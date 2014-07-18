@@ -3273,41 +3273,41 @@
 						<Property key="Alpha" value="0.4"/>
 						<Property key="Colour" value="1 0.7 0.9"/>
 					</Widget>
-					<Widget type="Slider" skin="Slider" position="16 220 300 16">
-						<Property key="Colour" value="0.7 0.7 0.7"/>
-					</Widget>
-					<Widget type="Slider" skin="Slider" position="16 116 300 16">
+					<Widget type="Slider" skin="Slider" position="16 72 300 16" name="LDust">
 						<Property key="Colour" value="0.8 0.8 0.2"/>
 					</Widget>
-					<Widget type="Slider" skin="Slider" position="16 72 300 16">
+					<Widget type="Slider" skin="Slider" position="16 116 300 16" name="LDustS">
 						<Property key="Colour" value="0.8 0.8 0.2"/>
 					</Widget>
-					<Widget type="Slider" skin="Slider" position="16 168 300 16">
+					<Widget type="Slider" skin="Slider" position="16 168 300 16" name="LMud">
 						<Property key="Colour" value="0.8 0.7 0.2"/>
+					</Widget>
+					<Widget type="Slider" skin="Slider" position="16 220 300 16" name="LSmoke">
+						<Property key="Colour" value="0.7 0.7 0.7"/>
 					</Widget>
 					<Widget type="ImageBox" skin="ImageBox" position="348 4 60 60">
 						<Property key="ImageCoord" value="384 512 128 128"/>
 						<Property key="Alpha" value="1.0"/>
 						<Property key="ImageTexture" value="gui_icons.png"/>
 					</Widget>
-					<Widget type="EditBox" skin="EditBox" position="96 50 56 20" name="LDust">
-						<Property key="Colour" value="0.8 0.8 0.2"/>
-						<Property key="TextColour" value="0.8 0.8 0.2"/>
+					<Widget type="EditBox" skin="EditBox" position="96 50 56 20" name="LDustEdit">
+						<Property key="Colour" value="0.6 0.6 0.1"/>
+						<Property key="TextColour" value="1 1 0.3"/>
 						<UserString key="tip" value="#{TipDustInt}"/>
 					</Widget>
-					<Widget type="EditBox" skin="EditBox" position="96 94 56 20" name="LDustS">
-						<Property key="Colour" value="0.8 0.8 0.2"/>
-						<Property key="TextColour" value="0.8 0.8 0.2"/>
+					<Widget type="EditBox" skin="EditBox" position="96 94 56 20" name="LDustSEdit">
+						<Property key="Colour" value="0.5 0.5 0.3"/>
+						<Property key="TextColour" value="0.9 0.9 0.4"/>
 						<UserString key="tip" value="#{TipDustSize}"/>
 					</Widget>
-					<Widget type="EditBox" skin="EditBox" position="96 146 56 20" name="LMud">
-						<Property key="Colour" value="0.8 0.7 0.2"/>
-						<Property key="TextColour" value="0.8 0.7 0.2"/>
+					<Widget type="EditBox" skin="EditBox" position="96 146 56 20" name="LMudEdit">
+						<Property key="Colour" value="0.6 0.5 0.1"/>
+						<Property key="TextColour" value="1.0 0.9 0.3"/>
 						<UserString key="tip" value="#{TipMudInt}"/>
 					</Widget>
-					<Widget type="EditBox" skin="EditBox" position="96 198 56 20" name="LSmoke">
-						<Property key="Colour" value="0.7 0.7 0.7"/>
-						<Property key="TextColour" value="0.7 0.7 0.7"/>
+					<Widget type="EditBox" skin="EditBox" position="96 198 56 20" name="LSmokeEdit">
+						<Property key="Colour" value="0.5 0.5 0.5"/>
+						<Property key="TextColour" value="0.9 0.9 0.9"/>
 						<UserString key="tip" value="#{TipSmokeInt}"/>
 					</Widget>
 					<Widget type="ImageBox" skin="ImageBox" position="116 252 100 24" name="ClrTrail">

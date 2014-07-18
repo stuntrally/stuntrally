@@ -336,8 +336,11 @@ void CGui::InitGui()
 	Btn("TerLNswap", btnNswap);
 	
 	//  particles
-	Ed(LDust, editLDust);	Ed(LDustS, editLDust);
-	Ed(LMud,  editLDust);	Ed(LSmoke, editLDust);
+	sv= &svLDust;   sv->Init("LDust",  &f, 0.f,1.f);  sv->DefaultF(0.f);
+	sv= &svLDustS;  sv->Init("LDustS", &f, 0.f,1.f);  sv->DefaultF(0.f);
+	sv= &svLMud;    sv->Init("LMud",   &f, 0.f,1.f);  sv->DefaultF(0.f);
+	sv= &svLSmoke;  sv->Init("LSmoke", &f, 0.f,1.f);  sv->DefaultF(0.f);
+	SldUpd_Surf();
 	Cmb(cmbParDust, "CmbParDust", comboParDust);
 	Cmb(cmbParMud,  "CmbParMud",  comboParDust);
 	Cmb(cmbParSmoke,"CmbParSmoke",comboParDust);

@@ -36,8 +36,8 @@ void Scene::Default()
 	fHDamage = 0.f;
 
 	ldPitch = 50.f;  ldYaw = 30.f;
-	lAmb  = SColor(0.45f, 0.45f, 0.45f);
-	lDiff = SColor(0.7f, 0.7f, 0.7f);	lSpec = SColor(0.99f, 0.99f, 0.97f);
+	lAmb  = SColor(0.16f, 0.0f, 0.45f);
+	lDiff = SColor(0.16f, 0.0f, 0.7f);	lSpec = SColor(0.16f, 0.05f, 1.f);
 
 	sParDust = "Dust";  sParMud = "Mud";  sParSmoke = "Smoke";
 

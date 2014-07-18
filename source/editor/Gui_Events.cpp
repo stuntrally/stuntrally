@@ -418,16 +418,22 @@ void CGui::listSurf(Li, size_t id)
 
 	idSurf = id;  // help var
 	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+	SldUpd_Surf();
 
-	//  Particles
-	edLDust->setCaption(toStr(l->dust));	edLDustS->setCaption(toStr(l->dustS));
-	edLMud->setCaption(toStr(l->mud));	edLSmoke->setCaption(toStr(l->smoke));
 	Vector3 c;  c = l->tclr.GetRGB1();
 	clrTrail->setColour(Colour(c.x, c.y, c.z));
 	
 	//  Surface
 	cmbSurface->setIndexSelected( cmbSurface->findItemIndexWith(l->surfName));
 	UpdSurfInfo();
+}
+
+void CGui::SldUpd_Surf()
+{
+	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+
+	svLDust.UpdF(&l->dust);  svLDustS.UpdF(&l->dustS);
+	svLMud.UpdF(&l->mud);    svLSmoke.UpdF(&l->smoke);
 }
 
 void CGui::UpdSurfList()

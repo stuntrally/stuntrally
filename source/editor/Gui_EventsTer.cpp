@@ -514,35 +514,23 @@ void CGui::comboParDust(Cmb cmb, size_t val)  // par type
 	else if (n=="CmbParSmoke")  sc->sParSmoke = s;
 }
 
-void CGui::editLDust(Ed ed)  // vals
-{
-	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
-	Real r = s2r(ed->getCaption());
-	String n = ed->getName();
-
-		 if (n=="LDust")   l->dust = r;		else if (n=="LDustS")  l->dustS = r;
-	else if (n=="LMud")    l->mud = r;		else if (n=="LSmoke")  l->smoke = r;
-}
-
 
 ///  Terrain Surface  -----------------------------
 //
 void CGui::comboSurface(Cmb cmb, size_t val)
 {
 	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
-	std::string s = cmb->getItemNameAt(val);
+	//std::string s = cmb->getItemNameAt(val);
+	std::string s = cmbSurface->getCaption();
+	LogO("SURF cmb  = "+s);
 	l->surfName = s;
 	UpdSurfInfo();
 }
 
 void CGui::UpdSurfInfo()
 {
-	//TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
-	//std::string s = cmb->getItemNameAt(val);
-	//l->surfName = s;
-
-	std::string s = cmbSurface->getCaption();
-	int id = app->surf_map[s]-1;
+	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+	int id = app->surf_map[l->surfName]-1;
 	if (id == -1)  return;  //not found..
 	const TRACKSURFACE& su = app->surfaces[id];
 

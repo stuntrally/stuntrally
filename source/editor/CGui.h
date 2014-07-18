@@ -180,8 +180,8 @@ public:
 
 	
 	//  Ter Particles
-	Ed edLDust,edLDustS,edLMud,edLSmoke;  Img clrTrail;
-	void editLDust(Ed);
+	SV svLDust,svLDustS,svLMud,svLSmoke;  Img clrTrail;
+	void SldUpd_Surf();
 	Cmb cmbParDust,cmbParMud,cmbParSmoke;  void comboParDust(CMB);
 	
 	//  Ter Surfaces
