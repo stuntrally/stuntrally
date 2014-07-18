@@ -99,11 +99,11 @@ Vector4 SColor::GetRGBA() const
 void SColor::Load(const char* ss)
 {
 	a = 1.f;  n = 0.f;
-	int n = sscanf(ss, "%f %f %f %f %f", &h,&s,&v,&a,&n);
-	if (n == 5)
+	int i = sscanf(ss, "%f %f %f %f %f", &h,&s,&v,&a,&n);
+	if (i == 5)
 		return;  // new
 
-	if (n < 3 || n > 5)
+	if (i < 3 || i > 5)
 	{	LogO("NOT 3..5 components color!");  }
 
 	//  rgb old < 2.4
