@@ -752,7 +752,7 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 
 
 	///  heavy landing damp  __
-	Dbl vz = chassis->getLinearVelocity().dot( ToBulletVector(pipe ? -dn : n) );
+	Dbl vz = chassis->getLinearVelocity().dot( pipe ? ToBulletVector(-dn) : ToBulletVector(n) );
 		suspension[1].velocity = vz * hov.hov_vz;  // for graphs
 		suspension[1].displacement = d / len;
 		suspension[0].displacement = d / rlen;
