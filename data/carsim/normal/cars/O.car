@@ -200,20 +200,20 @@ efficiency = 0.90
 position = 0.01, 0.01, -0.0
 roll-height = 0.8
 mass = 0
-restitution = 0.1
+restitution = 0.0
 
 [ suspension-FR ]
-position = 0.58, 0.0, -0.61
+position = 0.01, 0.0, -0.1
 hinge = -0.71, 0.55, -0.0
 
 [ wheel-FL ]
 position = -0.01, 0.01, -0.0
 roll-height = 0.8
 mass = 0
-restitution = 0.1
+restitution = 0.0
 
 [ suspension-FL ]
-position = -0.58, 0.275, -0.61
+position = -0.01, 0.0, -0.1
 hinge = 0.71, 0.55, 0.0
 
 
@@ -223,20 +223,20 @@ hinge = 0.71, 0.55, 0.0
 position = 0.01, -0.01, -0.0
 roll-height = 0.8
 mass = 0
-restitution = 0.1
+restitution = 0.0
 
 [ suspension-RR ]
-position = 0.58, -0.266, -0.61
+position = 0.01, 0.0, -0.1
 hinge = -0.25, -1.94, 0.0
 
 [ wheel-RL ]
-position = -0.01, -0.1, -0.0
+position = -0.01, -0.01, -0.0
 roll-height = 0.8
 mass = 0
-restitution = 0.1
+restitution = 0.0
 
 [ suspension-RL ]
-position = -0.58, -0.266, -0.61
+position = -0.01, 0.0, -0.1
 hinge = 0.25, -1.94, 0.0
 
 
@@ -244,25 +244,25 @@ hinge = 0.25, -1.94, 0.0
 # (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]
-mass = 10
+mass = 20
 position =  0.5, 0, 0
 
 [ particle-01 ]
-mass = 10
+mass = 20
 position = -0.5, 0, 0
 
 [ particle-02 ]
-mass = 10
+mass = 20
 position =  0, 0.5, 0
 
 [ particle-03 ]
-mass = 10
+mass = 20
 position =  0,-0.5, 0
 
 [ particle-04 ]
-mass = 10
+mass = 20
 position =  0, 0, 0.5
 
 [ particle-05 ]
-mass = 10
+mass = 20
 position =  0, 0,-0.5
