@@ -13,32 +13,31 @@ yaw   = 200.0
 yaw2  = 1.0
 
 [ flares ]
-brake-pos0 = 0.3,-0.9, -0.05
-brake-pos1 =-0.3,-0.9, -0.05
+brake-pos0 = 0.0,-1.65, -0.07
 brake-size = 0.46
-brake-color = 1, 0, 0
+brake-color = 1, 0.3, 0
 
 [ model_ofs ]
 rot_fix = on
-boost-x = -0.0
-boost-y = 0.2
-boost-z = -0.63
-boost-size-z = 0.4
-boost-name = ThrusterV1s
-thrust-x = 1.8
-thrust-y = 0.13
-thrust-z = 0.34
-thrust-size-z = 0.27
+boost-x = -0.1
+boost-y = -0.52
+boost-z = -0.43
+boost-size-z = 0.32
+boost-name = ThrusterV1
+thrust-x = 1.7
+thrust-y = 0.24
+thrust-z = 0.2
+thrust-size-z = 0.2
 thrust-name = ThrusterV1s
-thrust1-x = 2.4
-thrust1-y = 0.13
-thrust1-z = 0.34
-thrust1-size-z = 0.27
+thrust1-x = 1.7
+thrust1-y = 0.14
+thrust1-z = 0.26
+thrust1-size-z = 0.26
 thrust1-name = ThrusterV1s
-thrust2-x = 2.1
-thrust2-y = 0.33
-thrust2-z = 0.14
-thrust2-size-z = 0.12
+thrust2-x = 1.7
+thrust2-y = -0.19
+thrust2-z = 0.07
+thrust2-size-z = 0.07
 thrust2-name = ThrusterV1s
 
 #  collision shape params
@@ -64,25 +63,25 @@ friction = 0.1
 hAbove = 2.5
 hRayLen = 4.0
 
-steerForce = 22
-steerDamp = 14
+steerForce = 27
+steerDamp = 16
 steerDampP = 14
 
-engineForce = 26
-engineVelDec = 0.008
-brakeForce  = 26
+engineForce = 27
+engineVelDec = 0.01
+brakeForce  = 32
 
-dampAirRes = 32
-dampSide = 1800
-dampUp = 1050
-dampDn = 2850
+dampAirRes = 28
+dampSide = 2300
+dampUp = 1450
+dampDn = 2650
 dampPmul = 2.86
 
 alignTqP = 42, 42, 32
 alignTq  = 21, 21, 21
 pitchTq = 30
 rollTq = 0
-roll = 2
+roll = 1.9
 
 [ hover_h ]
 hov_vz = 0.384
