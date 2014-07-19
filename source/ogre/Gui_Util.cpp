@@ -340,18 +340,26 @@ void CGui::UpdCarStats(bool car)
 
 	//  speed graph points
 	e = root->FirstChildElement("velGraph");
+	std::vector<float> ttim,tkmh;
 	if (e)
-	{	std::vector<float> ttim,tkmh;	float t,v;
+	{	float t,v;
 		XMLElement* p = e->FirstChildElement("p");
 		while (p)
-		{	a = e->Attribute("t");  if (a) {  t = s2r(a);
-			a = e->Attribute("v");	if (a) {  v = s2r(a);
+		{	a = p->Attribute("t");  if (a) {  t = s2r(a);
+			a = p->Attribute("v");	if (a) {  v = s2r(a);
 				ttim.push_back(t);  tkmh.push_back(v);
 			}	}
 			p = p->NextSiblingElement("p");
 	}	}
 
-	//  todo upd graph ..
+	///  upd vel graph  ~~~
+	std::vector<FloatPoint> points;
+	for (i = 0; i < (int)ttim.size(); ++i)
+		points.push_back(FloatPoint(
+			ttim[i]* 22.f, 235- 0.55f *tkmh[i]));
+			//ttim[i]* 10.f, 160- 0.4f *tkmh[i]));
+	graphVel->setPoints(points);
+	
 
 	//  upd text  --------
 	bool kmh = !pSet->show_mph;  float k2m = 0.621371f;

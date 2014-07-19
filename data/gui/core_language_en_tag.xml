@@ -380,6 +380,7 @@
 	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
 	<Tag name="TipSteerSurf">Steering range multiplier, for surface (Gravel,Asphalt).</Tag>
 
+	<Tag name="Gearbox">Gearbox</Tag>
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="TipAutoGearbox">Uncheck for manual gears changing.</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>

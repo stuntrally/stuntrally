@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Resource" version="1.1">
+	<Resource type="ResourceSkin" name="PolygonalSkin" size="6 9" texture="SplineSkin.png">
+		<BasisSkin type="PolygonalSkin" offset="0 0 6 9" align="Stretch">
+			<State name="normal" offset="6 3 6 9"/>
+		</BasisSkin>
+	</Resource>
     <Resource type="ResourceSkin" name="CheckBoxSkin" size="23 21" texture="core_blackblueskins.png">
         <BasisSkin type="SubSkin" offset="0 0 21 21" align="Left Top">
             <State name="disabled" offset="2 2 21 21"/>

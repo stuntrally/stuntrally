@@ -250,6 +250,9 @@ public:
 	wraps::RenderBoxScene* viewBox;  Ogre::Vector3 viewSc;
 	MyGUI::IntCoord GetViewSize();
 	void InitCarPrv();
+	
+	WP graphW;
+	MyGUI::PolygonalSkin* graphVel;
 
 
 	///  [Car] color  --===---

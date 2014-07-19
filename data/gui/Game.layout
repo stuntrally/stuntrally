@@ -551,6 +551,12 @@
 					<Property key="Alpha" value="0.15"/>
 					<Property key="InheritsAlpha" value="false"/>
 					<UserString key="tip" value="#{TipCarDesc}"/>
+					<Widget type="Widget" skin="PanelSkin" position="0 0 424 154" align="Stretch">
+						<Property key="Colour" value="0.7 0.9 0.9"/>
+						<Property key="Alpha" value="0.6"/>
+						<Property key="InheritsAlpha" value="false"/>
+						<Widget type="Widget" skin="PanelEmpty" position="0 0 424 154" align="Stretch" name="VelGraph"/>
+					</Widget>
 				</Widget>
 
 				<Widget type="ImageBox" skin="ImageBox" position="240 276 180 11" name="cb0">
@@ -618,11 +624,11 @@
 					<Property key="ImageTexture" value="stats_bar.png"/>
 					<Property key="Alpha" value="0.7"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="16 348 200 14" name="cst5">
+				<Widget type="TextBox" skin="TextBox" position="16 348 200 14" name="cst5">
 					<Property key="TextAlign" value="Right Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="240 348 180 14" name="csv5">
+				<Widget type="TextBox" skin="TextBox" position="240 348 180 14" name="csv5">
 					<Property key="TextAlign" value="Left Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
@@ -631,11 +637,11 @@
 					<Property key="ImageTexture" value="stats_bar.png"/>
 					<Property key="Alpha" value="0.8"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="16 368 200 14" name="cst6">
+				<Widget type="TextBox" skin="TextBox" position="16 368 200 14" name="cst6">
 					<Property key="TextAlign" value="Right Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="240 368 180 14" name="csv6">
+				<Widget type="TextBox" skin="TextBox" position="240 368 180 14" name="csv6">
 					<Property key="TextAlign" value="Left Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
@@ -643,11 +649,11 @@
 					<Property key="ImageTexture" value="stats_bar.png"/>
 					<Property key="Alpha" value="0.8"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="16 380 200 14" name="cst7">
+				<Widget type="TextBox" skin="TextBox" position="16 380 200 14" name="cst7">
 					<Property key="TextAlign" value="Right Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="240 380 180 14" name="csv7">
+				<Widget type="TextBox" skin="TextBox" position="240 380 180 14" name="csv7">
 					<Property key="TextAlign" value="Left Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
@@ -655,11 +661,11 @@
 					<Property key="ImageTexture" value="stats_bar.png"/>
 					<Property key="Alpha" value="0.8"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="16 392 200 14" name="cst8">
+				<Widget type="TextBox" skin="TextBox" position="16 392 200 14" name="cst8">
 					<Property key="TextAlign" value="Right Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="240 392 180 14" name="csv8">
+				<Widget type="TextBox" skin="TextBox" position="240 392 180 14" name="csv8">
 					<Property key="TextAlign" value="Left Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
@@ -667,11 +673,11 @@
 					<Property key="ImageTexture" value="stats_bar.png"/>
 					<Property key="Alpha" value="0.8"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="16 408 200 14" name="cst9">
+				<Widget type="TextBox" skin="TextBox" position="16 408 200 14" name="cst9">
 					<Property key="TextAlign" value="Right Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-                <Widget type="TextBox" skin="TextBox" position="240 408 180 14" name="csv9">
+				<Widget type="TextBox" skin="TextBox" position="240 408 180 14" name="csv9">
 					<Property key="TextAlign" value="Left Top"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
@@ -743,6 +749,10 @@
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 574 112" name="CarClrs">
 						<Property key="Caption" value="#C0E0FF#{Color}"/>
+						<!--<Widget type="Widget" skin="PanelSkin" position="232 0 224 108" align="Stretch">
+							<Property key="Colour" value="0.7 0.9 0.9"/>
+							<Widget type="Widget" skin="PanelEmpty" position="2 2 220 104" align="Stretch" name="VelGraph"/>
+						</Widget>-->
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 574 112" name="TabTrack">
 						<Property key="Caption" value="#80E0F0#{Adjust}"/>
@@ -854,118 +864,129 @@
 						<Property key="Caption" value="#80FF80#{Track}"/>
 					</Widget>
 				</Widget>
-				<!--<Widget type="Button" skin="Button" position="20 12 32 20">
-                    <Property key="Caption" value="|"/>
-                </Widget>
-                <Widget type="Button" skin="Button" position="64 12 32 20">
-                    <Property key="Caption" value="|||"/>
-                </Widget>-->
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#90A0A0#{Setup}"/>
-				<Widget type="ImageBox" skin="ImageBox" position="284 64 80 80">
-					<Property key="ImageCoord" value="128 512 128 128"/>
-					<Property key="Alpha" value="1.0"/>
-					<Property key="ImageTexture" value="gui_icons.png"/>
-				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="276 224 96 96">
-					<Property key="ImageCoord" value="128 384 128 128"/>
-					<Property key="Alpha" value="1.0"/>
-					<Property key="ImageTexture" value="gui_icons.png"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 70 240 24" name="CarGear">
-					<Property key="Caption" value="#{AutoGearbox}"/>
-					<Property key="TextColour" value="0.8 0.9 1"/>
-					<UserString key="tip" value="#{TipAutoGearbox}"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 100 240 24" name="CarRear">
-					<Property key="Caption" value="#{AutoRear}"/>
-					<Property key="TextColour" value="0.65 0.8 0.9"/>
-					<UserString key="tip" value="#{TipAutoRear}"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 130 244 24" name="CarRearThrInv">
-					<Property key="Caption" value="#{RearThrottleInverse}"/>
-					<Property key="TextColour" value="0.65 0.8 0.9"/>
-					<UserString key="tip" value="#{TipRearThrottleInverse}"/>
-				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="32 210 210 20" name="tabCarTires">
+				<Widget type="TabControl" skin="TabControl" position="16 16 752 504" align="Default" layer="Back" name="SubTab">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Colour" value="0.75 0.83 0.9"/>
 					<Property key="SmoothShow" value="false"/>
-					<Widget type="TabItem" skin="" position="2 24 204 -8">
-						<Property key="Caption" value="#E0E0D0#{Gravel}"/>
+					<Widget type="TabItem" skin="" position="2 24 746 476">
+						<Property key="Caption" value="#C8D0D8#{Gearbox}"/>
+						<Widget type="ImageBox" skin="ImageBox" position="284 64 80 80">
+							<Property key="ImageCoord" value="128 512 128 128"/>
+							<Property key="Alpha" value="1.0"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 70 240 24" name="CarGear">
+							<Property key="Caption" value="#{AutoGearbox}"/>
+							<Property key="TextColour" value="0.8 0.9 1"/>
+							<UserString key="tip" value="#{TipAutoGearbox}"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 100 240 24" name="CarRear">
+							<Property key="Caption" value="#{AutoRear}"/>
+							<Property key="TextColour" value="0.65 0.8 0.9"/>
+							<UserString key="tip" value="#{TipAutoRear}"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 130 244 24" name="CarRearThrInv">
+							<Property key="Caption" value="#{RearThrottleInverse}"/>
+							<Property key="TextColour" value="0.65 0.8 0.9"/>
+							<UserString key="tip" value="#{TipRearThrottleInverse}"/>
+						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 204 -8">
-						<Property key="Caption" value="#707070#{Asphalt}"/>
-					</Widget>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 250 236 24" name="CarABS">
-					<Property key="Caption" value="#{ABS}"/>
-					<Property key="TextColour" value="0.8 0.8 0.6"/>
-					<UserString key="tip" value="#{TipABS}"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 280 236 24" name="CarTCS">
-					<Property key="Caption" value="#{TCS}"/>
-					<Property key="TextColour" value="0.5 0.8 0.8"/>
-					<UserString key="tip" value="#{TipTCS}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 340 284 24">
-					<Property key="Caption" value="#{SpeedSensitiveSteering}"/>
-					<Property key="TextColour" value="0.3 0.9 0.9"/>
-					<UserString key="tip" value="#{TipSpeedSensitiveSteering}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 372 244 24">
-					<Property key="Caption" value="#{SSS_Effect}"/>
-					<Property key="TextColour" value="0.7 0.9 1.0"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="280 372 80 24" name="SSSEffectVal">
-					<Property key="TextColour" value="0.7 0.9 1.0"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="32 396 284 16" name="SSSEffect"/>
-				<Widget type="TextBox" skin="TextBox" position="32 424 244 24">
-					<Property key="Caption" value="#{SSS_SpeedFactor}"/>
-					<Property key="TextColour" value="0.7 0.9 1.0"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="280 424 80 24" name="SSSVelFactorVal">
-					<Property key="TextColour" value="0.7 0.9 1.0"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="32 448 284 16" name="SSSVelFactor"/>
-				<Widget type="Button" skin="Button" position="64 488 120 24" name="SSSReset">
-					<Property key="Caption" value="#{Reset}"/>
-					<Property key="Colour" value="0.6 0.8 1.0"/>
-					<Property key="TextColour" value="0.5 0.75 1"/>
-				</Widget>
+					<Widget type="TabItem" skin="" position="2 24 746 476" name="TabTrack">
+						<Property key="Caption" value="#80E0E0#{InputMapSteering}"/>
+						<Widget type="ImageBox" skin="ImageBox" position="276 20 96 96">
+							<Property key="ImageCoord" value="128 384 128 128"/>
+							<Property key="Alpha" value="1.0"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+						</Widget>
+						<Widget type="TabControl" skin="TabControl" position="24 92 240 20" name="tabCarTires">
+							<Property key="SmoothShow" value="false"/>
+							<Widget type="TabItem" skin="" position="2 24 234 -8">
+								<Property key="Caption" value="#E0E0D0#{Gravel}"/>
+							</Widget>
+							<Widget type="TabItem" skin="" position="2 24 234 -8">
+								<Property key="Caption" value="#707070#{Asphalt}"/>
+							</Widget>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="24 132 348 24">
+							<Property key="Caption" value="#{SpeedSensitiveSteering}"/>
+							<Property key="TextColour" value="0.3 0.9 0.9"/>
+							<UserString key="tip" value="#{TipSpeedSensitiveSteering}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="24 168 244 24">
+							<Property key="Caption" value="#{SSS_Effect}"/>
+							<Property key="TextColour" value="0.7 0.9 1.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="272 168 80 24" name="SSSEffectVal">
+							<Property key="TextColour" value="0.7 0.9 1.0"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="24 196 328 18" name="SSSEffect"/>
+						<Widget type="TextBox" skin="TextBox" position="24 228 244 24">
+							<Property key="Caption" value="#{SSS_SpeedFactor}"/>
+							<Property key="TextColour" value="0.7 0.9 1.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="272 228 80 24" name="SSSVelFactorVal">
+							<Property key="TextColour" value="0.7 0.9 1.0"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="24 256 328 18" name="SSSVelFactor"/>
+						<Widget type="Button" skin="Button" position="64 488 120 24" name="SSSReset">
+							<Property key="Caption" value="#{Reset}"/>
+							<Property key="Colour" value="0.6 0.8 1.0"/>
+							<Property key="TextColour" value="0.5 0.75 1"/>
+						</Widget>
 
-				<Widget type="TextBox" skin="TextBox" position="384 340 312 24">
-					<Property key="Caption" value="#{SteerRange}"/>
-					<Property key="TextColour" value="0.85 1.0 0.92"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="384 372 240 24">
-					<Property key="Caption" value="#{Simulation}"/>
-					<Property key="TextColour" value="0.6 1.0 0.8"/>
-					<UserString key="tip" value="#{TipSteerSim}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="668 372 80 24" name="SteerRangeSimVal">
-					<Property key="TextColour" value="0.6 1.0 0.8"/>
-					<UserString key="tip" value="#{TipSteerSim}"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="384 396 320 16" name="SteerRangeSim">
-					<UserString key="tip" value="#{TipSteerSim}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="384 424 240 24">
-					<Property key="Caption" value="#{Surface}"/>
-					<Property key="TextColour" value="0.6 0.8 0.7"/>
-					<UserString key="tip" value="#{TipSteerSurf}"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="668 424 80 24" name="SteerRangeSurfVal">
-					<Property key="TextColour" value="0.6 0.8 0.7"/>
-					<UserString key="tip" value="#{TipSteerSurf}"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="384 448 320 16" name="SteerRangeSurf">
-					<UserString key="tip" value="#{TipSteerSurf}"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="416 488 120 24" name="SteerReset">
-					<Property key="Caption" value="#{Reset}"/>
-					<Property key="Colour" value="0.6 0.9 1.0"/>
-					<Property key="TextColour" value="0.5 0.8 1"/>
+						<Widget type="TextBox" skin="TextBox" position="24 332 312 24">
+							<Property key="Caption" value="#{SteerRange}"/>
+							<Property key="TextColour" value="0.85 1.0 0.92"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="24 364 240 24">
+							<Property key="Caption" value="#{Simulation}"/>
+							<Property key="TextColour" value="0.6 1.0 0.8"/>
+							<UserString key="tip" value="#{TipSteerSim}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="272 364 80 24" name="SteerRangeSimVal">
+							<Property key="TextColour" value="0.6 1.0 0.8"/>
+							<UserString key="tip" value="#{TipSteerSim}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="24 390 328 18" name="SteerRangeSim">
+							<UserString key="tip" value="#{TipSteerSim}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="24 416 240 24">
+							<Property key="Caption" value="#{Surface}"/>
+							<Property key="TextColour" value="0.6 0.8 0.7"/>
+							<UserString key="tip" value="#{TipSteerSurf}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="272 416 80 24" name="SteerRangeSurfVal">
+							<Property key="TextColour" value="0.6 0.8 0.7"/>
+							<UserString key="tip" value="#{TipSteerSurf}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="24 442 328 18" name="SteerRangeSurf">
+							<UserString key="tip" value="#{TipSteerSurf}"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="416 488 120 24" name="SteerReset">
+							<Property key="Caption" value="#{Reset}"/>
+							<Property key="Colour" value="0.6 0.9 1.0"/>
+							<Property key="TextColour" value="0.5 0.8 1"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 746 476" name="TabTrack">
+						<Property key="Caption" value="#904060#{Other}"/>
+						<Widget type="Button" skin="CheckBox" position="32 88 300 24" name="CarABS">
+							<Property key="Caption" value="#{ABS}"/>
+							<Property key="TextColour" value="0.8 0.8 0.6"/>
+							<UserString key="tip" value="#{TipABS}"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 124 300 24" name="CarTCS">
+							<Property key="Caption" value="#{TCS}"/>
+							<Property key="TextColour" value="0.5 0.8 0.8"/>
+							<UserString key="tip" value="#{TipTCS}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 40 388 24">
+							<Property key="Caption" value="#D09040#{NotRecommended}"/>
+						</Widget>
+					</Widget>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
@@ -3229,6 +3250,9 @@
 							<Property key="TextColour" value="1 0.7 0.1"/>
 						</Widget>
 
+						<Widget type="TextBox" skin="TextBox" position="196 306 388 24">
+							<Property key="Caption" value="#F08020#{NotRecommended}"/>
+						</Widget>
 						<Widget type="Button" skin="CheckBox" position="28 306 168 24" name="GodRays">
 							<Property key="Caption" value="#{godrays}"/>
 							<Property key="TextColour" value="1 0.4 0.1"/>
@@ -3258,6 +3282,9 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">
 						<Property key="Caption" value="#804060#{HDRTab}"/>
+						<Widget type="TextBox" skin="TextBox" position="196 306 388 24">
+							<Property key="Caption" value="#FF8020#{NotRecommended}"/>
+						</Widget>
 						<Widget type="Button" skin="CheckBox" position="28 20 152 24" name="HDR">
 							<Property key="Caption" value="#{HDR}"/>
 							<Property key="TextColour" value="0.8 0.3 0.6"/>
@@ -3936,7 +3963,7 @@
 					<Property key="Colour" value="0.3 1.0 0.2"/>
 				</Widget>
 			</Widget>
-			<Widget type="TabItem" skin="" position="2 24 514 692">
+			<Widget type="TabItem" skin="" position="2 24 522 692">
 				<Property key="Caption" value="#A090FF#{Surface}"/>
 				<Property key="Colour" value="0.7 0.6 1"/>
 				<Widget type="Button" skin="Button" position="344 80 160 36" name="TweakSurfPickWh">
@@ -4090,7 +4117,7 @@
 					<UserString key="tip" value="#{TipSurfType}"/>
 				</Widget>
 			</Widget>
-			<Widget type="TabItem" skin="" position="2 24 514 692">
+			<Widget type="TabItem" skin="" position="2 24 522 692">
 				<Property key="Caption" value="#D0D0D0#{Car}#{Test}"/>
 				<Widget type="EditBox" skin="EditBoxStretch" position="8 64 507 626" name="TweakPerfTest">
 					<Property key="InheritsAlpha" value="false"/>
@@ -4105,7 +4132,7 @@
 					<Property key="Colour" value="0.73 0.86 0.95"/>
 				</Widget>
 			</Widget>
-			<Widget type="TabItem" skin="" position="2 24 514 692">
+			<Widget type="TabItem" skin="" position="2 24 522 692">
 				<Property key="Caption" value="#C0C040collisions"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
 				<Widget type="EditBox" skin="EditBoxStretch" position="2 44 520 652" name="TweakEditCol">

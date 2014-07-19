@@ -180,6 +180,18 @@ void CGui::InitGui()
 	sv= &svCarClrRefl;	sv->Init("CarClrRefl",  &f, 0.f,1.4f);  Sev(CarClr);
 	UpdCarClrSld();
 
+	///  car vel graph  ~~~
+	graphW = fWP("VelGraph");
+	WP w = graphW->createWidget<Widget>("PolygonalSkin", IntCoord(IntPoint(), graphW->getSize()), Align::Stretch);
+	w->setColour(Colour(0.9f,0.6f,0.3f));
+	//w->setColour(Colour(0.8f,1.f,1.f));
+
+	ISubWidget* main = w->getSubWidgetMain();
+	graphVel = main->castType<PolygonalSkin>();
+	
+	graphVel->setWidth(3.f);
+	graphVel->setStroke(0);
+
 
 	///  Checks
 	//------------------------------------------------------------------------
