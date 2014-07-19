@@ -42,12 +42,15 @@
 
 	<car id="SZ"  crtver="2.4" speed="8.0" year="1996" type="Gravel"   easy="1.01" norm="1.03"  author="cobe571" />
 	<car id="XZ"  crtver="2.0" speed="8.4" year="2007" type="Asphalt"  easy="1.01" norm="1.03"  author="Neubi" />
+
 	
 	<car id="V1"  crtver="2.4" speed="9.6" year="2523" type="Spaceship" easy="1.10" norm="1.20"  car="0" author="benja" />
-	<car id="V2"  crtver="2.4" speed="9.2" year="2516" type="Spaceship" easy="1.05" norm="1.10"  car="0" author="speedypro" />
-	<car id="V3"  crtver="2.4" speed="9.6" year="2548" type="Spaceship" easy="1.05" norm="1.10"  car="0" author="" />
-<!--<car id="V4"  crtver="2.4" speed="9.8" year="2780" type="Spaceship" easy="1.05" norm="1.10"  car="0" author="" />-->
-	<car id="O"   crtver="2.4" speed="10.2" year="2744" type="Other"     easy="1.01" norm="1.03"  car="0" author="cryham" />
+	<car id="V2"  crtver="2.4" speed="9.5" year="2516" type="Spaceship" easy="1.05" norm="1.10"  car="0" author="speedypro" />
+
+	<car id="V3"  crtver="2.4" speed="9.7" year="2548" type="Spaceship" easy="1.05" norm="1.10"  car="0" author="jumahsafarty" />
+	<car id="V4"  crtver="2.4" speed="9.6" year="2780" type="Spaceship" easy="1.05" norm="1.10"  car="0" author="YellowPanda" />
+
+	<car id="O"   crtver="2.4" speed="10.2" year="2744" type="Other"    easy="1.01" norm="1.03"  car="0" author="cryham" />
 	
 	<!--easy and norm are the car time multipliers for simultation modes-->
 	<!--less means bigger track time (more points, easier to qualify)-->

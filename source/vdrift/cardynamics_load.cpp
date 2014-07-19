@@ -728,8 +728,7 @@ void CARDYNAMICS::Init(
 		//chassisShape = new btBoxShape(btVector3(1.f,1.f,0.2f));
 		chassisShape->setMargin(0.05f);  //!? doesnt work, bounces too much
 	}else
-	{	/// todo: all params in .car
-		// y| length  x- width  z^ height
+	{	// y| length  x- width  z^ height
 		btScalar w = size.getX()*0.2, r = size.getZ()*0.3, h = 0.45;
 
 		///  spheres
@@ -742,12 +741,9 @@ void CARDYNAMICS::Init(
 		const int numSph = 14;  int i = 0;
 		btScalar rad[numSph];  btVector3 pos[numSph];
 
-		//LogO("Car shape dims:  r="+toStr(r)+"  w="+toStr(w)+"  h="+toStr(h)+"  h0="+toStr(h0));
-		//LogO("Car offset:  x="+toStr(origin.x())+"  y="+toStr(origin.y())+"  z="+toStr(origin.z()));
-
 		btScalar r2 = r * coll_R2m;
 		btScalar l1 = coll_posLfront, l2 = coll_posLback, l1m = l1*0.5, l2m = l2*0.5;
-		float ww = hover ? coll_FrWmul : 1.f;  ///
+		float ww = hover ? coll_FrWmul : 1.f;
 		float wt = coll_TopWmul * ww;
 
 		rad[i] = r2;  pos[i] = btVector3( l1 , -w*ww, -h);  ++i;  // front

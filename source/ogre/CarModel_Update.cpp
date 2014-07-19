@@ -171,9 +171,10 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		for (i=0; i < PAR_ALL; ++i)
 			if (par[i][w])  par[i][w]->setSpeedFactor(fa);
 		if (w < 2 && parBoost[w])  parBoost[w]->setSpeedFactor(fa);
-		if (w < 2 && parThrust[w])  parThrust[w]->setSpeedFactor(fa);
 		if (parHit)  parHit->setSpeedFactor(fa);
 	}
+	for (w=0; w < 8; ++w)
+		if (parThrust[w])  parThrust[w]->setSpeedFactor(fa);
 
 
 	if (!posInfo.bNew)  return;  // new only ?
@@ -255,7 +256,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 			pe->setEmissionRate(emitB);
 		}
 		//  spaceship thrusters
-		for (i=0; i < 2; i++)  if (parThrust[i])
+		for (i=0; i < 8; i++)  if (parThrust[i])
 		{
 			float dmg = 1.f - 0.5f * pCar->dynamics.fDamage*0.01f;
 			float emitT = posInfo.hov_throttle * 60.f * dmg;  // par
@@ -553,13 +554,14 @@ void CarModel::UpdParsTrails(bool visible)
 	{
 		Ogre::uint8 grp = RQG_CarTrails;  //9=road  after glass
 		if (w < 2 && parBoost[w]) {  parBoost[w]->setVisible(vis);  parBoost[w]->setRenderQueueGroup(grp);  }
-		if (w < 2 && parThrust[w]) {  parThrust[w]->setVisible(vis);  parThrust[w]->setRenderQueueGroup(grp);  }
 		if (whTrail[w]){  whTrail[w]->setVisible(visible && pSet->trails);  whTrail[w]->setRenderQueueGroup(grp);  }
 		grp = RQG_CarParticles;
 		for (int p=0; p < PAR_ALL; ++p)
 			if (par[p][w]){  par[p][w]->setVisible(vis);  par[p][w]->setRenderQueueGroup(grp);  }
 		if (parHit && w==0)	{  parHit->setVisible(vis);  parHit->setRenderQueueGroup(grp);  }
 	}
+	for (int w=0; w < 8; ++w)
+		if (parThrust[w]) {  parThrust[w]->setVisible(vis);  parThrust[w]->setRenderQueueGroup(RQG_CarTrails);  }
 }
 
 

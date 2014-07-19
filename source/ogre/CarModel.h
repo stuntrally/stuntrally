@@ -51,11 +51,11 @@ public:
 	
 	///----  model params  from .car
 	float driver_view[3], hood_view[3];
-	float interiorOffset[3], boostOffset[3],boostSizeZ, thrusterOfs[3],thrusterSizeZ;
+	float interiorOffset[3], boostOffset[3],boostSizeZ, thrusterOfs[4][3],thrusterSizeZ[4];
 	std::vector<Ogre::Vector3> brakePos;  // flares
 	float brakeSize;  Ogre::ColourValue brakeClr;
 	bool bRotFix;
-	std::string sBoostParName, sThrusterPar;
+	std::string sBoostParName, sThrusterPar[4];
 
 	float whRadius[4], whWidth[4];  // for tire trails
 	MATHVECTOR<float,3> whPos[4];
@@ -161,7 +161,7 @@ public:
 	//--------  Particle systems
 	enum EParTypes {  PAR_Smoke=0, PAR_Mud, PAR_Dust, PAR_Water, PAR_MudHard, PAR_MudSoft, PAR_ALL };
 	//  par-wheels, boost-car rear, spaceship thruster, sparks-world hit
-	Ogre::ParticleSystem* par[PAR_ALL][4], *parBoost[2], *parThrust[2], *parHit;
+	Ogre::ParticleSystem* par[PAR_ALL][4], *parBoost[2], *parThrust[8], *parHit;
 	Ogre::RibbonTrail* whTrail[4];  // tire trail
 	Ogre::Real whTemp[4];  // spin time, approx tire temp.
 	

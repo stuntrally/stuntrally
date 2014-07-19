@@ -63,7 +63,7 @@ CarModel::CarModel(int index, int colorId, eCarType type, const std::string& nam
 	}
 	int i;
 	for (i=0; i < 2; ++i)  parBoost[i] = 0;
-	for (i=0; i < 2; ++i)  parThrust[i] = 0;
+	for (i=0; i < 8; ++i)  parThrust[i] = 0;
 	parHit = 0;
 
 	qFixWh[0].Rotate(2*PI_d,0,0,1);
@@ -74,11 +74,17 @@ CarModel::CarModel(int index, int colorId, eCarType type, const std::string& nam
 
 void CarModel::Defaults()
 {
-	for (int i=0; i<3; ++i)
+	int i,w;
+	for (i=0; i<3; ++i)
 	{
 		driver_view[i] = 0.f;  hood_view[i] = 0.f;
 		interiorOffset[i] = 0.f;  boostOffset[i] = 0.f;  exhaustPos[i] = 0.f;
-		thrusterOfs[3],thrusterSizeZ;
+	}
+	for (i=0; i<4; ++i)
+	{
+		for (w=0; w<3; ++w)  thrusterOfs[i][w] = 0.f;
+		thrusterSizeZ[i] = 0.f;
+		sThrusterPar[i] = "";
 	}
 	brakePos.clear();
 	brakeClr = ColourValue(1,0,0);
@@ -86,9 +92,8 @@ void CarModel::Defaults()
 
 	bRotFix = false;
 	sBoostParName = "Boost";  boostSizeZ = 1.f;
-	sThrusterPar = "";  thrusterSizeZ = 0.f;
 
-	for (int w=0; w<4; ++w)
+	for (w=0; w<4; ++w)
 	{
 		whRadius[w] = 0.3f;  whWidth[w] = 0.2f;
 	}
@@ -162,7 +167,7 @@ CarModel::~CarModel()
 		if (ndBrake[w])  mSceneMgr->destroySceneNode(ndBrake[w]);
 	}
 	for (i=0; i < 2; ++i)  if (parBoost[i]) {  mSceneMgr->destroyParticleSystem(parBoost[i]);  parBoost[i]=0;  }
-	for (i=0; i < 2; ++i)  if (parThrust[i]) {  mSceneMgr->destroyParticleSystem(parThrust[i]);  parThrust[i]=0;  }
+	for (i=0; i < 8; ++i)  if (parThrust[i]) {  mSceneMgr->destroyParticleSystem(parThrust[i]);  parThrust[i]=0;  }
 	if (parHit) {  mSceneMgr->destroyParticleSystem(parHit);  parHit=0;  }
 						
 	if (brakes)  mSceneMgr->destroyBillboardSet(brakes);
@@ -204,12 +209,17 @@ void CarModel::LoadConfig(const std::string & pathCar)
 	cf.GetParam("model_ofs.boost-size-z", boostSizeZ);
 	cf.GetParam("model_ofs.boost-name", sBoostParName);
 	
-	//  thruster  spaceship hover
-	cf.GetParam("model_ofs.thrust-x", thrusterOfs[0]);
-	cf.GetParam("model_ofs.thrust-y", thrusterOfs[1]);
-	cf.GetParam("model_ofs.thrust-z", thrusterOfs[2]);
-	cf.GetParam("model_ofs.thrust-size-z", thrusterSizeZ);
-	cf.GetParam("model_ofs.thrust-name", sThrusterPar);
+	//  thruster  spaceship hover  max 4 pairs
+	for (int i=0; i < 4; ++i)
+	{
+		std::string s = "model_ofs.thrust";
+		if (i > 0)  s += toStr(i);
+		cf.GetParam(s+"-x", thrusterOfs[i][0]);
+		cf.GetParam(s+"-y", thrusterOfs[i][1]);
+		cf.GetParam(s+"-z", thrusterOfs[i][2]);
+		cf.GetParam(s+"-size-z", thrusterSizeZ[i]);
+		cf.GetParam(s+"-name", sThrusterPar[i]);
+	}
 	
 
 	//~  brake flares
@@ -543,21 +553,21 @@ void CarModel::Create()
 		}	}
 
 		///  spaceship thrusters ^  ------------------------
-		if (!sThrusterPar.empty())
-		{  int ii = thrusterSizeZ > 0.f ? 2 : 1;
-			for (int i=0; i < ii; i++)
-			{
-				String si = strI + "_" +toStr(i);
-				if (!parThrust[i])
-				{	parThrust[i] = mSceneMgr->createParticleSystem("Thrust"+si, sThrusterPar);
-					parThrust[i]->setVisibilityFlags(RV_Particles);
+		for (int w=0; w < 4; ++w)
+		if (!sThrusterPar[w].empty())
+		{	int i2 = thrusterSizeZ[w] > 0.f ? 2 : 1;
+			for (int i=0; i < i2; ++i)
+			{	int ii = w*2+i;
+				String si = strI + "_" +toStr(ii);
+				if (!parThrust[ii])
+				{	parThrust[ii] = mSceneMgr->createParticleSystem("Thrust"+si, sThrusterPar[w]);
+					parThrust[ii]->setVisibilityFlags(RV_Particles);
 
-					Vector3 vp = Vector3(thrusterOfs[0],thrusterOfs[1],
-						thrusterOfs[2] + (i-1)*2*thrusterSizeZ);
+					Vector3 vp = Vector3(thrusterOfs[w][0],thrusterOfs[w][1],
+						thrusterOfs[w][2] + (i-1)*2*thrusterSizeZ[w]);
 					SceneNode* nb = pMainNode->createChildSceneNode(vp);
-					nb->attachObject(parThrust[i]);
-
-					parThrust[i]->getEmitter(0)->setEmissionRate(0);
+					nb->attachObject(parThrust[ii]);
+					parThrust[ii]->getEmitter(0)->setEmissionRate(0);
 		}	}	}
 
 		///  wheel emitters  ------------------------

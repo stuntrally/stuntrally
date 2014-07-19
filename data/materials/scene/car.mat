@@ -877,16 +877,21 @@ material V3_interior
 	parent car_interior
 	diffuseMap V3_interior.png
 	//specMap V3_interior_spec.png
-	ambient 0.9 0.9 0.9
-	diffuse 0.9 0.9 0.9
-	specular 1.0 1.0 1.0 6
-	//env_map true
-	//refl_amount 0.2
+	ambient 0.8 0.8 0.8
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 16
+	env_map true
+	refl_amount 0.05
 }
 material V3_glass
 {
-	parent car_glass2
-	diffuseMap V3_glass.png
+	parent car_interior
+	diffuseMap white.png
+	ambient 0.1 0.2 0.2
+	diffuse 0.1 0.2 0.2
+	specular 0.9 1 1 16
+	env_map true
+	refl_amount 0.3
 }
 
 //  O
