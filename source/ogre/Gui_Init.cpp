@@ -190,7 +190,7 @@ void CGui::InitGui()
 	graphVel = main->castType<PolygonalSkin>();
 	
 	graphVel->setWidth(3.f);
-	graphVel->setStroke(0);
+	//graphVel->setStroke(0);
 
 
 	///  Checks
