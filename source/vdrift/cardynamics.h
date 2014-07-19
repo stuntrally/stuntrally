@@ -79,10 +79,13 @@ public:
 	MATHVECTOR<Dbl,3> GetEnginePosition() const;
 
 /// custom collision params
-	float coll_R, coll_W, coll_H,
+	float coll_R, coll_R2m, coll_W, coll_H,
 		coll_Hofs, coll_Wofs, coll_Lofs,
 		coll_flTrig_H, com_ofs_H, com_ofs_L;
 	float coll_posLfront, coll_posLback, coll_friction;
+	float coll_FrWmul, coll_TopWmul,
+		coll_TopFr, coll_TopMid, coll_TopBack,
+		coll_TopFrHm, coll_TopMidHm, coll_TopBackHm;
 	
 // damage
 	// changed in CAR::UpdateSounds from bullet hit info
@@ -168,6 +171,7 @@ public:
 	float sphereYaw;  // dir
 	float hov_throttle, hov_roll;
 	void SimulateHover(Dbl dt), SimulateSphere(Dbl dt);
+	std::string sHov;
 
 	///  -- sim params (from .car)
 	struct HoverPar

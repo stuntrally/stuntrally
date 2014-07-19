@@ -217,6 +217,7 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 			//MATHVECTOR<Dbl,3> up(0,0,1);  Orientation().RotateVector(up);
 			//out << "up: " << up << endl;
 			out << endl;
+			//out << sHov.c_str() << endl;
 		}
 
 		//  fluids
@@ -627,6 +628,8 @@ void CARDYNAMICS::UpdateMass()
 ///..........................................................................................................
 void CARDYNAMICS::SimulateHover(Dbl dt)
 {
+	//sHov = "";
+
 	//  destroyed  damping
 	if (fDamage >= 100.f)
 	{
@@ -646,14 +649,17 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	//  cast ray down .
 	COLLISION_CONTACT ct,ct2;
 	MATHVECTOR<Dbl,3> dn = GetDownVector();
+	///
+	//sHov += " dn "+fToStr(dn[2],2,5)+"\n";
+	Dbl ups = dn[2] < 0.0 ? 1.0 : -1.0;
 
-	const Dbl len = hov.hAbove, rlen = hov.hRayLen;
+	/*const */Dbl len = hov.hAbove, rlen = hov.hRayLen;
 	MATHVECTOR<Dbl,3> p = GetPosition();  // - dn * 0.1;  // v fluids as solids
 	world->CastRay(p, dn, rlen, chassis, ct,  0,0, false, true);
 	float d = ct.GetDepth();
 
 	//  2nd in front for pitch
-	MATHVECTOR<Dbl,3> dx(1.4, 0, 0);
+	MATHVECTOR<Dbl,3> dx(3.4, 0, 0);  //par
 	Orientation().RotateVector(dx);
 	
 	world->CastRay(p+dx, dn, rlen, chassis, ct2,  0,0, false, true);
@@ -667,6 +673,9 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 		if (su >= SU_Pipe && su < SU_RoadWall)
 			pipe = true;
 	}
+	if (pipe)
+	{	len *= 1.2;  rlen *= 0.9;  }  ///!par
+	
 	//  vel
 	MATHVECTOR<Dbl,3> sv = -GetVelocity();
 	(-Orientation()).RotateVector(sv);
@@ -678,18 +687,31 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 
 
 	//  steer  < >
+	//bool rear = sv[0] > 0.0;
 	bool rear = transmission.GetGear() < 0;
 	float r = rear ? -1.f : 1.f;
-	MATHVECTOR<Dbl,3> t(0,0, -1000.0 * r * hov.steerForce * steerValue * dmgE);
+	MATHVECTOR<Dbl,3> t(0,0, -1000.0 * r * ups * hov.steerForce * steerValue * dmgE);
 	Orientation().RotateVector(t);
 	Dbl damp = pipe ? hov.steerDamp : hov.steerDamp;  //damp *= 1 - fabs(steerValue);
 	ApplyTorque(t - av * damp * 1000.0);  // rotation damping
+
+
+	//  handbrake damping
+	btVector3 v = chassis->getLinearVelocity();
+	Dbl h = brake[0].GetHandbrakeFactor();
+	if (h > 0.01f)
+	{
+		chassis->applyCentralForce(v * h * -20);  //par
+		btVector3 av = chassis->getAngularVelocity();
+		chassis->applyTorque(av * h * -20);
+	}
 	
 	//  engine  ^
 	float vel = sv.Magnitude(),  //  decrease power with velocity
 		velMul = 1.f - std::min(1.f, hov.engineVelDec * vel);
+	Dbl brk = brake[0].GetBrakeFactor() * (1.0 - h);
 	float f = hov.engineForce * velMul * hov_throttle * dmgE
-			- hov.brakeForce * brake[0].GetBrakeFactor() * dmgE;
+			- hov.brakeForce * brk * dmgE;
 	MATHVECTOR<Dbl,3> vf(body.GetMass() * f * r, 0,0);
 	Orientation().RotateVector(vf);
 	ApplyForce(vf);
@@ -706,23 +728,31 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	
 	//  align straight torque
 	MATHVECTOR <float,3> n = ct.GetNormal();  // ground
+	MATHVECTOR <float,3> n2 = ct2.GetNormal();
 	if (!(d > 0.f && d < rlen))  n = MATHVECTOR <float,3>(0,0,1);  // in air
-	MATHVECTOR<Dbl,3> al = dn.cross(n);
+	MATHVECTOR<Dbl,3> al = dn.cross(n), ay = al;
+	MATHVECTOR<Dbl,3> ay2 = dn.cross(n2);
 	if (pipe) {  al[0] *= hov.alp[0];  al[1] *= hov.alp[1];  al[2] *= hov.alp[2];  }
 	else      {  al[0] *= hov.alt[0];  al[1] *= hov.alt[1];  al[2] *= hov.alt[2];  }
 	ApplyTorque(al * -1000.0);
 
+	//sHov += " a1 "+fToStr(ay[0],2,5)+" "+fToStr(ay[1],2,5)+" "+fToStr(ay[2],2,5) +"\n";
+	//sHov += " a2 "+fToStr(ay2[0],2,5)+" "+fToStr(ay2[1],2,5)+" "+fToStr(ay2[2],2,5) +"\n";
+	//sHov += " 12 "+fToStr(ay[0]-ay2[0],2,5)+" "+fToStr(ay[1]-ay2[1],2,5)+" "+fToStr(ay[2]-ay2[2],2,5) +"\n";
 
 	//  pitch torque )
 	Dbl pitch = (d < len && d2 < len) ? (d2 - d) * hov.pitchTq * 1000.f : 0.f;
 	Dbl roll = sv[1] * hov.rollTq * -1000.f;
-	MATHVECTOR<Dbl,3> tq(roll, pitch, 0);
+	Dbl yawP = !pipe ? 0.0 : 600.0 * (ay[0]-ay2[0]);
+	Dbl spiP = !pipe ? 0.0 : 600.0 * (ay[1]-ay2[1]);
+	//sHov += " yp "+fToStr(yawP,0,5)+" "+fToStr(spiP,0,5) +"\n";
+	MATHVECTOR<Dbl,3> tq(roll, pitch + spiP * ups, ups * yawP);
 	Orientation().RotateVector(tq);
 	ApplyTorque(tq);
 
 
 	///  heavy landing damp  __
-	Dbl vz = chassis->getLinearVelocity().dot(ToBulletVector(n));
+	Dbl vz = chassis->getLinearVelocity().dot( ToBulletVector(pipe ? -dn : n) );
 		suspension[1].velocity = vz * hov.hov_vz;  // for graphs
 		suspension[1].displacement = d / len;
 		suspension[0].displacement = d / rlen;
@@ -758,30 +788,62 @@ void CARDYNAMICS::SimulateSphere(Dbl dt)
 		return;
 	}
 
-	float f = hov_throttle - brake[0].GetBrakeFactor();
-	if (transmission.GetGear() < 0)  f *= -1.f;
-	//  rotate dir
-	sphereYaw += steerValue * dt * 70.f* PI_d/180.f;  // steerability
+	float dmg = fDamage > 50.f ? 1.f - (fDamage-50.f)*0.02f : 1.f;
+	float dmgE = 1.f - 0.1 * dmg;
+
+	//  ray,  only to check if in pipe
+	/*const */Dbl len = hov.hAbove, rlen = hov.hRayLen;
+	COLLISION_CONTACT ct;
+	MATHVECTOR<Dbl,3> p = GetPosition();  // - dn * 0.1;  // v fluids as solids
+	MATHVECTOR<float,3> dn(0,0,-1);
+	world->CastRay(p, dn, rlen, chassis, ct,  0,0, false, true);
+	float d = ct.GetDepth();
+
+	//  pipe
+	bool pipe = false;
+	if (ct.GetColObj())
+	{
+		int su = (long)ct.GetColObj()->getCollisionShape()->getUserPointer();
+		if (su >= SU_Pipe && su < SU_RoadWall)
+			pipe = true;
+	}
+
+	//  engine
+	//if (transmission.GetGear() < 0)  f *= -1.f;
+	MATHVECTOR<Dbl,3> sv = -GetVelocity();
+	(-Orientation()).RotateVector(sv);
+	float vel = sv.Magnitude(),  //  decrease power with velocity
+		velMul = 1.f - std::min(1.f, hov.engineVelDec * vel);
+	float f = hov.engineForce * velMul * hov_throttle * dmgE
+			- hov.brakeForce * brake[0].GetBrakeFactor() * dmgE;
+
+	//  steer  rotate dir
+	float pst = hov.steerForce;
+		if (pipe)  pst *= hov.steerDampP;
+	sphereYaw += steerValue * dt * pst * PI_d/180.f;
 	MATHVECTOR<Dbl,3> dir(cosf(sphereYaw), -sinf(sphereYaw), 0);
 
 	f *= body.GetMass() * -1.0;
-	chassis->applyCentralForce(ToBulletVector(dir * f)
-		+ btVector3(0,0,-100));  // fall down force
+	btVector3 fc = ToBulletVector(dir * f);
+		if (!pipe)  fc += btVector3(0,0,-hov.hov_fall);
+	chassis->applyCentralForce(fc);
 
 	//  handbrake damping
 	btVector3 v = chassis->getLinearVelocity();
-	Dbl d = brake[0].GetHandbrakeFactor();
-	if (d > 0.01f)
+	Dbl h = brake[0].GetHandbrakeFactor();
+	if (h > 0.01f)
 	{
-		chassis->applyCentralForce(v * d * -10);
+		chassis->applyCentralForce(v * h * -10);
 
 		btVector3 av = chassis->getAngularVelocity();
-		chassis->applyTorque(av * d * -10);
+		chassis->applyTorque(av * h * -10);
 	}
 
 	//  side damp --
 	btVector3 vv(dir[1], -dir[0], 0.f);
+	float pmul = hov.dampSide;
+		if (pipe)  pmul *= hov.dampPmul;
 	float dot = v.getX()*vv.getX() + v.getY()*vv.getY();
-	chassis->applyCentralForce(vv * dot * -100
+	chassis->applyCentralForce(vv * dot * -pmul
 		/*- btVector3(0,0, v.getZ()*100)*/ );
 }

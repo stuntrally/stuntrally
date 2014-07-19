@@ -221,7 +221,7 @@ void CGui::listCarChng(MultiList2* li, size_t pos)
 	if (app->mClient)  app->mClient->updatePlayerInfo(pSet->nickname, sListCar);
 	
 	//  car desc txt
-	carDesc->setCaption(TR("#{CarDesc_"+sListCar+"}"));
+	String sd = String("#BFD3E5")+TR("#{CarDesc_"+sListCar+"}");
 
 	//  car info
 	bool car = true;
@@ -235,10 +235,14 @@ void CGui::listCarChng(MultiList2* li, size_t pos)
 		txCarType->setCaption(data->cars->colormap[ci.type]+ TR("#{CarType_"+ci.type+"}"));
 		txCarYear->setCaption(toStr(ci.year));
 
+		if (ci.type == "Spaceship" || ci.type == "Sphere")
+			sd += TR("#E0E060 #{CarDesc_Pipes}");
+
 		float v = std::max(0.f, 1.f - ci.speed/13.f);
 		barCarSpeed->setImageCoord(IntCoord(v*128.f,0,128,16));
 		barCarSpeed->setColour(Colour(1.f, 0.2f + 0.8f * v, v * 0.3f));
 	}
+	carDesc->setCaption(sd);
 
 	changeCar();
 	UpdCarStats(car);

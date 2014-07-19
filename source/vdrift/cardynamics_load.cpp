@@ -739,31 +739,33 @@ void CARDYNAMICS::Init(
 		if (coll_H > 0.f)  h = coll_H;	h0 = coll_Hofs;
 		origin = btVector3(l0, w0, h0);
 
-		btScalar r2 = r*0.6;
-		btScalar l1 = coll_posLfront, l2 = coll_posLback, l1m = l1*0.5, l2m = l2*0.5;
+		const int numSph = 14;  int i = 0;
+		btScalar rad[numSph];  btVector3 pos[numSph];
 
 		//LogO("Car shape dims:  r="+toStr(r)+"  w="+toStr(w)+"  h="+toStr(h)+"  h0="+toStr(h0));
 		//LogO("Car offset:  x="+toStr(origin.x())+"  y="+toStr(origin.y())+"  z="+toStr(origin.z()));
 
-		const int numSph = 14;  int i = 0;
-		btScalar rad[numSph];  btVector3 pos[numSph];
-		float ww = hover ? 0.2f : 1.f;  ///
-		pos[i] = btVector3( l1 , -w*ww, -h);    	rad[i] = r2;  ++i;  // front
-		pos[i] = btVector3( l1 ,  w*ww, -h);    	rad[i] = r2;  ++i;
-		pos[i] = btVector3( l1m, -w*ww, -h);    	rad[i] = r;   ++i;  // front near
-		pos[i] = btVector3( l1m,  w*ww, -h);    	rad[i] = r;   ++i;
+		btScalar r2 = r * coll_R2m;
+		btScalar l1 = coll_posLfront, l2 = coll_posLback, l1m = l1*0.5, l2m = l2*0.5;
+		float ww = hover ? coll_FrWmul : 1.f;  ///
+		float wt = coll_TopWmul * ww;
 
-		pos[i] = btVector3( l2m, -w,    -h);    	rad[i] = r;   ++i;  // rear near
-		pos[i] = btVector3( l2m,  w,    -h);    	rad[i] = r;   ++i;
-		pos[i] = btVector3( l2 , -w,    -h);    	rad[i] = r2;  ++i;  // rear
-		pos[i] = btVector3( l2 ,  w,    -h);    	rad[i] = r2;  ++i;
-
-		pos[i] = btVector3( 0.4, -w*0.8*ww, h*0.2);	rad[i] = r2;  ++i;  // top
-		pos[i] = btVector3( 0.4,  w*0.8*ww, h*0.2);	rad[i] = r2;  ++i;
-		pos[i] = btVector3(-0.3, -w*0.8*ww, h*0.4);	rad[i] = r2;  ++i;
-		pos[i] = btVector3(-0.3,  w*0.8*ww, h*0.4);	rad[i] = r2;  ++i;
-		pos[i] = btVector3(-1.1, -w*0.8*ww, h*0.2);	rad[i] = r2;  ++i;  // top rear
-		pos[i] = btVector3(-1.1,  w*0.8*ww, h*0.2);	rad[i] = r2;  ++i;
+		rad[i] = r2;  pos[i] = btVector3( l1 , -w*ww, -h);  ++i;  // front
+		rad[i] = r2;  pos[i] = btVector3( l1 ,  w*ww, -h);  ++i;
+		rad[i] = r;   pos[i] = btVector3( l1m, -w*ww, -h);  ++i;  // front near
+		rad[i] = r;   pos[i] = btVector3( l1m,  w*ww, -h);  ++i;
+		
+		rad[i] = r;   pos[i] = btVector3( l2m, -w,    -h);  ++i;  // rear near
+		rad[i] = r;   pos[i] = btVector3( l2m,  w,    -h);  ++i;
+		rad[i] = r2;  pos[i] = btVector3( l2 , -w,    -h);  ++i;  // rear
+		rad[i] = r2;  pos[i] = btVector3( l2 ,  w,    -h);  ++i;
+		
+		rad[i] = r2;  pos[i] = btVector3( coll_TopFr,  -w*wt, h*coll_TopFrHm  );  ++i;  // top
+		rad[i] = r2;  pos[i] = btVector3( coll_TopFr,   w*wt, h*coll_TopFrHm  );  ++i;
+		rad[i] = r2;  pos[i] = btVector3( coll_TopMid, -w*wt, h*coll_TopMidHm );  ++i;
+		rad[i] = r2;  pos[i] = btVector3( coll_TopMid,  w*wt, h*coll_TopMidHm );  ++i;
+		rad[i] = r2;  pos[i] = btVector3( coll_TopBack,-w*wt, h*coll_TopBackHm);  ++i;  // top rear
+		rad[i] = r2;  pos[i] = btVector3( coll_TopBack, w*wt, h*coll_TopBackHm);  ++i;
 
 		for (i=0; i < numSph; ++i)
 			pos[i] += origin;

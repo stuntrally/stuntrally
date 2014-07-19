@@ -24,7 +24,7 @@ static Ogre::String iToStr(const int v, const char width=0)
 	s << std::fixed << v;
 	return s.str();
 }
-static Ogre::String fToStr(const float v, const char precision, const char width=0, const char fill=' ')
+static Ogre::String fToStr(const float v, const char precision=2, const char width=4, const char fill=' ')
 {
 	std::ostringstream s;
 	if (width != 0)  s.width(width);  s.fill(fill);

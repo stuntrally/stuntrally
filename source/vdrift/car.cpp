@@ -88,35 +88,45 @@ bool CAR::Load(class App* pApp1,
 	
 	
 	///-  custom car collision params  (dimensions and sphere placement)
-	dynamics.coll_R = 0.3f;  dynamics.coll_H = 0.45f;  dynamics.coll_W = 0.5f;
-	dynamics.coll_Lofs = 0.f;  dynamics.coll_Wofs = 0.f;  dynamics.coll_Hofs = 0.f;
-	dynamics.coll_posLfront = 1.9f;  dynamics.coll_posLback = -1.9f;
-	dynamics.coll_friction = 0.4f;   dynamics.coll_flTrig_H = 0.f;
+	//..................................................................................
+	CARDYNAMICS& cd = dynamics;
+	//  com
+	cd.com_ofs_L = 0.f;  cf.GetParam("collision.com_ofs_L", cd.com_ofs_L);  //|
+	cd.com_ofs_H = 0.f;  cf.GetParam("collision.com_ofs_H", cd.com_ofs_H);
+	//  dim
+	cd.coll_R   = 0.3f;  cf.GetParam("collision.radius", cd.coll_R);
+	cd.coll_R2m = 0.6f;  cf.GetParam("collision.radius2mul", cd.coll_R2m);
+	cd.coll_H   = 0.45f; cf.GetParam("collision.height", cd.coll_H);
+	cd.coll_W   = 0.5f;  cf.GetParam("collision.width",  cd.coll_W);
+	//  ofs
+	cd.coll_Lofs = 0.f;  cf.GetParam("collision.offsetL", cd.coll_Lofs);
+	cd.coll_Wofs = 0.f;  cf.GetParam("collision.offsetW", cd.coll_Wofs);
+	cd.coll_Hofs = 0.f;  cf.GetParam("collision.offsetH", cd.coll_Hofs);
+	cd.coll_Lofs -= cd.com_ofs_L;  //|
+	cd.coll_Hofs -= cd.com_ofs_H;
+	//  L
+	cd.coll_posLfront = 1.9f; cf.GetParam("collision.posLfront", cd.coll_posLfront);
+	cd.coll_posLback = -1.9f; cf.GetParam("collision.posLrear",  cd.coll_posLback);
+	//  w
+	cd.coll_FrWmul  = 0.2f;   cf.GetParam("collision.FrWmul",  cd.coll_FrWmul);
+	cd.coll_TopWmul = 0.8f;   cf.GetParam("collision.TopWmul", cd.coll_TopWmul);
+	//  Top	 L pos
+	cd.coll_TopFr    = 0.4f;  cf.GetParam("collision.TopFr",    cd.coll_TopFr);
+	cd.coll_TopMid   =-0.3f;  cf.GetParam("collision.TopMid",   cd.coll_TopMid);
+	cd.coll_TopBack  =-1.1f;  cf.GetParam("collision.TopBack",  cd.coll_TopBack);
+	//  Top  h mul
+	cd.coll_TopFrHm  = 0.2f;  cf.GetParam("collision.TopFrHm",  cd.coll_TopFrHm);
+	cd.coll_TopMidHm = 0.4f;  cf.GetParam("collision.TopMidHm", cd.coll_TopMidHm);
+	cd.coll_TopBackHm= 0.2f;  cf.GetParam("collision.TopBackHm",cd.coll_TopBackHm);
 
-	dynamics.com_ofs_L = 0.f;  dynamics.com_ofs_H = 0.f;  //|
-	cf.GetParam("collision.com_ofs_L", dynamics.com_ofs_L);
-	cf.GetParam("collision.com_ofs_H", dynamics.com_ofs_H);
-	
-	cf.GetParam("collision.radius", dynamics.coll_R);
-	cf.GetParam("collision.width",  dynamics.coll_W);
-	cf.GetParam("collision.height", dynamics.coll_H);
-
-	cf.GetParam("collision.offsetL", dynamics.coll_Lofs);
-	cf.GetParam("collision.offsetW", dynamics.coll_Wofs);
-	cf.GetParam("collision.offsetH", dynamics.coll_Hofs);
-	dynamics.coll_Lofs -= dynamics.com_ofs_L;  //|
-	dynamics.coll_Hofs -= dynamics.com_ofs_H;  //|
-
-	cf.GetParam("collision.posLrear",  dynamics.coll_posLback);
-	cf.GetParam("collision.posLfront", dynamics.coll_posLfront);
-	cf.GetParam("collision.friction",  dynamics.coll_friction);
-	cf.GetParam("collision.fluidTrigH",dynamics.coll_flTrig_H);
-	dynamics.coll_flTrig_H -= dynamics.com_ofs_H;  //|
+	cd.coll_friction = 0.4f;  cf.GetParam("collision.friction",  cd.coll_friction);
+	cd.coll_flTrig_H = 0.f;   cf.GetParam("collision.fluidTrigH",cd.coll_flTrig_H);
+	cd.coll_flTrig_H -= cd.com_ofs_H;  //|
 	
 
 	// load cardynamics
 	{
-		if (!dynamics.Load(pGame, cf, error_output))  return false;
+		if (!cd.Load(pGame, cf, error_output))  return false;
 
 		MATHVECTOR<double,3> position;
 		QUATERNION<double> orientation;
@@ -125,17 +135,17 @@ bool CAR::Load(class App* pApp1,
 
 		float stOfsY = 0.f;
 		cf.GetParam("collision.start-offsetY", stOfsY);
-			position[2] += stOfsY -0.4/**/ + dynamics.com_ofs_H;  //|
+			position[2] += stOfsY -0.4/**/ + cd.com_ofs_H;  //|
 
 		posAtStart = posLastCheck = position;
 		rotAtStart = rotLastCheck = orientation;
 		dmgLastCheck = 0.f;
 		
-		dynamics.Init(pSet, pApp->scn->sc, pApp->scn->data->fluids,
+		cd.Init(pSet, pApp->scn->sc, pApp->scn->data->fluids,
 			world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
 
-		dynamics.SetABS(defaultabs);
-		dynamics.SetTCS(defaulttcs);
+		cd.SetABS(defaultabs);
+		cd.SetTCS(defaulttcs);
 	}
 
 	// load sounds

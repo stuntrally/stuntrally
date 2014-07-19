@@ -50,38 +50,22 @@ friction = 1.9
 
 #---------------------------
 [ hover ]
-hAbove = 2.0
-hRayLen = 4.0
+hAbove = 4.0
+hRayLen = 8.0
 
-steerForce = 25
-steerDamp = 10
-steerDampP = 14
+steerForce = 75
+steerDampP = 2.1
 
-engineForce = 18
-engineVelDec = 0.006
-brakeForce  = 22
+engineForce = 0.8
+engineVelDec = 0.008
+brakeForce  = 0.9
 
 dampAirRes = 42
-dampSide = 2100
-dampUp = 1050
-dampDn = 3150
-dampPmul = 2.86
-
-alignTqP = 42, 42, 32
-alignTq  = 21, 21, 21
-pitchTq = 30
-rollTq = 0
-roll = 3
+dampSide = 40
+dampPmul = 0.02
 
 [ hover_h ]
-hov_vz = 0.384
-hov_vsat = 0.98
-hov_dsat = 0.9
-hov_dampP = 0.5
-hov_damp = 3.6
-hov_fall = 500
-hov_riseP = 2000
-hov_rise = 6000
+hov_fall = 100
 
 
 #  engine
