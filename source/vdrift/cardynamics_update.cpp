@@ -759,8 +759,10 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	
 	float aa = std::min(1.0, vz * hov.hov_vz);
 	float df = vz > 0 ? (1.0 - hov.hov_vsat * aa) : 1.0;
+          df *= pipe ? hov.hov_dampP : hov.hov_damp;
+
 	float dlen = len * hov.hov_dsat;
-	float dm = d > dlen ? 0 : (0.5+0.5*d/len) * df * (pipe ? hov.hov_dampP : hov.hov_damp);
+	float dm = d > dlen ? 0 : (0.5+0.5*d/len) * df;
 		suspension[2].displacement = dm;
 		suspension[3].displacement = (d < dlen ? (len-d) * 1.f : 0.f);
 	float fn =
