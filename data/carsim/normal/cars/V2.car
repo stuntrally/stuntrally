@@ -13,23 +13,23 @@ yaw   = 200.0
 yaw2  = 1.0
 
 [ flares ]
-brake-pos0 = 0.3,-0.9, -0.05
-brake-pos1 =-0.3,-0.9, -0.05
-brake-size = 0.46
-brake-color = 1, 0, 0
+brake-pos0 = 0.30,-0.85, 0.27
+brake-pos1 =-0.28,-0.85, 0.27
+brake-size = 0.55
+brake-color = 1, 0.6, 0
 
 [ model_ofs ]
 rot_fix = on
-boost-x = -0.45
-boost-y = 0.13
-boost-z = -0.63
-boost-size-z = 0.49
-boost-name = ThrusterV1s
-thrust-x = 1.03
-thrust-y = 0.065
-thrust-z = 0.015
-thrust-size-z = 0
-thrust-name = ThrusterV1
+boost-x = -0.26
+boost-y = -0.70
+boost-z = -0.84
+boost-size-z = 0.34
+boost-name = ThrusterV1
+thrust-x = 0.66
+thrust-y = -0.27
+thrust-z = 0.285
+thrust-size-z = 0.285
+thrust-name = ThrusterV2
 
 
 #  collision shape params
@@ -38,13 +38,14 @@ thrust-name = ThrusterV1
 com_ofs_L = 0.2
 com_ofs_H = -0.0
 radius = 0.2
-width = 1.0
-height = 0.2
-posLrear = -1.3
-posLfront = 1.5
+width = 1.05
+height = 0.25
+posLrear = -0.4
+posLfront = 1.3
 offsetL = 0.0
 offsetW = 0.0
-offsetH = 0.0
+offsetH = 0.27
+TopBack = -0.8
 start-offsetY = 1.64
 fluidTrigH = 0.05
 friction = 0.1
@@ -63,8 +64,8 @@ engineForce = 18
 engineVelDec = 0.006
 brakeForce  = 22
 
-dampAirRes = 32
-dampSide = 1800
+dampAirRes = 62
+dampSide = 2100
 dampUp = 1050
 dampDn = 3150
 dampPmul = 2.86
@@ -82,7 +83,7 @@ hov_dsat = 0.9
 hov_dampP = 0.5
 hov_damp = 3.6
 hov_fall = 500
-hov_riseP = 4000
+hov_riseP = 2000
 hov_rise = 6000
 
 
@@ -90,7 +91,7 @@ hov_rise = 6000
 #---------------------------
 [ engine ]
 position = 0.0, 0.0, 0.0
-mass = 250.0
+mass = 270.0
 rpm-limit = 6500
 inertia = 0.27
 start-rpm = 1000
@@ -258,17 +259,17 @@ hinge = 0.25, -1.94, 0.0
 # (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]  # rear
-mass = 145
-position =  1.2, -1.2, -0.0
+mass = 165
+position =  1.2, -1.1, -0.0
 
 [ particle-01 ]
-mass = 145
-position = -1.2, -1.2, -0.0
+mass = 165
+position = -1.2, -1.1, -0.0
 
 [ particle-02 ]  # front
-mass = 145
-position =  1.2,  1.2, -0.0
+mass = 165
+position =  1.2,  1.1, -0.0
 
 [ particle-03 ]
-mass = 145
-position = -1.2,  1.2, -0.0
+mass = 165
+position = -1.2,  1.1, -0.0

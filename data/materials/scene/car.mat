@@ -749,21 +749,8 @@ material TU_wheel_rear
 	refl_amount 0.3
 }
 
-//  V1  -------------------------------
-material V1_interior
-{
-	parent car_interior
-	diffuseMap V1_interior.png
-	specMap V1_interior_spec.png
-	ambient 0.9 0.9 0.9
-	diffuse 0.9 0.9 0.9
-	specular 1.0 1.0 1.0 6
-	//env_map true
-	//refl_amount 0.2
-}
-//-------------------------------------------------------
 
-//  SZ
+//  SZ  -------------------------------------------------
 material car_body_SZ
 {
 	parent car_body
@@ -830,7 +817,7 @@ material FN_brake
 	specular 0.8 0.8 0.8 20
 }
 
-//  NG
+//  NG  ...
 material NG_glass
 {
 	parent car_glass
@@ -843,6 +830,63 @@ material NG_interior
 	ambient 0.3 0.3 0.3
 	diffuse 0.3 0.3 0.3
 	//specular 1.0 1.0 1.0 6
+}
+
+
+//  V1	-------------------------------------------------
+material V1_interior
+{
+	parent car_interior
+	diffuseMap V1_interior.png
+	specMap V1_interior_spec.png
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 1.0 1.0 1.0 6
+	//env_map true
+	//refl_amount 0.2
+}
+
+//  V2
+material V2_interior
+{
+	parent car_interior
+	diffuseMap V2_interior.png
+	//specMap V3_interior_spec.png
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.8 0.8
+	specular 0.8 0.8 0.8 24
+	env_map true
+	refl_amount 0.1
+}
+material V2_glass
+{
+	parent car_interior
+	diffuseMap white.png
+	ambient 0.1 0.2 0.2
+	diffuse 0.1 0.2 0.2
+	specular 0.9 1 1 16
+	env_map true
+	refl_amount 0.3
+	fresnel false
+	fresnelScaleBiasPower 0.7 0.15 4
+}
+
+//  V3
+material V3_interior
+{
+	parent car_interior
+	diffuseMap V3_interior.png
+	//specMap V3_interior_spec.png
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 1.0 1.0 1.0 6
+	//env_map true
+	//refl_amount 0.2
+}
+material V3_glass
+{
+	parent car_glass2
+	diffuseMap V3_glass.png
 }
 
 //  O

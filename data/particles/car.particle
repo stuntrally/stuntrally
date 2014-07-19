@@ -257,3 +257,44 @@ particle_system ThrusterV1s
    	    rate -0.20
     }
 }
+
+//  V2 main thrusters  ------------------------------
+particle_system ThrusterV2
+{
+    material        Boost
+    particle_width  0.27
+    particle_height 0.27
+    cull_each       false
+    quota           300
+    billboard_type  point
+    sorted			false
+    local_space		true
+
+    emitter Box
+    {
+		width 0.04
+		height 0.04
+		depth 0.04
+	    position 0 0 0
+	    direction 1 0 0
+
+	    emission_rate 100
+		time_to_live 0.2
+	    velocity_min 1.30
+	    velocity_max 1.50
+
+        colour 0.4 0.7 0.5 0.6
+    }
+    affector ColourFader
+    {
+        red   -2.1
+        green -2.4
+        blue  -2.1
+        alpha -2.8
+    }
+    affector Scaler
+    {
+   	    rate -0.20
+    }
+}
+
