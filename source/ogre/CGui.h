@@ -14,7 +14,7 @@
 #include "CInput.h"
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;  }
-namespace MyGUI{  class MultiList2;  class Slider;  class Message;  }
+namespace MyGUI{  class MultiList2;  class Slider;  class Message;  class PolygonalSkin;  }
 namespace wraps {	class RenderBoxScene;  }
 class Scene;  class SplineRoad;  class GAME;  class CHud;  class CData;
 class CGuiCom;  class CarInfo;  class GuiPopup;
