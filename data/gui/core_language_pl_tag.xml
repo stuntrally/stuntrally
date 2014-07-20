@@ -452,6 +452,7 @@
 	<Tag name="obstacles">przeszkody (na drodze lub w rurze)</Tag>
 	<Tag name="TipGrassColorMap">Mapa koloru trawy, dla scenerii. Zazwyczaj ten sam wybór, co dla materiału trawy. Dodatkowo koloruje trawę.</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
+	<Tag name="trailColor">kolor śladu</Tag>
 	<Tag name="ListeningOnPort">Nasłuchiwanie na porcie</Tag>
 	<Tag name="InputToggleVeget">V - wł. / wył. wegetację</Tag>
 	<Tag name="Particles">Cząstki</Tag>
@@ -466,7 +467,7 @@
 	<Tag name="ColReflect">Odbicie</Tag>
 	<Tag name="Development">Narzędzia</Tag>
 	<Tag name="InputRoadIns">Ins - wstaw nowy (za wybranym, alt - przed)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - przełącz okno dostosowywania (edycja auta)</Tag>
+	<Tag name="Gravel">Szuter</Tag>
 	<Tag name="InputBrushParams">Parametry pędzla</Tag>
 	<Tag name="min">min.</Tag>
 	<Tag name="SC_Asphalt">Asfalt</Tag>
@@ -478,6 +479,7 @@
 	<Tag name="InputInverse">Odwróć</Tag>
 	<Tag name="InputMapRestartGame">Nowa gra</Tag>
 	<Tag name="Graphics">Grafika</Tag>
+	<Tag name="Gold">Złoto</Tag>
 	<Tag name="InputMapNextCamera">Następny widok</Tag>
 	<Tag name="CarClrRandom">Losowy</Tag>
 	<Tag name="HUD">HUD</Tag>
@@ -592,7 +594,7 @@
 	<Tag name="FrameSkip">Pomijanie klatek</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - zapisz plik i przeładuj grę</Tag>
 	<Tag name="InputTrackScrn">(dla obrazu trasy)</Tag>
-	<Tag name="trailColor">kolor śladu</Tag>
+	<Tag name="TweakEdit1">Alt-Z - przełącz okno dostosowywania (edycja auta)</Tag>
 	<Tag name="Boost">Dopalacz</Tag>
 	<Tag name="BumpWavelen">Wyboje: Częstość</Tag>
 	<Tag name="TipFogClr">Kolor mgły patrząc pod słońce.</Tag>
@@ -904,7 +906,6 @@
 	<Tag name="SleepMS">Czas czekania [milisek]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - skopiuj zaznaczenie</Tag>
 	<Tag name="Materials">Materiały</Tag>
-	<Tag name="Gravel">Szuter</Tag>
 	<Tag name="InputMultiplier">Mnożnik</Tag>
 	<Tag name="Reverse">Odwrócenie</Tag>
 	<Tag name="InputMapShiftDown">Poprzedni bieg</Tag>
@@ -935,7 +936,6 @@
 	<Tag name="InputRoadAlignTerrain">U - Wyrównaj teren do drogi (dla wybranych segmentów).</Tag>
 	<Tag name="Add">Dodaj</Tag>
 	<Tag name="CamInfoStrings">Typ,Kąt,Nachyl,Odl,Wysok,Szybk,Przesun,LEWY,PRAWY,Środkowy,Kółko,shift,Obróć,reset,ruch,Wys,Pozycja</Tag>
-	<Tag name="Gold">Złoto</Tag>
 	<Tag name="Chall_Stunts">Wyczynowe</Tag>
 	<Tag name="NormalsScale">Skala normalnych</Tag>
 	<Tag name="SC_Jungle">Dżungla</Tag>
@@ -1060,6 +1060,12 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz.,następna zakładka (alt - pod-zakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
+	<Tag name="Gearbox">Gearbox</Tag>
+	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
+	<Tag name="CarDesc_V3">A big and heavy spaceship. Very good acceleration at start and strong braking. But doesn't reach high speeds.</Tag>
+	<Tag name="Negative">Negative (darken)</Tag>
+	<Tag name="CarDesc_Pipes">NOTE: Currently impossible to use in pipes.</Tag>
+	<Tag name="Transparency">Transparency</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

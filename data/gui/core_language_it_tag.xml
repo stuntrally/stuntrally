@@ -60,7 +60,7 @@
 	<Tag name="About">A riguardo</Tag>
 	<Tag name="NewTerrainGenerate">Genera nuovo</Tag>
 	<Tag name="TBScore">Punteggio</Tag>
-	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But currently impossible to use in pipes.</Tag>
+	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But being small does slide sideways.</Tag>
 	<Tag name="DevKeys">Tasti per sviluppo. Ctrl-F globale, Alt-shift-1..6 carica i test su piste.</Tag>
 	<Tag name="InputRoadChkFirst">0   - imposta il checkpoint come prima  (1)</Tag>
 	<Tag name="SC_ForestMntn">ForestaMntgn</Tag>
@@ -452,6 +452,7 @@
 	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
 	<Tag name="TipGrassColorMap">Colormap erba per layer, di solito stessa scelta come i materiali erba. Colorazione erba aggiuntivo.</Tag>
 	<Tag name="Multiplayer">Multigiocatore</Tag>
+	<Tag name="trailColor">colore scia</Tag>
 	<Tag name="ListeningOnPort">Listening on port</Tag>
 	<Tag name="InputToggleVeget">V - Attiva/disattiva la vegetazione</Tag>
 	<Tag name="Particles">Particelle</Tag>
@@ -466,7 +467,7 @@
 	<Tag name="ColReflect">Riflesso</Tag>
 	<Tag name="Development">Sviluppo</Tag>
 	<Tag name="InputRoadIns">Ins - inserisci nuovo (dopo aver preso, alt -prima)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - vai alla finestra ottimizza (modifica auto)</Tag>
+	<Tag name="Gravel">Ghiaia</Tag>
 	<Tag name="InputBrushParams">Parametri brush</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="SC_Asphalt">Asfalto</Tag>
@@ -478,6 +479,7 @@
 	<Tag name="InputInverse">Inverso</Tag>
 	<Tag name="InputMapRestartGame">Nuovo gioco</Tag>
 	<Tag name="Graphics">Grafica</Tag>
+	<Tag name="Gold">Oro</Tag>
 	<Tag name="InputMapNextCamera">Camera seguente</Tag>
 	<Tag name="CarClrRandom">Casuale</Tag>
 	<Tag name="HUD">HUD</Tag>
@@ -592,7 +594,7 @@
 	<Tag name="FrameSkip">Riduci frame</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - salva il file e ricarica il gioco</Tag>
 	<Tag name="InputTrackScrn">(per le immagini catturate delle piste)</Tag>
-	<Tag name="trailColor">colore scia</Tag>
+	<Tag name="TweakEdit1">Alt-Z - vai alla finestra ottimizza (modifica auto)</Tag>
 	<Tag name="Boost">Turbo</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="TipFogClr">Colore di fine nebbia quando si guarda sotto il sole.</Tag>
@@ -904,7 +906,6 @@
 	<Tag name="SleepMS">Intervallo sonno [milisec]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - copia selezione</Tag>
 	<Tag name="Materials">Materiali</Tag>
-	<Tag name="Gravel">Ghiaia</Tag>
 	<Tag name="InputMultiplier">Moltiplicatore</Tag>
 	<Tag name="Reverse">Invertito</Tag>
 	<Tag name="InputMapShiftDown">Scala marcia prec.</Tag>
@@ -935,7 +936,6 @@
 	<Tag name="InputRoadAlignTerrain">U - Allinea terreno alla strada (per segmenti selezionati)</Tag>
 	<Tag name="Add">Aggiungi</Tag>
 	<Tag name="CamInfoStrings">Tipo,Yaw,Pitch,Dist,Altezza,Velocità,Offset,SINISTRA,DESTRA,Metà,Ruota,marcia,Rotazione,riavvia,muovi,H,Pos</Tag>
-	<Tag name="Gold">Oro</Tag>
 	<Tag name="Chall_Stunts">Acrobazie</Tag>
 	<Tag name="NormalsScale">Scala normale</Tag>
 	<Tag name="SC_Jungle">Giungla</Tag>
@@ -998,7 +998,7 @@
 	<Tag name="Diff1">Molto facile</Tag>
 	<Tag name="InputObjectsPrevNext">PgUp,PgDn (o rotella) - precedente/prossimo oggetto</Tag>
 	<Tag name="Diff7">Ultra</Tag>
-	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy. And currently impossible to use in pipes.</Tag>
+	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy.</Tag>
 	<Tag name="SkirtHeight">Altezza margine</Tag>
 	<Tag name="ObjBuildings">Edifici</Tag>
 	<Tag name="Car_TopSpeed">Velocità migliore</Tag>
@@ -1060,6 +1060,12 @@
 	<Tag name="InputNextOptTab">F2,F3 - prec.,pross. scheda (alt - sottoschede)</Tag>
 	<Tag name="Diff6">Estrema</Tag>
 	<Tag name="RplAll">Tutto</Tag>
+	<Tag name="Gearbox">Gearbox</Tag>
+	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
+	<Tag name="CarDesc_V3">A big and heavy spaceship. Very good acceleration at start and strong braking. But doesn't reach high speeds.</Tag>
+	<Tag name="Negative">Negative (darken)</Tag>
+	<Tag name="CarDesc_Pipes">NOTE: Currently impossible to use in pipes.</Tag>
+	<Tag name="Transparency">Transparency</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

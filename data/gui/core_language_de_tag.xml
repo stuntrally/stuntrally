@@ -32,7 +32,7 @@
 	<Tag name="Road_Roll">Rollen</Tag>
 	<Tag name="TipFogHStart">Höhennebel-Starthöhe (Meter), bei welcher der Nebel anfängt, dichter für weiche Entfernungen zu werden.</Tag>
 	<Tag name="PostfilterAA">Post-filter antialiasing</Tag>
-	<Tag name="NewtworkFailed">Failed to initialize networking. Try different local port and make sure your firewall is properly configured.</Tag>
+	<Tag name="NewtworkFailed">Die Initialisierung der Netzwerkverbindung schlug fehl. Bitte mit einem anderen lokalem Port versuchen und sicherstellen, dass die Firewall korrekt konfiguriert ist.</Tag>
 	<Tag name="Prize">Preis</Tag>
 	<Tag name="TipLTrMinTerH">Minimale Terrain-Höhe, bei der Modelle noch platziert werden</Tag>
 	<Tag name="SimModeEasy">Leicht (Anfänger)</Tag>
@@ -60,7 +60,7 @@
 	<Tag name="About">Über</Tag>
 	<Tag name="NewTerrainGenerate">Neu erzeugen</Tag>
 	<Tag name="TBScore">Punkte</Tag>
-	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But currently impossible to use in pipes.</Tag>
+	<Tag name="CarDesc_V1">Ein Raumschiff, dass zum Luftkissenfahrzeug umfunktioniret wurde. Sehr schnell und leicht zu lenken. Schert sich nicht um Bodenwellen. Aber es ist momentan unmöglich in Rohren zu benutzen.</Tag>
 	<Tag name="DevKeys">Entwicklertasten. Strg-F: global; Alt-Umschalt-1 bis 6: Teststrecken laden.</Tag>
 	<Tag name="InputRoadChkFirst">0 - Wegpunkt als Ersten markieren (1)</Tag>
 	<Tag name="SC_ForestMntn">WaldBerge</Tag>
@@ -150,7 +150,7 @@
 	<Tag name="NetMasterPort">Masterserver-Port</Tag>
 	<Tag name="InpSet_KeyHalf">Taste halb</Tag>
 	<Tag name="TerLHSm">Höhenglättung</Tag>
-	<Tag name="CarDesc_SZ">Fastest car meant for gravel. Light and with a powerful engine. Has great aerodynamics and steerability.</Tag>
+	<Tag name="CarDesc_SZ">Das schnellste Auto für Kies. Leichtgewichtig und mit einem starken Motor. Hat großartige Aerodynamik und Lenkbarkeit.</Tag>
 	<Tag name="CopySource">Als Kopierquelle setzen</Tag>
 	<Tag name="CarCrash">Auto-Crash</Tag>
 	<Tag name="TipSteerSim">Lenkungsreichweiten-Faktor, für Simulationsmodus (Leicht, Normal).</Tag>
@@ -179,7 +179,7 @@
 	<Tag name="frenzy">viele Kurven</Tag>
 	<Tag name="InputRoadChkRadius">K,L - Wegpunkt-Radius</Tag>
 	<Tag name="TipCarSpeed">Geschwindigkeitsklasse des Autos - je höher sie ist, desto schneller ist das Fahrzeug. Achtung, zu schnelle Autos werden auf Kies nicht schneller sein, da sie nicht über genügend Halt verfügen.</Tag>
-	<Tag name="TipCarYear">Year when this car's production started.</Tag>
+	<Tag name="TipCarYear">Das Jahr, in dem die Produktion dieses Autos begann.</Tag>
 	<Tag name="InputRoadInsAlt">Alt-Shift - am Anfang Alt-Strg - am Ende</Tag>
 	<Tag name="RearThrottleInverse">Bremse=Rückwärts</Tag>
 	<Tag name="MessageBox_Yes">Ja</Tag>
@@ -449,10 +449,11 @@
 	<Tag name="SkirtLength">Skirt-Länge</Tag>
 	<Tag name="InputRoadNotOnTer">wenn nicht auf Terrain</Tag>
 	<Tag name="CameraLoopChange">Kamerawechsel in Loopings</Tag>
-	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
+	<Tag name="obstacles">Hindernisse (auf Straße oder im Rohr)</Tag>
 	<Tag name="TipGrassColorMap">Color-Map des Grases, üblicherweise die selbe Auswahl wie für das Grasmaterial. Zusätzliche Graseinfärbung.</Tag>
 	<Tag name="Multiplayer">Mehrspieler</Tag>
-	<Tag name="ListeningOnPort">Listening on port</Tag>
+	<Tag name="trailColor">Spurenfarbe</Tag>
+	<Tag name="ListeningOnPort">Lausche an Port</Tag>
 	<Tag name="InputToggleVeget">V - Vegetation an/aus</Tag>
 	<Tag name="Particles">Partikel</Tag>
 	<Tag name="CarDesc_XZ">Ein mit einem sehr starken Motor ausgestattes Fahrzeug, fahrbar auf den meisten Strecken. Nicht die beste Wahl für Bodenwellen, wegen der kurzen und starren Aufhängung. Daher wird ein hoher Drehmoment auch mehr Räder zum Drehen bringen.</Tag>
@@ -466,7 +467,7 @@
 	<Tag name="ColReflect">Spiegelung</Tag>
 	<Tag name="Development">Entwicklung</Tag>
 	<Tag name="InputRoadIns">Einfg - Punkt danach einfügen, mit Alt - davor</Tag>
-	<Tag name="TweakEdit1">Alt-Z - Feineinstellungsfenster umschalten (Auto bearbeiten)</Tag>
+	<Tag name="Gravel">Schotter</Tag>
 	<Tag name="InputBrushParams">Pinseleigenschaften</Tag>
 	<Tag name="min">min.</Tag>
 	<Tag name="SC_Asphalt">Asphalt</Tag>
@@ -478,6 +479,7 @@
 	<Tag name="InputInverse">Umkehren</Tag>
 	<Tag name="InputMapRestartGame">Neues Spiel</Tag>
 	<Tag name="Graphics">Grafik</Tag>
+	<Tag name="Gold">Gold</Tag>
 	<Tag name="InputMapNextCamera">Nächste Kamera</Tag>
 	<Tag name="CarClrRandom">Zufällig</Tag>
 	<Tag name="HUD">HUD</Tag>
@@ -592,7 +594,7 @@
 	<Tag name="FrameSkip">FrameSkip</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - Datei speichern und Spiel laden.</Tag>
 	<Tag name="InputTrackScrn">(für Bildschirmfoto)</Tag>
-	<Tag name="trailColor">Spurenfarbe</Tag>
+	<Tag name="TweakEdit1">Alt-Z - Feineinstellungsfenster umschalten (Auto bearbeiten)</Tag>
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="BumpWavelen">Bump: WaveLen</Tag>
 	<Tag name="TipFogClr">Nebelfarbe wenn schauen auf Sonne.</Tag>
@@ -688,7 +690,7 @@
 	<Tag name="LS_GAME">Lade Spiel</Tag>
 	<Tag name="TreeMult">Baumanzahl</Tag>
 	<Tag name="InputObjectsPaste">Umschalt-Einfg - Kopie einfügen</Tag>
-	<Tag name="ConnectingTo">Connecting to</Tag>
+	<Tag name="ConnectingTo">Verbinde zu</Tag>
 	<Tag name="InputTopView">Alt-Z - Draufsicht umschalten</Tag>
 	<Tag name="FogStart">Start</Tag>
 	<Tag name="InputToggleGUIMode">F1 - Einstellungsfenster anzeigen</Tag>
@@ -904,7 +906,6 @@
 	<Tag name="SleepMS">Schlafintervall (ms)</Tag>
 	<Tag name="InputObjectsCopySel">Strg-Einfg - Auswahl kopieren</Tag>
 	<Tag name="Materials">Materialien</Tag>
-	<Tag name="Gravel">Schotter</Tag>
 	<Tag name="InputMultiplier">Faktor</Tag>
 	<Tag name="Reverse">Rückwärts</Tag>
 	<Tag name="InputMapShiftDown">Runterschalten</Tag>
@@ -935,7 +936,6 @@
 	<Tag name="InputRoadAlignTerrain">U - Gelände zum Weg ausrichten (für ausgewählte Segmente)</Tag>
 	<Tag name="Add">Hinzufügen</Tag>
 	<Tag name="CamInfoStrings">Typ,Gierung,Neigung,Abstand,Höhe,Geschw.,Offset,LINKS,RECHTS,Mitte,Rad,shift,Rotieren,zurücks.,bewegen,H,Pos</Tag>
-	<Tag name="Gold">Gold</Tag>
 	<Tag name="Chall_Stunts">Stunts</Tag>
 	<Tag name="NormalsScale">Normalenskalierung</Tag>
 	<Tag name="SC_Jungle">Dschungel</Tag>
@@ -998,7 +998,7 @@
 	<Tag name="Diff1">Sehr einfach</Tag>
 	<Tag name="InputObjectsPrevNext">Bild/Mausrad auf/ab - Objekt vor/zurück</Tag>
 	<Tag name="Diff7">Ultra</Tag>
-	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy. And currently impossible to use in pipes.</Tag>
+	<Tag name="CarDesc_O">Eine experimentelle perfekt stabilisierte rotierende Kugel. Verwendet einen fortschrittlichen Raumschiffsantrieb, um sich leicht in jede Richtung zu bewegen. Sehr schnell aber sehr sprunghaft. Und momentan unmöglich in Rohren zu benutzen.</Tag>
 	<Tag name="SkirtHeight">Skirt-Höhe</Tag>
 	<Tag name="ObjBuildings">Gebäude</Tag>
 	<Tag name="Car_TopSpeed">Höchstgeschwindigkeit</Tag>
@@ -1060,6 +1060,12 @@
 	<Tag name="InputNextOptTab">F2/F3 - Vorh./nächst. Tab (Alt: Untertab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
+	<Tag name="Gearbox">Gearbox</Tag>
+	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
+	<Tag name="CarDesc_V3">A big and heavy spaceship. Very good acceleration at start and strong braking. But doesn't reach high speeds.</Tag>
+	<Tag name="Negative">Negative (darken)</Tag>
+	<Tag name="CarDesc_Pipes">NOTE: Currently impossible to use in pipes.</Tag>
+	<Tag name="Transparency">Transparency</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
