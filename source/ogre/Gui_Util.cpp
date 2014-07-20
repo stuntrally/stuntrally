@@ -236,7 +236,7 @@ void CGui::listCarChng(MultiList2* li, size_t pos)
 		txCarType->setCaption(data->cars->colormap[ci.type]+ TR("#{CarType_"+ci.type+"}"));
 		txCarYear->setCaption(toStr(ci.year));
 
-		if (ci.type == "Spaceship" || ci.type == "Sphere")
+		if (ci.type == "Spaceship" || ci.type == "Other")
 			sd += TR("#E0E060 #{CarDesc_Pipes}");
 
 		float v = std::max(0.f, 1.f - ci.speed/13.f);
@@ -354,13 +354,31 @@ void CGui::UpdCarStats(bool car)
 	}	}
 
 	///  upd vel graph  ~~~
-	std::vector<FloatPoint> points;
+	float xs = 10.f, ys = 0.4f, yo = 166.f, x2 = 500.f;
+	const IntSize& wi = app->mWndOpts->getSize();
+	const float sx = wi.width/1248.f, sy = wi.height/935.f;
+	xs *= sx;  ys *= sy;  yo *= sy;  x2 *= sx;
+
+	std::vector<FloatPoint> points,grid;
+	points.push_back(FloatPoint(0.f, yo));
 	for (i = 0; i < (int)ttim.size(); ++i)
-		points.push_back(FloatPoint(
-			ttim[i]* 22.f, 235- 0.55f *tkmh[i]));
-			//ttim[i]* 10.f, 160- 0.4f *tkmh[i]));
+		points.push_back(FloatPoint(ttim[i] * xs, yo - ys * tkmh[i]));
 	graphVel->setPoints(points);
-	
+
+	//  grid lines
+	const int y1 = yo +10, y2 = -10, x1 = -10;  //outside
+	for (i = 0; i < 20; ++i)  // ||
+	{	float fi = i > 2 ? 10.f*(i-1) : 5.f*i;
+		grid.push_back(FloatPoint(fi * xs,  i%2==0 ? y1 : y2));
+		grid.push_back(FloatPoint(fi * xs,  i%2==0 ? y2 : y1));
+	}
+	grid.push_back(FloatPoint(x2, y1));
+	grid.push_back(FloatPoint(x1, y1));
+	for (i = 0; i < 4; ++i)  // ==
+	{	grid.push_back(FloatPoint(i%2==0 ? x1 : x2,  yo - ys * i * 100.f));
+		grid.push_back(FloatPoint(i%2==0 ? x2 : x1,  yo - ys * i * 100.f));
+	}
+	graphGrid->setPoints(grid);
 
 	//  upd text  --------
 	bool kmh = !pSet->show_mph;  float k2m = 0.621371f;

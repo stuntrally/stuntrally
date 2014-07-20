@@ -551,12 +551,6 @@
 					<Property key="Alpha" value="0.15"/>
 					<Property key="InheritsAlpha" value="false"/>
 					<UserString key="tip" value="#{TipCarDesc}"/>
-					<Widget type="Widget" skin="PanelSkin" position="0 0 424 154" align="Stretch">
-						<Property key="Colour" value="0.7 0.9 0.9"/>
-						<Property key="Alpha" value="0.6"/>
-						<Property key="InheritsAlpha" value="false"/>
-						<Widget type="Widget" skin="PanelEmpty" position="0 0 424 154" align="Stretch" name="VelGraph"/>
-					</Widget>
 				</Widget>
 
 				<Widget type="ImageBox" skin="ImageBox" position="240 276 180 11" name="cb0">
@@ -749,10 +743,33 @@
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 574 112" name="CarClrs">
 						<Property key="Caption" value="#C0E0FF#{Color}"/>
-						<!--<Widget type="Widget" skin="PanelSkin" position="232 0 224 108" align="Stretch">
+
+						<Widget type="TextBox" skin="TextBox" position="234 4 88 42">
+							<Property key="Caption" value="#{CarSpeed}\n #{UnitKmh}"/>
+							<Property key="TextColour" value="0.65 0.78 0.9"/>
+							<Property key="FontName" value="font.small"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="254 74 34 18">
+							<Property key="Caption" value="100"/>
+							<Property key="TextColour" value="0.6 0.75 0.9"/>
+							<Property key="FontName" value="font.small"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="502 98 88 22">
+							<Property key="Caption" value="#{Time} #{UnitS}"/>
+							<Property key="TextColour" value="0.65 0.78 0.9"/>
+							<Property key="FontName" value="font.small"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="314 94 18 18">
+							<Property key="Caption" value="5"/>
+							<Property key="TextColour" value="0.6 0.75 0.9"/>
+							<Property key="FontName" value="font.small"/>
+						</Widget>
+						<Widget type="Widget" skin="PanelSkin" position="280 0 214 109" align="Stretch">
 							<Property key="Colour" value="0.7 0.9 0.9"/>
-							<Widget type="Widget" skin="PanelEmpty" position="2 2 220 104" align="Stretch" name="VelGraph"/>
-						</Widget>-->
+							<Property key="Alpha" value="1.0"/>
+							<Property key="InheritsAlpha" value="false"/>
+							<Widget type="Widget" skin="PanelEmpty" position="0 0 212 107" align="Stretch" name="VelGraph"/>
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 574 112" name="TabTrack">
 						<Property key="Caption" value="#80E0F0#{Adjust}"/>
@@ -873,7 +890,7 @@
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 746 476">
 						<Property key="Caption" value="#C8D0D8#{Gearbox}"/>
-						<Widget type="ImageBox" skin="ImageBox" position="284 64 80 80">
+						<Widget type="ImageBox" skin="ImageBox" position="284 24 80 80">
 							<Property key="ImageCoord" value="128 512 128 128"/>
 							<Property key="Alpha" value="1.0"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>

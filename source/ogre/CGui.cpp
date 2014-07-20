@@ -20,7 +20,7 @@ CGui::CGui(App* app1)
 	, bRsimEasy(0), bRsimNorm(0), bRsimHard(0), bReloadSim(true)
 	,valRplNumViewports(0)
 	,viewBox(0), viewCar(0)
-	,graphW(0), graphVel(0)
+	,graphW(0), graphVel(0),graphGrid(0)
 	//  setup
 	, iTireSet(0)
 	,bchAbs(0),bchTcs(0)

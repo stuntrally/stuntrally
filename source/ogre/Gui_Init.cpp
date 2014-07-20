@@ -181,16 +181,15 @@ void CGui::InitGui()
 	UpdCarClrSld();
 
 	///  car vel graph  ~~~
-	graphW = fWP("VelGraph");
-	WP w = graphW->createWidget<Widget>("PolygonalSkin", IntCoord(IntPoint(), graphW->getSize()), Align::Stretch);
-	w->setColour(Colour(0.9f,0.6f,0.3f));
-	//w->setColour(Colour(0.8f,1.f,1.f));
-
-	ISubWidget* main = w->getSubWidgetMain();
-	graphVel = main->castType<PolygonalSkin>();
-	
-	graphVel->setWidth(3.f);
-	//graphVel->setStroke(0);
+	graphW = fWP("VelGraph");  WP w;  ISubWidget* sw;
+	w = graphW->createWidget<Widget>("PolygonalSkin", IntCoord(IntPoint(), graphW->getSize()), Align::Stretch);
+	w->setColour(Colour(0.5f,0.6f,0.6f));
+	sw = w->getSubWidgetMain();  graphGrid = sw->castType<PolygonalSkin>();
+	graphGrid->setWidth(1.5f);
+	w = graphW->createWidget<Widget>("PolygonalSkin", IntCoord(IntPoint(), graphW->getSize()), Align::Stretch);
+	w->setColour(Colour(0.5f,0.7f,0.8f));
+	sw = w->getSubWidgetMain();  graphVel = sw->castType<PolygonalSkin>();
+	graphVel->setWidth(3.5f);
 
 
 	///  Checks
@@ -640,7 +639,7 @@ void CGui::InitGui()
 	sListCar = pSet->gui.car[0];
 	imgCar = fImg("CarImg");
 	carDesc = fEd("CarDesc");
-	listCarChng(carList,0);
+	//listCarChng(carList,0);
 
 	Btn("CarView1", btnCarView1);  Btn("CarView2", btnCarView2);
 

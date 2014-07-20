@@ -252,7 +252,7 @@ public:
 	void InitCarPrv();
 	
 	WP graphW;
-	MyGUI::PolygonalSkin* graphVel;
+	MyGUI::PolygonalSkin* graphVel,*graphGrid;
 
 
 	///  [Car] color  --===---
