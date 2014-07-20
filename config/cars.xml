@@ -48,7 +48,7 @@
 	<car id="V2"  crtver="2.4" speed="9.5" year="2516" type="Spaceship" easy="1.05" norm="1.10"  car="0" author="speedypro" />
 
 	<car id="V3"  crtver="2.4" speed="9.7" year="2548" type="Spaceship" easy="1.05" norm="1.10"  car="0" author="jumahsafarty" />
-	<car id="V4"  crtver="2.4" speed="9.6" year="2780" type="Spaceship" easy="1.05" norm="1.10"  car="0" author="YellowPanda" />
+<!--<car id="V4"  crtver="2.4" speed="9.6" year="2780" type="Spaceship" easy="1.05" norm="1.10"  car="0" author="YellowPanda" />-->
 
 	<car id="O"   crtver="2.4" speed="10.2" year="2744" type="Other"    easy="1.01" norm="1.03"  car="0" author="cryham" />
 	

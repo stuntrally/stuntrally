@@ -309,7 +309,7 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 			default:           tab = mWndTabsGame;  sub = gui->vSubTabsGame[tab->getIndexSelected()];  break;
 		}
 		if (tab)
-		if (shift)
+		if (alt)
 		{	if (sub)  // prev, next subtab
 			{	bool chng = false;
 				if (action(A_PrevTab))
