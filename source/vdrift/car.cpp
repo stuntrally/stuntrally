@@ -109,6 +109,7 @@ bool CAR::Load(class App* pApp1,
 	cd.coll_posLback = -1.9f; cf.GetParam("collision.posLrear",  cd.coll_posLback);
 	//  w
 	cd.coll_FrWmul  = 0.2f;   cf.GetParam("collision.FrWmul",  cd.coll_FrWmul);
+	cd.coll_FrHmul  = 1.0f;   cf.GetParam("collision.FrHmul",  cd.coll_FrHmul);
 	cd.coll_TopWmul = 0.8f;   cf.GetParam("collision.TopWmul", cd.coll_TopWmul);
 	//  Top	 L pos
 	cd.coll_TopFr    = 0.4f;  cf.GetParam("collision.TopFr",    cd.coll_TopFr);

@@ -746,10 +746,10 @@ void CARDYNAMICS::Init(
 		float ww = hover ? coll_FrWmul : 1.f;
 		float wt = coll_TopWmul * ww;
 
-		rad[i] = r2;  pos[i] = btVector3( l1 , -w*ww, -h);  ++i;  // front
-		rad[i] = r2;  pos[i] = btVector3( l1 ,  w*ww, -h);  ++i;
-		rad[i] = r;   pos[i] = btVector3( l1m, -w*ww, -h);  ++i;  // front near
-		rad[i] = r;   pos[i] = btVector3( l1m,  w*ww, -h);  ++i;
+		rad[i] = r2;  pos[i] = btVector3( l1 , -w*ww, -h*coll_FrHmul);  ++i;  // front
+		rad[i] = r2;  pos[i] = btVector3( l1 ,  w*ww, -h*coll_FrHmul);  ++i;
+		rad[i] = r;   pos[i] = btVector3( l1m, -w*ww, -h*coll_FrHmul);  ++i;  // front near
+		rad[i] = r;   pos[i] = btVector3( l1m,  w*ww, -h*coll_FrHmul);  ++i;
 		
 		rad[i] = r;   pos[i] = btVector3( l2m, -w,    -h);  ++i;  // rear near
 		rad[i] = r;   pos[i] = btVector3( l2m,  w,    -h);  ++i;

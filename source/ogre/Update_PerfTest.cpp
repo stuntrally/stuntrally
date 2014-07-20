@@ -53,7 +53,7 @@ void App::newPerfTest(float time)
 		case PT_StartWait:
 		{
 			//  wheels still count
-			int whStill = 0;
+			int whStill = pCar->dynamics.hover ? 4 : 0;
 			for (int i=0; i<4; ++i)
 			{
 				WHEEL_POSITION wp = (WHEEL_POSITION)i;
