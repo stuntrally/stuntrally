@@ -368,7 +368,7 @@ void CGui::UpdCarStats(bool car)
 
 	//  grid lines
 	const int y1 = yo +10, y2 = -10, x1 = -10;  //outside
-	for (i = 0; i < 20; ++i)  // ||
+	for (i = 0; i < 6; ++i)  // ||
 	{	float fi = i > 2 ? 10.f*(i-1) : 5.f*i;
 		grid.push_back(FloatPoint(fi * xs,  i%2==0 ? y1 : y2));
 		grid.push_back(FloatPoint(fi * xs,  i%2==0 ? y2 : y1));
@@ -379,8 +379,8 @@ void CGui::UpdCarStats(bool car)
 	{	grid.push_back(FloatPoint(i%2==0 ? x1 : x2,  yo - ys * i * 100.f));
 		grid.push_back(FloatPoint(i%2==0 ? x2 : x1,  yo - ys * i * 100.f));
 	}
-	graphGrid->setPoints(grid);
-
+	graphVGrid->setPoints(grid);
+	
 
 	//  upd text  --------
 	bool kmh = !pSet->show_mph;  float k2m = 0.621371f;

@@ -180,16 +180,28 @@ void CGui::InitGui()
 	sv= &svCarClrRefl;	sv->Init("CarClrRefl",  &f, 0.f,1.4f);  Sev(CarClr);
 	UpdCarClrSld();
 
+
 	///  car vel graph  ~~~
-	graphW = fWP("VelGraph");  WP w;  ISubWidget* sw;
-	w = graphW->createWidget<Widget>("PolygonalSkin", IntCoord(IntPoint(), graphW->getSize()), Align::Stretch);
+	graphV = fWP("VelGraph");  WP w;  ISubWidget* sw;
+	w = graphV->createWidget<Widget>("PolygonalSkin", IntCoord(IntPoint(), graphV->getSize()), Align::Stretch);
 	w->setColour(Colour(0.5f,0.6f,0.6f));
-	sw = w->getSubWidgetMain();  graphGrid = sw->castType<PolygonalSkin>();
-	graphGrid->setWidth(1.5f);
-	w = graphW->createWidget<Widget>("PolygonalSkin", IntCoord(IntPoint(), graphW->getSize()), Align::Stretch);
+	sw = w->getSubWidgetMain();  graphVGrid = sw->castType<PolygonalSkin>();
+	graphVGrid->setWidth(1.5f);
+	w = graphV->createWidget<Widget>("PolygonalSkin", IntCoord(IntPoint(), graphV->getSize()), Align::Stretch);
 	w->setColour(Colour(0.5f,0.7f,0.8f));
 	sw = w->getSubWidgetMain();  graphVel = sw->castType<PolygonalSkin>();
 	graphVel->setWidth(3.5f);
+
+	//  sss graph
+	graphS = fWP("SSSGraph");
+	w = graphS->createWidget<Widget>("PolygonalSkin", IntCoord(IntPoint(), graphS->getSize()), Align::Stretch);
+	w->setColour(Colour(0.5f,0.6f,0.6f));
+	sw = w->getSubWidgetMain();  graphSGrid = sw->castType<PolygonalSkin>();
+	graphSGrid->setWidth(1.5f);
+	w = graphS->createWidget<Widget>("PolygonalSkin", IntCoord(IntPoint(), graphS->getSize()), Align::Stretch);
+	w->setColour(Colour(0.5f,0.8f,0.8f));
+	sw = w->getSubWidgetMain();  graphSSS = sw->castType<PolygonalSkin>();
+	graphSSS->setWidth(3.5f);
 
 
 	///  Checks
@@ -263,10 +275,10 @@ void CGui::InitGui()
 
 	TabPtr tTires = fTab("tabCarTires");  Tev(tTires, TireSet);
 
-	sv= &svSSSEffect;		sv->Init("SSSEffect",		&f, 0.f, 1.f);
-	sv= &svSSSVelFactor;	sv->Init("SSSVelFactor",	&f, 0.f, 2.f);
-	sv= &svSteerRangeSurf;	sv->Init("SteerRangeSurf",	&f, 0.3f, 1.3f);
-	sv= &svSteerRangeSim;	sv->Init("SteerRangeSim",	&f, 0.3f, 1.3f);
+	sv= &svSSSEffect;		sv->Init("SSSEffect",		&f, 0.f, 1.f);  Sev(SSS);
+	sv= &svSSSVelFactor;	sv->Init("SSSVelFactor",	&f, 0.f, 2.f);	Sev(SSS);
+	sv= &svSteerRangeSurf;	sv->Init("SteerRangeSurf",	&f, 0.3f, 1.3f);  Sev(SSS);
+	sv= &svSteerRangeSim;	sv->Init("SteerRangeSim",	&f, 0.3f, 1.3f);  Sev(SSS);
 	Btn("SSSReset", btnSSSReset);  Btn("SteerReset", btnSteerReset);
 	SldUpd_TireSet();
 

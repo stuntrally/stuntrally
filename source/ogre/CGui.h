@@ -251,8 +251,8 @@ public:
 	MyGUI::IntCoord GetViewSize();
 	void InitCarPrv();
 	
-	WP graphW;
-	MyGUI::PolygonalSkin* graphVel,*graphGrid;
+	WP graphV, graphS;
+	MyGUI::PolygonalSkin* graphVel,*graphVGrid, *graphSSS,*graphSGrid;
 
 
 	///  [Car] color  --===---
@@ -276,7 +276,7 @@ public:
 
 	SV svSSSEffect, svSSSVelFactor;
 	SV svSteerRangeSurf, svSteerRangeSim;
-	void btnSSSReset(WP), btnSteerReset(WP);
+	void btnSSSReset(WP), btnSteerReset(WP), slSSS(SV*);
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);
 	

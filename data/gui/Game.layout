@@ -948,10 +948,42 @@
 							<Property key="TextColour" value="0.7 0.9 1.0"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="24 256 328 18" name="SSSVelFactor"/>
-						<Widget type="Button" skin="Button" position="64 488 120 24" name="SSSReset">
+                        <Widget type="Button" skin="Button" position="364 284 120 24" name="SSSReset">
 							<Property key="Caption" value="#{Reset}"/>
 							<Property key="Colour" value="0.6 0.8 1.0"/>
 							<Property key="TextColour" value="0.5 0.75 1"/>
+						</Widget>
+
+                        <Widget type="TextBox" skin="TextBox" position="648 264 88 42">
+							<Property key="Caption" value="#{CarSpeed}\n #{UnitKmh}"/>
+							<Property key="TextColour" value="0.65 0.78 0.9"/>
+							<Property key="FontName" value="font.small"/>
+						</Widget>
+                        <Widget type="TextBox" skin="TextBox" position="536 264 34 18">
+							<Property key="Caption" value="100"/>
+							<Property key="TextColour" value="0.6 0.75 0.9"/>
+							<Property key="FontName" value="font.small"/>
+						</Widget>
+                        <Widget type="TextBox" skin="TextBox" position="412 134 96 22">
+                            <Property key="Caption" value="#{SSS_Effect}"/>
+							<Property key="TextColour" value="0.65 0.78 0.9"/>
+							<Property key="FontName" value="font.small"/>
+						</Widget>
+                        <Widget type="TextBox" skin="TextBox" position="440 148 18 18">
+                            <Property key="Caption" value="1"/>
+							<Property key="TextColour" value="0.6 0.75 0.9"/>
+							<Property key="FontName" value="font.small"/>
+						</Widget>
+                        <Widget type="TextBox" skin="TextBox" position="440 194 18 18">
+                            <Property key="Caption" value="0.5"/>
+							<Property key="TextColour" value="0.6 0.75 0.9"/>
+							<Property key="FontName" value="font.small"/>
+						</Widget>
+						<Widget type="Widget" skin="PanelSkin" position="460 150 214 109" align="Stretch">
+							<Property key="Colour" value="0.6 0.9 0.9"/>
+							<Property key="Alpha" value="1.0"/>
+							<Property key="InheritsAlpha" value="false"/>
+							<Widget type="Widget" skin="PanelEmpty" position="0 0 212 107" align="Stretch" name="SSSGraph"/>
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="24 332 312 24">
@@ -982,7 +1014,7 @@
 						<Widget type="Slider" skin="Slider" position="24 442 328 18" name="SteerRangeSurf">
 							<UserString key="tip" value="#{TipSteerSurf}"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="416 488 120 24" name="SteerReset">
+                        <Widget type="Button" skin="Button" position="364 440 120 24" name="SteerReset">
 							<Property key="Caption" value="#{Reset}"/>
 							<Property key="Colour" value="0.6 0.9 1.0"/>
 							<Property key="TextColour" value="0.5 0.8 1"/>

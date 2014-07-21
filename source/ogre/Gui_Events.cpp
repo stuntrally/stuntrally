@@ -47,6 +47,42 @@ void CGui::btnSteerReset(WP)
 	SldUpd_TireSet();
 }
 
+//  sss sliders,  upd graph
+void CGui::slSSS(SV* sv)
+{
+	///  upd sss graph
+	float xs = 5.f, yo = 166.f, x2 = 500.f;
+	const IntSize& wi = app->mWndOpts->getSize();
+	const float sx = wi.width/1248.f, sy = wi.height/935.f;
+	xs *= sx;  yo *= sy;  x2 *= sx;
+
+	std::vector<FloatPoint> points,grid;
+	float vmax = 300.f;  // kmh
+	const int ii = 200;
+	int i;
+	for (i = 0; i <= ii; ++i)
+	{	float v = float(i)/ii * vmax / 3.6f;  // to m/s
+		float f = CARCONTROLMAP_LOCAL::GetSSScoeff(v, pSet->sss_velfactor[iTireSet], pSet->sss_effect[iTireSet]);
+		points.push_back(FloatPoint(v * xs, yo - yo * f));
+	}
+	graphSSS->setPoints(points);
+
+	//  grid lines
+	const int y1 = yo +10, y2 = -10, x1 = -10;  //outside
+	for (i = 0; i < 6; ++i)  // ||
+	{	float v = i * 50.f / 3.6f;
+		grid.push_back(FloatPoint(v * xs,  i%2==0 ? y1 : y2));
+		grid.push_back(FloatPoint(v * xs,  i%2==0 ? y2 : y1));
+	}
+	grid.push_back(FloatPoint(x2, y1));
+	grid.push_back(FloatPoint(x1, y1));
+	for (i = 0; i < 4; ++i)  // ==
+	{	grid.push_back(FloatPoint(i%2==0 ? x1 : x2,  yo - yo * i * 0.25f));
+		grid.push_back(FloatPoint(i%2==0 ? x2 : x1,  yo - yo * i * 0.25f));
+	}
+	graphSGrid->setPoints(grid);
+}
+
 //  gravel/asphalt
 void CGui::tabTireSet(Tab, size_t id)
 {
@@ -54,6 +90,7 @@ void CGui::tabTireSet(Tab, size_t id)
 	SldUpd_TireSet();
 	bchAbs->setStateSelected(pSet->abs[id]);
 	bchTcs->setStateSelected(pSet->tcs[id]);
+	slSSS(0);
 }
 
 void CGui::SldUpd_TireSet()

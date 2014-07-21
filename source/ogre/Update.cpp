@@ -208,6 +208,7 @@ bool App::frameStart(Real time)
 		gcom->SizeGUI();
 		gcom->updTrkListDim();
 		gui->updChampListDim();  // resize lists
+		gui->slSSS(0);
 		bRecreateHUD = true;
 		
 		if (mSplitMgr)  //  reassign car cameras from new viewports
