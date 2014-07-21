@@ -16,45 +16,41 @@
 
 	<car id="FR4" crtver="2.1" speed="1.8" year="1986" type="Terrain"  easy="0.86" norm="0.90"  author="computergeekman" />
 	<car id="HR"  crtver="2.1" speed="2.4" year="1996" type="Terrain"  easy="0.88" norm="0.93"  author="thiagohenrinrique" />
-																		
 	<car id="LK4" crtver="2.0" speed="2.7" year="2008" type="Terrain"  easy="0.89" norm="0.94"  author="clarabox" />
 
-	<car id="3S"  crtver="0.1" speed="3.0" year="2003" type="Racing"   easy="0.89" norm="0.97"  author="Kevin Miller, Dick Maurer (VDrift)" />
 	<car id="M3"  crtver="1.0" speed="2.6" year="1985" type="Racing"   easy="0.92" norm="0.96"  author="FlashG (VDrift)" />
+	<car id="3S"  crtver="0.1" speed="3.0" year="2003" type="Racing"   easy="0.89" norm="0.97"  author="Kevin Miller, Dick Maurer (VDrift)" />
 																						
 	<car id="UV"  crtver="2.1" speed="4.0" year="2008" type="Extreme"  easy="0.87" norm="0.965" author="greyoxide" />
 	<car id="TC6" crtver="1.4" speed="4.5" year="1994" type="Gravel"   easy="0.94" norm="1.00"  author="Ny (VDrift)" />
 																						
-	<car id="FN"  crtver="2.4" speed="5.5" year="2000" type="Gravel"   easy="0.99" norm="1.00"  author="Neubi" />
-	<car id="S8"  crtver="2.0" speed="6.0" year="2008" type="Gravel"   easy="0.96" norm="1.00"  author="lubomircenovsky" />
-
 	<car id="N1"  crtver="2.0" speed="5.0" year="1999" type="Racing"   easy="0.96" norm="1.015" author="(Super Racing)" />
-	<car id="NG"  crtver="2.4" speed="5.2" year="2004" type="Racing"   easy="0.96" norm="1.015" author="Neubi" />
+	<car id="FN"  crtver="2.4" speed="5.5" year="2000" type="Gravel"   easy="0.99" norm="1.01"  author="Neubi" />
 																						
-	<car id="ES"  crtver="1.2" speed="6.2" year="2006" type="Gravel"   easy="0.99" norm="1.04"  author="VeTi" />
+	<car id="S8"  crtver="2.0" speed="6.0" year="2008" type="Gravel"   easy="0.96" norm="1.00"  author="lubomircenovsky" />
 	<car id="S1"  crtver="1.8" speed="6.1" year="2005" type="Gravel"   easy="0.97" norm="1.01"  author="(Super Racing)" />
+	<car id="ES"  crtver="1.2" speed="6.2" year="2006" type="Gravel"   easy="0.99" norm="1.04"  author="VeTi" />
 																						
 	<car id="TW"  crtver="2.1" speed="7.0" year="2011" type="Extreme"  easy="0.92" norm="0.94"  author="irokrhus" />
-	<car id="TU"  crtver="2.4" speed="7.3" year="2012" type="Extreme"  easy="0.92" norm="0.94"  author="carlospanganiban" />
+	<car id="TU"  crtver="2.4" speed="7.3" year="2012" type="Extreme"  easy="0.92" norm="1.02"  author="carlospanganiban" />
 
 	<car id="CT"  crtver="0.2" speed="6.4" year="1998" type="Asphalt"  easy="0.97" norm="1.02"  author="Dick Maurer,.. (VDrift)" />
 	<car id="360" crtver="0.2" speed="7.9" year="1999" type="Asphalt"  easy="1.03" norm="1.07"  author="Tyler Fric (VDrift)" />
 
-	<car id="SZ"  crtver="2.4" speed="8.0" year="1996" type="Gravel"   easy="1.01" norm="1.03"  author="cobe571" />
+	<car id="SZ"  crtver="2.4" speed="8.0" year="1996" type="Gravel"   easy="1.02" norm="1.05"  author="cobe571" />
 	<car id="XZ"  crtver="2.0" speed="8.4" year="2007" type="Asphalt"  easy="1.01" norm="1.03"  author="Neubi" />
 
 	
-	<car id="V1"  crtver="2.4" speed="9.6" year="2523" type="Spaceship" easy="1.10" norm="1.20"  car="0" author="benja" />
-	<car id="V2"  crtver="2.4" speed="9.5" year="2516" type="Spaceship" easy="1.05" norm="1.10"  car="0" author="speedypro" />
+	<car id="V2"  crtver="2.4" speed="9.4" year="2516" type="Spaceship" easy="1.33" norm="1.43"  car="0" author="speedypro" />
+	<car id="V1"  crtver="2.4" speed="9.6" year="2523" type="Spaceship" easy="1.40" norm="1.46"  car="0" author="benja" />
+	<car id="V3"  crtver="2.4" speed="9.8" year="2548" type="Spaceship" easy="1.50" norm="1.52"  car="0" author="jumahsafarty" />
 
-	<car id="V3"  crtver="2.4" speed="9.7" year="2548" type="Spaceship" easy="1.05" norm="1.10"  car="0" author="jumahsafarty" />
-<!--<car id="V4"  crtver="2.4" speed="9.6" year="2780" type="Spaceship" easy="1.05" norm="1.10"  car="0" author="YellowPanda" />-->
+	<car id="O"   crtver="2.4" speed="10.2" year="2785" type="Other"    easy="1.01" norm="1.57"  car="0" author="cryham" />
 
-	<car id="O"   crtver="2.4" speed="10.2" year="2744" type="Other"    easy="1.01" norm="1.03"  car="0" author="cryham" />
 	
-	<!--easy and norm are the car time multipliers for simultation modes-->
-	<!--less means bigger track time (more points, easier to qualify)-->
-	<!--track time is divided by this factor for a car,
+	<!--easy and norm are the car time multipliers for simultation modes
+		less means bigger track time (more points, easier to qualify)
+		track time is divided by this factor for a car,
 		this way each car can be 1st on a track despite different engine power-->
 	<!--made on F4-OSquare: drive a car perfectly (no boost, no going off road) then adjust it to have 1st place-->
 </cars>
