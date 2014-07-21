@@ -1,0 +1,274 @@
+drive = hover
+version = 2
+# all positions have x,y,z dir going + to: right, front, up
+
+[ steering ]
+max-angle = 28
+angular-damping = 0.0
+
+[ rot_drag ]
+roll  = 200.0
+pitch = 200.0
+yaw   = 200.0
+yaw2  = 1.0
+
+[ flares ]
+brake-pos0 = 0.3,-0.9, -0.05
+brake-pos1 =-0.3,-0.9, -0.05
+brake-size = 0.46
+brake-color = 1, 0, 0
+
+[ model_ofs ]
+rot_fix = on
+boost-x = -0.45
+boost-y = 0.13
+boost-z = -0.63
+boost-size-z = 0.49
+boost-name = ThrusterV1s
+thrust-x = 1.03
+thrust-y = 0.065
+thrust-z = 0.015
+thrust-size-z = 0
+thrust-name = ThrusterV1
+
+
+#  collision shape params
+#---------------------------
+[ collision ]
+com_ofs_L = 0.2
+com_ofs_H = -0.0
+radius = 0.2
+width = 1.0
+height = 0.2
+posLrear = -1.3
+posLfront = 1.5
+offsetL = 0.0
+offsetW = 0.0
+offsetH = 0.0
+start-offsetY = 1.64
+fluidTrigH = 0.05
+friction = 0.1
+
+
+#---------------------------
+[ hover ]
+hAbove = 2.0
+hRayLen = 4.0
+
+steerForce = 22
+steerDamp = 11
+steerDampP = 14
+
+engineForce = 16
+engineVelDec = 0.008
+brakeForce  = 24
+
+dampAirRes = 72
+dampSide = 2000
+dampUp = 1050
+dampDn = 3150
+dampPmul = 2.86
+
+alignTqP = 42, 42, 32
+alignTq  = 21, 21, 21
+pitchTq = 30
+rollTq = 0
+roll = 3
+
+[ hover_h ]
+hov_vz = 0.384
+hov_vsat = 0.98
+hov_dsat = 0.9
+hov_dampP = 0.5
+hov_damp = 3.6
+hov_fall = 500
+hov_riseP = 4000
+hov_rise = 6000
+
+
+#  engine
+#---------------------------
+[ engine ]
+position = 0.0, 0.0, 0.0
+mass = 250.0
+rpm-limit = 6500
+inertia = 0.27
+start-rpm = 1000
+stall-rpm = 400
+fuel-consumption = 1e-9
+friction = 230
+torque-val-mul = 0.83
+torque-curve-00 = 1000, 305
+torque-curve-01 = 7000, 400
+real-pow-tq-mul = 1.25
+sound-vol-mul = 0.35
+
+[ clutch ]
+max-torque-mul = 1.1
+
+#  gearbox
+#---------------------------
+[ transmission ]
+gears = 1
+gear-ratio-r = -3.545
+gear-ratio-1 = 3.636
+shift-delay = 0.06
+
+[ differential ]
+final-drive = 4.50
+anti-slip = 400.0
+
+[ fuel-tank ]
+position = 0.0, -0.2, -0.26
+capacity = 100.0
+volume = 100.0
+fuel-density = 0.08
+
+
+#  suspension
+#---------------------------
+[ suspension-front ]
+spring-constant = 25000.0
+bounce = 2100.0
+rebound = 2200.0
+travel = 2.0
+camber = -1.33
+caster = 2.02
+toe = 0.0
+anti-roll = 26000.0
+factors-file = hover
+
+[ suspension-rear ]
+spring-constant = 9000.0
+bounce = 5000.0
+rebound = 5000.0
+travel = 2.0
+camber = -0.45
+caster = 0.33
+toe = 0.2
+anti-roll = 20000.0
+factors-file = hover
+
+
+#  tires (more in .tire)
+#---------------------------
+[ tire-both ]
+radius = 0.32
+rolling-resistance = 1.3e-2, 6.5e-6
+rotational-inertia = 1.2
+tread = 0.0
+
+
+#  brakes
+#---------------------------
+[ brakes-front ]
+friction = 0.9
+max-pressure = 3.0e6
+bias = 0.6
+radius = 0.14
+area = 0.015
+
+[ brakes-rear ]
+friction = 0.9
+max-pressure = 3.0e6
+bias = 0.4
+radius = 0.14
+area = 0.015
+handbrake = 3.9
+
+
+[ driver ]
+position = -0.3, 0.4, 0.2
+mass = 50.0
+view-position = -0.52, 0.0, 0.14
+hood-position = -1.1, 0, 0.07
+
+
+#  aerodynamics
+#---------------------------
+[ drag ]
+position = 0.0, 0.0, 0.0
+frontal-area = 2.0
+drag-coefficient = 0.30
+
+[ wing-front ]
+position = 0, 1.34, 0.0
+frontal-area = 0.2
+drag-coefficient = 0
+surface-area = 0.55
+lift-coefficient = -0.1
+efficiency = 0.92
+
+[ wing-rear ]
+position = 0, -1.14, 0.0
+frontal-area = 0.2
+drag-coefficient = 0
+surface-area = 0.5
+lift-coefficient = -0.1
+efficiency = 0.92
+
+
+# wheels front (position and suspension mount)
+#---------------------------
+[ wheel-FR ]
+position = 0.73, 1.275, -0.58
+roll-height = 0.8
+mass = 15.0
+restitution = 0.1
+
+[ suspension-FR ]
+position = 0.58, 1.275, -0.61
+hinge = -0.71, 0.55, -0.0
+
+[ wheel-FL ]
+position = -0.73, 1.275, -0.58
+roll-height = 0.8
+mass = 15.0
+restitution = 0.1
+
+[ suspension-FL ]
+position = -0.58, 1.275, -0.61
+hinge = 0.71, 0.55, 0.0
+
+
+# wheels rear (position and suspension mount)
+#---------------------------
+[ wheel-RR ]
+position = 0.73, -1.266, -0.58
+roll-height = 0.8
+mass = 15.0
+restitution = 0.1
+
+[ suspension-RR ]
+position = 0.58, -1.266, -0.61
+hinge = -0.25, -1.94, 0.0
+
+[ wheel-RL ]
+position = -0.73, -1.266, -0.58
+roll-height = 0.8
+mass = 15.0
+restitution = 0.1
+
+[ suspension-RL ]
+position = -0.58, -1.266, -0.61
+hinge = 0.25, -1.94, 0.0
+
+
+# used to calculate the weight distribution and balance
+# (for car total mass and inertia) also use engine mass and position
+#---------------------------
+[ particle-00 ]  # rear
+mass = 145
+position =  1.2, -1.2, -0.0
+
+[ particle-01 ]
+mass = 145
+position = -1.2, -1.2, -0.0
+
+[ particle-02 ]  # front
+mass = 145
+position =  1.2,  1.2, -0.0
+
+[ particle-03 ]
+mass = 145
+position = -1.2,  1.2, -0.0
