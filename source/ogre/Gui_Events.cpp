@@ -36,15 +36,15 @@ void CGui::chkGear(Ck*)
 //  reset to same as in default.cfg
 void CGui::btnSSSReset(WP)
 {
-	pSet->sss_effect[0] = 0.43f;  pSet->sss_velfactor[0] = 1.22f;
-	pSet->sss_effect[1] = 0.43f;  pSet->sss_velfactor[1] = 1.22f;
-	SldUpd_TireSet();
+	pSet->sss_effect[0] = 0.574f;  pSet->sss_velfactor[0] = 0.626f;
+	pSet->sss_effect[1] = 0.650f;  pSet->sss_velfactor[1] = 0.734f;
+	SldUpd_TireSet();  slSSS(0);
 }
 void CGui::btnSteerReset(WP)
 {
-	pSet->steer_range[0] = 1.00f;  pSet->steer_sim[0] = 0.51f;
-	pSet->steer_range[1] = 0.70f;  pSet->steer_sim[1] = 0.81f;
-	SldUpd_TireSet();
+	pSet->steer_range[0] = 1.00f;  pSet->steer_sim[0] = 0.71f;
+	pSet->steer_range[1] = 0.76f;  pSet->steer_sim[1] = 1.00f;
+	SldUpd_TireSet();  slSSS(0);
 }
 
 //  sss sliders,  upd graph

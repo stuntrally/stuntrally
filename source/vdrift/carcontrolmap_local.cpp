@@ -7,15 +7,14 @@
 
 //*  speed sensitive steering
 float CARCONTROLMAP_LOCAL::GetSSScoeff(float carspeed, float sss_velfactor, float sss_effect)
-{									//  m/s
+{								//  m/s
 	float coeff = 1.f, carmph = carspeed * 2.23693629f;
 	if (carmph > 1.f)
 	{
-		//float ssco = sss_effect;  //*(1.0f-pow(val,2.0f));  //?-
-		coeff = (3.f-sss_velfactor) * 450.0f * (1.0f - atan(carmph*20.0f*sss_effect) * 0.6366198f);  // old ?-
-		//coeff = std::max(1.f - sss_effect, 1.f - sss_velfactor * carspeed * 0.02f);  // new linear+
+		//coeff = (3.f-sss_velfactor) * 450.0f * (1.0f - atan(carmph*20.0f*sss_effect) * 0.6366198f);  // old ?-
+		//if (coeff > 1.f)  coeff = 1.f;
+		coeff = std::max(1.f - sss_effect, 1.f - sss_velfactor * carspeed * 0.02f);  // new linear+
 	}
-	if (coeff > 1.f)  coeff = 1.f;
 
 	//LogO("vel: "+fToStr(carspeed*3.6f,1,5)+"  sss: "+fToStr(coeff));
 

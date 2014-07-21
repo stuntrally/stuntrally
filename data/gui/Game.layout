@@ -988,15 +988,15 @@
 
 						<Widget type="TextBox" skin="TextBox" position="24 332 312 24">
 							<Property key="Caption" value="#{SteerRange}"/>
-							<Property key="TextColour" value="0.85 1.0 0.92"/>
+							<Property key="TextColour" value="0.56 1.0 0.78"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="24 364 240 24">
 							<Property key="Caption" value="#{Simulation}"/>
-							<Property key="TextColour" value="0.6 1.0 0.8"/>
+							<Property key="TextColour" value="0.85 1.0 0.92"/>
 							<UserString key="tip" value="#{TipSteerSim}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="272 364 80 24" name="SteerRangeSimVal">
-							<Property key="TextColour" value="0.6 1.0 0.8"/>
+							<Property key="TextColour" value="0.88 1.0 0.95"/>
 							<UserString key="tip" value="#{TipSteerSim}"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="24 390 328 18" name="SteerRangeSim">
