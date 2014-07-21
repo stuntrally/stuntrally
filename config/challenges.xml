@@ -5,7 +5,7 @@
 			//  increase ver if you changed challenge (no need if track count changed)
 
 			//  type is for putting it into gui diffuculty tabs
-			//    0 Rally  1 Scenery  2 Endurance  3 Chase  4 Stunts  5 Extreme  6 Test
+			//    0 Rally  1 Scenery  2 Endurance  3 Chase  4 Stunts  5 Extreme  6 Special  7 Test
 
 			//  difficulty is for text displayed in list
 			//    "1" easy .. "3" medium .. "6" extreme
@@ -678,10 +678,23 @@
 	</challenge>
 
 
+<!--  Special  spaceships, sphere, etc  -->
+<!--========================================================================================================================-->
+
+	<challenge name="Test" ver="1" difficulty="0" type="6" 
+			descr="Test Challenge 1, prize points">
+		<cartype names="Spaceship" />
+		<pass avgPoints="9" />
+		<tracks>
+			<t name="TestC4-ow"   passPoints="7" />
+		</tracks>
+	</challenge>
+
+
 <!--  Test  -->
 <!--========================================================================================================================-->
 
-	<challenge name="Test 1 prize" ver="1" difficulty="0" type="6" 
+	<challenge name="Test 1 prize" ver="1" difficulty="0" type="7" 
 			descr="Test Challenge 1, prize points">
 		<car names="N1|TC6|3S" />
 		<pass avgPoints="10" />
@@ -690,7 +703,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Test 1 pos" ver="1" difficulty="0" type="6" 
+	<challenge name="Test 1 pos" ver="1" difficulty="0" type="7" 
 			descr="Test Challenge 1, position pass.">
 		<sim damage="0" boost="2" flip="2" rewind="1" />
 		<car names="N1" />
@@ -700,7 +713,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Test 2 points" ver="1" difficulty="1" type="6" 
+	<challenge name="Test 2 points" ver="1" difficulty="1" type="7" 
 			descr="Test Challenge 2, points pass.">
 		<sim mode="normal" damage="1" boost="1" flip="1" rewind="1" />
 		<car names="ES|S1" />
@@ -711,7 +724,7 @@
 		</tracks>
 	</challenge>
 	
-	<challenge name="Test 3 all" ver="1" difficulty="1" type="6" 
+	<challenge name="Test 3 all" ver="1" difficulty="1" type="7" 
 			descr="Test Challenge 3, all pass conditions.">
 		<sim mode="normal" damage="2" boost="0" flip="2" rewind="1" />
 		<cartype names="Gravel" />
@@ -723,7 +736,7 @@
 
 	</challenge>
 
-	<challenge name="Test 4 laps, hud" ver="1" difficulty="2" type="6" 
+	<challenge name="Test 4 laps, hud" ver="1" difficulty="2" type="7" 
 			descr="Test Challenge 4, 2 laps.
 			Allow checkpoint arrow,beam and abs,tcs. Deny track's ghost.">
 		<cartype names="Extreme" />
