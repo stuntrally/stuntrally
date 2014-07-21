@@ -300,17 +300,18 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	bool mph = false;
 	#endif
 	float m = mph ? 0.621371f : 1.f;
-	string km = mph ? " mi" : " km";
+	String km = mph ? TR(" #{UnitMi}") : TR(" #{UnitKm}");
+	String sm = TR(" #{UnitM}");
 	
 	//  road stats
 	//---------------------------------------------------------------------------
-	stTrk[ch][1]->setCaption(fToStr(sc->td.fTerWorldSize*0.001f*m ,1,3)+km);
+	stTrk[ch][1]->setCaption(fToStr(sc->td.fTerWorldSize*0.001f*m ,1,3) + km);
 	if (!rd)  return;
 	float len = rd->st.Length;					//3,5
-	stTrk[ch][0]->setCaption(fToStr(len*0.001f*m ,1,3)+km);
+	stTrk[ch][0]->setCaption(fToStr(len*0.001f*m ,1,3) + km);
 
-	stTrk[ch][2]->setCaption(fToStr(rd->st.WidthAvg ,1,3)+" m");
-	stTrk[ch][3]->setCaption(fToStr(rd->st.HeightDiff ,0,2)+" m");
+	stTrk[ch][2]->setCaption(fToStr(rd->st.WidthAvg ,1,3) + sm);
+	stTrk[ch][3]->setCaption(fToStr(rd->st.HeightDiff ,0,2) + sm);
 
 	bool h = rd->st.Pipes > 99.f && rd->st.OnTer > 99.f;  // hide bridge 100% when pipe is 100%
 	float a;

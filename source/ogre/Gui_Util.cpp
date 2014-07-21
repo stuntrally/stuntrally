@@ -276,7 +276,7 @@ void CGui::UpdCarStats(bool car)
 
 	for (i=0; i < iCarSt; ++i)	vis(i,true);
 
-	//  read xml
+	//  read xml  --------
 	XMLElement* e;  const char* a;
 	float mass=0.f, comFront=0.f,  maxTrq=0.f, rpmMaxTq=0.f, maxPwr=0.f, rpmMaxPwr=0.f, bhpPerTon=0.f,
 		maxVel=0.f, tiMaxVel=0.f,  t0to60=0.f, t0to100=0.f, t0to160=0.f, t0to200=0.f,
@@ -353,6 +353,7 @@ void CGui::UpdCarStats(bool car)
 			p = p->NextSiblingElement("p");
 	}	}
 
+
 	///  upd vel graph  ~~~
 	float xs = 10.f, ys = 0.4f, yo = 166.f, x2 = 500.f;
 	const IntSize& wi = app->mWndOpts->getSize();
@@ -379,6 +380,7 @@ void CGui::UpdCarStats(bool car)
 		grid.push_back(FloatPoint(i%2==0 ? x2 : x1,  yo - ys * i * 100.f));
 	}
 	graphGrid->setPoints(grid);
+
 
 	//  upd text  --------
 	bool kmh = !pSet->show_mph;  float k2m = 0.621371f;

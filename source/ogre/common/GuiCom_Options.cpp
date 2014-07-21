@@ -52,7 +52,7 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 	cmb->addItem(TR("#{Anisotropic}"));
 	cmb->setIndexSelected(pSet->tex_filt);  comboTexFilter(cmb, pSet->tex_filt);
 
-	sv= &svViewDist;	sv->Init("ViewDist",	&pSet->view_distance, 50.f,20000.f, 2.f, 1,4, 0.001f," km");
+	sv= &svViewDist;	sv->Init("ViewDist",	&pSet->view_distance, 50.f,20000.f, 2.f, 1,4, 0.001f, TR(" #{UnitKm}"));
 																				SevC(ViewDist);  sv->DefaultF(8000.f);
 	sv= &svAnisotropy;	sv->Init("Anisotropy",	&pSet->anisotropy,	0,16);		SevC(Anisotropy);  sv->DefaultI(4);
 	sv= &svTexSize;

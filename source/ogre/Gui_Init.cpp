@@ -610,7 +610,6 @@ void CGui::InitGui()
 		cmb->addItem(csTRKsurf[i]);
 
 
-
 	///  input tab  -------
 	InitInputGui();
 
@@ -637,8 +636,7 @@ void CGui::InitGui()
 	CarListUpd(false);  //upd
 
 	sListCar = pSet->gui.car[0];
-	imgCar = fImg("CarImg");
-	carDesc = fEd("CarDesc");
+	imgCar = fImg("CarImg");  carDesc = fEd("CarDesc");
 	//listCarChng(carList,0);
 
 	Btn("CarView1", btnCarView1);  Btn("CarView2", btnCarView2);
@@ -670,6 +668,7 @@ void CGui::InitGui()
 	//  new game
 	for (i=1; i<=4; ++i)
 	{	Btn("NewGame"+toStr(i), btnNewGame);  if (i==2)  btNewGameCar = btn;  }
+
 
 	//  championships
 	//------------------------------------------------------------------------

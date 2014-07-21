@@ -13,6 +13,7 @@
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
+namespace fs = boost::filesystem;
 
 
 ///  [Replay]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -42,8 +43,8 @@ void CGui::btnRplLoad(WP)  // Load
 
 	if (!app->replay.LoadFile(file))
 	{
-		Message::createMessageBox(  // #{.. translate
-			"Message", "Load Replay", "Error: Can't load file.",
+		Message::createMessageBox(
+			"Message", TR("#{Replay} - #{RplLoad}"), TR("#{Error}."),
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 	}
 	else  // car, track change
@@ -85,15 +86,15 @@ void CGui::btnRplSave(WP)  // Save
 	///  save
 	if (PATHMANAGER::FileExists(file))
 	{
-		Message::createMessageBox(  // #{..
-			"Message", "Save Replay", "File already exists.",
+		Message::createMessageBox(
+			"Message", TR("#{Replay} - #{RplSave}"), TR("#{AlreadyExists}."),
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return;
 	}
 	if (!app->replay.SaveFile(file.c_str()))
 	{
-		Message::createMessageBox(  // #{..
-			"Message", "Save Replay", "Error: Can't save file.",
+		Message::createMessageBox(
+			"Message", TR("#{Replay} - #{RplSave}"), TR("#{Error}."),
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 	}
 	updReplaysList();
@@ -128,8 +129,8 @@ void CGui::listRplChng(List* li, size_t pos)
 		valRplInfo->setCaption(ss);
 
 		//  file stats
-		int size = boost::filesystem::file_size(file);
-		std::time_t ti = boost::filesystem::last_write_time(file);
+		int size = fs::file_size(file);
+		std::time_t ti = fs::last_write_time(file);
 		if (!std::strftime(stm, 126, "%d.%b'%y  %a %H:%M", std::localtime(&ti)))  stm[0]=0;
 		
 		ss =/*"Time: "+*/String(stm)+"\n#A0A0A0"+
@@ -232,7 +233,7 @@ void CGui::btnRplDelete(WP)
 	string name = rplList->getItemNameAt(i).substr(7);
 
 	Message* message = Message::createMessageBox(
-		"Message", "Delete Replay ?", name,  // #{..
+		"Message", TR("#{Replay} - #{RplDelete} ?"), name,
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
 	message->eventMessageBoxResult += newDelegate(this, &CGui::msgRplDelete);
 }
@@ -243,8 +244,8 @@ void CGui::msgRplDelete(Message* sender, MessageBoxStyle result)
 	string name = rplList->getItemNameAt(i).substr(7);
 	string file = GetRplListDir() +"/"+ name + ".rpl";
 
-	if (boost::filesystem::exists(file))
-		boost::filesystem::remove(file);
+	if (fs::exists(file))
+		fs::remove(file);
 	updReplaysList();
 }
 
@@ -258,20 +259,20 @@ void CGui::btnRplRename(WP)
 
 	if (name == edit)  // same name
 	{	Message::createMessageBox(
-			"Message", "Rename Replay", "Same names.\n",  // #{..
+			"Message", TR("#{Replay} - #{RplRename}"), TR("#{AlreadyExists}."),
 			MessageBoxStyle::IconInfo | MessageBoxStyle::Ok);
 		return;  }
 	
 	string file = PATHMANAGER::Replays() + "/" + name + ".rpl";
 	string fileNew = PATHMANAGER::Replays() + "/" + edit + ".rpl";
 
-	if (boost::filesystem::exists(fileNew))
+	if (fs::exists(fileNew))
 	{	Message::createMessageBox(
-			"Message", "Rename Replay", "File already exists.\n",  // #{..
+			"Message", TR("#{Replay} - #{RplRename}"), TR("#{AlreadyExists}."),
 			MessageBoxStyle::IconInfo | MessageBoxStyle::Ok);
 		return;  }
 
-	if (boost::filesystem::exists(file))
-		boost::filesystem::rename(file, fileNew);
+	if (fs::exists(file))
+		fs::rename(file, fileNew);
 	updReplaysList();
 }

@@ -495,6 +495,6 @@ void CGui::TweakTireSave()
 	fo << "#---------\n";
 
 	if (txtTweakTire)
-	{	txtTweakTire->setCaption("Saved.");
+	{	txtTweakTire->setCaption(TR("#{Saved}."));
 		txtTweakTire->setTextColour(Colour(0.2,1,0.2));  }
 }

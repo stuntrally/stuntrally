@@ -377,7 +377,8 @@ void CGui::ChampFillStageInfo(bool finished)
 			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + gcom->clrsDiff[ti->diff] + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
 			if (app->scn->road)
 			{	Real len = app->scn->road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
-				s += "#A0D0FF"+ TR("#{Distance}:  ") + "#B0E0FF" + fToStr(len, 1,4) + (pSet->show_mph ? " mi" : " km") + "\n\n";
+				s += "#A0D0FF"+ TR("#{Distance}:  ") + "#B0E0FF" + 
+					fToStr(len, 1,4) + (pSet->show_mph ? TR(" #{UnitMi}") : TR(" #{UnitKm}")) + "\n\n";
 				s += "#A8B8C8"+ app->scn->road->sTxtDesc;
 		}	}
 	}
