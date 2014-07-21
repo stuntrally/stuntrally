@@ -189,7 +189,8 @@ void CGui::setSimMode(std::string mode)
 	pSet->gui.sim_mode = mode;  bReloadSim = true;
 	bRsimEasy->setStateSelected(mode == "easy");
 	bRsimNorm->setStateSelected(mode == "normal");
-	bRsimHard->setStateSelected(mode == "hard");
+	if (bRsimHard)
+		bRsimHard->setStateSelected(mode == "hard");
 	tabTireSet(0,iTireSet);  listCarChng(carList,0);
 }
 
