@@ -1457,7 +1457,7 @@
 						<Property key="Caption" value="#D0C0F0#{Chall_Extreme}"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 560 8">
-						<Property key="Caption" value="#D0C0F0#{Chall_Special}"/>
+						<Property key="Caption" value="#60B0FF#{Chall_Special}"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 560 8">
 						<Property key="Caption" value="#909090#{Test}"/>
