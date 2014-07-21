@@ -28,7 +28,7 @@
 	<Tag name="ViewDist">Видимость</Tag>
 	<Tag name="CarDesc_OT">Это самое медленное авто. Очень старый и немного страшный грузовик. Управляемый только на треках с ровным рельефом и со скоростью черепахи.</Tag>
 	<Tag name="SimMode">Режим симуляции (сложность)</Tag>
-	<Tag name="RplParticles">Частицы (не для призрака)</Tag>
+	<Tag name="Gearbox">Gearbox</Tag>
 	<Tag name="Road_Roll">Вращ</Tag>
 	<Tag name="TipFogHStart">Начальная высота тумана [метры], от которой туман густеет на ровной дистанции.</Tag>
 	<Tag name="PostfilterAA">Фильтр сглаживания</Tag>
@@ -58,17 +58,17 @@
 	<Tag name="Surface">Поверхность</Tag>
 	<Tag name="ChallEndFinished">Вы прошли этот вызов.</Tag>
 	<Tag name="About">Об игре</Tag>
-	<Tag name="NewTerrainGenerate">Ген. новый</Tag>
 	<Tag name="TBScore">Очки</Tag>
-	<Tag name="CarDesc_V1">Космический корабль переделанный под парящий. Очень быстрый и лёгкий в управлении. Не беспокойтесь о неровности местности. Но не для труб.</Tag>
-	<Tag name="DevKeys">Разработчику. Ctrl-F всё, Alt-shift-1..6 загр. тест треки.</Tag>
+	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But being small does slide sideways.</Tag>
+	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
+	<Tag name="CarDesc_V3">A big and heavy spaceship. Very good acceleration at start and strong braking. But doesn't reach high speeds.</Tag>
 	<Tag name="InputRoadChkFirst">0   - устан. контр. точку 1-ой</Tag>
 	<Tag name="SC_ForestMntn">Гор.Лес</Tag>
 	<Tag name="NetRefreshList">Обновить</Tag>
 	<Tag name="InputObjectsIns">Ins - вставить, где курсор</Tag>
 	<Tag name="GraphicsAll_Low">Низкая</Tag>
 	<Tag name="ChampEndFinished">Вы закончили этот чемпионат.</Tag>
-	<Tag name="Gravity">Тяжесть</Tag>
+	<Tag name="Negative">Negative (darken)</Tag>
 	<Tag name="InputUpdBlendmap">F9 - обновить смесь ландшафтов</Tag>
 	<Tag name="Camera">Камера</Tag>
 	<Tag name="InputRoadOnTer">Home - захват Ландшафта</Tag>
@@ -95,7 +95,7 @@
 	<Tag name="RepeatStage">Этап провален</Tag>
 	<Tag name="CarDesc_HR">Очень тяжёлое и медленное авто, лучший для земной местности и ухабов, лёгкий в управлении. Но бесполезный на быстрых треках и с трюками.</Tag>
 	<Tag name="SC_Finland">Финляндия</Tag>
-	<Tag name="TipParType1">Частица шины тип 1 (глобально для трека).</Tag>
+	<Tag name="CarDesc_Pipes">NOTE: Currently impossible to use in pipes.</Tag>
 	<Tag name="GrassDens">Плотность травы</Tag>
 	<Tag name="Locked">Заблок.</Tag>
 	<Tag name="VSync">Верт. синхр.</Tag>
@@ -185,6 +185,7 @@
 	<Tag name="MessageBox_Yes">Да</Tag>
 	<Tag name="BlendMap">Смесь</Tag>
 	<Tag name="InputMapPrevCamera">Пред. камера</Tag>
+	<Tag name="RplParticles">Частицы (не для призрака)</Tag>
 	<Tag name="Brush_Size">Размер</Tag>
 	<Tag name="HDRParam2">Яркость</Tag>
 	<Tag name="HDRParam3">Зерно</Tag>
@@ -210,7 +211,7 @@
 	<Tag name="TimeMS">м:с</Tag>
 	<Tag name="InputAssignKey">&lt;Назнач&gt;</Tag>
 	<Tag name="Wireframe">Каркас</Tag>
-	<Tag name="TerUpdSkip">Пропустить обновление ландшафта</Tag>
+	<Tag name="ShowPictures">Показать картинку при загр.</Tag>
 	<Tag name="Brush_Force">Сила</Tag>
 	<Tag name="Score">Очки</Tag>
 	<Tag name="SpeedSensitiveSteering">Чувствит. управления</Tag>
@@ -357,6 +358,7 @@
 	<Tag name="Vegetation">Растит.</Tag>
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="max">макс.</Tag>
+	<Tag name="TerUpdSkip">Пропустить обновление ландшафта</Tag>
 	<Tag name="Stage">Этап</Tag>
 	<Tag name="CarDesc_3S">Хорошее авто, подходит для всех треков, но медленнее ускорение, особенно на высоких скоростях.</Tag>
 	<Tag name="None">Нет</Tag>
@@ -373,7 +375,7 @@
 	<Tag name="RplVersion">Версия</Tag>
 	<Tag name="Stages">Этапы</Tag>
 	<Tag name="OpponentsList">Спис. опон.</Tag>
-	<Tag name="Options">Опции</Tag>
+	<Tag name="DevKeys">Разработчику. Ctrl-F всё, Alt-shift-1..6 загр. тест треки.</Tag>
 	<Tag name="Delete">Удалить</Tag>
 	<Tag name="Rename">Переименовать</Tag>
 	<Tag name="Asphalt">Асфальт</Tag>
@@ -452,11 +454,11 @@
 	<Tag name="obstacles">препятствия (на дор., в трубе)</Tag>
 	<Tag name="TipGrassColorMap">Отображение цвета травы для ландшафта, обычно такой же как у материала травы. Дополнительная окраска травы.</Tag>
 	<Tag name="Multiplayer">По сети</Tag>
-	<Tag name="trailColor">цвет следа</Tag>
 	<Tag name="ListeningOnPort">Ожидание порта</Tag>
 	<Tag name="InputToggleVeget">V - откл./вкл. растительность</Tag>
 	<Tag name="Particles">Частицы</Tag>
 	<Tag name="CarDesc_XZ">На авто устанавлен очень мощный двигатель, управляемый для большинства треков. Не лучший для ухабов из-за низкой и жёсткой подвески. Излишний крутящий момент также вызывает больше пробуксовки.</Tag>
+	<Tag name="Adjust">Настроить</Tag>
 	<Tag name="Other">Другое</Tag>
 	<Tag name="TipTerLAngSm">Диапазон ровного угла (переход).</Tag>
 	<Tag name="godrays">Рас. света</Tag>
@@ -467,7 +469,7 @@
 	<Tag name="ColReflect">Отраж.</Tag>
 	<Tag name="Development">Разработка</Tag>
 	<Tag name="InputRoadIns">Ins - вставить (после., alt - до)</Tag>
-	<Tag name="Gravel">Гравий</Tag>
+	<Tag name="TweakEdit1">Alt-Z - окно наладки (ред. авто)</Tag>
 	<Tag name="InputBrushParams">Параметры кисти</Tag>
 	<Tag name="min">мин.</Tag>
 	<Tag name="SC_Asphalt">Асфальт</Tag>
@@ -492,6 +494,7 @@
 	<Tag name="TipMudInt">Интенсивность частиц грязи.</Tag>
 	<Tag name="HeightMax">Макс. высота</Tag>
 	<Tag name="Obj_Rot">Вр.</Tag>
+	<Tag name="Transparency">Transparency</Tag>
 	<Tag name="NetWrongPassword">Неверный пароль.</Tag>
 	<Tag name="RplRewindGhost">Перемотка призрака</Tag>
 	<Tag name="ScaleAll">Масш. все</Tag>
@@ -549,7 +552,7 @@
 	<Tag name="Bronze">Бронза</Tag>
 	<Tag name="TexCoordMul">Тех. коор.</Tag>
 	<Tag name="Shadows">Тени</Tag>
-	<Tag name="ShowPictures">Показать картинку при загр.</Tag>
+	<Tag name="Options">Опции</Tag>
 	<Tag name="distance">дистанция</Tag>
 	<Tag name="SSS_Effect">Эффект</Tag>
 	<Tag name="Chall_Extreme">Экстрим</Tag>
@@ -583,7 +586,7 @@
 	<Tag name="InputRplCtrl3">[ , ] - ветер сзади/спереди (shift - слабый, ctrl,alt - сильный)</Tag>
 	<Tag name="Laps">Круги</Tag>
 	<Tag name="InputRplCtrl1">Backspace - пок./скрыть индик. (держи ctrl для мыши)</Tag>
-	<Tag name="TracksGhost">Призрак трека (лучш. езда для трека)</Tag>
+	<Tag name="TipParType1">Частица шины тип 1 (глобально для трека).</Tag>
 	<Tag name="InputRplCtrl4">K, L - изм. вид камеры другого игрока</Tag>
 	<Tag name="TipGrassSwayLen">Длина эффекта качания травы (размер).</Tag>
 	<Tag name="WaterReflection">Отражение</Tag>
@@ -594,7 +597,7 @@
 	<Tag name="FrameSkip">Пропуск кадра</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - сохр. файл и перезагр. игру</Tag>
 	<Tag name="InputTrackScrn">(снимок для трека)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - окно наладки (ред. авто)</Tag>
+	<Tag name="trailColor">цвет следа</Tag>
 	<Tag name="Boost">Нитро</Tag>
 	<Tag name="BumpWavelen">Ухаб: длина волны</Tag>
 	<Tag name="TipFogClr">Конец тумана когда смотришь ниже солнца.</Tag>
@@ -730,6 +733,7 @@
 	<Tag name="UnitNm">Нм</Tag>
 	<Tag name="ABS">АБС</Tag>
 	<Tag name="UnitMB">MB</Tag>
+	<Tag name="Terrain">Ландш.</Tag>
 	<Tag name="Back">Назад</Tag>
 	<Tag name="TipDiffusePrev">Распространяет текстуру предварительного просмотра изображения.</Tag>
 	<Tag name="InputTerSmooth">S - ровный (выравнивать)</Tag>
@@ -743,7 +747,7 @@
 	<Tag name="NewTerrainFlat">Новая плоскость</Tag>
 	<Tag name="ColSat">Насыщен.</Tag>
 	<Tag name="TipTCS">Предотвращает кручение колеса при ускорении (по умолчанию: выключено).</Tag>
-	<Tag name="RplGhost">Показать езду призрака</Tag>
+	<Tag name="NewTerrainGenerate">Ген. новый</Tag>
 	<Tag name="InputRoadColumn">End - вкл./выкл. колонну</Tag>
 	<Tag name="InputRoadMerge">M - слияние сегментов дороги</Tag>
 	<Tag name="Brush_Height">Высота</Tag>
@@ -770,7 +774,7 @@
 	<Tag name="Car_MaxTorque">Макс. кр. момент</Tag>
 	<Tag name="ReflMode_full">Все</Tag>
 	<Tag name="Distance">Дистанция</Tag>
-	<Tag name="Adjust">Настроить</Tag>
+	<Tag name="RplGhost">Показать езду призрака</Tag>
 	<Tag name="TipGrassPageLength">Длина страница памяти для травы (ниже будут частые перезагрузки, выше будут визуальные переключения).</Tag>
 	<Tag name="Reflections">Отражения</Tag>
 	<Tag name="dust">пыль</Tag>
@@ -849,7 +853,7 @@
 	<Tag name="SREditorVersion">Stunt Rally - Ред. треков - версия</Tag>
 	<Tag name="InputRoadAfterPick">после выбора у центра</Tag>
 	<Tag name="TipTrackDesc">Описание трека.</Tag>
-	<Tag name="RplFileSize">Размер файла</Tag>
+	<Tag name="TracksGhost">Призрак трека (лучш. езда для трека)</Tag>
 	<Tag name="SC_GreeceWhite">ГрецияБ</Tag>
 	<Tag name="SC_Savanna">Саванна</Tag>
 	<Tag name="NetHost">Хост</Tag>
@@ -864,7 +868,7 @@
 	<Tag name="InputHelp">ввод/помощь</Tag>
 	<Tag name="TipVegetModels">Модели (ячейки) для растительности. Найденые в data/trees/.</Tag>
 	<Tag name="CheckArrow">Стрелка навигации</Tag>
-	<Tag name="Sun">Солнце</Tag>
+	<Tag name="RplFileSize">Размер файла</Tag>
 	<Tag name="InputMapShiftUp">Передача +</Tag>
 	<Tag name="CarDebugText">Отладка авто </Tag>
 	<Tag name="OgreDialog">Показать диалог Ogre</Tag>
@@ -906,6 +910,7 @@
 	<Tag name="SleepMS">Инт. сна [миллисек.]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - копир. выб.</Tag>
 	<Tag name="Materials">Материалы</Tag>
+	<Tag name="Gravel">Гравий</Tag>
 	<Tag name="InputMultiplier">Коэффициент</Tag>
 	<Tag name="Reverse">Обратно</Tag>
 	<Tag name="InputMapShiftDown">Передача -</Tag>
@@ -955,7 +960,7 @@
 	<Tag name="RplLoad">Загрузить</Tag>
 	<Tag name="UnitBhp">л. с.</Tag>
 	<Tag name="InputTogglePreview">F7 - войти/выйти смот. камера</Tag>
-	<Tag name="InpSet_AxisHalfInv">Пол оси инверсия</Tag>
+	<Tag name="Sun">Солнце</Tag>
 	<Tag name="ScaleTerHeight">Высота ландшафта</Tag>
 	<Tag name="SC_Crystals">Кристаллы</Tag>
 	<Tag name="TipTerLHSm">Диапазон ровной высоты (переход).</Tag>
@@ -998,7 +1003,7 @@
 	<Tag name="Diff1">Легче</Tag>
 	<Tag name="InputObjectsPrevNext">PgUp,PgDn (или Wheel) - пред./след. объект</Tag>
 	<Tag name="Diff7">Ультра</Tag>
-	<Tag name="CarDesc_O">Экспериментальная, совершенно стабильная, вращающаяся сфера. Использует движущую силу продвинутого космического аппарата для лёгкого передвижения в любом направлении. Очень быстрая, но очень пружинистая. Но не для труб.</Tag>
+	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy.</Tag>
 	<Tag name="SkirtHeight">Высота края</Tag>
 	<Tag name="ObjBuildings">Здания</Tag>
 	<Tag name="Car_TopSpeed">Макс. скор.</Tag>
@@ -1035,6 +1040,7 @@
 	<Tag name="CameraAutoTilt">Автонаклон на склонах</Tag>
 	<Tag name="Trilinear">Трилинейный</Tag>
 	<Tag name="InputUndo">(1 раз отмена)</Tag>
+	<Tag name="Gravity">Тяжесть</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - сброс шкалы до 1 (с shift до 0.5)</Tag>
 	<Tag name="CarStart">Старт авто</Tag>
 	<Tag name="ProfilerTxt">Сроки профайлера </Tag>
@@ -1054,18 +1060,20 @@
 	<Tag name="RplSave">Сохранить</Tag>
 	<Tag name="InputPressButtonTip">Нажми кнопку для теста</Tag>
 	<Tag name="SC_Moss">Болото</Tag>
-	<Tag name="Terrain">Ландш.</Tag>
+	<Tag name="InpSet_AxisHalfInv">Пол оси инверсия</Tag>
 	<Tag name="smooth">ровный</Tag>
 	<Tag name="Pitch">наклон</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - пред.,след. вкладка (alt - ниже)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="Gearbox">Gearbox</Tag>
-	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
-	<Tag name="CarDesc_V3">A big and heavy spaceship. Very good acceleration at start and strong braking. But doesn't reach high speeds.</Tag>
-	<Tag name="Negative">Negative (darken)</Tag>
-	<Tag name="CarDesc_Pipes">NOTE: Currently impossible to use in pipes.</Tag>
-	<Tag name="Transparency">Transparency</Tag>
+	<Tag name="Updating">Updating</Tag>
+	<Tag name="Saving">Saving</Tag>
+	<Tag name="Loaded">Loaded</Tag>
+	<Tag name="Chall_Special">Special</Tag>
+	<Tag name="Updated">Updated</Tag>
+	<Tag name="AlreadyExists">Already exists</Tag>
+	<Tag name="Saved">Saved</Tag>
+	<Tag name="Loading">Loading</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

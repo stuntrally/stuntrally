@@ -28,7 +28,7 @@
 	<Tag name="ViewDist">Zobrazená vzdialenosť</Tag>
 	<Tag name="CarDesc_OT">This is the slowest car. Very old and a bit creepy truck. Can drive only on flat tracks and with turtle speed.</Tag>
 	<Tag name="SimMode">Režim simulácie (obtiažnosť)</Tag>
-	<Tag name="RplParticles">Particles (for not transparent ghost)</Tag>
+	<Tag name="Gearbox">Gearbox</Tag>
 	<Tag name="Road_Roll">Roll</Tag>
 	<Tag name="TipFogHStart">Height fog start height [meters] at which fog starts getting denser for smooth distance.</Tag>
 	<Tag name="PostfilterAA">Post-filter antialiasing</Tag>
@@ -58,17 +58,17 @@
 	<Tag name="Surface">Surface</Tag>
 	<Tag name="ChallEndFinished">You have passed this challenge.</Tag>
 	<Tag name="About">O ...</Tag>
-	<Tag name="NewTerrainGenerate">Generate new</Tag>
 	<Tag name="TBScore">Hodnotenie</Tag>
 	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But being small does slide sideways.</Tag>
-	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
+	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
+	<Tag name="CarDesc_V3">A big and heavy spaceship. Very good acceleration at start and strong braking. But doesn't reach high speeds.</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
 	<Tag name="SC_ForestMntn">ForestMntn</Tag>
 	<Tag name="NetRefreshList">Get/refresh list</Tag>
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
 	<Tag name="GraphicsAll_Low">Nízke</Tag>
 	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
-	<Tag name="Gravity">Gravitácia</Tag>
+	<Tag name="Negative">Negative (darken)</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 	<Tag name="Camera">Kamera</Tag>
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
@@ -95,7 +95,7 @@
 	<Tag name="RepeatStage">Repeating stage</Tag>
 	<Tag name="CarDesc_HR">Very heavy and slow car, best for terrain and bumps, easy to drive. But useless on fast and stunt tracks.</Tag>
 	<Tag name="SC_Finland">Fínsko</Tag>
-	<Tag name="TipParType1">Tire Particle type 1 (global for track).</Tag>
+	<Tag name="CarDesc_Pipes">NOTE: Currently impossible to use in pipes.</Tag>
 	<Tag name="GrassDens">Grass   density</Tag>
 	<Tag name="Locked">Zamknuté</Tag>
 	<Tag name="VSync">VSync</Tag>
@@ -185,6 +185,7 @@
 	<Tag name="MessageBox_Yes">Áno</Tag>
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
+	<Tag name="RplParticles">Particles (for not transparent ghost)</Tag>
 	<Tag name="Brush_Size">Veľkosť</Tag>
 	<Tag name="HDRParam2">Jas</Tag>
 	<Tag name="HDRParam3">Obilie</Tag>
@@ -210,7 +211,7 @@
 	<Tag name="TimeMS">m:s</Tag>
 	<Tag name="InputAssignKey">&lt;Assign&gt;</Tag>
 	<Tag name="Wireframe">Drôtený model</Tag>
-	<Tag name="TerUpdSkip">Terrain update skip</Tag>
+	<Tag name="ShowPictures">Show pictures while loading</Tag>
 	<Tag name="Brush_Force">Sila</Tag>
 	<Tag name="Score">Hodnotenie</Tag>
 	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
@@ -357,6 +358,7 @@
 	<Tag name="Vegetation">Vegetácia</Tag>
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="max">max</Tag>
+	<Tag name="TerUpdSkip">Terrain update skip</Tag>
 	<Tag name="Stage">Etapa</Tag>
 	<Tag name="CarDesc_3S">Good car, suited for all tracks, but has slower acceleration, especially at high speeds.</Tag>
 	<Tag name="None">Žiadne</Tag>
@@ -373,7 +375,7 @@
 	<Tag name="RplVersion">Verzia</Tag>
 	<Tag name="Stages">Etapy</Tag>
 	<Tag name="OpponentsList">Opponents List</Tag>
-	<Tag name="Options">Možnosti</Tag>
+	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
 	<Tag name="Delete">Vymazať</Tag>
 	<Tag name="Rename">Premenovať</Tag>
 	<Tag name="Asphalt">Asphalt</Tag>
@@ -452,11 +454,11 @@
 	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Viac hráčov</Tag>
-	<Tag name="trailColor">trail color</Tag>
 	<Tag name="ListeningOnPort">Listening on port</Tag>
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="Particles">Častice</Tag>
 	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
+	<Tag name="Adjust">Adjust</Tag>
 	<Tag name="Other">Ostatné</Tag>
 	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
 	<Tag name="godrays">God Rays</Tag>
@@ -467,7 +469,7 @@
 	<Tag name="ColReflect">Odraz</Tag>
 	<Tag name="Development">Vývoj</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
-	<Tag name="Gravel">Gravel</Tag>
+	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
 	<Tag name="InputBrushParams">Brush parameters</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="SC_Asphalt">Asfalt</Tag>
@@ -492,6 +494,7 @@
 	<Tag name="TipMudInt">Mud particles intensity.</Tag>
 	<Tag name="HeightMax">Height Max</Tag>
 	<Tag name="Obj_Rot">Rot.</Tag>
+	<Tag name="Transparency">Transparency</Tag>
 	<Tag name="NetWrongPassword">Nesprávne heslo.</Tag>
 	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
 	<Tag name="ScaleAll">Scale all</Tag>
@@ -549,7 +552,7 @@
 	<Tag name="Bronze">Bronz</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Shadows">Tiene</Tag>
-	<Tag name="ShowPictures">Show pictures while loading</Tag>
+	<Tag name="Options">Možnosti</Tag>
 	<Tag name="distance">distance</Tag>
 	<Tag name="SSS_Effect">Efekt</Tag>
 	<Tag name="Chall_Extreme">Extrémna</Tag>
@@ -583,7 +586,7 @@
 	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
 	<Tag name="Laps">Kolá</Tag>
 	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
-	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
+	<Tag name="TipParType1">Tire Particle type 1 (global for track).</Tag>
 	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
 	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
 	<Tag name="WaterReflection">Odraz</Tag>
@@ -594,7 +597,7 @@
 	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - save file and reload game</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
+	<Tag name="trailColor">trail color</Tag>
 	<Tag name="Boost">Zosilnenie</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="TipFogClr">Fog end color when looking under sun.</Tag>
@@ -730,6 +733,7 @@
 	<Tag name="UnitNm">Nm</Tag>
 	<Tag name="ABS">ABS (antilock brakes)</Tag>
 	<Tag name="UnitMB">MB</Tag>
+	<Tag name="Terrain">Terén</Tag>
 	<Tag name="Back">Späť</Tag>
 	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
 	<Tag name="InputTerSmooth">S - Smooth  (flatten)</Tag>
@@ -743,7 +747,7 @@
 	<Tag name="NewTerrainFlat">New flat</Tag>
 	<Tag name="ColSat">Sýtosť</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
-	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
+	<Tag name="NewTerrainGenerate">Generate new</Tag>
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="Brush_Height">Výška</Tag>
@@ -770,7 +774,7 @@
 	<Tag name="Car_MaxTorque">Max Torque</Tag>
 	<Tag name="ReflMode_full">Plné</Tag>
 	<Tag name="Distance">Vzdialenosť</Tag>
-	<Tag name="Adjust">Adjust</Tag>
+	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
 	<Tag name="Reflections">Odrazy</Tag>
 	<Tag name="dust">dust</Tag>
@@ -849,7 +853,7 @@
 	<Tag name="SREditorVersion">Stunt Rally - Track Editor - version</Tag>
 	<Tag name="InputRoadAfterPick">after picked, center at mouse</Tag>
 	<Tag name="TipTrackDesc">Track description text.</Tag>
-	<Tag name="RplFileSize">Veľkosť súboru</Tag>
+	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
 	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
 	<Tag name="SC_Savanna">Savana</Tag>
 	<Tag name="NetHost">Hostiteľ</Tag>
@@ -864,7 +868,7 @@
 	<Tag name="InputHelp">Input/help</Tag>
 	<Tag name="TipVegetModels">Models (meshes) for vegetation. Found in data/trees/.</Tag>
 	<Tag name="CheckArrow">Checkpoint Arrow</Tag>
-	<Tag name="Sun">Slnko</Tag>
+	<Tag name="RplFileSize">Veľkosť súboru</Tag>
 	<Tag name="InputMapShiftUp">Posunúť hore</Tag>
 	<Tag name="CarDebugText">Car debug text </Tag>
 	<Tag name="OgreDialog">Show Ogre dialog</Tag>
@@ -906,6 +910,7 @@
 	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - copy selection</Tag>
 	<Tag name="Materials">Materiály</Tag>
+	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="InputMultiplier">Multiplier</Tag>
 	<Tag name="Reverse">Obrátené</Tag>
 	<Tag name="InputMapShiftDown">Posunúť dolu</Tag>
@@ -955,7 +960,7 @@
 	<Tag name="RplLoad">Načítať</Tag>
 	<Tag name="UnitBhp">bhp</Tag>
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
-	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
+	<Tag name="Sun">Slnko</Tag>
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
 	<Tag name="SC_Crystals">Crystals</Tag>
 	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
@@ -1035,6 +1040,7 @@
 	<Tag name="CameraAutoTilt">Camera auto tilt on slopes</Tag>
 	<Tag name="Trilinear">Trilineárna</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
+	<Tag name="Gravity">Gravitácia</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - reset scale to 1 (with shift to 0.5)</Tag>
 	<Tag name="CarStart">Car Start</Tag>
 	<Tag name="ProfilerTxt">Profiler times text </Tag>
@@ -1054,18 +1060,20 @@
 	<Tag name="RplSave">Uložiť</Tag>
 	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
 	<Tag name="SC_Moss">Mach</Tag>
-	<Tag name="Terrain">Terén</Tag>
+	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
 	<Tag name="smooth">hladké</Tag>
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extrémna</Tag>
 	<Tag name="RplAll">Všetko</Tag>
-	<Tag name="Gearbox">Gearbox</Tag>
-	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
-	<Tag name="CarDesc_V3">A big and heavy spaceship. Very good acceleration at start and strong braking. But doesn't reach high speeds.</Tag>
-	<Tag name="Negative">Negative (darken)</Tag>
-	<Tag name="CarDesc_Pipes">NOTE: Currently impossible to use in pipes.</Tag>
-	<Tag name="Transparency">Transparency</Tag>
+	<Tag name="Updating">Updating</Tag>
+	<Tag name="Saving">Saving</Tag>
+	<Tag name="Loaded">Loaded</Tag>
+	<Tag name="Chall_Special">Special</Tag>
+	<Tag name="Updated">Updated</Tag>
+	<Tag name="AlreadyExists">Already exists</Tag>
+	<Tag name="Saved">Saved</Tag>
+	<Tag name="Loading">Loading</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

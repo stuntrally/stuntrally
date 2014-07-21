@@ -28,7 +28,7 @@
 	<Tag name="ViewDist">Visualizza la distanza</Tag>
 	<Tag name="CarDesc_OT">Questa è la macchina più lenta. Camion molto vecchio e un po' inquietante. Guida solo su piste pianeggianti ad una velocità tartaruga.</Tag>
 	<Tag name="SimMode">Modalità di simulazione (difficoltà)</Tag>
-	<Tag name="RplParticles">Particelle (per fantasma non trasparente)</Tag>
+	<Tag name="Gearbox">Gearbox</Tag>
 	<Tag name="Road_Roll">Rotola</Tag>
 	<Tag name="TipFogHStart">Altezza di inizio nebbia [metri] dove la nebbia comincerà a essere più fitta per distanza smoothing.</Tag>
 	<Tag name="PostfilterAA">Post-filtro antialiasing</Tag>
@@ -58,17 +58,17 @@
 	<Tag name="Surface">Superficie</Tag>
 	<Tag name="ChallEndFinished">Hai superato la sfida.</Tag>
 	<Tag name="About">A riguardo</Tag>
-	<Tag name="NewTerrainGenerate">Genera nuovo</Tag>
 	<Tag name="TBScore">Punteggio</Tag>
 	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But being small does slide sideways.</Tag>
-	<Tag name="DevKeys">Tasti per sviluppo. Ctrl-F globale, Alt-shift-1..6 carica i test su piste.</Tag>
+	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
+	<Tag name="CarDesc_V3">A big and heavy spaceship. Very good acceleration at start and strong braking. But doesn't reach high speeds.</Tag>
 	<Tag name="InputRoadChkFirst">0   - imposta il checkpoint come prima  (1)</Tag>
 	<Tag name="SC_ForestMntn">ForestaMntgn</Tag>
 	<Tag name="NetRefreshList">Ricevi/aggiorna l'elenco</Tag>
 	<Tag name="InputObjectsIns">Ins - inserisci nuovo, in corrispondenza del cursore</Tag>
 	<Tag name="GraphicsAll_Low">Basso</Tag>
 	<Tag name="ChampEndFinished">Hai completato il campionato.</Tag>
-	<Tag name="Gravity">Gravità</Tag>
+	<Tag name="Negative">Negative (darken)</Tag>
 	<Tag name="InputUpdBlendmap">F9 - aggiorna il blendmap del terreno (manuale)</Tag>
 	<Tag name="Camera">Camera</Tag>
 	<Tag name="InputRoadOnTer">Home - vai su snap terreno</Tag>
@@ -95,7 +95,7 @@
 	<Tag name="RepeatStage">Ripeti lo stage</Tag>
 	<Tag name="CarDesc_HR">Auto molto pesante e lenta, ottima su terreno e resistente agli urti, facile da guidare. Inutile su piste veloci e acrobatici.</Tag>
 	<Tag name="SC_Finland">Finlandia</Tag>
-	<Tag name="TipParType1">Particella di pneumatici di tipo 1 (globale per la pista).</Tag>
+	<Tag name="CarDesc_Pipes">NOTE: Currently impossible to use in pipes.</Tag>
 	<Tag name="GrassDens">Densità dell'erba</Tag>
 	<Tag name="Locked">Bloccato</Tag>
 	<Tag name="VSync">VSync</Tag>
@@ -185,6 +185,7 @@
 	<Tag name="MessageBox_Yes">Sì</Tag>
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Camera precedente</Tag>
+	<Tag name="RplParticles">Particelle (per fantasma non trasparente)</Tag>
 	<Tag name="Brush_Size">Grandezza</Tag>
 	<Tag name="HDRParam2">Luminosità</Tag>
 	<Tag name="HDRParam3">Grana</Tag>
@@ -210,7 +211,7 @@
 	<Tag name="TimeMS">m:s</Tag>
 	<Tag name="InputAssignKey">&lt;Assegna&gt;</Tag>
 	<Tag name="Wireframe">Wireframe</Tag>
-	<Tag name="TerUpdSkip">Salta aggiornamento del terreno</Tag>
+	<Tag name="ShowPictures">Mostra le immagini nei caricamenti</Tag>
 	<Tag name="Brush_Force">Forza</Tag>
 	<Tag name="Score">Punteggio</Tag>
 	<Tag name="SpeedSensitiveSteering">Sensibilità dello sterzo</Tag>
@@ -357,6 +358,7 @@
 	<Tag name="Vegetation">Vegetazione</Tag>
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="max">mass.</Tag>
+	<Tag name="TerUpdSkip">Salta aggiornamento del terreno</Tag>
 	<Tag name="Stage">Stage</Tag>
 	<Tag name="CarDesc_3S">Buona macchina adatta per tutte le piste, con accelerazione molto lenta, soprattutto ad alta velocità.</Tag>
 	<Tag name="None">Niente</Tag>
@@ -373,7 +375,7 @@
 	<Tag name="RplVersion">Versione</Tag>
 	<Tag name="Stages">Stage</Tag>
 	<Tag name="OpponentsList">Tabella degli avversari</Tag>
-	<Tag name="Options">Opzioni</Tag>
+	<Tag name="DevKeys">Tasti per sviluppo. Ctrl-F globale, Alt-shift-1..6 carica i test su piste.</Tag>
 	<Tag name="Delete">Cancella</Tag>
 	<Tag name="Rename">Rinonima</Tag>
 	<Tag name="Asphalt">Asfalto</Tag>
@@ -452,11 +454,11 @@
 	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
 	<Tag name="TipGrassColorMap">Colormap erba per layer, di solito stessa scelta come i materiali erba. Colorazione erba aggiuntivo.</Tag>
 	<Tag name="Multiplayer">Multigiocatore</Tag>
-	<Tag name="trailColor">colore scia</Tag>
 	<Tag name="ListeningOnPort">Listening on port</Tag>
 	<Tag name="InputToggleVeget">V - Attiva/disattiva la vegetazione</Tag>
 	<Tag name="Particles">Particelle</Tag>
 	<Tag name="CarDesc_XZ">Auto dotata di motore molto potente, facile da guidare sulla maggior parte delle piste, ma non molto su dossi a causa delle sospensioni corte e rigide. Tanto torque provoca molte testa-coda.</Tag>
+	<Tag name="Adjust">Adjust</Tag>
 	<Tag name="Other">Altro</Tag>
 	<Tag name="TipTerLAngSm">Raggio angolo smoothing (transizione).</Tag>
 	<Tag name="godrays">Raggi crepuscolari</Tag>
@@ -467,7 +469,7 @@
 	<Tag name="ColReflect">Riflesso</Tag>
 	<Tag name="Development">Sviluppo</Tag>
 	<Tag name="InputRoadIns">Ins - inserisci nuovo (dopo aver preso, alt -prima)</Tag>
-	<Tag name="Gravel">Ghiaia</Tag>
+	<Tag name="TweakEdit1">Alt-Z - vai alla finestra ottimizza (modifica auto)</Tag>
 	<Tag name="InputBrushParams">Parametri brush</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="SC_Asphalt">Asfalto</Tag>
@@ -492,6 +494,7 @@
 	<Tag name="TipMudInt">Intensità particelle di fango.</Tag>
 	<Tag name="HeightMax">Altezza mass.</Tag>
 	<Tag name="Obj_Rot">Rot.</Tag>
+	<Tag name="Transparency">Transparency</Tag>
 	<Tag name="NetWrongPassword">Password errata.</Tag>
 	<Tag name="RplRewindGhost">Riavvolgi il fantasma</Tag>
 	<Tag name="ScaleAll">Scala tutto</Tag>
@@ -549,7 +552,7 @@
 	<Tag name="Bronze">Bronzo</Tag>
 	<Tag name="TexCoordMul">Mol. coord. tex</Tag>
 	<Tag name="Shadows">Ombre</Tag>
-	<Tag name="ShowPictures">Mostra le immagini nei caricamenti</Tag>
+	<Tag name="Options">Opzioni</Tag>
 	<Tag name="distance">distanza</Tag>
 	<Tag name="SSS_Effect">Effetto</Tag>
 	<Tag name="Chall_Extreme">Estremo</Tag>
@@ -583,7 +586,7 @@
 	<Tag name="InputRplCtrl3">[ , ] - vento in avanti/all'indietro (shift - lento, ctrl,alt -veloce)</Tag>
 	<Tag name="Laps">Giri</Tag>
 	<Tag name="InputRplCtrl1">Backspace - mostra/nascondi i controlli (tieni premuto ctrl per usare il mouse)</Tag>
-	<Tag name="TracksGhost">Piste fantasma (ES miglior guidatore per pista)</Tag>
+	<Tag name="TipParType1">Particella di pneumatici di tipo 1 (globale per la pista).</Tag>
 	<Tag name="InputRplCtrl4">K, L - guarda camera di un altro giocatore</Tag>
 	<Tag name="TipGrassSwayLen">Lunghezza ondeggiamento dell'erba (scala).</Tag>
 	<Tag name="WaterReflection">Riflesso</Tag>
@@ -594,7 +597,7 @@
 	<Tag name="FrameSkip">Riduci frame</Tag>
 	<Tag name="TweakEdit2">Alt-Shift-Z - salva il file e ricarica il gioco</Tag>
 	<Tag name="InputTrackScrn">(per le immagini catturate delle piste)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - vai alla finestra ottimizza (modifica auto)</Tag>
+	<Tag name="trailColor">colore scia</Tag>
 	<Tag name="Boost">Turbo</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="TipFogClr">Colore di fine nebbia quando si guarda sotto il sole.</Tag>
@@ -730,6 +733,7 @@
 	<Tag name="UnitNm">Nm</Tag>
 	<Tag name="ABS">ABS (freni antibloccaggio)</Tag>
 	<Tag name="UnitMB">MB</Tag>
+	<Tag name="Terrain">Terreno</Tag>
 	<Tag name="Back">Indietro</Tag>
 	<Tag name="TipDiffusePrev">Anteprima immagine di diffusione texture.</Tag>
 	<Tag name="InputTerSmooth">S - Smooth  (spiana)</Tag>
@@ -743,7 +747,7 @@
 	<Tag name="NewTerrainFlat">Nuovo piano</Tag>
 	<Tag name="ColSat">Saturazione</Tag>
 	<Tag name="TipTCS">Impedisce che le ruote girino durante l'accelerazione (default: disattivato).</Tag>
-	<Tag name="RplGhost">Mostra la guida fantasma - miglior giro</Tag>
+	<Tag name="NewTerrainGenerate">Genera nuovo</Tag>
 	<Tag name="InputRoadColumn">End - attiva/disattiva colonna</Tag>
 	<Tag name="InputRoadMerge">M - attiva/disattiva unione segm strada (per test)</Tag>
 	<Tag name="Brush_Height">Altezza</Tag>
@@ -770,7 +774,7 @@
 	<Tag name="Car_MaxTorque">Torque mass.</Tag>
 	<Tag name="ReflMode_full">Completo</Tag>
 	<Tag name="Distance">Distanza</Tag>
-	<Tag name="Adjust">Adjust</Tag>
+	<Tag name="RplGhost">Mostra la guida fantasma - miglior giro</Tag>
 	<Tag name="TipGrassPageLength">Lunghezza pagine erba (bassa si ricarica spesso, alta causa commutazione visibile).</Tag>
 	<Tag name="Reflections">Riflessi</Tag>
 	<Tag name="dust">polvere</Tag>
@@ -849,7 +853,7 @@
 	<Tag name="SREditorVersion">Stunt Rally - Editor di piste - versione</Tag>
 	<Tag name="InputRoadAfterPick">una volta presa, centra in corrispondenza del mouse</Tag>
 	<Tag name="TipTrackDesc">Testo di descrizione pista</Tag>
-	<Tag name="RplFileSize">Grandezza del file</Tag>
+	<Tag name="TracksGhost">Piste fantasma (ES miglior guidatore per pista)</Tag>
 	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
 	<Tag name="SC_Savanna">Savana</Tag>
 	<Tag name="NetHost">Host</Tag>
@@ -864,7 +868,7 @@
 	<Tag name="InputHelp">Input/aiuto</Tag>
 	<Tag name="TipVegetModels">Modelli (mesh) per vegetazione. Locata in data/trees/.</Tag>
 	<Tag name="CheckArrow">Freccia checkpoint</Tag>
-	<Tag name="Sun">Sole</Tag>
+	<Tag name="RplFileSize">Grandezza del file</Tag>
 	<Tag name="InputMapShiftUp">Cambia marcia seguente</Tag>
 	<Tag name="CarDebugText">Testo di debug auto </Tag>
 	<Tag name="OgreDialog">Mostra il dialogo di Ogre</Tag>
@@ -906,6 +910,7 @@
 	<Tag name="SleepMS">Intervallo sonno [milisec]</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - copia selezione</Tag>
 	<Tag name="Materials">Materiali</Tag>
+	<Tag name="Gravel">Ghiaia</Tag>
 	<Tag name="InputMultiplier">Moltiplicatore</Tag>
 	<Tag name="Reverse">Invertito</Tag>
 	<Tag name="InputMapShiftDown">Scala marcia prec.</Tag>
@@ -955,7 +960,7 @@
 	<Tag name="RplLoad">Carica</Tag>
 	<Tag name="UnitBhp">bhp</Tag>
 	<Tag name="InputTogglePreview">f7 - accedi/lascia anteprima di camera</Tag>
-	<Tag name="InpSet_AxisHalfInv">Metà asse invertito</Tag>
+	<Tag name="Sun">Sole</Tag>
 	<Tag name="ScaleTerHeight">Altezza del terreno</Tag>
 	<Tag name="SC_Crystals">Crystals</Tag>
 	<Tag name="TipTerLHSm">Raggio di altezza smoothing (transizione).</Tag>
@@ -1035,6 +1040,7 @@
 	<Tag name="CameraAutoTilt">Inclinazione automatica camera su pendenza</Tag>
 	<Tag name="Trilinear">Trilinear</Tag>
 	<Tag name="InputUndo">(una volta indietro)</Tag>
+	<Tag name="Gravity">Gravità</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - riavvia scala a 1 (con shift a 0.5)</Tag>
 	<Tag name="CarStart">Car Start</Tag>
 	<Tag name="ProfilerTxt">Testo profiler times </Tag>
@@ -1054,18 +1060,20 @@
 	<Tag name="RplSave">Salva</Tag>
 	<Tag name="InputPressButtonTip">Premi un tasto per vedere il suo numero</Tag>
 	<Tag name="SC_Moss">Palude</Tag>
-	<Tag name="Terrain">Terreno</Tag>
+	<Tag name="InpSet_AxisHalfInv">Metà asse invertito</Tag>
 	<Tag name="smooth">smooth</Tag>
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prec.,pross. scheda (alt - sottoschede)</Tag>
 	<Tag name="Diff6">Estrema</Tag>
 	<Tag name="RplAll">Tutto</Tag>
-	<Tag name="Gearbox">Gearbox</Tag>
-	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
-	<Tag name="CarDesc_V3">A big and heavy spaceship. Very good acceleration at start and strong braking. But doesn't reach high speeds.</Tag>
-	<Tag name="Negative">Negative (darken)</Tag>
-	<Tag name="CarDesc_Pipes">NOTE: Currently impossible to use in pipes.</Tag>
-	<Tag name="Transparency">Transparency</Tag>
+	<Tag name="Updating">Updating</Tag>
+	<Tag name="Saving">Saving</Tag>
+	<Tag name="Loaded">Loaded</Tag>
+	<Tag name="Chall_Special">Special</Tag>
+	<Tag name="Updated">Updated</Tag>
+	<Tag name="AlreadyExists">Already exists</Tag>
+	<Tag name="Saved">Saved</Tag>
+	<Tag name="Loading">Loading</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
