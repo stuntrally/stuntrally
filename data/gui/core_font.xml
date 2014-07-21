@@ -4,7 +4,8 @@
 
 
 	<!-- Main Gui Fonts - variable size
-		created in code  CGuiCom::CreateFonts()  -->
+		created in code  CGuiCom::CreateFonts()
+		code ranges same as in hud.text  -->
 
 
 	<!-- Fps -->
@@ -33,18 +34,9 @@
 		<Property key="Distance" value="4"/>
 		<Property key="OffsetHeight" value="0"/>
 		<Codes>
-			<Code range="33 255"/>
-			<!-- polish -->
-			<Code range="260 263"/>
-			<Code range="280 281"/>
-			<Code range="321 324"/>
-			<Code range="346 347"/>
-			<Code range="377 380"/>
+			<Code range="33 400"/>
 			<!-- romanian -->
 			<Code range="536 539"/>
-			<Code range="258 259"/>
-			<Code range="350 351"/>
-			<Code range="354 355"/>
 			<!-- russian -->
 			<Code range="1025 1105"/>
 			<Code range="8470"/>
@@ -64,18 +56,9 @@
 		<Property key="Distance" value="4"/>
 		<Property key="OffsetHeight" value="0"/>
 		<Codes>
-			<Code range="33 255"/>
-			<!-- polish -->
-			<Code range="260 263"/>
-			<Code range="280 281"/>
-			<Code range="321 324"/>
-			<Code range="346 347"/>
-			<Code range="377 380"/>
+			<Code range="33 400"/>
 			<!-- romanian -->
 			<Code range="536 539"/>
-			<Code range="258 259"/>
-			<Code range="350 351"/>
-			<Code range="354 355"/>
 			<!-- russian -->
 			<Code range="1025 1105"/>
 			<Code range="8470"/>
