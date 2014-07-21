@@ -41,6 +41,15 @@
 	<Tag name="LS_OBJS">Loading Objects</Tag>
 	<Tag name="LS_TREES">Loading Trees</Tag>
 	<Tag name="LS_MISC">Finishing</Tag>
+
+	<!--  Ed status  -->
+	<Tag name="Loading">Loading</Tag>
+	<Tag name="Loaded">Loaded</Tag>
+	<Tag name="Saving">Saving</Tag>
+	<Tag name="Saved">Saved</Tag>
+	<Tag name="Updating">Updating</Tag>
+	<Tag name="Updated">Updated</Tag>
+	<Tag name="Copy">Copy</Tag>
 	
 	<!--  HUD  -->
 	<Tag name="TBTime">Time</Tag>
@@ -430,6 +439,7 @@
 	<Tag name="RplSave">Save</Tag>
 	<Tag name="RplDelete">Delete</Tag>
 	<Tag name="RplRename">Rename</Tag>
+	<Tag name="AlreadyExists">Already exists</Tag>
 
 	<Tag name="RplAutoRec">Auto record replay</Tag>
 	<Tag name="RplGhost">Show ghost drive - best lap</Tag>

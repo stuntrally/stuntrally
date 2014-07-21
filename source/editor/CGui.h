@@ -14,6 +14,7 @@
 #include <MyGUI_Enumerator.h>
 #include <MyGUI_WidgetDefines.h>  //EnumeratorWidgetPtr
 #include <MyGUI_Colour.h>
+#include <MyGUI_UString.h>
 #include "../ogre/common/MessageBox/MessageBoxStyle.h"
 
 
@@ -47,10 +48,16 @@ public:
 	void toggleGui(bool toggle=false);
 	void GuiShortcut(WND_Types wnd, int tab, int subtab=-1), NumTabNext(int rel);
 
+
 	//  ed
-	void Status(Ogre::String s, float r,float g,float b);
+	void Status(MyGUI::UString s, float r,float g,float b);
 	void SetGuiFromXmls();  // update gui controls
 	bool noBlendUpd;
+
+	///  mode, status
+	Img imgCam, imgEdit, imgGui;
+	WP panStatus;  Txt txtStatus;
+
 
 	//  clr
 	const static MyGUI::Colour sUsedClr[8];

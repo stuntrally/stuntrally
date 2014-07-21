@@ -19,22 +19,6 @@ using namespace Ogre;
 //------------------------------------------------------------------------
 void BaseApp::updateStats()
 {
-	//  Focus  * * *
-	static int fcOld = -2;
-	int fc = bGuiFocus ? 2 : bMoveCam ? 0 : 1;
-	if (ovFocus && fc != fcOld)
-	{	if (fcOld < 0)  ++fcOld;
-		else  fcOld = fc;
-		
-		const char* sFoc[3] = {"Cam", " Edit", "  Gui"};
-		ColourValue cFoc[3] = {ColourValue(0.7,0.85,1.0), ColourValue(0.7,1.0,0.5), ColourValue(1.0,1.0,0.4)};
-		const char* mFoc[3] = {"Cam", "Edit", "Gui"};
-
-		ovFocus->setCaption(sFoc[fc]);
-		ovFocus->setColour(cFoc[fc]);  if (ovFocBck)
-		ovFocBck->setMaterialName(String("Menu/Focus") + mFoc[fc]);
-	}
-
 	//  camera pos, rot
 	if (pSet->camPos)
 	{
@@ -46,15 +30,14 @@ void BaseApp::updateStats()
 	}
 
 	//  Fps
-	{	const RenderTarget::FrameStats& stats = mWindow->getStatistics();
-		size_t mem = TextureManager::getSingleton().getMemoryUsage() + MeshManager::getSingleton().getMemoryUsage();
+	const RenderTarget::FrameStats& stats = mWindow->getStatistics();
+	size_t mem = TextureManager::getSingleton().getMemoryUsage() + MeshManager::getSingleton().getMemoryUsage();
 
-		txFps->setCaption(
-			"#E0F0FF"+(stats.lastFPS >= 200.f ? fToStr(stats.lastFPS,0,4)+"." : fToStr(stats.lastFPS,1,5))+
-			"#B0C0D0"+iToStr(int(stats.triangleCount/1000.f),4)+"k"+
-			" #C8E0FF"+iToStr(stats.batchCount,3)+
-			" #A0B0C8"+iToStr(mem/1024/1024,3)+"M" );
-	}
+	txFps->setCaption(
+		"#E0F0FF"+(stats.lastFPS >= 200.f ? fToStr(stats.lastFPS,0,4)+"." : fToStr(stats.lastFPS,1,5))+
+		"#B0C0D0"+iToStr(int(stats.triangleCount/1000.f),4)+"k"+
+		" #C8E0FF"+iToStr(stats.batchCount,3)+
+		" #A0B0C8"+iToStr(mem/1024/1024,3)+"M" );
 }
 
 

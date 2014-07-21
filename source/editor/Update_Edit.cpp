@@ -54,14 +54,13 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			mpos->end();  }
 	}
 	
-	//  status overlay
+	//  status
 	if (fStFade > 0.f)
 	{	fStFade -= evt.timeSinceLastFrame;
-		//Real a = std::min(1.0f, fStFade*0.9f);
-		//ColourValue cv(0.0,0.5,a, a );
-		//ovStat->setColour(cv);	ovSt->setColour(cv);
+		
+		gui->panStatus->setAlpha(std::min(1.f, fStFade / 1.5f));
 		if (fStFade <= 0.f)
-		{	ovSt->hide();	ovSt->setMaterialName("");  }
+			gui->panStatus->setVisible(false);
 	}
 
 	#define isKey(a)  mInputWrapper->isKeyDown(SDL_SCANCODE_##a)

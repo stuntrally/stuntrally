@@ -1,32 +1,3 @@
-Editor/FocusOverlay
-{
-	zorder 500
-	container BorderPanel(Editor/FocusPanel)
-	{
-		metrics_mode pixels
-		vert_align bottom
-		left  0
-		width 70
-		top	-25
-		height	 25
-		material Menu/FocusOvr
-
-		element TextArea(Editor/FocusText)
-		{
-			metrics_mode pixels
-			left 5
-			top 5
-			width 70
-			height 22
-			font_name Console
-			char_height 21
-			//caption Cam
-			colour_top	0.7 0.8 1.0
-			colour_bottom 0.95 1.0 1.0
-		}
-				
-	}
-}
 
 Editor/StatusOverlay
 {
@@ -223,7 +194,7 @@ Editor/BrushPrvOverlay
 		metrics_mode pixels
 		vert_align bottom
 		left  0
-		top	 -153
+		top	 -190
 		width   128
 		height	128
 		//material BrushPrvMtr

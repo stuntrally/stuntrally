@@ -1,5 +1,36 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
+	<Widget type="ImageBox" skin="ImageBox" position="1 2000 64 64" align="Bottom" layer="Back" name="modeCam">
+		<Property key="ImageCoord" value="0 512 128 128"/>
+		<Property key="Colour" value="0.7 0.85 1"/>
+		<Property key="Alpha" value="0.9"/>
+		<Property key="ImageTexture" value="gui_icons.png"/>
+		<Property key="Visible" value="false"/>
+	</Widget>
+	<Widget type="ImageBox" skin="ImageBox" position="1 2100 64 64" align="Bottom" layer="Back" name="modeEdit">
+		<Property key="ImageCoord" value="0 896 128 128"/>
+		<Property key="Colour" value="0.6 1 0.6"/>
+		<Property key="Alpha" value="0.9"/>
+		<Property key="ImageTexture" value="gui_icons.png"/>
+		<Property key="Visible" value="false"/>
+	</Widget>
+	<Widget type="ImageBox" skin="ImageBox" position="1 2200 64 64" align="Bottom" layer="Back" name="modeGui">
+		<Property key="ImageCoord" value="256 640 128 128"/>
+		<Property key="Colour" value="0.9 0.88 0.75"/>
+		<Property key="Alpha" value="0.6"/>
+		<Property key="ImageTexture" value="gui_icons.png"/>
+		<Property key="Visible" value="false"/>
+	</Widget>
+	<Widget type="Widget" skin="PanelSkin" position="88 2300 320 40" align="Center" layer="Back" name="panStatus">
+		<Property key="Colour" value="0.7 0.85 1.0"/>
+		<Property key="Alpha" value="0.9"/>
+		<Property key="Visible" value="false"/>
+		<Widget type="TextBox" skin="TextBox" position="12 4 440 80" name="txtStatus">
+			<Property key="InheritsAlpha" value="false"/>
+			<!--<Property key="Caption" value="#{LoadingDesc}"/>-->
+			<Property key="TextColour" value="0.8 0.9 1.0"/>
+		</Widget>
+	</Widget>
 	<Widget type="Window" skin="WindowC" position="1740 24 400 480" align="Center" layer="Overlapped" name="MainMenuWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
@@ -88,7 +119,6 @@
 			<Property key="Static" value="true"/>
 			<Property key="TextAlign" value="Left Top"/>
 			<Property key="FontName" value="font.small"/>
-			<Property key="Caption" value="ToolTip Text"/>
 			<UserString key="NotSized" value="1"/>
 		</Widget>
 	</Widget>
@@ -672,7 +702,7 @@
 				<Property key="InheritsAlpha" value="false"/>
 			</Widget>
 			<Widget type="Button" skin="RadioButton" position="306 100 92 20" name="PickRadFilter">
-				<Property key="Caption" value="Filter"/>
+				<Property key="Caption" value="#{Brush_Filter}"/>
 				<Property key="TextColour" value="0.6 0.8 1.0"/>
 				<Property key="InheritsAlpha" value="false"/>
 			</Widget>-->

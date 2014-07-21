@@ -189,7 +189,7 @@ void App::NewCommon(bool onlyTerVeget)
 void App::LoadTrack()
 {
 	eTrkEvent = TE_Load;
-	gui->Status("Loading...", 0.3,0.6,1.0);
+	gui->Status(TR("#{Loading}..."), 0.3,0.6,1.0);
 }
 void App::LoadTrackEv()
 {
@@ -270,7 +270,7 @@ void App::LoadTrackEv()
 		tex->reload();
 	} catch(...) {  }
 
-	gui->Status("Loaded", 0.5,0.7,1.0);
+	gui->Status(TR("#{Loaded}"), 0.5,0.7,1.0);
 	
 	if (pSet->check_load)
 		gui->WarningsCheck(scn->sc, scn->road);
@@ -284,7 +284,7 @@ void App::LoadTrackEv()
 void App::UpdateTrack()
 {
 	eTrkEvent = TE_Update;
-	gui->Status("Updating...",0.2,1.0,0.5);
+	gui->Status(TR("#{Updating}..."),0.2,1.0,0.5);
 }
 void App::UpdateTrackEv()
 {
@@ -308,7 +308,7 @@ void App::UpdateTrackEv()
 
 	Rnd2TexSetup();
 
-	gui->Status("Updated",0.5,1.0,0.7);
+	gui->Status(TR("#{Updated)"),0.5,1.0,0.7);
 }
 
 //  Update btns  ---
@@ -352,7 +352,7 @@ void App::SaveTrack()
 		return;
 	}
 	eTrkEvent = TE_Save;
-	gui->Status("Saving...", 1,0.4,0.1);
+	gui->Status(TR("#{Saving}..."), 1,0.4,0.1);
 
 	if (pSet->check_save)
 		gui->WarningsCheck(scn->sc, scn->road);
@@ -385,7 +385,7 @@ void App::SaveTrackEv()
 	if (!vdr)  SaveWaterDepth();  //?-
 
 	gui->Delete(gui->getHMapNew());
-	gui->Status("Saved", 1,0.6,0.2);
+	gui->Status(TR("#{Saved}"), 1,0.6,0.2);
 }
 
 

@@ -143,6 +143,11 @@ void CGui::InitGui()
 	}
 
 
+	//  mode, status
+	imgCam  = fImg("modeCam");  imgEdit = fImg("modeEdit");  imgGui  = fImg("modeGui");
+	panStatus = fWP("panStatus");  txtStatus = fTxt("txtStatus");
+
+
 	///  brush presets   o o o o o o o o 
 	ScrollView* scv = mGui->findWidget<ScrollView>("svBrushes");
 	int j=0, n=0;  const int z = 128;

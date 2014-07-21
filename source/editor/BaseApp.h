@@ -92,7 +92,8 @@ protected:
 	///  ovelay
 	Ogre::Overlay* mDebugOverlay, *ovBrushPrv, *ovTerPrv;
 	Ogre::OverlayElement *ovSt, *ovBrushMtr, *ovTerMtr,
-		*ovPos, *ovDbg, *ovInfo, *ovStat, *ovFocus, *ovFocBck;  Ogre::Real fStFade;
+		*ovPos, *ovDbg, *ovInfo, *ovStat;
+	float fStFade;
 
 	bool alt, ctrl, shift;  // key modifiers
 	bool mbLeft, mbRight, mbMiddle;  // mouse buttons

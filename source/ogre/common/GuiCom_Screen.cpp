@@ -9,6 +9,7 @@
 #else
 	#include "../../editor/CApp.h"
 	#include "../../editor/settings.h"
+	#include "../../editor/CGui.h"
 #endif
 #include "SDL_video.h"
 #include <OgreRoot.h>
@@ -20,6 +21,7 @@
 #include <MyGUI_Gui.h>
 #include <MyGUI_Button.h>
 #include <MyGUI_Window.h>
+#include <MyGUI_ImageBox.h>
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -180,6 +182,15 @@ void CGuiCom::ResizeOptWnd()
 
 	if (bnQuit)  //  reposition Quit btn
 		bnQuit->setCoord(wx - 0.09*wx, 0, 0.09*wx, 0.03*wy);
+
+	//  ed mode, status  ._
+	#ifdef SR_EDITOR
+	IntCoord ic(0.f, wy - 0.07*wy, 0.06*wy, 0.06*wy);
+	if (app->gui->imgCam)
+	{	app->gui->imgCam->setCoord(ic);  app->gui->imgEdit->setCoord(ic);  app->gui->imgGui->setCoord(ic);  }
+	if (app->gui->panStatus)
+		app->gui->panStatus->setCoord(0.08*wy, wy - 0.035*wy, 0.15*wy, 0.035*wy);
+	#endif
 
 	updTrkListDim();
 }

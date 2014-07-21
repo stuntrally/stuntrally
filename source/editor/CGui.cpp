@@ -11,6 +11,9 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	: app(app1)
 	,bGI(0)
 	,brImg(0), wndTabs(0)  // brush
+	//  mode
+	,imgCam(0), imgEdit(0), imgGui(0)
+	,panStatus(0), txtStatus(0)
 	// sun
 	,btnSky(0),cmbRain1(0),cmbRain2(0)
 	// light

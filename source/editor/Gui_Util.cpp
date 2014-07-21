@@ -47,7 +47,6 @@ void CGui::SetGuiFromXmls()
 
 	svSkyYaw.Upd();  svSunPitch.Upd();  svSunYaw.Upd();
 	_Clr(Amb, sc->lAmb);  _Clr(Diff, sc->lDiff);  _Clr(Spec, sc->lSpec);
-	//  fog
 	_Clr(Fog, sc->fogClr);  _Clr(Fog2, sc->fogClr2);  _Clr(FogH, sc->fogClrH);
 	svFogStart.Upd();	svFogEnd.Upd();
 	svFogHStart.Upd();	svFogHEnd.Upd();
@@ -182,24 +181,33 @@ void App::SetEdMode(ED_MODE newMode)
 //-----------------------------------------------
 void App::UpdVisGui()
 {
-	bool notMain = bGuiFocus && !pSet->isMain;
-	mWndMain->setVisible(bGuiFocus && pSet->isMain);
+	//  wnd
+	bool g = bGuiFocus;
+	bool notMain = g && !pSet->isMain;
+	mWndMain->setVisible(g && pSet->isMain);
 	mWndTrack->setVisible(notMain && pSet->inMenu == WND_Track);
 	mWndEdit->setVisible(notMain && pSet->inMenu == WND_Edit);
 	mWndHelp->setVisible(notMain && pSet->inMenu == WND_Help);
 	mWndOpts->setVisible(notMain && pSet->inMenu == WND_Options);
 
-	if (!bGuiFocus)  mWndPick->setVisible(false);
-	if (!bGuiFocus && gui->wndColor)  gui->wndColor->setVisible(false);
-	if (gcom->bnQuit)  gcom->bnQuit->setVisible(bGuiFocus);
+	if (!g)  mWndPick->setVisible(false);
+	if (!g && gui->wndColor)  gui->wndColor->setVisible(false);
+	if (gcom->bnQuit)  gcom->bnQuit->setVisible(g);
 
-	bool vis = bGuiFocus || !bMoveCam;
+	//  mode
+	if (gui->imgCam)
+	{	gui->imgCam->setVisible(!g && bMoveCam);
+		gui->imgEdit->setVisible(!g && !bMoveCam);
+		gui->imgGui->setVisible(g);
+	}
+
+	bool vis = g || !bMoveCam;
 	mCursorManager->cursorVisibilityChange(vis);
 	mInputWrapper->setMouseRelative(!vis);
 	mInputWrapper->setGrabPointer(!vis && pSet->mouse_capture);
 
 	if (scn->road)  scn->road->SetTerHitVis(bEdit());
-	if (!bGuiFocus && gcom->mToolTip)  gcom->mToolTip->setVisible(false);
+	if (!g && gcom->mToolTip)  gcom->mToolTip->setVisible(false);
 
 	if (ovBrushPrv)
 	if (edMode >= ED_Road || bMoveCam)
@@ -212,7 +220,7 @@ void App::UpdVisGui()
 
 	//  1st center mouse
 	static bool first = true;
-	if (bGuiFocus && first)
+	if (g && first)
 	{	first = false;
 		gcom->GuiCenterMouse();
 	}
@@ -228,12 +236,12 @@ void CGui::toggleGui(bool toggle)
 
 
 //  bottom status bar
-void CGui::Status(String s, float r,float g,float b)
+void CGui::Status(UString s, float r,float g,float b)
 {
-	app->ovStat->setColour(ColourValue(r,g,b));
-	app->ovStat->setCaption(s);
-	app->ovSt->setMaterialName("hud/Times");
-	app->ovSt->show();
+	txtStatus->setCaption(s);
+	txtStatus->setTextColour(Colour(r,g,b));
+	panStatus->setColour(Colour(r,g,b));
+	panStatus->setAlpha(1.f);  panStatus->setVisible(true);
 	app->fStFade = 1.5f;
 }
 
@@ -400,6 +408,7 @@ void CGui::GuiUpdate()
 	}
 
 }
+
 
 ///  Color tool window
 //...............................................................................

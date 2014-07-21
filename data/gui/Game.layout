@@ -4190,7 +4190,6 @@
 			<Property key="Static" value="true"/>
 			<Property key="TextAlign" value="Left Top"/>
 			<Property key="FontName" value="font.small"/>
-			<Property key="Caption" value="ToolTip Text"/>
 			<UserString key="NotSized" value="1"/>
 		</Widget>
 	</Widget>
