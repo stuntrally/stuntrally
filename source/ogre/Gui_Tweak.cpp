@@ -437,7 +437,7 @@ void CGui::TweakTireSave()
 	if (PATHMANAGER::FileExists(file))
 	{
 		if (txtTweakTire)
-		{	txtTweakTire->setCaption("File already exists.");
+		{	txtTweakTire->setCaption(TR("#{AlreadyExists}."));
 			txtTweakTire->setTextColour(Colour(1,0.2,0.2));  }
 		return;
 	}
