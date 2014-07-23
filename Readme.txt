@@ -16,7 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-    The license GPL 3.0 applies only to code written by us.
+    The license GNU GPL 3.0 applies only to code written by us.
     Which is in source dir, subdirs: editor, network, ogre and road.
     Libraries used have their own licenses.
     For data licenses look in various .txt files in data subdirs.
@@ -27,7 +27,7 @@ Links
 Project's Homepage:  (all links, Wiki pages)
         http://code.google.com/p/vdrift-ogre/
 
-Releases:  (Linux binaries, Windows installer)
+Releases:  (GNU/Linux binaries, Windows installer)
         https://sourceforge.net/projects/stuntrally/files/
 Git repositories:  (for latest sources, data, and tracks)
         https://github.com/stuntrally/
@@ -45,12 +45,12 @@ Editor tutorial:
 
 Description
 
-The game features 144 tracks in 25 sceneries and 19 cars.
+The game features 146 tracks in 26 sceneries and 19 cars + 4 vehicles.
 Game modes include: Single Race, Tutorials, Championships, Challenges,
 Multiplayer and Split Screen. Also Replays and Ghost drive are present.
 
-The Track Editor allows modifying and creating tracks.
-Both run on Linux and Windows.
+The Track Editor allows creating and modifying tracks.
+Both run on GNU/Linux and Windows.
 
 The game aims at a rally style of driving (like in Richard Burns Rally),
 with possible stunt elements (jumps, loops, pipes)
