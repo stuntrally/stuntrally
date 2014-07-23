@@ -1,5 +1,7 @@
 #pragma once
 
+//  for car prv screens
+//#define CAR_PRV
 
 ///  const game params  -------
 struct SParams
@@ -38,7 +40,7 @@ struct SParams
 	,camBncScale, camBncMass
 	;
 
-//  take back time in rewind
+//  take back time in rewind (for track's ghosts)
 	bool backTime;
 
 	//  ctor, init values

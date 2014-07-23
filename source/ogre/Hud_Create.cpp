@@ -151,7 +151,7 @@ void CHud::Size()
 		}
 	}
 	if (txCamInfo)
-	{	txCamInfo->setPosition(300,wy-100);
+	{	txCamInfo->setPosition(270,wy-100);
 		bckMsg->setPosition(256,0);
 	}
 }

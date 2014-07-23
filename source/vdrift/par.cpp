@@ -3,8 +3,10 @@
 
 SParams::SParams()
 {
+
 /// _Tool_  go back time rewind  (1 for making best ghosts),  saves ghost always
 	backTime = 0;  //0 !in release
+
 //  SIM
 	raylen = 1.5f;  // wheel ray cast length
 //  GAME

@@ -211,7 +211,11 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 		float brake = !rear ? inputs[CARINPUT::BRAKE] : inputs[CARINPUT::THROTTLE];
 		dynamics.SetBrake(brake);
 	}
+	#ifdef CAR_PRV
+	dynamics.SetHandBrake(1.f);
+	#else
 	dynamics.SetHandBrake(inputs[CARINPUT::HANDBRAKE]);
+	#endif
 	
 	//  boost, flip over
 	if (!bRemoteCar)
@@ -225,6 +229,10 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 		if (std::abs(inputs[CARINPUT::STEER_LEFT]) > std::abs(inputs[CARINPUT::STEER_RIGHT])) //use whichever control is larger
 			steer_value = -inputs[CARINPUT::STEER_LEFT];
 
+		#ifdef CAR_PRV
+		if (!dynamics.hover && !dynamics.sphere)
+			steer_value = -1.f;
+		#endif
 		dynamics.SetSteering(steer_value, pGame->GetSteerRange());
 		last_steer = steer_value;
 	}

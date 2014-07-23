@@ -14,6 +14,7 @@
 #include "FollowCamera.h"
 #include "CarReflection.h"
 #include "../road/Road.h"
+#include "../vdrift/par.h"
 
 #include <OgreRoot.h>
 #include <OgreTerrain.h>
@@ -212,12 +213,14 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 
 	
 	//  brake state
+	#ifndef CAR_PRV
 	bool braking = posInfo.braking > 0;
 	if (bBraking != braking)
 	{
 		bBraking = braking;
 		UpdateBraking();
 	}
+	#endif
 	
 	//  terrain lightmap enable/disable (depending on distance to terrain)
 	#define MAX_TERRAIN_DIST 2.0  // meters

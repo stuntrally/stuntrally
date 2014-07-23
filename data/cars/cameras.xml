@@ -22,8 +22,8 @@
 	<Camera on="1" name="Ext close"         type="4"  bounce="1.0" pitch="11"  dist="7.0" offset="0 1.1 0" speed="6" default="0" />
 	<Camera on="1" name="Ext near"          type="4"  bounce="1.0" pitch="15"  dist="8.5" offset="0 1.1 0" speed="9" />
 
-	<!--used screen res 1024x768 crop to 512-->
-<!--<Camera on="2" name="Preview cam"       type="0"  bounce="0.0" yaw="147" pitch="13"  dist="8" offset="0 0.1 0" speed="20" default="1" />-->
+	<!--  car preview camera,  used screen res 1920x1080,  crop to 1024 center,  uncomment in par.h  #define CAR_PRV  -->
+<!--<Camera on="2" name="Preview Car Arena" type="2"  bounce="0.0" yaw="-132" pitch="-13.6"  offset="-49.3 4.3 -109.9" speed="20" default="1" />-->
 
 	<Camera on="2" name="Follow close"      type="0"  bounce="1" pitch="11"  dist="6.2" offset="0 1.1 0" speed="20" default="1" />
 	<Camera on="0" name="Follow near"       type="0"  bounce="1" pitch=" 7"  dist="7"   offset="0 1.2 0" speed="10" />

@@ -3,6 +3,7 @@
 #include "carcontrolmap_local.h"
 #include "../ogre/CGame.h"
 #include "../ogre/CGui.h"
+#include "../vdrift/par.h"
 
 
 //*  speed sensitive steering
