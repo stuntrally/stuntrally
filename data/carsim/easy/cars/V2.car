@@ -56,13 +56,13 @@ friction = 0.1
 hAbove = 2.0
 hRayLen = 4.0
 
-steerForce = 25
-steerDamp = 10
+steerForce = 24
+steerDamp = 12
 steerDampP = 14
 
-engineForce = 18
-engineVelDec = 0.006
-brakeForce  = 22
+engineForce = 11
+engineVelDec = 0.008
+brakeForce  = 19
 
 dampAirRes = 62
 dampSide = 2100

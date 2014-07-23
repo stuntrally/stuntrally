@@ -56,14 +56,14 @@ hAbove = 2.0
 hRayLen = 4.0
 
 steerForce = 22
-steerDamp = 11
+steerDamp = 10
 steerDampP = 14
 
-engineForce = 16
-engineVelDec = 0.008
-brakeForce  = 24
+engineForce = 13
+engineVelDec = 0.009
+brakeForce  = 20
 
-dampAirRes = 72
+dampAirRes = 51
 dampSide = 2000
 dampUp = 1050
 dampDn = 3150

@@ -32,20 +32,20 @@
 	<car id="ES"  crtver="1.2" speed="6.2" year="2006" type="Gravel"   easy="0.99" norm="1.04"  author="VeTi" />
 																						
 	<car id="TW"  crtver="2.1" speed="7.0" year="2011" type="Extreme"  easy="0.92" norm="0.94"  author="irokrhus" />
-	<car id="TU"  crtver="2.4" speed="7.3" year="2012" type="Extreme"  easy="0.92" norm="1.02"  author="carlospanganiban" />
+	<car id="TU"  crtver="2.4" speed="7.3" year="2012" type="Extreme"  easy="0.98" norm="1.02"  author="carlospanganiban" />
 
 	<car id="CT"  crtver="0.2" speed="6.4" year="1998" type="Asphalt"  easy="0.97" norm="1.02"  author="Dick Maurer,.. (VDrift)" />
 	<car id="360" crtver="0.2" speed="7.9" year="1999" type="Asphalt"  easy="1.03" norm="1.07"  author="Tyler Fric (VDrift)" />
 
-	<car id="SZ"  crtver="2.4" speed="8.0" year="1996" type="Gravel"   easy="1.02" norm="1.05"  author="cobe571" />
+	<car id="SZ"  crtver="2.4" speed="8.0" year="1996" type="Gravel"   easy="1.01" norm="1.05"  author="cobe571" />
 	<car id="XZ"  crtver="2.0" speed="8.4" year="2007" type="Asphalt"  easy="1.01" norm="1.03"  author="Neubi" />
 
 	
-	<car id="V2"  crtver="2.4" speed="9.4" year="2516" type="Spaceship" easy="1.33" norm="1.43"  car="0" author="speedypro" />
-	<car id="V1"  crtver="2.4" speed="9.6" year="2523" type="Spaceship" easy="1.40" norm="1.46"  car="0" author="benja" />
-	<car id="V3"  crtver="2.4" speed="9.8" year="2548" type="Spaceship" easy="1.50" norm="1.52"  car="0" author="jumahsafarty" />
+	<car id="V2"  crtver="2.4" speed="9.4" year="2516" type="Spaceship" easy="1.17" norm="1.43"  car="0" author="speedypro" />
+	<car id="V1"  crtver="2.4" speed="9.6" year="2523" type="Spaceship" easy="1.24" norm="1.46"  car="0" author="benja" />
+	<car id="V3"  crtver="2.4" speed="9.8" year="2548" type="Spaceship" easy="1.32" norm="1.52"  car="0" author="jumahsafarty" />
 
-	<car id="O"   crtver="2.4" speed="10.2" year="2785" type="Other"    easy="1.01" norm="1.57"  car="0" author="cryham" />
+	<car id="O"   crtver="2.4" speed="10.2" year="2785" type="Other"    easy="1.32" norm="1.57"  car="0" author="cryham" />
 
 	
 	<!--easy and norm are the car time multipliers for simultation modes
