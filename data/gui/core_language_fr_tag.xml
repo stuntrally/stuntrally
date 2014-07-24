@@ -69,6 +69,7 @@
 	<Tag name="GraphicsAll_Low">Bas</Tag>
 	<Tag name="ChampEndFinished">Vous avez fini ce championnat</Tag>
 	<Tag name="Negative">Negative (darken)</Tag>
+	<Tag name="MessageBox_No">Non</Tag>
 	<Tag name="InputUpdBlendmap">F9 - mettre à jour la Blendmap du terrain (manuellement)</Tag>
 	<Tag name="Camera">Caméra</Tag>
 	<Tag name="InputRoadOnTer">Orig. - activer l'alignement sur le Terrain</Tag>
@@ -226,10 +227,11 @@
 	<Tag name="SC_AutumnDark">AutomneSombre</Tag>
 	<Tag name="TipChangeReflect">Réflexions de la voiture (mat-miroir).</Tag>
 	<Tag name="filmgrain">Grain de film</Tag>
-	<Tag name="InputMapSteering">Direction</Tag>
+	<Tag name="Replay">Rejouer</Tag>
 	<Tag name="AutoRear">Marche aarière automatique</Tag>
 	<Tag name="TerGenFreq">Fréquence, Zoom</Tag>
 	<Tag name="Road_OnTerrain">Sur le terrain</Tag>
+	<Tag name="Updating">Updating</Tag>
 	<Tag name="ReflMode_single">Unique</Tag>
 	<Tag name="Near">Proche</Tag>
 	<Tag name="FogNormal">Normale</Tag>
@@ -311,6 +313,7 @@
 	<Tag name="InputBrushSize">,= (ou molette) - taille</Tag>
 	<Tag name="Car_StopTimeFrom">Temps d'arrêt de</Tag>
 	<Tag name="SC_JungleDark">JungleSombre</Tag>
+	<Tag name="Saving">Saving</Tag>
 	<Tag name="EscQuit">Esc quitte</Tag>
 	<Tag name="Gauges">Jauges (tours/min, vitesse)</Tag>
 	<Tag name="LengthDim">Mesure de longueur</Tag>
@@ -322,7 +325,7 @@
 	<Tag name="GrColorMap">Carte de couleurs</Tag>
 	<Tag name="TipBumpAmp">Amplitude des bosses additionelles (hauteur).</Tag>
 	<Tag name="InputFluidsMove">Clic gauche - se déplacer Clic droit - hauteur</Tag>
-	<Tag name="TipNormalTex">Texture de normale (hauteur en alpha).</Tag>
+	<Tag name="Loaded">Loaded</Tag>
 	<Tag name="CountdownTime">Compte à rebours avant une course</Tag>
 	<Tag name="Ghost">Fantôme</Tag>
 	<Tag name="GraphicsAll_High">Élevé</Tag>
@@ -378,6 +381,7 @@
 	<Tag name="DevKeys">Touches développeur. Ctrl-F</Tag>
 	<Tag name="Delete">Effacer</Tag>
 	<Tag name="Rename">Renommer</Tag>
+	<Tag name="Chall_Special">Special</Tag>
 	<Tag name="Asphalt">Bitume</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often and make too many batches, high will cause visible switching and make too many drawn triangles).</Tag>
 	<Tag name="ReverseStartOrder">Inverser l'ordre de départ</Tag>
@@ -388,7 +392,7 @@
 	<Tag name="TipFogHSmooth">Height fog smooth distance [meters].</Tag>
 	<Tag name="Brush_Shape">Forme</Tag>
 	<Tag name="length">longueur</Tag>
-	<Tag name="MessageBox_No">Non</Tag>
+	<Tag name="DynamicObjects">Objets dynamiques</Tag>
 	<Tag name="TipFogClrH">Couleur de la brume volumétrique.</Tag>
 	<Tag name="ColumnNSides">Côtés d'une colonne</Tag>
 	<Tag name="RplAutoRec">Enregistrer un replay automatiquement</Tag>
@@ -671,6 +675,7 @@
 	<Tag name="InputRoadMMB">Clic du milieu (ou pavé num. /,*)</Tag>
 	<Tag name="Textures">Textures</Tag>
 	<Tag name="TipTerVertCount">Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize].</Tag>
+	<Tag name="Updated">Updated</Tag>
 	<Tag name="RplCurrent">Courrante</Tag>
 	<Tag name="InputBrushFreq">O,P - fréquence du bruit (échelle)</Tag>
 	<Tag name="Diff4">Difficile</Tag>
@@ -737,6 +742,7 @@
 	<Tag name="Back">Retour</Tag>
 	<Tag name="TipDiffusePrev">Aperçu de la texture.</Tag>
 	<Tag name="InputTerSmooth">S - adoucir (aplatir)</Tag>
+	<Tag name="AlreadyExists">Already exists</Tag>
 	<Tag name="InputFocusFind">Ctrl-F aller à la boîte de recherche</Tag>
 	<Tag name="InputOther1">Haut,bas - naviguer dans les listes Entrée - démarrer</Tag>
 	<Tag name="TipModelDens">À quelle fréquence le modèle apparaîtra sur le circuit.</Tag>
@@ -797,6 +803,7 @@
 	<Tag name="TutorEndFinished">Vous avez fini ce tutoriel.</Tag>
 	<Tag name="TipGrassSwaySpd">Vitesse du \</Tag>
 	<Tag name="MaterialProperties">Propriétés du matériau</Tag>
+	<Tag name="Loading">Loading</Tag>
 	<Tag name="HeightmapSize">Taille de l'Heightmap</Tag>
 	<Tag name="TipToggleLayer">Activer ou désactiver le calque de texture choisi.</Tag>
 	<Tag name="TipTrkListEditor">Liste des circuits, cliquez pour sélectionner (pour Renommer ou Dupliquer). Appuyez sur [Charger le circuit] pour charger un circuit dans l'éditeur.</Tag>
@@ -808,7 +815,6 @@
 	<Tag name="GraphicsRightHQ">Par défaut, la meilleure qualité est obtenue avec le curseur à droite. Si elle est obtenue à gauche, le glisseur aura un + à gauche.</Tag>
 	<Tag name="CamInertia">Inertie de la caméra</Tag>
 	<Tag name="TipSurfFrict">Friction de la surface (exemple : 1.0 pour l'asphalte, 0.7 pour le gravier, 0.5 pour la glace).</Tag>
-	<Tag name="DynamicObjects">Objets dynamiques</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="TipGrassLayers">Calques d'herbe. Des valeurs entre 1 et 4 sont recommandées.</Tag>
 	<Tag name="speed">vitesse</Tag>
@@ -902,6 +908,7 @@
 	<Tag name="TipTerLMove">Déplace le calque, change l'ordre.</Tag>
 	<Tag name="TipLTrMaxTerH">Au-delà de cette altitude, le modèle n'apparaîtra pas.</Tag>
 	<Tag name="TotalScore">Score total</Tag>
+	<Tag name="Saved">Saved</Tag>
 	<Tag name="InputLoadNextTrack">Charger le circuit précédent (Maj - Préc.)</Tag>
 	<Tag name="TrackDifficulties">Différentes difficultés</Tag>
 	<Tag name="TipModelPrev">Image d'aperçu du modèle.</Tag>
@@ -912,6 +919,7 @@
 	<Tag name="Materials">Matériels</Tag>
 	<Tag name="Gravel">Gravier</Tag>
 	<Tag name="InputMultiplier">Multiplicateur</Tag>
+	<Tag name="TipNormalTex">Texture de normale (hauteur en alpha).</Tag>
 	<Tag name="Reverse">Inverser</Tag>
 	<Tag name="InputMapShiftDown">Rétrograder</Tag>
 	<Tag name="InputObjectsMoveReset">Maj.-1 - déplacer au curseur/réinit. la nouvelle hauteur</Tag>
@@ -925,7 +933,7 @@
 	<Tag name="StartInMain">Démarrer dans le menu principal</Tag>
 	<Tag name="Find">Rechercher</Tag>
 	<Tag name="FogEnd">fin</Tag>
-	<Tag name="Replay">Rejouer</Tag>
+	<Tag name="InputMapSteering">Direction</Tag>
 	<Tag name="InputDetailsFor">Détails pour</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 	<Tag name="ApplyShaders">Appliquer</Tag>
@@ -1066,14 +1074,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet précédent/suivant (Alt. - sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
-	<Tag name="Updating">Updating</Tag>
-	<Tag name="Saving">Saving</Tag>
-	<Tag name="Loaded">Loaded</Tag>
-	<Tag name="Chall_Special">Special</Tag>
-	<Tag name="Updated">Updated</Tag>
-	<Tag name="AlreadyExists">Already exists</Tag>
-	<Tag name="Saved">Saved</Tag>
-	<Tag name="Loading">Loading</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

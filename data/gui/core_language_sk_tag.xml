@@ -69,6 +69,7 @@
 	<Tag name="GraphicsAll_Low">Nízke</Tag>
 	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
 	<Tag name="Negative">Negative (darken)</Tag>
+	<Tag name="MessageBox_No">Nie</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 	<Tag name="Camera">Kamera</Tag>
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
@@ -226,10 +227,11 @@
 	<Tag name="SC_AutumnDark">AutumnDark</Tag>
 	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
 	<Tag name="filmgrain">Filmové zrnenie</Tag>
-	<Tag name="InputMapSteering">Zatáčanie</Tag>
+	<Tag name="Replay">Opakované prehranie</Tag>
 	<Tag name="AutoRear">Auto Rear gear</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="Road_OnTerrain">On Terrain</Tag>
+	<Tag name="Updating">Updating</Tag>
 	<Tag name="ReflMode_single">Jednotlivý</Tag>
 	<Tag name="Near">Blízko</Tag>
 	<Tag name="FogNormal">Normálna</Tag>
@@ -311,6 +313,7 @@
 	<Tag name="InputBrushSize">-,=  (or Wheel)  -  Size</Tag>
 	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
 	<Tag name="SC_JungleDark">JungleDark</Tag>
+	<Tag name="Saving">Saving</Tag>
 	<Tag name="EscQuit">Esc quits</Tag>
 	<Tag name="Gauges">Gauges (rpm, speed)</Tag>
 	<Tag name="LengthDim">Length dim.</Tag>
@@ -322,7 +325,7 @@
 	<Tag name="GrColorMap">Color map</Tag>
 	<Tag name="TipBumpAmp">Amplitude of additional bumps on surface (how high).</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
-	<Tag name="TipNormalTex">Normal texture (Height in alpha).</Tag>
+	<Tag name="Loaded">Loaded</Tag>
 	<Tag name="CountdownTime">Race countdown time</Tag>
 	<Tag name="Ghost">Duch</Tag>
 	<Tag name="GraphicsAll_High">Vysoké</Tag>
@@ -378,6 +381,7 @@
 	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
 	<Tag name="Delete">Vymazať</Tag>
 	<Tag name="Rename">Premenovať</Tag>
+	<Tag name="Chall_Special">Special</Tag>
 	<Tag name="Asphalt">Asphalt</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often and make too many batches, high will cause visible switching and make too many drawn triangles).</Tag>
 	<Tag name="ReverseStartOrder">Reverse starting order</Tag>
@@ -388,7 +392,7 @@
 	<Tag name="TipFogHSmooth">Height fog smooth distance [meters].</Tag>
 	<Tag name="Brush_Shape">Tvar</Tag>
 	<Tag name="length">dĺžka</Tag>
-	<Tag name="MessageBox_No">Nie</Tag>
+	<Tag name="DynamicObjects">Dynamic Objects</Tag>
 	<Tag name="TipFogClrH">Fog color for height fog.</Tag>
 	<Tag name="ColumnNSides">Column N sides</Tag>
 	<Tag name="RplAutoRec">Auto record replay</Tag>
@@ -671,6 +675,7 @@
 	<Tag name="InputRoadMMB">MMB (or Num /,*)</Tag>
 	<Tag name="Textures">Textúry</Tag>
 	<Tag name="TipTerVertCount">Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize].</Tag>
+	<Tag name="Updated">Updated</Tag>
 	<Tag name="RplCurrent">Aktuálne</Tag>
 	<Tag name="InputBrushFreq">O,P  -  noise Frequency (scale)</Tag>
 	<Tag name="Diff4">Ťažká</Tag>
@@ -737,6 +742,7 @@
 	<Tag name="Back">Späť</Tag>
 	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
 	<Tag name="InputTerSmooth">S - Smooth  (flatten)</Tag>
+	<Tag name="AlreadyExists">Already exists</Tag>
 	<Tag name="InputFocusFind">Ctrl-F  go to find box</Tag>
 	<Tag name="InputOther1">Up,Down - navigate in lists   Enter - start</Tag>
 	<Tag name="TipModelDens">How often model will appear on track area.</Tag>
@@ -797,6 +803,7 @@
 	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
 	<Tag name="MaterialProperties">Vlastnosti materiálu</Tag>
+	<Tag name="Loading">Loading</Tag>
 	<Tag name="HeightmapSize">Heightmap size</Tag>
 	<Tag name="TipToggleLayer">Turn on/off chosen texture layer.</Tag>
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
@@ -808,7 +815,6 @@
 	<Tag name="GraphicsRightHQ">By default better quality (less Fps) is on right. Marked with + if on left.</Tag>
 	<Tag name="CamInertia">Camera inertia</Tag>
 	<Tag name="TipSurfFrict">Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice).</Tag>
-	<Tag name="DynamicObjects">Dynamic Objects</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="TipGrassLayers">Grass layers. Recommended use 1-4.</Tag>
 	<Tag name="speed">rýchlosť</Tag>
@@ -902,6 +908,7 @@
 	<Tag name="TipTerLMove">Move layer, changes order.</Tag>
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 	<Tag name="TotalScore">Total score</Tag>
+	<Tag name="Saved">Saved</Tag>
 	<Tag name="InputLoadNextTrack">Load next track (shift - previous)</Tag>
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
@@ -912,6 +919,7 @@
 	<Tag name="Materials">Materiály</Tag>
 	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="InputMultiplier">Multiplier</Tag>
+	<Tag name="TipNormalTex">Normal texture (Height in alpha).</Tag>
 	<Tag name="Reverse">Obrátené</Tag>
 	<Tag name="InputMapShiftDown">Posunúť dolu</Tag>
 	<Tag name="InputObjectsMoveReset">shift-1 - move to cursor / reset new height</Tag>
@@ -925,7 +933,7 @@
 	<Tag name="StartInMain">Start in main menu</Tag>
 	<Tag name="Find">Nájsť</Tag>
 	<Tag name="FogEnd">koniec</Tag>
-	<Tag name="Replay">Opakované prehranie</Tag>
+	<Tag name="InputMapSteering">Zatáčanie</Tag>
 	<Tag name="InputDetailsFor">Details for</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 	<Tag name="ApplyShaders">Apply shaders</Tag>
@@ -1066,14 +1074,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extrémna</Tag>
 	<Tag name="RplAll">Všetko</Tag>
-	<Tag name="Updating">Updating</Tag>
-	<Tag name="Saving">Saving</Tag>
-	<Tag name="Loaded">Loaded</Tag>
-	<Tag name="Chall_Special">Special</Tag>
-	<Tag name="Updated">Updated</Tag>
-	<Tag name="AlreadyExists">Already exists</Tag>
-	<Tag name="Saved">Saved</Tag>
-	<Tag name="Loading">Loading</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

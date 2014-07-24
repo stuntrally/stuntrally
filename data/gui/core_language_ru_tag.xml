@@ -69,6 +69,7 @@
 	<Tag name="GraphicsAll_Low">Низкая</Tag>
 	<Tag name="ChampEndFinished">Вы закончили этот чемпионат.</Tag>
 	<Tag name="Negative">Negative (darken)</Tag>
+	<Tag name="MessageBox_No">Нет</Tag>
 	<Tag name="InputUpdBlendmap">F9 - обновить смесь ландшафтов</Tag>
 	<Tag name="Camera">Камера</Tag>
 	<Tag name="InputRoadOnTer">Home - захват Ландшафта</Tag>
@@ -226,10 +227,11 @@
 	<Tag name="SC_AutumnDark">ОсеньС</Tag>
 	<Tag name="TipChangeReflect">Изменяет отражение цвета автомобиля (матовый-зеркальный).</Tag>
 	<Tag name="filmgrain">Зернистость пленки</Tag>
-	<Tag name="InputMapSteering">Управление</Tag>
+	<Tag name="Replay">Повтор</Tag>
 	<Tag name="AutoRear">Автоматическая задняя передача</Tag>
 	<Tag name="TerGenFreq">Частота увел.</Tag>
 	<Tag name="Road_OnTerrain">На ландшафте</Tag>
+	<Tag name="Updating">Updating</Tag>
 	<Tag name="ReflMode_single">Одно</Tag>
 	<Tag name="Near">Близко</Tag>
 	<Tag name="FogNormal">Нормальный</Tag>
@@ -311,6 +313,7 @@
 	<Tag name="InputBrushSize">-,=  (или Wheel) - размер</Tag>
 	<Tag name="Car_StopTimeFrom">Вр. торм. от</Tag>
 	<Tag name="SC_JungleDark">ДжунглиС</Tag>
+	<Tag name="Saving">Saving</Tag>
 	<Tag name="EscQuit">Esc выйти</Tag>
 	<Tag name="Gauges">Приборы (об., скор.)</Tag>
 	<Tag name="LengthDim">Длина</Tag>
@@ -322,7 +325,7 @@
 	<Tag name="GrColorMap">Цвет карты</Tag>
 	<Tag name="TipBumpAmp">Амплитуда дополнительной неровности на поверхности (как максимум).</Tag>
 	<Tag name="InputFluidsMove">LMB - движение RMB - высота</Tag>
-	<Tag name="TipNormalTex">Нормальные текстуры (высота в альфа).</Tag>
+	<Tag name="Loaded">Loaded</Tag>
 	<Tag name="CountdownTime">Обратный отсчет (с)</Tag>
 	<Tag name="Ghost">Призр.</Tag>
 	<Tag name="GraphicsAll_High">Высокая</Tag>
@@ -378,6 +381,7 @@
 	<Tag name="DevKeys">Разработчику. Ctrl-F всё, Alt-shift-1..6 загр. тест треки.</Tag>
 	<Tag name="Delete">Удалить</Tag>
 	<Tag name="Rename">Переименовать</Tag>
+	<Tag name="Chall_Special">Special</Tag>
 	<Tag name="Asphalt">Асфальт</Tag>
 	<Tag name="TipModelPageLength">Длина страницы памяти моделей (ниже будет перезагружаться часто и будет много пакетов данных, выше будут визуальные переключения и много искаженных треугольников или групп из трех частей).</Tag>
 	<Tag name="ReverseStartOrder">Обр. старт. порядок</Tag>
@@ -388,7 +392,7 @@
 	<Tag name="TipFogHSmooth">Высота тумана на ровной дистанции [метры].</Tag>
 	<Tag name="Brush_Shape">Форма</Tag>
 	<Tag name="length">длина</Tag>
-	<Tag name="MessageBox_No">Нет</Tag>
+	<Tag name="DynamicObjects">Дин. объекты</Tag>
 	<Tag name="TipFogClrH">Цвет тумана по высоте.</Tag>
 	<Tag name="ColumnNSides">Верт. N стороны</Tag>
 	<Tag name="RplAutoRec">Автозап. повтора</Tag>
@@ -671,6 +675,7 @@
 	<Tag name="InputRoadMMB">MMB (или Num /,*)</Tag>
 	<Tag name="Textures">Текстуры</Tag>
 	<Tag name="TipTerVertCount">Количество вершин ландшафта на одной стороне (квадраты). Применяется с кнопками [Новая равнина] или [Менять размеры].</Tag>
+	<Tag name="Updated">Updated</Tag>
 	<Tag name="RplCurrent">Текущий</Tag>
 	<Tag name="InputBrushFreq">O,P  -  частота шума (шкала)</Tag>
 	<Tag name="Diff4">Сложно</Tag>
@@ -737,6 +742,7 @@
 	<Tag name="Back">Назад</Tag>
 	<Tag name="TipDiffusePrev">Распространяет текстуру предварительного просмотра изображения.</Tag>
 	<Tag name="InputTerSmooth">S - ровный (выравнивать)</Tag>
+	<Tag name="AlreadyExists">Already exists</Tag>
 	<Tag name="InputFocusFind">Ctrl-F  поисковик</Tag>
 	<Tag name="InputOther1">Up,Down - навигация   Enter - старт</Tag>
 	<Tag name="TipModelDens">Как часто модель будет появлятся в области трека.</Tag>
@@ -797,6 +803,7 @@
 	<Tag name="TutorEndFinished">Вы закончили это обучение.</Tag>
 	<Tag name="TipGrassSwaySpd">Скор. качания травы.</Tag>
 	<Tag name="MaterialProperties">Свойства материала</Tag>
+	<Tag name="Loading">Loading</Tag>
 	<Tag name="HeightmapSize">Высота карты</Tag>
 	<Tag name="TipToggleLayer">Включить/выключить выбранную текстуру слоя.</Tag>
 	<Tag name="TipTrkListEditor">Список треков. Кликни, чтобы выбрать (для Переименовать или Дубликат). Нажми [Загр. трек], чтобы изменить текущий трек в редакторе.</Tag>
@@ -808,7 +815,6 @@
 	<Tag name="GraphicsRightHQ">Направо лучше качество (меньше Fps). Отметь + если налево.</Tag>
 	<Tag name="CamInertia">Инерц. камера</Tag>
 	<Tag name="TipSurfFrict">Сцепление с поверхностью (напр. 1.0 асфальт, 0.7 гравий, 0.5 лед).</Tag>
-	<Tag name="DynamicObjects">Дин. объекты</Tag>
 	<Tag name="TipTerSize">Результирующая площадь в метрах (боковая длина). Равняется подсчитаной вершине кратной размеру треугольника.</Tag>
 	<Tag name="TipGrassLayers">Слои травы. Рекомендуем использовать 1-4.</Tag>
 	<Tag name="speed">скорость</Tag>
@@ -902,6 +908,7 @@
 	<Tag name="TipTerLMove">Перемещает слой, изменяет порядок.</Tag>
 	<Tag name="TipLTrMaxTerH">Высота ландшафта, выше которого модель не появиться.</Tag>
 	<Tag name="TotalScore">Итого очков</Tag>
+	<Tag name="Saved">Saved</Tag>
 	<Tag name="InputLoadNextTrack">Загр. след. трек (shift - пред.)</Tag>
 	<Tag name="TrackDifficulties">Разные сложности трека</Tag>
 	<Tag name="TipModelPrev">Предварительный просмотр изображения модели.</Tag>
@@ -912,6 +919,7 @@
 	<Tag name="Materials">Материалы</Tag>
 	<Tag name="Gravel">Гравий</Tag>
 	<Tag name="InputMultiplier">Коэффициент</Tag>
+	<Tag name="TipNormalTex">Нормальные текстуры (высота в альфа).</Tag>
 	<Tag name="Reverse">Обратно</Tag>
 	<Tag name="InputMapShiftDown">Передача -</Tag>
 	<Tag name="InputObjectsMoveReset">shift-1 - к курсору /сброс высоты</Tag>
@@ -925,7 +933,7 @@
 	<Tag name="StartInMain">Запускать гл. меню</Tag>
 	<Tag name="Find">Найти</Tag>
 	<Tag name="FogEnd">конец</Tag>
-	<Tag name="Replay">Повтор</Tag>
+	<Tag name="InputMapSteering">Управление</Tag>
 	<Tag name="InputDetailsFor">Детали для</Tag>
 	<Tag name="GraphicsAll_Ultra">Ультра</Tag>
 	<Tag name="ApplyShaders">Прим. шейдеры</Tag>
@@ -1066,14 +1074,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред.,след. вкладка (alt - ниже)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="Updating">Updating</Tag>
-	<Tag name="Saving">Saving</Tag>
-	<Tag name="Loaded">Loaded</Tag>
-	<Tag name="Chall_Special">Special</Tag>
-	<Tag name="Updated">Updated</Tag>
-	<Tag name="AlreadyExists">Already exists</Tag>
-	<Tag name="Saved">Saved</Tag>
-	<Tag name="Loading">Loading</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -69,6 +69,7 @@
 	<Tag name="GraphicsAll_Low">Alhainen</Tag>
 	<Tag name="ChampEndFinished">Olet suorittanut tämän mestaruuden loppuun.</Tag>
 	<Tag name="Negative">Negative (darken)</Tag>
+	<Tag name="MessageBox_No">Ei</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 	<Tag name="Camera">Camera</Tag>
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
@@ -226,10 +227,11 @@
 	<Tag name="SC_AutumnDark">AutumnDark</Tag>
 	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
 	<Tag name="filmgrain">Filmirakeisuus</Tag>
-	<Tag name="InputMapSteering">Ohjaus</Tag>
+	<Tag name="Replay">Uusinta</Tag>
 	<Tag name="AutoRear">Automaattinen peruutusvaihde</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="Road_OnTerrain">On Terrain</Tag>
+	<Tag name="Updating">Updating</Tag>
 	<Tag name="ReflMode_single">Yksittäinen</Tag>
 	<Tag name="Near">Near</Tag>
 	<Tag name="FogNormal">Tavallinen</Tag>
@@ -311,6 +313,7 @@
 	<Tag name="InputBrushSize">-,=  (or Wheel)  -  Size</Tag>
 	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
 	<Tag name="SC_JungleDark">JungleDark</Tag>
+	<Tag name="Saving">Saving</Tag>
 	<Tag name="EscQuit">Esc lopettaa</Tag>
 	<Tag name="Gauges">Mittarit (moottorin kierrosmäärä, nopeus)</Tag>
 	<Tag name="LengthDim">Length dim.</Tag>
@@ -322,7 +325,7 @@
 	<Tag name="GrColorMap">Color map</Tag>
 	<Tag name="TipBumpAmp">Amplitude of additional bumps on surface (how high).</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
-	<Tag name="TipNormalTex">Normaalitekstuuri (korkeus alpha-kanavassa).</Tag>
+	<Tag name="Loaded">Loaded</Tag>
 	<Tag name="CountdownTime">Kilpailun lähtölaskenta</Tag>
 	<Tag name="Ghost">Haamu</Tag>
 	<Tag name="GraphicsAll_High">Korkea</Tag>
@@ -378,6 +381,7 @@
 	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
 	<Tag name="Delete">Poista</Tag>
 	<Tag name="Rename">Nimeä uudelleen</Tag>
+	<Tag name="Chall_Special">Special</Tag>
 	<Tag name="Asphalt">Asfaltti</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often and make too many batches, high will cause visible switching and make too many drawn triangles).</Tag>
 	<Tag name="ReverseStartOrder">Reverse starting order</Tag>
@@ -388,7 +392,7 @@
 	<Tag name="TipFogHSmooth">Height fog smooth distance [meters].</Tag>
 	<Tag name="Brush_Shape">Muoto</Tag>
 	<Tag name="length">pituus</Tag>
-	<Tag name="MessageBox_No">Ei</Tag>
+	<Tag name="DynamicObjects">Dynaamiset objektit</Tag>
 	<Tag name="TipFogClrH">Fog color for height fog.</Tag>
 	<Tag name="ColumnNSides">Column N sides</Tag>
 	<Tag name="RplAutoRec">Nauhoita uusinta automaattisesti</Tag>
@@ -671,6 +675,7 @@
 	<Tag name="InputRoadMMB">MMB (or Num /,*)</Tag>
 	<Tag name="Textures">Tekstuurit</Tag>
 	<Tag name="TipTerVertCount">Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize].</Tag>
+	<Tag name="Updated">Updated</Tag>
 	<Tag name="RplCurrent">Nykyinen</Tag>
 	<Tag name="InputBrushFreq">O,P  -  noise Frequency (scale)</Tag>
 	<Tag name="Diff4">Vaikea</Tag>
@@ -737,6 +742,7 @@
 	<Tag name="Back">Takaisin</Tag>
 	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
 	<Tag name="InputTerSmooth">S - Tasoita</Tag>
+	<Tag name="AlreadyExists">Already exists</Tag>
 	<Tag name="InputFocusFind">Ctrl-F  go to find box</Tag>
 	<Tag name="InputOther1">Up,Down - navigate in lists   Enter - start</Tag>
 	<Tag name="TipModelDens">How often model will appear on track area.</Tag>
@@ -797,6 +803,7 @@
 	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
 	<Tag name="TipGrassSwaySpd">Ruohikon huojunnan nopeus.</Tag>
 	<Tag name="MaterialProperties">Materiaalin ominaisuudet</Tag>
+	<Tag name="Loading">Loading</Tag>
 	<Tag name="HeightmapSize">Korkeuskartan koko</Tag>
 	<Tag name="TipToggleLayer">Kytke valittu tekstuurikerros päälle/pois.</Tag>
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
@@ -808,7 +815,6 @@
 	<Tag name="GraphicsRightHQ">By default better quality (less Fps) is on right. Marked with + if on left.</Tag>
 	<Tag name="CamInertia">Kameran inertia</Tag>
 	<Tag name="TipSurfFrict">Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice).</Tag>
-	<Tag name="DynamicObjects">Dynaamiset objektit</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="TipGrassLayers">Grass layers. Recommended use 1-4.</Tag>
 	<Tag name="speed">nopeus</Tag>
@@ -902,6 +908,7 @@
 	<Tag name="TipTerLMove">Move layer, changes order.</Tag>
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 	<Tag name="TotalScore">Kokonaispistemäärä</Tag>
+	<Tag name="Saved">Saved</Tag>
 	<Tag name="InputLoadNextTrack">Load next track (shift - previous)</Tag>
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
 	<Tag name="TipModelPrev">Mallin esikatselukuva.</Tag>
@@ -912,6 +919,7 @@
 	<Tag name="Materials">Materiaalit</Tag>
 	<Tag name="Gravel">Sora</Tag>
 	<Tag name="InputMultiplier">Kerroin</Tag>
+	<Tag name="TipNormalTex">Normaalitekstuuri (korkeus alpha-kanavassa).</Tag>
 	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
 	<Tag name="InputObjectsMoveReset">shift-1 - move to cursor / reset new height</Tag>
@@ -925,7 +933,7 @@
 	<Tag name="StartInMain">Start in main menu</Tag>
 	<Tag name="Find">Etsi</Tag>
 	<Tag name="FogEnd">loppu</Tag>
-	<Tag name="Replay">Uusinta</Tag>
+	<Tag name="InputMapSteering">Ohjaus</Tag>
 	<Tag name="InputDetailsFor">Details for</Tag>
 	<Tag name="GraphicsAll_Ultra">Huippu</Tag>
 	<Tag name="ApplyShaders">Käytä varjostimia</Tag>
@@ -1066,14 +1074,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="Updating">Updating</Tag>
-	<Tag name="Saving">Saving</Tag>
-	<Tag name="Loaded">Loaded</Tag>
-	<Tag name="Chall_Special">Special</Tag>
-	<Tag name="Updated">Updated</Tag>
-	<Tag name="AlreadyExists">Already exists</Tag>
-	<Tag name="Saved">Saved</Tag>
-	<Tag name="Loading">Loading</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
