@@ -7,11 +7,7 @@
 
 	<!--  unused tracks
 		<t name="D13-Winding"/>
-		<t name="D14-JumpCrazy"/>
-		<t name="D15-CityWall"/>
-		<t name="V7-Radioactive"/>
 		<t name="R3-Hot"/>
-		<t name="W14-DangerRoad"/>
 		<t name="V8-Uncertain"/>
 		<t name="F17-BadCamber"/>
 		<t name="W15-SkiJump"/>
@@ -134,6 +130,7 @@
 		<t name="V4-Spikeland"/>
 		<t name="R2-Red"/>
 		<t name="X6-Wild"/>
+		<t name="V10-MtSulphur"/>
 	</champ>
 
 	<champ name="Long trip" ver="1" difficulty="3" type="2" 
@@ -150,13 +147,12 @@
 		<t name="G1-Long"/>
 	</champ>
 
-	<champ name="Curly shorts" ver="2" difficulty="3" type="2" 
+	<champ name="Curly shorts" ver="3" difficulty="3" type="2" 
 			descr="Short, curly and tricky tracks with sharp turns.">
 		<t name="E2-Serpent"/>
 		<t name="I12-Beach"/>
 		<t name="F3-Snail"/>
 		<t name="O2-Mouse"/>
-		<t name="D11-PersianCity"/>
 		<t name="J18-Tiny"/>
 	</champ>
 
@@ -172,6 +168,15 @@
 		<t name="X1-Magic"/>
 		<t name="W12-Peaks"/>
 		<t name="I8-Pharaoh"/>
+	</champ>
+
+	<champ name="Ancient cities" ver="4" difficulty="3" type="2" 
+			descr="Driving in peaceful small towns with many buildings, frozen in ancient times. Sometimes quite narrow and with sharp turns.">
+		<t name="D11-PersianCity"/>
+		<t name="D14-JumpCrazy"/>
+		<t name="D15-CityWall"/>
+		<t name="G8-SlopeCity"/>
+		<t name="D17-NileCity"/>
 	</champ>
 
 
@@ -241,6 +246,8 @@
 		<t name="V5-Sad"/>
 		<t name="R1-Mars"/>
 		<t name="V9-Craters"/>
+		<t name="V7-Radioactive"/>
+		<t name="Y1-CrystalMoon"/>
 	</champ>
 
 
@@ -257,7 +264,7 @@
 	</champ>
 
 	<champ name="Pipes mastery" ver="3" difficulty="5" type="4" 
-			descr="Only pipe tracks with high difficulty, extremely curly. Lets you master your pipe driving.">
+			descr="Only pipe tracks with high difficulty, extremely curly. Don't drive too fast, it damages car. Lets you master your pipe driving.">
 		<t name="S6-PipeCrazy"/>
 		<t name="A2-PipeCoil"/>
 		<t name="X2-Swirl"/>
@@ -266,14 +273,14 @@
 		<t name="C5-Obstacles"/>
 	</champ>
 
-	<champ name="Curly master" ver="1" difficulty="5" type="4" 
+	<champ name="Curly master" ver="2" difficulty="5" type="4" 
 			descr="Curly tracks, driven mad. Require lots of steering, determination and experience.">
-		<t name="S13-Hole"/>
-		<t name="F14-Maze"/>
 		<t name="A4-Snake"/>
 		<t name="F16-Clew"/>
 		<t name="J22-Knotted"/>
 		<t name="G6-Halfpipes"/>
+		<t name="S13-Hole"/>
+		<t name="F14-Maze"/>
 	</champ>
 
 	<champ name="Jump mania" ver="2" difficulty="4" type="4" 
@@ -286,12 +293,19 @@
 	</champ>
 
 	<champ name="Insane stunts" ver="2" difficulty="6" type="4" 
-			descr="The most difficult, insanely twisted tracks. Require the most skills and determination. Recommended to do both Stunts and Pipes mastery before.">
+			descr="The very difficult, insanely twisted tracks. Require the most skills and determination. Recommended to do both Stunts and Pipes mastery before.">
 		<t name="A1-StuntPark"/>
 		<t name="S14-Refinery"/>
 		<t name="I9-Web"/>
 		<t name="S15-Scorpio"/>
 		<t name="V6-Crematoria"/>
+	</champ>
+
+	<champ name="Stunt madness" ver="2" difficulty="6" type="4" 
+			descr="The most difficult and complicated stunt tracks. Require great skills and determination. Recommended to do after all others.">
+		<t name="G7-Spider"/>
+		<t name="O5-Factory"/>
+		<t name="W14-DangerRoad"/>
 	</champ>
 
 
@@ -318,6 +332,8 @@
 		<t name="D13-Winding"/>
 		<t name="D14-JumpCrazy"/>
 		<t name="D15-CityWall"/>
+		<t name="D16-AsphaltJumps"/>
+		<t name="D17-NileCity"/>
 	</champ>
 	<champ name="Jungle" ver="3" difficulty="3" type="5" 
 			descr="Jungle championship. Part 1.">
@@ -456,6 +472,8 @@
 		<t name="G4-River"/>
 		<t name="G5-Climb"/>
 		<t name="G6-Halfpipes"/>
+		<t name="G7-Spider"/>
+		<t name="G8-SlopeCity"/>
 	</champ>
 	<champ name="Finland" ver="1" difficulty="1" type="6" 
 			descr="Finland championship.">
@@ -476,6 +494,7 @@
 		<t name="O2-Mouse"/>
 		<t name="O3-Air"/>
 		<t name="O4-MossyMntn"/>
+		<t name="O5-Factory"/>
 	</champ>
 	<champ name="Volcanic" ver="2" difficulty="4" type="6" 
 			descr="Volcanic championship.">
@@ -504,6 +523,11 @@
 		<t name="R2-Red"/>
 		<t name="R3-Hot"/>
 	</champ>
+	<champ name="Crystals" ver="1" difficulty="3" type="6" 
+			descr="Crystals championship.">
+		<t name="Y1-CrystalMoon"/>
+	</champ>
+	
 
 <!--  Test  -->
 <!--========================================================================================================================-->
