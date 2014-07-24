@@ -21,7 +21,7 @@ for line in times:
 	if len(line) > 0 and line[0] >= '0' and line[0] <= '9':
 		tr = r.split(line)
 		trk = tr[1]
-		tim = tr[30]
+		tim = tr[32]
 		map[trk] = tim
 		#print(trk + " " + tim)
 times.close()
