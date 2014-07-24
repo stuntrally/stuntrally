@@ -69,6 +69,7 @@
 	<Tag name="GraphicsAll_Low">Basso</Tag>
 	<Tag name="ChampEndFinished">Hai completato il campionato.</Tag>
 	<Tag name="Negative">Negative (darken)</Tag>
+	<Tag name="MessageBox_No">No</Tag>
 	<Tag name="InputUpdBlendmap">F9 - aggiorna il blendmap del terreno (manuale)</Tag>
 	<Tag name="Camera">Camera</Tag>
 	<Tag name="InputRoadOnTer">Home - vai su snap terreno</Tag>
@@ -226,10 +227,11 @@
 	<Tag name="SC_AutumnDark">AutunnoNero</Tag>
 	<Tag name="TipChangeReflect">Cambia il riflesso del colore dell'auto (metallo-specchio).</Tag>
 	<Tag name="filmgrain">Grana di film</Tag>
-	<Tag name="InputMapSteering">Sterzare</Tag>
+	<Tag name="Replay">Replay</Tag>
 	<Tag name="AutoRear">Cambio automatico posteriore</Tag>
 	<Tag name="TerGenFreq">Freq. di zoom</Tag>
 	<Tag name="Road_OnTerrain">Su terreno</Tag>
+	<Tag name="Updating">Updating</Tag>
 	<Tag name="ReflMode_single">Singolo</Tag>
 	<Tag name="Near">Vicino</Tag>
 	<Tag name="FogNormal">Normale</Tag>
@@ -311,6 +313,7 @@
 	<Tag name="InputBrushSize">-,=  (o rotellal)  -  Dimensioni</Tag>
 	<Tag name="Car_StopTimeFrom">Ferma il tempo da</Tag>
 	<Tag name="SC_JungleDark">GiunglaNera</Tag>
+	<Tag name="Saving">Saving</Tag>
 	<Tag name="EscQuit">Esc chiudi il gioco</Tag>
 	<Tag name="Gauges">Indicatori (giri/min, velocità)</Tag>
 	<Tag name="LengthDim">Dim. lunghezza</Tag>
@@ -322,7 +325,7 @@
 	<Tag name="GrColorMap">Colore della mappa</Tag>
 	<Tag name="TipBumpAmp">Ampiezza di bump aggiuntivi sulla superficie (quanto intensa).</Tag>
 	<Tag name="InputFluidsMove">LMB - muovi   RMB - altezza</Tag>
-	<Tag name="TipNormalTex">Texture normale ( altezza in alfa)</Tag>
+	<Tag name="Loaded">Loaded</Tag>
 	<Tag name="CountdownTime">Conto alla rovescia</Tag>
 	<Tag name="Ghost">Fantasma</Tag>
 	<Tag name="GraphicsAll_High">Alto</Tag>
@@ -378,6 +381,7 @@
 	<Tag name="DevKeys">Tasti per sviluppo. Ctrl-F globale, Alt-shift-1..6 carica i test su piste.</Tag>
 	<Tag name="Delete">Cancella</Tag>
 	<Tag name="Rename">Rinonima</Tag>
+	<Tag name="Chall_Special">Special</Tag>
 	<Tag name="Asphalt">Asfalto</Tag>
 	<Tag name="TipModelPageLength">Lunghezza pagina modelli (se bassa si ricarica spesso e crea molti batch, alta causa commutazione visibile e crea troppi triangoli disegnati).</Tag>
 	<Tag name="ReverseStartOrder">Ordine inverso di partenza</Tag>
@@ -388,7 +392,7 @@
 	<Tag name="TipFogHSmooth">Distanza smoothing di altezza nebbia [metri]</Tag>
 	<Tag name="Brush_Shape">Forma</Tag>
 	<Tag name="length">lunghezza</Tag>
-	<Tag name="MessageBox_No">No</Tag>
+	<Tag name="DynamicObjects">Oggetti dinamici</Tag>
 	<Tag name="TipFogClrH">Colore nebbia per altezza.</Tag>
 	<Tag name="ColumnNSides">Lati colonna N</Tag>
 	<Tag name="RplAutoRec">Registrazione replay automatica</Tag>
@@ -671,6 +675,7 @@
 	<Tag name="InputRoadMMB">MMB (oppure Num /,*)</Tag>
 	<Tag name="Textures">Texture</Tag>
 	<Tag name="TipTerVertCount">Numero vertice di terreno da un lato (quadrati). Applica con i pulsanti [Nuovo terreno] o [Ridimensiona].</Tag>
+	<Tag name="Updated">Updated</Tag>
 	<Tag name="RplCurrent">Attuale</Tag>
 	<Tag name="InputBrushFreq">O,P  -  frequenza disturbo (scala)</Tag>
 	<Tag name="Diff4">Difficile</Tag>
@@ -737,6 +742,7 @@
 	<Tag name="Back">Indietro</Tag>
 	<Tag name="TipDiffusePrev">Anteprima immagine di diffusione texture.</Tag>
 	<Tag name="InputTerSmooth">S - Smooth  (spiana)</Tag>
+	<Tag name="AlreadyExists">Already exists</Tag>
 	<Tag name="InputFocusFind">Ctrl-F  barra di ricerca</Tag>
 	<Tag name="InputOther1">Su, Giù - naviga nelle liste   Invio - inizia</Tag>
 	<Tag name="TipModelDens">Quanto spesso il modello apparirà sulla zona della pista.</Tag>
@@ -797,6 +803,7 @@
 	<Tag name="TutorEndFinished">Hai completato il tutorial.</Tag>
 	<Tag name="TipGrassSwaySpd">Velocità ondeggiamento dell'erba.</Tag>
 	<Tag name="MaterialProperties">Proprietà materiale</Tag>
+	<Tag name="Loading">Loading</Tag>
 	<Tag name="HeightmapSize">Dim. heightmap</Tag>
 	<Tag name="TipToggleLayer">Attiva/disattiva il layer di texture scelto.</Tag>
 	<Tag name="TipTrkListEditor">Lista delle piste, clicka per selezionare (per rinominare o duplicare). Premi [Carica la pista] per cambiare l'attuale pista dall'editor.</Tag>
@@ -808,7 +815,6 @@
 	<Tag name="GraphicsRightHQ">Da predefinito, una migliore qualità (meno fps) si trova sulla destra. Contrassegnato con + a sinistra.</Tag>
 	<Tag name="CamInertia">Inerzia della camera</Tag>
 	<Tag name="TipSurfFrict">Attrito di superficie (es. 1.0 asfalto, 0.7 ghiaia, 0.5 ghiaccio).</Tag>
-	<Tag name="DynamicObjects">Oggetti dinamici</Tag>
 	<Tag name="TipTerSize">Superficie risultante in metri (lunghezza del lato). Numero uguale di vertice moltiplicato per dimensioni triangolo.</Tag>
 	<Tag name="TipGrassLayers">Layer erba. Si raccomanda di usare da 1 a 4.</Tag>
 	<Tag name="speed">velocità</Tag>
@@ -902,6 +908,7 @@
 	<Tag name="TipTerLMove">Muovi il layer, cambia l'ordine.</Tag>
 	<Tag name="TipLTrMaxTerH">Altezza terreno posto sopra dove il modello non apparirà.</Tag>
 	<Tag name="TotalScore">Punteggio totale</Tag>
+	<Tag name="Saved">Saved</Tag>
 	<Tag name="InputLoadNextTrack">Carica la pista seguente (shift - precedente)</Tag>
 	<Tag name="TrackDifficulties">Piste con difficoltà differenti</Tag>
 	<Tag name="TipModelPrev">Anteprima immagine del modello.</Tag>
@@ -912,6 +919,7 @@
 	<Tag name="Materials">Materiali</Tag>
 	<Tag name="Gravel">Ghiaia</Tag>
 	<Tag name="InputMultiplier">Moltiplicatore</Tag>
+	<Tag name="TipNormalTex">Texture normale ( altezza in alfa)</Tag>
 	<Tag name="Reverse">Invertito</Tag>
 	<Tag name="InputMapShiftDown">Scala marcia prec.</Tag>
 	<Tag name="InputObjectsMoveReset">shift-1 - muovi nel cursore/riavvia nuova altezza</Tag>
@@ -925,7 +933,7 @@
 	<Tag name="StartInMain">Avvia dal menu principale</Tag>
 	<Tag name="Find">Trova</Tag>
 	<Tag name="FogEnd">fine</Tag>
-	<Tag name="Replay">Replay</Tag>
+	<Tag name="InputMapSteering">Sterzare</Tag>
 	<Tag name="InputDetailsFor">Dettagli per</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 	<Tag name="ApplyShaders">Applica gli shader</Tag>
@@ -1066,14 +1074,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prec.,pross. scheda (alt - sottoschede)</Tag>
 	<Tag name="Diff6">Estrema</Tag>
 	<Tag name="RplAll">Tutto</Tag>
-	<Tag name="Updating">Updating</Tag>
-	<Tag name="Saving">Saving</Tag>
-	<Tag name="Loaded">Loaded</Tag>
-	<Tag name="Chall_Special">Special</Tag>
-	<Tag name="Updated">Updated</Tag>
-	<Tag name="AlreadyExists">Already exists</Tag>
-	<Tag name="Saved">Saved</Tag>
-	<Tag name="Loading">Loading</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
