@@ -948,34 +948,34 @@
 							<Property key="TextColour" value="0.7 0.9 1.0"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="24 256 328 18" name="SSSVelFactor"/>
-                        <Widget type="Button" skin="Button" position="364 284 120 24" name="SSSReset">
+						<Widget type="Button" skin="Button" position="364 284 120 24" name="SSSReset">
 							<Property key="Caption" value="#{Reset}"/>
 							<Property key="Colour" value="0.6 0.8 1.0"/>
 							<Property key="TextColour" value="0.5 0.75 1"/>
 						</Widget>
 
-                        <Widget type="TextBox" skin="TextBox" position="648 264 88 42">
+						<Widget type="TextBox" skin="TextBox" position="648 264 88 42">
 							<Property key="Caption" value="#{CarSpeed}\n #{UnitKmh}"/>
 							<Property key="TextColour" value="0.65 0.78 0.9"/>
 							<Property key="FontName" value="font.small"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="536 264 34 18">
+						<Widget type="TextBox" skin="TextBox" position="536 264 34 18">
 							<Property key="Caption" value="100"/>
 							<Property key="TextColour" value="0.6 0.75 0.9"/>
 							<Property key="FontName" value="font.small"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="412 134 96 22">
-                            <Property key="Caption" value="#{SSS_Effect}"/>
+						<Widget type="TextBox" skin="TextBox" position="412 134 96 22">
+							<Property key="Caption" value="#{SSS_Effect}"/>
 							<Property key="TextColour" value="0.65 0.78 0.9"/>
 							<Property key="FontName" value="font.small"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="440 148 18 18">
-                            <Property key="Caption" value="1"/>
+						<Widget type="TextBox" skin="TextBox" position="440 148 18 18">
+							<Property key="Caption" value="1"/>
 							<Property key="TextColour" value="0.6 0.75 0.9"/>
 							<Property key="FontName" value="font.small"/>
 						</Widget>
-                        <Widget type="TextBox" skin="TextBox" position="440 194 18 18">
-                            <Property key="Caption" value="0.5"/>
+						<Widget type="TextBox" skin="TextBox" position="440 194 18 18">
+							<Property key="Caption" value="0.5"/>
 							<Property key="TextColour" value="0.6 0.75 0.9"/>
 							<Property key="FontName" value="font.small"/>
 						</Widget>
@@ -1014,7 +1014,7 @@
 						<Widget type="Slider" skin="Slider" position="24 442 328 18" name="SteerRangeSurf">
 							<UserString key="tip" value="#{TipSteerSurf}"/>
 						</Widget>
-                        <Widget type="Button" skin="Button" position="364 440 120 24" name="SteerReset">
+						<Widget type="Button" skin="Button" position="364 440 120 24" name="SteerReset">
 							<Property key="Caption" value="#{Reset}"/>
 							<Property key="Colour" value="0.6 0.9 1.0"/>
 							<Property key="TextColour" value="0.5 0.8 1"/>
@@ -1898,7 +1898,7 @@
 			</Widget>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="28 1360 648 440" align="Center" layer="Popup" name="WndChampStage">
+	<Widget type="Window" skin="WindowC" position="28 1360 744 440" align="Center" layer="Popup" name="WndChampStage">
 		<Property key="Caption" value="#{Championship}"/>
 		<Property key="Alpha" value="0.8"/>
 		<Property key="Colour" value="0.4 1 0.4"/>
@@ -1918,16 +1918,17 @@
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
 		</Widget>
-		<Widget type="EditBox" skin="EditBoxEmpty" position="32 24 312 308" name="ChampStageText">
+		<Widget type="EditBox" skin="EditBoxEmpty" position="28 24 392 308" name="ChampStageText">
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
+			<Property key="FontName" value="font.small"/>
 			<Property key="WordWrap" value="true"/>
 		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="348 24 256 256" name="ChampStageImg"/>
+		<Widget type="ImageBox" skin="ImageBox" position="428 24 288 288" name="ChampStageImg"/>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="720 1356 536 456" align="Center" layer="Popup" name="WndChampEnd">
+	<Widget type="Window" skin="WindowC" position="796 1356 536 456" align="Center" layer="Popup" name="WndChampEnd">
 		<Property key="Caption" value="#{Championship}"/>
 		<Property key="Alpha" value="0.9"/>
 		<Property key="Colour" value="0.4 1 1"/>
@@ -1990,10 +1991,11 @@
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
+			<Property key="FontName" value="font.small"/>
 		</Widget>
 		<Widget type="ImageBox" skin="ImageBox" position="428 24 288 288" name="ChallStageImg"/>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="720 1856 536 516" align="Center" layer="Popup" name="WndChallEnd">
+	<Widget type="Window" skin="WindowC" position="796 1856 536 516" align="Center" layer="Popup" name="WndChallEnd">
 		<Property key="Caption" value="#{Challenge}"/>
 		<Property key="Alpha" value="0.9"/>
 		<Property key="Colour" value="0.8 0.6 1.0"/>
@@ -2035,7 +2037,7 @@
 			<Property key="ImageTexture" value="ico_champ.png"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="1336 1360 648 540" align="Center" layer="Popup" name="WndNetEnd">
+	<Widget type="Window" skin="WindowC" position="1356 1360 648 540" align="Center" layer="Popup" name="WndNetEnd">
 		<Property key="Caption" value="#{Multiplayer}"/>
 		<Property key="Alpha" value="0.8"/>
 		<Property key="Colour" value="0.7 0.7 0"/>
