@@ -8,8 +8,6 @@
 	<!--  unused tracks
 		<t name="D13-Winding"/>
 		<t name="R3-Hot"/>
-		<t name="V8-Uncertain"/>
-		<t name="F17-BadCamber"/>
 		<t name="W15-SkiJump"/>
 	-->
 
@@ -123,7 +121,7 @@
 	</champ>
 
 	<champ name="Bumpy shorts" ver="2" difficulty="4" type="2" 
-			descr="Few short, but very bumpy tracks.">
+			descr="The most bumpy tracks. Difficult to keep on road, if you drive too fast.">
 		<t name="M2-Bumps"/>
 		<t name="D2-Mntn"/>
 		<t name="I10-Treasure"/>
@@ -131,6 +129,7 @@
 		<t name="R2-Red"/>
 		<t name="X6-Wild"/>
 		<t name="V10-MtSulphur"/>
+		<t name="V8-Uncertain"/>
 	</champ>
 
 	<champ name="Long trip" ver="1" difficulty="3" type="2" 
@@ -151,9 +150,10 @@
 			descr="Short, curly and tricky tracks with sharp turns.">
 		<t name="E2-Serpent"/>
 		<t name="I12-Beach"/>
-		<t name="F3-Snail"/>
 		<t name="O2-Mouse"/>
 		<t name="J18-Tiny"/>
+		<t name="X1-Magic"/>
+		<t name="W12-Peaks"/>
 	</champ>
 
 	<champ name="Fancy circles" ver="4" difficulty="3" type="2" 
@@ -165,9 +165,8 @@
 		<t name="I6-Flooded"/>
 		<t name="C2-CanyonRun"/>
 		<t name="W5-Circles"/>
-		<t name="X1-Magic"/>
-		<t name="W12-Peaks"/>
 		<t name="I8-Pharaoh"/>
+		<t name="F17-BadCamber"/>
 	</champ>
 
 	<champ name="Ancient cities" ver="4" difficulty="3" type="2" 
