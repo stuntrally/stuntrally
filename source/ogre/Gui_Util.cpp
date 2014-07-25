@@ -297,13 +297,13 @@ void CGui::UpdCarStats(bool car)
 	e = root->FirstChildElement("torque");
 	if (e)
 	{	a = e->Attribute("max");	if (a)  maxTrq = s2r(a);
-		a = e->Attribute("rpm");	if (a)  rpmMaxTq = s2r(a);
+		//a = e->Attribute("rpm");	if (a)  rpmMaxTq = s2r(a);
 		//a = e->Attribute("mul");	if (a)  mul = s2r(a);
 	}
 	e = root->FirstChildElement("power");
 	if (e)
 	{	a = e->Attribute("max");	if (a)  maxPwr = s2r(a);
-		a = e->Attribute("rpm");	if (a)  rpmMaxPwr = s2r(a);
+		//a = e->Attribute("rpm");	if (a)  rpmMaxPwr = s2r(a);
 	}
 	e = root->FirstChildElement("bhpPerTon");
 	if (e)
@@ -312,7 +312,7 @@ void CGui::UpdCarStats(bool car)
 	e = root->FirstChildElement("top");
 	if (e)
 	{	a = e->Attribute("speed");	if (a)  maxVel = s2r(a);
-		a = e->Attribute("time");	if (a)  tiMaxVel = s2r(a);
+		//a = e->Attribute("time");	if (a)  tiMaxVel = s2r(a);
 	}
 	/*e = root->FirstChildElement("quarterMile");
 	if (e)
@@ -385,6 +385,7 @@ void CGui::UpdCarStats(bool car)
 	//  upd text  --------
 	bool kmh = !pSet->show_mph;  float k2m = 0.621371f;
 	String s[iCarSt], v[iCarSt];
+	float sm = pSet->gui.sim_mode == "easy" ? 0.75f : 1.f;
 
 	#define bar(n,sc, r,g,b)  \
 		f = std::max(0.f, (1.f - sc)) * 128.f;  barCarSt[n]->setImageCoord(IntCoord(f,0,128,16));  \
@@ -417,19 +418,19 @@ void CGui::UpdCarStats(bool car)
 
 	s[6]= "#8ECEFE"+ TR("#{Car_TimeTo} ");  sVel(s[6], 100.f);
 	v[6]= "#9EDEFF"+ fToStr(t0to100,1,4) +TR(" #{UnitS} ");
-	bar(6, t0to100 / 8.f, 0.8,1.0,1.0);
+	bar(6, t0to100 / 8.f * sm, 0.8,1.0,1.0);
 
 	s[7]= "#88C8F8"+ TR("#{Car_TimeTo} ");  sVel(s[7], 160.f);
 	v[7]= "#98D8FF"+ fToStr(t0to160,1,4) +TR(" #{UnitS} ");
-	bar(7, t0to160 / 17.f, 0.75,1.0,1.0);  vis(7, t0to160 > 0.f);
+	bar(7, t0to160 / 17.f * sm, 0.75,1.0,1.0);  vis(7, t0to160 > 0.f);
 		  
 	s[8]= "#80C0F0"+ TR("#{Car_TimeTo} ");  sVel(s[8], 200.f);
 	v[8]= "#90D0FF"+ fToStr(t0to200,1,4) +TR(" #{UnitS} ");
-	bar(8, t0to200 / 27.f, 0.7,1.0,1.0);  vis(8, t0to200 > 0.f);
+	bar(8, t0to200 / 27.f * sm, 0.7,1.0,1.0);  vis(8, t0to200 > 0.f);
 		  
 	s[9]= "#70E0E0"+ TR("#{Car_StopTimeFrom} ");  sVel(s[9], 100.f);
 	v[9]= "#80F0F0"+ fToStr(stop100,1,4) +TR(" #{UnitS} ");
-	bar(9, stop100 / 5.f, 0.5,1.0,1.0);
+	bar(9, stop100 / 5.f * sm, 0.5,1.0,1.0);
 
 	for (i=0; i < iCarSt; ++i)	
 	{	txCarStTxt[i]->setCaption(s[i]);  txCarStVals[i]->setCaption(v[i]);  }
