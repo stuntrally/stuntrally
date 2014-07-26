@@ -80,25 +80,25 @@ void CGui::InitGui()
 	vSubTabsTrack.clear();
 	for (size_t i=0; i < app->mWndTabsTrack->getItemCount(); ++i)
 	{
-		sub = (TabPtr)app->mWndTabsTrack->getItemAt(i)->findWidget("SubTab");
+		sub = gcom->FindSubTab(app->mWndTabsTrack->getItemAt(i));
 		vSubTabsTrack.push_back(sub);
 	}
 	vSubTabsEdit.clear();
 	for (size_t i=0; i < app->mWndTabsEdit->getItemCount(); ++i)
 	{
-		sub = (TabPtr)app->mWndTabsEdit->getItemAt(i)->findWidget("SubTab");
-		vSubTabsEdit.push_back(sub);  // 0 for not found
+		sub = gcom->FindSubTab(app->mWndTabsEdit->getItemAt(i));
+		vSubTabsEdit.push_back(sub);
 	}
 	vSubTabsHelp.clear();
 	for (size_t i=0; i < app->mWndTabsHelp->getItemCount(); ++i)
 	{
-		sub = (TabPtr)app->mWndTabsHelp->getItemAt(i)->findWidget("SubTab");
+		sub = gcom->FindSubTab(app->mWndTabsHelp->getItemAt(i));
 		vSubTabsHelp.push_back(sub);
 	}
 	vSubTabsOpts.clear();
 	for (size_t i=0; i < app->mWndTabsOpts->getItemCount(); ++i)
 	{
-		sub = (TabPtr)app->mWndTabsOpts->getItemAt(i)->findWidget("SubTab");
+		sub = gcom->FindSubTab(app->mWndTabsOpts->getItemAt(i));
 		vSubTabsOpts.push_back(sub);
 	}
 

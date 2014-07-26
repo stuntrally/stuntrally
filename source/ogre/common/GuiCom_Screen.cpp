@@ -172,6 +172,7 @@ void CGuiCom::ResizeOptWnd()
 	#ifndef SR_EDITOR  // game
 	app->mWndGame->setCoord(xm, ym, xo, yo);
 	app->mWndReplays->setCoord(xm, ym, xo, yo);
+	app->mWndFirst->setCoord(xm, ym, xo, yo);
 	//ap->mWndTweak->setCoord(0, 6, xo/3, yo-ym);
 	#else  // editor
 	app->mWndTrack->setCoord(xm, ym, xo, yo);
