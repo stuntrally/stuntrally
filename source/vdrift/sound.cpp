@@ -41,7 +41,7 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 
 	fp = fopen(filename.c_str(), "rb");
 	if (!fp)
-	{	error_output << "Can't open sound file: "+filename << endl;  goto error;	}
+	{	error_output << "Can't open wav sound file: "+filename << endl;  goto error;	}
 	else
 	{
 		char id[5];  //four bytes to hold 'RIFF'
@@ -239,7 +239,7 @@ bool SOUNDBUFFER::LoadOGG(const string & filename, const SOUNDINFO & sound_devic
 	}
 	else
 	{
-		error_output << "Can't open sound file: "+filename << endl;
+		error_output << "Can't open ogg sound file: "+filename << endl;
 		return false;
 	}
 }
@@ -448,7 +448,7 @@ void SOUNDSOURCE::SampleAndAdvanceWithPitch16bit(int * chan1, int * chan2, int l
 	assert(buffer);
 	int samples = buffer->info.GetSamples();  // the number of 16-bit samples in the buffer with left and right channels SUMMED (so for stereo signals the number of samples per channel is samples/2)
 
-	float n_remain = sample_pos_remainder;  // the fractional portion of the current playback position for this soundsource
+	float n_remain = sample_rem;  // the fractional portion of the current playback position for this soundsource
 	int n = sample_pos;  // the integer portion of the current playback position for this soundsource PER CHANNEL (i.e., this will range from 0 to samples/2)
 	float samplecount = 0;  // floating point record of how far the playback position has increased during this callback
 
@@ -481,14 +481,14 @@ void SOUNDSOURCE::SampleAndAdvanceWithPitch16bit(int * chan1, int * chan2, int l
 		for (int i = 0; i  < len; ++i)
 		{
 			//do gain change rate limiting
-			gaindiff1 = computed_gain1 - last_computed_gain1;
-			gaindiff2 = computed_gain2 - last_computed_gain2;
+			gaindiff1 = comp_gain1 - last_comp_gain1;
+			gaindiff2 = comp_gain2 - last_comp_gain2;
 				 if (gaindiff1 > maxrate)  gaindiff1 = maxrate;
 			else if (gaindiff1 < negmaxrate) gaindiff1 = negmaxrate;
 				 if (gaindiff2 > maxrate)  gaindiff2 = maxrate;
 			else if (gaindiff2 < negmaxrate)  gaindiff2 = negmaxrate;
-			last_computed_gain1 = last_computed_gain1 + gaindiff1;
-			last_computed_gain2 = last_computed_gain2 + gaindiff2;
+			last_comp_gain1 = last_comp_gain1 + gaindiff1;
+			last_comp_gain2 = last_comp_gain2 + gaindiff2;
 
 			//do pitch change rate limiting
 			/*pitchdiff = pitch - last_pitch;
@@ -520,8 +520,8 @@ void SOUNDSOURCE::SampleAndAdvanceWithPitch16bit(int * chan1, int * chan2, int l
 				//samp2[1] = samp1[1];
 
 				// set the output buffer to the linear interpolation between the left and right samples for channels
-				chan1[i] = (int) ((n_remain*(samp2[0] - samp1[0]) + samp1[0])*last_computed_gain1);
-				chan2[i] = (int) ((n_remain*(samp2[1] - samp1[1]) + samp1[1])*last_computed_gain2);
+				chan1[i] = (int) ((n_remain*(samp2[0] - samp1[0]) + samp1[0])*last_comp_gain1);
+				chan2[i] = (int) ((n_remain*(samp2[1] - samp1[1]) + samp1[1])*last_comp_gain2);
 
 				n_remain += last_pitch;		// increment the playback position
 				const unsigned int ninc = (unsigned int) n_remain;
@@ -532,7 +532,7 @@ void SOUNDSOURCE::SampleAndAdvanceWithPitch16bit(int * chan1, int * chan2, int l
 			}
 		}
 
-		double newpos = sample_pos + sample_pos_remainder + samplecount;  // calculate a floating point new playback position based on where we started plus how many samples we just played
+		double newpos = sample_pos + sample_rem + samplecount;  // calculate a floating point new playback position based on where we started plus how many samples we just played
 
 		if (newpos >= samples_per_channel && !loop)  // end playback if we've finished playing the buffer and looping is not enabled
 			playing = 0;
@@ -541,7 +541,7 @@ void SOUNDSOURCE::SampleAndAdvanceWithPitch16bit(int * chan1, int * chan2, int l
 			while (newpos >= samples_per_channel)  // newpos = newpos % samples
 				newpos -= samples_per_channel;
 			sample_pos = (unsigned int) newpos;			 // save the integer portion of the current playback position back to the soundsource
-			sample_pos_remainder = newpos - sample_pos;	 // save the fractional portion of the current playback position back to the soundsource
+			sample_rem = newpos - sample_pos;	 // save the fractional portion of the current playback position back to the soundsource
 		}
 		
 		if (playing)
@@ -561,7 +561,7 @@ void SOUNDSOURCE::SampleAndAdvanceWithPitch16bit(int * chan1, int * chan2, int l
 inline void SOUNDSOURCE::IncrementWithPitch(int num)
 {
 	int samples = buffer->GetSoundInfo().GetSamples()/buffer->GetSoundInfo().GetChannels();
-	double newpos = sample_pos + sample_pos_remainder + (num)*pitch;
+	double newpos = sample_pos + sample_rem + (num)*pitch;
 	if (newpos >= samples && !loop)
 		playing = 0;
 	else
@@ -569,7 +569,7 @@ inline void SOUNDSOURCE::IncrementWithPitch(int num)
 		while (newpos >= samples)
 			newpos -= samples;
 		sample_pos = (unsigned int) newpos;
-		sample_pos_remainder = newpos - sample_pos;
+		sample_rem = newpos - sample_pos;
 	}
 }
 
@@ -670,8 +670,7 @@ void SOUND::Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECT
 {
 	for (std::list <SOUNDSOURCE *>::iterator i = sources.begin(); i != sources.end(); ++i)
 	{
-		//if ((*i)->Get3DEffects())
-		if (listener3D)
+		if (listener3D && (*i)->Get3DEffects())
 		{
 			MATHVECTOR<float,3> relvec = (*i)->GetPosition() - listener_pos;
 			float len = relvec.Magnitude();
@@ -694,7 +693,7 @@ void SOUND::Compute3DEffects(std::list <SOUNDSOURCE *> & sources, const MATHVECT
 
 			(*i)->SetComputationResults(cgain*(*i)->GetGain()*(1.f-pgain1), cgain*(*i)->GetGain()*(1.f-pgain2));
 		}
-		else
+		else  // 2d, hud sound
 		{
 			(*i)->SetComputationResults((*i)->GetGain(), (*i)->GetGain());
 		}

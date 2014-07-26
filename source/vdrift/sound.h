@@ -158,14 +158,14 @@ class SOUNDSOURCE  // single sound
 {
 private:
 	unsigned int sample_pos;
-	float sample_pos_remainder;
+	float sample_rem;  // pos_remainder
 
 	int playing, loop;
 	bool autodelete, effects3d;
 
 	float gain, relative_gain, pitch,last_pitch;
-	float computed_gain1, last_computed_gain1;  // c-computed
-	float computed_gain2, last_computed_gain2;
+	float comp_gain1, last_comp_gain1;  // computed
+	float comp_gain2, last_comp_gain2;
 
 	MATHVECTOR<float,3> position, velocity;
 	const SOUNDBUFFER * buffer;
@@ -173,9 +173,11 @@ private:
 
 public:
 	SOUNDSOURCE() :
-		sample_pos(0),sample_pos_remainder(0.0f),playing(0),loop(false),autodelete(false),
-		gain(1.0),pitch(1.0),last_pitch(1.0), computed_gain1(1.0),computed_gain2(1.0),last_computed_gain1(0.0),last_computed_gain2(0.0),
-		effects3d(true),relative_gain(1.0),buffer(NULL)
+		sample_pos(0), sample_rem(0.f),
+		playing(0), loop(false), autodelete(false),
+		gain(1.f), pitch(1.f), last_pitch(1.f),
+		comp_gain1(1.f),comp_gain2(1.f), last_comp_gain1(0.f),last_comp_gain2(0.f),
+		effects3d(true), relative_gain(1.f), buffer(NULL)
 	{  }
 
 	void SetBuffer(const SOUNDBUFFER & newbuf)
@@ -199,7 +201,7 @@ public:
 	void Seek4(int i)
 	{
 		int samples = GetSoundBuffer().GetSoundInfo().GetSamples();
-		SeekToSample((samples/4)*i);  Play();
+		SeekToSample((samples/4)*i);  Start();
 	}
 
 	void SampleAndAdvanceWithPitch16bit(int * chan1, int * chan2, int len);
@@ -209,45 +211,51 @@ public:
 	void SampleAndAdvance16bit(int * chan1, int * chan2, int len);
 	void Sample16bit(unsigned int peekoffset, int & chan1, int & chan2);
 	void Advance(unsigned int offset);
-	void SeekToSample(const unsigned int newpos) {assert(buffer);assert((int)newpos < buffer->info.GetSamples()/buffer->info.GetChannels());sample_pos = newpos;sample_pos_remainder=0;}
+	void SeekToSample(const unsigned int newpos)
+	{	assert(buffer);
+		assert((int)newpos < buffer->info.GetSamples() / buffer->info.GetChannels());
+		sample_pos = newpos;  sample_rem = 0.f;
+	}
+	void SetAutoDelete(const bool newauto)	{  autodelete = newauto;  }
+	bool GetAutoDelete() const				{  return autodelete;  }
 
-	void SetAutoDelete(const bool newauto) {autodelete = newauto;}
-	bool GetAutoDelete() const {return autodelete;}
-
-	void SetGain(const float newgain)   {  gain = newgain;  }
-	void SetPitch(const float newpitch) {  pitch = newpitch;  }
+	void SetGain(const float newgain)		{  gain = newgain;  }
+	void SetPitch(const float newpitch)		{  pitch = newpitch;  }
 	void SetGainSmooth(const float newgain, const float dt);
 	void SetPitchSmooth(const float newpitch, const float dt);
 
-	const MATHVECTOR<float,3>& GetPosition() const {  return position;  }
-	void SetPosition(const MATHVECTOR<float,3>& pos) {  position = pos;  }
-	void SetVelocity(const MATHVECTOR<float,3>& vel) {  velocity = vel;  }
+	const MATHVECTOR<float,3>& GetPosition() const		{  return position;  }
+	void SetPosition(const MATHVECTOR<float,3>& pos)	{  position = pos;  }
+	void SetVelocity(const MATHVECTOR<float,3>& vel)	{  velocity = vel;  }
 
-	const MATHVECTOR<float,3> & GetVelocity() const {  return velocity;  }
-	void Set3DEffects(bool new3d) {  effects3d = new3d;  }
-	bool Get3DEffects() const	  {  return effects3d;  }
+	const MATHVECTOR<float,3> & GetVelocity() const		{  return velocity;  }
+	void Set3DEffects(bool new3d)	{  effects3d = new3d;  }
+	bool Get3DEffects() const		{  return effects3d;  }
 
-	void SetComputationResults(float cpg1, float cpg2)	{	computed_gain1 = cpg1;	computed_gain2 = cpg2;	}
-	float ComputedGain(const int channel) const  {  if (channel == 1)  return computed_gain1;  else  return computed_gain2;  }
-	float GetGain() const  {  return gain;  }
-	void SetRelativeGain(const float relgain)  {  relative_gain = relgain;  }
-	float GetRelativeGain()  {  return relative_gain;  }
+	void SetComputationResults(float cpg1, float cpg2)	{	comp_gain1 = cpg1;	comp_gain2 = cpg2;	}
+	float ComputedGain(const int channel) const			{  if (channel == 1)  return comp_gain1;  else  return comp_gain2;  }
+	float GetGain() const						{  return gain;  }
+	void SetRelativeGain(const float relgain)	{  relative_gain = relgain;  }
+	float GetRelativeGain()						{  return relative_gain;  }
 	
 	void SetLoop(const bool newloop) {  loop = newloop ? 1 : 0;  }
-	void Reset() {  sample_pos = 0;  sample_pos_remainder = 0.f;  }
+	void Reset() {  sample_pos = 0;  sample_rem = 0.f;  }
 	void Stop()  {  playing = 0;  Reset();  }
 	void Pause() {  playing = 0;  }
-	void Play()  {  playing = 1;  }
-	void StopPlay()  {  playing = 0;  Reset();  playing = 1;  }
-	bool Audible() 	{  return (playing == 1) && (GetGain() > 0);  }
+	//  play
+	void Start() {  playing = 1;  }  // play, looped
+	void Play()  {  playing = 0;  Reset();  playing = 1;  }  // play now, 2d
+	bool Audible()
+	{	return (playing == 1) && (GetGain() > 0);  }
 
-	const std::string GetName() const {  if (buffer == NULL)  return "NULL";  else  return buffer->GetName();  }
+	const std::string GetName() const
+	{	if (buffer == NULL)  return "NULL";  else  return buffer->GetName();  }
 	
-	const SOUNDBUFFER & GetSoundBuffer() const {  return *buffer;  }
-	SOUNDFILTER & AddFilter() {  SOUNDFILTER newfilt;  filters.push_back(newfilt);  return filters.back();  }
+	const SOUNDBUFFER & GetSoundBuffer() const	{  return *buffer;  }
+	SOUNDFILTER & AddFilter()	{	SOUNDFILTER newfilt;  filters.push_back(newfilt);  return filters.back();  }
 	SOUNDFILTER & GetFilter(int num);
-	int NumFilters() const {  return filters.size();  }
-	void ClearFilters() {  filters.clear();  }
+	int NumFilters() const	{  return filters.size();  }
+	void ClearFilters()		{  filters.clear();  }
 };
 
 

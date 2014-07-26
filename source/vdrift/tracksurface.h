@@ -27,7 +27,7 @@ public:
 		friction(1.0f),
 		frictionX(1.0f), frictionY(1.0f),
 		bumpWaveLength(10.f), bumpAmplitude(0.f),
-		bumpWaveLength2(10.f), bumpAmplitude2(0.f),
+		bumpWaveLength2(14.f), bumpAmplitude2(0.f),
 		rollingDrag(1.f), rollingResist(1.f),
 		type(GRASS),
 		tireName("DEFAULT"),
