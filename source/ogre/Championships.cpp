@@ -329,14 +329,17 @@ void CGui::ChampionshipAdvance(float timeCur)
 	ChampFillStageInfo(true);  // cur track
 	app->mWndChampStage->setVisible(true);
 
+	//  sound  //)
+	if (passed)
+		pGame->snd_stage.Play();
+	else
+		pGame->snd_fail.Play();  //)
+
+
 	if (!last || (last && !passed))
 	{
 		if (passed)
-		{	pc.curTrack++;  // next stage
-		
-			pGame->snd_stage.Play();
-		}else
-			pGame->snd_fail.Play();  //)
+			pc.curTrack++;  // next stage
 			
 		ProgressSave();
 	}else
@@ -352,7 +355,7 @@ void CGui::ChampionshipAdvance(float timeCur)
 
 		ProgressSave();
 
-		///  save which snd to play  //)
+		//  save which sound to play  //)
 		if (!passed)
 			iChSnd = -1;
 		else

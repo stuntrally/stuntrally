@@ -332,21 +332,25 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 	ChallFillStageInfo(true);  // cur track
 	app->mWndChallStage->setVisible(true);
 
+	//  sound  //)
+	if (passed)
+		pGame->snd_stage.Play();
+	else
+		pGame->snd_fail.Play();  //)
+
+
 	if (!last || (last && !passed))
 	{
 		if (pc.curTrack == 0)  // save picked car
 			pc.car = pSet->game.car[0];
 
 		if (passed)
-		{	pc.curTrack++;  // next stage
-
-			pGame->snd_stage.Play();
-		}else
-			pGame->snd_fail.Play();  //)
+			pc.curTrack++;  // next stage
 
 		ProgressLSave();
 		return;
 	}
+
 
 	//  challenge end
 	//-----------------------------------------------------------------------------------------------
@@ -437,7 +441,7 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 	
 	ProgressLSave();
 
-	///  save which snd to play  //)
+	//  save which sound to play  //)
 	if (!passed)
 		iChSnd = -1;
 	else
