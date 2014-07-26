@@ -860,7 +860,7 @@
 					</Widget>
 				</Widget>
 
-				<Widget type="TabControl" skin="TabControl" position="196 16 548 20" name="tabPlayer">
+				<Widget type="TabControl" skin="TabControl" position="196 16 548 20" name="SubTabPlayer">
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 542 -8">
 						<Property key="Caption" value="#A0D0FF#{Player} 1"/>
@@ -1290,7 +1290,7 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#A0A0FF#{Multiplayer}"/>
-				<Widget type="TabControl" skin="TabControl" position="16 15 744 497" name="tabsNet">
+				<Widget type="TabControl" skin="TabControl" position="16 15 744 497" name="SubTabNet">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 738 469">
@@ -1447,7 +1447,7 @@
 						<Property key="Caption" value="#E0E000#{Diff3}"/>
 					</Widget>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="32 26 538 36" name="ChampType">
+				<Widget type="TabControl" skin="TabControl" position="32 26 538 36" name="SubTabChampType">
 					<Property key="Colour" value="0.8 0.9 1.0"/>
 					<Widget type="TabItem" skin="" position="2 24 532 8">
 						<Property key="Caption" value="#A0F0FF#{Diff3}"/>
@@ -2037,7 +2037,7 @@
 			<Property key="ImageTexture" value="ico_champ.png"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="1356 1360 648 540" align="Center" layer="Popup" name="WndNetEnd">
+    <Widget type="Window" skin="WindowC" position="1356 1700 648 540" align="Center" layer="Popup" name="WndNetEnd">
 		<Property key="Caption" value="#{Multiplayer}"/>
 		<Property key="Alpha" value="0.8"/>
 		<Property key="Colour" value="0.7 0.7 0"/>
@@ -2446,7 +2446,7 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562" name="InputTabAll">
 				<Property key="Caption" value="#FFFF60#{Input}"/>
-				<Widget type="TabControl" skin="TabControl" position="16 15 516 520" name="InputTab">
+				<Widget type="TabControl" skin="TabControl" position="16 15 516 520" name="SubTabInput">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 510 492">
@@ -3758,7 +3758,7 @@
 			</Widget>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="2020 776 536 757" align="Default" layer="Popup" name="WndTweak">
+    <Widget type="Window" skin="WindowC" position="2044 1620 536 756" align="Default" layer="Popup" name="WndTweak">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
 		<Property key="Caption" value="#{Tweak}"/>
@@ -3769,7 +3769,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Colour" value="0.7 0.85 1"/>
 			<Property key="SmoothShow" value="false"/>
-			<Widget type="TabItem" skin="" position="2 24 514 692">
+            <Widget type="TabItem" skin="" position="2 24 522 692">
 				<Property key="Caption" value="#C0E0FF#{Car}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
 				<Widget type="TextBox" skin="TextBoxS" position="16 12 800 26" name="TweakPath">
@@ -3789,7 +3789,7 @@
 					<Property key="ButtonWidth" value="42"/>
 					<Property key="SmoothShow" value="false"/>
 					<Property key="Colour" value="0.9 0.9 1.0"/>
-					<Widget type="TabItem" skin="" position="2 24 510 628">
+                    <Widget type="TabItem" skin="" position="2 24 514 628">
 						<Property key="Caption" value="#D0E0F0st"/>
 						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar0">
 							<Property key="InheritsAlpha" value="false"/>
@@ -3804,7 +3804,7 @@
 							<Property key="Colour" value="0.48 0.55 0.62"/>
 						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 510 628">
+                    <Widget type="TabItem" skin="" position="2 24 514 628">
 						<Property key="Caption" value="#D0FFD0c"/>
 						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar1">
 							<Property key="InheritsAlpha" value="false"/>
@@ -3819,7 +3819,7 @@
 							<Property key="Colour" value="0.5 0.6 0.5"/>
 						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 510 628">
+                    <Widget type="TabItem" skin="" position="2 24 514 628">
 						<Property key="Caption" value="#FFA0A0e,"/>
 						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar2">
 							<Property key="InheritsAlpha" value="false"/>
@@ -3834,7 +3834,7 @@
 							<Property key="Colour" value="0.65 0.5 0.5"/>
 						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 510 628">
+                    <Widget type="TabItem" skin="" position="2 24 514 628">
 						<Property key="Caption" value="#FFC8A0t,"/>
 						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar3">
 							<Property key="InheritsAlpha" value="false"/>
@@ -3849,7 +3849,7 @@
 							<Property key="Colour" value="0.7 0.55 0.4"/>
 						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 510 628">
+                    <Widget type="TabItem" skin="" position="2 24 514 628">
 						<Property key="Caption" value="#FFFFC0g"/>
 						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar4">
 							<Property key="InheritsAlpha" value="false"/>
@@ -3864,7 +3864,7 @@
 							<Property key="Colour" value="0.6 0.6 0.4"/>
 						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 510 628">
+                    <Widget type="TabItem" skin="" position="2 24 514 628">
 						<Property key="Caption" value="#80FFFFss"/>
 						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar5">
 							<Property key="InheritsAlpha" value="false"/>
@@ -3879,7 +3879,7 @@
 							<Property key="Colour" value="0.4 0.6 0.6"/>
 						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 510 628">
+                    <Widget type="TabItem" skin="" position="2 24 514 628">
 						<Property key="Caption" value="#C0C0C0ti"/>
 						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar6">
 							<Property key="InheritsAlpha" value="false"/>
@@ -3894,7 +3894,7 @@
 							<Property key="Colour" value="0.5 0.5 0.5"/>
 						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 510 628">
+                    <Widget type="TabItem" skin="" position="2 24 514 628">
 						<Property key="Caption" value="#D0B0FFbr"/>
 						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar7">
 							<Property key="InheritsAlpha" value="false"/>
@@ -3909,7 +3909,7 @@
 							<Property key="Colour" value="0.6 0.55 0.65"/>
 						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 510 628">
+                    <Widget type="TabItem" skin="" position="2 24 514 628">
 						<Property key="Caption" value="#C8FFA0a"/>
 						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar8">
 							<Property key="InheritsAlpha" value="false"/>
@@ -3924,7 +3924,7 @@
 							<Property key="Colour" value="0.6 0.7 0.5"/>
 						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 510 628">
+                    <Widget type="TabItem" skin="" position="2 24 514 628">
 						<Property key="Caption" value="#90C0F0.f"/>
 						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar9">
 							<Property key="InheritsAlpha" value="false"/>
@@ -3939,7 +3939,7 @@
 							<Property key="Colour" value="0.4 0.55 0.7"/>
 						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 510 628">
+                    <Widget type="TabItem" skin="" position="2 24 514 628">
 						<Property key="Caption" value="#A0D0FF.r"/>
 						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar10">
 							<Property key="InheritsAlpha" value="false"/>
@@ -3954,7 +3954,7 @@
 							<Property key="Colour" value="0.45 0.6 0.75"/>
 						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 510 628">
+                    <Widget type="TabItem" skin="" position="2 24 514 628">
 						<Property key="Caption" value="#D0D0FFm"/>
 						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar11">
 							<Property key="InheritsAlpha" value="false"/>
@@ -3971,7 +3971,7 @@
 					</Widget>
 				</Widget>
 			</Widget>
-			<Widget type="TabItem" skin="" position="2 24 514 692">
+            <Widget type="TabItem" skin="" position="2 24 522 692">
 				<Property key="Caption" value="#80FFFF#{Tires}"/>
 				<Property key="Colour" value="1 0.6 0.2"/>
 				<Widget type="TextBox" skin="TextBoxS" position="20 32 132 22">
@@ -4230,7 +4230,7 @@
 			<UserString key="NotSized" value="1"/>
 		</Widget>
 	</Widget>
-	<Widget type="Button" skin="Button" position_real="0.908125 0 0.0884375 0.0254167" layer="Popup" name="Quit">
+    <Widget type="Button" skin="Button" position_real="0.908125 0 0.0884375 0.0253846" layer="Popup" name="Quit">
 		<Property key="Caption" value="#{Quit}"/>
 		<Property key="Colour" value="1 0.4 0.4"/>
 		<Property key="Visible" value="false"/>
@@ -4310,4 +4310,66 @@
 			</Widget>
 		</Widget>
 	</Widget>
+	<Widget type="Window" skin="WindowC" position="16 88 800 600" align="Center" layer="Overlapped" name="FirstWnd">
+		<Property key="MinSize" value="500 400"/>
+		<Property key="MaxSize" value="2560 1600"/>
+		<Property key="Colour" value="0.6 0.8 1"/>
+		<Property key="Alpha" value="1"/>
+		<Property key="Visible" value="false"/>
+		<Property key="Caption" value="Welcome"/>
+        <Widget type="ImageBox" skin="ImageBox" position="260 0 240 60">
+            <Property key="ImageTexture" value="stuntrally-logo.png"/>
+        </Widget>
+        <Widget type="ImageBox" skin="ImageBox" position="12 70 680 192">
+            <Property key="ImageTexture" value="keys.png"/>
+        </Widget>
+        <Widget type="EditBox" skin="EditBoxEmpty" position="12 294 520 60">
+			<Property key="ReadOnly" value="true"/>
+			<Property key="MultiLine" value="true"/>
+			<Property key="WordWrap" value="true"/>
+			<Property key="TextColour" value="0.8 0.9 1.0"/>
+			<Property key="FontName" value="font.small"/>
+			<Property key="Caption" value="To change screen resolution and adjust graphics to your card go to:"/>
+		</Widget>
+        <Widget type="EditBox" skin="EditBoxEmpty" position="12 354 520 60">
+			<Property key="ReadOnly" value="true"/>
+			<Property key="MultiLine" value="true"/>
+			<Property key="WordWrap" value="true"/>
+			<Property key="TextColour" value="1.0 1.0 0.8"/>
+			<Property key="FontName" value="font.small"/>
+			<Property key="Caption" value="To check keys used in game or reassign them, or to confugure controller press:"/>
+		</Widget>
+        <Widget type="TextBox" skin="TextBox" position="12 420 520 24">
+			<Property key="ReadOnly" value="true"/>
+			<Property key="MultiLine" value="true"/>
+			<Property key="WordWrap" value="true"/>
+			<Property key="TextColour" value="0.9 0.95 1.0"/>
+			<Property key="FontName" value="font.small"/>
+			<Property key="Caption" value="Hint (1/16): Rewind"/>
+		</Widget>
+        <Widget type="EditBox" skin="EditBoxEmpty" position="12 444 520 60">
+			<Property key="ReadOnly" value="true"/>
+			<Property key="MultiLine" value="true"/>
+			<Property key="WordWrap" value="true"/>
+			<Property key="TextColour" value="0.7 0.86 1.0"/>
+			<Property key="FontName" value="font.small"/>
+			<Property key="Caption" value="#{Hint1text}"/>
+		</Widget>
+        <Widget type="Button" skin="CheckBox" position="16 532 380 28">
+            <Property key="Caption" value="#A0C0E0Show at startup"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="576 284 180 40">
+			<Property key="Colour" value="0.7 0.9 1"/>
+			<Property key="Caption" value="#C0E0FF#{Screen}"/>
+		</Widget>
+        <Widget type="Button" skin="Button" position="576 344 180 40">
+			<Property key="Colour" value="1 1 0.6"/>
+			<Property key="Caption" value="#FFFF60#{Input}"/>
+		</Widget>
+        <Widget type="Button" skin="Button" position="548 504 216 48">
+			<Property key="Colour" value="0.7 0.8 1"/>
+			<Property key="Caption" value="#E0F0FF#{Close}"/>
+		</Widget>
+    </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>

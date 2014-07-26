@@ -135,6 +135,19 @@ void CGuiCom::UnfocusLists()
 	}	}
 }
 
+MyGUI::Tab* CGuiCom::FindSubTab(WP tab)
+{
+	MyGUI::Tab* sub = 0;  // 0 for not found
+	size_t s = tab->getChildCount();
+	for (size_t n = 0; n < s; ++n)
+	{
+		WP wp = tab->getChildAt(n);
+		if (StringUtil::startsWith(wp->getName(), "SubTab"))
+			sub = (MyGUI::Tab*)wp;
+	}
+	return sub;
+}
+
 
 //  Resize MyGUI
 //-----------------------------------------------------------------------------------

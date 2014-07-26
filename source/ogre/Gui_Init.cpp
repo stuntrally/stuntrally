@@ -48,11 +48,9 @@ void CGui::InitGui()
 
 
 	//  wnds
-	app->mWndMain = fWnd("MainMenuWnd");
-	app->mWndGame = fWnd("GameWnd");
-	app->mWndReplays = fWnd("ReplaysWnd");
-	app->mWndHelp = fWnd("HelpWnd");
-	app->mWndOpts = fWnd("OptionsWnd");
+	app->mWndMain = fWnd("MainMenuWnd");  app->mWndFirst = fWnd("FirstWnd");
+	app->mWndGame = fWnd("GameWnd");  app->mWndReplays = fWnd("ReplaysWnd");
+	app->mWndHelp = fWnd("HelpWnd");  app->mWndOpts = fWnd("OptionsWnd");
 
 	app->mWndChampStage = fWnd("WndChampStage");  app->mWndChampStage->setVisible(false);
 	app->mWndChampEnd   = fWnd("WndChampEnd");    app->mWndChampEnd->setVisible(false);
@@ -79,16 +77,14 @@ void CGui::InitGui()
 	//  get sub tabs
 	vSubTabsGame.clear();
 	for (i=0; i < app->mWndTabsGame->getItemCount(); ++i)
-	{	// todo: startsWith("SubTab")..
-		sub = (Tab)app->mWndTabsGame->getItemAt(i)->findWidget(
-			i==TAB_Champs ? "ChampType" : (i==TAB_Multi ? "tabsNet" : "tabPlayer") );
-		vSubTabsGame.push_back(sub);  // 0 for not found
+	{
+		sub = (Tab)gcom->FindSubTab(app->mWndTabsGame->getItemAt(i));
+		vSubTabsGame.push_back(sub);
 	}
 	vSubTabsOpts.clear();
 	for (i=0; i < app->mWndTabsOpts->getItemCount(); ++i)
 	{
-		sub = (Tab)app->mWndTabsOpts->getItemAt(i)->findWidget(
-			i==TABo_Input ? "InputTab" : "SubTab");
+		sub = (Tab)gcom->FindSubTab(app->mWndTabsOpts->getItemAt(i));
 		vSubTabsOpts.push_back(sub);
 	}
 
@@ -488,7 +484,7 @@ void CGui::InitGui()
 	barCarSpeed = fImg("CarSpeedBar");
 	txCarAuthor = fTxt("CarAuthor");  txTrackAuthor = fTxt("TrackAuthor");
 
-	TabPtr tPlr = fTab("tabPlayer");  Tev(tPlr, Player);
+	TabPtr tPlr = fTab("SubTabPlayer");  Tev(tPlr, Player);
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
 	ck= &ckSplitVert;	ck->Init("chkSplitVertically",  &pSet->split_vertically);
@@ -496,11 +492,7 @@ void CGui::InitGui()
 
 	///  Multiplayer
 	//------------------------------------------------------------------------
-	tabsNet = fTab("tabsNet");
-		//TabItem* t1 = tabsNet->getItemAt(0);
-		//t1->setEnabled(0);
-	//int num = tabsNet ? tabsNet->getItemCount() : 0;
-	//tabsNet->setIndexSelected( (tabsNet->getIndexSelected() - 1 + num) % num );
+	tabsNet = fTab("SubTabNet");
 
 	//  server, games
 	listServers = fMli("MListServers");  int c=0;
@@ -764,7 +756,7 @@ void CGui::InitGui()
 
 	//  tabs
 	tabTut   = fTab("TutType");    Tev(tabTut,   TutType);    tabTut->setIndexSelected(pSet->tut_type);
-	tabChamp = fTab("ChampType");  Tev(tabChamp, ChampType);  tabChamp->setIndexSelected(pSet->champ_type);
+	tabChamp = fTab("SubTabChampType");  Tev(tabChamp, ChampType);  tabChamp->setIndexSelected(pSet->champ_type);
 	tabChall = fTab("ChallType");  Tev(tabChall, ChallType);  tabChall->setIndexSelected(pSet->chall_type);
 	imgTut   = fImg("imgTut");
 	imgChamp = fImg("imgChamp");

@@ -68,7 +68,8 @@ public:
 	//  main menu
 	void InitMainMenu();
 	void btnMainMenu(WP);  void tabMainMenu(Tab tab, size_t id);
-
+	MyGUI::Tab* FindSubTab(WP tab);  // util
+	
 
 	///  [Graphics]
 	SlV(ViewDist);  SlV(Anisotropy);

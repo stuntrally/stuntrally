@@ -230,7 +230,7 @@ void CGui::InitInputGui()
 	txtInpDetail = fTxt("InputDetail");
 	panInputDetail = fWP("PanInputDetail");
 
-	Tab(tabInput, "InputTab", tabInputChg);
+	Tab(tabInput, "SubTabInput", tabInputChg);
 	if (!tabInput)  return;
 
 	//  details edits
@@ -294,7 +294,7 @@ void CGui::notifyInputActionBound(bool complete)
 
 		// If a key was assigned that used to belong to another control, it will now be unassigned,
 		// so we need to force-update button labels
-		TabControl* inputTab = fTab("InputTab");  if (!inputTab)  return;
+		TabControl* inputTab = fTab("SubTabInput");  if (!inputTab)  return;
 		TabItem* current = inputTab->getItemSelected();
 		for (int i=0; i < current->getChildCount(); ++i)
 		{
@@ -422,7 +422,7 @@ void CGui::comboInputKeyAllPreset(ComboBoxPtr cmb, size_t val)
 //-------------------------------------------------------------------------------
 void CGui::UpdateInputBars()
 {
-	TabControl* inputTab = fTab("InputTab");  if (!inputTab)  return;
+	TabControl* inputTab = fTab("SubTabInput");  if (!inputTab)  return;
 	TabItem* current = inputTab->getItemSelected();
 	for (int i=0; i<current->getChildCount(); ++i)
 	{

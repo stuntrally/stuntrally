@@ -200,7 +200,7 @@ BaseApp::BaseApp()
 	,mGui(0), mPlatform(0)
 	,mWndTabsGame(0),mWndTabsOpts(0),mWndTabsHelp(0),mWndTabsRpl(0)
 	,mWndMain(0),mWndGame(0),mWndReplays(0),mWndHelp(0),mWndOpts(0)
-	,mWndRpl(0), mWndNetEnd(0), mWndTweak(0)
+	,mWndFirst(0), mWndRpl(0), mWndNetEnd(0), mWndTweak(0)
 	,mWndChampStage(0),mWndChampEnd(0), mWndChallStage(0),mWndChallEnd(0)
 
 	,bSizeHUD(true), bRecreateHUD(false), bAssignKey(false)
