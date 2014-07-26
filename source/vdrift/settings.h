@@ -134,8 +134,10 @@ public:
 	bool mouse_capture, show_welcome;
 
 	//  sound
-	float vol_master, vol_engine, vol_tires, vol_susp, vol_env,
+	float vol_master, vol_hud,
+		vol_engine, vol_tires, vol_susp, vol_env,
 		vol_fl_splash,vol_fl_cont, vol_car_crash,vol_car_scrap;
+	bool snd_chk, snd_chkwr;  // play hud
 	
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq,  perf_speed;

@@ -86,7 +86,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "gui.cars_sort", cars_sort);			Param(c,w, "gui.car_ed_tab", car_ed_tab);
 	Param(c,w, "gui.champ_tab", champ_type);		Param(c,w, "gui.tut_tab", tut_type);
 	Param(c,w, "gui.chall_tab", chall_type);		Param(c,w, "gui.champ_info", champ_info);
-
+	//  hud size
 	Param(c,w, "hud_size.gauges", size_gauges);			Param(c,w, "hud_size.arrow", size_arrow);
 	Param(c,w, "hud_size.minimap", size_minimap);		Param(c,w, "hud_size.minipos", size_minipos);
 	Param(c,w, "hud_size.mini_zoom", zoom_minimap);		Param(c,w, "hud_size.mini_zoomed", mini_zoomed);
@@ -150,11 +150,14 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "sim.dynamics_iter", dyn_iter);		Param(c,w, "sim.thread_sleep", thread_sleep);
 	Param(c,w, "sim.perf_speed", perf_speed);
 	
+	//  sound
 	Param(c,w, "sound.volume", vol_master);			Param(c,w, "sound.vol_engine", vol_engine);
 	Param(c,w, "sound.vol_tires", vol_tires);		Param(c,w, "sound.vol_env", vol_env);
 	Param(c,w, "sound.vol_susp", vol_susp);
 	Param(c,w, "sound.vol_fl_splash", vol_fl_splash);	Param(c,w, "sound.vol_fl_cont", vol_fl_cont);
 	Param(c,w, "sound.vol_car_crash", vol_car_crash);	Param(c,w, "sound.vol_car_scrap", vol_car_scrap);
+	Param(c,w, "sound.hud_vol", vol_hud);
+	Param(c,w, "sound.hud_chk", snd_chk);			Param(c,w, "sound.hud_chk_wrong", snd_chkwr);
 
 	//  effects
 	Param(c,w, "video_eff.all_effects", all_effects);
@@ -247,6 +250,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	//  sound
 	,vol_master(1.f), vol_engine(0.6f), vol_tires(1.f), vol_env(1.f), vol_susp(1.f)
 	,vol_fl_splash(1.f),vol_fl_cont(1.f), vol_car_crash(1.f),vol_car_scrap(1.f)
+	,vol_hud(1.f), snd_chk(0), snd_chkwr(1)
 	//  video
 	,windowx(800), windowy(600)
 	,fullscreen(false), vsync(false)
