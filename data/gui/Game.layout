@@ -4230,7 +4230,7 @@
 			<UserString key="NotSized" value="1"/>
 		</Widget>
 	</Widget>
-    <Widget type="Button" skin="Button" position_real="0.908125 0 0.0884375 0.0253846" layer="Popup" name="Quit">
+    <Widget type="Button" skin="Button" position_real="0.908125 0 0.0884375 0.025" layer="Popup" name="Quit">
 		<Property key="Caption" value="#{Quit}"/>
 		<Property key="Colour" value="1 0.4 0.4"/>
 		<Property key="Visible" value="false"/>
@@ -4310,65 +4310,102 @@
 			</Widget>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="16 88 800 600" align="Center" layer="Overlapped" name="FirstWnd">
+	<Widget type="Window" skin="WindowC" position="16 88 800 600" align="Center" layer="Popup" name="WelcomeWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
 		<Property key="Colour" value="0.6 0.8 1"/>
 		<Property key="Alpha" value="1"/>
 		<Property key="Visible" value="false"/>
-		<Property key="Caption" value="Welcome"/>
-        <Widget type="ImageBox" skin="ImageBox" position="260 0 240 60">
+        <Widget type="TextBox" skin="TextBox" position="20 20 240 24">
+            <Property key="Caption" value="#B0D0F0#{WelcomeTo}"/>
+			<Property key="FontName" value="font.big"/>
+			<Property key="TextShadow" value="true"/>
+        </Widget>
+        <Widget type="ImageBox" skin="ImageBox" position="276 0 240 60">
             <Property key="ImageTexture" value="stuntrally-logo.png"/>
         </Widget>
-        <Widget type="ImageBox" skin="ImageBox" position="12 70 680 192">
+        <Widget type="ImageBox" skin="ImageBox" position="16 84 528 154">
+			<Property key="ImageCoord" value="0 0 1266 369"/>
             <Property key="ImageTexture" value="keys.png"/>
         </Widget>
-        <Widget type="EditBox" skin="EditBoxEmpty" position="12 294 520 60">
+		<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
+			<Property key="ImageCoord" value="128 768 128 128"/>
+			<Property key="Alpha" value="0.15"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+		</Widget>
+        <Widget type="EditBox" skin="EditBoxEmpty" position="20 276 520 56">
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
 			<Property key="TextColour" value="0.8 0.9 1.0"/>
-			<Property key="FontName" value="font.small"/>
-			<Property key="Caption" value="To change screen resolution and adjust graphics to your card go to:"/>
+			<Property key="TextAlign" value="Left Top"/>
+			<Property key="Caption" value="#{HintScreen}"/>
 		</Widget>
-        <Widget type="EditBox" skin="EditBoxEmpty" position="12 354 520 60">
+        <Widget type="EditBox" skin="EditBoxEmpty" position="20 336 520 54">
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
 			<Property key="TextColour" value="1.0 1.0 0.8"/>
-			<Property key="FontName" value="font.small"/>
-			<Property key="Caption" value="To check keys used in game or reassign them, or to confugure controller press:"/>
+			<Property key="TextAlign" value="Left Top"/>
+			<Property key="Caption" value="#{HintInput}"/>
+			<Property key="TextShadow" value="true"/>
 		</Widget>
-        <Widget type="TextBox" skin="TextBox" position="12 420 520 24">
+		
+		<Widget type="Widget" skin="PanelSkin" position="16 406 524 146">
+			<Property key="Colour" value="0.7 0.85 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Widget type="Widget" skin="PanelSkin" position="0 32 524 114">
+				<Property key="Colour" value="0.6 0.67 0.74"/>
+				<Property key="InheritsAlpha" value="false"/>
+			</Widget>
+		</Widget>
+        <Widget type="EditBox" skin="EditBoxEmpty" position="22 416 254 24" name="HintTitle">
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
+			<Property key="Colour" value="0.6 0.66 0.7"/>
 			<Property key="TextColour" value="0.9 0.95 1.0"/>
-			<Property key="FontName" value="font.small"/>
-			<Property key="Caption" value="Hint (1/16): Rewind"/>
+			<Property key="TextAlign" value="Left Top"/>
+			<Property key="TextShadow" value="true"/>
 		</Widget>
-        <Widget type="EditBox" skin="EditBoxEmpty" position="12 444 520 60">
+        <Widget type="EditBox" skin="EditBoxEmpty" position="22 452 514 104" name="HintText">
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
-			<Property key="TextColour" value="0.7 0.86 1.0"/>
-			<Property key="FontName" value="font.small"/>
-			<Property key="Caption" value="#{Hint1text}"/>
+			<Property key="Colour" value="0.5 0.56 0.6"/>
+			<Property key="TextColour" value="0.8 0.9 1.0"/>
+			<Property key="TextAlign" value="Left Top"/>
+			<Property key="FontName" value="font.big"/>
+			<Property key="TextShadow" value="true"/>
 		</Widget>
-        <Widget type="Button" skin="CheckBox" position="16 532 380 28">
-            <Property key="Caption" value="#A0C0E0Show at startup"/>
+        <Widget type="Button" skin="Button" position="288 412 32 24" name="btnHintPrev">
+			<Property key="Colour" value="0.7 0.85 1.0"/>
+            <Property key="Caption" value="#A0C0FF&lt;"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="576 284 180 40">
+        <Widget type="Button" skin="Button" position="324 412 32 24" name="btnHintNext">
+			<Property key="Colour" value="0.7 0.85 1.0"/>
+            <Property key="Caption" value="#A0C0FF&gt;"/>
+        </Widget>
+        <Widget type="Button" skin="CheckBox" position="576 412 212 24" name="chkHintShow">
+            <Property key="Caption" value="#A0C8FF#{HintShow}"/>
+			<Property key="FontName" value="font.small"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="576 456 212 24">
+            <Property key="Caption" value="#A0C0E0#{HintKey}"/>
+			<Property key="FontName" value="font.small"/>
+        </Widget>
+
+        <Widget type="Button" skin="Button" position="576 276 196 40" name="btnHintScreen">
 			<Property key="Colour" value="0.7 0.9 1"/>
 			<Property key="Caption" value="#C0E0FF#{Screen}"/>
 		</Widget>
-        <Widget type="Button" skin="Button" position="576 344 180 40">
+        <Widget type="Button" skin="Button" position="576 336 196 40" name="btnHintInput">
 			<Property key="Colour" value="1 1 0.6"/>
 			<Property key="Caption" value="#FFFF60#{Input}"/>
 		</Widget>
-        <Widget type="Button" skin="Button" position="548 504 216 48">
-			<Property key="Colour" value="0.7 0.8 1"/>
-			<Property key="Caption" value="#E0F0FF#{Close}"/>
+        <Widget type="Button" skin="Button" position="576 504 196 48" name="btnHintClose">
+			<Property key="Colour" value="0.6 0.95 1"/>
+			<Property key="Caption" value="#D0F0FF#{Close}"/>
 		</Widget>
     </Widget>
     <CodeGeneratorSettings/>

@@ -419,6 +419,41 @@ void CGui::slVolMaster(SV*)
 }
 
 
+//  Hints, welcome screen
+//---------------------------------------------------------------------
+void CGui::UpdHint()
+{
+	if (!edHintTitle)  return;
+	edHintTitle->setCaption(TR("#{Hint}  ") +toStr(iHintCur+1)+"/"+toStr(iHints)+
+					  ":   "+TR("#{Hint-"+toStr(iHintCur)+"}"));
+	edHintText->setCaption(TR("#{Hint-"+toStr(iHintCur)+"text}"));
+}
+
+void CGui::btnHintPrev(WP)
+{
+	iHintCur = (iHintCur-1+iHints) % iHints;  UpdHint();
+}
+void CGui::btnHintNext(WP)
+{
+	iHintCur = (iHintCur+1) % iHints;         UpdHint();
+}
+
+void CGui::btnHintScreen(WP)
+{
+	GuiShortcut(MNU_Options, TABo_Screen,0);  btnHintClose(0);
+}
+void CGui::btnHintInput(WP)
+{
+	GuiShortcut(MNU_Options, TABo_Input,0);  btnHintClose(0);
+}
+
+void CGui::btnHintClose(WP)
+{
+	app->mWndWelcome->setVisible(false);
+}
+
+
+
 ///  3d car view  TODO ...
 //--------------------------------------------
 

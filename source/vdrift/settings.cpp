@@ -133,6 +133,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "misc.language", language);			Param(c,w, "misc.loadingback", loadingbackground);
 	Param(c,w, "misc.dev_keys", dev_keys);			Param(c,w, "misc.dev_no_prvs", dev_no_prvs);
 	Param(c,w, "misc.screenshot_png", screen_png);	Param(c,w, "misc.mouse_capture", mouse_capture);
+	Param(c,w, "misc.show_welcome", show_welcome);
 
 	Param(c,w, "network.nickname", nickname);		Param(c,w, "network.master_server_address", master_server_address);
 	Param(c,w, "network.local_port", local_port);	Param(c,w, "network.master_server_port", master_server_port);
@@ -226,6 +227,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,autostart(0), ogre_dialog(0), escquit(0)
 	,bltDebug(0), bltLines(1),  bltProfilerTxt(0), profilerTxt(0)
 	,loadingbackground(true), mouse_capture(true)
+	,show_welcome(true)
 	//  network
 	,nickname("Player"), netGameName("Default Game")
 	,master_server_address("localhost")

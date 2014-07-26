@@ -48,7 +48,7 @@ void CGui::InitGui()
 
 
 	//  wnds
-	app->mWndMain = fWnd("MainMenuWnd");  app->mWndFirst = fWnd("FirstWnd");
+	app->mWndMain = fWnd("MainMenuWnd");  app->mWndWelcome = fWnd("WelcomeWnd");
 	app->mWndGame = fWnd("GameWnd");  app->mWndReplays = fWnd("ReplaysWnd");
 	app->mWndHelp = fWnd("HelpWnd");  app->mWndOpts = fWnd("OptionsWnd");
 
@@ -107,6 +107,16 @@ void CGui::InitGui()
 	toggleGui(false);
 	app->updMouse();
 	gcom->bnQuit->setVisible(app->isFocGui);
+
+
+	///  Hints  ----
+	edHintTitle = fEd("HintTitle");  edHintText = fEd("HintText");
+	UpdHint();
+	ck= &ckShowWelcome;  ck->Init("chkHintShow", &pSet->show_welcome);
+	app->mWndWelcome->setVisible(pSet->show_welcome);
+	Btn("btnHintPrev", btnHintPrev);     Btn("btnHintNext", btnHintNext);
+	Btn("btnHintScreen",btnHintScreen);  Btn("btnHintInput", btnHintInput);
+	Btn("btnHintClose", btnHintClose);
 	
 
 	///  Sliders

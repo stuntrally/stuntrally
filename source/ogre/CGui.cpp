@@ -77,6 +77,7 @@ CGui::CGui(App* app1)
 	,txtTweakPathCol(0)
 	, loadReadme(1)
 	, iCurCar(0)
+	,edHintTitle(0), edHintText(0), iHintCur(0), iHints(16)
 	//  input
 	,mBindingAction(NULL), mBindingSender(NULL)
 	,tabInput(0)

@@ -71,6 +71,12 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		return true;
 	}
 
+	//  ctrl-F1  welcome wnd
+	if (skey == key(F1) && ctrl)
+	{
+		mWndWelcome->setVisible(true);
+		return false;
+	}
 
 	//  shortcut keys for gui access (alt-Q,C,S,G,V,.. )
 	if (alt)

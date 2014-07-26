@@ -66,6 +66,14 @@ public:
 	void toggleGui(bool toggle=true);
 	void GuiShortcut(MNU_Btns mnu, int tab, int subtab=-1);
 	bool loadReadme;
+	
+
+	//  hints
+	const int iHints;  int iHintCur;  void UpdHint();
+	Ck ckShowWelcome;
+	Ed edHintTitle, edHintText;
+	void btnHintPrev(WP), btnHintNext(WP);
+	void btnHintScreen(WP), btnHintInput(WP), btnHintClose(WP);
 
 
 	///  [Input] tab

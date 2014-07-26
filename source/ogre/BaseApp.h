@@ -162,7 +162,7 @@ public:
 	Btn mWndMainBtns[ciMainBtns];
 
 	Wnd mWndMain, mWndGame,mWndReplays,mWndHelp,mWndOpts,  // menu, windows
-		mWndFirst, mWndRpl, mWndNetEnd, mWndTweak,  // rpl controls, netw, tools
+		mWndWelcome, mWndRpl, mWndNetEnd, mWndTweak,  // rpl controls, netw, tools
 		mWndChampStage,mWndChampEnd, mWndChallStage,mWndChallEnd;
 	Tab mWndTabsGame,mWndTabsOpts,mWndTabsHelp,mWndTabsRpl;  // main tabs on windows
 	
