@@ -266,6 +266,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				else
 				if (mClient && !isFocGui)  // show/hide players net wnd
 				{	mWndNetEnd->setVisible(!mWndNetEnd->getVisible());  return true;  }
+				else
+				if (!isFocGui)  // show last lap results
+				{	
+					for (int i=0; i < carModels.size(); ++i)
+					{	CarModel* cm = carModels[i];
+						cm->updLap = true;  cm->fLapAlpha = 1.f;
+				}	}
 				break;
 		}
 	}

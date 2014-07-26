@@ -113,10 +113,12 @@ void CGui::InitGui()
 	edHintTitle = fEd("HintTitle");  edHintText = fEd("HintText");
 	UpdHint();
 	ck= &ckShowWelcome;  ck->Init("chkHintShow", &pSet->show_welcome);
-	app->mWndWelcome->setVisible(pSet->show_welcome);
+
 	Btn("btnHintPrev", btnHintPrev);     Btn("btnHintNext", btnHintNext);
 	Btn("btnHintScreen",btnHintScreen);  Btn("btnHintInput", btnHintInput);
 	Btn("btnHintClose", btnHintClose);
+
+	app->mWndWelcome->setVisible(pSet->show_welcome && !pSet->autostart);
 	
 
 	///  Sliders
