@@ -54,7 +54,7 @@ void CInput::LoadInputDefaults()
 							   {{SDLK_d, SDLK_g}, {SDLK_e, SDLK_t}},
 							   {{SDLK_l, SDLK_QUOTE}, {SDLK_o, SDLK_LEFTBRACKET}} },
 
-		kTrig0[iTrig] = {SDLK_a, SDLK_z,  SDLK_x, SDLK_c,  SDLK_0, SDLK_BACKSPACE};  // 1st player, rest undefined
+		kTrig0[iTrig] = {SDLK_a, SDLK_s,  SDLK_x, SDLK_c,  SDLK_0, SDLK_BACKSPACE};  // 1st player, rest undefined
 
 	//  map to add in order like in enum
 	const int iBoth = iHalf+iAxis;
