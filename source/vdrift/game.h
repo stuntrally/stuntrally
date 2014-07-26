@@ -93,15 +93,20 @@ public:
 	bool debugmode;
 	bool profilingmode;
 
+
 	SOUND sound;
 	SOUND_LIB sound_lib;
+	//  hud 2d sounds
+	//SOUNDSOURCE snd_chk, snd_chkwr,  snd_lap, snd_lapbest;
+
+
 	SETTINGS* settings;
 	TRACK track;
 
 	std::list <CAR> cars;
 	std::pair <CAR*, CARCONTROLMAP_LOCAL> carcontrols_local;
 
-	// todo: move outside of GAME..
+	//  carsim
 	std::vector <CARTIRE> tires;  /// New  all tires
 	std::map <std::string, int> tires_map;  // name to tires id
 	bool LoadTire(CARTIRE& ct, std::string path, std::string& file);

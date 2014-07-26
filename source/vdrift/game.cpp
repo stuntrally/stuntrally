@@ -283,28 +283,44 @@ bool GAME::InitializeSound()
 	{
 		sound_lib.SetLibraryPath(PATHMANAGER::Sounds());
 		const SOUNDINFO & sdi = sound.GetDeviceInfo();
+		#define Lsnd(s)  if (!sound_lib.Load(s,1,sdi, error_output))  return false
 		
-		if (!sound_lib.Load("tire_squeal",1,sdi, error_output))  return false;
-		if (!sound_lib.Load("grass",1,		sdi, error_output))  return false;
-		if (!sound_lib.Load("gravel",1,		sdi, error_output))  return false;
+		//  Load sounds ----
+		Lsnd("tire_squeal");  Lsnd("grass");  Lsnd("gravel");
 		
-		if (!sound_lib.Load("bump_front",1,	sdi, error_output))  return false;
-		if (!sound_lib.Load("bump_rear",1,	sdi, error_output))  return false;
-		if (!sound_lib.Load("wind",1,		sdi, error_output))  return false;
+		Lsnd("bump_front");  Lsnd("bump_rear");
+		Lsnd("wind");  Lsnd("boost");
 
 		for (int i = 1; i <= Ncrashsounds; ++i)
-			if (!sound_lib.Load(toStr(i/10)+toStr(i%10),1,	sdi, error_output))  return false;
-		if (!sound_lib.Load("scrap",1,		sdi, error_output))  return false;
-		if (!sound_lib.Load("screech",1,	sdi, error_output))  return false;
+		{	std::string s = "crash/";  s += toStr(i/10)+toStr(i%10);
+			Lsnd(s);
+		}
+		Lsnd("crash/scrap");
+		Lsnd("crash/screech");
 
 		for (int i = 0; i < Nwatersounds; ++i)
-			if (!sound_lib.Load("water"+toStr(i+1),1,	sdi, error_output))  return false;
+			Lsnd("water"+toStr(i+1));
 
-		if (!sound_lib.Load("mud1",1,		sdi, error_output))  return false;
-		if (!sound_lib.Load("mud_cont",1,	sdi, error_output))  return false;
-		if (!sound_lib.Load("water_cont",1,	sdi, error_output))  return false;
-		if (!sound_lib.Load("boost",1,		sdi, error_output))  return false;
+		Lsnd("mud1");  Lsnd("mud_cont");  Lsnd("water_cont");
 
+		//  generic 2d  ----
+		/*Lsnd("hud/check");
+		if (!snd_chk.Setup(sound_lib, "hud/check",	 error_output,  false, false,1.f))  return false;
+		sound.AddSource(snd_chk);
+
+		Lsnd("hud/check_wrong");
+		if (!snd_chkwr.Setup(sound_lib, "hud/check_wrong",	 error_output,  false, false,1.f))  return false;
+		sound.AddSource(snd_chkwr);
+
+		Lsnd("hud/lap");
+		if (!snd_lap.Setup(sound_lib, "hud/lap",	 error_output,  false, false,1.f))  return false;
+		sound.AddSource(snd_lap);
+
+		Lsnd("hud/lap_best");
+		if (!snd_lapbest.Setup(sound_lib, "hud/lap_best",	 error_output,  false, false,1.f))  return false;
+		sound.AddSource(snd_lapbest);*/
+
+		#undef Lsnd
 		sound.SetMasterVolume(settings->vol_master);
 		sound.Pause(false);
 		info_output << "Sound initialization successful" << endl;
@@ -551,6 +567,7 @@ void GAME::LeaveGame()
 				sound.RemoveSource(*s);
 		}
 	}
+	
 	cars.clear();
 	timer.Unload();
 	pause = false;

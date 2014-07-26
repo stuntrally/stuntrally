@@ -52,10 +52,11 @@ bool CAR::LoadSounds(
 	}
 
 	for (i = 1; i <= Ncrashsounds; ++i)  // crashes
-		if (!crashsound[i-1].Setup(sndLib, toStr(i/10)+toStr(i%10), errOut,  true, false,1.f))  return false;
-
-	if (!crashscrap  .Setup(sndLib, "scrap",	errOut,  true, true, 0.f))  return false;  crashscrap.Play();
-	if (!crashscreech.Setup(sndLib, "screech",	errOut,  true, true, 0.f))  return false;  crashscreech.Play();
+	{	std::string s = "crash/";  s += toStr(i/10)+toStr(i%10);
+		if (!crashsound[i-1].Setup(sndLib, s, errOut,  true, false,1.f))  return false;
+	}
+	if (!crashscrap  .Setup(sndLib, "crash/scrap",	errOut,  true, true, 0.f))  return false;  crashscrap.Play();
+	if (!crashscreech.Setup(sndLib, "crash/screech",	errOut,  true, true, 0.f))  return false;  crashscreech.Play();
 
 	if (!roadnoise	.Setup(sndLib, "wind",		 errOut,  true, true, 0.f))  return false;  roadnoise.Play();
 	if (!boostsnd	.Setup(sndLib, "boost",		 errOut,  true, true, 0.f))  return false;  boostsnd.Play();

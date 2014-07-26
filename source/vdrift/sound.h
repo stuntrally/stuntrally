@@ -42,7 +42,7 @@ public:
 
 
 //........................................................
-class SOUNDBUFFER
+class SOUNDBUFFER  // sound data
 {
 	friend class SOUNDSOURCE;
 private:
@@ -87,7 +87,7 @@ public:
 };
 
 //........................................................
-class SOUND_LIB
+class SOUND_LIB  // sounds library
 {
 	private:
 		std::string librarypath;
@@ -154,7 +154,7 @@ public:
 
 
 //........................................................
-class SOUNDSOURCE
+class SOUNDSOURCE  // single sound
 {
 private:
 	unsigned int sample_pos;
@@ -252,7 +252,7 @@ public:
 
 
 //........................................................
-class SOUND
+class SOUND  // sound system
 {
 private:
 	bool initdone, paused, disable;
