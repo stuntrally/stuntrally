@@ -41,27 +41,27 @@ CarModel::CarModel(int index, int colorId, eCarType type, const std::string& nam
 	:mSceneMgr(sceneMgr), pSet(set), pGame(game), sc(s), mCamera(cam), pApp(app)
 	,iIndex(index), iColor(colorId % 6), sDirname(name), eType(type), bIsCar(true)
 	,fCam(0), pMainNode(0), pCar(0), terrain(0), ndSph(0), brakes(0)
-	,pReflect(0), color(0,1,0)
+	,pReflect(0), color(0,1,0), maxangle(26.f)
 	,hideTime(1.f), mbVisible(true), bLightMapEnabled(true), bBraking(false)
-	,iCamNextOld(0), bLastChkOld(0), bWrongChk(0),  iFirst(0)
+	,iCamNextOld(0), bLastChkOld(0), bInSt(0), bWrongChk(0),  iFirst(0)
 	,angCarY(0), vStartPos(0,0,0), pNickTxt(0)
 	,ndNextChk(0), entNextChk(0)
 	,all_subs(0), all_tris(0)  //stats
-	,bGetStPos(true), fChkTime(0.f), iWonPlace(0), iWonPlaceOld(0)
-	,iCurChk(-1), iNumChks(0), iNextChk(0), iLoopChk(-1)  //ResetChecks();  // road isnt yet
-	,timeAtCurChk(0.f), iLoopLastCam(-1)
+	,bGetStPos(true), fChkTime(0.f), iWonPlace(0), iWonPlaceOld(0), iWonMsgTime(0.f)
+	,iInChk(-1),iCurChk(-1), iNumChks(0), iNextChk(0), iLoopChk(-1)  //ResetChecks();  // no road yet
+	,iInWrChk(-1), timeAtCurChk(0.f), iLoopLastCam(-1)
 	,distFirst(1.f), distLast(1.f), distTotal(10.f), trackPercent(0.f)
 	,updTimes(1), updLap(1), fLapAlpha(1.f)
 {
-	for (int w = 0; w < 4; ++w)
+	int i,w;
+	for (w = 0; w < 4; ++w)
 	{
 		for (int p=0; p < PAR_ALL; ++p)
 			par[p][w] = 0;
 
-		ndWh[w] = 0;  ndWhE[w] = 0;  whTrail[w] = 0;  ndBrake[w] = 0;
-		whTemp[w] = 0.f;  whWidth[w] = 0.2f;
+		ndWh[w] = 0;  ndWhE[w] = 0;  whTrail[w] = 0;
+		ndBrake[w] = 0;  whTemp[w] = 0.f;
 	}
-	int i;
 	for (i=0; i < 2; ++i)  parBoost[i] = 0;
 	for (i=0; i < 8; ++i)  parThrust[i] = 0;
 	parHit = 0;
@@ -96,9 +96,18 @@ void CarModel::Defaults()
 	for (w=0; w<4; ++w)
 	{
 		whRadius[w] = 0.3f;  whWidth[w] = 0.2f;
+		whPos[w] = MATHVECTOR<float,3>(0,0,0);
 	}
 	manualExhaustPos = false;  has2exhausts = false;
+
+	maxangle = 26.f;
+	for (w=0; w<2; ++w)
+		posSph[2] = Vector3::ZERO;
+
+	matStPos = Matrix4::IDENTITY;
+	vStDist = Vector4(0,0,0,0);
 }
+
 
 //  Load CAR
 //------------------------------------------------------------------------------------------------------
