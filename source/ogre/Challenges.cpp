@@ -208,6 +208,12 @@ void CGui::btnChallStageStart(WP)
 		//if (imgChallEnd)
 		//	imgChallEnd->setImageCoord(IntCoord(ui[std::min(7, std::max(0, ch.type))]*128,0,128,256));
 		app->mWndChallEnd->setVisible(true);
+		
+		///  sounds  //)
+		if (iChSnd < 0)
+			pGame->snd_fail.Play();
+		else
+			pGame->snd_win[iChSnd].Play();  //)
 		return;
 	}
 
@@ -330,8 +336,14 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 	{
 		if (pc.curTrack == 0)  // save picked car
 			pc.car = pSet->game.car[0];
+
 		if (passed)
-			pc.curTrack++;  // next stage
+		{	pc.curTrack++;  // next stage
+
+			pGame->snd_stage.Play();
+		}else
+			pGame->snd_fail.Play();  //)
+
 		ProgressLSave();
 		return;
 	}
@@ -425,6 +437,12 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 	
 	ProgressLSave();
 
+	///  save which snd to play  //)
+	if (!passed)
+		iChSnd = -1;
+	else
+		iChSnd = std::min(2, std::max(0, prize-1));  // ch.diff ?
+
 
 	//  upd chall end [window]
 	imgChallFail->setVisible(!passed);
@@ -436,6 +454,7 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 
 	edChallEnd->setCaption(s);
 	//ap->mWndChallEnd->setVisible(true);  // show after stage end
+	
 	LogO("|]");
 }
 

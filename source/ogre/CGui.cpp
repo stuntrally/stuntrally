@@ -67,6 +67,7 @@ CGui::CGui(App* app1)
 	,imgChampStage(0),imgChallStage(0), imgChampEndCup(0)
 	,imgChallFail(0),imgChallCup(0)
 	,txChallEndC(0),txChallEndF(0),txChampEndF(0)
+	, iChSnd(0)
 	//  other
 	,edPerfTest(0),edTweakCol(0)
 	,tabTweak(0),tabEdCar(0)

@@ -226,6 +226,13 @@ void CGui::btnChampStageStart(WP)
 		txChampEndF->setCaption(TR(tut ? "#{TutorEndFinished}" : "#{ChampEndFinished}"));
 
 		app->mWndChampEnd->setVisible(true);
+
+		///  sound  //)
+		if (iChSnd < 0)
+			pGame->snd_fail.Play();
+		else
+			pGame->snd_win[iChSnd].Play();  //)
+
 		return;
 	}
 
@@ -325,7 +332,12 @@ void CGui::ChampionshipAdvance(float timeCur)
 	if (!last || (last && !passed))
 	{
 		if (passed)
-			pc.curTrack++;  // next stage
+		{	pc.curTrack++;  // next stage
+		
+			pGame->snd_stage.Play();
+		}else
+			pGame->snd_fail.Play();  //)
+			
 		ProgressSave();
 	}else
 	{	//  champ ended
@@ -337,8 +349,15 @@ void CGui::ChampionshipAdvance(float timeCur)
 		pc.curTrack++;  // end = 100 %
 		//float old = pc.score;  // .. save only higher ?
 		pc.points = sum / ntrk;  // average from all tracks
+
 		ProgressSave();
 
+		///  save which snd to play  //)
+		if (!passed)
+			iChSnd = -1;
+		else
+			iChSnd = std::min(2, std::max(0, ch.diff / 3));
+		
 		LogO("|| Champ finished");
 		LogO("|| Total points: " + toStr(points));
 		

@@ -27,8 +27,12 @@ class GAME
 {
 public:
 	class App* app;
+
 	double TickPeriod() const {  return framerate;  }
-	bool OneLoop(double dt);  std::string strProfInfo;
+
+	bool OneLoop(double dt);
+
+	std::string strProfInfo;
 	
 	bool ParseArguments(std::list <std::string> & args);
 	bool InitializeSound();
@@ -96,8 +100,9 @@ public:
 
 	SOUND sound;
 	SOUND_LIB sound_lib;
-	//  hud 2d sounds
-	//SOUNDSOURCE snd_chk, snd_chkwr,  snd_lap, snd_lapbest;
+	///  hud 2d sounds  //)
+	SOUNDSOURCE snd_chk, snd_chkwr,  snd_lap, snd_lapbest,  snd_stage, snd_win[3], snd_fail;
+	void UpdHudSndVol();
 
 
 	SETTINGS* settings;

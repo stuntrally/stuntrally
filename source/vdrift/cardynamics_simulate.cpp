@@ -90,6 +90,7 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::UpdateSuspension(int i, Dbl dt)
 	Dbl shift = 2.0 * sin (phase*1.414214);
 	Dbl amplitude = 0.25 * surface.bumpAmplitude;
 	Dbl bumpoffset = amplitude * (sin(phase + shift) + sin(phase*1.414214) - 2.0);
+	
 	Dbl displacement = 2.0 * wheel[i].GetRadius() - wheel_contact[i].GetDepth() + bumpoffset;
 
 	// compute suspension force

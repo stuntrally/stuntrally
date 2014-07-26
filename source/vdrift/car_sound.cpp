@@ -38,7 +38,7 @@ bool CAR::LoadSounds(
 		enginesounds.push_back(std::pair <ENGINESOUNDINFO, SOUNDSOURCE> ());
 		SOUNDSOURCE & enginesound = enginesounds.back().second;
 		enginesound.Setup(soundbuffers["engine.wav"], true, true, 0.f);
-		enginesound.Play();
+		enginesound.Start();
 	}
 
 	int i;
@@ -55,18 +55,18 @@ bool CAR::LoadSounds(
 	{	std::string s = "crash/";  s += toStr(i/10)+toStr(i%10);
 		if (!crashsound[i-1].Setup(sndLib, s, errOut,  true, false,1.f))  return false;
 	}
-	if (!crashscrap  .Setup(sndLib, "crash/scrap",	errOut,  true, true, 0.f))  return false;  crashscrap.Play();
-	if (!crashscreech.Setup(sndLib, "crash/screech",	errOut,  true, true, 0.f))  return false;  crashscreech.Play();
+	if (!crashscrap  .Setup(sndLib, "crash/scrap",	errOut,  true, true, 0.f))  return false;  crashscrap.Start();
+	if (!crashscreech.Setup(sndLib, "crash/screech",	errOut,  true, true, 0.f))  return false;  crashscreech.Start();
 
-	if (!roadnoise	.Setup(sndLib, "wind",		 errOut,  true, true, 0.f))  return false;  roadnoise.Play();
-	if (!boostsnd	.Setup(sndLib, "boost",		 errOut,  true, true, 0.f))  return false;  boostsnd.Play();
+	if (!roadnoise	.Setup(sndLib, "wind",		 errOut,  true, true, 0.f))  return false;  roadnoise.Start();
+	if (!boostsnd	.Setup(sndLib, "boost",		 errOut,  true, true, 0.f))  return false;  boostsnd.Start();
 
 	for (i = 0; i < Nwatersounds; ++i)  // fluids
 		if (!watersnd[i].Setup(sndLib, "water"+toStr(i+1), errOut,  true, false,0.f))  return false;
 
 	if (!mudsnd		.Setup(sndLib, "mud1",		 errOut,  true, false,0.f))  return false;
-	if (!mud_cont	.Setup(sndLib, "mud_cont",	 errOut,  true, true, 0.f))  return false;  mud_cont.Play();
-	if (!water_cont	.Setup(sndLib, "water_cont", errOut,  true, true, 0.f))  return false;  water_cont.Play();
+	if (!mud_cont	.Setup(sndLib, "mud_cont",	 errOut,  true, true, 0.f))  return false;  mud_cont.Start();
+	if (!water_cont	.Setup(sndLib, "water_cont", errOut,  true, true, 0.f))  return false;  water_cont.Start();
 	
 	return true;
 }
@@ -284,7 +284,7 @@ void CAR::UpdateSounds(float dt)
 		if (gain > loudest)  loudest = gain;
 		gainlist.push_back(std::pair <SOUNDSOURCE*, float> (&sound, gain));
 
-		if (dynamics.hover)  //,sphere?
+		if (dynamics.hover /*|| dynamics.sphere*/)
 		{
 			sound.SetPitch(1.0);
 			gain = total_gain = throttle;
@@ -375,7 +375,7 @@ void CAR::UpdateSounds(float dt)
 			{
 				tirebump[i].SetGain(gain * pSet->vol_susp);
 				tirebump[i].SetPosition(whPos[i]);
-				tirebump[i].StopPlay();
+				tirebump[i].Play();
 			}
 		}
 	}
@@ -396,7 +396,7 @@ void CAR::UpdateSounds(float dt)
 		{
 			snd.SetGain(gain * pSet->vol_fl_splash * (mud ? 0.6f : 1.f));
 			snd.SetPosition(engPos);
-			snd.StopPlay();
+			snd.Play();
 		}
 
 		if (mud)  {  SOUNDSOURCE& snd = mudsnd;
@@ -404,7 +404,7 @@ void CAR::UpdateSounds(float dt)
 		{
 			snd.SetGain(gain * pSet->vol_fl_splash);
 			snd.SetPosition(engPos);
-			snd.StopPlay();
+			snd.Play();
 		}	}
 	}
 	fluidHitOld = fluidHit;
@@ -456,7 +456,7 @@ void CAR::UpdateSounds(float dt)
 			{
 				crashsound[i].SetGain(gain * pSet->vol_car_crash);
 				crashsound[i].SetPosition(hitPos);
-				crashsound[i].StopPlay();
+				crashsound[i].Play();
 				crashsoundtime[i] = 0.f;
 
 				/// <><> Damage <><> 

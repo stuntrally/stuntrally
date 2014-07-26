@@ -428,6 +428,7 @@ public:
 	Ed edChallStage, edChallEnd;  Img imgChallStage;
 	Img imgChallFail, imgChallCup;
 	Txt txChallEndC, txChallEndF, txChampEndF;
+	int iChSnd;  // snd id to play
 
 	//  main
 	void ChampsListUpdate(), ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);

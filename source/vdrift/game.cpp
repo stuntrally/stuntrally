@@ -127,12 +127,12 @@ bool GAME::LoadAllSurfaces()
 		float f = 0.f;
 		param.GetParam(*section + ".BumpWaveLength", f, error_output);	surf.bumpWaveLength = f;
 		param.GetParam(*section + ".BumpAmplitude", f, error_output);	surf.bumpAmplitude = f;
-		if (param.GetParam(*section + ".BumpWaveLength2", f, error_output))	surf.bumpWaveLength2 = f;
-		if (param.GetParam(*section + ".BumpAmplitude2", f, error_output))	surf.bumpAmplitude2 = f;
+		if (param.GetParam(*section + ".BumpWaveLength2", f))  surf.bumpWaveLength2 = f;
+		if (param.GetParam(*section + ".BumpAmplitude2", f))   surf.bumpAmplitude2 = f;
 		
 		param.GetParam(*section + ".FrictionTread", f, error_output);	surf.friction = f;
-		if (param.GetParam(*section + ".FrictionX", f, error_output))	surf.frictionX = f;
-		if (param.GetParam(*section + ".FrictionY", f, error_output))	surf.frictionY = f;
+		if (param.GetParam(*section + ".FrictionX", f))   surf.frictionX = f;
+		if (param.GetParam(*section + ".FrictionY", f))   surf.frictionY = f;
 		
 		if (param.GetParam(*section + ".RollResistance", f))			surf.rollingResist = f;
 		param.GetParam(*section + ".RollingDrag", f, error_output);		surf.rollingDrag = f;
@@ -278,12 +278,16 @@ bool GAME::LoadSusp()
 bool GAME::InitializeSound()
 {
 	Ogre::Timer ti;
-
+	int i;
 	if (sound.Init(2048/*1024/*512*/, info_output, error_output))
 	{
 		sound_lib.SetLibraryPath(PATHMANAGER::Sounds());
 		const SOUNDINFO & sdi = sound.GetDeviceInfo();
-		#define Lsnd(s)  if (!sound_lib.Load(s,1,sdi, error_output))  return false
+
+		#define Lsnd(n)   if (!sound_lib.Load(n,1,sdi, error_output))  return false
+		#define Lsnd2(n,snd)  Lsnd(n);  \
+			if (!snd.Setup(sound_lib, n,	 error_output,  false, false,1.f))  return false;  \
+			sound.AddSource(snd);
 		
 		//  Load sounds ----
 		Lsnd("tire_squeal");  Lsnd("grass");  Lsnd("gravel");
@@ -291,47 +295,59 @@ bool GAME::InitializeSound()
 		Lsnd("bump_front");  Lsnd("bump_rear");
 		Lsnd("wind");  Lsnd("boost");
 
-		for (int i = 1; i <= Ncrashsounds; ++i)
+		for (i = 1; i <= Ncrashsounds; ++i)
 		{	std::string s = "crash/";  s += toStr(i/10)+toStr(i%10);
 			Lsnd(s);
 		}
 		Lsnd("crash/scrap");
 		Lsnd("crash/screech");
 
-		for (int i = 0; i < Nwatersounds; ++i)
+		for (i = 0; i < Nwatersounds; ++i)
 			Lsnd("water"+toStr(i+1));
 
 		Lsnd("mud1");  Lsnd("mud_cont");  Lsnd("water_cont");
 
-		//  generic 2d  ----
-		/*Lsnd("hud/check");
-		if (!snd_chk.Setup(sound_lib, "hud/check",	 error_output,  false, false,1.f))  return false;
-		sound.AddSource(snd_chk);
+		//  Hud 2d  ----
+		Lsnd2("hud/check", snd_chk);
+		Lsnd2("hud/check_wrong", snd_chkwr);
 
-		Lsnd("hud/check_wrong");
-		if (!snd_chkwr.Setup(sound_lib, "hud/check_wrong",	 error_output,  false, false,1.f))  return false;
-		sound.AddSource(snd_chkwr);
+		Lsnd2("hud/lap", snd_lap);
+		Lsnd2("hud/lap_best", snd_lapbest);
 
-		Lsnd("hud/lap");
-		if (!snd_lap.Setup(sound_lib, "hud/lap",	 error_output,  false, false,1.f))  return false;
-		sound.AddSource(snd_lap);
+		Lsnd2("hud/stage", snd_stage);
+		
+		for (i = 0; i < 3; ++i)
+		{	std::string s = "hud/win" + toStr(i);
+			if (!sound_lib.Load(s,0,sdi, error_output))  return false;
+			if (!snd_win[i].Setup(sound_lib, s,		error_output,  false, false,1.f))  return false;
+			sound.AddSource(snd_win[i]);
+		}
+		Lsnd2("hud/fail", snd_fail);
 
-		Lsnd("hud/lap_best");
-		if (!snd_lapbest.Setup(sound_lib, "hud/lap_best",	 error_output,  false, false,1.f))  return false;
-		sound.AddSource(snd_lapbest);*/
-
-		#undef Lsnd
+		
 		sound.SetMasterVolume(settings->vol_master);
 		sound.Pause(false);
+		UpdHudSndVol();
+
 		info_output << "Sound initialization successful" << endl;
-	}else{
-		error_output << "Sound initialization failed" << endl;
+	}else
+	{	error_output << "Sound initialization failed" << endl;
 		return false;
 	}
 
 	info_output << "::: Time Sounds: " << fToStr(ti.getMilliseconds(),0,3) << " ms" << endl;
 	return true;
 }
+
+void GAME::UpdHudSndVol()
+{
+	float g = settings->vol_hud;
+	snd_chk.SetGain(g);  snd_chkwr.SetGain(g);
+	snd_lap.SetGain(g);  snd_lapbest.SetGain(g);
+	for (int i=0; i<3; ++i)  snd_win[i].SetGain(g);
+	snd_fail.SetGain(g);
+}
+
 
 
 //  do any necessary cleanup

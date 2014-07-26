@@ -273,12 +273,24 @@ void App::newPoses(float time)  // time only for camera update
 							mClient->lap(pGame->timer.GetCurrentLap(c), pGame->timer.GetLastLap(c));
 
 						///  new best lap, save ghost
+						bool newbest = false;
 						if (!pSet->rpl_bestonly || best || gPar.backTime)
 						if (c==0 && pSet->rpl_rec)  // for many, only 1st car
 						{
 							ghost.SaveFile(gui->GetGhostFile());  //,boost_type?
 							ghplay.CopyFrom(ghost);
 							isGhost2nd = false;  // hide 2nd ghost
+							newbest = true;
+						}
+
+						bool champ = pSet->game.champ_num >= 0, chall = pSet->game.chall_num >= 0;
+						bool chs = champ || chall;
+						
+						if (!chs)
+						{	if (newbest)
+								pGame->snd_lapbest.Play();  //)
+							else
+								pGame->snd_lap.Play();  //)
 						}
 						ghost.Clear();
 						
@@ -301,8 +313,7 @@ void App::newPoses(float time)  // time only for camera update
 						finished = pGame->timer.GetCurrentLap(c) >= pSet->game.num_laps;
 						if (finished && !mClient)
 						{
-							bool champ = pSet->game.champ_num >= 0, chall = pSet->game.chall_num >= 0;
-							if (!champ && !chall)
+							if (!chs)
 							{
 								if (carM->iWonPlace == 0)	//  split screen winner places
 									carM->iWonPlace = carIdWin++;
@@ -348,10 +359,21 @@ void App::newPoses(float time)  // time only for camera update
 								//  save car pos and rot
 								carM->pCar->SavePosAtCheck();
 								carM->updTimes = true;
+	
+								if (pSet->snd_chk)
+									pGame->snd_chk.Play();  //)
 							}
 							else
 							if (carM->iInChk != carM->iCurChk)
+							{
 								carM->bWrongChk = true;
+								
+								if (carM->iInWrChk != carM->iInChk)
+								{	carM->iInWrChk = carM->iInChk;
+									
+									if (pSet->snd_chkwr)
+										pGame->snd_chkwr.Play();  //)
+							}	}
 							break;
 						}
 				}	}
