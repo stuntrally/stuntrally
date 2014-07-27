@@ -279,6 +279,8 @@ void CGui::peerMessage(PeerInfo peer, string msg)
 
 	int hc = 0;  // color from name
 	int len = peer.name.length();
+	if (len == 0)
+		return;
 	hc += len;  hc += peer.name[0];
 	const static int num = 16;
 	const static char sclr[num][8] = {
