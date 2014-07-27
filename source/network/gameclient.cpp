@@ -312,6 +312,11 @@ void P2PGameClient::connectionEvent(net::NetworkTraffic const& e)
 	LogO("== Netw  Connected "+e.peer_address.str());
 	if (m_state == LOBBY)
 	{
+		if (m_playerInfo.address == e.peer_address)
+		{
+			LogO("== Netw  CConnected  reject, same !!");
+			return;
+		}
 		boost::mutex::scoped_lock lock(m_mutex);
 		PeerInfo& pi = m_peers[e.peer_address.str()];
 		pi.address = e.peer_address;
@@ -415,18 +420,30 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 		{
 			LogO("== Netw PLAYER_INFO  start");
 			protocol::PlayerInfoPacket pip = *reinterpret_cast<protocol::PlayerInfoPacket const*>(e.packet_data);
+
+			if (std::string(pip.name) == m_playerInfo.name)
+			{
+				LogO("== Netw PLAYER_INFO  reject, same !!");
+				break;
+			}
+			
 			boost::mutex::scoped_lock lock(m_mutex);
 
 			PeerInfo& pi = m_peers[e.peer_address.str()];
 			bool isNew = pi.name.empty();
+
+			LogO("== Netw PI0  adr: "+pi.address.str()+"  name: "+pi.name+"  id: "+toStr(pi.id)+"  rid: "+toStr(pi.random_id)+"  peers: "+toStr(pi.peers)+"  rdy: "+toStr(pi.ready?1:0)+"  ld: "+toStr(pi.loaded?1:0)+"  ping: "+toStr(pi.ping)+"  aut: "+toStr(pi.authenticated));
 			pi = pip;
 			pi.ping = e.ping;
+			LogO("== Netw PI1  adr: "+pi.address.str()+"  name: "+pi.name+"  id: "+toStr(pi.id)+"  rid: "+toStr(pi.random_id)+"  peers: "+toStr(pi.peers)+"  rdy: "+toStr(pi.ready?1:0)+"  ld: "+toStr(pi.loaded?1:0)+"  ping: "+toStr(pi.ping)+"  aut: "+toStr(pi.authenticated));
 
 			if (m_callback)  // Callback
 			{
+				LogO(std::string("== Netw PI  callb  ")+(isNew?"new":""));
 				PeerInfo picopy = pi;
 				if (isNew)
 					recountPeersAndAssignIds();
+
 				lock.unlock();  // Mutex unlocked in callback to avoid dead-locks
 
 				if (isNew)	// First info means completed connection
