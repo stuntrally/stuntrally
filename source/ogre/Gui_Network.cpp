@@ -277,10 +277,11 @@ void CGui::peerMessage(PeerInfo peer, string msg)
 {
 	boost::mutex::scoped_lock lock(netGuiMutex);
 
-	int hc = 0;  // color from name
 	int len = peer.name.length();
 	if (len == 0)
 		return;
+
+	int hc = 0;  // color from name
 	hc += len;  hc += peer.name[0];
 	const static int num = 16;
 	const static char sclr[num][8] = {
@@ -352,7 +353,7 @@ void CGui::join(string host, string port, string password)
 		app->mClient->updatePlayerInfo(pSet->nickname, sListCar);
 		app->mClient->connect(host, boost::lexical_cast<int>(port), password); // Lobby phase started automatically
 		boost::mutex::scoped_lock lock(netGuiMutex);
-		AddChatMsg("#00FFFF", TR("#{ConnectingTo}") + host + ":" + port, false);  // clears chat
+		AddChatMsg("#00FFFF", TR("#{ConnectingTo} ") + host + ":" + port, false);  // clears chat
 	}catch (...)
 	{	MsgError(TR("#{NewtworkFailed}"), TR("NetworkError"));
 		return;
