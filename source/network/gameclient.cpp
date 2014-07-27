@@ -432,10 +432,10 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			PeerInfo& pi = m_peers[e.peer_address.str()];
 			bool isNew = pi.name.empty();
 
-			LogO("== Netw PI0  adr: "+pi.address.str()+"  name: "+pi.name+"  id: "+toStr(pi.id)+"  rid: "+toStr(pi.random_id)+"  peers: "+toStr(pi.peers)+"  rdy: "+toStr(pi.ready?1:0)+"  ld: "+toStr(pi.loaded?1:0)+"  ping: "+toStr(pi.ping)+"  aut: "+toStr(pi.authenticated));
+			//LogO("== Netw PI0  adr: "+pi.address.str()+"  name: "+pi.name+"  id: "+toStr(pi.id)+"  rid: "+toStr(pi.random_id)+"  peers: "+toStr(pi.peers)+"  rdy: "+toStr(pi.ready?1:0)+"  ld: "+toStr(pi.loaded?1:0)+"  ping: "+toStr(pi.ping)+"  aut: "+toStr(pi.authenticated));
 			pi = pip;
 			pi.ping = e.ping;
-			LogO("== Netw PI1  adr: "+pi.address.str()+"  name: "+pi.name+"  id: "+toStr(pi.id)+"  rid: "+toStr(pi.random_id)+"  peers: "+toStr(pi.peers)+"  rdy: "+toStr(pi.ready?1:0)+"  ld: "+toStr(pi.loaded?1:0)+"  ping: "+toStr(pi.ping)+"  aut: "+toStr(pi.authenticated));
+			//LogO("== Netw PI1  adr: "+pi.address.str()+"  name: "+pi.name+"  id: "+toStr(pi.id)+"  rid: "+toStr(pi.random_id)+"  peers: "+toStr(pi.peers)+"  rdy: "+toStr(pi.ready?1:0)+"  ld: "+toStr(pi.loaded?1:0)+"  ping: "+toStr(pi.ping)+"  aut: "+toStr(pi.authenticated));
 
 			if (m_callback)  // Callback
 			{
