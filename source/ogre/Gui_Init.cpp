@@ -178,6 +178,10 @@ void CGui::InitGui()
 	sv= &svVolCarCrash;	sv->Init("VolCarCrash",	&pSet->vol_car_crash, 0.f, 1.4f);  sv->DefaultF(0.703f);
 	sv= &svVolCarScrap;	sv->Init("VolCarScrap",	&pSet->vol_car_scrap, 0.f, 1.4f);  sv->DefaultF(1.00f);
 
+	sv= &svVolHud;		sv->Init("VolHud",		&pSet->vol_hud,    0.f, 2.f);  sv->DefaultF(1.f);  Sev(VolHud);
+	ck= &ckSndChk;		ck->Init("SndChk",		&pSet->snd_chk);
+	ck= &ckSndChkWr;	ck->Init("SndChkWr",    &pSet->snd_chkwr);
+
 
 	//  car color
 	float f;  // temp

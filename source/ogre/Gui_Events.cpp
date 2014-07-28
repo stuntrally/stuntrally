@@ -418,6 +418,11 @@ void CGui::slVolMaster(SV*)
 	pGame->ProcessNewSettings();
 }
 
+void CGui::slVolHud(SV*)
+{
+	pGame->UpdHudSndVol();
+}
+
 
 //  Hints, welcome screen
 //---------------------------------------------------------------------

@@ -191,9 +191,11 @@ public:
 	SV svDbgTxtClr, svDbgTxtCnt;
 
 	//  sound
-	SlV(VolMaster);
+	SlV(VolMaster);  SlV(VolHud);
 	SV svVolEngine, svVolTires, svVolSusp, svVolEnv;
 	SV svVolFlSplash, svVolFlCont, svVolCarCrash, svVolCarScrap;
+	Ck ckSndChk, ckSndChkWr;
+	
 	
 	///  Checks  . . . . . . . . . . . . . . . . . . . .
 	CK(Reverse);  // track

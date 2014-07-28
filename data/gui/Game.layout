@@ -3454,84 +3454,123 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#B090E0#{Sound}"/>
-				<Widget type="TextBox" skin="TextBox" position="32 20 144 30">
+                <Widget type="TextBox" skin="TextBox" position="32 20 208 28">
 					<Property key="Caption" value="#{Volume}"/>
 					<Property key="TextColour" value="0.9 0.96 1.0"/>
+					<Property key="FontName" value="font.big"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 60 144 30">
+                <Widget type="TextBox" skin="TextBox" position="32 60 144 24">
 					<Property key="Caption" value="#{VolMaster}"/>
-					<Property key="TextColour" value="0.9 0.94 1.0"/>
+					<Property key="TextColour" value="0.94 0.9 1.0"/>
+					<Property key="FontName" value="font.big"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 58 320 22" name="VolMaster"/>
+                <Widget type="Slider" skin="Slider" position="248 58 320 22" name="VolMaster">
+                    <Property key="Colour" value="0.94 0.9 1"/>
+                </Widget>
 				<Widget type="TextBox" skin="TextBox" position="180 60 60 24" name="VolMasterVal">
-					<Property key="TextColour" value="0.9 0.94 1.0"/>
+					<Property key="TextColour" value="0.94 0.9 1.0"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 110 144 30">
+                <Widget type="TextBox" skin="TextBox" position="32 110 144 24">
 					<Property key="Caption" value="#{Engine}"/>
 					<Property key="TextColour" value="0.8 0.85 1.0"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 110 320 18" name="VolEngine"/>
+                <Widget type="Slider" skin="Slider" position="248 110 320 18" name="VolEngine">
+                    <Property key="Colour" value="0.8 0.9 1"/>
+                </Widget>
 				<Widget type="TextBox" skin="TextBox" position="180 110 60 24" name="VolEngineVal">
 					<Property key="TextColour" value="0.8 0.85 1.0"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 140 144 30">
+                <Widget type="TextBox" skin="TextBox" position="32 140 144 24">
 					<Property key="Caption" value="#{Tires}"/>
 					<Property key="TextColour" value="0.75 0.8 1.0"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 140 320 18" name="VolTires"/>
+                <Widget type="Slider" skin="Slider" position="248 140 320 18" name="VolTires">
+                    <Property key="Colour" value="0.8 0.9 1"/>
+                </Widget>
 				<Widget type="TextBox" skin="TextBox" position="180 140 60 24" name="VolTiresVal">
 					<Property key="TextColour" value="0.75 0.8 1.0"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 170 144 30">
+                <Widget type="TextBox" skin="TextBox" position="32 170 144 24">
 					<Property key="Caption" value="#{Suspension}"/>
 					<Property key="TextColour" value="0.75 0.8 1.0"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 170 320 18" name="VolSusp"/>
+                <Widget type="Slider" skin="Slider" position="248 170 320 18" name="VolSusp">
+                    <Property key="Colour" value="0.8 0.9 1"/>
+                </Widget>
 				<Widget type="TextBox" skin="TextBox" position="180 170 60 24" name="VolSuspVal">
 					<Property key="TextColour" value="0.75 0.8 1.0"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 200 144 30">
+                <Widget type="TextBox" skin="TextBox" position="32 200 144 24">
 					<Property key="Caption" value="#{Environment}"/>
 					<Property key="TextColour" value="0.6 0.75 1.0"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 200 320 18" name="VolEnv"/>
+                <Widget type="Slider" skin="Slider" position="248 200 320 18" name="VolEnv">
+                    <Property key="Colour" value="0.8 0.9 1"/>
+                </Widget>
 				<Widget type="TextBox" skin="TextBox" position="180 200 60 24" name="VolEnvVal">
 					<Property key="TextColour" value="0.6 0.75 1.0"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 250 144 30">
+                <Widget type="TextBox" skin="TextBox" position="32 248 144 24">
 					<Property key="Caption" value="#{FluidSplash}"/>
-					<Property key="TextColour" value="0.5 0.75 1.0"/>
+					<Property key="TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 250 320 18" name="VolFlSplash"/>
-				<Widget type="TextBox" skin="TextBox" position="180 250 60 24" name="VolFlSplashVal">
-					<Property key="TextColour" value="0.5 0.75 1.0"/>
+                <Widget type="Slider" skin="Slider" position="248 248 320 16" name="VolFlSplash">
+                    <Property key="Colour" value="0.7 0.8 0.9"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="180 248 60 24" name="VolFlSplashVal">
+					<Property key="TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 280 144 30">
+                <Widget type="TextBox" skin="TextBox" position="32 272 144 24">
 					<Property key="Caption" value="#{FluidCont}"/>
-					<Property key="TextColour" value="0.5 0.75 1.0"/>
+					<Property key="TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 280 320 18" name="VolFlCont"/>
-				<Widget type="TextBox" skin="TextBox" position="180 280 60 24" name="VolFlContVal">
-					<Property key="TextColour" value="0.5 0.75 1.0"/>
+                <Widget type="Slider" skin="Slider" position="248 272 320 16" name="VolFlCont">
+                    <Property key="Colour" value="0.7 0.8 0.9"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="180 272 60 24" name="VolFlContVal">
+					<Property key="TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 310 144 30">
+                <Widget type="TextBox" skin="TextBox" position="32 304 144 24">
 					<Property key="Caption" value="#{CarCrash}"/>
-					<Property key="TextColour" value="0.5 0.75 1.0"/>
+					<Property key="TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 310 320 18" name="VolCarCrash"/>
-				<Widget type="TextBox" skin="TextBox" position="180 310 60 24" name="VolCarCrashVal">
-					<Property key="TextColour" value="0.5 0.75 1.0"/>
+                <Widget type="Slider" skin="Slider" position="248 304 320 18" name="VolCarCrash">
+                    <Property key="Colour" value="0.7 0.8 0.9"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="180 304 60 24" name="VolCarCrashVal">
+					<Property key="TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 340 144 30">
+                <Widget type="TextBox" skin="TextBox" position="32 328 144 24">
 					<Property key="Caption" value="#{CarScrap}"/>
-					<Property key="TextColour" value="0.5 0.75 1.0"/>
+					<Property key="TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="248 340 320 18" name="VolCarScrap"/>
-				<Widget type="TextBox" skin="TextBox" position="180 340 60 24" name="VolCarScrapVal">
-					<Property key="TextColour" value="0.5 0.75 1.0"/>
+                <Widget type="Slider" skin="Slider" position="248 328 320 16" name="VolCarScrap">
+                    <Property key="Colour" value="0.7 0.8 0.9"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="180 328 60 24" name="VolCarScrapVal">
+					<Property key="TextColour" value="0.5 0.7 0.9"/>
 				</Widget>
 
-				<Widget type="TextBox" skin="TextBox" position="32 490 312 20">
+                <Widget type="TextBox" skin="TextBox" position="32 376 144 24">
+					<Property key="Caption" value="#{HUD}"/>
+					<Property key="TextColour" value="0.75 0.8 1.0"/>
+				</Widget>
+                <Widget type="Slider" skin="Slider" position="248 376 320 18" name="VolHud">
+                    <Property key="Colour" value="0.9 0.9 1"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="180 376 60 24" name="VolHudVal">
+					<Property key="TextColour" value="0.75 0.8 1.0"/>
+				</Widget>
+                <Widget type="Button" skin="CheckBox" position="32 448 308 24" name="SndChk">
+					<Property key="Caption" value="#{Checkpoint}"/>
+					<Property key="TextColour" value="0.65 0.8 0.9"/>
+				</Widget>
+                <Widget type="Button" skin="CheckBox" position="32 416 308 24" name="SndChkWr">
+					<Property key="Caption" value="#{WrongChk}"/>
+					<Property key="TextColour" value="0.65 0.8 0.9"/>
+				</Widget>
+
+                <Widget type="TextBox" skin="TextBox" position="248 490 524 24">
 					<Property key="Caption" value="#{TipSliderReset}"/>
 					<Property key="TextColour" value="0.45 0.55 0.65"/>
 				</Widget>
