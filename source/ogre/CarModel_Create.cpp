@@ -96,13 +96,13 @@ void CarModel::Defaults()
 	for (w=0; w<4; ++w)
 	{
 		whRadius[w] = 0.3f;  whWidth[w] = 0.2f;
-		whPos[w] = MATHVECTOR<float,3>(0,0,0);
+		//whPos[w] = MATHVECTOR<float,3>(0,0,0);
 	}
 	manualExhaustPos = false;  has2exhausts = false;
 
 	maxangle = 26.f;
 	for (w=0; w<2; ++w)
-		posSph[2] = Vector3::ZERO;
+		posSph[w] = Vector3::ZERO;
 
 	matStPos = Matrix4::IDENTITY;
 	vStDist = Vector4(0,0,0,0);
