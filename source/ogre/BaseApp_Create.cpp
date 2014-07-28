@@ -163,7 +163,8 @@ void BaseApp::Run( bool showDialog )
 		while (1)
 		{
 			Ogre::WindowEventUtilities::messagePump();
-			if (tim.getMicroseconds() > 1000000.0 / pSet->limit_fps_val)
+			long min_fps = 1000000.0 / std::max(10.f, pSet->limit_fps_val);
+			if (tim.getMicroseconds() > min_fps)
 			{
 				tim.reset();
 				if (!mRoot->renderOneFrame())
