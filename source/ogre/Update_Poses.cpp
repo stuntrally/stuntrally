@@ -254,11 +254,12 @@ void App::newPoses(float time)  // time only for camera update
 					abs(carM->vStDist.z) < road->vStBoxDim.z;
 							
 				carM->iInChk = -1;  carM->bWrongChk = false;
+				bool locar = carM->eType == CarModel::CT_LOCAL;
 				int ncs = road->mChks.size();
 				if (ncs > 0)
 				{
 					//  Finish  --------------------------------------
-					if (carM->eType == CarModel::CT_LOCAL &&
+					if (locar &&
 						(carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1))
 					{
 						///  Lap
@@ -316,7 +317,12 @@ void App::newPoses(float time)  // time only for camera update
 							if (!chs)
 							{
 								if (carM->iWonPlace == 0)	//  split screen winner places
+								{
+									int n = std::min(2, std::max(0, 3 - carIdWin));
+									pGame->snd_win[n].Play();  //)
+
 									carM->iWonPlace = carIdWin++;
+								}
 							}
 							else if (champ)
 								gui->ChampionshipAdvance(timeCur);
@@ -360,7 +366,7 @@ void App::newPoses(float time)  // time only for camera update
 								carM->pCar->SavePosAtCheck();
 								carM->updTimes = true;
 	
-								if (pSet->snd_chk)
+								if (pSet->snd_chk && locar)
 									pGame->snd_chk.Play();  //)
 							}
 							else
@@ -371,7 +377,7 @@ void App::newPoses(float time)  // time only for camera update
 								if (carM->iInWrChk != carM->iInChk)
 								{	carM->iInWrChk = carM->iInChk;
 									
-									if (pSet->snd_chkwr)
+									if (pSet->snd_chkwr && locar)
 										pGame->snd_chkwr.Play();  //)
 							}	}
 							break;
