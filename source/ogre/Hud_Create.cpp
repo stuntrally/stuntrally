@@ -99,19 +99,19 @@ void CHud::Size()
 
 			#if 1
 			if (h.txDamage)
-			{	h.txDamage ->setPosition(gxL-90,   gy+10);
-				h.icoDamage->setPosition(gxL-90+50,gy+10-5);
+			{	h.txDamage ->setPosition(gxL-83-72, gy+10-5);
+				h.icoDamage->setPosition(gxL-83+57, gy+10-5);
 			}
-			h.txBFuel ->setPosition(gxL-83,   gy-60);
-			h.icoBFuel->setPosition(gxL-83+54,gy-60-5+2);
-			//h.icoBInf ->setPosition(gxL-83+14,gy-60-5+2);
+			h.txBFuel ->setPosition(gxL-83-74, gy-60);
+			h.icoBFuel->setPosition(gxL-83+57, gy-60);
+			//h.icoBInf->setPosition(gxL-83+14,gy-60-5+2);
 			#else
 			if (h.txDamage)
-			{	h.txDamage ->setPosition(bx-70,   by-70);
-				h.icoDamage->setPosition(bx-70+50,by-70-5);
+			{	h.txDamage ->setPosition(bx-70-80, by-70);
+				h.icoDamage->setPosition(bx-70+50, by-70-5);
 			}
-			h.txBFuel ->setPosition(bx-63,   by-140);
-			h.icoBFuel->setPosition(bx-63+54,by-140-5+2);
+			h.txBFuel ->setPosition(bx-63,    by-140);
+			h.icoBFuel->setPosition(bx-63+54, by-140-5+2);
 			#endif
 
 			//  times
@@ -282,7 +282,8 @@ void CHud::Create()
 		
 		//  boost
 		h.txBFuel = h.parent->createWidget<TextBox>("TextBox",
-			0,y, 240,80, Align::Right, "Fuel"+s);  h.txBFuel->setVisible(false);
+			0,y, 120,80, Align::Right, "Fuel"+s);  h.txBFuel->setVisible(false);
+		h.txBFuel->setTextAlign(Align::Right|Align::VCenter);
 		h.txBFuel->setFontName("DigGear");  h.txBFuel->setFontHeight(72);
 		h.txBFuel->setTextColour(Colour(0.6,0.8,1.0));  //h.txBFuel->setTextShadow(true);
 
@@ -301,7 +302,8 @@ void CHud::Create()
 		if (pSet->game.damage_type > 0)
 		{
 			h.txDamage = h.parent->createWidget<TextBox>("TextBox",
-				0,y, 240,80, Align::Right, "Dmg"+s);  //h.txDamage->setVisible(false);
+				0,y, 120,40, Align::Right, "Dmg"+s);  //h.txDamage->setVisible(false);
+			h.txDamage->setTextAlign(Align::Right|Align::VCenter);
 			h.txDamage->setFontName("hud.replay");  //h.txDamage->setFontHeight(64);
 			h.txDamage->setTextColour(Colour(0.7,0.7,0.7));  h.txDamage->setTextShadow(true);
 
