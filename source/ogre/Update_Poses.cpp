@@ -318,9 +318,11 @@ void App::newPoses(float time)  // time only for camera update
 							{
 								if (carM->iWonPlace == 0)	//  split screen winner places
 								{
-									int n = std::min(2, std::max(0, 3 - carIdWin));
-									pGame->snd_win[n].Play();  //)
-
+									if (pSet->game.local_players > 1)
+									{
+										int n = std::min(2, std::max(0, 3 - carIdWin));
+										pGame->snd_win[n].Play();  //)
+									}
 									carM->iWonPlace = carIdWin++;
 								}
 							}
