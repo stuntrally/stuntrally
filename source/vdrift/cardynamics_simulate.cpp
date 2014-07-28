@@ -414,7 +414,7 @@ void CARDYNAMICS::UpdateTransmission(Dbl dt)
 	if (autoshift)
 	{
 		bool dmg = fDamage >= 100.f;
-		int gear = dmg ? 0 : NextGear();  /// <><> damage shift to N
+		int gear = dmg ? 1 : NextGear();  /// <><> damage shift to N
 		if (!dmg)
 		{
 			Dbl spm = GetSpeedMPS();  // opposite and N gear fix
