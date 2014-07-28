@@ -63,7 +63,7 @@
 	<Tag name="CarDesc_V1">Statek kosmiczny przerobiony na poduszkowiec. Bardzo szybki i łatwy w prowadzeniu. Nie przeszkadają mu wyboje terenu. Ale jest mały i ślizga się bokiem.</Tag>
 	<Tag name="DevKeys">Klawisze deweloperów. Ctrl-F globalne, Alt-shift-1..6 wczytuje trasy testowe.</Tag>
 	<Tag name="CarDesc_V3">Duży i ciężki statek. Bardzo dobre przyśpieszenie na początku i mocne hamowanie. Ale nie osiąga dużych prędkości.</Tag>
-	<Tag name="Hint-15text">For more info, check [Help] in the menu.</Tag>
+	<Tag name="Hint-15text">Więcej informacji, znajdziesz w menu [Pomoc].</Tag>
 	<Tag name="InputRoadChkFirst">0 - ustaw sferę kontrolną jako pierwszą (1)</Tag>
 	<Tag name="SC_ForestMntn">LasGóry</Tag>
 	<Tag name="NetRefreshList">Odśwież listę</Tag>
@@ -192,7 +192,7 @@
 	<Tag name="InputRoadInsAlt">alt-shift - na pocz. alt-ctrl - na końcu</Tag>
 	<Tag name="RearThrottleInverse">Odwrotnie gaz na R</Tag>
 	<Tag name="MessageBox_Yes">Tak</Tag>
-	<Tag name="Hint-2text">Hold [Q] or [W] to flip over the car, when upside down or in jumps. Depending on settings, it may cost some fuel.</Tag>
+	<Tag name="Hint-2text">Przytrzymaj [Q] lub [W] by odwrócić przewrócone auto, lub w skokach. W zależności od ustawień, może to kosztować paliwo.</Tag>
 	<Tag name="InputMapPrevCamera">Poprzedni widok</Tag>
 	<Tag name="RplParticles">Cząsteczki (dla ducha nieprzeźroczystego)</Tag>
 	<Tag name="Brush_Size">Rozmiar</Tag>
@@ -296,7 +296,7 @@
 	<Tag name="TerrainError">Błąd terenu</Tag>
 	<Tag name="InputGraphsType">zmień typ grafów w grze</Tag>
 	<Tag name="Reduced">Zredukowane</Tag>
-	<Tag name="Hint-10text">In loops, the camera will automatically switch to an interior view, to make it easier to steer while in a loop.</Tag>
+	<Tag name="Hint-10text">W pętlach, kamera automatycznie zmienia się na widoć ze środka, by ułatwić sterowanie.</Tag>
 	<Tag name="InputRoadModify">Zmień</Tag>
 	<Tag name="No">Nie</Tag>
 	<Tag name="CheckOnLoad">Sprawdź przy ładowaniu</Tag>
@@ -361,7 +361,7 @@
 	<Tag name="Disconnected">Rozłączono</Tag>
 	<Tag name="CarType_Extreme">Ekstremalny</Tag>
 	<Tag name="LoadTrack">Wczytaj trasę</Tag>
-	<Tag name="Hint-0text">If you crashed or you're stuck, hold [Backspace] to move back in time.</Tag>
+	<Tag name="Hint-0text">Jeśli miałeś wypadek albo utknąłeś, przytrzymaj [Backspace] by cofnąć się w czasie.</Tag>
 	<Tag name="SetCamTo">Ustaw kamerę na</Tag>
 	<Tag name="RplMaxNumViewports">Maks. liczba widoków (dla powtórek kilkugraczowych)</Tag>
 	<Tag name="SingleRace">Pojedynczy wyścig</Tag>
@@ -440,7 +440,7 @@
 	<Tag name="InputStartPos">Q - edytuj start auta</Tag>
 	<Tag name="SC_Mars">Mars</Tag>
 	<Tag name="TipModelMinScale">Minimalna skala modelu</Tag>
-	<Tag name="Hint-14text">The top left bar shows frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
+	<Tag name="Hint-14text">Lewy górny pasek pokazuje ilość klatek na sekundę i inne informacje. Do gry najlepiej mieć co najmniej 30 klatek, 60 jest idealnie.</Tag>
 	<Tag name="InputRplCtrl1">Backspace - pokaż/ukryj kontrolki (przytrzymaj ctrl by użyć myszy)</Tag>
 	<Tag name="Car_BhpPerTon">Bhp na tonę</Tag>
 	<Tag name="TipFogClrRGBA">R G B A składowe 0 do 1 (np. 0.7 0.8 0.9 1). Ostatnią można użyć do zmniejszenia maksymalnej gęstości (1 pełna).</Tag>
@@ -489,11 +489,11 @@
 	<Tag name="HDRIntensity">Blask intensywność</Tag>
 	<Tag name="ColReflect">Odbicie</Tag>
 	<Tag name="Development">Narzędzia</Tag>
-	<Tag name="Hint-9text">Don't drive too fast in jumps, else the car will land in a sloppy manner. The ideal landing is on the jump's other end.</Tag>
+	<Tag name="Hint-9text">Nie jedź zbyt szybko w skokach, bo auto będzie lądować w niechlujny sposób. Idealne miejsce lądowania to drugi koniec skoku.</Tag>
 	<Tag name="TweakEdit1">Alt-Z - przełącz okno dostosowywania (edycja auta)</Tag>
 	<Tag name="InputBrushParams">Parametry pędzla</Tag>
 	<Tag name="min">min.</Tag>
-	<Tag name="Hint-11text">Don't drive too fast in pipes and loops. You will damage the car's bottom due to high acceleration.</Tag>
+	<Tag name="Hint-11text">Nie jedź zbyt szybko w rurach i pętlach. Uszkodzisz spód auta w wyniku przyśpieszenia.</Tag>
 	<Tag name="SC_Asphalt">Asfalt</Tag>
 	<Tag name="TipTerNoiseOnly">Powoduje ignorowanie zakresów kąta i wysokości. Wastwa będzie widoczna tylko jeśli mnożniki szumu innych spowodują przejście do tej.</Tag>
 	<Tag name="InputRoadPipeAngle">[,] - kąt rury (brak rury gdy 0)</Tag>
@@ -543,7 +543,7 @@
 	<Tag name="Obj_Pos">Poz.</Tag>
 	<Tag name="RoadMaterials">Materiały drogi</Tag>
 	<Tag name="Fullscreen">Pełny ekran</Tag>
-	<Tag name="Hint-13text">By default simulation is in easy mode, for beginners. Don't forget to set it to normal if the game feels too easy.</Tag>
+	<Tag name="Hint-13text">Domyślnie symulacja jest w trybie łatwym, dla początkujących. Nie zapomnij zmienić ją na normalną, jeśli gra wydaje się zbyt łatwa.</Tag>
 	<Tag name="TipTerLAngMax">Końcowy kąt terenu dla warstwy</Tag>
 	<Tag name="TBPoints">Punkty</Tag>
 	<Tag name="InputFluidsTile">[,] - zmień skalę tekstury</Tag>
@@ -714,7 +714,7 @@
 	<Tag name="InputStartMeet">auto napotka (następne+ / poprzednie-) numery punktów</Tag>
 	<Tag name="Difficulty">Trudność</Tag>
 	<Tag name="GraphicsAll_Higher">Wyższe</Tag>
-	<Tag name="Hint-6text">Hold [Ctrl] to boost. Depending on the settings, boost is given each lap, regenerates over time, or is infinite.</Tag>
+	<Tag name="Hint-6text">Przytrzymaj [Ctrl] by użyć dopalacza. W zależności od ustawień, jego paliwo jest dostępne co okrążenie, rośnie z czasem, lub jest nieskończone.</Tag>
 	<Tag name="EnterSave">Enter - zapisz</Tag>
 	<Tag name="InputMapLastChk">Start od poprzedniego punktu kontrolnego</Tag>
 	<Tag name="NetJoinLocked">Gra chroniona</Tag>
@@ -755,7 +755,7 @@
 	<Tag name="NetNew">Nowa gra</Tag>
 	<Tag name="Road_Width">Szerokość</Tag>
 	<Tag name="Size">Rozmiar</Tag>
-	<Tag name="Hint-4text">Watch your car's damage, especially in stunt tracks. It will stop working if it is fully damaged and its performance decreases when over 50 %.</Tag>
+	<Tag name="Hint-4text">Obserwuj uszkodzenie auta, zwłaszcza na trasach wyczynowych. Auto przestanie działać przy pełnym uszkodzeniu, a jego wydajność maleje od 50 %.</Tag>
 	<Tag name="ReplaysMenu">Powtórki</Tag>
 	<Tag name="InputSlowFast">shift - wolno  ctrl - szybko</Tag>
 	<Tag name="TerHeight">Wysokość</Tag>
@@ -887,7 +887,7 @@
 	<Tag name="InputTerDeform">D - Deformuj (LMB góra, RMB dół)</Tag>
 	<Tag name="SREditorVersion">Stunt Rally - Edytor Tras - wersja</Tag>
 	<Tag name="InputRoadAfterPick">po wybraniu, centruj na myszce</Tag>
-	<Tag name="Hint-1text">Don't accelerate all the time. Also don't forget to brake before turns, especially sharp ones. If you don't know the road yet, it's better to drive slowly.</Tag>
+	<Tag name="Hint-1text">Nie przyśpieszaj cały czas. Również nie zapomnij o hamowaniu przed zakrętami, szczególnie ostrymi. Jeśli nie znasz jeszcze drogi, lepiej jest jechać wolno.</Tag>
 	<Tag name="TipTrackDesc">Opis trasy.</Tag>
 	<Tag name="TracksGhost">Duch trasy (auto ES, nalepszy przejazd dla trasy)</Tag>
 	<Tag name="SC_GreeceWhite">GrecjaBiała</Tag>
@@ -1112,6 +1112,9 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz.,następna zakładka (alt - pod-zakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
+	<Tag name="Simple">Simple</Tag>
+	<Tag name="Checkpoint">Checkpoint</Tag>
+	<Tag name="Complex">Complex</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

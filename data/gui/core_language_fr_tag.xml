@@ -24,7 +24,7 @@
 	<Tag name="Warnings">Avertissements</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Sélectionner (une route)</Tag>
-	<Tag name="HintInput">To check keys used in game or reassign them, or to confugure controller press:</Tag>
+	<Tag name="HintInput">To check keys used in game or reassign them, or to confugure controller press Input button.</Tag>
 	<Tag name="ViewDist">Distance de vue</Tag>
 	<Tag name="CarDesc_OT">Ceci est la voiture la plus lente. Très âgée et un peu effrayante. Ne peut conduire que sur les circuits plats et à une vitesse très réduite.</Tag>
 	<Tag name="SimMode">Mode de simulation (difficulté)</Tag>
@@ -107,7 +107,7 @@
 	<Tag name="RoadPointSize">Taille des points de la route</Tag>
 	<Tag name="Flip">Retourner</Tag>
 	<Tag name="DistToRoad">dist. de la route</Tag>
-	<Tag name="TBPlace">Lieu</Tag>
+	<Tag name="TBPlace">Place</Tag>
 	<Tag name="AngleMax">Angle Maximum</Tag>
 	<Tag name="objects">objets (dynamiques)</Tag>
 	<Tag name="TipToggleTriplanar">Utilisez pour les calques montagneux ou pentus, 2 au maximum.</Tag>
@@ -147,12 +147,12 @@
 	<Tag name="InputRoadShiftSel">Maj. - sélectionner</Tag>
 	<Tag name="Hint-2">Flipping</Tag>
 	<Tag name="Hint-3">Gravel</Tag>
-	<Tag name="Hint-0">Rewind</Tag>
+	<Tag name="Hint-0">Rembobiner</Tag>
 	<Tag name="Hint-1">Turns</Tag>
 	<Tag name="Hint-6">Boost</Tag>
 	<Tag name="Hint-7">Cars</Tag>
 	<Tag name="NetReady">Prêt</Tag>
-	<Tag name="Hint-5">Ghost cars</Tag>
+	<Tag name="Hint-5">Voitures fantômes</Tag>
 	<Tag name="InputNoJS">Pas de joystick</Tag>
 	<Tag name="InputRoadAngType">Alt-1,2 - type d'angle</Tag>
 	<Tag name="NetMasterPort">Port du serveur maître</Tag>
@@ -194,7 +194,7 @@
 	<Tag name="MessageBox_Yes">Oui</Tag>
 	<Tag name="Hint-2text">Hold [Q] or [W] to flip over the car, when upside down or in jumps. Depending on settings, it may cost some fuel.</Tag>
 	<Tag name="InputMapPrevCamera">Caméra précédente</Tag>
-	<Tag name="RplParticles">Particules (pour les fantômes non transparents).</Tag>
+	<Tag name="RplParticles">Particules (pour les fantômes non transparents)</Tag>
 	<Tag name="Brush_Size">Taille</Tag>
 	<Tag name="HDRParam2">Luminosité</Tag>
 	<Tag name="HDRParam3">Grain</Tag>
@@ -213,7 +213,7 @@
 	<Tag name="TipGrTerMaxHeight">Au-delà de cette altitude, il n'y aura pas (ou moins) d'herbe.</Tag>
 	<Tag name="InputRoadYaw">- tourner horizontalement</Tag>
 	<Tag name="MessageBox_Try">Essayer</Tag>
-	<Tag name="InputMapRewind">Retour (dans le temps)</Tag>
+	<Tag name="InputMapRewind">Rembobiner</Tag>
 	<Tag name="InputKeyAllPreset">Définir depuis un pré-réglage</Tag>
 	<Tag name="Chall_Endurance">Endurance</Tag>
 	<Tag name="InpSet_Slow">Lent</Tag>
@@ -517,7 +517,7 @@
 	<Tag name="Obj_Rot">Rot.</Tag>
 	<Tag name="Transparency">Transparence</Tag>
 	<Tag name="NetWrongPassword">Mot de passe incorrect.</Tag>
-	<Tag name="RplRewindGhost">\</Tag>
+	<Tag name="RplRewindGhost">Rembobiner les fantômes</Tag>
 	<Tag name="ScaleAll">Tout mettre à l'échelle</Tag>
 	<Tag name="InpSet_KeyFull">Touche complète</Tag>
 	<Tag name="InputMapPrevTab">Onglet précédent</Tag>
@@ -575,7 +575,7 @@
 	<Tag name="TexCoordMul">Échelle de la texture</Tag>
 	<Tag name="Shadows">Ombres</Tag>
 	<Tag name="Options">Options</Tag>
-	<Tag name="HintScreen">To change screen resolution and adjust graphics to your card go to:</Tag>
+	<Tag name="HintScreen">To change screen resolution and adjust graphics to your card press Screen button.</Tag>
 	<Tag name="distance">distance</Tag>
 	<Tag name="SSS_Effect">Effet</Tag>
 	<Tag name="Chall_Extreme">Extrême</Tag>
@@ -1065,7 +1065,7 @@
 	<Tag name="Shaders">Shaders</Tag>
 	<Tag name="Never">Jamais</Tag>
 	<Tag name="TerGenOct">Octaves</Tag>
-	<Tag name="Hint-5text">By default, your best drive ghost is an orange car. It will appear after a lap. The green car is the track's ghost.</Tag>
+	<Tag name="Hint-5text">Par défaut, votre meilleur tour est représenté par une voiture orange qui apparaît après un tour. La voiture verte est le fantôme du circuit.</Tag>
 	<Tag name="Volume">Volume</Tag>
 	<Tag name="UserDir">Chemin utilisateur (journaux, fichiers de configuration, etc.)</Tag>
 	<Tag name="TipTerLayers">3 à 4 calques sont recommandés. Un nombre élevé de calques réduit la performance. Le nombre maximum de calques est de 4.</Tag>
@@ -1112,6 +1112,9 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet précédent/suivant (Alt. - sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
+	<Tag name="Simple">Simple</Tag>
+	<Tag name="Checkpoint">Checkpoint</Tag>
+	<Tag name="Complex">Complex</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

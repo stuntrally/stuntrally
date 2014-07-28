@@ -24,7 +24,7 @@
 	<Tag name="Warnings">Varoitukset</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Valitse (yksi)</Tag>
-	<Tag name="HintInput">To check keys used in game or reassign them, or to confugure controller press:</Tag>
+	<Tag name="HintInput">To check keys used in game or reassign them, or to confugure controller press Input button.</Tag>
 	<Tag name="ViewDist">Piirtoetäisyys</Tag>
 	<Tag name="CarDesc_OT">This is the slowest car. Very old and a bit creepy truck. Can drive only on flat tracks and with turtle speed.</Tag>
 	<Tag name="SimMode">Simulaatio (vaikeusaste)</Tag>
@@ -575,7 +575,7 @@
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Shadows">Varjot</Tag>
 	<Tag name="Options">Valinnat</Tag>
-	<Tag name="HintScreen">To change screen resolution and adjust graphics to your card go to:</Tag>
+	<Tag name="HintScreen">To change screen resolution and adjust graphics to your card press Screen button.</Tag>
 	<Tag name="distance">etäisyys</Tag>
 	<Tag name="SSS_Effect">Tehoste</Tag>
 	<Tag name="Chall_Extreme">Extreme</Tag>
@@ -1112,6 +1112,9 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
+	<Tag name="Simple">Simple</Tag>
+	<Tag name="Checkpoint">Checkpoint</Tag>
+	<Tag name="Complex">Complex</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

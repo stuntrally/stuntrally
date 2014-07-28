@@ -24,7 +24,7 @@
 	<Tag name="Warnings">Оповещения</Tag>
 	<Tag name="UnitKmh">км/ч</Tag>
 	<Tag name="InputRoadPickOne">Выбор (один)</Tag>
-	<Tag name="HintInput">To check keys used in game or reassign them, or to confugure controller press:</Tag>
+	<Tag name="HintInput">To check keys used in game or reassign them, or to confugure controller press Input button.</Tag>
 	<Tag name="ViewDist">Видимость</Tag>
 	<Tag name="CarDesc_OT">Это самое медленное авто. Очень старый и немного страшный грузовик. Управляемый только на треках с ровным рельефом и со скоростью черепахи.</Tag>
 	<Tag name="SimMode">Режим симуляции (сложность)</Tag>
@@ -575,7 +575,7 @@
 	<Tag name="TexCoordMul">Тех. коор.</Tag>
 	<Tag name="Shadows">Тени</Tag>
 	<Tag name="Options">Опции</Tag>
-	<Tag name="HintScreen">To change screen resolution and adjust graphics to your card go to:</Tag>
+	<Tag name="HintScreen">To change screen resolution and adjust graphics to your card press Screen button.</Tag>
 	<Tag name="distance">дистанция</Tag>
 	<Tag name="SSS_Effect">Эффект</Tag>
 	<Tag name="Chall_Extreme">Экстрим</Tag>
@@ -1112,6 +1112,9 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред.,след. вкладка (alt - ниже)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
+	<Tag name="Simple">Simple</Tag>
+	<Tag name="Checkpoint">Checkpoint</Tag>
+	<Tag name="Complex">Complex</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

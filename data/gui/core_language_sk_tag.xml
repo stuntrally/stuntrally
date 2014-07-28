@@ -24,7 +24,7 @@
 	<Tag name="Warnings">Varovania</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Pick (one)</Tag>
-	<Tag name="HintInput">To check keys used in game or reassign them, or to confugure controller press:</Tag>
+	<Tag name="HintInput">To check keys used in game or reassign them, or to confugure controller press Input button.</Tag>
 	<Tag name="ViewDist">Zobrazená vzdialenosť</Tag>
 	<Tag name="CarDesc_OT">This is the slowest car. Very old and a bit creepy truck. Can drive only on flat tracks and with turtle speed.</Tag>
 	<Tag name="SimMode">Režim simulácie (obtiažnosť)</Tag>
@@ -575,7 +575,7 @@
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
 	<Tag name="Shadows">Tiene</Tag>
 	<Tag name="Options">Možnosti</Tag>
-	<Tag name="HintScreen">To change screen resolution and adjust graphics to your card go to:</Tag>
+	<Tag name="HintScreen">To change screen resolution and adjust graphics to your card press Screen button.</Tag>
 	<Tag name="distance">distance</Tag>
 	<Tag name="SSS_Effect">Efekt</Tag>
 	<Tag name="Chall_Extreme">Extrémna</Tag>
@@ -1112,6 +1112,9 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extrémna</Tag>
 	<Tag name="RplAll">Všetko</Tag>
+	<Tag name="Simple">Simple</Tag>
+	<Tag name="Checkpoint">Checkpoint</Tag>
+	<Tag name="Complex">Complex</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
