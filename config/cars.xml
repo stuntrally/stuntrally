@@ -43,9 +43,9 @@
 	
 	<car id="V2"  crtver="2.4" speed="9.4" year="2516" type="Spaceship" easy="1.07" norm="1.13"  car="0" author="speedypro" />
 	<car id="V1"  crtver="2.4" speed="9.6" year="2523" type="Spaceship" easy="1.04" norm="1.16"  car="0" author="benja" />
-	<car id="V3"  crtver="2.4" speed="9.8" year="2548" type="Spaceship" easy="1.12" norm="1.22"  car="0" author="jumahsafarty" />
+	<car id="V3"  crtver="2.4" speed="9.8" year="2548" type="Spaceship" easy="1.10" norm="1.20"  car="0" author="jumahsafarty" />
 
-	<car id="O"   crtver="2.4" speed="10.2" year="2785" type="Other"    easy="1.12" norm="1.17"  car="0" author="cryham" />
+	<car id="O"   crtver="2.4" speed="10.2" year="2785" type="Other"    easy="1.10" norm="1.17"  car="0" author="cryham" />
 
 	
 	<!--easy and norm are the car time multipliers for simultation modes
