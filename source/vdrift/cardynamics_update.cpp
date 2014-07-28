@@ -649,9 +649,8 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	//  cast ray down .
 	COLLISION_CONTACT ct,ct2;
 	MATHVECTOR<Dbl,3> dn = GetDownVector();
-	///
-	//sHov += " dn "+fToStr(dn[2],2,5)+"\n";
 	Dbl ups = dn[2] < 0.0 ? 1.0 : -1.0;
+		//sHov += " dn "+fToStr(dn[2],2,5)+"\n";
 
 	/*const */Dbl len = hov.hAbove, rlen = hov.hRayLen;
 	MATHVECTOR<Dbl,3> p = GetPosition();  // - dn * 0.1;  // v fluids as solids
@@ -687,10 +686,11 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 
 
 	//  steer  < >
-	//bool rear = sv[0] > 0.0;
-	bool rear = transmission.GetGear() < 0;
-	float r = rear ? -1.f : 1.f;
-	MATHVECTOR<Dbl,3> t(0,0, -1000.0 * r * ups * hov.steerForce * steerValue * dmgE);
+	bool rear = sv[0] > 0.0;
+	Dbl rr = std::max(-1.0, std::min(1.0, -sv[0] * 0.4));  //par
+		//sHov += " rr "+fToStr(rr,2,5)+"\n";
+
+	MATHVECTOR<Dbl,3> t(0,0, -1000.0 * rr * ups * hov.steerForce * steerValue * dmgE);
 	Orientation().RotateVector(t);
 	Dbl damp = pipe ? hov.steerDamp : hov.steerDamp;  //damp *= 1 - fabs(steerValue);
 	ApplyTorque(t - av * damp * 1000.0);  // rotation damping
@@ -708,11 +708,15 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	
 	//  engine  ^
 	float vel = sv.Magnitude(),  //  decrease power with velocity
-		velMul = 1.f - std::min(1.f, hov.engineVelDec * vel);
+		velMul = 1.f - std::min(1.f, hov.engineVelDec * vel),
+		velMulR = 1.f - std::min(1.f, hov.engineVelDecR * vel);
+		//sHov += " m  "+fToStr(velMul,2,5)+"\n";
+
 	Dbl brk = brake[0].GetBrakeFactor() * (1.0 - h);
 	float f = hov.engineForce * velMul * hov_throttle * dmgE
-			- hov.brakeForce * brk * dmgE;
-	MATHVECTOR<Dbl,3> vf(body.GetMass() * f * r, 0,0);
+			- hov.brakeForce * (rear ? velMulR : 1.f) * brk * dmgE;
+
+	MATHVECTOR<Dbl,3> vf(body.GetMass() * f, 0,0);
 	Orientation().RotateVector(vf);
 	ApplyForce(vf);
 
@@ -736,16 +740,16 @@ void CARDYNAMICS::SimulateHover(Dbl dt)
 	else      {  al[0] *= hov.alt[0];  al[1] *= hov.alt[1];  al[2] *= hov.alt[2];  }
 	ApplyTorque(al * -1000.0);
 
-	//sHov += " a1 "+fToStr(ay[0],2,5)+" "+fToStr(ay[1],2,5)+" "+fToStr(ay[2],2,5) +"\n";
-	//sHov += " a2 "+fToStr(ay2[0],2,5)+" "+fToStr(ay2[1],2,5)+" "+fToStr(ay2[2],2,5) +"\n";
-	//sHov += " 12 "+fToStr(ay[0]-ay2[0],2,5)+" "+fToStr(ay[1]-ay2[1],2,5)+" "+fToStr(ay[2]-ay2[2],2,5) +"\n";
+		//sHov += " a1 "+fToStr(ay[0],2,5)+" "+fToStr(ay[1],2,5)+" "+fToStr(ay[2],2,5) +"\n";
+		//sHov += " a2 "+fToStr(ay2[0],2,5)+" "+fToStr(ay2[1],2,5)+" "+fToStr(ay2[2],2,5) +"\n";
+		//sHov += " 12 "+fToStr(ay[0]-ay2[0],2,5)+" "+fToStr(ay[1]-ay2[1],2,5)+" "+fToStr(ay[2]-ay2[2],2,5) +"\n";
 
 	//  pitch torque )
 	Dbl pitch = (d < len && d2 < len) ? (d2 - d) * hov.pitchTq * 1000.f : 0.f;
 	Dbl roll = sv[1] * hov.rollTq * -1000.f;
 	Dbl yawP = !pipe ? 0.0 : 600.0 * (ay[0]-ay2[0]);
 	Dbl spiP = !pipe ? 0.0 : 600.0 * (ay[1]-ay2[1]);
-	//sHov += " yp "+fToStr(yawP,0,5)+" "+fToStr(spiP,0,5) +"\n";
+		//sHov += " yp "+fToStr(yawP,0,5)+" "+fToStr(spiP,0,5) +"\n";
 	MATHVECTOR<Dbl,3> tq(roll, pitch + spiP * ups, ups * yawP);
 	Orientation().RotateVector(tq);
 	ApplyTorque(tq);

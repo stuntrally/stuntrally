@@ -178,7 +178,7 @@ public:
 	{
 		float hAbove, hRayLen;
 		float steerForce, steerDamp, steerDampP;
-		float engineForce, engineVelDec, brakeForce;
+		float engineForce, engineVelDec,engineVelDecR, brakeForce;
 		float dampAirRes, dampSide, dampUp, dampDn, dampPmul;
 		MATHVECTOR <float,3> alt, alp;  // align torque, pipe
 		float pitchTq, rollTq, roll;

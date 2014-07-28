@@ -68,7 +68,8 @@ void CARDYNAMICS::HoverPar::Default()
 	steerForce = 25.f;
 	steerDamp = 10.f;  steerDampP = 14.f;
 
-	engineForce = 18.f;  engineVelDec = 0.006f;
+	engineForce = 18.f;
+	engineVelDec = 0.006f;  engineVelDecR = 0.04f;
 	brakeForce  = 22.f;
 
 	dampAirRes = 42.f;  dampSide = 2100.f;
@@ -638,7 +639,8 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 		c.GetParam("hover.steerForce",	 hov.steerForce);
 		c.GetParam("hover.steerDamp",	 hov.steerDamp);	c.GetParam("hover.steerDampP",	 hov.steerDampP);
 										 
-		c.GetParam("hover.engineForce",	 hov.engineForce);	c.GetParam("hover.engineVelDec", hov.engineVelDec);
+		c.GetParam("hover.engineForce",	 hov.engineForce);
+		c.GetParam("hover.engineVelDec", hov.engineVelDec);	c.GetParam("hover.engineVelDecR", hov.engineVelDecR);
 		c.GetParam("hover.brakeForce",	 hov.brakeForce);
 										 
 		c.GetParam("hover.dampAirRes",	 hov.dampAirRes);	c.GetParam("hover.dampSide",	 hov.dampSide);

@@ -405,6 +405,12 @@ void CARDYNAMICS::UpdateTransmission(Dbl dt)
 {
 	driveshaft_rpm = CalculateDriveshaftRPM();
 
+	if (sphere || hover)
+	{
+		int gear = 1;
+		ShiftGear(gear);
+	}
+	else
 	if (autoshift)
 	{
 		bool dmg = fDamage >= 100.f;
