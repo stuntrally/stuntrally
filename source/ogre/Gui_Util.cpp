@@ -10,9 +10,9 @@
 #include "common/GuiCom.h"
 #include "common/MultiList2.h"
 #include "common/Slider.h"
-//#include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 #include <boost/filesystem.hpp>
+#include <OgreTimer.h>
 #include <MyGUI_Gui.h>
 #include <MyGUI_TabControl.h>
 #include <MyGUI_TabItem.h>
