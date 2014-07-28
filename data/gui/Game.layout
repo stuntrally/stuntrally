@@ -2876,7 +2876,7 @@
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 738 472" layer="Back">
-						<Property key="Caption" value="#E0E040#{Diff4}"/>
+						<Property key="Caption" value="#E0E040#{Complex}"/>
 						<Widget type="TextBox" skin="TextBox" position="32 380 236 24">
 							<Property key="Caption" value="*#{NeedRestart}"/>
 							<Property key="TextColour" value="0.5 0.9 1"/>
@@ -3090,7 +3090,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472" layer="Back">
-						<Property key="Caption" value="#60F060#{Diff3}"/>
+						<Property key="Caption" value="#60F060#{Simple}"/>
 						<Widget type="TextBox" skin="TextBox" position="32 380 236 24">
 							<Property key="Caption" value="*#{NeedRestart}"/>
 							<Property key="TextColour" value="0.5 0.9 1"/>
