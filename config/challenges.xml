@@ -107,14 +107,14 @@
 
 			<t name="S10-PipeCurl"   
 			<t name="A2-PipeCoil"  
-
-			<t name="M3-Mudlake"   
 			<t name="D13-Winding"  
-			<t name="O4-MossyMntn" 
 	
 			<t name="E2-Serpent"
 			<t name="V8-Uncertain"
 			<t name="W15-SkiJump"
+			<t name="V10-MtSulphur"
+
+			<t name="Y1-CrystalMoon"
 	-->
 
 
@@ -348,7 +348,7 @@
 
 	<challenge name="Long endurance" ver="1" difficulty="3" type="2" 
 			descr="Very long tracks, need strong endurance skills and no mistakes while driving fast.">
-		<car names="ES|S1|XZ" />
+		<car names="ES|S1|XZ|SZ|360" />
 		<hud chkArrow="1" />
 		<pass avgPoints="10" />
 		<tracks>
@@ -438,6 +438,16 @@
 		</tracks>
 	</challenge>
 
+	<challenge name="Ancient chase" ver="2" difficulty="3" type="3" 
+			descr="Fast drive through 2 ancient cities. Sometimes narrow and with sharp turns.">
+		<car names="SZ|XZ" />
+		<pass avgPoints="13" />
+		<tracks>
+			<t name="D17-NileCity" passPoints="13.5" />
+			<t name="G8-SlopeCity" passPoints="12.5" />
+		</tracks>
+	</challenge>
+
 	<challenge name="Tricky Jungle" ver="1" difficulty="3" type="3" 
 			descr="Very fast drive through short, narrow, twisted jungle tracks. Don't go too fast, it's better to be slower than to hit a tree.">
 		<cartype names="Gravel" />
@@ -473,7 +483,7 @@
 
 	<challenge name="Max Banked" ver="1" difficulty="3" type="3" 
 			descr="Maximum banked terrain tracks. Very fast and with side turns.">
-		<car names="ES|S1|XZ" />
+		<car names="ES|S1|XZ|SZ" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="C2-CanyonRun" passPoints="9" />
@@ -486,7 +496,7 @@
 	<challenge name="Twisted Bridges" ver="1" difficulty="4" type="3" 
 			descr="Banked and twisted bridged roads. You get fast cars, but the key is to drive not too fast.">
 		<!--<cartype names="Asphalt" />-->
-		<car names="XZ" />
+		<car names="XZ|SZ" />
 		<pass avgPos="2" />
 		<tracks>
 			<t name="I6-Flooded"  laps="2" passPos="2" />
@@ -533,7 +543,7 @@
 	<challenge name="Stunt Long" ver="1" difficulty="4" type="4" 
 			descr="Long stunt filled tracks.">
 		<!--<cartype names="Gravel" />-->
-		<car names="XZ" />
+		<car names="XZ|SZ" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="A1-StuntPark"      passPoints="9" />
@@ -567,7 +577,7 @@
 
 	<challenge name="Jump Mania" ver="1" difficulty="5" type="4" 
 			descr="Very jump filled tracks. Mostly fast, but you need to know jumps well, and know where to land. ">
-		<car names="ES|S1|S8|N1" />
+		<car names="ES|S1|S8|N1|FN" />
 		<pass avgPoints="12" />
 		<tracks>
 			<t name="D7-CrossJumps"  passPoints="9" />
@@ -578,7 +588,7 @@
 
 	<challenge name="Loop Mania" ver="1" difficulty="6" type="4" 
 			descr="The most looped tracks, few loops in each, difficult. Pay attention to car damage. Don't drive too fast in loops.">
-		<car names="ES|S1|N1" />
+		<car names="ES|S1|N1|FN" />
 		<pass avgPoints="14" factor="2" />
 		<tracks>
 			<t name="S5-LoopBasic"   passPoints="10" />
@@ -606,6 +616,16 @@
 		<tracks>
 			<t name="S12-Infinity"   passPoints="9" />
 			<t name="X4-Pipeline"    passPoints="8.5" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Stunt Madness" ver="1" difficulty="7" type="4"
+			descr="Most difficult stunt tracks. Long and extremely curly and twisted. Filled with all stunt elements.">
+		<car names="ES|S8|S1|FN" />
+		<pass avgPoints="9" />
+		<tracks>
+			<t name="G7-Spider"		passPoints="9" />
+			<t name="O5-Factory"	passPoints="9" />
 		</tracks>
 	</challenge>
 
@@ -658,10 +678,10 @@
 		<car names="ES|S1|XZ|UV" />
 		<pass avgPoints="14" />
 		<tracks>
-			<t name="R1-Mars"       passPoints="12.0" />
-			<t name="X4-Pipeline"   passPoints="14.0" />
-			<t name="X5-PipeJumps"  passPoints="11.0" />
-			<t name="V6-Crematoria" passPoints="11.0" />
+			<t name="R1-Mars"       passPoints="12" />
+			<t name="X4-Pipeline"   passPoints="14" />
+			<t name="X5-PipeJumps"  passPoints="11" />
+			<t name="V6-Crematoria" passPoints="11" />
 		</tracks>
 	</challenge>
 	
@@ -677,16 +697,121 @@
 		</tracks>
 	</challenge>
 
+	<!--<challenge name="Extreme cars" ver="1" difficulty="5" type="5" 
+			descr="Ice, sandstorm and heavy rain, this is definitely a challenge. Remember, on ice, push throttle only occasionally.">
+		<cartype names="Extreme" />
+		<pass avgPoints="14" factor="2" />
+		<tracks>
+			<t name="V4-Spikeland"  passPoints="10" />
+			<t name="V9-Craters"	passPoints="9" />
+		</tracks>
+	</challenge>-->
+
 
 <!--  Special  spaceships, sphere, etc  -->
 <!--========================================================================================================================-->
 
-	<challenge name="Test" ver="1" difficulty="0" type="6" 
-			descr="Test Challenge 1, prize points">
+	<challenge name="Easy spacious chase" ver="1" difficulty="2" type="6" 
+			descr="Fly spaceships on broad terrain tracks. Be quick and use boost on straights. Caution, don't miss checkpoints by flying too high above them after jump (beams can help).">
 		<cartype names="Spaceship" />
-		<pass avgPoints="9" />
+		<sim boost="2" />
+		<pass avgPoints="25" factor="2" />
 		<tracks>
-			<t name="TestC4-ow"   passPoints="7" />
+			<t name="W2-Wet"			passPoints="25" />
+			<t name="D8-Technical"		passPoints="20" />
+			<t name="A3-Canyon"			passPoints="20" />
+			<t name="W6-SnowyEights"	passPoints="24" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Long flight" ver="1" difficulty="2" type="6" 
+			descr="Few very long tracks to fly with spaceships. ">
+		<cartype names="Spaceship" />
+		<pass avgPoints="19" factor="2" />
+		<tracks>
+			<t name="C3-Vast"		passPoints="18" />
+			<t name="W11-Glacier"	passPoints="20" />
+			<t name="S4-Hills"		passPoints="11" />
+			<t name="I13-Beauty"	passPoints="15" />
+			<t name="J13-Tropic"	passPoints="14" />
+		</tracks>
+	</challenge>
+
+	<challenge name="City flight" ver="1" difficulty="3" type="6" 
+			descr="Flight through our 2 currently biggest cities. Be fast and don't crash. But also be on time.">
+		<cartype names="Spaceship" />
+		<pass avgPoints="21" />
+		<tracks>
+			<t name="G8-SlopeCity"	laps="1" passPoints="19.5" />
+			<t name="D17-NileCity"	laps="1" passPoints="19.5" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Narrow space" ver="1" difficulty="3" type="6" 
+			descr="Spaceships in flat, but narrow tracks.">
+		<cartype names="Spaceship" />
+		<pass avgPoints="24" factor="1.5" />
+		<tracks>
+			<t name="V1-Dark"		passPoints="25" />
+			<t name="I10-Treasure"	passPoints="19" />
+			<t name="F1-Slippery"	passPoints="20" />
+			<t name="W7-LJs-Mntn"	passPoints="23" />
+			<t name="G2-Coast"		passPoints="20" />
+			<t name="M2-Bumps"		passPoints="23" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Tight call" ver="1" difficulty="4" type="6" 
+			descr="Mom I don't want a spaceship, I want a car ! This is a disaster waiting to happen. Spaceships in very narrow tracks. Fly extra careful and slow or you'll crash on each turn. V2 is recommended since it's the slowest one.">
+		<cartype names="Spaceship" />
+		<pass avgPoints="18" />
+		<tracks>
+			<t name="J1-Curly"		laps="2" passPoints="19" />
+			<t name="G4-River"		laps="1" passPoints="11" />
+			<t name="J11-Temple"	laps="1" passPoints="17" />
+			<t name="J14-Muddy"		laps="2" passPoints="23" />
+			<t name="J18-Tiny"		laps="1" passPoints="11" />
+			<t name="J8-Round"		laps="1" passPoints="14" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Bridges aren't nice" ver="1" difficulty="3" type="6" 
+			descr="It was good to have that bridge wall holding your car. But now it's gone. Remember to keep on road, because the wall won't hold a hovering spaceship.">
+		<cartype names="Spaceship" />
+		<pass avgPoints="16" />
+		<tracks>
+			<t name="A5-TopTwist"	 passPoints="23" />
+			<t name="C2-CanyonRun"	 passPoints="18" />
+			<t name="J20-JungleMaze" passPoints="12" />
+			<t name="W12-Peaks"		 passPoints="11" />
+			<t name="F9-MadMntn"	 passPoints="8" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Round and bouncy" ver="1" difficulty="2" type="6" 
+			descr="Take the fast and very futuristic sphere around few tracks.">
+		<car names="O" />
+		<pass avgPoints="20" />
+		<tracks>
+			<t name="V4-Spikeland"	passPoints="20" />
+			<t name="I12-Beach"		passPoints="15" />
+			<t name="M3-Mudlake"	passPoints="13" />
+			<t name="D14-JumpCrazy"	passPoints="19" />
+			<t name="V9-Craters"	passPoints="20" />
+		</tracks>
+	</challenge>
+
+		<!--<t name="I9-Web"		passPoints="10" />
+			<t name="G7-Spider"		passPoints="10" />-->
+
+	<challenge name="Oh, that's so odd" ver="1" difficulty="4" type="6" 
+			descr="Control the sphere through half pipes. Not easy. Weird.">
+		<car names="O" />
+		<hud chkArrow="1" chkBeam="1" />
+		<pass avgPoints="5" />
+		<tracks>
+			<t name="A4-Snake"		passPoints="4" />
+			<t name="G6-Halfpipes"	passPoints="2" />
 		</tracks>
 	</challenge>
 
