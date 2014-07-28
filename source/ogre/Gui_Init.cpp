@@ -658,7 +658,7 @@ void CGui::InitGui()
 
 	sListCar = pSet->gui.car[0];
 	imgCar = fImg("CarImg");  carDesc = fEd("CarDesc");
-	listCarChng(carList,0);
+	//listCarChng(carList,0);  // wrong size graph
 
 	Btn("CarView1", btnCarView1);  Btn("CarView2", btnCarView2);
 

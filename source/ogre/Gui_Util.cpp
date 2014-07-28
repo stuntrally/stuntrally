@@ -213,9 +213,10 @@ string CGui::GetRplListDir()
 //  [Game] 	. . . . . . . . . . . . . . . . . . . .    --- lists ----    . . . . . . . . . . . . . . . . . . 
 
 //  car
-void CGui::listCarChng(MultiList2* li, size_t pos)
+void CGui::listCarChng(MultiList2* li, size_t)
 {
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
+	Ogre::Timer ti;
 	sListCar = li->getItemNameAt(i).substr(7);
 
 	if (imgCar && !pSet->dev_no_prvs)  imgCar->setImageTexture(sListCar+".jpg");
@@ -247,6 +248,7 @@ void CGui::listCarChng(MultiList2* li, size_t pos)
 
 	changeCar();
 	UpdCarStats(car);
+	LogO(Ogre::String(":::: Time car tab upd: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }	
 void CGui::changeCar()
 {
