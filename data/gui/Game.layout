@@ -4374,6 +4374,11 @@
 			<Property key="Alpha" value="0.15"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
+		<Widget type="Widget" skin="PanelSkin" position="12 270 768 52">
+			<Property key="Colour" value="0.7 0.85 1"/>
+			<Property key="Alpha" value="0.5"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
 		<Widget type="EditBox" skin="EditBoxEmpty" position="20 276 520 56">
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
@@ -4382,6 +4387,11 @@
 			<Property key="TextAlign" value="Left Top"/>
 			<Property key="Caption" value="#{HintScreen}"/>
 			<Property key="TextShadow" value="true"/>
+		</Widget>
+		<Widget type="Widget" skin="PanelSkin" position="12 330 768 52">
+			<Property key="Colour" value="0.9 0.9 0.8"/>
+			<Property key="Alpha" value="0.5"/>
+			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 		<Widget type="EditBox" skin="EditBoxEmpty" position="20 336 520 54">
 			<Property key="ReadOnly" value="true"/>
