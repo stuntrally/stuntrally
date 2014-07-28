@@ -2431,6 +2431,7 @@
 							<Property key="Caption" value="#{SleepMS}"/>
 							<Property key="TextColour" value="0.7 0.6 0.8"/>
 							<Property key="Alpha" value="0.8"/>
+							<Property key="FontName" value="font.small"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="200 236 60 24" name="LimitSleepEdit">
 							<Property key="TextColour" value="0.7 0.6 0.8"/>
@@ -2579,6 +2580,7 @@
 					<Property key="Caption" value="#{OneAxisThrottleBrake}"/>
 					<Property key="Colour" value="0.6 0.95 1"/>
 					<Property key="TextColour" value="0.6 0.95 1"/>
+					<!--<Property key="FontName" value="font.small"/>-->
 					<UserString key="tip" value="#{TipOneAxisThrottleBrake}"/>
 				</Widget>
 				<Widget type="Widget" skin="PanelSkin" position="532 156 236 116" name="PanKey1">
