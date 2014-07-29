@@ -11,7 +11,7 @@ using namespace Ogre;
 PosInfo::PosInfo()
 	:bNew(false)  // not inited
 	,pos(0,-200,0), percent(0.f), braking(0)
-	,hov_roll(0.f), hov_throttle(0.f)
+	,hov_roll(0.f), hov_throttle(0.f), sph_yaw(0.f)
 	//,carY, camPos, camRot
 {	}
 
@@ -73,6 +73,7 @@ void PosInfo::FromRpl(const ReplayFrame* rf)
 	fboost = rf->fboost;  steer = rf->steer;
 	braking = rf->braking;  percent = rf->percent;
 	hov_roll = rf->hov_roll;  hov_throttle = rf->throttle;
+	sph_yaw = 0.f;
 
 	fHitTime = rf->fHitTime;  fParIntens = rf->fParIntens;  fParVel = rf->fParVel;
 	vHitPos = rf->vHitPos;  vHitNorm = rf->vHitNorm;
@@ -105,9 +106,11 @@ void PosInfo::FromCar(CAR* pCar)
 	if (cd->sphere)
 	{	rot.FromAngleAxis(Radian(-cd->sphereYaw), Vector3::UNIT_Y);
 		carY = Vector3::UNIT_Y;
+		sph_yaw = cd->sphereYaw;
 	}else
 	{	rot = Axes::toOgre(cd->GetOrientation());
 		carY = rot * Vector3::UNIT_Y;
+		sph_yaw = 0.f;
 	}
 	speed = pCar->GetSpeed();
 	fboost = cd->boostVal;	//posInfo.steer = cd->steer;

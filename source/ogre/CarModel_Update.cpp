@@ -208,9 +208,12 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		fCam->Apply(posInfoCam);
 
 	//  upd rotY for minimap
-	Quaternion q = posInfo.rot * Quaternion(Degree(90),Vector3(0,1,0));
-	angCarY = q.getYaw().valueDegrees() + 90.f;
-
+	if (posInfo.sph_yaw != 0.f)  //-
+		angCarY = posInfo.sph_yaw;
+	else
+	{	Quaternion q = posInfo.rot * Quaternion(Degree(90),Vector3(0,1,0));
+		angCarY = q.getYaw().valueDegrees() + 90.f;
+	}
 	
 	//  brake state
 	#ifndef CAR_PRV
