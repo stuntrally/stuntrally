@@ -91,8 +91,8 @@ public:
 	CK(Minimap);
 	void btnSetCam(WP);
 
+	CK(Fps);  CK(Wireframe);  Ck ckAllowSave;
 	CK(InputBar);  CK(CamPos);
-	CK(Wireframe);  Ck ckAllowSave;
 
 	//  top view
 	void toggleTopView();

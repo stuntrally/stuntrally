@@ -525,8 +525,9 @@ void BaseApp::baseInitGui()
 		0,0, 212,25, Align::Default, "Pointer", "FpsB");
 	bckFps->setImageTexture("Border_Center.png");
 
-	txFps = mGui->createWidget<TextBox>("TextBox",
-		1,1, 212,25, Align::Default, "Pointer", "FpsT");
+	txFps = bckFps->createWidget<TextBox>("TextBox",
+		1,1, 212,25, Align::Default, "FpsT");
 	txFps->setFontName("hud.fps");
 
+	bckFps->setVisible(false);
 }

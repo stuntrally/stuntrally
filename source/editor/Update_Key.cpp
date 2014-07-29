@@ -227,8 +227,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
    			break;
 
 
-		//  WireFrame  F11
-		case key(F11):  gui->ckWireframe.Invert();
+		//  Fps, WireFrame  F11
+		case key(F11):
+			if (ctrl)  gui->ckWireframe.Invert();  else  gui->ckFps.Invert();
 			return true;
 
 		//  Show Stats  ctrl-I

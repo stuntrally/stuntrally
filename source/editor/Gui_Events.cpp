@@ -319,10 +319,11 @@ void CGui::chkCamPos(Ck*){
 void CGui::chkInputBar(Ck*){	
 	if (pSet->inputBar)  app->mDebugOverlay->show();  else  app->mDebugOverlay->hide();  }
 
-void CGui::chkWireframe(Ck*)
-{
-	app->UpdWireframe();
-}
+void CGui::chkFps(Ck*){
+	app->bckFps->setVisible(pSet->show_fps);  }
+
+void CGui::chkWireframe(Ck*){
+	app->UpdWireframe();  }
 
 void CGui::slSizeRoadP(SV*)
 {

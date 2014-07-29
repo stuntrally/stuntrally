@@ -1966,12 +1966,12 @@
 								<Property key="Caption" value="#{TipSliderReset}"/>
 								<Property key="TextColour" value="0.45 0.55 0.65"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="612 324 108 24">
+							<Widget type="TextBox" skin="TextBox" position="612 324 148 24">
 								<Property key="Caption" value="#{Terrain}"/>
 								<Property key="TextColour" value="0.3 0.8 0.3"/>
 								<Property key="Alpha" value="0.6"/>
 							</Widget>
-							<Widget type="TextBox" skin="TextBox" position="616 232 108 24">
+							<Widget type="TextBox" skin="TextBox" position="616 232 148 24">
 								<Property key="Caption" value="#{Multiply}"/>
 								<Property key="TextColour" value="0.5 0.5 0.8"/>
 								<Property key="Alpha" value="0.5"/>
@@ -4424,15 +4424,19 @@
 							<Property key="Caption" value="#{ScreenshotPng}"/>
 						</Widget>
 
-						<Widget type="Button" skin="CheckBox" position="368 62 356 24" name="Wireframe">
+						<Widget type="Button" skin="CheckBox" position="368 62 320 24" name="Fps">
+							<Property key="Caption" value="#{FPS} F11"/>
 							<Property key="TextColour" value="0.7 0.8 0.9"/>
-							<Property key="Caption" value="#{Wireframe} F11"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="368 94 356 24" name="CamPos">
+						<Widget type="Button" skin="CheckBox" position="368 94 356 24" name="Wireframe">
+							<Property key="TextColour" value="0.7 0.8 0.9"/>
+							<Property key="Caption" value="#{Wireframe} Ctrl-F11"/>
+						</Widget>
+						<Widget type="Button" skin="CheckBox" position="368 126 356 24" name="CamPos">
 							<Property key="Caption" value="#{EdCamPos}"/>
 							<Property key="TextColour" value="0.55 0.6 0.65"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="368 126 356 24" name="InputBar">
+						<Widget type="Button" skin="CheckBox" position="368 158 356 24" name="InputBar">
 							<Property key="Caption" value="#{EdInputBar}"/>
 							<Property key="TextColour" value="0.65 0.7 0.75"/>
 						</Widget>
@@ -4585,9 +4589,9 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 714 444">
 						<Property key="Caption" value="#B0A0FF#{Shortcuts}"/>
-						<Widget type="Widget" skin="PanelSkin" position="372 56 340 200">
-							<Property key="TextColour" value="0.6 0.8 1.0"/>
-							<Property key="Alpha" value="0.8"/>
+						<Widget type="Widget" skin="PanelSkin" position="364 56 344 200">
+							<Property key="Colour" value="0.7 0.8 0.9"/>
+							<Property key="Alpha" value="0.6"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 68 332 20">
 							<Property key="Caption" value="#{TipSliderReset}"/>
