@@ -4581,6 +4581,10 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 714 444">
 						<Property key="Caption" value="#B0A0FF#{Shortcuts}"/>
+						<Widget type="Widget" skin="PanelSkin" position="372 56 340 200">
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+							<Property key="Alpha" value="0.8"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="376 68 332 20">
 							<Property key="Caption" value="#{TipSliderReset}"/>
 							<Property key="TextColour" value="0.65 0.85 0.75"/>
@@ -4714,13 +4718,18 @@
 						</Widget>-->
 						<Widget type="TextBox" skin="TextBox" position="32 196 328 20">
 							<Property key="Caption" value="#{InputLockBrush}"/>
-							<Property key="TextColour" value="0.3 0.8 0.2"/>
+							<Property key="TextColour" value="0.3 0.95 0.2"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 260 328 20">
+						<Widget type="TextBox" skin="TextBox" position="32 220 328 20">
+							<Property key="Caption" value="#{InputTerHeightSet}"/>
+							<Property key="TextColour" value="0.55 0.95 0.55"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 280 328 20">
 							<Property key="Caption" value="#{InputMinimapType}"/>
 							<Property key="TextColour" value="0.3 0.6 0.3"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="32 288 540 20">
+						<Widget type="TextBox" skin="TextBox" position="32 308 540 20">
 							<Property key="Caption" value="#{TipBrushPick}"/>
 							<Property key="TextColour" value="0.45 0.55 0.45"/>
 						</Widget>

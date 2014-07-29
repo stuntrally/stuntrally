@@ -1146,6 +1146,7 @@
 	<Tag name="InputMinimapType">shift-F2,F3 - Prev,next minimap type</Tag>
 	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
+	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
 
 	<!--  Terrain  brush  -->
 	<Tag name="InputBrushParams">Brush parameters</Tag>

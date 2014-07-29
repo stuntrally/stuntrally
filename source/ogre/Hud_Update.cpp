@@ -173,8 +173,7 @@ void CHud::Update(int carId, float time)
 	///  multiplayer
 	// -----------------------------------------------------------------------------------
 	static float tm = 0.f;  tm += time;
-	if (tm > 0.2f /**/&& app->mClient/**/)  // not every frame, each 0.2s
-	// if (pSet->game.isNetw) ..
+	if (tm > 0.2f && app->mClient/**/)  // not every frame, each 0.2s
 	{
 		//  sort winners
 		std::list<CarModel*> cms;

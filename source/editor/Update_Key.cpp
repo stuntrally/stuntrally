@@ -344,7 +344,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	}
 
 	//  ter brush shape
-	if (edMode < ED_Road && !alt)
+	if (edMode < ED_Road && !alt && !bGuiFocus)
 	switch (skey)
 	{
 		case key(K):    if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]-1 + BRS_ALL) % BRS_ALL);  updBrush();  }  break;
@@ -352,6 +352,10 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(N): case key(COMMA):   mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
 		case key(M): case key(PERIOD):  mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
 		case key(RETURN):  brLockPos = !brLockPos;  break;
+		case key(SPACE):  //  set brush height from terrain
+			if (edMode == ED_Height)
+			{	terSetH = road->posHit.y;  }
+			break;
 	}
 
 	//  ter brush presets  ----
