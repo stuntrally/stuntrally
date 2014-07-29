@@ -941,7 +941,7 @@
 	<Tag name="TipLTrMaxTerH">Altezza terreno posto sopra dove il modello non apparirà.</Tag>
 	<Tag name="TotalScore">Punteggio totale</Tag>
 	<Tag name="Road_Height">Altezza</Tag>
-	<Tag name="Saved">Save d</Tag>
+	<Tag name="Saved">Saved</Tag>
 	<Tag name="InputLoadNextTrack">Carica la pista seguente (shift - precedente)</Tag>
 	<Tag name="TrackDifficulties">Piste con difficoltà differenti</Tag>
 	<Tag name="TipModelPrev">Anteprima immagine del modello.</Tag>

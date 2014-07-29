@@ -941,7 +941,7 @@
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 	<Tag name="TotalScore">Kokonaispistemäärä</Tag>
 	<Tag name="Road_Height">Korkeus</Tag>
-	<Tag name="Saved">Save d</Tag>
+	<Tag name="Saved">Saved</Tag>
 	<Tag name="InputLoadNextTrack">Load next track (shift - previous)</Tag>
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
 	<Tag name="TipModelPrev">Mallin esikatselukuva.</Tag>

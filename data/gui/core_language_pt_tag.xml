@@ -941,7 +941,7 @@
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 	<Tag name="TotalScore">Total score</Tag>
 	<Tag name="Road_Height">Altura</Tag>
-	<Tag name="Saved">Save d</Tag>
+	<Tag name="Saved">Saved</Tag>
 	<Tag name="InputLoadNextTrack">Load next track (shift - previous)</Tag>
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
