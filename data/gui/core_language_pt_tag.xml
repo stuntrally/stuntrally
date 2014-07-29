@@ -442,7 +442,7 @@
 	<Tag name="InputStartPos">Q - edit car start pos</Tag>
 	<Tag name="SC_Mars">Mars</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
-	<Tag name="Hint-14text">The top left bar shows frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
+	<Tag name="Hint-14text">Press F11 to show the bar with frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
 	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
 	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
 	<Tag name="TipFogClrRGBA">R G B A components 0 to 1 (eg. 0.7 0.8 0.9 1). Last can be used to lower maximum density (1 is full).</Tag>
@@ -941,7 +941,7 @@
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 	<Tag name="TotalScore">Total score</Tag>
 	<Tag name="Road_Height">Altura</Tag>
-	<Tag name="Saved">Saved</Tag>
+	<Tag name="Saved">Save d</Tag>
 	<Tag name="InputLoadNextTrack">Load next track (shift - previous)</Tag>
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
@@ -1115,8 +1115,16 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">All</Tag>
+	<Tag name="TweakOriginal">Original</Tag>
 	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
+	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
+	<Tag name="Hint-16">Camera</Tag>
+	<Tag name="CantSaveOrgTrack">Can't save original track. Duplicate it first.</Tag>
+	<Tag name="CopyTrackNoSource">No source track selected.</Tag>
 	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
+	<Tag name="TweakUser">User</Tag>
+	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
+	<Tag name="DeleteTrack">Delete track ?</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

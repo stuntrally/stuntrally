@@ -442,7 +442,7 @@
 	<Tag name="InputStartPos">Q - éditer la position de départ de la voiture</Tag>
 	<Tag name="SC_Mars">Mars</Tag>
 	<Tag name="TipModelMinScale">Taille minimum du modèle.</Tag>
-	<Tag name="Hint-14text">The top left bar shows frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
+	<Tag name="Hint-14text">Press F11 to show the bar with frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
 	<Tag name="InputRplCtrl1">Retour arrière - montrer/cacher les contrôles (CTRL enfoncée pour utiliser la souris)</Tag>
 	<Tag name="Car_BhpPerTon">Chevaux par tonne</Tag>
 	<Tag name="TipFogClrRGBA">Composants R V B A de 0 à 1 (exemple : 0.7 0.8 0.9 1). Le dernier peut être utilisé pour réduire la densité maximale (1 étant 100%).</Tag>
@@ -1115,8 +1115,16 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet précédent/suivant (Alt. - sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
+	<Tag name="TweakOriginal">Original</Tag>
 	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
+	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
+	<Tag name="Hint-16">Camera</Tag>
+	<Tag name="CantSaveOrgTrack">Can't save original track. Duplicate it first.</Tag>
+	<Tag name="CopyTrackNoSource">No source track selected.</Tag>
 	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
+	<Tag name="TweakUser">User</Tag>
+	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
+	<Tag name="DeleteTrack">Delete track ?</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -1115,8 +1115,16 @@
 	<Tag name="InputNextOptTab">F2/F3 - Vorh./nächst. Tab (Alt: Untertab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
+	<Tag name="TweakOriginal">Original</Tag>
 	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
+	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
+	<Tag name="Hint-16">Camera</Tag>
+	<Tag name="CantSaveOrgTrack">Can't save original track. Duplicate it first.</Tag>
+	<Tag name="CopyTrackNoSource">No source track selected.</Tag>
 	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
+	<Tag name="TweakUser">User</Tag>
+	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
+	<Tag name="DeleteTrack">Delete track ?</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
