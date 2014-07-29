@@ -815,17 +815,18 @@ void CARDYNAMICS::SimulateSphere(Dbl dt)
 	}
 
 	//  engine
-	bool rear = transmission.GetGear() < 0;
+	//bool rear = false;  //transmission.GetGear() < 0;
 	MATHVECTOR<Dbl,3> sv = -GetVelocity();
-	(-Orientation()).RotateVector(sv);
+	//(-Orientation()).RotateVector(sv);
+	
 	float vel = sv.Magnitude(),  //  decrease power with velocity
 		velMul = 1.f - std::min(1.f, hov.engineVelDec * vel);
 	float f = hov.engineForce * velMul * hov_throttle * dmgE
-			- hov.brakeForce * brake[0].GetBrakeFactor() * dmgE;
-	if (rear)  f *= -1.f;
+			- hov.brakeForce * velMul * brake[0].GetBrakeFactor() * dmgE;
+	//if (rear)  f *= -1.f;
 
 	//  steer  rotate dir
-	float pst = hov.steerForce;  if (rear)  pst = -pst;
+	float pst = hov.steerForce;  //if (rear)  pst = -pst;
 		if (pipe)  pst *= hov.steerDampP;
 	sphereYaw += steerValue * dt * pst * PI_d/180.f;
 	MATHVECTOR<Dbl,3> dir(cosf(sphereYaw), -sinf(sphereYaw), 0);
