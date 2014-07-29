@@ -24,7 +24,7 @@
 	<Tag name="Warnings">Avvertenze</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Prendi (uno)</Tag>
-	<Tag name="HintInput">To check keys used in game or reassign them, or to confugure controller press Input button.</Tag>
+	<Tag name="HintInput">To check keys used in game or reassign them, or to configure controller press Input button.</Tag>
 	<Tag name="ViewDist">Visualizza la distanza</Tag>
 	<Tag name="CarDesc_OT">Questa è la macchina più lenta. Camion molto vecchio e un po' inquietante. Guida solo su piste pianeggianti ad una velocità tartaruga.</Tag>
 	<Tag name="SimMode">Modalità di simulazione (difficoltà)</Tag>
@@ -328,6 +328,7 @@
 	<Tag name="EscQuit">Esc chiudi il gioco</Tag>
 	<Tag name="Gauges">Indicatori (giri/min, velocità)</Tag>
 	<Tag name="LengthDim">Dim. lunghezza</Tag>
+	<Tag name="Simple">Simple</Tag>
 	<Tag name="Bloom">Bloom</Tag>
 	<Tag name="TipRenameTrk">Rinonima la pista selezionata con un nome nuovo (prima cambia il nome).</Tag>
 	<Tag name="TerrainHalf">Metà</Tag>
@@ -349,8 +350,9 @@
 	<Tag name="InputObjectsRotReset">shift-2 - riavvia rotazione</Tag>
 	<Tag name="EdInputBar">Barra di input  Ctrl-I</Tag>
 	<Tag name="TipFogClr2">Fine colore nebbia quando si distoglie lo sguardo dal sole.</Tag>
+	<Tag name="Checkpoint">Checkpoint</Tag>
 	<Tag name="Readme">Leggimi</Tag>
-	<Tag name="Substract">Rimuovi</Tag>
+	<Tag name="Complex">Complex</Tag>
 	<Tag name="TipSunDirPitch">Direzione del sole - angolo pitch.</Tag>
 	<Tag name="Passed">Superato</Tag>
 	<Tag name="InputMapHandBrake">Freno a mano</Tag>
@@ -955,6 +957,7 @@
 	<Tag name="InputMapShiftDown">Scala marcia prec.</Tag>
 	<Tag name="InputObjectsMoveReset">shift-1 - muovi nel cursore/riavvia nuova altezza</Tag>
 	<Tag name="TerFilter">Filter</Tag>
+	<Tag name="Substract">Rimuovi</Tag>
 	<Tag name="AllEffects">Effetti abilitati</Tag>
 	<Tag name="CarCollis">Collisione con auto</Tag>
 	<Tag name="TipTerrainDouble">Rende doppia la dimensione del terreno, lasciando la parte di altezza della mappa al centro.</Tag>
@@ -1112,9 +1115,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - prec.,pross. scheda (alt - sottoschede)</Tag>
 	<Tag name="Diff6">Estrema</Tag>
 	<Tag name="RplAll">Tutto</Tag>
-	<Tag name="Simple">Simple</Tag>
-	<Tag name="Checkpoint">Checkpoint</Tag>
-	<Tag name="Complex">Complex</Tag>
+	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
+	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -24,7 +24,7 @@
 	<Tag name="Warnings">Warnungen</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Auswählen (eins)</Tag>
-	<Tag name="HintInput">Um die Tastenbelegung für das Spiel zu überprüfen oder sie zu ändern, oder, um den Controller zu konfigurieren, drücken Sie bitte:</Tag>
+	<Tag name="HintInput">Um die Tastenbelegung zu betrachten oder zu ändern oder die Controller zu konfigurieren, betätigen Sie den »Eingabe«-Knopf.</Tag>
 	<Tag name="ViewDist">Sichtweite</Tag>
 	<Tag name="CarDesc_OT">Dies ist das langsamste Fahrzeug. Ein sehr alter und etwas unheimlicher Laster. Er kann nur auf flachen Strecken im Schneckentempo fahren.</Tag>
 	<Tag name="SimMode">Simulationsmodus (Schwierigkeit)</Tag>
@@ -145,10 +145,10 @@
 	<Tag name="Hint-8">Steuerung</Tag>
 	<Tag name="Hint-9">Sprünge</Tag>
 	<Tag name="InputRoadShiftSel">shift - wählen</Tag>
-	<Tag name="Hint-2">Flipping</Tag>
+	<Tag name="Hint-2">Umdrehen</Tag>
 	<Tag name="Hint-3">Schotter</Tag>
 	<Tag name="Hint-0">Zurück</Tag>
-	<Tag name="Hint-1">Wendungen</Tag>
+	<Tag name="Hint-1">Kurven</Tag>
 	<Tag name="Hint-6">Boost</Tag>
 	<Tag name="Hint-7">Autos</Tag>
 	<Tag name="NetReady">Bereit</Tag>
@@ -328,6 +328,7 @@
 	<Tag name="EscQuit">Beenden mit Esc</Tag>
 	<Tag name="Gauges">Tacho</Tag>
 	<Tag name="LengthDim">Längendimensionalität</Tag>
+	<Tag name="Simple">Einfach</Tag>
 	<Tag name="Bloom">Überstrahlung</Tag>
 	<Tag name="TipRenameTrk">Ausgewählte Strecke umbenennen (zuerst Namen ändern)</Tag>
 	<Tag name="TerrainHalf">Halbieren</Tag>
@@ -349,8 +350,9 @@
 	<Tag name="InputObjectsRotReset">shift-2 - Umdrehung zurücksetzen</Tag>
 	<Tag name="EdInputBar">Eingabeleiste Strg-I</Tag>
 	<Tag name="TipFogClr2">Nebelfarbe wenn schauen gegenüber Sonne.</Tag>
+	<Tag name="Checkpoint">Kontrollpunkt</Tag>
 	<Tag name="Readme">Liesmich</Tag>
-	<Tag name="Substract">Subtrahieren</Tag>
+	<Tag name="Complex">Komplex</Tag>
 	<Tag name="TipSunDirPitch">Richtung der Sonne - Nickwinkel.</Tag>
 	<Tag name="Passed">Bestanden</Tag>
 	<Tag name="InputMapHandBrake">Handbremse</Tag>
@@ -575,7 +577,7 @@
 	<Tag name="TexCoordMul">Texturkoordinaten-Faktor</Tag>
 	<Tag name="Shadows">Schatten</Tag>
 	<Tag name="Options">Einstellungen</Tag>
-	<Tag name="HintScreen">Um die Bildschirmauflösung zu ändern und die Grafikeinstellungen Ihrer Grafikkarte anzupassen, gehen sie zu:</Tag>
+	<Tag name="HintScreen">Um die Bildschirmauflösung und die Grafikeinstellungen Ihrer Grafikkarte zu ändern, betätigen Sie den »Bildschirm«-Knopf.</Tag>
 	<Tag name="distance">Distanz</Tag>
 	<Tag name="SSS_Effect">Wirkung</Tag>
 	<Tag name="Chall_Extreme">Extrem</Tag>
@@ -615,7 +617,7 @@
 	<Tag name="TipGrassSwayLen">Grasschwingungslänge (Skal.)</Tag>
 	<Tag name="WaterReflection">Spiegelung</Tag>
 	<Tag name="intensity">Intensität</Tag>
-	<Tag name="Hint-8text">If you don't feel comfortable with steering on keyboard, try different settings in [Setup], tab [Steering], namely range and speed decrease and keys sensitivity in [Input].</Tag>
+	<Tag name="Hint-8text">Falls Sie sich mit dem Lenken mit der Tastatur nicht wohl fühlen, versuchen Sie es mit anderen Einstellungen in [Steuerung], Registerkarte [Lenkung], nämlich Reichweite, Geschwindigkeitsreduktion und Tastenempflindlichkeit in [Eingabe].</Tag>
 	<Tag name="BulletProfilerTxt">Bullet-Profileranzeige</Tag>
 	<Tag name="InputMapNextTab">Nächster Tab</Tag>
 	<Tag name="FrameSkip">FrameSkip</Tag>
@@ -625,11 +627,11 @@
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="LS_SCENE">Lade Szene</Tag>
 	<Tag name="Hint-10">Loopings</Tag>
-	<Tag name="Hint-11">Röhren</Tag>
+	<Tag name="Hint-11">Rohre</Tag>
 	<Tag name="Hint-12">Fahrzeuge</Tag>
 	<Tag name="Hint-13">Simulation</Tag>
-	<Tag name="Hint-14">Bilder pro Sekunde</Tag>
-	<Tag name="Hint-15">Letzter</Tag>
+	<Tag name="Hint-14">Bildwiederholrate</Tag>
+	<Tag name="Hint-15">Zuletzt</Tag>
 	<Tag name="UnitM">m</Tag>
 	<Tag name="EditTerrainMode">Terrainbearbeitungs-Modus</Tag>
 	<Tag name="TipTireParType3">Reifenpartikel Typ 3</Tag>
@@ -709,7 +711,7 @@
 	<Tag name="InputCamControl2">LMT - drehen RMT - bewegen MMT - Zoom</Tag>
 	<Tag name="Cars">Autos</Tag>
 	<Tag name="CarType_Slow">Langsam</Tag>
-	<Tag name="Hint">Hinweis</Tag>
+	<Tag name="Hint">Tipp</Tag>
 	<Tag name="TipTestBlendmap">Wird benutzt, um die Blendmap-Durchsichtigkeit zu testen. Der Farbkasten zeigt die Farbe dieser Schicht auf der Blendmap (sie ist schwarz, wenn die Schicht abgeschaltet ist). Gewöhnlicherweise braucht eine gute Blendmap reine Schichtfarben mit wenigen Übergängen (matte Farben, Mischfarben). Um diesen engen/separaten Winkel und diese Höhenreichweiten zu erlangen, benutzen sie eine hohe oder geringe Rauschstärke.</Tag>
 	<Tag name="InputStartMeet">Auto wird (nächste + / vorherige -) Streckenpunkte treffen</Tag>
 	<Tag name="Difficulty">Schwierigkeit</Tag>
@@ -955,6 +957,7 @@
 	<Tag name="InputMapShiftDown">Runterschalten</Tag>
 	<Tag name="InputObjectsMoveReset">shift-1 - zum Cursor setzen / neue Höhe zurücksetzen</Tag>
 	<Tag name="TerFilter">Filtern</Tag>
+	<Tag name="Substract">Subtrahieren</Tag>
 	<Tag name="AllEffects">Effekte aktivieren</Tag>
 	<Tag name="CarCollis">Autokollision</Tag>
 	<Tag name="TipTerrainDouble">Verdoppelt die Terreingröße, wobei das aktuelle Höhenprofil in der Mitte beibehalten wird.</Tag>
@@ -1112,9 +1115,8 @@
 	<Tag name="InputNextOptTab">F2/F3 - Vorh./nächst. Tab (Alt: Untertab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="Simple">Simple</Tag>
-	<Tag name="Checkpoint">Checkpoint</Tag>
-	<Tag name="Complex">Complex</Tag>
+	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
+	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -24,7 +24,7 @@
 	<Tag name="Warnings">Оповещения</Tag>
 	<Tag name="UnitKmh">км/ч</Tag>
 	<Tag name="InputRoadPickOne">Выбор (один)</Tag>
-	<Tag name="HintInput">To check keys used in game or reassign them, or to confugure controller press Input button.</Tag>
+	<Tag name="HintInput">To check keys used in game or reassign them, or to configure controller press Input button.</Tag>
 	<Tag name="ViewDist">Видимость</Tag>
 	<Tag name="CarDesc_OT">Это самое медленное авто. Очень старый и немного страшный грузовик. Управляемый только на треках с ровным рельефом и со скоростью черепахи.</Tag>
 	<Tag name="SimMode">Режим симуляции (сложность)</Tag>
@@ -328,6 +328,7 @@
 	<Tag name="EscQuit">Esc выйти</Tag>
 	<Tag name="Gauges">Приборы (об., скор.)</Tag>
 	<Tag name="LengthDim">Длина</Tag>
+	<Tag name="Simple">Simple</Tag>
 	<Tag name="Bloom">Разм.</Tag>
 	<Tag name="TipRenameTrk">Переименовать выбранный трек на новое имя (во-первых измени имя).</Tag>
 	<Tag name="TerrainHalf">Половина</Tag>
@@ -349,8 +350,9 @@
 	<Tag name="InputObjectsRotReset">shift-2 - сброс вращ.</Tag>
 	<Tag name="EdInputBar">Панель ввода Ctrl-I</Tag>
 	<Tag name="TipFogClr2">Конец цвета тумана, когда отводишь взгляд от солнца.</Tag>
+	<Tag name="Checkpoint">Checkpoint</Tag>
 	<Tag name="Readme">Прочти</Tag>
-	<Tag name="Substract">Основа</Tag>
+	<Tag name="Complex">Complex</Tag>
 	<Tag name="TipSunDirPitch">Направление солнца - угол наклона.</Tag>
 	<Tag name="Passed">Пройдено</Tag>
 	<Tag name="InputMapHandBrake">Ручник</Tag>
@@ -955,6 +957,7 @@
 	<Tag name="InputMapShiftDown">Передача -</Tag>
 	<Tag name="InputObjectsMoveReset">shift-1 - к курсору /сброс высоты</Tag>
 	<Tag name="TerFilter">Фильтр</Tag>
+	<Tag name="Substract">Основа</Tag>
 	<Tag name="AllEffects">Вкл. эффекты</Tag>
 	<Tag name="CarCollis">Столк. авто</Tag>
 	<Tag name="TipTerrainDouble">Делает двойной размер ландшафта, оставляя часть текущей высоты карты в центре.</Tag>
@@ -1112,9 +1115,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред.,след. вкладка (alt - ниже)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="Simple">Simple</Tag>
-	<Tag name="Checkpoint">Checkpoint</Tag>
-	<Tag name="Complex">Complex</Tag>
+	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
+	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

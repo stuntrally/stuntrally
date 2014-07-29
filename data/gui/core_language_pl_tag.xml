@@ -24,7 +24,7 @@
 	<Tag name="Warnings">Ostrzeżenia</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Wybierz (jeden)</Tag>
-	<Tag name="HintInput">By zobaczyć klawisze używane w grze, lub je przypisać, albo skonfigurować kontoler naciśnij:</Tag>
+	<Tag name="HintInput">By zobaczyć klawisze używane w grze, lub je przypisać, albo skonfigurować kontoler naciśnij przycisk Wejście.</Tag></Tag>
 	<Tag name="ViewDist">Dalekość widzenia</Tag>
 	<Tag name="CarDesc_OT">To jest najwolniejsze auto. Bardzo stara i trochę straszna ciężarówka. Może jeździć tylko po płaskich trasach i to z prędkością żółwia.</Tag>
 	<Tag name="SimMode">Typ symulacji (trudność)</Tag>
@@ -328,6 +328,7 @@
 	<Tag name="EscQuit">Esc wychodzi</Tag>
 	<Tag name="Gauges">Liczniki (obroty, szybkość)</Tag>
 	<Tag name="LengthDim">Wymiar długości</Tag>
+	<Tag name="Simple">Proste</Tag>
 	<Tag name="Bloom">Poświata</Tag>
 	<Tag name="TipRenameTrk">Zmień nazwę wybranej trasy (zmień nazwę w polu).</Tag>
 	<Tag name="TerrainHalf">Połowa</Tag>
@@ -349,8 +350,9 @@
 	<Tag name="InputObjectsRotReset">shift-2 - resetuj obrót</Tag>
 	<Tag name="EdInputBar">Pasek wejścia Ctrl-I</Tag>
 	<Tag name="TipFogClr2">Kolor mgły patrząc przeciwnie niż słońce.</Tag>
+	<Tag name="Checkpoint">Punkt kontrolny</Tag>
 	<Tag name="Readme">Readme</Tag>
-	<Tag name="Substract">Odejmij</Tag>
+	<Tag name="Complex">Złożone</Tag>
 	<Tag name="TipSunDirPitch">Kierunek słońca - kąt nachlenia.</Tag>
 	<Tag name="Passed">Zaliczone</Tag>
 	<Tag name="InputMapHandBrake">Ręczny</Tag>
@@ -533,7 +535,7 @@
 	<Tag name="RplDelete">Usuń</Tag>
 	<Tag name="TipAutoRear">Odznacz dla ręcznej zmiany wstecznego.</Tag>
 	<Tag name="TipToggleModel">Włącz / wyłącz ten model.</Tag>
-	<Tag name="Hint-12text">Check out other vehicles, we also have hovering spaceships, and tracks on other planets.</Tag>
+	<Tag name="Hint-12text">Sprawdź również inne pojazdy, mamy też unoszące się statki kosmiczne oraz trasy na innych planetach.</Tag>
 	<Tag name="InputCameraTxt1">z shift - tylko główne kamery</Tag>
 	<Tag name="TipTrailClr">Kolor śladu opon. R G B A składowe 0 do 1 (np. 0.4 0.4 0.2 0.6)</Tag>
 	<Tag name="MinimapTerrain">Teren</Tag>
@@ -575,7 +577,7 @@
 	<Tag name="TexCoordMul">Mnożnik tekstury</Tag>
 	<Tag name="Shadows">Cienie</Tag>
 	<Tag name="Options">Opcje</Tag>
-	<Tag name="HintScreen">Aby zmienić rozdzielczość ekranu i dopasować grafikę do Twojej karty przejdź do:</Tag>
+	<Tag name="HintScreen">Aby zmienić rozdzielczość ekranu i dopasować grafikę do Twojej karty naciśnij przycisk Ekran.</Tag></Tag>
 	<Tag name="distance">odległość</Tag>
 	<Tag name="SSS_Effect">Efekt</Tag>
 	<Tag name="Chall_Extreme">Ekstremalne</Tag>
@@ -615,7 +617,7 @@
 	<Tag name="TipGrassSwayLen">Efekt kołysania trawy długość (skala).</Tag>
 	<Tag name="WaterReflection">Odbicie</Tag>
 	<Tag name="intensity">Intensywność</Tag>
-	<Tag name="Hint-8text">If you don't feel comfortable with steering on keyboard, try different settings in [Setup], tab [Steering], namely range and speed decrease and keys sensitivity in [Input].</Tag>
+	<Tag name="Hint-8text">Jeśli nie czujesz się komfortowo sterując klawiaturą, wypróbuj innych ustawien w [Ustawienia], zakładka [Sterowanie], mianowicie zakres i spadek od prędkości, oraz czułość klawiszy w [Wejście].</Tag>
 	<Tag name="BulletProfilerTxt">Czasy profilera Bullet</Tag>
 	<Tag name="InputMapNextTab">Następna zakładka</Tag>
 	<Tag name="FrameSkip">Pomijanie klatek</Tag>
@@ -867,7 +869,7 @@
 	<Tag name="TipDeleteTrk">Trwale usuń trasę.</Tag>
 	<Tag name="TipTrkViewShort">Krótki widok listy.</Tag>
 	<Tag name="Setup">Ustawienia</Tag>
-	<Tag name="Hint-7text">Pick the right car type for a track. So, don't use low cars on bumpy terrain, avoid large cars in narrow tracks, and fast super cars aren't meant for slippery surfaces.</Tag>
+	<Tag name="Hint-7text">Wybieraj odpowiednie auta do tras. Nie używaj niskich aut na wyboistym terenie, ani szerokich aut na wąskich trasach. A także szybkie super auta nie nadają się na śliskie nawierzchnie.</Tag>
 	<Tag name="Layer">Warstwa</Tag>
 	<Tag name="TipDisableWeather">Wyłącz cząstki pogody.</Tag>
 	<Tag name="TipTerErrorNorm">Domyślny błąd terenu w procentach. Mniej dla płaskich więcej dla wysokich terenów.</Tag>
@@ -955,6 +957,7 @@
 	<Tag name="InputMapShiftDown">Poprzedni bieg</Tag>
 	<Tag name="InputObjectsMoveReset">shift-1 - ustaw gdzie kursor / resetuj nową wysok.</Tag>
 	<Tag name="TerFilter">Filtruj</Tag>
+	<Tag name="Substract">Odejmij</Tag>
 	<Tag name="AllEffects">Efekty włączone</Tag>
 	<Tag name="CarCollis">Kolizja aut</Tag>
 	<Tag name="TipTerrainDouble">Rozszerz terren, zostawiając obecny w środku.</Tag>
@@ -981,7 +984,7 @@
 	<Tag name="Add">Dodaj</Tag>
 	<Tag name="CamInfoStrings">Typ,Kąt,Nachyl,Odl,Wysok,Szybk,Przesun,LEWY,PRAWY,Środkowy,Kółko,shift,Obróć,reset,ruch,Wys,Pozycja</Tag>
 	<Tag name="Chall_Stunts">Wyczynowe</Tag>
-	<Tag name="Hint-3text">Remember that mostly you will drive on gravel. This means low grip, lower speeds and sliding. Wet gravel is even more slippery. Snow and ice are worst. Deserts are fastest.</Tag>
+	<Tag name="Hint-3text">Pamiętaj że w większości będziesz jeździł po szutrze. To oznacza niską przyczepność, mniejsze prędkości i ślizganie się. Mokry szuter jest nawet bardziej śliski. Śnieg i lód są najgorsze. Pustynie są najszybsze.</Tag>
 	<Tag name="NormalsScale">Skala normalnych</Tag>
 	<Tag name="SC_Jungle">Dżungla</Tag>
 	<Tag name="Environment">Środowisko</Tag>
@@ -1065,7 +1068,7 @@
 	<Tag name="Shaders">Cieniowanie</Tag>
 	<Tag name="Never">Nigdy</Tag>
 	<Tag name="TerGenOct">Oktawy</Tag>
-	<Tag name="Hint-5text">By default, your best drive ghost is an orange car. It will appear after a lap. The green car is the track's ghost.</Tag>
+	<Tag name="Hint-5text">Domyślnie, Twój duch najlepszego przejazdu jest pomarańczowym autem. Pojawi się po okrążeniu. Zielone auto to duch trasy.</Tag>
 	<Tag name="Volume">Głośność</Tag>
 	<Tag name="UserDir">Katalog użytkownika (logi, konfigi, dane, itp.)</Tag>
 	<Tag name="TipTerLayers">Zalecane użycie 3 lub 4, z szumem. Wpływa na Fps. Więcej niż 4 nie będzie działać.</Tag>
@@ -1112,9 +1115,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - poprz.,następna zakładka (alt - pod-zakładka)</Tag>
 	<Tag name="Diff6">Ekstremalny</Tag>
 	<Tag name="RplAll">Wszystkie</Tag>
-	<Tag name="Simple">Simple</Tag>
-	<Tag name="Checkpoint">Checkpoint</Tag>
-	<Tag name="Complex">Complex</Tag>
+	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
+	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

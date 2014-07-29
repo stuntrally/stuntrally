@@ -24,7 +24,7 @@
 	<Tag name="Warnings">Varoitukset</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Valitse (yksi)</Tag>
-	<Tag name="HintInput">To check keys used in game or reassign them, or to confugure controller press Input button.</Tag>
+	<Tag name="HintInput">To check keys used in game or reassign them, or to configure controller press Input button.</Tag>
 	<Tag name="ViewDist">Piirtoetäisyys</Tag>
 	<Tag name="CarDesc_OT">This is the slowest car. Very old and a bit creepy truck. Can drive only on flat tracks and with turtle speed.</Tag>
 	<Tag name="SimMode">Simulaatio (vaikeusaste)</Tag>
@@ -328,6 +328,7 @@
 	<Tag name="EscQuit">Esc lopettaa</Tag>
 	<Tag name="Gauges">Mittarit (moottorin kierrosmäärä, nopeus)</Tag>
 	<Tag name="LengthDim">Length dim.</Tag>
+	<Tag name="Simple">Simple</Tag>
 	<Tag name="Bloom">Bloom-tehoste</Tag>
 	<Tag name="TipRenameTrk">Rename selected track with new name (change name first).</Tag>
 	<Tag name="TerrainHalf">Puolikas</Tag>
@@ -349,8 +350,9 @@
 	<Tag name="InputObjectsRotReset">shift-2 - reset rotation</Tag>
 	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	<Tag name="TipFogClr2">Fog end color when looking away from sun.</Tag>
+	<Tag name="Checkpoint">Checkpoint</Tag>
 	<Tag name="Readme">Lueminut</Tag>
-	<Tag name="Substract">Substract</Tag>
+	<Tag name="Complex">Complex</Tag>
 	<Tag name="TipSunDirPitch">Sun direction - pitch angle.</Tag>
 	<Tag name="Passed">Läpäisty</Tag>
 	<Tag name="InputMapHandBrake">Käsijarru</Tag>
@@ -955,6 +957,7 @@
 	<Tag name="InputMapShiftDown">Shift down</Tag>
 	<Tag name="InputObjectsMoveReset">shift-1 - move to cursor / reset new height</Tag>
 	<Tag name="TerFilter">Filter</Tag>
+	<Tag name="Substract">Substract</Tag>
 	<Tag name="AllEffects">Tehosteet aktivoitu</Tag>
 	<Tag name="CarCollis">Autojen törmäystunnistus</Tag>
 	<Tag name="TipTerrainDouble">Make terrain size double, leaving current heightmap part in center.</Tag>
@@ -1112,9 +1115,8 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Äärimmäinen</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
-	<Tag name="Simple">Simple</Tag>
-	<Tag name="Checkpoint">Checkpoint</Tag>
-	<Tag name="Complex">Complex</Tag>
+	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
+	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
