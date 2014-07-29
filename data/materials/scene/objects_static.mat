@@ -156,6 +156,8 @@ material gas_tank
 	terrain_light_map true
 }
 
+
+//  house
 material house
 {
 	parent base
@@ -199,6 +201,66 @@ material well
 	specular 0.2 0.2 0.2 32
 	terrain_light_map true
 	shadowBias 0.0001
+}
+
+
+//  city
+material city_house1
+{
+	parent base
+	diffuseMap city_house1.jpg
+	normalMap city_house1_n.jpg
+	ambient 1.1 1.1 1.1
+	diffuse 1.1 1.1 1.1
+	specular 0.2 0.2 0.2 16
+}
+material city_house2
+{
+	parent base
+	diffuseMap city_house2.jpg
+	normalMap city_house2_n.jpg
+	ambient 1.2 1.2 1.2
+	diffuse 1.2 1.2 1.2
+	specular 0.2 0.2 0.2 16
+}
+material city_house3
+{
+	parent base
+	diffuseMap city_house3.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.9 0.9 0.9
+	specular 0.2 0.2 0.2 16
+}
+material city_house4
+{
+	parent base
+	diffuseMap city_house4.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.9 0.9 0.9
+	specular 0.2 0.2 0.2 16
+}
+material city_shop
+{
+	parent base
+	diffuseMap city_shop.jpg
+	ambient 1.1 1.1 1.1
+	diffuse 1.1 1.1 1.1
+	specular 0.2 0.2 0.2 16
+}
+
+material Building
+{
+	parent base
+	diffuseMap skyscraper.jpg
+	normalMap skyscraper_norm.jpg
+	specMap skyscraper_spec.jpg
+	reflMap skyscraper_refl.jpg
+	ambient 0.8 0.8 0.8
+	diffuse 0.9 0.9 0.9
+	specular 0.4 0.4 0.4 32
+	env_map true
+    fresnel false
+    refl_amount 0.3
 }
 
 
@@ -248,65 +310,6 @@ material balloon2clr
 {
 	parent balloon2
 	diffuseMap balloon2clr.png
-}
-
-
-//  city  - not used
-material city_house1
-{
-	parent base
-	diffuseMap city_house1.jpg
-	normalMap city_house1_n.jpg
-	ambient 0.8 0.8 0.8
-	diffuse 0.9 0.9 0.9
-	specular 0.2 0.2 0.2 16
-}
-material city_house2
-{
-	parent base
-	diffuseMap city_house2.jpg
-	normalMap city_house2_n.jpg
-	ambient 0.9 0.9 0.9
-	diffuse 0.9 0.9 0.9
-	specular 0.2 0.2 0.2 16
-}
-material city_house3
-{
-	parent base
-	diffuseMap city_house3.jpg
-	ambient 0.8 0.8 0.8
-	diffuse 0.9 0.9 0.9
-	specular 0.2 0.2 0.2 16
-}
-material city_house4
-{
-	parent base
-	diffuseMap city_house4.jpg
-	ambient 0.8 0.8 0.8
-	diffuse 0.9 0.9 0.9
-	specular 0.2 0.2 0.2 16
-}
-material city_shop
-{
-	parent base
-	diffuseMap city_shop.jpg
-	ambient 0.7 0.7 0.7
-	diffuse 0.9 0.9 0.9
-	specular 0.2 0.2 0.2 16
-}
-material Building
-{
-	parent base
-	diffuseMap skyscraper.jpg
-	normalMap skyscraper_norm.jpg
-	specMap skyscraper_spec.jpg
-	reflMap skyscraper_refl.jpg
-	ambient 0.8 0.8 0.8
-	diffuse 0.9 0.9 0.9
-	specular 0.4 0.4 0.4 32
-	env_map true
-    fresnel false
-    refl_amount 0.3
 }
 
 
