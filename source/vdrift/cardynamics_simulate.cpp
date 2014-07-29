@@ -405,7 +405,7 @@ void CARDYNAMICS::UpdateTransmission(Dbl dt)
 {
 	driveshaft_rpm = CalculateDriveshaftRPM();
 
-	if (sphere || hover)
+	if (sphere || hover)  // no gearbox
 	{
 		int gear = 1;
 		ShiftGear(gear);

@@ -114,7 +114,7 @@ void CGui::listRplChng(List* li, size_t pos)
 	if (rpl.LoadFile(file,true))
 	{
 		String ss = String(TR("#{Track}: ")) + gcom->GetSceneryColor(rpl.header.track) +
-			rpl.header.track + (rpl.header.track_user ? "  *user*" : "");
+			rpl.header.track + (rpl.header.track_user ? "  *"+TR("#{TweakUser}")+"*" : "");
 		valRplName->setCaption(ss);
 
 		ss = String(TR("#{Car}: ")) + rpl.header.car + "       "+

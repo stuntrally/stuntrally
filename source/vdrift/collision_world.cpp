@@ -130,8 +130,15 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 		Ogre::Vector3 vel(vcar[0], vcar[2], -vcar[1]);
 		Ogre::Vector3 norm(hit.norm.getX(), hit.norm.getZ(), -hit.norm.getY());
 		float vlen = vel.length(), normvel = abs(vel.dotProduct(norm));
-		if (cd->sphere)  {  vlen *= 0.1f;  normvel *= 0.06f;  }
 
+		if (cd->sphere)  // no damage when rolling
+		{
+			//LogO("vlen "+fToStr(vlen,2,4)+"  nv "+fToStr(normvel,2,4)+"  f "+fToStr(force,2,4));
+			if (force > 11.f)  // hit
+			{	vlen = normvel*0.2f;  force = normvel*0.2f;  normvel *= 0.2f;  }
+			else  // quiet
+			{	vlen *= 0.02f;  normvel *= 0.02f;  force *= 0.1f;  }
+		}
 		//  Sparks emit params
 		cd->vHitPos = Ogre::Vector3(hit.pos.getX(), hit.pos.getZ(), -hit.pos.getY());
 		cd->vHitNorm = norm + vel * 0.1f;
@@ -148,12 +155,16 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 		(-cd->GetOrientation()).RotateVector(cN);
 		cd->vHitCarN = Ogre::Vector3(cN[0],cN[1],cN[2]);  cd->vHitCarN.normalise();
 		//----  factors
-		float sx = cd->vHitCarN.x, sy = cd->vHitCarN.y, sz = cd->vHitCarN.z;
-		float nx = fabs(sx), ny = fabs(sy), nz = fabs(sz);
-		cd->vHitDmgN.x = nx * (1.f-ny) * (1.f-nz) * (sx > 0 ? 1.0f : 0.3f);  // front x+
-		cd->vHitDmgN.y = (1.f-nx) * ny * (1.f-nz) * 0.3f;  // side y
-		cd->vHitDmgN.z = (1.f-nx) * (1.f-ny) * nz * (sz > 0 ? 1.0f : 0.1f);  // top z+
-		cd->fHitDmgA = cd->vHitDmgN.x + cd->vHitDmgN.y + cd->vHitDmgN.z;
+		if (!cd->sphere)
+		{
+			float sx = cd->vHitCarN.x, sy = cd->vHitCarN.y, sz = cd->vHitCarN.z;
+			float nx = fabs(sx), ny = fabs(sy), nz = fabs(sz);
+			cd->vHitDmgN.x = nx * (1.f-ny) * (1.f-nz) * (sx > 0 ? 1.0f : 0.3f);  // front x+
+			cd->vHitDmgN.y = (1.f-nx) * ny * (1.f-nz) * 0.3f;  // side y
+			cd->vHitDmgN.z = (1.f-nx) * (1.f-ny) * nz * (sz > 0 ? 1.0f : 0.1f);  // top z+
+			cd->fHitDmgA = cd->vHitDmgN.x + cd->vHitDmgN.y + cd->vHitDmgN.z;
+		}else
+			cd->fHitDmgA = 0.5f;
 		//--------
 
 		//  hit force for sound

@@ -180,7 +180,8 @@ void App::NewGame()
 		gui->BackFromChs();
 		//toggleGui(true);  // show gui
 		Message::createMessageBox("Message", TR("#{Track}"),
-			TR("#{TrackNotFound}")+"\n"+pSet->game.track+(pSet->game.track_user?" *user*":"")+"\nPath: "+gcom->TrkDir(),
+			TR("#{TrackNotFound}")+"\n" + pSet->game.track +
+			(pSet->game.track_user ? " *"+TR("#{TweakUser}")+"*" :"") + "\nPath: " + gcom->TrkDir(),
 			MessageBoxStyle::IconError | MessageBoxStyle::Ok);
 		//todo: gui is stuck..
 		return;
