@@ -80,7 +80,7 @@ void CHud::Size()
 
 		//  gear, vel
 		//  positioning, min yMax - dont go below viewport bottom
-		if (h.txGear)
+		if (h.txVel)
 		{
 			int vv = pSet->gauges_type > 0 ? -45 : 40;
 			int gx = (xcRpm+1.f)*0.5f*wx - 10, gy = (-ycRpm+1.f)*0.5f*wy +22;
@@ -89,7 +89,8 @@ void CHud::Size()
 			int bx =(xBFuel+1.f)*0.5f*wx - 10, by = std::min(yMax -36, my + 5);
 				vx = std::min(vx, xMax -100);
 				bx = std::min(bx, xMax -180);  // not too near to vel
-			h.txGear->setPosition(gx,gy);
+			if (h.txGear)
+				h.txGear->setPosition(gx,gy);
 			h.txVel->setPosition(vx,vy);  //h.bckVel
 
 			#if 0
@@ -97,22 +98,15 @@ void CHud::Size()
 			h.icoRewind->setPosition(bx+50,by-5);
 			#endif
 
-			#if 1
 			if (h.txDamage)
 			{	h.txDamage ->setPosition(gxL-83-72, gy+10-5);
 				h.icoDamage->setPosition(gxL-83+57, gy+10-5);
 			}
-			h.txBFuel ->setPosition(gxL-83-74, gy-60);
-			h.icoBFuel->setPosition(gxL-83+57, gy-60);
-			//h.icoBInf->setPosition(gxL-83+14,gy-60-5+2);
-			#else
-			if (h.txDamage)
-			{	h.txDamage ->setPosition(bx-70-80, by-70);
-				h.icoDamage->setPosition(bx-70+50, by-70-5);
+			if (h.txBFuel)
+			{	h.txBFuel ->setPosition(gxL-83-74, gy-60);
+				h.icoBFuel->setPosition(gxL-83+57, gy-60);
+				//h.icoBInf->setPosition(gxL-83+14,gy-60-5+2);
 			}
-			h.txBFuel ->setPosition(bx-63,    by-140);
-			h.icoBFuel->setPosition(bx-63+54, by-140-5+2);
-			#endif
 
 			//  times
 			//bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || app->mClient;
@@ -218,6 +212,7 @@ void CHud::Create()
 	{
 		String s = toStr(c);
 		Hud& h = hud[c];
+		CarModel* cm = app->carModels[c];
 		if (sc->ter)
 		{	float t = sc->td.fTerWorldSize*0.5;
 			minX = -t;  minY = -t;  maxX = t;  maxY = t;  }
@@ -259,14 +254,18 @@ void CHud::Create()
 
 
 		///  GUI
-		//  gear, vel text  -----------
+		//  gear  text  -----------
 		h.parent = app->mGui->createWidget<Widget>("",0,0,2560,1600,Align::Left,"Back","main"+s);
 
-		h.txGear = h.parent->createWidget<TextBox>("TextBox",
-			0,y, 160,116, Align::Left, "Gear"+s);  h.txGear->setVisible(false);
-		h.txGear->setFontName("DigGear");  h.txGear->setFontHeight(126);
-		//h.txGear->setTextShadow(true);
-
+		if (cm->bIsCar)
+		{
+			h.txGear = h.parent->createWidget<TextBox>("TextBox",
+				0,y, 160,116, Align::Left, "Gear"+s);  h.txGear->setVisible(false);
+			h.txGear->setFontName("DigGear");  h.txGear->setFontHeight(126);
+			//h.txGear->setTextShadow(true);
+		}
+		
+		//  vel
 		/*h.bckVel = h.parent->createWidget<ImageBox>("ImageBox",
 			0,y, 130,82, Align::Left, "IVel"+s);
 		h.bckVel->setImageTexture("back_vel.png");
@@ -281,23 +280,25 @@ void CHud::Create()
 		//h.txVel->setTextShadow(true);
 		
 		//  boost
-		h.txBFuel = h.parent->createWidget<TextBox>("TextBox",
-			0,y, 120,80, Align::Right, "Fuel"+s);  h.txBFuel->setVisible(false);
-		h.txBFuel->setTextAlign(Align::Right|Align::VCenter);
-		h.txBFuel->setFontName("DigGear");  h.txBFuel->setFontHeight(72);
-		h.txBFuel->setTextColour(Colour(0.6,0.8,1.0));  //h.txBFuel->setTextShadow(true);
+		if (!cm->bIsSphere)
+		{
+			h.txBFuel = h.parent->createWidget<TextBox>("TextBox",
+				0,y, 120,80, Align::Right, "Fuel"+s);  h.txBFuel->setVisible(false);
+			h.txBFuel->setTextAlign(Align::Right|Align::VCenter);
+			h.txBFuel->setFontName("DigGear");  h.txBFuel->setFontHeight(72);
+			h.txBFuel->setTextColour(Colour(0.6,0.8,1.0));  //h.txBFuel->setTextShadow(true);
 
-		h.icoBFuel = h.parent->createWidget<ImageBox>("ImageBox",
-			0,y, 40,40, Align::Left, "IFuel"+s);  //h.icoBFuel->setVisible(false);
-		h.icoBFuel->setImageTexture("gui_icons.png");
-		//if (pSet->game.boost_type == 3)
-		h.icoBFuel->setImageCoord(IntCoord(512,0,128,128));
+			h.icoBFuel = h.parent->createWidget<ImageBox>("ImageBox",
+				0,y, 40,40, Align::Left, "IFuel"+s);  //h.icoBFuel->setVisible(false);
+			h.icoBFuel->setImageTexture("gui_icons.png");
+			//if (pSet->game.boost_type == 3)
+			h.icoBFuel->setImageCoord(IntCoord(512,0,128,128));
 
-		//h.icoBInf = h.parent->createWidget<ImageBox>("ImageBox",
-		//	0,y, 40,40, Align::Right, "IInf"+s);
-		//h.icoBInf->setImageTexture("gui_icons.png");
-		//h.icoBInf->setImageCoord(IntCoord(512,768,128,128));
-
+			//h.icoBInf = h.parent->createWidget<ImageBox>("ImageBox",
+			//	0,y, 40,40, Align::Right, "IInf"+s);
+			//h.icoBInf->setImageTexture("gui_icons.png");
+			//h.icoBInf->setImageCoord(IntCoord(512,768,128,128));
+		}
 		//  damage %
 		if (pSet->game.damage_type > 0)
 		{
@@ -644,12 +645,15 @@ void CHud::Show(bool hideAll)
 		show = pSet->show_gauges;
 		for (int c=0; c < hud.size(); ++c)
 		{	Hud& h = hud[c];
-			if (h.parent && h.txGear)
+			if (h.parent && h.txVel)
 			{	h.parent->setVisible(true);
 			
-				h.txGear->setVisible(pSet->show_digits);  h.txVel->setVisible(pSet->show_digits);
-				h.txBFuel->setVisible(show && btxt);
-				h.icoBFuel->setVisible(show && bfuel);  //h.icoBInf->setVisible(show && binf);
+				if (h.txGear)
+					h.txGear->setVisible(pSet->show_digits);
+				h.txVel->setVisible(pSet->show_digits);
+				if (h.txBFuel)
+				{	h.txBFuel->setVisible(show && btxt);
+					h.icoBFuel->setVisible(show && bfuel);  /*h.icoBInf->setVisible(show && binf);*/  }
 				if (h.txDamage)
 				{	h.txDamage->setVisible(show && bdmg);  h.icoDamage->setVisible(show && bdmg);	}
 				//txRewind;icoRewind;

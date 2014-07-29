@@ -39,7 +39,7 @@ using namespace Ogre;
 CarModel::CarModel(int index, int colorId, eCarType type, const std::string& name,
 	SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam, App* app)
 	:mSceneMgr(sceneMgr), pSet(set), pGame(game), sc(s), mCamera(cam), pApp(app)
-	,iIndex(index), iColor(colorId % 6), sDirname(name), eType(type), bIsCar(true)
+	,iIndex(index), iColor(colorId % 6), sDirname(name), eType(type), bIsCar(true), bIsSphere(0)
 	,fCam(0), pMainNode(0), pCar(0), terrain(0), ndSph(0), brakes(0)
 	,pReflect(0), color(0,1,0), maxangle(26.f)
 	,hideTime(1.f), mbVisible(true), bLightMapEnabled(true), bBraking(false)
@@ -146,6 +146,7 @@ void CarModel::Load(int startId)
 
 		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, eType == CT_REMOTE, iIndex);
 		bIsCar = !(pCar->dynamics.hover || pCar->dynamics.sphere);
+		bIsSphere = pCar->dynamics.sphere;
 
 		if (!pCar)  LogO("Error creating car " + sDirname + "  path: " + pathCar);
 		else  pCar->pCarM = this;

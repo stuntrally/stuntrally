@@ -36,7 +36,9 @@ public:
 	eCarType eType;
 	bool isGhost() const {  return eType >= CT_GHOST;  }
 	bool isGhostTrk() const {  return eType == CT_TRACK;  }
+
 	bool bIsCar;  // if not, hover,sphere etc
+	bool bIsSphere;
 
 	//  ctor
 	CarModel(int index, int colorId, eCarType type, const std::string& name,

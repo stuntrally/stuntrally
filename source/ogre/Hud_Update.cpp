@@ -363,7 +363,7 @@ void CHud::Update(int carId, float time)
 
 
 	///  gear, vel texts  -----------------------------
-	if (h.txVel && h.txGear && pCar)
+	if (h.txGear)
 	{
 		float cl = clutch*0.8f + 0.2f;
 		if (gear == -1)
@@ -372,7 +372,9 @@ void CHud::Update(int carId, float time)
 		{	h.txGear->setCaption("N");  h.txGear->setTextColour(Colour(0.3,1,0.3,cl));  }
 		else if (gear > 0 && gear < 8)
 		{	h.txGear->setCaption(toStr(gear));  h.txGear->setTextColour(Colour(1,1-gear*0.1,0.2,cl));  }
-
+	}
+	if (h.txVel && pCar)
+	{
 		h.txVel->setCaption(fToStr(fabs(vel),0,3));
 
 		float k = pCar->GetSpeedometer() * 3.6f * 0.0025f;	// vel clr
