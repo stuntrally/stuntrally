@@ -394,7 +394,7 @@ void CARDYNAMICS::ShiftGear(int value)
 	{
 		if (value <= transmission.GetForwardGears() && value >= -transmission.GetReverseGears())
 		{
-			remaining_shift_time = shift_time;
+			rem_shift_time = shift_time;
 			shift_gear = value;
 			shifted = false;
 		}
@@ -422,7 +422,7 @@ void CARDYNAMICS::UpdateTransmission(Dbl dt)
 			if (gear >= 0 && spm <-3)  gear =-1;
 			else		
 			///  auto Rear gear
-			if (autorear && shifted && fDamage < 100.f && remaining_shift_time <= 0)
+			if (autorear && shifted && fDamage < 100.f && rem_shift_time <= 0)
 			{
 				Dbl gas = engine.GetThrottle()*0.8;
 				gas -= brake[0].GetBrakeFactor();
@@ -436,10 +436,10 @@ void CARDYNAMICS::UpdateTransmission(Dbl dt)
 		ShiftGear(gear);
 	}
 
-	remaining_shift_time -= dt;
-	if (remaining_shift_time < 0)  remaining_shift_time = 0;
+	rem_shift_time -= dt;
+	if (rem_shift_time < 0)  rem_shift_time = 0;
 
-	if (remaining_shift_time <= shift_time * 0.5 && !shifted)
+	if (rem_shift_time <= shift_time * 0.5 && !shifted)
 	{
 		shifted = true;
 		transmission.Shift(shift_gear);
@@ -546,20 +546,20 @@ Dbl CARDYNAMICS::AutoClutch(Dbl last_clutch, Dbl dt) const
 Dbl CARDYNAMICS::ShiftAutoClutch() const
 {
 	Dbl shift_clutch = 1.0;
-	if (remaining_shift_time > shift_time * 0.5)
+	if (rem_shift_time > shift_time * 0.5)
 	    shift_clutch = 0.0;
-	else if (remaining_shift_time > 0.0)
-	    shift_clutch = 1.0 - remaining_shift_time / (shift_time * 0.5);
+	else if (rem_shift_time > 0.0)
+	    shift_clutch = 1.0 - rem_shift_time / (shift_time * 0.5);
 	return shift_clutch;
 }
 
 Dbl CARDYNAMICS::ShiftAutoClutchThrottle(Dbl throttle, Dbl dt)
 {
-	if (remaining_shift_time > 0.0)
+	if (rem_shift_time > 0.0)
 	{
 	    if (engine.GetRPM() < driveshaft_rpm && engine.GetRPM() < engine.GetRpmMax())
 	    {
-	        remaining_shift_time += dt;
+	        rem_shift_time += dt;
             return 1.0;
 	    }
 	    else

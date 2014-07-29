@@ -21,7 +21,7 @@ CARDYNAMICS::CARDYNAMICS() :
 	drive(AWD), tacho_rpm(0), engine_vol_mul(1),
 	autoclutch(true), autoshift(true), autorear(true),
 	shifted(true), shift_gear(0),
-	last_auto_clutch(1.0), remaining_shift_time(0.0),
+	last_auto_clutch(1.0), rem_shift_time(0.0),
 	shift_time(0.2),
 	abs(false), tcs(false),
 	maxangle(45.0), ang_damp(0.4),

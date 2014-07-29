@@ -208,7 +208,7 @@ public:
 
 	bool autoclutch, autoshift, autorear, shifted;
 	int shift_gear;
-	Dbl last_auto_clutch, remaining_shift_time, shift_time;
+	Dbl last_auto_clutch, rem_shift_time, shift_time;  //remaining
 
 // traction control state
 	bool abs, tcs;
