@@ -46,7 +46,7 @@
 	<Tag name="Loading">Loading</Tag>
 	<Tag name="Loaded">Loaded</Tag>
 	<Tag name="Saving">Saving</Tag>
-	<Tag name="Saved">Saved</Tag>
+	<Tag name="Saved">Save d</Tag>
 	<Tag name="Updating">Updating</Tag>
 	<Tag name="Updated">Updated</Tag>
 	<Tag name="Copy">Copy</Tag>
@@ -180,9 +180,11 @@
 	<Tag name="Hint-13">Simulation</Tag>
 	<Tag name="Hint-13text">By default simulation is in easy mode, for beginners. Don't forget to set it to normal if the game feels too easy.</Tag>
 	<Tag name="Hint-14">Fps</Tag>
-	<Tag name="Hint-14text">The top left bar shows frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
+	<Tag name="Hint-14text">Press F11 to show the bar with frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
 	<Tag name="Hint-15">Last</Tag>
 	<Tag name="Hint-15text">For more info, check [Help] in the menu.</Tag>
+	<Tag name="Hint-16">Camera</Tag>
+	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
 
 	<Tag name="Hint">Hint</Tag>
 	<Tag name="HintShow">Show at startup</Tag>
@@ -817,6 +819,11 @@
 	<Tag name="NewDup">New (Duplicate)</Tag>
 	<Tag name="Rename">Rename</Tag>
 	<Tag name="Delete">Delete</Tag>
+
+	<Tag name="DeleteTrack">Delete track ?</Tag>
+	<Tag name="CopyTrackNoSource">No source track selected.</Tag>
+	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
+	<Tag name="CantSaveOrgTrack">Can't save original track. Duplicate it first.</Tag>
 	
 
 	<!--  Sun  -->
@@ -1096,6 +1103,8 @@
 	<!--  Tweak  -->
 	<Tag name="Tweak">Tweak</Tag>
 	<Tag name="MaterialProperties">Material Properties</Tag>
+	<Tag name="TweakUser">User</Tag>
+	<Tag name="TweakOriginal">Original</Tag>
 
 
 <!--  ............................................................................................................................  -->

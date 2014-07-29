@@ -426,12 +426,14 @@ void CGui::slVolHud(SV*)
 
 //  Hints, welcome screen
 //---------------------------------------------------------------------
+const static char hOrd[/*CGui::iHints*/17]={0,1,2,3,4,5,16,6,7,8,9,10,11,12,13,14, 15};
 void CGui::UpdHint()
 {
 	if (!edHintTitle)  return;
-	edHintTitle->setCaption(TR("#{Hint}  ") +toStr(iHintCur+1)+"/"+toStr(iHints)+
-					  ":   "+TR("#{Hint-"+toStr(iHintCur)+"}"));
-	edHintText->setCaption(TR("#{Hint-"+toStr(iHintCur)+"text}"));
+	int h = hOrd[iHintCur];
+	edHintTitle->setCaption(TR("#C0E0FF#{Hint}  #A0D0FF") +toStr(iHintCur+1)+"/"+toStr(iHints)+
+					  ":   "+TR("#D0E8FF#{Hint-"+toStr(h)+"}"));
+	edHintText->setCaption(TR("#{Hint-"+toStr(h)+"text}"));
 }
 
 void CGui::btnHintPrev(WP)

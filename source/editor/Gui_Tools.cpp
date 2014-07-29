@@ -35,14 +35,14 @@ bool CGui::ChkTrkCopy()
 	if (sCopyTrack == "")  // none
 	{
 		Message::createMessageBox(
-			"Message", "Copy Track", "No source track selected.",
+			"Message", TR("#{Track} - #{Copy}"), TR("#{CopyTrackNoSource}"),
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return false;
 	}
 	if (sCopyTrack == pSet->gui.track && bCopyTrackU == (pSet->gui.track_user ? 1 : 0))
 	{
 		Message::createMessageBox(
-			"Message", "Copy Track", "Source track and current track are the same.",
+			"Message", TR("#{Track} - #{Copy}"), TR("#{CopyTrackSourceSame}"),
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return false;
 	}
@@ -248,7 +248,7 @@ void CGui::btnTrackNew(WP)
 
 	if (gcom->TrackExists(name))  {
 		Message::createMessageBox(
-			"Message", "New Track", "Track " + name + " already exists.",
+			"Message", TR("#{Track} - #{NewDup}"), TR("#{Track}: ") + name + TR(" #{AlreadyExists}."),
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return;  }
 
@@ -275,15 +275,13 @@ void CGui::btnTrackRename(WP)
 	String name = trkName->getCaption();
 	if (name == gcom->sListTrack)  return;
 
-	/*if (bListTrackU==0)  {  // could force when originals writable..
-		Message::createMessageBox(
-			"Message", "Rename Track", "Track " + name + " is original and can't be renamed.",
-			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
-			return;  }/**/
+	if (!pSet->allow_save)  // could force when originals writable..
+	if (gcom->bListTrackU==0)  {
+		return;  }
 
 	if (gcom->TrackExists(name))  {
 		Message::createMessageBox(
-			"Message", "Rename Track", "Track " + name + " already exists.",
+			"Message", TR("#{Track} - #{Rename}"), TR("#{AlreadyExists}."),
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 		return;  }
 	
@@ -299,7 +297,7 @@ void CGui::btnTrackRename(WP)
 void CGui::btnTrackDel(WP)
 {
 	Message* message = Message::createMessageBox(
-		"Message", gcom->bListTrackU==0 ? "Delete original Track ?" : "Delete Track ?", gcom->sListTrack,
+		"Message", TR("#{DeleteTrack}"), gcom->sListTrack,
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
 	message->eventMessageBoxResult += newDelegate(this, &CGui::msgTrackDel);
 	//message->setUserString("FileName", fileName);

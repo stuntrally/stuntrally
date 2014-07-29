@@ -344,10 +344,10 @@ void CGui::btnUpdateVeget(WP)
 //---------------------------------------------------------------------------------------------------------------
 void App::SaveTrack()
 {
-	if (!pSet->allow_save)  // could force it when in writable location
+	if (!pSet->allow_save)  // can force it when in writable location
 	if (!pSet->gui.track_user)
 	{	MyGUI::Message::createMessageBox(
-			"Message", "Save Track", "Can't save original track. Duplicate it first.",
+			"Message", TR("#{Track} - #{RplSave}"), TR("#{CantSaveOrgTrack}"),
 			MyGUI::MessageBoxStyle::IconWarning | MyGUI::MessageBoxStyle::Ok);
 		return;
 	}

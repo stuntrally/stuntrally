@@ -130,7 +130,7 @@ void CGui::TweakCarLoad()
 		size_t p = path.find("carsim");
 		if (p != string::npos)
 			path = path.substr(p+7, path.length());
-		txtTweakPath->setCaption((user ? "User: " : "Original: ") + path);
+		txtTweakPath->setCaption(TR(user ? "#{TweakUser}: " : "#{TweakOriginal}: ") + path);
 		txtTweakPath->setTextColour(user ? Colour(1,1,0.5) : Colour(0.5,1,1));
 		
 		//MyGUI::InputManager::getInstance().resetKeyFocusWidget();
@@ -276,7 +276,7 @@ void CGui::TweakColSave()
 
 void CGui::TweakColUpd(bool user)
 {
-	txtTweakPathCol->setCaption((user ? "User" : "Original"));
+	txtTweakPathCol->setCaption(TR(user ? "#{TweakUser}" : "#{TweakOriginal}"));
 	txtTweakPathCol->setTextColour(user ? Colour(1,1,0.5) : Colour(0.5,1,1));
 }
 
