@@ -411,13 +411,20 @@ void CGui::toggleTopView()
 //  [Surface]
 //-----------------------------------------------------------------------------------------------------------
 
+TerLayer* CGui::GetTerRdLay()
+{
+	return idSurf < 4
+		? &sc->td.layersAll[sc->td.layers[idSurf]]
+		: &sc->td.layerRoad[sc->td.road1mtr ? 0 : idSurf-4];
+}
+
 void CGui::listSurf(Li, size_t id)
 {
 	if (id == ITEM_NONE) {  id = 0;  surfList->setIndexSelected(0);  }
 	if (id > 4) {  id = 4;  surfList->setIndexSelected(4);  }  ///TODO: temp 1 road mtr ...
 
 	idSurf = id;  // help var
-	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+	TerLayer* l = GetTerRdLay();
 	SldUpd_Surf();
 
 	Vector3 c;  c = l->tclr.GetRGB1();
@@ -430,7 +437,7 @@ void CGui::listSurf(Li, size_t id)
 
 void CGui::SldUpd_Surf()
 {
-	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+	TerLayer* l = GetTerRdLay();
 
 	svLDust.UpdF(&l->dust);  svLDustS.UpdF(&l->dustS);
 	svLMud.UpdF(&l->mud);    svLSmoke.UpdF(&l->smoke);
@@ -655,7 +662,7 @@ void CGui::listPickRd(Mli2 li, size_t pos)
 	scn->road->sMtrRoad[idRdPick] = s;
 	//  preset
 	if (pSet->pick_setpar && p)
-	{	TerLayer& l = scn->sc->td.layerRoad;  //[idRdPick]
+	{	TerLayer& l = scn->sc->td.layerRoad[idRdPick];
 		l.surfName = p->surfName;
 		l.dust = p->dust;  l.dustS = p->dustS;
 		l.mud = p->mud;  l.tclr = p->tclr;

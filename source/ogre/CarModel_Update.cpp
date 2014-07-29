@@ -283,8 +283,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	}
 
 	//  wheels  ------------------------------------------------------------------------
-	const float trlC = !sc->asphalt ? 0.14f : 0.f,  // const trail alpha
-		trlH = sc->ter ? 0.90f : 0.76f;  // vdr needs up (ter bumps), no ter  ..get from wheel contact ?rpl
+	const float trlH = sc->ter ? 0.90f : 0.76f;  // vdr needs up (ter bumps), no ter  ..get from wheel contact ?rpl
 
 	for (w=0; w < 4; ++w)
 	{
@@ -304,6 +303,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		
 		int whMtr = posInfo.whTerMtr[w];
 		int whRd = posInfo.whRoadMtr[w];
+		
 		bool pipe = whRd >= 30 && whRd < 60;  //old: whRd == 2;
 		//todo: road,pipe 4mtr [whRd] layer params..
 		float whVel = posInfo.whVel[w] * 3.6f;  //kmh
@@ -326,7 +326,9 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 
 		//  ter mtr factors
 		int mtr = std::max(0, std::min(whMtr-1, (int)(sc->td.layers.size()-1)));
-		TerLayer& lay = whMtr==0 ? sc->td.layerRoad : sc->td.layersAll[sc->td.layers[mtr]];
+		int rd  = sc->td.road1mtr ? 0 : std::max(0, std::min(3, whRd));
+
+		TerLayer& lay = whMtr==0 ? sc->td.layerRoad[rd] : sc->td.layersAll[sc->td.layers[mtr]];
 		emitD *= lay.dust;  emitM *= lay.mud;  sizeD *= lay.dustS;  emitS *= lay.smoke;
 
 		if (pipe)  emitD = 0;  // no dust in pipes
@@ -342,23 +344,22 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		if (pSet->particles)
 		{
 			ParticleSystem* ps = par[PAR_Smoke][w];
-			if (ps && sc->td.layerRoad.smoke > 0.f)
-			{	//  smoke
-				ParticleEmitter* pe = ps->getEmitter(0);
+			if (ps)  //  smoke
+			{	ParticleEmitter* pe = ps->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.7f);  ///*
 				ps->getAffector(0)->setParameter("alpha", toStr(-0.2f - 0.023f * whVel));  // fade out speed
 				pe->setTimeToLive( std::max(0.12f, 2.f - whVel * 0.06f) );  // live time
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitS);
 			}
 			ps = par[PAR_Mud][w];
-			if (ps)	//  mud
+			if (ps)	 //  mud
 			{	ParticleEmitter* pe = ps->getEmitter(0);
 				//pe->setDimensions(sizeM,sizeM);
 				pe->setPosition(vpos + posInfo.carY * wR*0.7f);
 				pe->setDirection(-posInfo.carY);	pe->setEmissionRate(emitM);
 			}
 			ps = par[PAR_Dust][w];
-			if (ps)	//  dust
+			if (ps)	 //  dust
 			{	ps->setDefaultDimensions(sizeD,sizeD);
 				ParticleEmitter* pe = ps->getEmitter(0);
 				pe->setPosition(vpos + posInfo.carY * wR*0.31f);
@@ -415,8 +416,9 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 				ndWhE[w]->setPosition(vp);
 				ndWhE[w]->setOrientation(posInfo.rot);
 			}
-			//float al = 1.f; // test  //squeal-
-			float al = ((pipe ? 0.f : trlC) + 0.6f * std::min(1.f, 0.7f * whTemp[w]) ) * onGr;  // par+
+			//  const trail alpha
+			float ac = pipe ? 0.f : /*own par..*/lay.smoke < 0.5f ? 0.14f : 0.f;
+			float al = (ac + 0.6f * std::min(1.f, 0.7f * whTemp[w]) ) * onGr;  // par+
 			if (whTrail[w])
 			{	whTrail[w]->setInitialColour(0,
 				lay.tcl.x, lay.tcl.y, lay.tcl.z, lay.tcl.w * al/**/);
@@ -607,8 +609,6 @@ void CarModel::UpdWhTerMtr()
 				"  ba " + fToStr(tsu->bumpAmplitude, 2,4) + " bw " + fToStr(tsu->bumpWaveLength, 2,4) +
 				"  b0 " + fToStr(tsu->tire->longitudinal[0], 3,5)
 				//,lay.dust, lay.mud, lay.dustS	//,lay.tclr.r, lay.tclr.g, lay.tclr.b, lay.tclr.a
-				//,pCar->dynamics.wheel_contact[i].depth, pCar->dynamics.wheel_contact[i].col
-				//,pCar->dynamics.GetWheelContact(WHEEL_POSITION(i)).GetDepth() - 2*pCar->GetTireRadius(WHEEL_POSITION(i))
 			)) + "\n";
 		}
 	}

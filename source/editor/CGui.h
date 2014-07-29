@@ -279,6 +279,7 @@ public:
 	
 	//  [Surfaces]  ----
 	int idSurf;  // help var
+	struct TerLayer* GetTerRdLay();
 	Li surfList;  void listSurf(Li, size_t);
 	void UpdSurfList();
 

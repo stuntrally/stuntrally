@@ -516,7 +516,7 @@ void CGui::ToolPresets()
 		}	}
 
 		//  road
-		TerLayer& r = sc.td.layerRoad;
+		TerLayer& r = sc.td.layerRoad[0];  //0..3
 		int id = ir[r.surfName];
 		if (all || id == 0)
 		{	RoadP p;  p.t = r;  p.trk = trk;  p.mtr = rd.sMtrRoad[0];

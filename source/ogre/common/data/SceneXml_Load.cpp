@@ -166,6 +166,7 @@ bool Scene::LoadXml(String file, bool bTer)
 	if (e)
 	{	a = e->Attribute("tires");		if (a)  asphalt = s2i(a) > 0;
 		a = e->Attribute("damage");		if (a)  damageMul = s2r(a);
+		a = e->Attribute("road1mtr");	if (a)  td.road1mtr = s2i(a) > 0;
 
 		a = e->Attribute("denyRev");	if (a)  denyReversed = s2i(a) > 0;
 		a = e->Attribute("gravity");	if (a)  gravity = s2r(a);
@@ -261,10 +262,11 @@ bool Scene::LoadXml(String file, bool bTer)
 		u = e->FirstChildElement("texture");
 		while (u)
 		{
-			bool road = false;
-			a = u->Attribute("road");	if (a)  if (s2i(a)==1)  road = true;
+			int road = -1;
+			a = u->Attribute("road");	if (a)  road = s2i(a)-1;
+			bool ter = road == -1;
 			
-			TerLayer lay, *l = road ? &td.layerRoad : &lay;
+			TerLayer lay, *l = ter ? &lay : &td.layerRoad[road];
 			lay.nFreq[0] += (il-0.7f) * 4.f;  // default, can't be same, needs variation
 			lay.nFreq[1] += (il-0.5f) * 3.f;
 
@@ -304,7 +306,7 @@ bool Scene::LoadXml(String file, bool bTer)
 				s = "prs"+sn;  a = eNoi->Attribute(s.c_str());  if (a)  l->nPers[n]= s2r(a);
 				s = "pow"+sn;  a = eNoi->Attribute(s.c_str());  if (a)  l->nPow[n] = s2r(a);
 			}
-			if (!road && il < td.ciNumLay)
+			if (ter && il < td.ciNumLay)
 				td.layersAll[il++] = lay;
 			u = u->NextSiblingElement("texture");
 		}
@@ -474,6 +476,8 @@ bool Scene::SaveXml(String file)
 		car.SetAttribute("tires",	asphalt ? "1":"0");
 		if (damageMul != 1.f)
 			car.SetAttribute("damage",	toStrC( damageMul ));
+		if (!td.road1mtr)
+			car.SetAttribute("road1mtr", td.road1mtr ? "1":"0");
 
 		if (denyReversed)
 			car.SetAttribute("denyRev",	"1");
@@ -606,18 +610,21 @@ bool Scene::SaveXml(String file)
 			tex.InsertEndChild(noi);
 			ter.InsertEndChild(tex);
 		}
-		l = &td.layerRoad;
-		TiXmlElement tex("texture");
-		tex.SetAttribute("road",	1);
-		tex.SetAttribute("surf",	l->surfName.c_str());
-		setDmst();
-		ter.InsertEndChild(tex);
-	
-		TiXmlElement par("par");
-			par.SetAttribute("dust",	sParDust.c_str());
-			par.SetAttribute("mud",		sParMud.c_str());
-			par.SetAttribute("smoke",	sParSmoke.c_str());
-		ter.InsertEndChild(par);
+		for (int i=0; i < 4; ++i)
+		{
+			l = &td.layerRoad[i];
+			TiXmlElement tex("texture");
+			tex.SetAttribute("road",	toStrC(i+1));
+			tex.SetAttribute("surf",	l->surfName.c_str());
+			setDmst();
+			ter.InsertEndChild(tex);
+		
+			TiXmlElement par("par");
+				par.SetAttribute("dust",	sParDust.c_str());
+				par.SetAttribute("mud",		sParMud.c_str());
+				par.SetAttribute("smoke",	sParSmoke.c_str());
+			ter.InsertEndChild(par);
+		}
 	root.InsertEndChild(ter);
 	
 

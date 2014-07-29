@@ -519,7 +519,7 @@ void CGui::comboParDust(Cmb cmb, size_t val)  // par type
 //
 void CGui::comboSurface(Cmb cmb, size_t val)
 {
-	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+	TerLayer* l = GetTerRdLay();
 	//std::string s = cmb->getItemNameAt(val);
 	std::string s = cmbSurface->getCaption();
 	LogO("SURF cmb  = "+s);
@@ -529,7 +529,7 @@ void CGui::comboSurface(Cmb cmb, size_t val)
 
 void CGui::UpdSurfInfo()
 {
-	TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+	TerLayer* l = GetTerRdLay();
 	int id = app->surf_map[l->surfName]-1;
 	if (id == -1)  return;  //not found..
 	const TRACKSURFACE& su = app->surfaces[id];

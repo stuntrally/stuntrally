@@ -469,7 +469,7 @@ bool COLLISION_WORLD::CastRay(
 
 		if (col->isStaticObject() /*&& (c->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE == 0)*/)
 		{
-			long long ptrU = (long long)col->getCollisionShape()->getUserPointer(),
+			int ptrU = (long)col->getCollisionShape()->getUserPointer(),
 				su = ptrU & 0xFF00, mtr = ptrU & 0xFF;  //void*
 
 			///  set surface, basing on shape type  -----------------
@@ -478,8 +478,9 @@ bool COLLISION_WORLD::CastRay(
 			switch (su)
 			{
 				case SU_Road:  // road
-				{
-					int id = td.layerRoad.surfId;  // Road[mtr].
+				{					 
+					//LogO("RD "+toStr(mtr));
+					int id = td.layerRoad[td.road1mtr ? 0 : mtr].surfId;
 					surf = &pApp->pGame->surfaces[id];
 
 					if (cd)
@@ -488,7 +489,7 @@ bool COLLISION_WORLD::CastRay(
 
 				case SU_Pipe:  // pipe
 				{
-					int id = td.layerRoad.surfId;
+					int id = td.layerRoad[0].surfId;
 					surf = &pApp->pGame->surfaces[id];
 
 					if (cd)
@@ -518,7 +519,7 @@ bool COLLISION_WORLD::CastRay(
 				//  fluids.. ?
 				default:
 				{
-					int id = td.layerRoad.surfId;
+					int id = td.layerRoad[0].surfId;
 					surf = &pApp->pGame->surfaces[id];
 
 					if (cd)
@@ -567,7 +568,7 @@ bool COLLISION_WORLD::CastRay(
 				//surf = 0;//track->GetRoadSurface();
 				bzr = colpatch;  col = NULL;
 
-				int id = td.layerRoad.surfId;
+				int id = td.layerRoad[0].surfId;
 				surf = &pApp->pGame->surfaces[id];
 
 				if (cd)

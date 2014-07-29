@@ -436,7 +436,7 @@ void CGui::btnClrSetA(WP w)
 	if (w == clrFog2)  v = &sc->fogClr2;  else
 	if (w == clrFogH)  v = &sc->fogClrH;  else
 	if (w == clrTrail) {
-		TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+		TerLayer* l = GetTerRdLay();
 		v = &l->tclr;  }
 	bool oth = wpClrSet != w;  wpClrSet = w;
 
@@ -466,6 +466,6 @@ void CGui::slUpdClr(SV* sv)
 	if (w == clrFogH){  sc->fogClrH = c;  scn->UpdFog();  }else
 
 	if (w == clrTrail) {
-		TerLayer* l = idSurf < 4 ? &sc->td.layersAll[idSurf] : &sc->td.layerRoad;
+		TerLayer* l = GetTerRdLay();
 		l->tclr = c;  }
 }

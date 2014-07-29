@@ -81,7 +81,9 @@ public:
 	const static int ciNumLay = 6;  // all, for edit
 	TerLayer layersAll[ciNumLay];
 	std::vector<int> layers;  // active only (on)
-	TerLayer layerRoad;  // road[4]+pipe[4]  //todo...
+	
+	bool road1mtr;  // if true (default) road has only 1 surface type
+	TerLayer layerRoad[4];  // pipe[4]  //todo...
 	void UpdLayers();
 
 	//  which should have triplanar most (eg high mountains)

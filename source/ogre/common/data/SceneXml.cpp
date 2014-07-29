@@ -153,8 +153,9 @@ void Scene::UpdateSurfId()
 {
 	if (!pGame)  return;
 	//  update surfId from surfName
+	int i;
 	//  terrain
-	for (int i=0; i < td.ciNumLay; ++i)
+	for (i=0; i < td.ciNumLay; ++i)
 	{
 		const std::string& s = td.layersAll[i].surfName;
 		int id = pGame->surf_map[s]-1;
@@ -165,13 +166,17 @@ void Scene::UpdateSurfId()
 		td.layersAll[i].surfId = id;  // cached
 	}
 	//  road
-	const std::string& s = td.layerRoad.surfName;
-	int id = pGame->surf_map[s]-1;
-	if (id == -1)
-	{	id = 0;
-		LogO("! Warning: Surface not found (road): "+s);
+	for (i=0; i < 4; ++i)
+	{
+		const std::string& s = td.layerRoad[i].surfName;
+		int id = pGame->surf_map[s]-1;
+		if (id == -1)
+		{	id = 0;
+			LogO("! Warning: Surface not found (road): "+s);
+		}
+		// road1mtr ?
+		td.layerRoad[i].surfId = id;
 	}
-	td.layerRoad.surfId = id;
 }
 
 
@@ -187,6 +192,7 @@ void TerData::Default()
 	triplanarLayer1 = 8;  triplanarLayer2 = 8;  triplCnt = 0;  // off
 	errorNorm = 1.7;  normScale = 1.f;
 	emissive = false;  specularPow = 32.f;  specularPowEm = 2.f;
+	road1mtr = true;
 
 	for (int i=0; i < ciNumLay; ++i)
 	{	
@@ -197,11 +203,13 @@ void TerData::Default()
 		l.tclr = SColor(0.16f,0.5f,0.2f,0.7f);
 		l.fDamage = 0.f;
 	}
-	TerLayer& r = layerRoad;
-	r.dust = 0.f;  r.mud = 0.f;  // r.smoke = 1.f;
-	r.tclr = SColor(0.16f,0.5f,0.2f,0.7f);  r.tcl = r.tclr.GetRGBA();
-	r.fDamage = 0.f;
-	
+	for (int i=0; i < 4; ++i)
+	{
+		TerLayer& r = layerRoad[i];
+		r.dust = 0.f;  r.mud = 0.f;  // r.smoke = 1.f;
+		r.tclr = SColor(0.16f,0.5f,0.2f,0.7f);  r.tcl = r.tclr.GetRGBA();
+		r.fDamage = 0.f;
+	}
 	UpdVals();  UpdLayers();
 }
 
