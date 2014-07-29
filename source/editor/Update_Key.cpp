@@ -47,7 +47,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			{	int u = pSet->allow_save ? pSet->gui.track_user : 1;
 				rt[RTs-1].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/view.jpg");
 				gcom->listTrackChng(gcom->trkList,0);  // upd gui img
-				gui->Status(TR("#{Saved}"), 1,1,0);
+				gui->Status("#{Saved}", 1,1,0);
 			}	break;
 
 			case key(F12):  // screenshot
@@ -306,7 +306,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			//  ins
 			case key(INSERT):  case key(KP_0):
 				if (ctrl && !shift && !alt)
-				{	if (road->CopySel())  gui->Status(TR("#{Copy}"), 0.6,0.8,1.0);  }
+				{	if (road->CopySel())  gui->Status("#{Copy}", 0.6,0.8,1.0);  }
 				else if (!ctrl && shift && !alt)	road->Paste();
 				else if ( ctrl && shift && !alt)	road->Paste(true);
 				else
@@ -455,7 +455,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					{
 						vObjCopy.push_back(scn->sc->objects[*it]);
 					}
-					gui->Status(TR("#{Copy}"), 0.6,0.8,1.0);
+					gui->Status("#{Copy}", 0.6,0.8,1.0);
 			}	}
 			else if (shift)  // paste copied
 			{

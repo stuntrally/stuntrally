@@ -14,7 +14,6 @@
 #include <MyGUI_Enumerator.h>
 #include <MyGUI_WidgetDefines.h>  //EnumeratorWidgetPtr
 #include <MyGUI_Colour.h>
-#include <MyGUI_UString.h>
 #include "../ogre/common/MessageBox/MessageBoxStyle.h"
 
 
@@ -50,7 +49,7 @@ public:
 
 
 	//  ed
-	void Status(MyGUI::UString s, float r,float g,float b);
+	void Status(Ogre::String s, float r,float g,float b);
 	void SetGuiFromXmls();  // update gui controls
 	bool noBlendUpd;
 
@@ -280,8 +279,10 @@ public:
 	//  [Surfaces]  ----
 	int idSurf;  // help var
 	struct TerLayer* GetTerRdLay();
+
 	Li surfList;  void listSurf(Li, size_t);
 	void UpdSurfList();
+	Ck ckRoad1Mtr;
 
 	
 	//  [Game]  ----

@@ -3292,6 +3292,10 @@
 				<Widget type="ListBox" skin="ListBox" position="20 20 200 200" name="SurfList">
 					<Property key="Colour" value="0.85 0.9 0.95"/>
 				</Widget>
+				<Widget type="Button" skin="CheckBox" position="254 190 190 24" name="Road1Mtr">
+					<Property key="Caption" value="#{Road1SurfOnly}"/>
+					<Property key="TextColour" value="0.9 0.9 0.6"/>
+				</Widget>
 
 				<Widget type="Widget" skin="" position="20 224 738 360">
 					<Property key="Caption" value="#B0B060#{Surface}"/>

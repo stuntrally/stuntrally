@@ -921,6 +921,7 @@
 	<Tag name="Friction">Friction</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RollingResist">Rolling Resistance</Tag>
+	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
 
 
 	<!--  Terrain  Brush  wnd  -->

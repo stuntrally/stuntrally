@@ -413,15 +413,21 @@ void CGui::toggleTopView()
 
 TerLayer* CGui::GetTerRdLay()
 {
-	return idSurf < 4
-		? &sc->td.layersAll[sc->td.layers[idSurf]]
-		: &sc->td.layerRoad[sc->td.road1mtr ? 0 : idSurf-4];
+	if (idSurf < 4)  //  terrain
+	{	if (idSurf >= sc->td.layers.size())  // could change by on/off ter layers
+		{	idSurf = 0;  if (surfList)  surfList->setIndexSelected(idSurf);  }
+		return &sc->td.layersAll[sc->td.layers[idSurf]];
+	}
+	//  road
+	return  &sc->td.layerRoad[sc->td.road1mtr ? 0 : idSurf-4];
 }
 
 void CGui::listSurf(Li, size_t id)
 {
 	if (id == ITEM_NONE) {  id = 0;  surfList->setIndexSelected(0);  }
-	if (id > 4) {  id = 4;  surfList->setIndexSelected(4);  }  ///TODO: temp 1 road mtr ...
+	if (id < 4 && id >= sc->td.layers.size()) {  id = 0;  surfList->setIndexSelected(id);  }  // more than used
+	if (id >= 8) {  id = 4;  surfList->setIndexSelected(id);  }
+	//TODO: own pipe mtrs..
 
 	idSurf = id;  // help var
 	TerLayer* l = GetTerRdLay();
@@ -455,6 +461,7 @@ void CGui::UpdSurfList()
 		surfList->setItemNameAt(n+4, "#FFB020"+TR("#{Road} ") +toStr(n+1)+"  "+ app->scn->road->sMtrRoad[n]);
 		surfList->setItemNameAt(n+8, "#FFFF80"+TR("#{Pipe} ") +toStr(n+1)+"  "+ app->scn->road->sMtrPipe[n]);
 	}
+	GetTerRdLay();  // fix list pos if cur gone
 }
 
 

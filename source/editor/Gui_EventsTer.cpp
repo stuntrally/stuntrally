@@ -385,14 +385,23 @@ void CGui::chkDebugBlend(Ck*)
 
 ///  Terrain layers  -----------------------------
 //
-void CGui::chkTerLayOn(Ck*)
+void CGui::chkTerLayOn(Ck* ck)
 {
+	sc->td.UpdLayers();
+	if (sc->td.layers.size()==0)  // would crash, surf
+	{
+		*ck->pBool = true;  // turn it back on
+		ck->Upd();
+	}
+
 	sc->td.UpdLayers();
 	updUsedTer();
 
 	//todo..  !! save hmap if changed
 	app->UpdateTrack();
+
 	SldUpd_TerLNvis();
+	UpdSurfList();
 }
 
 void CGui::updUsedTer()

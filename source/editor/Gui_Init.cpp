@@ -468,6 +468,9 @@ void CGui::InitGui()
 	ck= &ckDenyReversed;	ck->Init("DenyReversed",	&sc->denyReversed);
 	ck= &ckTiresAsphalt;	ck->Init("TiresAsphalt",	&sc->asphalt);
 	ck= &ckTerrainEmissive;	ck->Init("TerrainEmissive",	&sc->td.emissive);
+
+	///  [Surface]
+	ck= &ckRoad1Mtr;	ck->Init("Road1Mtr",	&sc->td.road1mtr);
 	
 
 	///  [Tools]  ------------------------------------

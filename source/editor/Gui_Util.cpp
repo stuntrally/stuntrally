@@ -88,6 +88,7 @@ void CGui::SetGuiFromXmls()
 	_Ed(RdHeightOfs, rd->fHeight);
 	_Ed(RdSkirtLen, rd->skirtLen);  _Ed(RdSkirtH, rd->skirtH);
 	SldUpd_Road();
+	ckRoad1Mtr.Upd();
 	
 	//  [Game]
 	//-----------------------------------------------
@@ -236,9 +237,9 @@ void CGui::toggleGui(bool toggle)
 
 
 //  bottom status bar
-void CGui::Status(UString s, float r,float g,float b)
+void CGui::Status(String s, float r,float g,float b)
 {
-	txtStatus->setCaption(s);
+	txtStatus->setCaption(TR(s));
 	txtStatus->setTextColour(Colour(r,g,b));
 	panStatus->setColour(Colour(r,g,b));
 	panStatus->setAlpha(1.f);  panStatus->setVisible(true);
