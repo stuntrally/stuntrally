@@ -598,16 +598,6 @@
 	</challenge>
 
 
-	<challenge name="Stunt Master" ver="1" difficulty="7" type="4" 
-			descr="The most difficult and long stunt tracks. Pay attention to car damage. Avoid hitting walls.">
-		<car names="ES|S1|S8" />
-		<pass avgPoints="11" />
-		<tracks>
-			<t name="S14-Refinery"   passPoints="9" />
-			<t name="I9-Web"         passPoints="8.5" />
-		</tracks>
-	</challenge>
-
 	<challenge name="Pipe Master" ver="1" difficulty="6" type="4" 
 			descr="Most difficult all-pipe tracks. Long and winding.">
 		<sim boost="2" />
@@ -619,13 +609,23 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Stunt Madness" ver="1" difficulty="7" type="4"
-			descr="Most difficult stunt tracks. Long and extremely curly and twisted. Filled with all stunt elements.">
-		<car names="ES|S8|S1|FN" />
-		<pass avgPoints="9" />
+	<challenge name="Stunt Master" ver="1" difficulty="7" type="4" 
+			descr="The most difficult, long and twisted stunt tracks. Pay attention to car damage. Avoid hitting walls.">
+		<car names="ES|S1|S8" />
+		<pass avgPoints="11" />
 		<tracks>
-			<t name="G7-Spider"		passPoints="9" />
-			<t name="O5-Factory"	passPoints="9" />
+			<t name="S14-Refinery"   passPoints="9" />
+			<t name="I9-Web"         passPoints="8.5" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Stunt Madness" ver="1" difficulty="7" type="4"
+			descr="Ultra difficult stunt tracks. Long, extremely curly and twisted. Filled with all stunt elements and obstacles. Caution: be sure you already finished Stunt Master before even trying this one. Knowing these tracks is also key.">
+		<car names="ES|S8|S1|FN" />
+		<pass avgPoints="13" />
+		<tracks>
+			<t name="G7-Spider"		passPoints="10.5" />
+			<t name="O5-Factory"	passPoints="10.5" />
 		</tracks>
 	</challenge>
 
