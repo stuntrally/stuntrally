@@ -402,7 +402,8 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 		for (int c=0; c < carModels.size(); ++c)
 		{
 			CarModel* cm = carModels[c];
-			if (cm->pCar)  cm->pCar->bResetPos = true;
+			if (cm->pCar)
+				cm->pCar->bResetPos = true;
 			if (cm->iLoopLastCam != -1 && cm->fCam)
 			{	cm->fCam->setCamera(cm->iLoopLastCam);  //o restore
 				cm->iLoopLastCam = -1;  }

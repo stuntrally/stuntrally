@@ -26,7 +26,8 @@ CAR::CAR() :
 	iCamNext(0), bLastChk(0),bLastChkOld(0), bRewind(0),
 	fluidHitOld(0),
 	trackPercentCopy(0), bRemoteCar(0),
-	bResetPos(0)
+	bResetPos(0),
+	dmgLastCheck(0.f), sphYawAtStart(0.f)
 {
 	//dynamics.pCar = this;
 	
@@ -144,6 +145,8 @@ bool CAR::Load(class App* pApp1,
 		
 		cd.Init(pSet, pApp->scn->sc, pApp->scn->data->fluids,
 			world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
+
+		sphYawAtStart = cd.sphereYaw;
 
 		cd.SetABS(defaultabs);
 		cd.SetTCS(defaulttcs);
@@ -420,6 +423,9 @@ void CAR::ResetPos(bool fromStart)
 	dynamics.SynchronizeBody();  // set body from chassis
 	if (fromStart)
 	{
+		if (dynamics.sphere)
+			dynamics.sphereYaw = sphYawAtStart;
+
 		dynamics.boostFuel = dynamics.boostFuelStart;  // restore boost fuel
 		dynamics.fDamage = 0.f;  // clear damage
 	}else

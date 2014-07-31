@@ -342,7 +342,7 @@ public:
 	//  for new game reset  and goto last checkp.
 	MATHVECTOR<Dbl,3> posAtStart, posLastCheck;
 	QUATERNION<Dbl> rotAtStart, rotLastCheck;
-	float dmgLastCheck;
+	float dmgLastCheck, sphYawAtStart;
 
 	//  car inputs (new)
 	int iCamNext;
