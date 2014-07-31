@@ -166,6 +166,7 @@
 	<Tag name="LS_OBJS">Caricamento oggetti</Tag>
 	<Tag name="MessageBox_Cancel">Annulla</Tag>
 	<Tag name="TreeRoadDist">Dist. alberi da strada</Tag>
+	<Tag name="RplTime">Tempo</Tag>
 	<Tag name="GraphicsAll_Medium">Media</Tag>
 	<Tag name="AutoGearbox">Cambio automatico</Tag>
 	<Tag name="NeedReload">* necessita il riavvio</Tag>
@@ -337,6 +338,7 @@
 	<Tag name="GrColorMap">Colore della mappa</Tag>
 	<Tag name="TipBumpAmp">Ampiezza di bump aggiuntivi sulla superficie (quanto intensa).</Tag>
 	<Tag name="InputFluidsMove">LMB - muovi   RMB - altezza</Tag>
+	<Tag name="DeleteTrack">Delete track ?</Tag>
 	<Tag name="Loaded">Loaded</Tag>
 	<Tag name="CountdownTime">Conto alla rovescia</Tag>
 	<Tag name="ReflMode_single">Singolo</Tag>
@@ -376,6 +378,7 @@
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="max">mass.</Tag>
 	<Tag name="Change">Cambia</Tag>
+	<Tag name="TweakOriginal">Original</Tag>
 	<Tag name="TerUpdSkip">Salta aggiornamento del terreno</Tag>
 	<Tag name="Stage">Stage</Tag>
 	<Tag name="CarDesc_3S">Buona macchina adatta per tutte le piste, con accelerazione molto lenta, soprattutto ad alta velocità.</Tag>
@@ -425,7 +428,7 @@
 	<Tag name="Start">Inizia</Tag>
 	<Tag name="TipGrTerMinHeight">Altezza terreno posto sotto in cui non ci sarà erba (inizio dissolvenza, per distanza smoothing).</Tag>
 	<Tag name="Road_Snap">Snap</Tag>
-	<Tag name="InputRoadShiftReverse">shift-Ins - incolla   shift-ctrl-Ins - inverti</Tag>
+	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
 	<Tag name="MinScale">scala min.</Tag>
 	<Tag name="NetStart">Inizia</Tag>
 	<Tag name="QuickHelpText">--- Aiuto rapido ---@@Usa il mouse o i pulsanti Su, Giù, Invio, Spazio per la navigazione nel menu.@@Per regolare la risoluzione, vai sulla scheda Schermo da Opzioni,@usa le preimpostazioni per sistemare velocemente la grafica del tuo hardware.@@Per vedere e configurare tutti i pulsanti presenti in gioco, vai sulla scheda Input da Opzioni.@Se detieni di un controller di gioco, visita:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Per l'hosting di un gioco multiplayer è richiesto il port forwarding.@Non è necessario connettersi a un gioco già esistente, sempre che gli altri giocatori lo ricevano.@@Se hai problemi o consigli, visita il nostro forum:@http://forum.freegamedev.net/viewforum.php?f=77@@Per più informazioni a riguardo consultate il leggimi o le pagine wiki del nostro progetto.@</Tag>
@@ -500,6 +503,7 @@
 	<Tag name="TipTerNoiseOnly">Ignorerà angolo di terreno e gamme di altezza. Il layer apparirà soltanto, se l'altro moltiplicatore di disturbo si fonde a questo.</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - angolo tubo  (no tubo quando è 0)</Tag>
 	<Tag name="TerrainEmissiveLight">Terreno con luce emissiva</Tag>
+	<Tag name="Column">Colonna</Tag>
 	<Tag name="Finished">Completato</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - prec,pross scheda layer</Tag>
 	<Tag name="InputInverse">Inverso</Tag>
@@ -514,6 +518,7 @@
 	<Tag name="Name">Nome</Tag>
 	<Tag name="RplSize">grandezza</Tag>
 	<Tag name="TipGrassPrev">Anteprima immagine del layer d'erba (cambiato con materiale).</Tag>
+	<Tag name="InputRoadShiftReverse">shift-Ins - incolla   shift-ctrl-Ins - inverti</Tag>
 	<Tag name="TipMudInt">Intensità particelle di fango.</Tag>
 	<Tag name="HeightMax">Altezza mass.</Tag>
 	<Tag name="Obj_Rot">Rot.</Tag>
@@ -527,6 +532,7 @@
 	<Tag name="GameBy">Un gioco creato da</Tag>
 	<Tag name="CarDesc_TW">Questo grosso e straordinario veicolo è ottimo per le piste lunghe e lisce. Del tutto inutile su strade ristrette o nel fango (es. nella giungla). Inoltre, non è facile da guidare.</Tag>
 	<Tag name="CarDesc_TU">Very futuristic and fast vehicle. Not suited for narrow roads, jumps or mud.</Tag>
+	<Tag name="Hint-16">Camera</Tag>
 	<Tag name="CameraBounce">Camera bouncing dinamico</Tag>
 	<Tag name="SunWeather">Sole e tempo meteorologico</Tag>
 	<Tag name="Lock">Blocca</Tag>
@@ -676,7 +682,7 @@
 	<Tag name="TipTrackDescEditor">Testo di descrizione pista (clicka per modificare).</Tag>
 	<Tag name="ViewLeft">Vista da sinistra</Tag>
 	<Tag name="ViewFront">Vista frontale</Tag>
-	<Tag name="RplTime">Tempo</Tag>
+	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
 	<Tag name="SC_IslandDark">IsolaOscura</Tag>
 	<Tag name="MinimapRotate">Ruota</Tag>
 	<Tag name="MessageBox_Retry">Riprova</Tag>
@@ -708,7 +714,7 @@
 	<Tag name="RplCurrent">Attuale</Tag>
 	<Tag name="InputBrushFreq">O,P  -  frequenza disturbo (scala)</Tag>
 	<Tag name="Diff4">Difficile</Tag>
-	<Tag name="InputCamControl2">LMB - ruota  RMB - muovi  MMB - zooma</Tag>
+	<Tag name="CantSaveOrgTrack">Can't save original track. Duplicate it first.</Tag>
 	<Tag name="Cars">Auto</Tag>
 	<Tag name="CarType_Slow">Lento</Tag>
 	<Tag name="Hint">Hint</Tag>
@@ -720,7 +726,7 @@
 	<Tag name="EnterSave">Enter - salva</Tag>
 	<Tag name="InputMapLastChk">Vai all'ultimo checkp.</Tag>
 	<Tag name="NetJoinLocked">Gioco protetto</Tag>
-	<Tag name="Properties">Proprietà</Tag>
+	<Tag name="ObjBuildings">Edifici</Tag>
 	<Tag name="TipBumpFreq">Frequenza di bump aggiuntivi sulla superficie (distanza tra loro).</Tag>
 	<Tag name="InputRoadDel">Del - cancella selezionata</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - cambia texture tiling, solo una coord.</Tag>
@@ -782,7 +788,6 @@
 	<Tag name="NewTerrainFlat">Nuovo piano</Tag>
 	<Tag name="ColSat">Saturazione</Tag>
 	<Tag name="TipTCS">Impedisce che le ruote girino durante l'accelerazione (default: disattivato).</Tag>
-	<Tag name="NewTerrainGenerate">Genera nuovo</Tag>
 	<Tag name="InputRoadColumn">End - attiva/disattiva colonna</Tag>
 	<Tag name="InputRoadMerge">M - attiva/disattiva unione segm strada (per test)</Tag>
 	<Tag name="Brush_Height">Altezza</Tag>
@@ -896,7 +901,8 @@
 	<Tag name="SC_Savanna">Savana</Tag>
 	<Tag name="NetHost">Host</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
-	<Tag name="ImpostorDist">Dist. impostori</Tag>
+	<Tag name="InputRoadAltLMB">alt-LMB (o 1,2)</Tag>
+	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
 	<Tag name="AlignSmooth">Dim. smooth</Tag>
 	<Tag name="RollingResist">Rolling Resistance</Tag>
 	<Tag name="page">pagina</Tag>
@@ -912,6 +918,7 @@
 	<Tag name="OgreDialog">Mostra il dialogo di Ogre</Tag>
 	<Tag name="MultiThread">Multi Threaded</Tag>
 	<Tag name="TipRollDrag">Ruote di trascinamento, più grandi li farà rallentare più velocemente (es. 140 per neve, 80 per erba).</Tag>
+	<Tag name="TweakUser">User</Tag>
 	<Tag name="Editor">Editor</Tag>
 	<Tag name="NotRecommended">Not recommended</Tag>
 	<Tag name="Any">Qualsiasi</Tag>
@@ -935,8 +942,9 @@
 	<Tag name="TBTime">Tempo</Tag>
 	<Tag name="AlignTerrainToRoad">Allinea il terreno alla strada</Tag>
 	<Tag name="TerLNoise">Disturbo</Tag>
-	<Tag name="InputRoadAltLMB">alt-LMB (o 1,2)</Tag>
+	<Tag name="ImpostorDist">Dist. impostori</Tag>
 	<Tag name="Hint-4">Damage</Tag>
+	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
 	<Tag name="TipTerLMove">Muovi il layer, cambia l'ordine.</Tag>
 	<Tag name="TipLTrMaxTerH">Altezza terreno posto sopra dove il modello non apparirà.</Tag>
 	<Tag name="TotalScore">Punteggio totale</Tag>
@@ -962,6 +970,7 @@
 	<Tag name="CarCollis">Collisione con auto</Tag>
 	<Tag name="TipTerrainDouble">Rende doppia la dimensione del terreno, lasciando la parte di altezza della mappa al centro.</Tag>
 	<Tag name="CameraInfo">Informazioni della camera</Tag>
+	<Tag name="InputCamControl2">LMB - ruota  RMB - muovi  MMB - zooma</Tag>
 	<Tag name="NetRouterTip">La configurazione port forwarding del router potrebbe essere necessaria al fine di consentire ai peer di connetersi alla porta locale.</Tag>
 	<Tag name="NewGame">Nuovo gioco</Tag>
 	<Tag name="StartInMain">Avvia dal menu principale</Tag>
@@ -1015,7 +1024,7 @@
 	<Tag name="TipRainSnowInt">Intensità pioggia/neve (es. 1000)</Tag>
 	<Tag name="TrackLength">Lunghezza</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - riavvia la rotazione</Tag>
-	<Tag name="Column">Colonna</Tag>
+	<Tag name="CopyTrackNoSource">No source track selected.</Tag>
 	<Tag name="TipRoadDist">Quanto distante dalla strada verrà visualizzato il modello.</Tag>
 	<Tag name="FramesPerSec">Frame al secondo</Tag>
 	<Tag name="ChampInfo2">I campionati solitamente durano di più e sono composti da più piste, ma sono facilmente superabili.</Tag>
@@ -1036,6 +1045,7 @@
 	<Tag name="InputStartDir">Spazio - cambia direzione stradale (+ o -)</Tag>
 	<Tag name="GrMaterial">Materiale</Tag>
 	<Tag name="Startup">Avvio</Tag>
+	<Tag name="Properties">Proprietà</Tag>
 	<Tag name="HintShow">Show at startup</Tag>
 	<Tag name="Car_MaxPower">Mass.Potenza</Tag>
 	<Tag name="Brush_ShapeTriangle">Triang</Tag>
@@ -1050,7 +1060,7 @@
 	<Tag name="Diff7">Ultra</Tag>
 	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy.</Tag>
 	<Tag name="SkirtHeight">Altezza margine</Tag>
-	<Tag name="ObjBuildings">Edifici</Tag>
+	<Tag name="NewTerrainGenerate">Genera nuovo</Tag>
 	<Tag name="Car_TopSpeed">Velocità migliore</Tag>
 	<Tag name="InputObjectsRot">2 - Ruota locale (alt- globale)  LMB: Z  RMB: Y  MMB: X</Tag>
 	<Tag name="CarType_Other">Altro</Tag>
@@ -1115,16 +1125,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prec.,pross. scheda (alt - sottoschede)</Tag>
 	<Tag name="Diff6">Estrema</Tag>
 	<Tag name="RplAll">Tutto</Tag>
-	<Tag name="TweakOriginal">Original</Tag>
-	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
-	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
-	<Tag name="Hint-16">Camera</Tag>
-	<Tag name="CantSaveOrgTrack">Can't save original track. Duplicate it first.</Tag>
-	<Tag name="CopyTrackNoSource">No source track selected.</Tag>
-	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
-	<Tag name="TweakUser">User</Tag>
-	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
-	<Tag name="DeleteTrack">Delete track ?</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

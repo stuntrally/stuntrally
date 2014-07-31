@@ -166,6 +166,7 @@
 	<Tag name="LS_OBJS">Loading Objects</Tag>
 	<Tag name="MessageBox_Cancel">Zrušiť</Tag>
 	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
+	<Tag name="RplTime">Čas</Tag>
 	<Tag name="GraphicsAll_Medium">Stredné</Tag>
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="NeedReload">* need reload</Tag>
@@ -337,6 +338,7 @@
 	<Tag name="GrColorMap">Color map</Tag>
 	<Tag name="TipBumpAmp">Amplitude of additional bumps on surface (how high).</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
+	<Tag name="DeleteTrack">Delete track ?</Tag>
 	<Tag name="Loaded">Loaded</Tag>
 	<Tag name="CountdownTime">Race countdown time</Tag>
 	<Tag name="ReflMode_single">Jednotlivý</Tag>
@@ -376,6 +378,7 @@
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="max">max</Tag>
 	<Tag name="Change">Zmeniť</Tag>
+	<Tag name="TweakOriginal">Original</Tag>
 	<Tag name="TerUpdSkip">Terrain update skip</Tag>
 	<Tag name="Stage">Etapa</Tag>
 	<Tag name="CarDesc_3S">Good car, suited for all tracks, but has slower acceleration, especially at high speeds.</Tag>
@@ -425,7 +428,7 @@
 	<Tag name="Start">Štart</Tag>
 	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out, for smooth distance).</Tag>
 	<Tag name="Road_Snap">Prichytávanie</Tag>
-	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
+	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
 	<Tag name="MinScale">min scale</Tag>
 	<Tag name="NetStart">Štart</Tag>
 	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@http://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.@</Tag>
@@ -500,6 +503,7 @@
 	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle  (no pipe when 0)</Tag>
 	<Tag name="TerrainEmissiveLight">Terrain has emissive light</Tag>
+	<Tag name="Column">Stĺpec</Tag>
 	<Tag name="Finished">Dokončené</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - prev,next Layer tab</Tag>
 	<Tag name="InputInverse">Inverzia</Tag>
@@ -514,6 +518,7 @@
 	<Tag name="Name">Názov</Tag>
 	<Tag name="RplSize">veľkosť</Tag>
 	<Tag name="TipGrassPrev">Preview image of this grass layer (changed with material).</Tag>
+	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
 	<Tag name="TipMudInt">Mud particles intensity.</Tag>
 	<Tag name="HeightMax">Height Max</Tag>
 	<Tag name="Obj_Rot">Rot.</Tag>
@@ -527,6 +532,7 @@
 	<Tag name="GameBy">A game by</Tag>
 	<Tag name="CarDesc_TW">This big, extreme vehicle is great for long and smooth tracks. But completely useless when narrow or in mud (e.g. in jungle). Also not easy to drive.</Tag>
 	<Tag name="CarDesc_TU">Very futuristic and fast vehicle. Not suited for narrow roads, jumps or mud.</Tag>
+	<Tag name="Hint-16">Camera</Tag>
 	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
 	<Tag name="SunWeather">Slnko a voda</Tag>
 	<Tag name="Lock">Zamknúť</Tag>
@@ -676,7 +682,7 @@
 	<Tag name="TipTrackDescEditor">Track description text (click to edit).</Tag>
 	<Tag name="ViewLeft">View Left</Tag>
 	<Tag name="ViewFront">View Front</Tag>
-	<Tag name="RplTime">Čas</Tag>
+	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
 	<Tag name="SC_IslandDark">IslandDark</Tag>
 	<Tag name="MinimapRotate">Otočiť</Tag>
 	<Tag name="MessageBox_Retry">Znova</Tag>
@@ -708,7 +714,7 @@
 	<Tag name="RplCurrent">Aktuálne</Tag>
 	<Tag name="InputBrushFreq">O,P  -  noise Frequency (scale)</Tag>
 	<Tag name="Diff4">Ťažká</Tag>
-	<Tag name="InputCamControl2">LMB - rotate  RMB - move  MMB - zoom</Tag>
+	<Tag name="CantSaveOrgTrack">Can't save original track. Duplicate it first.</Tag>
 	<Tag name="Cars">Autá</Tag>
 	<Tag name="CarType_Slow">Pomalé</Tag>
 	<Tag name="Hint">Hint</Tag>
@@ -720,7 +726,7 @@
 	<Tag name="EnterSave">Enter - save</Tag>
 	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
 	<Tag name="NetJoinLocked">Protected game</Tag>
-	<Tag name="Properties">Vlastnosti</Tag>
+	<Tag name="ObjBuildings">Budovy</Tag>
 	<Tag name="TipBumpFreq">Frequency of additional bumps on surface (distance between them).</Tag>
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
@@ -782,7 +788,6 @@
 	<Tag name="NewTerrainFlat">New flat</Tag>
 	<Tag name="ColSat">Sýtosť</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
-	<Tag name="NewTerrainGenerate">Generate new</Tag>
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="Brush_Height">Výška</Tag>
@@ -896,7 +901,8 @@
 	<Tag name="SC_Savanna">Savana</Tag>
 	<Tag name="NetHost">Hostiteľ</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
-	<Tag name="ImpostorDist">Impostors dist.</Tag>
+	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
+	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
 	<Tag name="AlignSmooth">Smooth size</Tag>
 	<Tag name="RollingResist">Rolling Resistance</Tag>
 	<Tag name="page">strana</Tag>
@@ -912,6 +918,7 @@
 	<Tag name="OgreDialog">Show Ogre dialog</Tag>
 	<Tag name="MultiThread">Multi Threaded</Tag>
 	<Tag name="TipRollDrag">Drag for wheels, bigger will make them slow down faster (eg. 140 for snow, 80 for grass).</Tag>
+	<Tag name="TweakUser">User</Tag>
 	<Tag name="Editor">Editor</Tag>
 	<Tag name="NotRecommended">Not recommended</Tag>
 	<Tag name="Any">Akékoľvek</Tag>
@@ -935,8 +942,9 @@
 	<Tag name="TBTime">Čas</Tag>
 	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
 	<Tag name="TerLNoise">Šum</Tag>
-	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
+	<Tag name="ImpostorDist">Impostors dist.</Tag>
 	<Tag name="Hint-4">Damage</Tag>
+	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
 	<Tag name="TipTerLMove">Move layer, changes order.</Tag>
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 	<Tag name="TotalScore">Total score</Tag>
@@ -962,6 +970,7 @@
 	<Tag name="CarCollis">Cars collision</Tag>
 	<Tag name="TipTerrainDouble">Make terrain size double, leaving current heightmap part in center.</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
+	<Tag name="InputCamControl2">LMB - rotate  RMB - move  MMB - zoom</Tag>
 	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
 	<Tag name="NewGame">Nová hra</Tag>
 	<Tag name="StartInMain">Start in main menu</Tag>
@@ -1015,7 +1024,7 @@
 	<Tag name="TipRainSnowInt">Rain/Snow intensity (eg. 1000)</Tag>
 	<Tag name="TrackLength">Dĺžka</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - reset rotation</Tag>
-	<Tag name="Column">Stĺpec</Tag>
+	<Tag name="CopyTrackNoSource">No source track selected.</Tag>
 	<Tag name="TipRoadDist">How far from road will the model appear.</Tag>
 	<Tag name="FramesPerSec">Snímok za sekundu</Tag>
 	<Tag name="ChampInfo2">Championships are usually long, have many tracks, but are easy to pass.</Tag>
@@ -1036,6 +1045,7 @@
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="GrMaterial">Materiál</Tag>
 	<Tag name="Startup">Spustenie</Tag>
+	<Tag name="Properties">Vlastnosti</Tag>
 	<Tag name="HintShow">Show at startup</Tag>
 	<Tag name="Car_MaxPower">Max Power</Tag>
 	<Tag name="Brush_ShapeTriangle">Triang</Tag>
@@ -1050,7 +1060,7 @@
 	<Tag name="Diff7">Ultra</Tag>
 	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy.</Tag>
 	<Tag name="SkirtHeight">Skirt Height</Tag>
-	<Tag name="ObjBuildings">Budovy</Tag>
+	<Tag name="NewTerrainGenerate">Generate new</Tag>
 	<Tag name="Car_TopSpeed">Top Speed</Tag>
 	<Tag name="InputObjectsRot">2 - Rotate local (alt- global)  LMB: Z  RMB: Y  MMB: X</Tag>
 	<Tag name="CarType_Other">Ostatné</Tag>
@@ -1115,16 +1125,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extrémna</Tag>
 	<Tag name="RplAll">Všetko</Tag>
-	<Tag name="TweakOriginal">Original</Tag>
-	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
-	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
-	<Tag name="Hint-16">Camera</Tag>
-	<Tag name="CantSaveOrgTrack">Can't save original track. Duplicate it first.</Tag>
-	<Tag name="CopyTrackNoSource">No source track selected.</Tag>
-	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
-	<Tag name="TweakUser">User</Tag>
-	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
-	<Tag name="DeleteTrack">Delete track ?</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
