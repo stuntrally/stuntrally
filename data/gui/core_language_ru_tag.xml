@@ -24,7 +24,7 @@
 	<Tag name="Warnings">Оповещения</Tag>
 	<Tag name="UnitKmh">км/ч</Tag>
 	<Tag name="InputRoadPickOne">Выбор (один)</Tag>
-	<Tag name="HintInput">To check keys used in game or reassign them, or to configure controller press Input button.</Tag>
+	<Tag name="HintInput">Чтобы узнать кнопки исп. в игре или переназначить их, или сконф. контролер нажми кнопку Ввод.</Tag>
 	<Tag name="ViewDist">Видимость</Tag>
 	<Tag name="CarDesc_OT">Это самое медленное авто. Очень старый и немного страшный грузовик. Управляемый только на треках с ровным рельефом и со скоростью черепахи.</Tag>
 	<Tag name="SimMode">Режим симуляции (сложность)</Tag>
@@ -329,7 +329,7 @@
 	<Tag name="EscQuit">Esc выйти</Tag>
 	<Tag name="Gauges">Приборы (об., скор.)</Tag>
 	<Tag name="LengthDim">Длина</Tag>
-	<Tag name="Simple">Simple</Tag>
+	<Tag name="Simple">Просто</Tag>
 	<Tag name="Bloom">Разм.</Tag>
 	<Tag name="TipRenameTrk">Переименовать выбранный трек на новое имя (во-первых измени имя).</Tag>
 	<Tag name="TerrainHalf">Половина</Tag>
@@ -338,7 +338,7 @@
 	<Tag name="GrColorMap">Цвет карты</Tag>
 	<Tag name="TipBumpAmp">Амплитуда дополнительной неровности на поверхности (как максимум).</Tag>
 	<Tag name="InputFluidsMove">LMB - движение RMB - высота</Tag>
-	<Tag name="DeleteTrack">Delete track ?</Tag>
+	<Tag name="DeleteTrack">Удалить трек ?</Tag>
 	<Tag name="Loaded">Загрузил</Tag>
 	<Tag name="CountdownTime">Обратный отсчет (с)</Tag>
 	<Tag name="ReflMode_single">Одно</Tag>
@@ -352,9 +352,9 @@
 	<Tag name="InputObjectsRotReset">shift-2 - сброс вращ.</Tag>
 	<Tag name="EdInputBar">Панель ввода Ctrl-I</Tag>
 	<Tag name="TipFogClr2">Конец цвета тумана, когда отводишь взгляд от солнца.</Tag>
-	<Tag name="Checkpoint">Checkpoint</Tag>
+	<Tag name="Checkpoint">КТ</Tag>
 	<Tag name="Readme">Прочти</Tag>
-	<Tag name="Complex">Complex</Tag>
+	<Tag name="Complex">Сложно</Tag>
 	<Tag name="TipSunDirPitch">Направление солнца - угол наклона.</Tag>
 	<Tag name="Passed">Пройдено</Tag>
 	<Tag name="InputMapHandBrake">Ручник</Tag>
@@ -378,7 +378,7 @@
 	<Tag name="ssao">SSAO</Tag>
 	<Tag name="max">макс.</Tag>
 	<Tag name="Change">Изменить</Tag>
-	<Tag name="TweakOriginal">Original</Tag>
+	<Tag name="TweakOriginal">Оригинал</Tag>
 	<Tag name="TerUpdSkip">Пропустить обновление ландшафта</Tag>
 	<Tag name="Stage">Этап</Tag>
 	<Tag name="CarDesc_3S">Хорошее авто, подходит для всех треков, но медленнее ускорение, особенно на высоких скоростях.</Tag>
@@ -428,7 +428,7 @@
 	<Tag name="Start">Старт</Tag>
 	<Tag name="TipGrTerMinHeight">Высота ландшафта ниже которой не будет какой-нибудь травы (начало исчезновения, на ровной дистанции).</Tag>
 	<Tag name="Road_Snap">Снимок</Tag>
-	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
+	<Tag name="InputTerHeightSet">Space - уст. высоту где курсор</Tag>
 	<Tag name="MinScale">мин. масштаб</Tag>
 	<Tag name="NetStart">Старт</Tag>
 	<Tag name="QuickHelpText">----  Быстрая помощь  ----@@Используй мышь или Up,Down,Enter,Backspace, чтобы управлять меню.@@Для изменения разрешения иди в Опции, вкладка Экран. Используй заранее установленные графические настройки, чтобы быстро настроить свое графическое устройство.@@Чтобы увидеть все используемые кнопки в игре и сконфигурировать ввод  иди в Опции, вкладка Ввод. Если у Вас игровой контроллер, посмотрите здесь:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Необходим порт главного компьютера для многопользовательской игры. Для соединения с существующей игрой это не нужно.@@Если у тебя проблемы или  предложения, используй наш форум:@http://forum.freegamedev.net/viewforum.php?f=77@@Для болшей информации смотри Прочти или нашего проекта Wiki страницы.@</Tag>
@@ -445,7 +445,7 @@
 	<Tag name="InputStartPos">Q - изм. поз. авто</Tag>
 	<Tag name="SC_Mars">Марс</Tag>
 	<Tag name="TipModelMinScale">Минимальный масштаб модели.</Tag>
-	<Tag name="Hint-14text">Press F11 to show the bar with frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
+	<Tag name="Hint-14text">Нажми F11, чтобы увидеть полосу с кадрами в секунду и другим инфо. Для игры лучше иметь хотя бы 30 К/с, 60 К/с будет идеально.</Tag>
 	<Tag name="InputRplCtrl1">Backspace - пок./скрыть индик. (держи ctrl для мыши)</Tag>
 	<Tag name="Car_BhpPerTon">Л. с. на тонну</Tag>
 	<Tag name="TipFogClrRGBA">R G B A значения от 0 до 1 (напр. 0.7 0.8 0.9 1). Последний используется для уменьшения максимальной густоты (1 является полной).</Tag>
@@ -532,7 +532,7 @@
 	<Tag name="GameBy">Игра</Tag>
 	<Tag name="CarDesc_TW">Большое экстрим авто, великолепный для длинных треков с ровной поверхностью. Но полностью бесполезный для узких треков или с грязью (напр. в джунглях). А также не лёгкий в управлении.</Tag>
 	<Tag name="CarDesc_TU">Быстрое авто из будущего. Не подходит для узких дорог, прыжков или грязи.</Tag>
-	<Tag name="Hint-16">Camera</Tag>
+	<Tag name="Hint-16">Камера</Tag>
 	<Tag name="CameraBounce">Дин. подпрыг. камеры</Tag>
 	<Tag name="SunWeather">Солнце и погода</Tag>
 	<Tag name="Lock">Забл.</Tag>
@@ -583,7 +583,7 @@
 	<Tag name="TexCoordMul">Тех. коор.</Tag>
 	<Tag name="Shadows">Тени</Tag>
 	<Tag name="Options">Опции</Tag>
-	<Tag name="HintScreen">To change screen resolution and adjust graphics to your card press Screen button.</Tag>
+	<Tag name="HintScreen">Чтобы изменить разрешение экрана и настроить графику нажми кнопку Экран.</Tag>
 	<Tag name="distance">дистанция</Tag>
 	<Tag name="SSS_Effect">Эффект</Tag>
 	<Tag name="Chall_Extreme">Экстрим</Tag>
@@ -682,7 +682,7 @@
 	<Tag name="TipTrackDescEditor">Описание трека (нажми для редактирования).</Tag>
 	<Tag name="ViewLeft">Вид слева</Tag>
 	<Tag name="ViewFront">Вид спереди</Tag>
-	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
+	<Tag name="CopyTrackSourceSame">Источник трека и тек. трек одинаковы.</Tag>
 	<Tag name="SC_IslandDark">ОстровС</Tag>
 	<Tag name="MinimapRotate">Вращать</Tag>
 	<Tag name="MessageBox_Retry">Повтор</Tag>
@@ -714,7 +714,7 @@
 	<Tag name="RplCurrent">Текущий</Tag>
 	<Tag name="InputBrushFreq">O,P  -  частота шума (шкала)</Tag>
 	<Tag name="Diff4">Сложно</Tag>
-	<Tag name="CantSaveOrgTrack">Can't save original track. Duplicate it first.</Tag>
+	<Tag name="CantSaveOrgTrack">Нельзя сохр. ориг. трек. Продублируйте.</Tag>
 	<Tag name="Cars">Тачки</Tag>
 	<Tag name="CarType_Slow">Медленный</Tag>
 	<Tag name="Hint">Совет</Tag>
@@ -902,7 +902,7 @@
 	<Tag name="NetHost">Хост</Tag>
 	<Tag name="Road_AngleAuto">Авто</Tag>
 	<Tag name="InputRoadAltLMB">alt-LMB (или 1,2)</Tag>
-	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
+	<Tag name="Road1SurfOnly">Только 1 дор. повер.</Tag>
 	<Tag name="AlignSmooth">Ровность</Tag>
 	<Tag name="RollingResist">Сопротив. вращ.</Tag>
 	<Tag name="page">ст.</Tag>
@@ -918,7 +918,7 @@
 	<Tag name="OgreDialog">Показать диалог Ogre</Tag>
 	<Tag name="MultiThread">Много потоков</Tag>
 	<Tag name="TipRollDrag">Для колес, чем больше значение тем быстрее замедление (напр. 140 для снега, 80 для травы).</Tag>
-	<Tag name="TweakUser">User</Tag>
+	<Tag name="TweakUser">Пользователя</Tag>
 	<Tag name="Editor">Редактор</Tag>
 	<Tag name="NotRecommended">Не рекомендуем</Tag>
 	<Tag name="Any">Любой</Tag>
@@ -944,12 +944,12 @@
 	<Tag name="TerLNoise">Шум</Tag>
 	<Tag name="ImpostorDist">Дист. спрайта</Tag>
 	<Tag name="Hint-4">Повреж.</Tag>
-	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
+	<Tag name="Hint-16text">Нажми [C] для след. или [X] для пред. вида камеры. Держи shift для главных камер.</Tag>
 	<Tag name="TipTerLMove">Перемещает слой, изменяет порядок.</Tag>
 	<Tag name="TipLTrMaxTerH">Высота ландшафта, выше которого модель не появиться.</Tag>
 	<Tag name="TotalScore">Итого очков</Tag>
 	<Tag name="Road_Height">Высота</Tag>
-	<Tag name="Saved">Saved</Tag>
+	<Tag name="Saved">Сохранил</Tag>
 	<Tag name="InputLoadNextTrack">Загр. след. трек (shift - пред.)</Tag>
 	<Tag name="TrackDifficulties">Разные сложности трека</Tag>
 	<Tag name="TipModelPrev">Предварительный просмотр изображения модели.</Tag>
@@ -1024,7 +1024,7 @@
 	<Tag name="TipRainSnowInt">Интенсивность дождь/снег (напр. 1000)</Tag>
 	<Tag name="TrackLength">Длина</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - отмена вращ.</Tag>
-	<Tag name="CopyTrackNoSource">No source track selected.</Tag>
+	<Tag name="CopyTrackNoSource">Не выбран источник трека.</Tag>
 	<Tag name="TipRoadDist">Как далеко от дороги появиться модель.</Tag>
 	<Tag name="FramesPerSec">Кадров в секунду</Tag>
 	<Tag name="ChampInfo2">Обычно чемпионаты длинные, много треков, но легко пройти.</Tag>

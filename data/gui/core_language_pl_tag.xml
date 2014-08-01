@@ -24,7 +24,7 @@
 	<Tag name="Warnings">Ostrzeżenia</Tag>
 	<Tag name="UnitKmh">km/h</Tag>
 	<Tag name="InputRoadPickOne">Wybierz (jeden)</Tag>
-	<Tag name="HintInput">To check keys used in game or reassign them, or to configure controller press Input button.</Tag>
+	<Tag name="HintInput">By zobaczyć klawisze używane w grze, lub je przypisać, albo skonfigurować kontoler naciśnij przycisk Wejście.</Tag>
 	<Tag name="ViewDist">Dalekość widzenia</Tag>
 	<Tag name="CarDesc_OT">To jest najwolniejsze auto. Bardzo stara i trochę straszna ciężarówka. Może jeździć tylko po płaskich trasach i to z prędkością żółwia.</Tag>
 	<Tag name="SimMode">Typ symulacji (trudność)</Tag>
@@ -428,7 +428,7 @@
 	<Tag name="Start">Start</Tag>
 	<Tag name="TipGrTerMinHeight">Wysokość terenu poniżej której nie będzie trawy (zaczyna zanikać, przez dystans wygładzania)</Tag>
 	<Tag name="Road_Snap">Przyciąganie</Tag>
-	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
+	<Tag name="InputTerHeightSet">Spacja - ustaw wysokość z kursora</Tag>
 	<Tag name="MinScale">min. skala</Tag>
 	<Tag name="NetStart">Start</Tag>
 	<Tag name="QuickHelpText">---- Szybka pomoc ----@@Użyj myszy lub Góra,Lewo,Enter,Backspace do nawigacji po menu.@@Aby dostosować rozdzielczość wejdź do Opcji na zakładkę Ekran,@użyj zestawów Ustawień grafiki by szybko dostosować grafikę do swojego sprzętu.@@Wszystkie klawisze używane w grze można zmienić w Opcjach, na zakładce Wejście.@Jeśli posiadasz kontroler gry zobacz:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Stworzenie gry muliplayer wymaga przekierowanych portów.@Dołączenie do istniejącej gry, nie wymaga, pod warunkiem że inni mają.@@Jeśli posiadasz problemy lub sugestie, use our Forum (in English):@http://forum.freegamedev.net/viewforum.php?f=77@@Więcej informacji w Czytaj, i na stronach Wiki projektu.@</Tag>
@@ -445,7 +445,7 @@
 	<Tag name="InputStartPos">Q - edytuj start auta</Tag>
 	<Tag name="SC_Mars">Mars</Tag>
 	<Tag name="TipModelMinScale">Minimalna skala modelu</Tag>
-	<Tag name="Hint-14text">Press F11 to show the bar with frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
+	<Tag name="Hint-14text">Naciśnij F11 by pokazać pasek z ilością klatek na sekundę i innymi informacjami. Do gry najlepiej mieć co najmniej 30 klatek, 60 jest idealnie.</Tag>
 	<Tag name="InputRplCtrl1">Backspace - pokaż/ukryj kontrolki (przytrzymaj ctrl by użyć myszy)</Tag>
 	<Tag name="Car_BhpPerTon">Bhp na tonę</Tag>
 	<Tag name="TipFogClrRGBA">R G B A składowe 0 do 1 (np. 0.7 0.8 0.9 1). Ostatnią można użyć do zmniejszenia maksymalnej gęstości (1 pełna).</Tag>
@@ -682,7 +682,7 @@
 	<Tag name="TipTrackDescEditor">Tekst opisowy trasy (kliknij by edytować).</Tag>
 	<Tag name="ViewLeft">Widok lewy</Tag>
 	<Tag name="ViewFront">Widok przód</Tag>
-	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
+	<Tag name="CopyTrackSourceSame">Trasa źródłowa i obecna są takie same.</Tag>
 	<Tag name="SC_IslandDark">WyspaCiemna</Tag>
 	<Tag name="MinimapRotate">Obrót</Tag>
 	<Tag name="MessageBox_Retry">Ponów</Tag>
@@ -714,7 +714,7 @@
 	<Tag name="RplCurrent">Bieżące</Tag>
 	<Tag name="InputBrushFreq">O,P - częstotliwość szumu (skala)</Tag>
 	<Tag name="Diff4">Trudny</Tag>
-	<Tag name="CantSaveOrgTrack">Can't save original track. Duplicate it first.</Tag>
+	<Tag name="CantSaveOrgTrack">Nie można zapisać oryginalnej trasy. Zduplikują ją najpierw.</Tag>
 	<Tag name="Cars">Auta</Tag>
 	<Tag name="CarType_Slow">Wolny</Tag>
 	<Tag name="Hint">Porada</Tag>
@@ -944,12 +944,12 @@
 	<Tag name="TerLNoise">Szum</Tag>
 	<Tag name="ImpostorDist">Odległość atrap</Tag>
 	<Tag name="Hint-4">Uszkodzenia</Tag>
-	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
+	<Tag name="Hint-16text">Naciśnij [C] dla następnego lub [X] dla poprzedniego widoku kamery. Dla tylko głównych kamer, przytrzymaj shift.</Tag>
 	<Tag name="TipTerLMove">Przesuń warstwę, zmienia kolejność.</Tag>
 	<Tag name="TipLTrMaxTerH">Wysokość terenu ponad którą model nie wystąpi.</Tag>
 	<Tag name="TotalScore">Końcowe punkty</Tag>
 	<Tag name="Road_Height">Wysokość</Tag>
-	<Tag name="Saved">Saved</Tag>
+	<Tag name="Saved">Zapisano</Tag>
 	<Tag name="InputLoadNextTrack">Wczytaj nast. trasę (shift - poprz.)</Tag>
 	<Tag name="TrackDifficulties">Różne trudności trasy</Tag>
 	<Tag name="TipModelPrev">Obraz podglądu modelu.</Tag>
@@ -1024,7 +1024,7 @@
 	<Tag name="TipRainSnowInt">Intensywność deszczu/śniegu (np. 1000)</Tag>
 	<Tag name="TrackLength">Długość</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - resetuj obrót</Tag>
-	<Tag name="CopyTrackNoSource">No source track selected.</Tag>
+	<Tag name="CopyTrackNoSource">Nie wybrano trasy źródłowej.</Tag>
 	<Tag name="TipRoadDist">Jak daleko od drogi będzie się pojawiał model.</Tag>
 	<Tag name="FramesPerSec">Klatki na sekundę</Tag>
 	<Tag name="ChampInfo2">Mistrzostwa są zazwyczaj długie, mają wiele tras, ale są łatwe do przejścia.</Tag>
