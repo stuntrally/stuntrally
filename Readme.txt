@@ -45,7 +45,7 @@ Editor tutorial:
 
 Description
 
-The game features 146 tracks in 26 sceneries and 19 cars + 4 vehicles.
+The game features 147 tracks in 26 sceneries and 19 cars + 4 vehicles.
 Game modes include: Single Race, Tutorials, Championships, Challenges,
 Multiplayer and Split Screen. Also Replays and Ghost drive are present.
 
