@@ -757,6 +757,7 @@
 
 	<Tag name="InputOther1">Up,Down - navigate in lists   Enter - start</Tag>
 	<Tag name="InputOther2">Enter - show/hide players window in multiplayer</Tag>
+	<Tag name="InputOther3">Enter - show lap results</Tag>
 	<Tag name="InputFocusFind">Ctrl-F  go to find box</Tag>
 
 	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
