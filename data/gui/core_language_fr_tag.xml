@@ -13,7 +13,7 @@
 	<Tag name="InputHeaderTxt4">Éditer</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
 	<Tag name="TipLoadTrkEditor">Charger le circuit (après modifications) ou recharger le circuit actuel.</Tag>
-	<Tag name="TipAutoGearbox">Décocher pour le changement manuel des vitesses</Tag>
+	<Tag name="TipAutoGearbox">Décochez pour changer de vitesse manuellement.</Tag>
 	<Tag name="LS_MISC">Terminé</Tag>
 	<Tag name="InputHeaderTxt2">Raccourci</Tag>
 	<Tag name="InputHeaderTxt3">Valeur</Tag>
@@ -64,7 +64,7 @@
 	<Tag name="DevKeys">Touches développeur. Ctrl-F</Tag>
 	<Tag name="CarDesc_V3">Un gros et lourd vaisseau. Très bonne accélération et bon freinage, mais reste assez lent.</Tag>
 	<Tag name="Hint-15text">Pour plus d'information, allez dans [Aide] dans le menu.</Tag>
-	<Tag name="InputRoadChkFirst">0 - définir point de contrôle comme premier</Tag>
+	<Tag name="InputRoadChkFirst">0 - définir le point de contrôle comme premier</Tag>
 	<Tag name="SC_ForestMntn">ForêtMont</Tag>
 	<Tag name="NetRefreshList">Rafraîchir la liste</Tag>
 	<Tag name="InputObjectsIns">Insér. - insérer nouveau, au curseur</Tag>
@@ -509,7 +509,7 @@
 	<Tag name="InputInverse">Inverse</Tag>
 	<Tag name="InputMapRestartGame">Nouvelle partie</Tag>
 	<Tag name="Graphics">Graphiques</Tag>
-	<Tag name="InputMapNextCamera">Prochaine Caméra</Tag>
+	<Tag name="InputMapNextCamera">Caméra suivante</Tag>
 	<Tag name="CarClrRandom">Aléatoire</Tag>
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="SC_Island">Île</Tag>
@@ -539,7 +539,7 @@
 	<Tag name="GraphicsPreset">Pré-réglage graphique</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="RplDelete">Supprimer</Tag>
-	<Tag name="TipAutoRear">Décochez pour changer les rapports manuellement.</Tag>
+	<Tag name="TipAutoRear">Décochez pour aller en marche arrière manuellement.</Tag>
 	<Tag name="TipToggleModel">Activer ou desactiver ce modèle</Tag>
 	<Tag name="Hint-12text">Jetez un coup d'œil aux autres véhicules, nous avons également des vaisseaux spatiaux et des circuits sur d'autres planètes.</Tag>
 	<Tag name="InputCameraTxt1">avec Maj. - caméras principales seulement</Tag>
@@ -637,7 +637,7 @@
 	<Tag name="Hint-12">Véhicules</Tag>
 	<Tag name="Hint-13">Simulation</Tag>
 	<Tag name="Hint-14">Images/s</Tag>
-	<Tag name="Hint-15">Enfin</Tag>
+	<Tag name="Hint-15">Pour finir</Tag>
 	<Tag name="UnitM">m</Tag>
 	<Tag name="EditTerrainMode">Mode d'édtion du terrain</Tag>
 	<Tag name="TipTireParType3">Particules de pneus type 3.</Tag>
@@ -724,7 +724,7 @@
 	<Tag name="GraphicsAll_Higher">Plus élevé</Tag>
 	<Tag name="Hint-6text">Utilisez [Ctrl] pour vous propulser. En fonction des réglages, le turbo est donné à chaque tour, se régénère avec le temps, ou est tout simplement infini.</Tag>
 	<Tag name="EnterSave">Entrer - sauvegarder</Tag>
-	<Tag name="InputMapLastChk">Aller au dernier point de contrôle</Tag>
+	<Tag name="InputMapLastChk">Dernier point de ctrl.</Tag>
 	<Tag name="NetJoinLocked">Partie privée</Tag>
 	<Tag name="ObjBuildings">Bâtiments</Tag>
 	<Tag name="TipBumpFreq">Fréquence des bosses additionnelles (distance entre elles).</Tag>
@@ -1125,6 +1125,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - onglet précédent/suivant (Alt. - sous-onglet)</Tag>
 	<Tag name="Diff6">Extrême</Tag>
 	<Tag name="RplAll">Tous</Tag>
+	<Tag name="InputOther3">Enter - show lap results</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
