@@ -238,6 +238,7 @@
 	<Tag name="TipChangeReflect">Изменяет отражение цвета автомобиля (матовый-зеркальный).</Tag>
 	<Tag name="filmgrain">Зернистость пленки</Tag>
 	<Tag name="Replay">Повтор</Tag>
+	<Tag name="InputOther3">Enter - пок. итоги круга</Tag>
 	<Tag name="TiresEdit4">End - знач. параметров в ряд</Tag>
 	<Tag name="AutoRear">Авто задняя передача</Tag>
 	<Tag name="TerGenFreq">Частота увел.</Tag>
@@ -1125,7 +1126,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред.,след. вкладка (alt - ниже)</Tag>
 	<Tag name="Diff6">Экстрим</Tag>
 	<Tag name="RplAll">Все</Tag>
-	<Tag name="InputOther3">Enter - show lap results</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
