@@ -55,10 +55,26 @@ void CarModel::UpdNextCheck()
 	if (pApp->scn->road->mChks.empty())  return;
 
 	Vector3 p;
+	MaterialPtr mtr;
 	if (iNumChks == pApp->scn->road->mChks.size() && iCurChk != -1)
+	{
+		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0; // FIXME: || app->mClient;
+		int lap = pGame->timer.GetCurrentLap(iIndex) + 1;
+		if (hasLaps && (lap == pSet->game.num_laps - 1))
+			mtr = MaterialManager::getSingleton().getByName("checkpoint_lastlap");
+		else if (hasLaps && (lap == pSet->game.num_laps))
+			mtr = MaterialManager::getSingleton().getByName("checkpoint_finish");
+		else
+			mtr = MaterialManager::getSingleton().getByName("checkpoint_lap");
+		entNextChk->setMaterial(mtr);
 		p = vStartPos;  // finish
+	}
 	else
+	{
 		p = pApp->scn->road->mChks[iNextChk].pos;
+		mtr = MaterialManager::getSingleton().getByName("checkpoint_normal");
+		entNextChk->setMaterial(mtr);
+	}
 		
 	p.y -= gPar.chkBeamSy;  // lower
 	ndNextChk->setPosition(p);

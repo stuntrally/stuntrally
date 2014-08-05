@@ -419,6 +419,8 @@ void CarModel::Create()
 	{
 		entNextChk = mSceneMgr->createEntity("Chk"+strI, "check.mesh");
 		entNextChk->setRenderQueueGroup(RQG_Weather);  entNextChk->setCastShadows(false);
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName("checkpoint_normal");
+		entNextChk->setMaterial(mtr);
 		ndNextChk = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		ndNextChk->attachObject(entNextChk);  entNextChk->setVisibilityFlags(RV_Hud);
 		ndNextChk->setVisible(false);
