@@ -414,6 +414,21 @@
 		</tracks>
 	</challenge>
 
+	<challenge name="Slowest trip" ver="1" difficulty="2" type="2"
+			descr="The slowest car drive on some easy tracks." >
+		<car names="OT" />
+		<hud minimap="1" chkArrow="1" chkBeam="1" trkGhost="1" />
+		<sim boost="0" flip="0" />
+		<pass avgPoints="14" />
+		<tracks>
+			<t name="T1-Autumn" laps="1" passPoints="12.0" />
+			<t name="M2-Bumps" laps="1" passPoints="14.0" />
+			<t name="I4-Sunset" laps="1" passPoints="11.5" />
+			<t name="J1-Curly" laps="1" passPoints="9.0" />
+			<t name="J12-Fog" laps="1" passPoints="15.0" />
+		</tracks>
+	</challenge>
+
 	<challenge name="Castle Delivery" ver="1" difficulty="2" type="2" 
 			descr="Take the truck up the castle. Remember to use lower gears when going up hill. Also slow down before circle turns and turn early and wide, use handbrake.">
 		<sim boost="0" />
@@ -438,7 +453,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Ancient chase" ver="2" difficulty="3" type="3" 
+	<challenge name="Ancient Chase" ver="2" difficulty="3" type="3" 
 			descr="Fast drive through 2 ancient cities. Sometimes narrow and with sharp turns.">
 		<car names="SZ|XZ" />
 		<pass avgPoints="13" />
@@ -503,6 +518,18 @@
 			<t name="F9-MadMntn"  laps="1" passPos="2" />
 		</tracks>
 	</challenge>
+
+   <challenge name="Bridge Blaster" ver="1" difficulty="4" type="3"
+         descr="Race the fastest cars on bridged tracks as fast as you can while avoiding the walls. Note: when driving those fast but low suspension cars, you need to brake before all highly banked turns to not damage them." >
+      <car names="360|XZ|SZ" />
+      <sim boost="0" />
+      <pass avgPoints="11.5" />
+      <tracks>
+         <t name="W12-Peaks" laps="2" passPoints="11.5" />
+         <t name="F9-MadMntn" laps="1" passPoints="9" />
+         <t name="I9-Web" laps="1" passPoints="8" />
+      </tracks>
+   </challenge>
 
 
 <!--  Stunts  -->

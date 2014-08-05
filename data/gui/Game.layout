@@ -3732,8 +3732,12 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">
 						<Property key="Caption" value="#E0A0E0#{Graphs}2"/>
+						<Widget type="TextBox" skin="TextBox" position="16 276 144 20">
+							<Property key="Caption" value="Tire circles"/>
+							<Property key="TextColour" value="0.8 1 0.85"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 300 144 20">
-							<Property key="Caption" value="#{scale} - Tire circles"/>
+							<Property key="Caption" value="#{scale}"/>
 							<Property key="TextColour" value="0.8 1 0.85"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="248 300 320 16" name="TC_r">
@@ -3755,8 +3759,12 @@
 							<Property key="TextColour" value="0.8 1 0.8"/>
 						</Widget>
 
+						<Widget type="TextBox" skin="TextBox" position="16 356 144 20">
+							<Property key="Caption" value="Pacejka #{Graphs}"/>
+							<Property key="TextColour" value="0.8 0.85 1.0"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 380 144 20">
-							<Property key="Caption" value="#{max} Fy - Pacejka #{Graphs}"/>
+							<Property key="Caption" value="#{max} Fy"/>
 							<Property key="TextColour" value="0.8 0.85 1.0"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="248 380 320 16" name="TE_yf">
