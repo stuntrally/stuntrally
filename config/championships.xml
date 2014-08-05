@@ -223,9 +223,9 @@
 		<t name="F13-Castle"/>
 		<t name="F12-HighPeaks"/>
 		<t name="M3-Mudlake"/>
-		<t name="0W7-LJs-Mntn"/>
-		<t name="0W11-Glacier"/>
-		<t name="0W13-MtFog"/>
+		<t name="W7-LJs-Mntn"/>
+		<t name="W11-Glacier"/>
+		<t name="W13-MtFog"/>
 	</champ>
 
 	<champ name="Frenzy fellow" ver="4" difficulty="4" type="3" 
