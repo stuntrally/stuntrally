@@ -238,6 +238,7 @@
 	<Tag name="TipChangeReflect">Cambia il riflesso del colore dell'auto (metallo-specchio).</Tag>
 	<Tag name="filmgrain">Grana di film</Tag>
 	<Tag name="Replay">Replay</Tag>
+	<Tag name="InputOther3">Enter - show lap results</Tag>
 	<Tag name="TiresEdit4">End - attiva/disattiva parametri allineamento momento</Tag>
 	<Tag name="AutoRear">Cambio automatico posteriore</Tag>
 	<Tag name="TerGenFreq">Freq. di zoom</Tag>
@@ -1125,7 +1126,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prec.,pross. scheda (alt - sottoschede)</Tag>
 	<Tag name="Diff6">Estrema</Tag>
 	<Tag name="RplAll">Tutto</Tag>
-	<Tag name="InputOther3">Enter - show lap results</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

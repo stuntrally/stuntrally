@@ -120,7 +120,7 @@
 	<Tag name="Chall_Chase">Jagd</Tag>
 	<Tag name="InputMaxVal">Max. Wert</Tag>
 	<Tag name="SSS_SpeedFactor">Schnelligkeitsfaktor</Tag>
-	<Tag name="TipTrackList">Streckenliste, wähle eine Strecke um Info anzusehen. Enter drücken oder [Neues Spiel] klicken um zu fahren.</Tag>
+	<Tag name="TipTrackList">Streckenliste; Strecke wählen, um Info anzusehen. Eingabe drücken oder [Neues Spiel] anklicken zum Fahren.</Tag>
 	<Tag name="GrDensSmooth">Grasvert. glätten</Tag>
 	<Tag name="TerSmooth">Glätten</Tag>
 	<Tag name="TerHeightMap">Terrain-Heightmap</Tag>
@@ -238,6 +238,7 @@
 	<Tag name="TipChangeReflect">Wähle Auto-Farbenreflektion (matt bis spiegelnd)</Tag>
 	<Tag name="filmgrain">Filmkörnung</Tag>
 	<Tag name="Replay">Wiederholung</Tag>
+	<Tag name="InputOther3">Eingabe - Rundenergebnisse zeigen</Tag>
 	<Tag name="TiresEdit4">Ende - Ausrichtungsmomentparameter ein/aus</Tag>
 	<Tag name="AutoRear">Automatischer Rückwärtsgang</Tag>
 	<Tag name="TerGenFreq">Frequenz-Zoom</Tag>
@@ -256,7 +257,7 @@
 	<Tag name="Road_ChkR">ChkR</Tag>
 	<Tag name="Continue">Fortsetzen</Tag>
 	<Tag name="Length">Länge</Tag>
-	<Tag name="TipCarsList">Autoliste. Drücke Enter oder [Neues Spiel] um mit ausgewähltem Auto zu fahren.</Tag>
+	<Tag name="TipCarsList">Autoliste. Drücken Sie die Eingabetaste oder klicken Sie auf [Neues Spiel], um mit dem ausgewähltem Auto zu fahren.</Tag>
 	<Tag name="FluidSplash">Wasser-Spritzer</Tag>
 	<Tag name="Model">Modell</Tag>
 	<Tag name="InpSet_AxisHalf">Achse halb</Tag>
@@ -578,7 +579,7 @@
 	<Tag name="CarChange">Auto wechseln</Tag>
 	<Tag name="LTrFlDepth">max. Wassertiefe</Tag>
 	<Tag name="InputFluidsSize">Alt-LMT Größe, Alt-RMT Tiefe</Tag>
-	<Tag name="InputLockBrush">Enter - Pinselposition einrasten</Tag>
+	<Tag name="InputLockBrush">Eingabe - Pinselposition einrasten</Tag>
 	<Tag name="Bronze">Bronze</Tag>
 	<Tag name="TexCoordMul">Texturkoordinaten-Faktor</Tag>
 	<Tag name="Shadows">Schatten</Tag>
@@ -723,7 +724,7 @@
 	<Tag name="Difficulty">Schwierigkeit</Tag>
 	<Tag name="GraphicsAll_Higher">Höher</Tag>
 	<Tag name="Hint-6text">Halten sie [Strg] gedrückt, um den Boost zu benutzen. Abhängig von den Einstellungen wird Treibstoff für den Boost wahlweise jede Runde, über die Zeit oder unbegrenzt vergeben.</Tag>
-	<Tag name="EnterSave">Enter - speichern</Tag>
+	<Tag name="EnterSave">Eingabe - speichern</Tag>
 	<Tag name="InputMapLastChk">Zurücksetzen</Tag>
 	<Tag name="NetJoinLocked">Geschütztes Spiel</Tag>
 	<Tag name="ObjBuildings">Gebäude</Tag>
@@ -779,9 +780,9 @@
 	<Tag name="InputTerSmooth">S - Glätten (abflachen)</Tag>
 	<Tag name="AlreadyExists">Bereits vorhanden</Tag>
 	<Tag name="InputFocusFind">Ctrl-F Suche fokussieren</Tag>
-	<Tag name="InputOther1">Oben,Unten - navigieren in Listen  Enter - starten</Tag>
+	<Tag name="InputOther1">Oben,Unten - in Listen navigieren  Eingabe - starten</Tag>
 	<Tag name="TipModelDens">Wie oft das Modell auf der Strecke erscheint.</Tag>
-	<Tag name="InputOther2">Enter - Spielerfenster in Mehrspieler zeigen</Tag>
+	<Tag name="InputOther2">Eingabe - Spielerfenster in Mehrspieler zeigen</Tag>
 	<Tag name="InpSet_Fast">Schnell</Tag>
 	<Tag name="InputMain">Allgemein</Tag>
 	<Tag name="CarDesc_UV">Dieses großradige Gebrauchsfahrzeug wird von 4 Elektromotoren angetrieben. Es für für nahezu alle Strecken, außer die engen, geeignet. Großartig zum Erforschen anderer Planeten. Aber es hat eine schlechte Aerodynamik und bleibt im Schlamm stecken.</Tag>
@@ -902,7 +903,7 @@
 	<Tag name="NetHost">Host</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
 	<Tag name="InputRoadAltLMB">Alt-LMT (oder 1,2)</Tag>
-	<Tag name="Road1SurfOnly">Nur 1 Straßenbelag.</Tag>
+	<Tag name="Road1SurfOnly">Nur 1 Straßenbelag</Tag>
 	<Tag name="AlignSmooth">Glättungsgröße</Tag>
 	<Tag name="RollingResist">Rollwiderstand</Tag>
 	<Tag name="page">Page</Tag>
@@ -929,7 +930,7 @@
 	<Tag name="Copy">Kopieren</Tag>
 	<Tag name="Channel">Kanal</Tag>
 	<Tag name="CarDesc_LK4">Langsames und schweres Auto. Kann gut mit Bodenwellen umgehen. Ist stabil und leicht zu fahren. Es ist aber nicht für schnellere Strecken geeignet.</Tag>
-	<Tag name="TipFind">Nach Streckenname suchen</Tag>
+	<Tag name="TipFind">Geben Sie hier einen Teil des Namens der Strecke, nach der Sie suchen, ein (filtert die Liste).</Tag>
 	<Tag name="InputRoadOnPipe">8 - als Auf-Rohr-Abschnitt markieren</Tag>
 	<Tag name="AlignWidthAdd">Breite addieren</Tag>
 	<Tag name="UnitMph">mph</Tag>
@@ -1125,7 +1126,6 @@
 	<Tag name="InputNextOptTab">F2/F3 - Vorh./nächst. Tab (Alt: Untertab)</Tag>
 	<Tag name="Diff6">Extrem</Tag>
 	<Tag name="RplAll">Alle</Tag>
-	<Tag name="InputOther3">Enter - show lap results</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -238,6 +238,7 @@
 	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
 	<Tag name="filmgrain">Film Grain</Tag>
 	<Tag name="Replay">Replay</Tag>
+	<Tag name="InputOther3">Enter - show lap results</Tag>
 	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
 	<Tag name="AutoRear">Dat cu spatele automat</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
@@ -1125,7 +1126,6 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Diff6">Extreme</Tag>
 	<Tag name="RplAll">Toate</Tag>
-	<Tag name="InputOther3">Enter - show lap results</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
