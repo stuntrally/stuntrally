@@ -257,7 +257,7 @@ void CHud::Create()
 		//  gear  text  -----------
 		h.parent = app->mGui->createWidget<Widget>("",0,0,2560,1600,Align::Left,"Back","main"+s);
 
-		if (cm->bIsCar)
+		if (cm->vtype == V_Car)
 		{
 			h.txGear = h.parent->createWidget<TextBox>("TextBox",
 				0,y, 160,116, Align::Left, "Gear"+s);  h.txGear->setVisible(false);
@@ -280,7 +280,7 @@ void CHud::Create()
 		//h.txVel->setTextShadow(true);
 		
 		//  boost
-		if (!cm->bIsSphere)
+		if (cm->vtype != V_Sphere)
 		{
 			h.txBFuel = h.parent->createWidget<TextBox>("TextBox",
 				0,y, 120,80, Align::Right, "Fuel"+s);  h.txBFuel->setVisible(false);

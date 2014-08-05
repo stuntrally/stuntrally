@@ -84,7 +84,7 @@ void CARDYNAMICS::SetClutch(float value)
 
 float CARDYNAMICS::GetThrottle() const
 {
-	if (hover)  return hov_throttle;  //
+	if (vtype == V_Spaceship)  return hov_throttle;  //
 	return engine.GetThrottle();
 }
 
@@ -93,7 +93,7 @@ void CARDYNAMICS::SetThrottle(float value)
 	/// <><> damage reduce  from 50 %
 	float dmg = fDamage >= 100.f ? 0.f : (1.f - 0.6f * std::max(0.f, fDamage-50.f)/50.f);
 
-	if (hover || sphere)
+	if (vtype != V_Car)
 		hov_throttle = value * dmg;
 	else
 		engine.SetThrottle(value * dmg);

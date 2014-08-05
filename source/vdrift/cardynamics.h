@@ -167,10 +167,12 @@ public:
 	Dbl time;  // for wind only
 	
 	///  other vehicles  *  *  *
-	bool hover, sphere;  //> false for cars
+	VehicleType vtype;
+
 	float sphereYaw;  // dir
 	float hov_throttle, hov_roll;
-	void SimulateHover(Dbl dt), SimulateSphere(Dbl dt);
+
+	void SimulateSpaceship(Dbl dt), SimulateSphere(Dbl dt);
 	std::string sHov;
 
 	///  -- sim params (from .car)

@@ -71,7 +71,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 			///  body initial conditions
 			//  pos & rot
 			body.x.x = chassisPosition[0];  body.x.y = chassisPosition[1];  body.x.z = chassisPosition[2];
-			if (sphere)
+			if (vtype == V_Sphere)
 			{	body.q.x = 0.f;  body.q.y = 0.f;  body.q.z = 0.f;  body.q.w = 1.f;  // no rot
 			}else
 			{	body.q.x = chassisRotation[0];  body.q.y = chassisRotation[1];  body.q.z = chassisRotation[2];  body.q.w = chassisRotation[3];
@@ -91,7 +91,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 			///  add buoyancy force
 			if (ComputeBuoyancy(body, *poly, water, 9.8f))
 			{
-				if (sphere||hover)
+				if (vtype != V_Car)
 				{	body.F.x *= 0.15f;  body.F.y *= 0.15f;  }
 				chassis->applyCentralForce( btVector3(body.F.x,body.F.y,body.F.z) );
 				chassis->applyTorque(       btVector3(body.T.x,body.T.y,body.T.z) );
@@ -342,7 +342,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	cam_force[0]=0.0;  cam_force[1]=0.0;  cam_force[2]=0.0;
 
 
-	bool car = !hover && !sphere;
+	bool car = vtype == V_Car;
 	if (car)
 	{
 		UpdateWheelVelocity();
@@ -422,7 +422,8 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	}
 
 	///***  boost  -------------------------------------------
-	if (!sphere && doBoost > 0.01f && pSet->game.boost_type > 0)
+	if (vtype != V_Sphere &&
+		doBoost > 0.01f && pSet->game.boost_type > 0)
 	{
 		/// <><> damage reduce
 		float dmg = fDamage >= 80.f ? 0.f : (130.f - fDamage)*0.01f;
@@ -455,11 +456,11 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	
 	
 	///  hover
-	if (hover)
-		SimulateHover(dt);
-		
+	if (vtype == V_Spaceship)
+		SimulateSpaceship(dt);
+	else
 	///  sphere
-	if (sphere)
+	if (vtype == V_Sphere)
 		SimulateSphere(dt);
 	
 
@@ -626,7 +627,7 @@ void CARDYNAMICS::UpdateMass()
 
 ///  HOVER Spaceship
 ///..........................................................................................................
-void CARDYNAMICS::SimulateHover(Dbl dt)
+void CARDYNAMICS::SimulateSpaceship(Dbl dt)
 {
 	//sHov = "";
 

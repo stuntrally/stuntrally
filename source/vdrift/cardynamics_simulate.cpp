@@ -405,11 +405,8 @@ void CARDYNAMICS::UpdateTransmission(Dbl dt)
 {
 	driveshaft_rpm = CalculateDriveshaftRPM();
 
-	if (sphere || hover)  // no gearbox
-	{
-		int gear = 1;
-		ShiftGear(gear);
-	}
+	if (vtype != V_Car)  // no gearbox
+		ShiftGear(1);
 	else
 	if (autoshift)
 	{
@@ -431,8 +428,7 @@ void CARDYNAMICS::UpdateTransmission(Dbl dt)
 				const Dbl spdmarg = 2.0, spd = GetSpeed();
 				if (g <-0.5 && spd < spdmarg && gear == 1)  gear =-1;  else
 				if (g <-0.5 && spd < spdmarg && gear ==-1)  gear = 1;
-			}
-		}
+		}	}
 		ShiftGear(gear);
 	}
 

@@ -131,7 +131,7 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 		Ogre::Vector3 norm(hit.norm.getX(), hit.norm.getZ(), -hit.norm.getY());
 		float vlen = vel.length(), normvel = abs(vel.dotProduct(norm));
 
-		if (cd->sphere)  // no damage when rolling
+		if (cd->vtype == V_Sphere)  // no damage when rolling
 		{
 			//LogO("vlen "+fToStr(vlen,2,4)+"  nv "+fToStr(normvel,2,4)+"  f "+fToStr(force,2,4));
 			if (force > 11.f)  // hit
@@ -155,7 +155,7 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 		(-cd->GetOrientation()).RotateVector(cN);
 		cd->vHitCarN = Ogre::Vector3(cN[0],cN[1],cN[2]);  cd->vHitCarN.normalise();
 		//----  factors
-		if (!cd->sphere)
+		if (!cd->vtype != V_Sphere)
 		{
 			float sx = cd->vHitCarN.x, sy = cd->vHitCarN.y, sz = cd->vHitCarN.z;
 			float nx = fabs(sx), ny = fabs(sy), nz = fabs(sz);

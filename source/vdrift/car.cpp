@@ -395,7 +395,7 @@ void CAR::SetPosition(const MATHVECTOR<float,3> & pos, const QUATERNION<float> &
 	tr.setOrigin(ToBulletVector(pos));
 	tr.setRotation(ToBulletQuaternion(rot));
 	dynamics.chassis->setWorldTransform(tr);
-	if (dynamics.sphere)  dynamics.sphereYaw = rot[0]; //o
+	if (dynamics.vtype == V_Sphere)  dynamics.sphereYaw = rot[0]; //o
 }
 void CAR::SetPosition(const MATHVECTOR<Dbl,3> & pos, const QUATERNION<Dbl> & rot)
 {
@@ -406,7 +406,7 @@ void CAR::SetPosition(const MATHVECTOR<Dbl,3> & pos, const QUATERNION<Dbl> & rot
 	tr.setOrigin(ToBulletVector(pos));
 	tr.setRotation(ToBulletQuaternion(rot));
 	dynamics.chassis->setWorldTransform(tr);
-	if (dynamics.sphere)  dynamics.sphereYaw = rot[0]; //o
+	if (dynamics.vtype == V_Sphere)  dynamics.sphereYaw = rot[0]; //o
 }
 
 ///  reset car, pos and state
@@ -423,7 +423,7 @@ void CAR::ResetPos(bool fromStart)
 	dynamics.SynchronizeBody();  // set body from chassis
 	if (fromStart)
 	{
-		if (dynamics.sphere)
+		if (dynamics.vtype == V_Sphere)
 			dynamics.sphereYaw = sphYawAtStart;
 
 		dynamics.boostFuel = dynamics.boostFuelStart;  // restore boost fuel

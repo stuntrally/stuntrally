@@ -7,6 +7,11 @@ enum WHEEL_POSITION
 	WHEEL_POSITION_SIZE
 };
 
+enum VehicleType
+{
+	V_Car=0, V_Spaceship, V_Sphere
+};
+
 namespace SURFACE  {
 enum CARSURFACETYPE
 {

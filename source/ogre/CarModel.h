@@ -8,6 +8,7 @@
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
 #include "../shiny/Main/MaterialInstance.hpp"
+#include "../vdrift/cardefs.h"
 #include "CarPosInfo.h"
 
 namespace Ogre {  class SceneNode;  class Terrain;  class Camera;  class SceneManager;
@@ -37,9 +38,8 @@ public:
 	bool isGhost() const {  return eType >= CT_GHOST;  }
 	bool isGhostTrk() const {  return eType == CT_TRACK;  }
 
-	bool bIsCar;  // if not, hover,sphere etc
-	bool bIsSphere;
-
+	VehicleType vtype;
+	
 	//  ctor
 	CarModel(int index, int colorId, eCarType type, const std::string& name,
 		Ogre::SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* sc,

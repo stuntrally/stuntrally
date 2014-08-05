@@ -284,7 +284,7 @@ void CAR::UpdateSounds(float dt)
 		if (gain > loudest)  loudest = gain;
 		gainlist.push_back(std::pair <SOUNDSOURCE*, float> (&sound, gain));
 
-		if (dynamics.hover /*|| dynamics.sphere*/)
+		if (dynamics.vtype == V_Spaceship)
 		{
 			sound.SetPitch(1.0);
 			gain = total_gain = throttle;
@@ -347,7 +347,7 @@ void CAR::UpdateSounds(float dt)
 	//  wind
 	{
 		float gain = dynVel;
-		if (dynamics.hover)   gain *= 0.7f;
+		if (dynamics.vtype == V_Spaceship)   gain *= 0.7f;
 		//if (dynamics.sphere)  gain *= 0.9f;
 		if (gain < 0.f)	gain = -gain;
 		gain *= 0.02f;	gain *= gain;
@@ -358,7 +358,7 @@ void CAR::UpdateSounds(float dt)
 	}
 
 	//  susp bump
-	if (!dynamics.sphere && !dynamics.hover)
+	if (dynamics.vtype == V_Car)
 	for (int i = 0; i < 4; i++)
 	{
 		suspbump[i].Update(suspVel[i], suspDisp[i], dt);

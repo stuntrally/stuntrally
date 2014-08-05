@@ -15,9 +15,8 @@ using namespace std;
 
 
 CARDYNAMICS::CARDYNAMICS() :
-	world(NULL), chassis(NULL), whTrigs(0), pGame(0),
-	hover(false), hov_throttle(0.f), hov_roll(0.f),
-	sphere(false), sphereYaw(0.f),
+	world(NULL), chassis(NULL), whTrigs(0), pGame(0), vtype(V_Car),
+	hov_throttle(0.f), hov_roll(0.f), sphereYaw(0.f),
 	drive(AWD), tacho_rpm(0), engine_vol_mul(1),
 	autoclutch(true), autoshift(true), autorear(true),
 	shifted(true), shift_gear(0),
@@ -224,11 +223,11 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 	if (!c.GetParam("drive", drivetype, error_output))  return false;
 
 	if (drivetype == "hover")  //>
-	{	hover = true;  drivetype = "AWD";  }
+	{	vtype = V_Spaceship;  drivetype = "AWD";  }
 	else if (drivetype == "sphere")
-	{	sphere = true;  drivetype = "AWD";  }
-	//if (!hover)
-		SetDrive(drivetype);
+	{	vtype = V_Sphere;  drivetype = "AWD";  }
+
+	SetDrive(drivetype);
 
 	float final_drive, a, a_tq(0), a_tq_dec(0);
 	///  new 3 sets
@@ -632,7 +631,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 	}
 
 	//  hover params
-	if (hover || sphere)
+	if (vtype != V_Car)
 	{
 		c.GetParam("hover.hAbove",		 hov.hAbove);		c.GetParam("hover.hRayLen",		 hov.hRayLen);
 										 
@@ -687,7 +686,7 @@ void CARDYNAMICS::Init(
 	cam_body.SetPosition(zero);
 	cam_body.SetInitialForce(zero);
 
-	if (sphere)
+	if (vtype == V_Sphere)
 	{	Ogre::Quaternion q = Axes::toOgre(orientation);
 		sphereYaw = PI_d - q.getYaw().valueRadians();
 	}
@@ -725,7 +724,7 @@ void CARDYNAMICS::Init(
 	btVector3 size = ToBulletVector(box.GetSize() - verticalMargin);
 
 	btCollisionShape* chassisShape;
-	if (sphere)
+	if (vtype == V_Sphere)
 	{	chassisShape = new btSphereShape(1.f);
 		//chassisShape = new btBoxShape(btVector3(1.f,1.f,0.2f));
 		chassisShape->setMargin(0.05f);  //!? doesnt work, bounces too much
@@ -745,7 +744,7 @@ void CARDYNAMICS::Init(
 
 		btScalar r2 = r * coll_R2m;
 		btScalar l1 = coll_posLfront, l2 = coll_posLback, l1m = l1*0.5, l2m = l2*0.5;
-		float ww = hover ? coll_FrWmul : 1.f;
+		float ww = vtype == V_Spaceship ? coll_FrWmul : 1.f;
 		float wt = coll_TopWmul * ww;
 
 		rad[i] = r2;  pos[i] = btVector3( l1 , -w*ww, -h*coll_FrHmul);  ++i;  // front

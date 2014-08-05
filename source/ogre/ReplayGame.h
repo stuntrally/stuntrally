@@ -42,11 +42,14 @@ struct ReplayHeader
 	char num_laps;
 	char networked;   // if 1, was networked, so use nicks when playing
 	char sim_mode[32];// easy, normal, etc
-	//char car_type[4];
+
+	char car_type[4]; // cars type
 
 	ReplayHeader();
 	void Default(), SafeEnd0();
 };
+
+//  TODO: rework this, not so much data, shorts not floats, range, interpolation etc..
 
 
 //  car data, for each simulation frame

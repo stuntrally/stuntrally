@@ -98,7 +98,7 @@ void CHud::Update(int carId, float time)
 		float vel=0.f, rpm=0.f, clutch=1.f;  int gear=1;
 		GetVals(c,&vel,&rpm,&clutch,&gear);
 
-		if (!app->carModels[c]->bIsCar)
+		if (!app->carModels[c]->vtype == V_Car)
 			rpm = -1.f;  // hide rpm gauge
 		
 		//  update all mini pos tri
