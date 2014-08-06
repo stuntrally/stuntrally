@@ -889,14 +889,14 @@
 	</challenge>
 
 	<challenge name="Test 4 laps, hud" ver="1" difficulty="2" type="7" 
-			descr="Test Challenge 4, 2 laps.
+			descr="Test Challenge 4, 4 laps.
 			Allow checkpoint arrow,beam and abs,tcs. Deny track's ghost.">
 		<cartype names="Extreme" />
 			<sim abs="1" tcs="1" />
 			<hud chkArrow="1" chkBeam="1" trkGhost="0" />
 		<pass avgPos="5" />
 		<tracks>
-			<t name="TestC4-ow"  laps="2" passPoints="5.0" />
+			<t name="TestC4-ow"  laps="4" passPoints="5.0" />
 		</tracks>
 	</challenge>
 
