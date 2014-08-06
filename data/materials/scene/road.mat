@@ -27,8 +27,8 @@ material checkpoint_normal
 material checkpoint_lap
 {
 	parent checkpoint
-	specular 0.3 0.4 0.3  32
-	emissive 0.7 11.0 0.7
+	specular 0.3 0.4 0.4  32
+	emissive 0.6 11.0 11.0
 }
 
 //  finish, last lap begins after passing it
@@ -43,8 +43,8 @@ material checkpoint_lastlap
 material checkpoint_finish
 {
 	parent checkpoint
-	specular 0.4 0.4 0.4  32
-	emissive 1.1 11.0 1.1
+	specular 0.4 0.2 0.2  32
+	emissive 11.0 0.7 0.1
 }
 
 
