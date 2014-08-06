@@ -15,7 +15,7 @@ material checkpoint
 	twoside_diffuse true
 }
 
-// a normal checkpoint which is not the start/finish point
+// normal checkpoint, not finish
 material checkpoint_normal
 {
 	parent checkpoint
@@ -23,28 +23,28 @@ material checkpoint_normal
 	emissive 0.1 11.0 0.1
 }
 
-// start/finish point; does not end race
+//  finish, does not end race
 material checkpoint_lap
 {
 	parent checkpoint
-	specular 0.2 0.4 0.4  32 //x4
-	emissive 0.1 11.0 11.0
+	specular 0.3 0.4 0.3  32
+	emissive 0.7 11.0 0.7
 }
 
-// start/finish point; last lap begins after passing it
+//  finish, last lap begins after passing it
 material checkpoint_lastlap
 {
 	parent checkpoint
-	specular 0.2 0.2 0.4  32 //x4
-	emissive 0.1 0.1 11.0 
+	specular 0.4 0.4 0.2  32
+	emissive 11.0 11.0 0.1
 }
 
-// the very last checkpoint; ends race after passing
+//  the very last checkpoint, ends race after passing
 material checkpoint_finish
 {
 	parent checkpoint
-	specular 0.4 0.2 0.2  32 //x4
-	emissive 11.0 0.1 0.1
+	specular 0.4 0.4 0.4  32
+	emissive 1.1 11.0 1.1
 }
 
 
