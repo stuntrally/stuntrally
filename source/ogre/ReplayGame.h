@@ -43,8 +43,6 @@ struct ReplayHeader
 	char networked;   // if 1, was networked, so use nicks when playing
 	char sim_mode[32];// easy, normal, etc
 
-	char car_type[4]; // cars type
-
 	ReplayHeader();
 	void Default(), SafeEnd0();
 };
@@ -90,7 +88,7 @@ struct ReplayFrame
 	float fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
 	float whMudSpin, fHitForce, fCarScrap, fCarScreech;
-	float hov_roll;
+	float hov_roll;  //=sph_yaw for O
 
 	ReplayFrame();
 	void FromCar(const CAR* pCar);

@@ -58,14 +58,14 @@ void CarModel::UpdNextCheck()
 	MaterialPtr mtr;
 	if (iNumChks == pApp->scn->road->mChks.size() && iCurChk != -1)
 	{
-		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0; // FIXME: || app->mClient;
-		int lap = pGame->timer.GetCurrentLap(iIndex) + 1;
-		if (hasLaps && (lap == pSet->game.num_laps - 1))
-			mtr = MaterialManager::getSingleton().getByName("checkpoint_lastlap");
-		else if (hasLaps && (lap == pSet->game.num_laps))
-			mtr = MaterialManager::getSingleton().getByName("checkpoint_finish");
-		else
-			mtr = MaterialManager::getSingleton().getByName("checkpoint_lap");
+		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0 || pApp->mClient;
+		int lap = pGame->timer.GetCurrentLap(iIndex) + 1, laps = pSet->game.num_laps;
+		String smtr = "checkpoint_lap";
+		if (hasLaps)
+		if (lap == laps - 1)   smtr = "checkpoint_lastlap";
+		else if (lap == laps)  smtr = "checkpoint_finish";
+
+		mtr = MaterialManager::getSingleton().getByName(smtr);
 		entNextChk->setMaterial(mtr);
 		p = vStartPos;  // finish
 	}
@@ -203,10 +203,12 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 
 	//  set car pos and rot
 	pMainNode->setPosition(posInfo.pos);
-	if (posInfo.hov_roll != 0.f)
-	{	//  hover roll  vis only
+	if (vtype == V_Sphere)
+		pMainNode->setOrientation(Quaternion(Quaternion(Degree(-posInfo.hov_roll),Vector3::UNIT_Y)));
+	else
+	if (vtype == V_Spaceship)  // roll  vis only
 		pMainNode->setOrientation(posInfo.rot * Quaternion(Degree(posInfo.hov_roll),Vector3::UNIT_X));
-	}else
+	else
 		pMainNode->setOrientation(posInfo.rot);
 	
 	///()  grass sphere pos
@@ -224,8 +226,8 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 		fCam->Apply(posInfoCam);
 
 	//  upd rotY for minimap
-	if (posInfo.sph_yaw != 0.f)  //-
-		angCarY = posInfo.sph_yaw;
+	if (vtype == V_Sphere)
+		angCarY = posInfo.hov_roll * 180.f / PI_d + 180.f;
 	else
 	{	Quaternion q = posInfo.rot * Quaternion(Degree(90),Vector3(0,1,0));
 		angCarY = q.getYaw().valueDegrees() + 90.f;

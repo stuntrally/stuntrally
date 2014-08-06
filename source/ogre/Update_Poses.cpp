@@ -92,6 +92,12 @@ void App::newPoses(float time)  // time only for camera update
 
 				pi.FromRpl(&gf);
 
+				if (carM->vtype == V_Sphere)
+				{	//  weird fix, mini rot
+					pi.carY = Vector3::UNIT_Y;
+					pi.hov_roll = -pi.hov_roll;
+				}
+
 				for (int w=0; w < 4; ++w)
 					pi.whR[w] = replay.header.whR[c][w]; //
 			}
@@ -138,6 +144,8 @@ void App::newPoses(float time)  // time only for camera update
 
 			pCar->SetPosRewind(rf.pos, rf.rot, rf.vel, rf.angvel);
 			pCar->dynamics.fDamage = rf.fDamage;  // take damage back
+			if (carModels[c]->vtype == V_Sphere)
+				pCar->dynamics.sphereYaw = rf.hov_roll;
 			carModels[c]->First();
 		}
 		else if (c < 4)  // save data
@@ -148,11 +156,13 @@ void App::newPoses(float time)  // time only for camera update
 			
 			fr.pos = cd.body.GetPosition();
 			fr.rot = cd.body.GetOrientation();
-			if (cd.vtype == V_Sphere)  fr.rot[0] = cd.sphereYaw; //o
 			fr.vel = cd.GetVelocity();
 			fr.angvel = cd.GetAngularVelocity();
 			fr.fDamage = cd.fDamage;
-			fr.hov_roll = cd.hov_roll;  //? fr.hov_throttle = cd.hov_throttle;
+			if (cd.vtype == V_Sphere)
+				fr.hov_roll = cd.sphereYaw;
+			else
+				fr.hov_roll = cd.hov_roll;  //? fr.hov_throttle = cd.hov_throttle;
 
 			rewind.AddFrame(fr, c);  // rec rewind
 		}

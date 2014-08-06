@@ -19,12 +19,14 @@ struct PosInfo
 	//  car
 	Ogre::Vector3 pos, carY;
 	//  wheel
-	Ogre::Vector3 whPos[4];  Ogre::Quaternion rot, whRot[4];  float whR[4];
+	Ogre::Vector3 whPos[4];
+	Ogre::Quaternion rot, whRot[4];  float whR[4];
+
 	float whVel[4], whSlide[4], whSqueal[4];
 	int whTerMtr[4],whRoadMtr[4];
 
 	float fboost,steer, percent;  char braking;
-	float hov_roll, hov_throttle, sph_yaw;
+	float hov_roll/*= sph_yaw for O*/, hov_throttle;
 
 	//  fluids
 	float whH[4],whAngVel[4], speed, whSteerAng[4];  int whP[4];

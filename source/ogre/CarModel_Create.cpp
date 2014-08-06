@@ -31,12 +31,13 @@
 #include <OgreBillboardChain.h>
 #include <OgreSceneNode.h>
 using namespace Ogre;
+using namespace std;
 #define  FileExists(s)  PATHMANAGER::FileExists(s)
 
 
 //  ctor
 //------------------------------------------------------------------------------------------------------
-CarModel::CarModel(int index, int colorId, eCarType type, const std::string& name,
+CarModel::CarModel(int index, int colorId, eCarType type, const string& name,
 	SceneManager* sceneMgr, SETTINGS* set, GAME* game, Scene* s, Camera* cam, App* app)
 	:mSceneMgr(sceneMgr), pSet(set), pGame(game), sc(s), mCamera(cam), pApp(app)
 	,iIndex(index), iColor(colorId % 6), sDirname(name), eType(type), vtype(V_Car)
@@ -121,7 +122,7 @@ void CarModel::Load(int startId)
 	
 
 	///  load config .car
-	std::string pathCar;
+	string pathCar;
 	pApp->gui->GetCarPath(&pathCar, 0, 0, sDirname, pApp->mClient);  // force orig for newtorked games
 	LoadConfig(pathCar);
 	
@@ -145,7 +146,6 @@ void CarModel::Load(int startId)
 		{	rot.Rotate(PI_d, 0,0,1);  rot[0] = -rot[0];  rot[1] = -rot[1];  }
 
 		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, eType == CT_REMOTE, iIndex);
-		vtype = pCar->dynamics.vtype;
 
 		if (!pCar)  LogO("Error creating car " + sDirname + "  path: " + pathCar);
 		else  pCar->pCarM = this;
@@ -195,7 +195,7 @@ static void ConvertV2to1(float & x, float & y, float & z)
 	float tx = x, ty = y, tz = z;
 	x = ty;  y = -tx;  z = tz;
 }
-void CarModel::LoadConfig(const std::string & pathCar)
+void CarModel::LoadConfig(const string & pathCar)
 {
 	Defaults();
 
@@ -203,6 +203,17 @@ void CarModel::LoadConfig(const std::string & pathCar)
 	CONFIGFILE cf;
 	if (!cf.Load(pathCar))
 	{  LogO("!! CarModel: Can't load .car "+pathCar);  return;  }
+
+
+	//  vehicle type
+	vtype = V_Car;
+	string drive;
+	cf.GetParam("drive", drive);
+
+	if (drive == "hover")  //>
+		vtype = V_Spaceship;
+	else if (drive == "sphere")
+		vtype = V_Sphere;
 
 
 	//-  custom interior model offset
@@ -221,7 +232,7 @@ void CarModel::LoadConfig(const std::string & pathCar)
 	//  thruster  spaceship hover  max 4 pairs
 	for (int i=0; i < 4; ++i)
 	{
-		std::string s = "model_ofs.thrust";
+		string s = "model_ofs.thrust";
 		if (i > 0)  s += toStr(i);
 		cf.GetParam(s+"-x", thrusterOfs[i][0]);
 		cf.GetParam(s+"-y", thrusterOfs[i][1]);
@@ -266,7 +277,7 @@ void CarModel::LoadConfig(const std::string & pathCar)
 	WHEEL_POSITION leftside = FRONT_LEFT, rightside = FRONT_RIGHT;
 	float value;
 	bool both = cf.GetParam("tire-both.radius", value);
-	std::string posstr = both ? "both" : "front";
+	string posstr = both ? "both" : "front";
 
 	for (int p = 0; p < 2; ++p)
 	{
@@ -293,7 +304,7 @@ void CarModel::LoadConfig(const std::string & pathCar)
 	cf.GetParam("version", version);
 	for (int i = 0; i < 4; ++i)
 	{
-		std::string sPos;
+		string sPos;
 		if (i == 0)			sPos = "FL";
 		else if (i == 1)	sPos = "FR";
 		else if (i == 2)	sPos = "RL";
@@ -674,17 +685,17 @@ void CarModel::RecreateMaterials()
 		// change textures for the car
 		if (m->hasProperty("diffuseMap"))
 		{
-			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty("diffuseMap"), 0).get();
+			string v = sh::retrieveValue<sh::StringValue>(m->getProperty("diffuseMap"), 0).get();
 			m->setProperty("diffuseMap", sh::makeProperty<sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
 		}
 		if (m->hasProperty("carPaintMap"))
 		{
-			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty("carPaintMap"), 0).get();
+			string v = sh::retrieveValue<sh::StringValue>(m->getProperty("carPaintMap"), 0).get();
 			m->setProperty("carPaintMap", sh::makeProperty<sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
 		}
 		if (m->hasProperty("reflMap"))
 		{
-			std::string v = sh::retrieveValue<sh::StringValue>(m->getProperty("reflMap"), 0).get();
+			string v = sh::retrieveValue<sh::StringValue>(m->getProperty("reflMap"), 0).get();
 			m->setProperty("reflMap", sh::makeProperty<sh::StringValue>(new sh::StringValue(sDirname + "_" + v)));
 		}
 		sMtr[i] = sMtr[i] + mtrId;
@@ -734,11 +745,11 @@ void CarModel::CreateReflection()
 	pReflect->Create();
 }
 
-void CarModel::requestedConfiguration(sh::MaterialInstance* m, const std::string& configuration)
+void CarModel::requestedConfiguration(sh::MaterialInstance* m, const string& configuration)
 {
 }
 
-void CarModel::createdConfiguration(sh::MaterialInstance* m, const std::string& configuration)
+void CarModel::createdConfiguration(sh::MaterialInstance* m, const string& configuration)
 {
 	UpdateLightMap();
 	ChangeClr();
