@@ -51,6 +51,7 @@ CarModel::CarModel(int index, int colorId, eCarType type, const string& name,
 	,bGetStPos(true), fChkTime(0.f), iWonPlace(0), iWonPlaceOld(0), iWonMsgTime(0.f)
 	,iInChk(-1),iCurChk(-1), iNumChks(0), iNextChk(0), iLoopChk(-1)  //ResetChecks();  // no road yet
 	,iInWrChk(-1), timeAtCurChk(0.f), iLoopLastCam(-1)
+	,sChkMtr("checkpoint_normal"), bChkUpd(true)
 	,distFirst(1.f), distLast(1.f), distTotal(10.f), trackPercent(0.f)
 	,updTimes(1), updLap(1), fLapAlpha(1.f)
 {

@@ -138,6 +138,7 @@ public:
 	float timeAtCurChk;
 	//bool Checkpoint(const PosInfo& posInfo, class SplineRoad* road);  // update
 	Ogre::Vector3 vStartPos;  void ResetChecks(bool bDist=false), UpdNextCheck(), ShowNextChk(bool visible);
+	Ogre::String sChkMtr;  bool bChkUpd;
 	//  for loop camera change
 	int iLoopChk, iLoopLastCam;
 	

@@ -55,7 +55,6 @@ void CarModel::UpdNextCheck()
 	if (pApp->scn->road->mChks.empty())  return;
 
 	Vector3 p;
-	MaterialPtr mtr;
 	if (iNumChks == pApp->scn->road->mChks.size() && iCurChk != -1)
 	{
 		bool hasLaps = pSet->game.local_players > 1 || pSet->game.champ_num >= 0 || pSet->game.chall_num >= 0 || pApp->mClient;
@@ -64,16 +63,15 @@ void CarModel::UpdNextCheck()
 		if (hasLaps)
 		if (lap == laps - 1)   smtr = "checkpoint_lastlap";
 		else if (lap == laps)  smtr = "checkpoint_finish";
-
-		mtr = MaterialManager::getSingleton().getByName(smtr);
-		entNextChk->setMaterial(mtr);
 		p = vStartPos;  // finish
+		sChkMtr = smtr;
+		bChkUpd = true;
 	}
 	else
 	{
 		p = pApp->scn->road->mChks[iNextChk].pos;
-		mtr = MaterialManager::getSingleton().getByName("checkpoint_normal");
-		entNextChk->setMaterial(mtr);
+		sChkMtr = "checkpoint_normal";
+		bChkUpd = true;
 	}
 		
 	p.y -= gPar.chkBeamSy;  // lower
@@ -180,6 +178,14 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 {	
 	pReflect->camPosition = pMainNode->getPosition();
 	int w,i;
+	
+	//  upd chk mtr
+	if (bChkUpd && entNextChk)
+	{
+		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sChkMtr);
+		if (!mtr.isNull())
+			entNextChk->setMaterial(mtr);
+	}
 
 	//  stop/resume par sys
 	float fa = pGame->pause ? 0.f : 1.f;
