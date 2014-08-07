@@ -385,6 +385,10 @@ void CHud::Update(int carId, float time)
 	//  boost fuel (time)  ------
 	if (h.txBFuel && pCar && h.txBFuel->getVisible())
 	{
+		float f = 0.1f * std::min(10.f, pCar->dynamics.boostFuel);
+		//ColourValue c;  c.setHSB(0.6f - f*0.1f, 0.7f + f*0.3f, 0.8f + f*0.2f);
+		//h.txBFuel->setTextColour(Colour(c.r,c.g,c.b));
+		h.txBFuel->setTextColour(Colour(f*0.35f +0.25f, std::min(1.f, f*0.9f +0.5f), std::min(1.f, f*0.6f +0.75f)));
 		h.txBFuel->setCaption(fToStr(pCar->dynamics.boostFuel,1,3));
 	}
 
