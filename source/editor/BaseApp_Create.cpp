@@ -145,8 +145,8 @@ void BaseApp::createFrameListener()
 	mInputWrapper->setKeyboardEventCallback(this);
 	mInputWrapper->setWindowEventCallback(this);
 	mCursorManager = new SFO::SDLCursorManager();
-	mCursorManager->setEnabled(true);
 	onCursorChange(MyGUI::PointerManager::getInstance().getDefaultPointer());
+	mCursorManager->setEnabled(true);
 
 	mRoot->addFrameListener(this);
 }

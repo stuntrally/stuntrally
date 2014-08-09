@@ -37,7 +37,8 @@ namespace SFO
         //turn on hardware cursors
         if(enabled)
         {
-            _setGUICursor(mCurrentCursor);
+            if (!mCurrentCursor.empty())
+                _setGUICursor(mCurrentCursor);
         }
         //turn off hardware cursors
         else
@@ -68,7 +69,10 @@ namespace SFO
 
     void SDLCursorManager::_setGUICursor(const std::string &name)
     {
-        SDL_SetCursor(mCursorMap.find(name)->second);
+        CursorMap::const_iterator curs_iter = mCursorMap.find(name);
+        assert (curs_iter != mCursorMap.end());
+
+        SDL_SetCursor(curs_iter->second);
     }
 
     void SDLCursorManager::receiveCursorInfo(const std::string& name, Ogre::TexturePtr tex, Uint8 left, Uint8 top, Uint8 size_x, Uint8 size_y, Uint8 hotspot_x, Uint8 hotspot_y)

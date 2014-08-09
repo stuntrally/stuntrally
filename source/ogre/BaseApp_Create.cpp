@@ -124,8 +124,8 @@ void BaseApp::createFrameListener()
 	mInputWrapper->setJoyEventCallback(this);
 	mInputWrapper->setWindowEventCallback(this);
 	mCursorManager = new SFO::SDLCursorManager();
-	mCursorManager->setEnabled(true);
 	onCursorChange(MyGUI::PointerManager::getInstance().getDefaultPointer());
+	mCursorManager->setEnabled(true);
 
 	std::string file = PATHMANAGER::UserConfigDir()+"/input.xml";
 	mInputCtrl = new ICS::InputControlSystem(file, true, mBindListner, NULL, 100);
