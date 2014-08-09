@@ -9,7 +9,6 @@ namespace SFO
 
     SDLCursorManager::SDLCursorManager() :
         mEnabled(false),
-        mCursorVisible(false),
         mInitialized(false)
     {
     }
@@ -69,46 +68,26 @@ namespace SFO
 
     void SDLCursorManager::_setGUICursor(const std::string &name)
     {
-        if(mEnabled && mCursorVisible)
-        {
-            SDL_SetCursor(mCursorMap.find(name)->second);
-            _setCursorVisible(mCursorVisible);
-        }
+        SDL_SetCursor(mCursorMap.find(name)->second);
     }
 
-    void SDLCursorManager::_setCursorVisible(bool visible)
+    void SDLCursorManager::receiveCursorInfo(const std::string& name, Ogre::TexturePtr tex, Uint8 left, Uint8 top, Uint8 size_x, Uint8 size_y, Uint8 hotspot_x, Uint8 hotspot_y)
     {
-        if(!mEnabled)
-            return;
-
-        SDL_ShowCursor(visible ? SDL_TRUE : SDL_FALSE);
-    }
-
-    void SDLCursorManager::cursorVisibilityChange(bool visible)
-    {
-        mCursorVisible = visible;
-
-        _setGUICursor(mCurrentCursor);
-        _setCursorVisible(visible);
-    }
-
-	void SDLCursorManager::receiveCursorInfo(const std::string& name, Ogre::TexturePtr tex, Uint8 left, Uint8 top, Uint8 size_x, Uint8 size_y, Uint8 hotspot_x, Uint8 hotspot_y)
-    {
-		_createCursorFromResource(name, tex, left, top, size_x, size_y, hotspot_x, hotspot_y);
+        _createCursorFromResource(name, tex, left, top, size_x, size_y, hotspot_x, hotspot_y);
     }
 
     /// \brief creates an SDL cursor from an Ogre texture
-	void SDLCursorManager::_createCursorFromResource(const std::string& name, Ogre::TexturePtr tex, Uint8 left, Uint8 top, Uint8 size_x, Uint8 size_y, Uint8 hotspot_x, Uint8 hotspot_y)
+    void SDLCursorManager::_createCursorFromResource(const std::string& name, Ogre::TexturePtr tex, Uint8 left, Uint8 top, Uint8 size_x, Uint8 size_y, Uint8 hotspot_x, Uint8 hotspot_y)
     {
         if (mCursorMap.find(name) != mCursorMap.end())
             return;
 
         // blit to memory
-		std::vector<Ogre::uint32> data;
-		data.resize(size_x*size_y);
-		Ogre::PixelBox destImage(size_x, size_y, 1, tex->getFormat(), &data[0]);
-		Ogre::Image::Box srcBox(left, top, left+size_x, top+size_y);
-		tex->getBuffer()->blitToMemory(srcBox, destImage);
+        std::vector<Ogre::uint32> data;
+        data.resize(size_x*size_y);
+        Ogre::PixelBox destImage(size_x, size_y, 1, tex->getFormat(), &data[0]);
+        Ogre::Image::Box srcBox(left, top, left+size_x, top+size_y);
+        tex->getBuffer()->blitToMemory(srcBox, destImage);
 
         SDL_Surface* surf = SDL_CreateRGBSurface(0,size_x,size_y,32,0xFF000000,0x00FF0000,0x0000FF00,0x000000FF);
 

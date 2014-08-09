@@ -10,7 +10,7 @@
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/Slider.h"
 #include <boost/filesystem.hpp>
-#include "../sdl4ogre/sdlcursormanager.hpp"
+#include "../sdl4ogre/sdlinputwrapper.hpp"
 #include <MyGUI.h>
 #include <MyGUI_InputManager.h>
 #include <OgreTimer.h>
@@ -116,7 +116,7 @@ void CGui::InitGui()
 
 
 	//  center mouse pos
-	app->mCursorManager->cursorVisibilityChange(app->bGuiFocus || !app->bMoveCam);
+	app->mInputWrapper->setMouseVisible(app->bGuiFocus || !app->bMoveCam);
 	gcom->GuiCenterMouse();
 	
 	//  hide  ---

@@ -54,7 +54,7 @@ public:
     //-- Not so common control events, so are not required --//
 
     //! Joystick Event, and povID
-    virtual bool povMoved( const SDL_JoyHatEvent &arg, int index) {return true;}
+    virtual bool povMoved( const SDL_JoyHatEvent &arg, int index) {}
 };
 
 class WindowListener
@@ -67,6 +67,8 @@ public:
 
     /** @remarks The window got / lost input focus */
     virtual void windowFocusChange( bool have_focus ) {}
+
+    virtual void windowClosed () {}
 
     virtual void windowResized (int x, int y) {}
 };

@@ -203,7 +203,7 @@ void App::UpdVisGui()
 	}
 
 	bool vis = g || !bMoveCam;
-	mCursorManager->cursorVisibilityChange(vis);
+	mInputWrapper->setMouseVisible(vis);
 	mInputWrapper->setMouseRelative(!vis);
 	mInputWrapper->setGrabPointer(!vis && pSet->mouse_capture);
 

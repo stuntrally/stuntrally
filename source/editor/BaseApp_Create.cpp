@@ -140,7 +140,7 @@ void BaseApp::createFrameListener()
 	ovTerMtr = ovr.getOverlayElement("Editor/TerPrvPanel");
 
 
-	mInputWrapper = new SFO::InputWrapper(mSDLWindow, mWindow);
+	mInputWrapper = new SFO::InputWrapper(mSDLWindow, mWindow, true);
 	mInputWrapper->setMouseEventCallback(this);
 	mInputWrapper->setKeyboardEventCallback(this);
 	mInputWrapper->setWindowEventCallback(this);
@@ -481,6 +481,10 @@ void BaseApp::windowResized(int x, int y)
 	mPlatform->getRenderManagerPtr()->setActiveViewport(0);
 }
 
+void BaseApp::windowClosed()
+{
+	Ogre::Root::getSingleton().queueEndRendering();
+}
 
 
 ///  base Init Gui

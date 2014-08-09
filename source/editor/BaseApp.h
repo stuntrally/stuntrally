@@ -74,7 +74,7 @@ protected:
 	void onCursorChange(const std::string& name);
 
 	virtual void windowResized(int x, int y);
-
+	virtual void windowClosed();
 
 	///  Ogre
 	Ogre::Root *mRoot;

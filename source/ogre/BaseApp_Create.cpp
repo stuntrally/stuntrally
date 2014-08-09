@@ -118,7 +118,7 @@ namespace
 //-------------------------------------------------------------------------------------
 void BaseApp::createFrameListener()
 {
-	mInputWrapper = new SFO::InputWrapper(mSDLWindow, mWindow);
+	mInputWrapper = new SFO::InputWrapper(mSDLWindow, mWindow, true);
 	mInputWrapper->setMouseEventCallback(this);
 	mInputWrapper->setKeyboardEventCallback(this);
 	mInputWrapper->setJoyEventCallback(this);
@@ -647,11 +647,11 @@ bool BaseApp::buttonReleased(const SDL_JoyButtonEvent &evt, int button)
 //-------------------------------------------------------
 void BaseApp::showMouse()
 {	
-	mCursorManager->cursorVisibilityChange(true);
+	mInputWrapper->setMouseVisible(true);
 }
 void BaseApp::hideMouse()
 {                
-	mCursorManager->cursorVisibilityChange(false);
+	mInputWrapper->setMouseVisible(false);
 }
 
 void BaseApp::updMouse()
@@ -695,6 +695,11 @@ void BaseApp::windowResized(int x, int y)
 	// Adjust viewports
 	mSplitMgr->Align();
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
+}
+
+void BaseApp::windowClosed()
+{
+	Ogre::Root::getSingleton().queueEndRendering();
 }
 
 

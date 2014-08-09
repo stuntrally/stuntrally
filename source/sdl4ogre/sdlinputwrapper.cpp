@@ -5,22 +5,14 @@
 #include <OgrePlatform.h>
 #include <OgreRoot.h>
 
-/*
-#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-#   include <X11/Xlib.h>
-#   include <X11/Xutil.h>
-#   include <X11/Xos.h>
-#endif
-*/
 
 namespace SFO
 {
     /// \brief General purpose wrapper for OGRE applications around SDL's event
     ///        queue, mostly used for handling input-related events.
-    InputWrapper::InputWrapper(SDL_Window* window, Ogre::RenderWindow* ogreWindow) :
+    InputWrapper::InputWrapper(SDL_Window* window, Ogre::RenderWindow* ogreWindow, bool grab) :
         mSDLWindow(window),
         mOgreWindow(ogreWindow),
-        mOwnWindow(false),
         mWarpCompensate(false),
         mMouseRelative(false),
         mGrabPointer(false),
@@ -28,37 +20,53 @@ namespace SFO
         mMouseZ(0),
         mMouseY(0),
         mMouseX(0),
-		mMouseInWindow(true),
-		mJoyListener(NULL),
-		mKeyboardListener(NULL),
-		mMouseListener(NULL),
-		mWindowListener(NULL)
+        mMouseInWindow(true),
+        mJoyListener(NULL),
+        mKeyboardListener(NULL),
+        mMouseListener(NULL),
+        mWindowListener(NULL),
+        mWindowHasFocus(true),
+        mWantGrab(false),
+        mWantRelative(false),
+        mWantMouseVisible(false),
+        mAllowGrab(grab)
     {
         _setupOISKeys();
     }
 
     InputWrapper::~InputWrapper()
     {
-        if (mSDLWindow != NULL && mOwnWindow)
-            SDL_DestroyWindow(mSDLWindow);
-        mSDLWindow = NULL;
     }
 
-    void InputWrapper::capture()
+    void InputWrapper::capture(bool windowEventsOnly)
     {
+        SDL_PumpEvents();
+
         SDL_Event evt;
+
+        if (windowEventsOnly)
+        {
+            // During loading, just handle window events, and keep others for later
+            while (SDL_PeepEvents(&evt, 1, SDL_GETEVENT, SDL_WINDOWEVENT, SDL_WINDOWEVENT))
+                handleWindowEvent(evt);
+            return;
+        }
+
         while(SDL_PollEvent(&evt))
         {
             switch(evt.type)
             {
                 case SDL_MOUSEMOTION:
-                    //ignore this if it happened due to a warp
-                    if (!_handleWarpMotion(evt.motion))
+                    // Ignore this if it happened due to a warp
+                    if(!_handleWarpMotion(evt.motion))
                     {
-                        mMouseListener->mouseMoved(_packageMouseMotion(evt));
+                        // If in relative mode, don't trigger events unless window has focus
+                        if (!mWantRelative || mWindowHasFocus)
+                            mMouseListener->mouseMoved(_packageMouseMotion(evt));
 
-                        //try to keep the mouse inside the window
-                        _wrapMousePointer(evt.motion);
+                        // Try to keep the mouse inside the window
+                        if (mWindowHasFocus)
+                            _wrapMousePointer(evt.motion);
                     }
                     break;
                 case SDL_MOUSEWHEEL:
@@ -81,33 +89,34 @@ namespace SFO
                 case SDL_TEXTINPUT:
                     mKeyboardListener->textInput(evt.text);
                     break;
-				case SDL_JOYAXISMOTION:
-					if (mJoyListener)
-						mJoyListener->axisMoved(evt.jaxis, evt.jaxis.axis);
-					break;
-				case SDL_JOYBUTTONDOWN:
-					if (mJoyListener)
-						mJoyListener->buttonPressed(evt.jbutton, evt.jbutton.button);
-					break;
-				case SDL_JOYBUTTONUP:
-					if (mJoyListener)
-						mJoyListener->buttonReleased(evt.jbutton, evt.jbutton.button);
-					break;
-				case SDL_JOYDEVICEADDED:
-					//SDL_JoystickOpen(evt.jdevice.which);
-					//std::cout << "Detected a new joystick: " << SDL_JoystickNameForIndex(evt.jdevice.which) << std::endl;
-					break;
-				case SDL_JOYDEVICEREMOVED:
-					//std::cout << "A joystick has been removed" << std::endl;
-					break;
+                case SDL_JOYAXISMOTION:
+                    if (mJoyListener)
+                        mJoyListener->axisMoved(evt.jaxis, evt.jaxis.axis);
+                    break;
+                case SDL_JOYBUTTONDOWN:
+                    if (mJoyListener)
+                        mJoyListener->buttonPressed(evt.jbutton, evt.jbutton.button);
+                    break;
+                case SDL_JOYBUTTONUP:
+                    if (mJoyListener)
+                        mJoyListener->buttonReleased(evt.jbutton, evt.jbutton.button);
+                    break;
+                case SDL_JOYDEVICEADDED:
+                    //SDL_JoystickOpen(evt.jdevice.which);
+                    //std::cout << "Detected a new joystick: " << SDL_JoystickNameForIndex(evt.jdevice.which) << std::endl;
+                    break;
+                case SDL_JOYDEVICEREMOVED:
+                    //std::cout << "A joystick has been removed" << std::endl;
+                    break;
                 case SDL_WINDOWEVENT:
                     handleWindowEvent(evt);
                     break;
                 case SDL_QUIT:
-                    Ogre::Root::getSingleton().queueEndRendering();
+                    if (mWindowListener)
+                        mWindowListener->windowClosed();
                     break;
                 default:
-                    std::cerr << "Unhandled SDL event of type " << evt.type << std::endl;
+                    std::cerr << "Unhandled SDL event of type 0x" << std::hex << evt.type << std::endl;
                     break;
             }
         }
@@ -118,67 +127,73 @@ namespace SFO
         switch (evt.window.event) {
             case SDL_WINDOWEVENT_ENTER:
                 mMouseInWindow = true;
+                updateMouseSettings();
                 break;
             case SDL_WINDOWEVENT_LEAVE:
                 mMouseInWindow = false;
-                SDL_SetWindowGrab(mSDLWindow, SDL_FALSE);
-                SDL_SetRelativeMouseMode(SDL_FALSE);
+                updateMouseSettings();
                 break;
-			case SDL_WINDOWEVENT_SIZE_CHANGED:
-				int w,h;
-				SDL_GetWindowSize(mSDLWindow, &w, &h);
-				// TODO: Fix Ogre to handle this more consistently
-				#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-					mOgreWindow->windowMovedOrResized();
-				#else
-					mOgreWindow->resize(w, h);
-				#endif
-				if (mWindowListener)
-					mWindowListener->windowResized(evt.window.data1, evt.window.data2);
+            case SDL_WINDOWEVENT_SIZE_CHANGED:
+                int w,h;
+                SDL_GetWindowSize(mSDLWindow, &w, &h);
+                // TODO: Fix Ogre to handle this more consistently (fixed in 1.9)
+#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+                mOgreWindow->resize(w, h);
+#else
+                mOgreWindow->windowMovedOrResized();
+#endif
+                if (mWindowListener)
+                    mWindowListener->windowResized(w, h);
+                break;
 
-			case SDL_WINDOWEVENT_RESIZED:
-				// TODO: Fix Ogre to handle this more consistently
-				#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-					mOgreWindow->windowMovedOrResized();
-				#else
-					mOgreWindow->resize(evt.window.data1, evt.window.data2);
-				#endif
-				if (mWindowListener)
-					mWindowListener->windowResized(evt.window.data1, evt.window.data2);
-				break;
+            case SDL_WINDOWEVENT_RESIZED:
+                // TODO: Fix Ogre to handle this more consistently (fixed in 1.9)
+#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+                mOgreWindow->resize(evt.window.data1, evt.window.data2);
+#else
+                mOgreWindow->windowMovedOrResized();
+#endif
+                if (mWindowListener)
+                    mWindowListener->windowResized(evt.window.data1, evt.window.data2);
+                break;
 
             case SDL_WINDOWEVENT_FOCUS_GAINED:
-				if (mWindowListener)
-					mWindowListener->windowFocusChange(true);
-				break;
+                mWindowHasFocus = true;
+                updateMouseSettings();
+                if (mWindowListener)
+                    mWindowListener->windowFocusChange(true);
+
+                break;
             case SDL_WINDOWEVENT_FOCUS_LOST:
-				if (mWindowListener)
-					mWindowListener->windowFocusChange(false);
-				break;
+                mWindowHasFocus = false;
+                updateMouseSettings();
+                if (mWindowListener)
+                    mWindowListener->windowFocusChange(false);
+                break;
             case SDL_WINDOWEVENT_CLOSE:
                 break;
             case SDL_WINDOWEVENT_SHOWN:
                 mOgreWindow->setVisible(true);
-				if (mWindowListener)
-					mWindowListener->windowVisibilityChange(true);
+                if (mWindowListener)
+                    mWindowListener->windowVisibilityChange(true);
                 break;
             case SDL_WINDOWEVENT_HIDDEN:
                 mOgreWindow->setVisible(false);
-				if (mWindowListener)
-					mWindowListener->windowVisibilityChange(false);
+                if (mWindowListener)
+                    mWindowListener->windowVisibilityChange(false);
                 break;
         }
     }
 
-	bool InputWrapper::isModifierHeld(SDL_Keymod mod)
+    bool InputWrapper::isModifierHeld(SDL_Keymod mod)
     {
         return SDL_GetModState() & mod;
     }
 
-	bool InputWrapper::isKeyDown(SDL_Scancode key)
-	{
-		return SDL_GetKeyboardState(NULL)[key];
-	}
+    bool InputWrapper::isKeyDown(SDL_Scancode key)
+    {
+        return SDL_GetKeyboardState(NULL)[key];
+    }
 
     /// \brief Moves the mouse to the specified point within the viewport
     void InputWrapper::warpMouse(int x, int y)
@@ -192,25 +207,45 @@ namespace SFO
     /// \brief Locks the pointer to the window
     void InputWrapper::setGrabPointer(bool grab)
     {
-        mGrabPointer = grab && mMouseInWindow;
-        SDL_SetWindowGrab(mSDLWindow, grab && mMouseInWindow ? SDL_TRUE : SDL_FALSE);
+        mWantGrab = grab;
+        updateMouseSettings();
     }
 
     /// \brief Set the mouse to relative positioning. Doesn't move the cursor
     ///        and disables mouse acceleration.
     void InputWrapper::setMouseRelative(bool relative)
     {
-        if (mMouseRelative == relative && mMouseInWindow)
+        mWantRelative = relative;
+        updateMouseSettings();
+    }
+
+    void InputWrapper::setMouseVisible(bool visible)
+    {
+        mWantMouseVisible = visible;
+        updateMouseSettings();
+    }
+
+    void InputWrapper::updateMouseSettings()
+    {
+        mGrabPointer = mWantGrab && mMouseInWindow && mWindowHasFocus;
+        SDL_SetWindowGrab(mSDLWindow, mGrabPointer && mAllowGrab ? SDL_TRUE : SDL_FALSE);
+
+        SDL_ShowCursor(mWantMouseVisible || !mWindowHasFocus);
+
+        bool relative = mWantRelative && mMouseInWindow && mWindowHasFocus;
+        if(mMouseRelative == relative)
             return;
 
-        mMouseRelative = relative && mMouseInWindow;
+        mMouseRelative = relative;
 
         mWrapPointer = false;
 
-        //eep, wrap the pointer manually if the input driver doesn't support
-        //relative positioning natively
-        int success = SDL_SetRelativeMouseMode(relative && mMouseInWindow ? SDL_TRUE : SDL_FALSE);
-        if (relative && mMouseInWindow && success != 0)
+        // eep, wrap the pointer manually if the input driver doesn't support
+        // relative positioning natively
+        // also use wrapping if no-grab was specified in options (SDL_SetRelativeMouseMode
+        // appears to eat the mouse cursor when pausing in a debugger)
+        bool success = mAllowGrab && SDL_SetRelativeMouseMode(relative ? SDL_TRUE : SDL_FALSE) == 0;
+        if(relative && !success)
             mWrapPointer = true;
 
         //now remove all mouse events using the old setting from the queue
@@ -222,11 +257,11 @@ namespace SFO
     ///        of warpMouse()
     bool InputWrapper::_handleWarpMotion(const SDL_MouseMotionEvent& evt)
     {
-        if (!mWarpCompensate)
+        if(!mWarpCompensate)
             return false;
 
         //this was a warp event, signal the caller to eat it.
-        if (evt.x == mWarpX && evt.y == mWarpY)
+        if(evt.x == mWarpX && evt.y == mWarpY)
         {
             mWarpCompensate = false;
             return true;
@@ -240,7 +275,7 @@ namespace SFO
     {
         //don't wrap if we don't want relative movements, support relative
         //movements natively, or aren't grabbing anyways
-        if (!mMouseRelative || !mWrapPointer || !mGrabPointer)
+        if(!mMouseRelative || !mWrapPointer || !mGrabPointer)
             return;
 
         int width = 0;
@@ -252,7 +287,7 @@ namespace SFO
         const int FUDGE_FACTOR_Y = height;
 
         //warp the mouse if it's about to go outside the window
-        if (evt.x - FUDGE_FACTOR_X < 0  || evt.x + FUDGE_FACTOR_X > width
+        if(evt.x - FUDGE_FACTOR_X < 0  || evt.x + FUDGE_FACTOR_X > width
                 || evt.y - FUDGE_FACTOR_Y < 0 || evt.y + FUDGE_FACTOR_Y > height)
         {
             warpMouse(width / 2, height / 2);
@@ -270,14 +305,14 @@ namespace SFO
         pack_evt.z = mMouseZ;
         pack_evt.zrel = 0;
 
-        if (evt.type == SDL_MOUSEMOTION)
+        if(evt.type == SDL_MOUSEMOTION)
         {
             pack_evt.x = mMouseX = evt.motion.x;
             pack_evt.y = mMouseY = evt.motion.y;
             pack_evt.xrel = evt.motion.xrel;
             pack_evt.yrel = evt.motion.yrel;
         }
-        else if (evt.type == SDL_MOUSEWHEEL)
+        else if(evt.type == SDL_MOUSEWHEEL)
         {
             mMouseZ += pack_evt.zrel = (evt.wheel.y * 120);
             pack_evt.z = mMouseZ;
@@ -296,7 +331,7 @@ namespace SFO
 
         KeyMap::const_iterator ois_equiv = mKeyMap.find(code);
 
-        if (ois_equiv != mKeyMap.end())
+        if(ois_equiv != mKeyMap.end())
             kc = ois_equiv->second;
 
         return kc;
@@ -306,9 +341,6 @@ namespace SFO
     {
         //lifted from OIS's SDLKeyboard.cpp
 
-        //TODO: Consider switching to scancodes so we
-        //can properly support international keyboards
-        //look at SDL_GetKeyFromScancode and SDL_GetKeyName
         mKeyMap.insert( KeyMap::value_type(SDLK_UNKNOWN, OIS::KC_UNASSIGNED));
         mKeyMap.insert( KeyMap::value_type(SDLK_ESCAPE, OIS::KC_ESCAPE) );
         mKeyMap.insert( KeyMap::value_type(SDLK_1, OIS::KC_1) );
@@ -411,5 +443,10 @@ namespace SFO
         mKeyMap.insert( KeyMap::value_type(SDLK_PAGEDOWN, OIS::KC_PGDOWN) );
         mKeyMap.insert( KeyMap::value_type(SDLK_INSERT, OIS::KC_INSERT) );
         mKeyMap.insert( KeyMap::value_type(SDLK_DELETE, OIS::KC_DELETE) );
+        mKeyMap.insert( KeyMap::value_type(SDLK_KP_ENTER, OIS::KC_NUMPADENTER) );
+        mKeyMap.insert( KeyMap::value_type(SDLK_RCTRL, OIS::KC_RCONTROL) );
+        mKeyMap.insert( KeyMap::value_type(SDLK_LGUI, OIS::KC_LWIN) );
+        mKeyMap.insert( KeyMap::value_type(SDLK_RGUI, OIS::KC_RWIN) );
+        mKeyMap.insert( KeyMap::value_type(SDLK_APPLICATION, OIS::KC_APPS) );
     }
 }

@@ -94,7 +94,7 @@ bool App::frameEnded(const FrameEvent& evt)
 	}
 	
 	///  input
-	mInputWrapper->capture();
+	mInputWrapper->capture(false);
 
 	//  road pick
 	SplineRoad* road = scn->road;

@@ -112,7 +112,7 @@ public:
 	SDL_Window* mSDLWindow;
 
 	virtual void windowResized (int x, int y);
-
+	virtual void windowClosed();
 
 	///  input
 	SFO::InputWrapper* mInputWrapper;

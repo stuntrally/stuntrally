@@ -27,7 +27,7 @@ bool BaseApp::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		return false;
 
 	//  update each device
-	mInputWrapper->capture();
+	mInputWrapper->capture(false);
 
 	mInputCtrl->update(evt.timeSinceLastFrame);
 	for (int i=0; i<4; ++i)

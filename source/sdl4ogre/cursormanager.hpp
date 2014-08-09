@@ -1,8 +1,11 @@
-#pragma once
+#ifndef SDL4OGRE_CURSOR_MANAGER_H
+#define SDL4OGRE_CURSOR_MANAGER_H
+
 #include <SDL_types.h>
 #include <string>
 
 #include <OgreTexture.h>
+#include <OgrePrerequisites.h>
 
 namespace SFO
 {
@@ -19,10 +22,9 @@ public:
     /// \brief Follow up a cursorChanged() call with enough info to create an cursor.
     virtual void receiveCursorInfo(const std::string &name, Ogre::TexturePtr tex, Uint8 left, Uint8 top, Uint8 size_x, Uint8 size_y, Uint8 hotspot_x, Uint8 hotspot_y) = 0;
 
-    /// \brief Tell the manager when the cursor visibility changed
-    virtual void cursorVisibilityChange(bool visible) = 0;
-
     /// \brief sets whether to actively manage cursors or not
     virtual void setEnabled(bool enabled) = 0;
 };
 }
+
+#endif
