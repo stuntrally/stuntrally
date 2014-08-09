@@ -18,8 +18,10 @@ namespace SFO
     class InputWrapper
     {
     public:
-        InputWrapper(SDL_Window *window, Ogre::RenderWindow* ogreWindow, bool grab);
+        InputWrapper(SDL_Window *window, Ogre::RenderWindow* ogreWindow);
         ~InputWrapper();
+
+        void setAllowGrab(bool allow);
 
         void setMouseEventCallback(MouseListener* listen) { mMouseListener = listen; }
         void setKeyboardEventCallback(KeyListener* listen) { mKeyboardListener = listen; }

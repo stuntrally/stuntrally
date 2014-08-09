@@ -140,7 +140,7 @@ void BaseApp::createFrameListener()
 	ovTerMtr = ovr.getOverlayElement("Editor/TerPrvPanel");
 
 
-	mInputWrapper = new SFO::InputWrapper(mSDLWindow, mWindow, true);
+	mInputWrapper = new SFO::InputWrapper(mSDLWindow, mWindow);
 	mInputWrapper->setMouseEventCallback(this);
 	mInputWrapper->setKeyboardEventCallback(this);
 	mInputWrapper->setWindowEventCallback(this);

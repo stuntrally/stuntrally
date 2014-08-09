@@ -118,7 +118,7 @@ namespace
 //-------------------------------------------------------------------------------------
 void BaseApp::createFrameListener()
 {
-	mInputWrapper = new SFO::InputWrapper(mSDLWindow, mWindow, true);
+	mInputWrapper = new SFO::InputWrapper(mSDLWindow, mWindow);
 	mInputWrapper->setMouseEventCallback(this);
 	mInputWrapper->setKeyboardEventCallback(this);
 	mInputWrapper->setJoyEventCallback(this);
@@ -659,8 +659,10 @@ void BaseApp::updMouse()
 	if (IsFocGui())	showMouse();
 	else			hideMouse();
 
+	mInputWrapper->setAllowGrab(pSet->mouse_capture);
+
 	mInputWrapper->setMouseRelative(!IsFocGui());
-	mInputWrapper->setGrabPointer(!IsFocGui() && pSet->mouse_capture);
+	mInputWrapper->setGrabPointer(!IsFocGui());
 }
 
 void BaseApp::onCursorChange(const std::string &name)

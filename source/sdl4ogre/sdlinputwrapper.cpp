@@ -10,7 +10,7 @@ namespace SFO
 {
     /// \brief General purpose wrapper for OGRE applications around SDL's event
     ///        queue, mostly used for handling input-related events.
-    InputWrapper::InputWrapper(SDL_Window* window, Ogre::RenderWindow* ogreWindow, bool grab) :
+    InputWrapper::InputWrapper(SDL_Window* window, Ogre::RenderWindow* ogreWindow) :
         mSDLWindow(window),
         mOgreWindow(ogreWindow),
         mWarpCompensate(false),
@@ -29,9 +29,15 @@ namespace SFO
         mWantGrab(false),
         mWantRelative(false),
         mWantMouseVisible(false),
-        mAllowGrab(grab)
+        mAllowGrab(true)
     {
         _setupOISKeys();
+    }
+
+    void InputWrapper::setAllowGrab(bool allow)
+    {
+        mAllowGrab = allow;
+        updateMouseSettings();
     }
 
     InputWrapper::~InputWrapper()
@@ -244,8 +250,8 @@ namespace SFO
         // relative positioning natively
         // also use wrapping if no-grab was specified in options (SDL_SetRelativeMouseMode
         // appears to eat the mouse cursor when pausing in a debugger)
-        bool success = mAllowGrab && SDL_SetRelativeMouseMode(relative ? SDL_TRUE : SDL_FALSE) == 0;
-        if(relative && !success)
+        bool success = SDL_SetRelativeMouseMode(relative && mAllowGrab ? SDL_TRUE : SDL_FALSE) == 0;
+        if(relative && (!success || !mAllowGrab))
             mWrapPointer = true;
 
         //now remove all mouse events using the old setting from the queue

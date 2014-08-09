@@ -205,7 +205,8 @@ void App::UpdVisGui()
 	bool vis = g || !bMoveCam;
 	mInputWrapper->setMouseVisible(vis);
 	mInputWrapper->setMouseRelative(!vis);
-	mInputWrapper->setGrabPointer(!vis && pSet->mouse_capture);
+	mInputWrapper->setAllowGrab(pSet->mouse_capture);
+	mInputWrapper->setGrabPointer(!vis);
 
 	if (scn->road)  scn->road->SetTerHitVis(bEdit());
 	if (!g && gcom->mToolTip)  gcom->mToolTip->setVisible(false);
