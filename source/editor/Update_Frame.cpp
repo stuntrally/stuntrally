@@ -171,6 +171,7 @@ bool App::frameEnded(const FrameEvent& evt)
 		}
 	}
 
+#if 0
 if (pSet->bTrees)
 {
 	///  upd grass
@@ -214,6 +215,7 @@ if (pSet->bTrees)
 	defOld = def;
 	gdOld = gd;
 }
+#endif
 
 	///  paged  * * *  ? frameStarted
 	if (road)
