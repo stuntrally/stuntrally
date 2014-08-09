@@ -584,7 +584,7 @@
 	<Tag name="TexCoordMul">Mnożnik tekstury</Tag>
 	<Tag name="Shadows">Cienie</Tag>
 	<Tag name="Options">Opcje</Tag>
-	<Tag name="HintScreen">Aby zmienić rozdzielczość ekranu i dopasować grafikę do Twojej karty naciśnij przycisk Ekran.</Tag></Tag>
+	<Tag name="HintScreen">Aby zmienić rozdzielczość ekranu i dopasować grafikę do Twojej karty naciśnij przycisk Ekran.</Tag>
 	<Tag name="distance">odległość</Tag>
 	<Tag name="SSS_Effect">Efekt</Tag>
 	<Tag name="Chall_Extreme">Ekstremalne</Tag>
