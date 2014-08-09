@@ -152,7 +152,7 @@ namespace sh
 			else if (typeid(*value) == typeid(IntValue))
 				type = Ogre::GCT_INT1;
 			else
-				assert(0);
+				throw std::runtime_error("unexpected type");
 			params->addConstantDefinition(name, type);
 			mSharedParameters[name] = params;
 		}
