@@ -264,15 +264,17 @@ void App::UpdObjPick()
 	
 	const Object& o = scn->sc->objects[iObjCur];
 	const AxisAlignedBox& ab = o.nd->getAttachedObject(0)->getBoundingBox();
-	//Vector3 p = ab.getCenter();
 	Vector3 s = o.scale * ab.getSize();  // * sel obj's node aabb
 
-		//Vector3 posO = Vector3(o.pos[0]+p.x,o.pos[2]+p.z,-o.pos[1]-p.y);
-		Vector3 posO = Vector3(o.pos[0],o.pos[2],-o.pos[1]);
-		Quaternion q(o.rot[0],o.rot[1],o.rot[2],o.rot[3]), q1;
-		Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-		q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));
-		Quaternion rotO = q1 * Object::qrFix;
+	Vector3 posO = Vector3(o.pos[0],o.pos[2],-o.pos[1]);
+
+	Quaternion q(o.rot[0],o.rot[1],o.rot[2],o.rot[3]), q1;
+	Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
+	q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));
+	Quaternion rotO = q1 * Object::qrFix;
+
+	Vector3 scaledCenter = ab.getCenter() * o.scale;
+	posO += (rotO * scaledCenter);
 
 	ndObjBox->setPosition(posO);
 	ndObjBox->setOrientation(rotO);
