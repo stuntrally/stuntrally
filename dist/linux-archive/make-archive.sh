@@ -6,7 +6,11 @@ STAGEDIR="`pwd`/stage"
 THISSCRIPT=`readlink -f "$0"`
 THISDIR=`dirname "$THISSCRIPT"`
 SOURCEDIR="$THISDIR"/../..
-JOBS=`nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 1`
+if [ -z "$JOBS" ]; then
+	JOBS=1
+	#`nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 1`
+fi
+
 if [ "$(uname -m)" = "x86_64" ]; then
 	echo "64bit system"
 	LIBPATH="$STAGEDIR/lib/64"
