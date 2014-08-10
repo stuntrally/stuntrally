@@ -54,7 +54,7 @@ public:
     //-- Not so common control events, so are not required --//
 
     //! Joystick Event, and povID
-    virtual bool povMoved( const SDL_JoyHatEvent &arg, int index) {}
+    virtual bool povMoved( const SDL_JoyHatEvent &arg, int index) {  return false;  }
 };
 
 class WindowListener
