@@ -216,21 +216,25 @@
 	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
 	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
 	<Tag name="ChallEndFinished">You have passed this challenge.</Tag>
+
 	<Tag name="ChampInfo">In tutorial/championship mode you drive a series of tracks. Minimum score (depending on your time) is needed to pass to next stage. Car changing is possible.</Tag>
 	<Tag name="ChallInfo">In challenge mode the game has setup, most settings can't be changed. Time or position is needed. If you pass you receive bronze, silver or gold prize.</Tag>
 	<Tag name="ChampInfo2">Championships are usually long, have many tracks, but are easy to pass.</Tag>
 	<Tag name="ChallInfo2">Challenges are short but usually difficult to pass.</Tag>
 	<Tag name="TutorInfo">Tutorials have just a few tracks. They are easy to pass and show various track elements.</Tag>
+
 	<Tag name="Start">Start</Tag>
 	<Tag name="Continue">Continue</Tag>
 	<Tag name="Restart">Restart</Tag>
 	<Tag name="Close">Close</Tag>
 
+	<!--  Challenge prizes  -->
 	<Tag name="Prize">Prize</Tag>
 	<Tag name="Bronze">Bronze</Tag>
 	<Tag name="Silver">Silver</Tag>
 	<Tag name="Gold">Gold</Tag>
 
+	<!--  Challenge types  -->
 	<Tag name="Chall_Rally">Rally</Tag>
 	<Tag name="Chall_Endurance">Endurance</Tag>
 	<Tag name="Chall_Chase">Chase</Tag>
@@ -238,6 +242,7 @@
 	<Tag name="Chall_Extreme">Extreme</Tag>
 	<Tag name="Chall_Special">Special</Tag>
 
+	<!--  Difficulty for tracks  -->
 	<Tag name="Diff0">Test Easy</Tag>
 	<Tag name="Diff1">Very Easy</Tag>
 	<Tag name="Diff2">Easy</Tag>
@@ -294,6 +299,7 @@
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
 
+	<!--  Track difficulties, icons  -->
 	<Tag name="fluids">fluids (water or mud)</Tag>
 	<Tag name="bumps">bumps (bumpy terrain)</Tag>
 	<Tag name="jumps">jumps</Tag>
@@ -327,6 +333,7 @@
 	<Tag name="TipCarDesc">Car description text.</Tag>
 	<Tag name="TipNewGameCar">Restart game.</Tag>
 
+	<!--  Car Color -->
 	<Tag name="ColHue">Color - Hue</Tag>
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="ColBright">Brightness</Tag>
@@ -350,6 +357,7 @@
 	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
 	<Tag name="TipCarYear">Year when this car's production started.</Tag>
 	
+	<!--  Car stats -->
 	<Tag name="Car_Mass">Mass</Tag>
 	<Tag name="Car_MassFront">Mass on front</Tag>
 	<Tag name="Car_MaxTorque">Max Torque</Tag>
