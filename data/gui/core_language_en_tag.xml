@@ -1151,7 +1151,7 @@
 	<Tag name="InputTopView">Alt-Z - toggle top view</Tag>
 
 
-	<!--  Terrain  -->
+	<!--  Terrain  edit modes  -->
 	<Tag name="EditTerrainMode">Edit Terrain mode</Tag>
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
 	<Tag name="InputTerSmooth">S - Smooth  (flatten)</Tag>
@@ -1167,7 +1167,7 @@
 	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
 	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
 
-	<!--  Terrain  brush  -->
+	<!--  Terrain  brush  params  -->
 	<Tag name="InputBrushParams">Brush parameters</Tag>
 	<Tag name="InputBrushSize">-,=  (or Wheel)  -  Size</Tag>
 	<Tag name="InputBrushForce">[,]  (or shift-Wheel)  -  Force (intensity)</Tag>
@@ -1182,8 +1182,9 @@
 	<Tag name="InputBrushFilter">1,2  -  Filter frequency (kernel size)</Tag>
 
 
-	<!-- Road  modify  -->
+	<!-- Road  Input  modify basic  -->
 	<Tag name="InputRoadModify">Modify</Tag>
+	<Tag name="InputRoadEdit">R - edit road mode</Tag>
 
 	<Tag name="InputRoadLMB">LMB (or Arrows)</Tag>
 	<Tag name="InputRoadRMB">RMB (or Num +,-)</Tag>
@@ -1193,16 +1194,17 @@
 	<Tag name="InputRoadWidth">- change road width</Tag>
 
 	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
-	<Tag name="InputRoadAltMMB">alt-RMB (or 3,4)</Tag>
-	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 	<Tag name="InputRoadRoll">- rotate roll / scale sel.</Tag>
 
+	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="InputRoadMostSel">most work also on selection</Tag>
 
-	<!-- Road  modify2  -->
+	<!-- Road  Input  modify medium  -->
+	<Tag name="InputRoadAltMMB">alt-RMB (or 3,4)</Tag>
+	<Tag name="InputRoadYaw">- rotate yaw</Tag>
+
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
-	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
 
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle  (no pipe when 0)</Tag>
 	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
@@ -1210,16 +1212,15 @@
 	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
 
+	<!-- Road  Input  modify advanced  -->
 	<Tag name="InputRoadAngType">alt-1,2   - angles type</Tag>
 	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
 	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
 	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
 	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
 
-	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 
-
-	<!-- Road  pick (one)  -->
+	<!-- Road  Input  (one)  -->
 	<Tag name="InputRoadPickOne">Pick (one)</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (or Wheel) - previous/next point</Tag>
@@ -1227,10 +1228,11 @@
 
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
+	<!-- Road  Input  (one) advanced  -->
 	<Tag name="InputRoadInsAlt">alt-shift - at start   alt-ctrl - at end</Tag>
 	<Tag name="InputRoadNew">ctrl-Space - set new point's values from picked</Tag>
 
-	<!-- Road  select (many)  -->
+	<!-- Road  Input  (many)  -->
 	<Tag name="InputRoadSelectMany">Select (many)</Tag>
 	<Tag name="InputRoadSel">Backspace - add to or remove from selection</Tag>
 	<Tag name="InputRoadSelAlt">alt - select all   ctrl - select none</Tag>
@@ -1238,22 +1240,27 @@
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
 	<Tag name="InputRoadAfterPick">after picked, center at mouse</Tag>
 
-	<Tag name="InputRoadEdit">R - edit road mode</Tag>
+	<!-- Road  Input  tools  -->
 	<Tag name="InputRoadRebuild">B - rebuild road (after terrain change, etc.)</Tag>
+	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
+	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
+
+	<!-- Road  Input  rarely used   -->
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="InputRoadStats">T - road stats window</Tag>
-	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 	<Tag name="InputRoadLooped">N - toggle looped</Tag>
 
 
-	<!--  Start pos  -->
+	<!--  Car Start  -->
 	<Tag name="CarStart">Car Start</Tag>
+	<!--  Car Start  Input  -->
 	<Tag name="InputStart">Start</Tag>
 	<Tag name="InputStartPos">Q - edit car start pos</Tag>
 	<Tag name="InputStartLMB">ctrl-LMB - place   LMB - move   RMB - height</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate (shift - global)   alt-RMB - pitch (shift - roll)</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - reset rotation</Tag>
 
+	<!--  Car Start  Input advanced  -->
 	<Tag name="InputStartHeight">[,]  -  adjust start box height (bigger for pipes)</Tag>
 	<Tag name="InputStartWidth">; &apos;  -  adjust start box width (for road width)</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
@@ -1262,6 +1269,7 @@
 
 	<!--  Fluids  -->
 	<Tag name="Fluids">Fluids</Tag>
+	<!--  Fluids  Input  -->
 	<Tag name="InputFluidsMode">W - edit fluids</Tag>
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
 	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
@@ -1281,6 +1289,7 @@
 	<Tag name="ObjBuildings">Buildings</Tag>
 	<Tag name="ObjRocks">Rocks</Tag>
 
+	<!--  Objects  Input  -->
 	<Tag name="InputObjectsMode">X - edit Objects</Tag>
 	<Tag name="InputObjectsPrevNext">PgUp,PgDn (or Wheel) - previous/next object</Tag>
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
@@ -1309,7 +1318,7 @@
 <!--  Tips  -->
 <!--  ............................................................................................................................  -->
 
-	<!--  Track  -->
+	<!--  TIP  Track  -->
 	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
 	<Tag name="TipLoadTrkEditor">Load track (after change) or Reload current track.</Tag>
 	<Tag name="TipTrkScreenEditor">In game screenshot for selected track.</Tag>
@@ -1321,7 +1330,7 @@
 	<Tag name="TipTrkNameEditor">Selected track name, used also for renaming track and as new track name.</Tag>
 	<Tag name="TipDeleteTrk">Permanently delete selected track.</Tag>
 
-	<!--  Sky  -->
+	<!--  TIP  Sky  -->
 	<Tag name="TipSkyMats">Sky material names.</Tag>
 	<Tag name="TipSunDirPitch">Sun direction - pitch angle.</Tag>
 	<Tag name="TipSunDirYaw">Sun direction - yaw angle.</Tag>
@@ -1345,7 +1354,7 @@
 	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
 
 
-	<!--  Terrain  -->
+	<!--  TIP  Terrain  -->
 	<Tag name="TipTerTriSize">Terrain triangle size in [meters] (recommended: 1 - 2, use more for big track area). Changed after Update (F8).</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
@@ -1370,7 +1379,7 @@
 	<Tag name="TipTexTiling">Texture tiling length (less means more repeats).</Tag>
 	<Tag name="TipTerLMove">Move layer, changes order.</Tag>
 
-	<!--  Terrain  blendmap  -->
+	<!--  TIP  Terrain  blendmap  -->
 	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>
 	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
 	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
@@ -1381,7 +1390,7 @@
 	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
 	<Tag name="TipTestBlendmap">Use to test blendmap clarity. The color box shows this layer's color on blendmap (is black when layer is off). Usually, a good blendmap needs to have pure layer colors with little blending (dull, mixed colors). To achieve that narrow/separate angle and height ranges and use high or low noise power.</Tag>
 
-	<!--  Terrain  particles  -->
+	<!--  TIP  Terrain  particles  -->
 	<Tag name="TipDustInt">Dust particles intensity.</Tag>
 	<Tag name="TipDustSize">Dust particles size.</Tag>
 	<Tag name="TipMudInt">Mud particles intensity.</Tag>
@@ -1392,7 +1401,7 @@
 	<Tag name="TipParType3">Tire Particle type 3 (global for track).</Tag>
 	<Tag name="TipTireParType3">Tire Particle type 3.</Tag>
 
-	<!--  Terrain  surface  -->
+	<!--  TIP  Terrain  surface  -->
 	<Tag name="TipBumpFreq">Frequency of additional bumps on surface (distance between them).</Tag>
 	<Tag name="TipBumpAmp">Amplitude of additional bumps on surface (how high).</Tag>
 	<Tag name="TipSurfType">Type of surface, determines sound.</Tag>
@@ -1400,7 +1409,7 @@
 	<Tag name="TipSurfFrict">Surface friction (eg. 1.0 asphalt, 0.7 gravel, 0.5 ice).</Tag>
 
 
-	<!--  Vegetation  -->
+	<!--  TIP  Vegetation  -->
 	<Tag name="TipGrassDens">How dense/rare will the grass be on terrain.</Tag>
 	<Tag name="TipTreeDens">How many models (trees, rocks, etc.) will be on track.</Tag>
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
@@ -1429,7 +1438,7 @@
 	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
 	<Tag name="TipGrassLayerDens">Grass density for layer (how often it will appear).</Tag>
 						
-	<!--  Vegetation  models  -->
+	<!--  TIP  Vegetation  models  -->
 	<Tag name="TipVegetGroups">Vegetation model groups (recommended use 4-6), affects performance.</Tag>
 	<Tag name="TipVegetModels">Models (meshes) for vegetation. Found in data/trees/.</Tag>
 	<Tag name="TipModelDens">How often model will appear on track area.</Tag>
