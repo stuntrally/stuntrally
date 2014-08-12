@@ -49,7 +49,6 @@
 	<Tag name="Saved">Saved</Tag>
 	<Tag name="Updating">Updating</Tag>
 	<Tag name="Updated">Updated</Tag>
-	<Tag name="Copy">Copy</Tag>
 	
 	<!--  HUD  -->
 	<Tag name="TBTime">Time</Tag>
@@ -297,7 +296,6 @@
 	<Tag name="Find">Find</Tag>
 	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
-	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
 
 	<!--  Track difficulties, icons  -->
 	<Tag name="fluids">fluids (water or mud)</Tag>
@@ -606,7 +604,6 @@
 	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="MapSize">Map size</Tag>
 	<Tag name="FacesOnce">Faces at once</Tag>
-	<Tag name="Distance">Distance</Tag>
 	<Tag name="ReflMode">Mode</Tag>
 	<Tag name="ReflMode_static">Static</Tag>
 	<Tag name="ReflMode_single">Single</Tag>
@@ -823,7 +820,6 @@
 
 	<Tag name="Editor">Editor</Tag>
 	<Tag name="LoadTrack">Load Track</Tag>
-	<Tag name="Length">Length</Tag>
 	<Tag name="CopySource">Set as copy source</Tag>
 	<Tag name="NewDup">New (Duplicate)</Tag>
 	<Tag name="Rename">Rename</Tag>
@@ -966,7 +962,6 @@
 	<Tag name="Properties">Properties</Tag>
 	<Tag name="Grasses">Grasses</Tag>
 	<Tag name="Models">Models</Tag>
-	<Tag name="Used">Used</Tag>
 	<Tag name="GrassDens">Grass   density</Tag>
 	<Tag name="TreeDens">Trees   density</Tag>
 	<Tag name="Model">Model</Tag>

@@ -623,16 +623,16 @@ int main(int argc, char* argv[])
 	of << "#, fuzzy\n";
 	of << "msgid \"\"\n";
 	of << "msgstr \"\"\n";
-	of << "\"Project-Id-Version: PACKAGE VERSION\"\n";
-	of << "\"Report-Msgid-Bugs-To: \"\n";
-	of << "\"POT-Creation-Date: 2014-08-10 10:00+0200\"\n";  // TODO: get date here
-	of << "\"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\"\n";
-	of << "\"Last-Translator: FULL NAME <EMAIL@ADDRESS>\"\n";
-	of << "\"Language-Team: LANGUAGE <LL@li.org>\"\n";
-	of << "\"Language: \"\n";
-	of << "\"MIME-Version: 1.0\"\n";
-	of << "\"Content-Type: text/plain; charset=CHARSET\"\n";
-	of << "\"Content-Transfer-Encoding: 8bit\"\n";
+	of << "\"Project-Id-Version: PACKAGE VERSION\\n\"\n";
+	of << "\"Report-Msgid-Bugs-To: \\n\"\n";
+	of << "\"POT-Creation-Date: 2014-08-10 10:00+0200\\n\"\n";  // TODO: get date here
+	of << "\"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n\"\n";
+	of << "\"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n\"\n";
+	of << "\"Language-Team: LANGUAGE <LL@li.org>\\n\"\n";
+	of << "\"Language: \\n\"\n";
+	of << "\"MIME-Version: 1.0\\n\"\n";
+	of << "\"Content-Type: text/plain; charset=UTF-8\\n\"\n";
+	of << "\"Content-Transfer-Encoding: 8bit\\n\"\n";
 	of << "\n";
 
 	//  for each tag
