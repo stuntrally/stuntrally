@@ -171,6 +171,10 @@
 	</References>
 	<Files>
 		<File
+			RelativePath="..\data\gui\core_language_en_tag.xml"
+			>
+		</File>
+		<File
 			RelativePath="..\source\transl\main.cpp"
 			>
 		</File>
@@ -196,6 +200,18 @@
 		</File>
 		<File
 			RelativePath="..\source\transl\pch.h"
+			>
+		</File>
+		<File
+			RelativePath=".\sr.log"
+			>
+		</File>
+		<File
+			RelativePath=".\sr.pot"
+			>
+		</File>
+		<File
+			RelativePath="..\locale\xml_po_parser.py"
 			>
 		</File>
 	</Files>

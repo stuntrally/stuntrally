@@ -4,9 +4,16 @@ using namespace std;
 using namespace boost::filesystem;
 typedef vector<string> vecstr;
 
-//  search for  [Setup]  to setup paths and params
+///---- INFO
+//  This is a tool program that generates sr.pot for translations
+//  It reads tags (strings) from *en_tag.xml
+//  and searches for their references in .cpp sources and
+//  in gui .layout (finds also widget hierarchy)
+//
+//  Search for  [Setup]  to setup paths and params
 //  look for  //par  for tweaking params
 //  and  //test  for adding more info in log
+//-----
 
 
 ///  single string to translate, from xml tag
@@ -207,16 +214,16 @@ int _tmain(int argc, _TCHAR* argv[])
 int main(int argc, char* argv[])
 #endif
 {
-	///  ----  [Setup]  here  ----
+	///  ----  [Setup]  ----
 	// TODO: get exe path  // start in sr/proj dir or sr/bin etc.
 	string path = "../";
 	string px = "data/gui/core_language_en_tag.xml";
-	string pot = "sr5.pot";  // output file  // TODO: save in user dir?
+	string pot = "sr.pot";  // output file  // TODO: save in user dir?
 	
 	const int bar = 50;   // text progress length
 	const bool bLog = 1;  // use log file
-	string slog = "sr_transl.log";  // log file
-	
+	string slog = "sr.log";  // log file
+		
 
 	//  log
 	#define log(s)  if (bLog)  ol << s << endl;
@@ -275,6 +282,8 @@ int main(int argc, char* argv[])
 				string text = GetAttr(ss, "\">", "</");
 				
 				if (!name.empty() && !text.empty())
+				if (!found(name,"LANG_"))  ///  ignored tags  [Setup]
+				if (name != "GameVersion" && name != "PageURL")
 				{
 					//log(/*sCmt.c_str() << "  " <<*/ name.c_str() << "  " << text.c_str());  //test
 					//  add tag
@@ -369,7 +378,8 @@ int main(int argc, char* argv[])
 		if (fi.fail())
 			cout << "Can't open: " << sf.c_str() << endl;
 
-		vecstr vsu;
+		//  widgets captions hierarchy (parents)
+		vecstr wh;
 		while (!fi.eof())
 		{
 			fi.getline(s,si);
@@ -388,15 +398,15 @@ int main(int argc, char* argv[])
 				#else
 				string ww;
 				#endif
-				vsu.push_back(ww);
+				wh.push_back(ww);
 			}
 			//  closing
 			if (found(ss,"</Widget>"))
 			{
-				vsu.pop_back();
+				wh.pop_back();
 			}
 			
-			if (!vsu.empty())
+			if (!wh.empty())
 			{
 				//  set caption  upd prev use info
 				if (found(ss,"key=\"Caption\""))
@@ -404,19 +414,19 @@ int main(int argc, char* argv[])
 					//eg.  value="#804060#{HDRTab}"/>
 					string v = GetAttr(ss, "value=\"");
 					v = Transl(v);
-					vsu[vsu.size()-1] = v;
+					wh[wh.size()-1] = v;
 				}
 				//key="tip" ..
 			}
 			
 			lay_lin[i]->push_back(s);
 
-			//  combine vsu to string
+			//  combine hierarchy to 1 string
 			string su,z;
-			int nn = vsu.size()-1 /*not last*/, n;
+			int nn = wh.size()-1 /*not last*/, n;
 			for (n=0; n < nn; ++n)
 			{
-				const string& z = vsu[n];
+				const string& z = wh[n];
 				if (!z.empty())
 				{	su += z;
 					if (n < nn-1)
@@ -439,7 +449,7 @@ int main(int argc, char* argv[])
 	ii = bar;
 	float pc_add = 100.f / ii, pc_next = pc_add, pc = 0.f;
 	for (i=1; i < ii; ++i)
-		cout << "-";
+		cout << ".";
 	cout << endl;
 	
 	ii = file_src.size();
@@ -449,7 +459,7 @@ int main(int argc, char* argv[])
 		pc = 100.f * float(i) / float(ii);
 		if (pc > pc_next)
 		{
-			cout << ".";
+			cout << "-";
 			pc_next += pc_add;
 		}
 		//cout << "Read file: " << i << " " << int(pc) << "%" << endl;
@@ -488,7 +498,7 @@ int main(int argc, char* argv[])
 	ii = bar;
 	pc_add = 100.f / ii;  pc_next = pc_add;  pc = 0.f;
 	for (i=1; i < ii; ++i)
-		cout << "-";
+		cout << ".";
 	cout << endl;
 	
 	//  for each tag
@@ -498,21 +508,24 @@ int main(int argc, char* argv[])
 		pc = 100.f * float(t) / float(tt);
 		if (pc > pc_next)
 		{
-			cout << ".";
+			cout << "|";
 			pc_next += pc_add;
 		}
 
 		Tag& ta = tags[t];
 		stringstream og, os;
 
-		tag = "#{" + ta.name + "}";  //  to search
+		tag = "#{" + ta.name + "}";  // to search
+		
 		
 		//  for each gui file
+		//--------------------------------
 		ii = file_lay.size();
+		bool nLn = false;
 		for (i=0; i < ii; ++i)
 		{
 			ln = lay_lin[i];  lu = lay_use[i];
-			bool fname = true, nl = true;
+			bool fname = true;
 			
 			//  for each line
 			ll = ln->size();
@@ -521,27 +534,36 @@ int main(int argc, char* argv[])
 				///----  tag in  layout  -----
 				if (found((*ln)[l], tag))
 				{
-					const string& su = (*lu)[l];
+					if (nLn)
+					{	og << endl << "#: ";  }
+
 					if (fname)
-						og << "#: " << lay[i];  // lay file name
+					{
+						if (!nLn)
+							og << "#: ";
+						og << lay[i];  // lay file name
+					}
+					if (nLn)  nLn = false;
 					fname = false;
-					
-					og << " :" << l;
+											
+					og << " :" << l;  // lay line number
+
+					const string& su = (*lu)[l];  // hierarchy
 					if (su != su_old)
-					{	og << "  " << su << endl << "#: ";
-						nl = false;
-					}else
-						nl = true;
+					{	og << "  " << su;  nLn = true;  }
 					su_old = su;
 			}	}
-			if (!fname && nl)
-				og << endl;
+			if (!fname)
+				nLn = true;
 		}
 		//  save
 		//log(og.str());  //test
 		ta.gui = og.str();
 		
+		
 		//  for each src file
+		//--------------------------------
+		nLn = false;
 		ii = file_src.size();
 		for (i=0; i < ii; ++i)
 		{
@@ -557,17 +579,20 @@ int main(int argc, char* argv[])
 				if (found((*ln)[l], tag))
 				{
 					if (fname)
-						os << sf;  // file name
+					{
+						if (nLn)
+						{	os << endl;  nLn = false;  }
+						os << "#: " << sf;  // file name
+					}
 					fname = false;
 					
 					os << " :" << l;  // line number
 			}	}
-			//if (!fname)
-			//	os << endl;
+			if (!fname)
+				nLn = true;
 		}
 		//  save
-		if (!os.str().empty())
-			log(os.str());  //test
+		//if (!os.str().empty())  log(os.str());  //test
 		ta.src = os.str();
 	}
 	cout << endl;
@@ -598,16 +623,17 @@ int main(int argc, char* argv[])
 	of << "#, fuzzy\n";
 	of << "msgid \"\"\n";
 	of << "msgstr \"\"\n";
-	of << "Project-Id-Version: PACKAGE VERSION\n";
-	of << "Report-Msgid-Bugs-To: \n";
-	of << "POT-Creation-Date: 2014-08-10 10:00+0200\n";
-	of << "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n";
-	of << "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n";
-	of << "Language-Team: LANGUAGE <LL@li.org>\n";
-	of << "Language: \n";
-	of << "MIME-Version: 1.0\n";
-	of << "Content-Type: text/plain; charset=CHARSET\n";
-	of << "Content-Transfer-Encoding: 8bit\n";
+	of << "\"Project-Id-Version: PACKAGE VERSION\"\n";
+	of << "\"Report-Msgid-Bugs-To: \"\n";
+	of << "\"POT-Creation-Date: 2014-08-10 10:00+0200\"\n";  // TODO: get date here
+	of << "\"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\"\n";
+	of << "\"Last-Translator: FULL NAME <EMAIL@ADDRESS>\"\n";
+	of << "\"Language-Team: LANGUAGE <LL@li.org>\"\n";
+	of << "\"Language: \"\n";
+	of << "\"MIME-Version: 1.0\"\n";
+	of << "\"Content-Type: text/plain; charset=CHARSET\"\n";
+	of << "\"Content-Transfer-Encoding: 8bit\"\n";
+	of << "\n";
 
 	//  for each tag
 	for (t=0; t < tt; ++t)
@@ -618,10 +644,11 @@ int main(int argc, char* argv[])
 			log(ta.name << "COMMENT empty");
 
 		of << "#. " << ta.cmt << endl;  // comment
+		// "#: " << 
 		if (!ta.gui.empty())
-		of << "#: " << ta.gui << endl;  // occurences
+		of << ta.gui << endl;  // occurences
 		if (!ta.src.empty())
-		of << "#: " << ta.src << endl;
+		of << ta.src << endl;
 
 		if (ta.gui.empty() && ta.src.empty())
 			log(ta.name);
