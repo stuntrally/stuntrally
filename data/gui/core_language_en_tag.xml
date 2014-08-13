@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
-	<!-- Languages -->
+	<!--  Languages  not translated  -->
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>
 	<Tag name="LANG_FI">Suomi</Tag>
@@ -11,13 +11,185 @@
 	<Tag name="LANG_PT">Português</Tag>
 	<Tag name="LANG_IT">Italiano</Tag>
 	<Tag name="LANG_SK">Slovenský</Tag>
+
 	<Tag name="Language">Language</Tag>
 
-	<!-- General -->
+	<!--  General  -->
 	<Tag name="Yes">Yes</Tag>
 	<Tag name="No">No</Tag>
 	<Tag name="Error">Error</Tag>
+
 	
+	<!--  HUD  Times bar  -->
+	<Tag name="TBTime">Time</Tag>
+	<Tag name="TBLast">Last</Tag>
+	<Tag name="TBBest">Best</Tag>
+	<Tag name="TBLap">Lap</Tag>
+	<Tag name="TBPlace">Place</Tag>
+	<Tag name="TBPosition">Position</Tag>
+	<Tag name="TBPoints">Points</Tag>
+	<Tag name="TBLapResults">Lap Results</Tag>
+
+	<!--  HUD  -->
+	<Tag name="Checkpoint">Checkpoint</Tag>
+	<Tag name="WrongChk">Wrong Checkpoint</Tag>
+
+
+	<!--  Editor  status  -->
+	<Tag name="Loading">Loading</Tag>
+	<Tag name="Loaded">Loaded</Tag>
+	<Tag name="Saving">Saving</Tag>
+	<Tag name="Saved">Saved</Tag>
+	<Tag name="Updating">Updating</Tag>
+	<Tag name="Updated">Updated</Tag>
+	
+
+	<!--  MAIN  Menu  -->
+	<Tag name="SingleRace">Single Race</Tag>
+	<Tag name="Championship">Championship</Tag>
+	<Tag name="Tutorial">Tutorial</Tag>
+	<Tag name="Challenge">Challenge</Tag>
+
+	<Tag name="ReplaysMenu">Replays</Tag>
+	<Tag name="Options">Options</Tag>
+	<Tag name="Quit">Quit</Tag>
+	<Tag name="BackMenu">Back</Tag>
+	<Tag name="Help">Help</Tag>
+	<Tag name="Readme">Readme</Tag>
+
+
+	<!--  MAIN  Championship  buttons  -->
+	<Tag name="Start">Start</Tag>
+	<Tag name="Continue">Continue</Tag>
+	<Tag name="Restart">Restart</Tag>
+	<Tag name="Close">Close</Tag>
+
+	<!--  MAIN  Challenge prizes  -->
+	<Tag name="Prize">Prize</Tag>
+	<Tag name="Bronze">Bronze</Tag>
+	<Tag name="Silver">Silver</Tag>
+	<Tag name="Gold">Gold</Tag>
+
+
+	<!--  Challenge types  -->
+	<Tag name="Chall_Rally">Rally</Tag>
+	<Tag name="Chall_Endurance">Endurance</Tag>
+	<Tag name="Chall_Chase">Chase</Tag>
+	<Tag name="Chall_Stunts">Stunts</Tag>
+	<Tag name="Chall_Extreme">Extreme</Tag>
+	<Tag name="Chall_Special">Special</Tag>
+
+	<!--  MAIN  Track Difficulty  -->
+	<Tag name="Diff0">Test Easy</Tag>
+	<Tag name="Diff1">Very Easy</Tag>
+	<Tag name="Diff2">Easy</Tag>
+	<Tag name="Diff3">Medium</Tag>
+	<Tag name="Diff4">Hard</Tag>
+	<Tag name="Diff5">Very Hard</Tag>
+	<Tag name="Diff6">Extreme</Tag>
+	<Tag name="Diff7">Ultra</Tag>
+
+
+	<!--  MAIN  Track  -->
+	<Tag name="Track">Track</Tag>
+	<Tag name="Reverse">Reverse</Tag>
+	<Tag name="NewGame">New Game</Tag>
+	<Tag name="Find">Find</Tag>	
+
+	<!--  MAIN  Track stats  -->
+	<Tag name="TrackBestTime">Best time</Tag>
+	<Tag name="TrackAvgSpeed">Avg. speed</Tag>
+	<Tag name="TrackLength">Length</Tag>
+	<Tag name="TrackArea">Area</Tag>
+	<Tag name="TrackWidthAvg">Width avg.</Tag>
+	<Tag name="TrackHeightDiff">Height diff.</Tag>
+	<Tag name="TrackInAir">In air</Tag>
+	<Tag name="TrackPipes">Pipes</Tag>
+
+
+	<!--  Championship Stage  stats  -->
+	<Tag name="Name">Name</Tag>
+	<Tag name="Tracks">Tracks</Tag>
+	<Tag name="Stage">Stage</Tag>
+	<Tag name="Stages">Stages</Tag>
+	<Tag name="Scenery">Scenery</Tag>
+
+	<Tag name="Length">Length</Tag>
+	<Tag name="Difficulty">Difficulty</Tag>
+	<Tag name="Distance">Distance</Tag>
+	<Tag name="Time">Time</Tag>
+	<Tag name="TimeMS">m:s</Tag>
+
+	<Tag name="Progress">Progress</Tag>
+	<Tag name="Score">Score</Tag>
+	<Tag name="TotalScore">Total score</Tag>
+	<Tag name="Needed">Needed</Tag>
+	<Tag name="Finished">Finished</Tag>
+
+	<Tag name="Passed">Passed</Tag>
+	<Tag name="DidntPass">Didn't pass</Tag>
+	<Tag name="NextStage">Continuing to next stage</Tag>
+	<Tag name="RepeatStage">Repeating stage</Tag>
+
+	<Tag name="CarChange">Car change</Tag>
+	<Tag name="Allowed">Allowed</Tag>
+	
+
+	<!--  Car  -->
+	<Tag name="Car">Car</Tag>
+	<Tag name="Cars">Cars</Tag>
+	<!--  TIP  Car  -->
+	<Tag name="TipCarsList">Cars list. Press Enter or [New Game] to drive with it.</Tag>
+	<Tag name="TipCarDesc">Car description text.</Tag>
+	<Tag name="TipNewGameCar">Restart game.</Tag>
+
+	<!--  Color  params  -->
+	<Tag name="ColHue">Color - Hue</Tag>
+	<Tag name="ColSat">Saturation</Tag>
+	<Tag name="ColBright">Brightness</Tag>
+	<Tag name="ColGloss">Glossiness</Tag>
+	<Tag name="ColReflect">Reflection</Tag>
+	<Tag name="CarClrRandom">Random</Tag>
+	<Tag name="Adjust">Adjust</Tag>
+	<Tag name="Transparency">Transparency</Tag>
+	<Tag name="Negative">Negative (darken)</Tag>
+
+	<!--  TIP  Car Color -->
+	<Tag name="TipChangeHue">Change car color (hue).</Tag>
+	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
+	<Tag name="TipChangeBright">Change car color brightness (dark-light).</Tag>
+	<Tag name="TipChangeGloss">Change car color glossiness (matte-shiny).</Tag>
+	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
+
+	<!--  MAIN  Car basics stats  -->
+	<Tag name="Author">Author(s)</Tag>
+	<Tag name="CarSpeed">Speed</Tag>
+	<Tag name="CarYear">Year</Tag>
+	<Tag name="CarType">Type</Tag>
+	
+	<!--  MAIN  Car Stats  -->
+	<Tag name="Car_Mass">Mass</Tag>
+	<Tag name="Car_MassFront">Mass on front</Tag>
+	<Tag name="Car_MaxTorque">Max Torque</Tag>
+	<Tag name="Car_MaxPower">Max Power</Tag>
+	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
+	<Tag name="Car_TopSpeed">Top Speed</Tag>
+	<Tag name="Car_TimeTo">Time to</Tag>
+	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
+
+<!--  ..............................................................................................  -->
+
+	<!--  MAIN  Car types  -->
+	<Tag name="CarType_Asphalt">Asphalt</Tag>
+	<Tag name="CarType_Racing">Racing</Tag>
+	<Tag name="CarType_Gravel">Gravel</Tag>
+	<Tag name="CarType_Slow">Slow</Tag>
+	<Tag name="CarType_Terrain">Terrain</Tag>
+	<Tag name="CarType_Extreme">Extreme</Tag>
+	<Tag name="CarType_Other">Other</Tag>
+	<Tag name="CarType_Hover">Hovercraft</Tag>
+	<Tag name="CarType_Spaceship">Spaceship</Tag>		
+
 	<!--  MsgBox  -->
 	<Tag name="MessageBox_Ok">Ok</Tag>
 	<Tag name="MessageBox_Yes">Yes</Tag>
@@ -29,7 +201,7 @@
 	<Tag name="MessageBox_Try">Try</Tag>
 	<Tag name="MessageBox_Continue">Continue</Tag>
 	
-	<!--  Loading tags  -->
+	<!--  Loading game tags  -->
 	<Tag name="LoadingDesc">Loading, please wait...</Tag>
 	<Tag name="Initializing">Initializing</Tag>
 	<Tag name="LS_CLEANUP">Cleaning up</Tag>
@@ -41,29 +213,6 @@
 	<Tag name="LS_OBJS">Loading Objects</Tag>
 	<Tag name="LS_TREES">Loading Trees</Tag>
 	<Tag name="LS_MISC">Finishing</Tag>
-
-	<!--  Ed status  -->
-	<Tag name="Loading">Loading</Tag>
-	<Tag name="Loaded">Loaded</Tag>
-	<Tag name="Saving">Saving</Tag>
-	<Tag name="Saved">Saved</Tag>
-	<Tag name="Updating">Updating</Tag>
-	<Tag name="Updated">Updated</Tag>
-	
-	<!--  HUD  -->
-	<Tag name="TBTime">Time</Tag>
-	<Tag name="TBLast">Last</Tag>
-	<Tag name="TBBest">Best</Tag>
-	<Tag name="TBScore">Score</Tag>
-	<Tag name="TBLap">Lap</Tag>
-	<Tag name="TBPlace">Place</Tag>
-	<Tag name="TBPosition">Position</Tag>
-	<Tag name="TBPoints">Points</Tag>
-	<Tag name="TBLapResults">Lap Results</Tag>
-	<Tag name="Checkpoint">Checkpoint</Tag>
-	<Tag name="WrongChk">Wrong Checkpoint</Tag>
-	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
-	<Tag name="Graphs">Graphs</Tag>
 
 	<!--  Units  -->
 	<Tag name="UnitKmh">km/h</Tag>
@@ -79,8 +228,7 @@
 	<Tag name="UnitBhp">bhp</Tag>
 	<Tag name="UnitS">s</Tag>
 	
-	
-	<!--  Sceneries  -->
+	<!--  Scenery names  -->
 	<Tag name="SC_Asphalt">Asphalt</Tag>
 	<Tag name="SC_Jungle">Jungle</Tag>
 	<Tag name="SC_JungleDark">JungleDark</Tag>
@@ -109,183 +257,45 @@
 	<Tag name="SC_Mars">Mars</Tag>
 	<Tag name="SC_Crystals">Crystals</Tag>
 	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
-
-	<!--  CarTypes  -->
-	<Tag name="CarType_Asphalt">Asphalt</Tag>
-	<Tag name="CarType_Racing">Racing</Tag>
-	<Tag name="CarType_Gravel">Gravel</Tag>
-	<Tag name="CarType_Slow">Slow</Tag>
-	<Tag name="CarType_Terrain">Terrain</Tag>
-	<Tag name="CarType_Extreme">Extreme</Tag>
-	<Tag name="CarType_Other">Other</Tag>
-	<Tag name="CarType_Hover">Hovercraft</Tag>
-	<Tag name="CarType_Spaceship">Spaceship</Tag>
 	
-	<!--  Cars  -->
-	<Tag name="CarDesc_3S">Good car, suited for all tracks, but has slower acceleration, especially at high speeds.</Tag>
-	<Tag name="CarDesc_360">Good looking car, best fit for asphalt tracks. Can also drive on few flat terrain tracks. But completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
-	<Tag name="CarDesc_CT">Good looking, but difficult to drive, having engine at rear. Fit only for asphalt and few flat tracks. Completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
-	<Tag name="CarDesc_ES">Best rally car in game, great driving experience on all tracks. A bit high though.</Tag>
-	<Tag name="CarDesc_FN">Another good rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
-	<Tag name="CarDesc_FR4">Quite old, heavy, broad and slow. Good for terrain but not with the best suspension. Isn't suited for faster or stunt tracks.</Tag>
-	<Tag name="CarDesc_HR">Very heavy and slow car, best for terrain and bumps, easy to drive. But useless on fast and stunt tracks.</Tag>
-	<Tag name="CarDesc_LK4">Slow and heavy car. Can handle bumps well. Is stable and easy to drive. But isn't suited for faster tracks.</Tag>
-	<Tag name="CarDesc_M3">Very old car with low power engine. Not fit for jumps. Pick if you want to drive slowly.</Tag>
-	<Tag name="CarDesc_N1">Good car for all tracks. A bit less steerable, but quite stable because of length.</Tag>
-	<Tag name="CarDesc_OT">This is the slowest car. Very old and a bit creepy truck. Can drive only on flat tracks and with turtle speed.</Tag>
-	<Tag name="CarDesc_S1">Second best rally car in game, drivable on all tracks with the best experience, similar to ES.</Tag>
-	<Tag name="CarDesc_S8">Good rally car, drivable on all tracks. Similar to S1, but shorter and more steerable.</Tag>
-	<Tag name="CarDesc_TC6">Good rally car. Has low height. Is a bit older and less powerful.</Tag>
 
-	<Tag name="CarDesc_TW">This big, extreme vehicle is great for long and smooth tracks. But completely useless when narrow or in mud (e.g. in jungle). Also not easy to drive.</Tag>
-	<Tag name="CarDesc_TU">Very futuristic and fast vehicle. Not suited for narrow roads, jumps or mud.</Tag>
-	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
-	<Tag name="CarDesc_SZ">Fastest car meant for gravel. Light and with a powerful engine. Has great aerodynamics and steerability.</Tag>
-	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
+<!--  ..............................................................................................  -->
 
-	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But being small does slide sideways.</Tag>
-	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
-	<Tag name="CarDesc_V3">A big and heavy spaceship. Very good acceleration at start and strong braking. But doesn't reach high speeds.</Tag>
-	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy.</Tag>
-	<Tag name="CarDesc_Pipes">NOTE: Currently impossible to use in pipes.</Tag>
+	<!--  TIP  Car basics stats  -->
+	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
+	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
+	<Tag name="TipCarYear">Year when this car's production started.</Tag>
 
-	<!--  Hints  -->
-	<Tag name="Hint-0">Rewind</Tag>
-	<Tag name="Hint-0text">If you crashed or you're stuck, hold [Backspace] to move back in time.</Tag>
-	<Tag name="Hint-1">Turns</Tag>
-	<Tag name="Hint-1text">Don't accelerate all the time. Also don't forget to brake before turns, especially sharp ones. If you don't know the road yet, it's better to drive slowly.</Tag>
-	<Tag name="Hint-2">Flipping</Tag>
-	<Tag name="Hint-2text">Hold [Q] or [W] to flip over the car, when upside down or in jumps. Depending on settings, it may cost some fuel.</Tag>
-	<Tag name="Hint-3">Gravel</Tag>
-	<Tag name="Hint-3text">Remember that mostly you will drive on gravel. This means low grip, lower speeds and sliding. Wet gravel is even more slippery. Snow and ice are worst. Deserts are fastest.</Tag>
-	<Tag name="Hint-4">Damage</Tag>
-	<Tag name="Hint-4text">Watch your car's damage, especially in stunt tracks. It will stop working if it is fully damaged and its performance decreases when over 50 %.</Tag>
-	<Tag name="Hint-5">Ghost cars</Tag>
-	<Tag name="Hint-5text">By default, your best drive ghost is an orange car. It will appear after a lap. The green car is the track's ghost.</Tag>
-	<Tag name="Hint-6">Boost</Tag>
-	<Tag name="Hint-6text">Hold [Ctrl] to boost. Depending on the settings, boost is given each lap, regenerates over time, or is infinite.</Tag>
-	<Tag name="Hint-7">Cars</Tag>
-	<Tag name="Hint-7text">Pick the right car type for a track. So, don't use low cars on bumpy terrain, avoid large cars in narrow tracks, and fast super cars aren't meant for slippery surfaces.</Tag>
-	<Tag name="Hint-8">Steering</Tag>
-	<Tag name="Hint-8text">If you don't feel comfortable with steering on keyboard, try different settings in [Setup], tab [Steering], namely range and speed decrease and keys sensitivity in [Input].</Tag>
-	<Tag name="Hint-9">Jumps</Tag>
-	<Tag name="Hint-9text">Don't drive too fast in jumps, else the car will land in a sloppy manner. The ideal landing is on the jump's other end.</Tag>
-	<Tag name="Hint-10">Loops</Tag>
-	<Tag name="Hint-10text">In loops, the camera will automatically switch to an interior view, to make it easier to steer while in a loop.</Tag>
-	<Tag name="Hint-11">Pipes</Tag>
-	<Tag name="Hint-11text">Don't drive too fast in pipes and loops. You will damage the car's bottom due to high acceleration.</Tag>
-	<Tag name="Hint-12">Vehicles</Tag>
-	<Tag name="Hint-12text">Check out other vehicles, we also have hovering spaceships, and tracks on other planets.</Tag>
-	<Tag name="Hint-13">Simulation</Tag>
-	<Tag name="Hint-13text">By default simulation is in easy mode, for beginners. Don't forget to set it to normal if the game feels too easy.</Tag>
-	<Tag name="Hint-14">Fps</Tag>
-	<Tag name="Hint-14text">Press F11 to show the bar with frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
-	<Tag name="Hint-15">Last</Tag>
-	<Tag name="Hint-15text">For more info, check [Help] in the menu.</Tag>
-	<Tag name="Hint-16">Camera</Tag>
-	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
-
-	<Tag name="Hint">Hint</Tag>
-	<Tag name="HintShow">Show at startup</Tag>
-	<Tag name="HintKey">Ctrl-F1 - Show</Tag>
-	<Tag name="WelcomeTo">Welcome to</Tag>
-	<Tag name="HintScreen">To change screen resolution and adjust graphics to your card press Screen button.</Tag>
-	<Tag name="HintInput">To check keys used in game or reassign them, or to configure controller press Input button.</Tag>
-	
-	
-<!--  ............................................................................................................................  -->
-
-
-	<!--  Main  -->
-	<Tag name="SingleRace">Single Race</Tag>
-	<Tag name="Championship">Championship</Tag>
-	<Tag name="Tutorial">Tutorial</Tag>
-	<Tag name="Challenge">Challenge</Tag>
-
-	<Tag name="ReplaysMenu">Replays</Tag>
-	<Tag name="Options">Options</Tag>
-	<Tag name="Quit">Quit</Tag>
-	<Tag name="BackMenu">Back</Tag>
-	<Tag name="Help">Help</Tag>
-	<Tag name="Readme">Readme</Tag>
-
-
-	<!--  Championship  -->
+	<!--  Championship  end  -->
 	<Tag name="ChampEndCongrats">Congratulations !</Tag>
 	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
 	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
 	<Tag name="ChallEndFinished">You have passed this challenge.</Tag>
 
+	<!--  Championship  info text  -->
 	<Tag name="ChampInfo">In tutorial/championship mode you drive a series of tracks. Minimum score (depending on your time) is needed to pass to next stage. Car changing is possible.</Tag>
 	<Tag name="ChallInfo">In challenge mode the game has setup, most settings can't be changed. Time or position is needed. If you pass you receive bronze, silver or gold prize.</Tag>
 	<Tag name="ChampInfo2">Championships are usually long, have many tracks, but are easy to pass.</Tag>
 	<Tag name="ChallInfo2">Challenges are short but usually difficult to pass.</Tag>
 	<Tag name="TutorInfo">Tutorials have just a few tracks. They are easy to pass and show various track elements.</Tag>
 
-	<Tag name="Start">Start</Tag>
-	<Tag name="Continue">Continue</Tag>
-	<Tag name="Restart">Restart</Tag>
-	<Tag name="Close">Close</Tag>
+	<!--  Hint  welcome screen  -->
+	<Tag name="Hint">Hint</Tag>
+	<Tag name="HintShow">Show at startup</Tag>
+	<Tag name="HintKey">Ctrl-F1 - Show</Tag>
+	<Tag name="WelcomeTo">Welcome to</Tag>
+	<Tag name="HintScreen">To change screen resolution and adjust graphics to your card press Screen button.</Tag>
+	<Tag name="HintInput">To check keys used in game or reassign them, or to configure controller press Input button.</Tag>
 
-	<!--  Challenge prizes  -->
-	<Tag name="Prize">Prize</Tag>
-	<Tag name="Bronze">Bronze</Tag>
-	<Tag name="Silver">Silver</Tag>
-	<Tag name="Gold">Gold</Tag>
-
-	<!--  Challenge types  -->
-	<Tag name="Chall_Rally">Rally</Tag>
-	<Tag name="Chall_Endurance">Endurance</Tag>
-	<Tag name="Chall_Chase">Chase</Tag>
-	<Tag name="Chall_Stunts">Stunts</Tag>
-	<Tag name="Chall_Extreme">Extreme</Tag>
-	<Tag name="Chall_Special">Special</Tag>
-
-	<!--  Difficulty for tracks  -->
-	<Tag name="Diff0">Test Easy</Tag>
-	<Tag name="Diff1">Very Easy</Tag>
-	<Tag name="Diff2">Easy</Tag>
-	<Tag name="Diff3">Medium</Tag>
-	<Tag name="Diff4">Hard</Tag>
-	<Tag name="Diff5">Very Hard</Tag>
-	<Tag name="Diff6">Extreme</Tag>
-	<Tag name="Diff7">Ultra</Tag>
-
-	<Tag name="Name">Name</Tag>
-	<Tag name="Tracks">Tracks</Tag>
-	<Tag name="Stage">Stage</Tag>
-	<Tag name="Stages">Stages</Tag>
-	<Tag name="Scenery">Scenery</Tag>
-	<Tag name="Length">Length</Tag>
-	<Tag name="Difficulty">Difficulty</Tag>
-	<Tag name="Distance">Distance</Tag>
-	<Tag name="Time">Time</Tag>
-	<Tag name="TimeMS">m:s</Tag>
-	<Tag name="Progress">Progress</Tag>
-	<Tag name="Score">Score</Tag>
-	<Tag name="TotalScore">Total score</Tag>
-	<Tag name="Needed">Needed</Tag>
-	<Tag name="Finished">Finished</Tag>
-
-	<Tag name="Passed">Passed</Tag>
-	<Tag name="DidntPass">Didn't pass</Tag>
-	<Tag name="NextStage">Continuing to next stage</Tag>
-	<Tag name="RepeatStage">Repeating stage</Tag>
-
-	<Tag name="CarChange">Car change</Tag>
-	<Tag name="Allowed">Allowed</Tag>
-
-
-	<!--  Track  -->
-	<Tag name="Track">Track</Tag>
-	<Tag name="TipTrackList">Tracks list, click to select and see info. Press Enter or [New Game] to drive on it.</Tag>
+	<!--  TIP  Track  messages  -->
 	<Tag name="TrackNotFound">Track not found !</Tag>
-
-	<Tag name="Reverse">Reverse</Tag>
 	<Tag name="TipReverse">Reverse track direction.</Tag>
-	<Tag name="NewGame">New Game</Tag>
 	<Tag name="TipNewGame">Start game on new track or Restart on current.</Tag>
 
+	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
+	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
+
+	<!--  TIP  Track  -->
 	<Tag name="TipTrackDesc">Track description text.</Tag>
 	<Tag name="TipTrackImg">In game screenshot for selected track.</Tag>
 	<Tag name="TipTrkTerImg">Minimap of selected track, view from top.</Tag>
@@ -293,11 +303,7 @@
 	<Tag name="TipTrkViewShort">Short list view.</Tag>
 	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
 
-	<Tag name="Find">Find</Tag>
-	<Tag name="TipFind">Enter part of name to find (filters list).</Tag>
-	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
-
-	<!--  Track difficulties, icons  -->
+	<!--  TIP  Track difficulties, on icons  -->
 	<Tag name="fluids">fluids (water or mud)</Tag>
 	<Tag name="bumps">bumps (bumpy terrain)</Tag>
 	<Tag name="jumps">jumps</Tag>
@@ -310,127 +316,24 @@
 	<Tag name="rating">rating</Tag>
 	<Tag name="objects">objects (dynamic)</Tag>
 	<Tag name="obstacles">obstacles (on road or in pipe)</Tag>
-	
-
-	<!--  Track stats  -->
-	<Tag name="TrackBestTime">Best time</Tag>
-	<Tag name="TrackAvgSpeed">Avg. speed</Tag>
-	<Tag name="TrackLength">Length</Tag>
-	<Tag name="TrackArea">Area</Tag>
-	<Tag name="TrackWidthAvg">Width avg.</Tag>
-	<Tag name="TrackHeightDiff">Height diff.</Tag>
-	<Tag name="TrackInAir">In air</Tag>
-	<Tag name="TrackPipes">Pipes</Tag>
+	<!--  TIP  Track stats  -->
 	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>	
-	
 
-	<!--  Car  -->
-	<Tag name="Car">Car</Tag>
-	<Tag name="Cars">Cars</Tag>
-	<Tag name="TipCarsList">Cars list. Press Enter or [New Game] to drive with it.</Tag>
-	<Tag name="TipCarDesc">Car description text.</Tag>
-	<Tag name="TipNewGameCar">Restart game.</Tag>
-
-	<!--  Car Color -->
-	<Tag name="ColHue">Color - Hue</Tag>
-	<Tag name="ColSat">Saturation</Tag>
-	<Tag name="ColBright">Brightness</Tag>
-	<Tag name="ColGloss">Glossiness</Tag>
-	<Tag name="ColReflect">Reflection</Tag>
-	<Tag name="TipChangeHue">Change car color (hue).</Tag>
-	<Tag name="TipChangeSat">Change car color saturation (white-black).</Tag>
-	<Tag name="TipChangeBright">Change car color brightness (dark-light).</Tag>
-	<Tag name="TipChangeGloss">Change car color glossiness (matte-shiny).</Tag>
-	<Tag name="TipChangeReflect">Change car color reflectiveness (matte-mirror).</Tag>
-	<Tag name="CarClrRandom">Random</Tag>
-	<Tag name="Adjust">Adjust</Tag>
-	<Tag name="Transparency">Transparency</Tag>
-	<Tag name="Negative">Negative (darken)</Tag>
-
-	<Tag name="Author">Author(s)</Tag>
-	<Tag name="CarSpeed">Speed</Tag>
-	<Tag name="CarYear">Year</Tag>
-	<Tag name="CarType">Type</Tag>
-	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
-	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
-	<Tag name="TipCarYear">Year when this car's production started.</Tag>
-	
-	<!--  Car stats -->
-	<Tag name="Car_Mass">Mass</Tag>
-	<Tag name="Car_MassFront">Mass on front</Tag>
-	<Tag name="Car_MaxTorque">Max Torque</Tag>
-	<Tag name="Car_MaxPower">Max Power</Tag>
-	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
-	<Tag name="Car_TopSpeed">Top Speed</Tag>
-	<Tag name="Car_TimeTo">Time to</Tag>
-	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
+<!--  ..............................................................................................  -->
 
 
-	<!--  Multiplayer  -->
-	<Tag name="Multiplayer">Multiplayer</Tag>
-	<Tag name="Game name">Game name</Tag>
-	<Tag name="Laps">Laps</Tag>
-	<Tag name="Player">Player</Tag>
-	<Tag name="Players">Players</Tag>
-	<Tag name="Collis.">Collis.</Tag>
-	<Tag name="Locked">Locked</Tag>
-	<Tag name="Peers">Peers</Tag>
-	<Tag name="Ping">Ping</Tag>
-	
-	<!-- Server -->
-	<Tag name="NetServer">Server</Tag>
-	<Tag name="NetGamesAvail">Available games</Tag>
-	<Tag name="NetRefreshList">Get/refresh list</Tag>
-	<Tag name="NetJoinGame">Join game</Tag>
-	<Tag name="NetJoinLocked">Protected game</Tag>
-	<Tag name="NetCreateGame">Create game</Tag>
-	<Tag name="NetDirectConnect">Direct connect</Tag>
-	<Tag name="NetAddress">Address</Tag>
-	<Tag name="NetHost">Host</Tag>
-	<Tag name="NetPort">Port</Tag>
-	<Tag name="NetPassword">Password</Tag>
-	<Tag name="NetWrongPassword">Wrong password.</Tag>
-	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>
-	<Tag name="NetMasterProtocolError">Incompatible protocol version - update Stunt Rally or contact server administrator.</Tag>
-	<Tag name="NetMasterConnectionError">Couldn't reach the master server.</Tag>
-	<!-- Game -->
-	<Tag name="NetGame">Game</Tag>
-	<Tag name="NetGameName">Game Name</Tag>
-	<Tag name="NetStart">Start</Tag>
-	<Tag name="NetReady">Ready</Tag>
-	<Tag name="NetWaiting">Waiting...</Tag>
-	<Tag name="NetNew">New game</Tag>
-	<Tag name="NetLeaveGame">Leave game</Tag>
-	<Tag name="NetChat">Chat</Tag>
-	<Tag name="FinishedCommaPlace">finished, place</Tag>
-	<Tag name="NetWaitingForOthers">Waiting for others</Tag>
-
-	<Tag name="ListeningOnPort">Listening on port</Tag>
-	<Tag name="ConnectingTo">Connecting to</Tag>
-	<Tag name="Connected">Connected</Tag>
-	<Tag name="Disconnected">Disconnected</Tag>
-	<Tag name="NetworkError">Network Error</Tag>
-	<Tag name="NewtworkFailed">Failed to initialize networking. Try different local port and make sure your firewall is properly configured.</Tag>
-
-	<!-- Settings -->
-	<Tag name="NetSettings">Settings</Tag>
-	<Tag name="NetNickname">Nickname</Tag>
-	<Tag name="NetMasterIp">Master Server IP</Tag>
-	<Tag name="NetMasterPort">Master Server Port</Tag>
-	<Tag name="NetLocalPort">Local Port</Tag>
-	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
-
-
-	<!--  Setup  -->
+	<!--  Setup  (car)  -->
 	<Tag name="Game">Game</Tag>
 	<Tag name="Setup">Setup</Tag>
 
+	<!--  Setup  ABS,TCS  -->
+	<Tag name="NotRecommended">Not recommended</Tag>
 	<Tag name="ABS">ABS (antilock brakes)</Tag>
 	<Tag name="TipABS">Prevents wheel lock when braking (default: off).</Tag>
 	<Tag name="TCS">TCS (traction control)</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
-	<Tag name="NotRecommended">Not recommended</Tag>
 
+	<!--  Setup  steeting  -->
 	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="Asphalt">Asphalt</Tag>
 	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
@@ -441,6 +344,7 @@
 	<Tag name="TipSteerSim">Steering range multiplier, for simulation mode (Easy,Normal).</Tag>
 	<Tag name="TipSteerSurf">Steering range multiplier, for surface (Gravel,Asphalt).</Tag>
 
+	<!--  Setup  Gearbox  -->
 	<Tag name="Gearbox">Gearbox</Tag>
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
 	<Tag name="TipAutoGearbox">Uncheck for manual gears changing.</Tag>
@@ -449,17 +353,21 @@
 	<Tag name="RearThrottleInverse">Rear throttle inverse</Tag>
 	<Tag name="TipRearThrottleInverse">Inverse throttle and brake function in rear gear.</Tag>
 
+	<!--  Setup  collision  -->
 	<Tag name="VegetCol">Vegetation collision</Tag>
 	<Tag name="CarCollis">Cars collision</Tag>
 	<Tag name="RoadWallFullCollis">Road wall full collision</Tag>
 	<Tag name="DynamicObjects">Dynamic Objects</Tag>
 
+
+	<!--  Game  Damage  -->
 	<Tag name="Damage">Damage</Tag>
 	<Tag name="None">None</Tag>
 	<Tag name="Reduced">Reduced</Tag>
 	<Tag name="Normal">Normal</Tag>
 	<Tag name="DamageDecLap">Repair each lap</Tag>
 
+	<!--  Game  Boost  -->
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="Flip">Flip</Tag>
 
@@ -471,11 +379,13 @@
 	<Tag name="FuelTime">Fuel over time</Tag>
 	<Tag name="FuelBoost">Boost Fuel</Tag>
 
+	<!--  Game  Split screen  -->
 	<Tag name="NumLocalPlayers">Number of local players</Tag>
 	<Tag name="SplitVertically">Split Vertically</Tag>
 	<Tag name="ReverseStartOrder">Reverse starting order</Tag>
 	<Tag name="NumLaps">Number of laps</Tag>
 
+	<!--  MAIN  Game  Simulation  -->
 	<Tag name="Simulation">Simulation</Tag>
 	<Tag name="SimMode">Simulation mode (difficulty)</Tag>
 	<Tag name="SimModeEasy">Easy (beginner)</Tag>
@@ -490,23 +400,16 @@
 	<Tag name="RplSave">Save</Tag>
 	<Tag name="RplDelete">Delete</Tag>
 	<Tag name="RplRename">Rename</Tag>
+
 	<Tag name="AlreadyExists">Already exists</Tag>
 
-	<Tag name="RplAutoRec">Auto record replay</Tag>
-	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
-	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
-	<Tag name="RplAlpha">Transparent ghost</Tag>
-	<Tag name="RplParticles">Particles (for not transparent ghost)</Tag>
-	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
-	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
-	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
-	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
-	<Tag name="Ghost">Ghost</Tag>
-
+	<!--  Replay  list  -->
 	<Tag name="RplAll">All</Tag>
 	<Tag name="RplCurrent">Current</Tag>
+	<Tag name="Ghost">Ghost</Tag>
 	<Tag name="RplGhosts">Ghosts</Tag>
 	
+	<!--  Replay  stats  -->
 	<Tag name="RplTime">Time</Tag>
 	<Tag name="RplVersion">Version</Tag>
 	
@@ -514,26 +417,39 @@
 	<Tag name="RplFileSize">File size</Tag>
 	<Tag name="RplRecTime">Recorded   time</Tag>
 
+	<!--  Replay  View setup  -->
+	<Tag name="RplAutoRec">Auto record replay</Tag>
+	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
+	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
+	<Tag name="RplAlpha">Transparent ghost</Tag>
+	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
+	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
+	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
+	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
+
 
 	<!--  Screen  -->
 	<Tag name="Screen">Screen</Tag>
 	<Tag name="Video">Video</Tag>
 	<Tag name="Resolution">Resolution</Tag>
 	<Tag name="Fullscreen">Fullscreen</Tag>
-	<Tag name="VSync">VSync</Tag>
-	<Tag name="RenderSystem">Render System</Tag>
 	<Tag name="Complex">Complex</Tag>
 	<Tag name="Simple">Simple</Tag>
-	
-	<Tag name="AntiAliasing">Antialiasing</Tag>
+	<!--  Screen  info  -->
 	<Tag name="NeedRestart">* need restart</Tag>
 	<Tag name="GraphicsRightHQ">By default better quality (less Fps) is on right. Marked with + if on left.</Tag>
+	<!--  Screen  vertical synchronisation  -->
+	<Tag name="VSync">VSync</Tag>
+	
+	<!--  Screen  advanced  -->
+	<Tag name="RenderSystem">Render System</Tag>
+	<Tag name="AntiAliasing">Antialiasing</Tag>
 	<Tag name="Change">Change</Tag>
-	<Tag name="PostfilterAA">Post-filter antialiasing</Tag>
 	<Tag name="LimitFPS">Limit frames per second</Tag>
 	<Tag name="FramesPerSec">Frames per second</Tag>
 	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
 	
+	<!--  Graphics Presets  -->
 	<Tag name="GraphicsPreset">Graphics preset</Tag>
 	<Tag name="GraphicsAll_Lowest">Lowest</Tag>
 	<Tag name="GraphicsAll_Low">Low</Tag>
@@ -544,9 +460,91 @@
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 	<Tag name="GraphicsAll_Impossible">Impossible</Tag>
 
+
+	<!--  Network Multiplayer  headers  -->
+	<Tag name="Multiplayer">Multiplayer</Tag>
+	<Tag name="Game name">Game name</Tag>
+	<Tag name="Laps">Laps</Tag>
+	<Tag name="Player">Player</Tag>
+	<Tag name="Players">Players</Tag>
+	<Tag name="Collis.">Collis.</Tag>
+	<Tag name="Locked">Locked</Tag>
+	<Tag name="Peers">Peers</Tag>
+	<Tag name="Ping">Ping</Tag>
+	
+	<!--  Network Server -->
+	<Tag name="NetServer">Server</Tag>
+	<Tag name="NetGamesAvail">Available games</Tag>
+	<Tag name="NetRefreshList">Get/refresh list</Tag>
+	<Tag name="NetJoinGame">Join game</Tag>
+	<Tag name="NetJoinLocked">Protected game</Tag>
+	<Tag name="NetCreateGame">Create game</Tag>
+	<Tag name="NetDirectConnect">Direct connect</Tag>
+	<Tag name="NetAddress">Address</Tag>
+	<Tag name="NetHost">Host</Tag>
+	<Tag name="NetPort">Port</Tag>
+	<Tag name="NetPassword">Password</Tag>
+
+	<!--  Network Game  -->
+	<Tag name="NetGame">Game</Tag>
+	<Tag name="NetGameName">Game Name</Tag>
+	<Tag name="NetStart">Start</Tag>
+	<Tag name="NetReady">Ready</Tag>
+	<Tag name="NetWaiting">Waiting...</Tag>
+	<Tag name="NetNew">New game</Tag>
+	<Tag name="NetLeaveGame">Leave game</Tag>
+	<Tag name="NetChat">Chat</Tag>
+	<Tag name="FinishedCommaPlace">finished, place</Tag>
+
+	<!--  Network status  -->
+	<Tag name="NetWaitingForOthers">Waiting for others</Tag>
+	<Tag name="ListeningOnPort">Listening on port</Tag>
+	<Tag name="ConnectingTo">Connecting to</Tag>
+	<Tag name="Connected">Connected</Tag>
+	<Tag name="Disconnected">Disconnected</Tag>
+	<Tag name="NetworkError">Network Error</Tag>
+	<!--  Network messages  -->
+	<Tag name="NetWrongPassword">Wrong password.</Tag>
+	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>
+	<Tag name="NetMasterProtocolError">Incompatible protocol version - update Stunt Rally or contact server administrator.</Tag>
+	<Tag name="NetMasterConnectionError">Couldn't reach the master server.</Tag>
+	<Tag name="NewtworkFailed">Failed to initialize networking. Try different local port and make sure your firewall is properly configured.</Tag>
+
+	<!--  Network Settings  -->
+	<Tag name="NetSettings">Settings</Tag>
+	<Tag name="NetNickname">Nickname</Tag>
+	<Tag name="NetMasterIp">Master Server IP</Tag>
+	<Tag name="NetMasterPort">Master Server Port</Tag>
+	<Tag name="NetLocalPort">Local Port</Tag>
+	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
+
+
+	<!--  Effects  Main -->
 	<Tag name="Effects">Effects</Tag>
 	<Tag name="AllEffects">Effects Enabled</Tag>
+	<!--  Effects  -->
+	<Tag name="Bloom">Bloom</Tag>
+	<Tag name="Intensity">Intensity</Tag>
+	<Tag name="OrigImage">Darken</Tag>
+	<Tag name="MotionBlur">Motion Blur</Tag>
+
+	<Tag name="godrays">God Rays</Tag>
+	<Tag name="filmgrain">Film Grain</Tag>
+	<Tag name="softparticles">Soft Particles</Tag>
+
+	<!--  Effects DOF  -->
+	<Tag name="DepthOfField">Depth of Field</Tag>
+	<Tag name="Near">Near</Tag>
+	<Tag name="Far">Far</Tag>
+	<Tag name="Small">Small</Tag>
+	<Tag name="Big">Big</Tag>
+
+	<!--  Effects (ambient shadows)  -->
+	<Tag name="ssao">SSAO</Tag>
+
+	<!--  Effects HDR  broken  -->
 	<Tag name="HDRTab">HDR</Tag>
+	<Tag name="HDR">HDR+Bloom</Tag>
 	<Tag name="HDRAdaptationScale">Adapt Scale</Tag>
 	<Tag name="HDRIntensity">Bloom Intensity</Tag>
 	<Tag name="HDROrigImage">Bloom Darken</Tag>
@@ -555,20 +553,6 @@
 	<Tag name="HDRParam3">Grain</Tag>
 	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
 	<Tag name="HDRVignettingDarkness">Vignetting Darken</Tag>
-	<Tag name="Bloom">Bloom</Tag>
-	<Tag name="Intensity">Intensity</Tag>
-	<Tag name="OrigImage">Darken</Tag>
-	<Tag name="HDR">HDR+Bloom</Tag>
-	<Tag name="MotionBlur">Motion Blur</Tag>
-	<Tag name="ssao">SSAO</Tag>
-	<Tag name="godrays">God Rays</Tag>
-	<Tag name="filmgrain">Film Grain</Tag>
-	<Tag name="softparticles">Soft Particles</Tag>
-	<Tag name="DepthOfField">Depth of Field</Tag>
-	<Tag name="Near">Near</Tag>
-	<Tag name="Far">Far</Tag>
-	<Tag name="Small">Small</Tag>
-	<Tag name="Big">Big</Tag>
 
 
 	<!--  Graphics  -->
@@ -577,6 +561,7 @@
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
 	<Tag name="ApplyShaders">Apply shaders</Tag>
 
+	<!--  Graphics  Detail  -->
 	<Tag name="Materials">Materials</Tag>
 	<Tag name="Detail">Detail</Tag>
 	<Tag name="TerrainError">Terrain error</Tag>
@@ -584,6 +569,7 @@
 	<Tag name="ViewDist">View distance</Tag>
 	<Tag name="RoadQual">Road far quality</Tag>
 
+	<!--  Graphics  Textures  -->
 	<Tag name="Textures">Textures</Tag>
 	<Tag name="Bilinear">Bilinear</Tag>
 	<Tag name="Trilinear">Trilinear</Tag>
@@ -592,6 +578,7 @@
 	<Tag name="Triplanar">Triplanar</Tag>
 	<Tag name="HighestSlopes">Highest slopes</Tag>
 
+	<!--  Graphics  Vegetation  -->
 	<Tag name="Vegetation">Vegetation</Tag>
 	<Tag name="TreeMult">Trees multiplier</Tag>
 	<Tag name="DistMult">Distance mul</Tag>
@@ -600,6 +587,7 @@
 	<Tag name="UseImposters">Use Impostors</Tag>
 	<Tag name="ImpostorsOnly">Impostors Only (low quality)</Tag>
 
+	<!--  Graphics  reflections  -->
 	<Tag name="Reflections">Reflections</Tag>
 	<Tag name="FrameSkip">Frames skip</Tag>
 	<Tag name="MapSize">Map size</Tag>
@@ -609,10 +597,12 @@
 	<Tag name="ReflMode_single">Single</Tag>
 	<Tag name="ReflMode_full">Full</Tag>
 
+	<!--  Graphics  Water  -->
 	<Tag name="Water">Water</Tag>
 	<Tag name="WaterReflection">Reflection</Tag>
 	<Tag name="WaterRefraction">Refraction</Tag>
 
+	<!--  Graphics  shadows  -->
 	<Tag name="Shadows">Shadows</Tag>
 	<Tag name="Shaders">Shaders</Tag>
 	<Tag name="Size">Size</Tag>
@@ -622,23 +612,27 @@
 	<Tag name="ApplyShadows">Apply Shadows</Tag>
 	<Tag name="LightmapSize">Lightmap size</Tag>
 
+	<!--  Graphics  particles  -->
 	<Tag name="Particles">Particles</Tag>
 	<Tag name="TireTrails">Tire Trails</Tag>
 	
 	
-	<!--  View  -->
+	<!--  View  Gauges  -->
 	<Tag name="View">View</Tag>
 	<Tag name="HUD">HUD</Tag>
 	<Tag name="Digits">Digits (gear, speed)</Tag>
 	<Tag name="SpeedUnit">Speed unit</Tag>
 	<Tag name="Gauges">Gauges (rpm, speed)</Tag>
 	<Tag name="Layout">Layout</Tag>
+
+	<!--  View  Minimap  -->
 	<Tag name="Minimap">Minimap</Tag>
 	<Tag name="MinimapZoom">Zoom</Tag>
 	<Tag name="MinimapRotate">Rotate</Tag>
 	<Tag name="MinimapTerrain">Terrain</Tag>
 	<Tag name="MinimapBorder">Border</Tag>
 	
+	<!--  View  Hud  -->
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="OpponentsList">Opponents List</Tag>
 	<Tag name="OpponentsSorted">Opponents Sorted</Tag>
@@ -647,6 +641,7 @@
 	<Tag name="CheckBeam">Next checkpoint beam</Tag>
 	<Tag name="CountdownTime">Race countdown time</Tag>
 
+	<!--  View  Camera  -->
 	<Tag name="Camera">Camera</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
 	<Tag name="CameraAutoTilt">Camera auto tilt on slopes</Tag>
@@ -660,18 +655,20 @@
 	<Tag name="Other">Other</Tag>
 	<Tag name="Development">Development</Tag>
 	<Tag name="FPS">Fps, Triangles, Batches</Tag>
-	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
-	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
 	<Tag name="Wireframe">Wireframe</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
-	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
 	
+	<!--  Settings  car tweak visualizeations  -->
+	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
+	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
 	<Tag name="CarDebugText">Car debug text </Tag>
 	<Tag name="CarDebugSurfaces">Car tire surfaces</Tag>
 	<Tag name="ProfilerTxt">Profiler times text </Tag>
 	<Tag name="TextColor">Text color</Tag>
+	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
 
+	<!--  Settings  startup  -->
 	<Tag name="Startup">Startup</Tag>
 	<Tag name="MouseCapture">Capture mouse</Tag>
 	<Tag name="OgreDialog">Show Ogre dialog</Tag>
@@ -684,7 +681,7 @@
 	<Tag name="ScreenshotPng">Screenshots saved as .png</Tag>
 
 	
-	<!--  Input  -->
+	<!--  Input  bind  -->
 	<Tag name="Input">Input</Tag>
 	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
 	<Tag name="InputNoJS">No joystick</Tag>
@@ -693,16 +690,15 @@
 
 	<Tag name="OneAxisThrottleBrake">One axis for throttle and brake</Tag>
 	<Tag name="TipOneAxisThrottleBrake">If your controller has throttle and brake in one axis, check this. Bind axis to throttle, unbind brake. Use Inverse from throttle if needed.</Tag>
-	<Tag name="InputMoveAxisTip">Move an axis to see its number</Tag>
-	<Tag name="InputPressButtonTip">Press a button to see its number</Tag>
 
+	<!--  Input  headers  -->
 	<Tag name="InputMapGeneral">General</Tag>
 	<Tag name="InputHeaderTxt1">Action</Tag>
 	<Tag name="InputHeaderTxt2">Binding</Tag>
 	<Tag name="InputHeaderTxt3">Value</Tag>
 	<Tag name="InputHeaderTxt4">Edit</Tag>
 
-	<!--  Input  Detail  -->
+	<!--  Input  Detail  Control  -->
 	<Tag name="InputControllers">Controllers</Tag>
 	<Tag name="InputDetailPreset">Set from preset</Tag>
 	<Tag name="InputDetailsFor">Details for</Tag>
@@ -711,6 +707,7 @@
 	<Tag name="InputMultiplier">Multiplier</Tag>
 	<Tag name="InputInverse">Inverse</Tag>
 
+	<!--  Input  axis presets  -->
 	<Tag name="InpSet_KeyHalf">Key Half</Tag>
 	<Tag name="InpSet_KeyFull">Key Full</Tag>
 	<Tag name="InpSet_AxisHalf">Axis Half</Tag>
@@ -718,6 +715,7 @@
 	<Tag name="InpSet_AxisFull">Axis Full</Tag>
 	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
 
+	<!--  Input  key setup  -->
 	<Tag name="InputKeyboardEmulation">Keyboard Emulation</Tag>
 	<Tag name="InputIncreaseSensitivity">Sensitivity</Tag>
 	<Tag name="InputReturnDelay">Return speed</Tag>
@@ -727,7 +725,8 @@
 	<Tag name="InpSet_Medium">Medium</Tag>
 	<Tag name="InpSet_Fast">Fast</Tag>
 
-	<!--  Input  Map  player  -->
+
+	<!--  MAIN  Game Input  Player  -->
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="InputMapBrake">Brake</Tag>
 	<Tag name="InputMapSteering">Steering</Tag>
@@ -735,16 +734,18 @@
 	<Tag name="InputMapHandBrake">Handbrake</Tag>
 	<Tag name="InputMapBoost">Boost</Tag>
 	<Tag name="InputMapFlip">Flip</Tag>
+	<Tag name="InputMapRewind">Rewind (time)</Tag>
 
+	<!--  Game Input  Player  -->
 	<Tag name="InputMapShiftUp">Shift up</Tag>
 	<Tag name="InputMapShiftDown">Shift down</Tag>
 
 	<Tag name="InputMapPrevCamera">Previous Camera</Tag>
 	<Tag name="InputMapNextCamera">Next Camera</Tag>
 	<Tag name="InputMapLastChk">Go to last checkp.</Tag>
-	<Tag name="InputMapRewind">Rewind (time)</Tag>
 
-	<!--  Input  Map  -->
+
+	<!--  MAIN  Game Input  -->
 	<Tag name="InputMapShowOptions">Show options</Tag>
 	<Tag name="InputMapPrevTab">Previous tab</Tag>
 	<Tag name="InputMapNextTab">Next tab</Tag>
@@ -755,16 +756,19 @@
 	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="InputGraphsType">change graphs type in game</Tag>
 
-	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
-	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
-	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
-	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
-
+	<!--  Game Input  General  -->
 	<Tag name="InputOther1">Up,Down - navigate in lists   Enter - start</Tag>
 	<Tag name="InputOther2">Enter - show/hide players window in multiplayer</Tag>
 	<Tag name="InputOther3">Enter - show lap results</Tag>
 	<Tag name="InputFocusFind">Ctrl-F  go to find box</Tag>
 
+	<!--  Game Input  General replay  -->
+	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
+	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
+	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
+	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
+
+	<!--  Game Input  Tweak extras  -->
 	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
 	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
 	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
@@ -777,7 +781,7 @@
 
 
 
-	<!--  Sound  -->
+	<!--  Sound  main  -->
 	<Tag name="Sound">Sound</Tag>
 	<Tag name="Volume">Volume</Tag>
 	<Tag name="VolMaster">Master</Tag>
@@ -786,6 +790,7 @@
 	<Tag name="Suspension">Suspension</Tag>
 	<Tag name="Environment">Environment</Tag>
 
+	<!--  Sound  other  -->
 	<Tag name="FluidSplash">Fluid Splash</Tag>
 	<Tag name="FluidCont">Fluid Cont.</Tag>
 	<Tag name="CarCrash">Car Crash</Tag>
@@ -809,6 +814,7 @@
 <!--  Editor  -->
 <!--  ............................................................................................................................  -->
 
+	<!--  Editor  Main  -->
 	<Tag name="PreviewCam">Preview Camera</Tag>
 	<Tag name="Leave">Leave (exit)</Tag>
 	<Tag name="EnterSave">Enter - save</Tag>
@@ -818,6 +824,7 @@
 	<Tag name="RoadPoint">Road Point</Tag>
 	<Tag name="RoadStats">Road Stats</Tag>
 
+	<!--  Editor  Main  Track  -->
 	<Tag name="Editor">Editor</Tag>
 	<Tag name="LoadTrack">Load Track</Tag>
 	<Tag name="CopySource">Set as copy source</Tag>
@@ -825,13 +832,15 @@
 	<Tag name="Rename">Rename</Tag>
 	<Tag name="Delete">Delete</Tag>
 
+	<!--  Editor  Track  message  -->
 	<Tag name="DeleteTrack">Delete track ?</Tag>
 	<Tag name="CopyTrackNoSource">No source track selected.</Tag>
 	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
 	<Tag name="CantSaveOrgTrack">Can't save original track. Duplicate it first.</Tag>
+	<Tag name="NeedReload">* need reload</Tag>
 	
 
-	<!--  Sun  -->
+	<!--  Editor  Sun  -->
 	<Tag name="Sun">Sun</Tag>
 	<Tag name="Sky">Sky</Tag>
 	<Tag name="SunDir">Sun dir.</Tag>
@@ -843,6 +852,7 @@
 	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="Specular">Specular</Tag>
 
+	<!--  Editor  Fog  -->
 	<Tag name="Fog">Fog</Tag>
 	<Tag name="FogNormal">Normal</Tag>
 	<Tag name="FogHeight">Height</Tag>
@@ -850,6 +860,7 @@
 	<Tag name="FogStart">start</Tag>
 	<Tag name="FogEnd">end</Tag>
 
+	<!--  Editor  Weather  -->
 	<Tag name="DisableEdit">Disable for edit</Tag>
 	<Tag name="Weather">Weather</Tag>
 	<Tag name="set1">set1</Tag>
@@ -857,32 +868,37 @@
 	<Tag name="intensity">intensity</Tag>
 
 
-	<!--  Terrain  -->
+	<!--  Terrain  Edit modes  -->
 	<Tag name="Terrain">Terrain</Tag>
 	<Tag name="TerDeform">Deform</Tag>
 	<Tag name="TerFilter">Filter</Tag>
 	<Tag name="TerSmooth">Smooth</Tag>
 	<Tag name="TerHeight">Height</Tag>
+
+	<!--  Terrain  heightmap  -->
 	<Tag name="HeightmapSize">Heightmap size</Tag>
 	<Tag name="TriSize">Triangle size</Tag>
 	<Tag name="TerrainSize">Terrain size</Tag>
-
-	<Tag name="NormalsScale">Normals scale</Tag>
-	<Tag name="TerrainEmissiveLight">Terrain has emissive light</Tag>
-	<Tag name="SpecularPower">Specular power</Tag>
-	<Tag name="SpecularPowerEm">Emissive power</Tag>
 	
 	<Tag name="NewTerrainFlat">New flat</Tag>
 	<Tag name="NewTerrainGenerate">Generate new</Tag>
 	<Tag name="Add">Add</Tag>
 	<Tag name="Substract">Substract</Tag>
 	<Tag name="Multiply">Multiply</Tag>
+
+	<!--  Terrain  advanced light  -->
+	<Tag name="NormalsScale">Normals scale</Tag>
+	<Tag name="TerrainEmissiveLight">Terrain has emissive light</Tag>
+	<Tag name="SpecularPower">Specular power</Tag>
+	<Tag name="SpecularPowerEm">Emissive power</Tag>
 	
+	<!--  Terrain  tools  -->
+	<Tag name="Brushes">Brushes</Tag>
 	<Tag name="TerrainHalf">Half</Tag>
 	<Tag name="TerrainDouble">Double</Tag>
 	<Tag name="TerrainMove">Move</Tag>
-	<Tag name="Brushes">Brushes</Tag>
 	
+	<!--  Terrain  Layers  -->
 	<Tag name="Enabled">Enabled</Tag>
 	<Tag name="Used">Used</Tag>
 	<Tag name="Layer">Layer</Tag>
@@ -894,17 +910,7 @@
 	<Tag name="Test">Test</Tag>
 	<Tag name="Update">Update</Tag>
 
-	<!--  Terrain  generate  -->
-	<Tag name="Generator">Generator</Tag>
-	<Tag name="TerGenScale">Scale Height</Tag>
-	<Tag name="TerGenFreq">Freq. zoom</Tag>
-	<Tag name="TerGenOct">Octaves</Tag>
-	<Tag name="TerGenPers">Persistance noise</Tag>
-	<Tag name="TerGenPow">Power (shape)</Tag>
-	<Tag name="TerGenOfsX">Offset X</Tag>
-	<Tag name="TerGenOfsY">Offset Y</Tag>
-	
-	<!--  Terrain  blendmap  -->
+	<!--  Terrain  Blendmap  -->
 	<Tag name="AngleMin">Angle Min</Tag>
 	<Tag name="AngleMax">Angle Max</Tag>
 	<Tag name="TerLAngSm">Angle smooth</Tag>
@@ -916,8 +922,18 @@
 	<Tag name="TerLNoiseOnly">Only Noise</Tag>
 	<Tag name="Swap">Swap</Tag>
 	
+	<!--  Terrain  generator  -->
+	<Tag name="Generator">Generator</Tag>
+	<Tag name="TerGenScale">Scale Height</Tag>
+	<Tag name="TerGenFreq">Freq. zoom</Tag>
+	<Tag name="TerGenOct">Octaves</Tag>
+	<Tag name="TerGenPers">Persistance noise</Tag>
+	<Tag name="TerGenPow">Power (shape)</Tag>
+	<Tag name="TerGenOfsX">Offset X</Tag>
+	<Tag name="TerGenOfsY">Offset Y</Tag>
+	
 
-	<!--  Terrain  particles  -->
+	<!--  Terrain  surface  particles  -->
 	<Tag name="DustSize">dust size</Tag>
 	<Tag name="dust">dust</Tag>
 	<Tag name="mud">mud</Tag>
@@ -936,17 +952,10 @@
 	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
 
 
-	<!--  Terrain  Brush  wnd  -->
+	<!--  Terrain  Brush  params  -->
 	<Tag name="Brush_Size">Size</Tag>
 	<Tag name="Brush_Force">Force</Tag>
 	<Tag name="Brush_Power">Power</Tag>
-
-	<Tag name="Brush_Shape">Shape</Tag>
-	<Tag name="Brush_ShapeTriangle">Triang</Tag>
-	<Tag name="Brush_ShapeSinus">Sinus</Tag>
-	<Tag name="Brush_ShapeNoise">Noise</Tag>
-	<Tag name="Brush_ShapeNoise2">Noise2</Tag>
-	<Tag name="Brush_ShapeN-gon">N-gon</Tag>
 
 	<Tag name="Brush_Freq">Freq</Tag>
 	<Tag name="Brush_Octaves">Octaves</Tag>
@@ -957,47 +966,70 @@
 	<Tag name="Brush_CurrentH">Curr.H</Tag>
 	<Tag name="Lock">Lock</Tag>
 
+	<!--  Terrain  Brush  shapes  -->
+	<Tag name="Brush_Shape">Shape</Tag>
+	<Tag name="Brush_ShapeTriangle">Triang</Tag>
+	<Tag name="Brush_ShapeSinus">Sinus</Tag>
+	<Tag name="Brush_ShapeNoise">Noise</Tag>
+	<Tag name="Brush_ShapeNoise2">Noise2</Tag>
+	<Tag name="Brush_ShapeN-gon">N-gon</Tag>
 
-	<!--  Vegetation  -->
+
+	<!--  Vegetation  Main  -->
 	<Tag name="Properties">Properties</Tag>
 	<Tag name="Grasses">Grasses</Tag>
 	<Tag name="Models">Models</Tag>
 	<Tag name="GrassDens">Grass   density</Tag>
 	<Tag name="TreeDens">Trees   density</Tag>
+
+	<!--  Vegetation  Model main  -->
 	<Tag name="Model">Model</Tag>
 	<Tag name="Density">Density</Tag>
 	<Tag name="MinScale">min scale</Tag>
 	<Tag name="MaxScale">max scale</Tag>
 	<Tag name="DistToRoad">dist. to road</Tag>
+
+	<!--  Vegetation  common  -->
 	<Tag name="wind">wind</Tag>
 	<Tag name="page">page</Tag>
-	<Tag name="distance">distance</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="max">max</Tag>
-	<Tag name="GrassSize">Size</Tag>
-	<Tag name="distribution">distribution</Tag>
+
+	<Tag name="distance">distance</Tag>
 	<Tag name="length">length</Tag>
-	<Tag name="speed">speed</Tag>
+
+	<!--  Vegetation  global  -->
 	<Tag name="TreeRoadDist">Trees to road dist.</Tag>
 	<Tag name="ImpostorDist">Impostors dist.</Tag>
-	<Tag name="GrassSway">Sway</Tag>
-	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
 	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
+
+	<!--  Vegetation  Grass  -->
+	<Tag name="GrassSize">Size</Tag>
+	<Tag name="GrDensSmooth">Smooth grass dens.</Tag>
+	
 	<Tag name="GrMaterial">Material</Tag>
 	<Tag name="GrColorMap">Color map</Tag>
 	<Tag name="Channels">Channels</Tag>
 	<Tag name="Channel">Channel</Tag>
 
+	<!--  Vegetation  Grass sway  -->
+	<Tag name="GrassSway">Sway</Tag>
+	<Tag name="speed">speed</Tag>
+	<Tag name="distribution">distribution</Tag>
 
-	<!--  Road  -->
+
+	<!--  Road  Main  -->
 	<Tag name="Road">Road</Tag>
 	<Tag name="Pipe">Pipe</Tag>
 	<Tag name="Wall">Wall</Tag>
 	<Tag name="Column">Column</Tag>
 	<Tag name="Advanced">Advanced</Tag>
+	
 	<Tag name="RoadMaterials">Road materials</Tag>
 	<Tag name="PipeMaterials">Pipe materials</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
+	
+	<!--  Road  build params  -->
 	<Tag name="LengthDim">Length dim.</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
 	<Tag name="HeightOffset">Height offset</Tag>
@@ -1010,31 +1042,36 @@
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
 	<Tag name="PipeLStepsMul">Pipe L steps mul.</Tag>
 
-	<!--  Road  Point  wnd  -->
+
+	<!--  Road Point  Main  -->
 	<Tag name="Road_OnTerrain">On Terrain</Tag>
 	<Tag name="Road_Length">Length</Tag>
 	<Tag name="Road_Height">Height</Tag>
 	<Tag name="Road_Width">Width</Tag>
 	<Tag name="Road_Yaw">Yaw</Tag>
 	<Tag name="Road_Roll">Roll</Tag>
-	<Tag name="Road_Snap">Snap</Tag>
 	<Tag name="Road_Pipe">Pipe</Tag>
-	<Tag name="Road_OnPipe">On Pipe</Tag>
 	<Tag name="Road_Column">Column</Tag>
-	<Tag name="Road_ChkR">ChkR</Tag>
 	<Tag name="Road_Loop">Loop</Tag>
+	<Tag name="Road_OnPipe">On Pipe</Tag>
 
+	<!--  Road Point  short: checkpoint radius  -->
+	<Tag name="Road_ChkR">ChkR</Tag>
+
+	<!--  Road Point  cur short  -->
 	<Tag name="Road_Cur">Cur</Tag>
 	<Tag name="Road_New">New</Tag>
 	<Tag name="Road_sel">sel</Tag>
 
+	<!--  Road Point  angles type  -->
+	<Tag name="Road_Snap">Snap</Tag>
 	<Tag name="Road_AngleManual">Manual</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
 	<Tag name="Road_AngleBoth">Both</Tag>
 	<Tag name="Road_Dir">Direction</Tag>
 	
 	
-	<!--  Objects, Fluids  wnd  -->
+	<!--  Objects, Fluids  window  -->
 	<Tag name="Obj_Pos">Pos.</Tag>
 	<Tag name="Obj_Rot">Rot.</Tag>
 	<Tag name="Tile">Tile</Tag>
@@ -1044,26 +1081,30 @@
 	<Tag name="Tools">Tools</Tag>
 	<Tag name="SourceTrack">Source track</Tag>
 	<Tag name="ChngTrkTab">changed in [Track] tab</Tag>
+	<!--  Tools  Copy  -->
 	<Tag name="Copy">Copy</Tag>
 	<Tag name="SunWeather">Sun and Weather</Tag>
 	<Tag name="TerHeightMap">Terrain Heightmap</Tag>
 	<Tag name="TerLayers">Terrain Layers</Tag>
 	<Tag name="RoadParams">Road parameters</Tag>
+	<!--  Tools  scale  -->
 	<Tag name="ScaleMul">Scale multiplier</Tag>
 	<Tag name="ScaleAll">Scale all</Tag>
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
-	<Tag name="NeedReload">* need reload</Tag>
 
+	<!--  Tools  Align  -->
 	<Tag name="AlignTerrainToRoad">Align terrain to road</Tag>
 	<Tag name="AlignWidthAdd">Width add</Tag>
 	<Tag name="AlignWidthMul">Width multiply</Tag>
 	<Tag name="AlignSmooth">Smooth size</Tag>
 
-	<!--  Game (in ed)  -->
+
+	<!--  Editor Game setup  -->
 	<Tag name="Gravity">Gravity</Tag>
 	<Tag name="Wind">Wind</Tag>
 	<Tag name="DenyReversed">Deny reversed direction</Tag>
 
+	<!--  Editor Warnings  -->
 	<Tag name="Warnings">Warnings</Tag>
 	<Tag name="WarningsInfo">Console for track errors, warnings and hints.</Tag>
 	<Tag name="CheckOnLoad">Check on load</Tag>
@@ -1071,33 +1112,39 @@
 	<Tag name="InputLoadNextTrack">Load next track (shift - previous)</Tag>
 
 
-	<!--  Pick  -->
+	<!--  Editor  Pick  window -->
 	<Tag name="Pick">Pick</Tag>
 	<Tag name="PickSetParam">Set parameters, marked with</Tag>
 
 
-	<!--  Settings  -->
+	<!--  Editor  Settings  -->
 	<Tag name="Settings">Settings</Tag>
 	<Tag name="SREditorVersion">Stunt Rally - Track Editor - version</Tag>
+	<!--  Editor  Settings main  -->
 	<Tag name="CamSpeed">Camera speed</Tag>
 	<Tag name="CamInertia">Camera inertia</Tag>
 	<Tag name="MinimapAndSize">Minimap, size</Tag>
+	<!--  Editor  Settings update  -->
 	<Tag name="RoadPointSize">Road points size</Tag>
 	<Tag name="TerUpdSkip">Terrain update skip</Tag>
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
 
+	<!--  Editor  Settings auto  -->
 	<Tag name="TrackAutoLoad">Auto Load track</Tag>
 	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
+	<!--  Editor  Settings extras  -->
 	<Tag name="EdCamPos">Camera position</Tag>
 	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	<Tag name="AllowSaveOrigTrk">Allow saving original tracks</Tag>
 	
+	<!--  Settings  camera views 6  -->
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="Top">Top</Tag>
 	<Tag name="Left">Left</Tag>
 	<Tag name="Right">Right</Tag>
 	<Tag name="Front">Front</Tag>
 	<Tag name="Back">Back</Tag>
+	<!--  Settings  camera views  -->
 	<Tag name="ViewFront">View Front</Tag>
 	<Tag name="ViewLeft">View Left</Tag>
 	<Tag name="ViewRight">View Right</Tag>
@@ -1105,6 +1152,7 @@
 
 
 	<!--  Tweak  -->
+	<Tag name="Graphs">Graphs</Tag>
 	<Tag name="Tweak">Tweak</Tag>
 	<Tag name="MaterialProperties">Material Properties</Tag>
 	<Tag name="TweakUser">User</Tag>
@@ -1114,53 +1162,62 @@
 <!--  ............................................................................................................................  -->
 <!--  Input/help  -->
 <!--  ............................................................................................................................  -->
+
+	<!--  MAIN  Editor Input Gui  -->
 	<Tag name="InputHelp">Input/help</Tag>
 	<Tag name="Shortcuts">Shortcuts</Tag>
+	<Tag name="InputMain">Main</Tag>
 	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
 
-	<!--  Main  -->
+	<!--  MAIN  Editor Input  -->
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
+	<Tag name="InputContextHelp">Ctrl-F1 - context help page</Tag>
+	<!--  Editor Input  Shortcuts  -->
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="InputSubTabSpace">Space - cycle sub-tabs (shift - back)</Tag>
 	<Tag name="InputPickTab">Tab - close/open pick window</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - prev,next Layer tab</Tag>
-	<Tag name="InputContextHelp">Ctrl-F1 - context help page</Tag>
 
+	<!--  MAIN  Editor Input  save  -->
 	<Tag name="InputSaveTrack">F4 - save track</Tag>
 	<Tag name="InputReadyToPlay">(ready to play in game)</Tag>
 	<Tag name="InputReloadTrack">F5 - reload track</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
 	<Tag name="InputAfterChanges">(after Terrain/Vegetation changes)</Tag>
-	<Tag name="InputMain">Main</Tag>
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
 	<Tag name="InputTrackScrn">(for track screenshot)</Tag>
 
-	<!--  Main  camera  -->
+	<!--  MAIN  Editor Camera  -->
 	<Tag name="InputCameraMode">Camera mode</Tag>
 	<Tag name="InputCamControl">W,S  A,D  Q,E - move   Arrows - rotate</Tag>
 	<Tag name="InputCamControl2">LMB - rotate  RMB - move  MMB - zoom</Tag>
+	<!--  Editor Input  Camera next  -->
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
 	<Tag name="InputTopView">Alt-Z - toggle top view</Tag>
 
 
-	<!--  Terrain  edit modes  -->
+	<!--  Terrain  Edit modes  -->
 	<Tag name="EditTerrainMode">Edit Terrain mode</Tag>
 	<Tag name="InputTerDeform">D - Deform  (LMB up, RMB down)</Tag>
 	<Tag name="InputTerSmooth">S - Smooth  (flatten)</Tag>
 	<Tag name="InputTerHeight">E - Height set  (RMB change height value)</Tag>
 	<Tag name="InputTerFilter">F - Filter  (remove noise)</Tag>
 
+	<!--  Terrain  Edit modes  not used -->
 	<Tag name="InputTerPaint">A - Paint Textures (layers)</Tag>
 	<Tag name="InputPaintColor">C - Paint Color</Tag>
 
+	<!--  Terrain  Toggle  -->
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
-	<Tag name="InputMinimapType">shift-F2,F3 - Prev,next minimap type</Tag>
-	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
 	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
+
+	<!--  Terrain  update  -->
+	<Tag name="InputMinimapType">shift-F2,F3 - Prev,next minimap type</Tag>
+	<Tag name="InputUpdBlendmap">F9 - update terrain blendmap (manual)</Tag>
 
 	<!--  Terrain  brush  params  -->
 	<Tag name="InputBrushParams">Brush parameters</Tag>
@@ -1191,7 +1248,9 @@
 	<Tag name="InputRoadAltLMB">alt-LMB (or 1,2)</Tag>
 	<Tag name="InputRoadRoll">- rotate roll / scale sel.</Tag>
 
+	<!-- Road  Input  modify toggle  -->
 	<Tag name="InputRoadOnTer">Home - toggle on Terrain snap</Tag>
+	<Tag name="InputRoadColumn">End - on/off column</Tag>
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="InputRoadMostSel">most work also on selection</Tag>
 
@@ -1199,10 +1258,10 @@
 	<Tag name="InputRoadAltMMB">alt-RMB (or 3,4)</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 
-	<Tag name="InputRoadColumn">End - on/off column</Tag>
-
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle  (no pipe when 0)</Tag>
 	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
+
+	<!-- Road  Input  checkpoints  -->
 	<Tag name="InputRoadChkRadius">K,L  - checkpoint radius  (ChkR 0 - none)</Tag>
 	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
@@ -1246,38 +1305,40 @@
 	<Tag name="InputRoadLooped">N - toggle looped</Tag>
 
 
-	<!--  Car Start  -->
+	<!--  Car Start  Main  -->
 	<Tag name="CarStart">Car Start</Tag>
-	<!--  Car Start  Input  -->
 	<Tag name="InputStart">Start</Tag>
 	<Tag name="InputStartPos">Q - edit car start pos</Tag>
+	<!--  Car Start  Input  -->
 	<Tag name="InputStartLMB">ctrl-LMB - place   LMB - move   RMB - height</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate (shift - global)   alt-RMB - pitch (shift - roll)</Tag>
 	<Tag name="InputStartAltMMB">alt-MMB - reset rotation</Tag>
 
-	<!--  Car Start  Input advanced  -->
+	<!--  Car Start  Input  advanced  -->
 	<Tag name="InputStartHeight">[,]  -  adjust start box height (bigger for pipes)</Tag>
 	<Tag name="InputStartWidth">; &apos;  -  adjust start box width (for road width)</Tag>
 	<Tag name="InputStartDir">Space  -  change road direction (+ or -)</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
 
 
-	<!--  Fluids  -->
+	<!--  Fluids  Main  -->
 	<Tag name="Fluids">Fluids</Tag>
-	<!--  Fluids  Input  -->
 	<Tag name="InputFluidsMode">W - edit fluids</Tag>
+	<!--  Fluids  Input  -->
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
 	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
 	<Tag name="InputFluidsDel">Del - delete current</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
 	<Tag name="InputFluidsSize">alt-LMB - size   alt-RMB - depth</Tag>
 	<Tag name="InputFluidsType">-,=  - change fluid type (water,mud,etc.)</Tag>
+
+	<!--  Fluids  Input advanced  -->
 	<Tag name="InputFluidsTile">[,]  - change texture tiling</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
 	<Tag name="InputFluidsUpdate">F10  - update depth map, after terrain deform near shore</Tag>
 
 
-	<!--  Objects  -->
+	<!--  Objects  main  -->
 	<Tag name="Objects">Objects</Tag>
 	<Tag name="ObjDynamic">Dynamic</Tag>
 	<Tag name="ObjStatic">Static</Tag>
@@ -1290,22 +1351,24 @@
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
 	<Tag name="InputObjectsDel">Del - delete current</Tag>
 
+	<!--  Objects  Input Modes  -->
 	<Tag name="InputObjectsMove">1 - Move   LMB - plane XZ  RMB - Y height</Tag>
 	<Tag name="InputObjectsRot">2 - Rotate local (alt- global)  LMB: Z  RMB: Y  MMB: X</Tag>
 	<Tag name="InputObjectsScale">3 - Scale   LMB - uniform XYZ  RMB: Y  MMB: Z</Tag>
 
+	<!--  Objects  Input extras -->
 	<Tag name="InputObjectsMoveReset">shift-1 - move to cursor / reset new height</Tag>
 	<Tag name="InputObjectsRotReset">shift-2 - reset rotation</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - reset scale to 1 (with shift to 0.5)</Tag>
-
 	<Tag name="InputObjectsType">-,=  - change object type</Tag>
-	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
 
+	<!--  Objects  Input  -->
+	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
 	<Tag name="InputObjectsCopySel">ctrl-Ins - copy selection</Tag>
 	<Tag name="InputObjectsPaste">shift-Ins - paste copied</Tag>
 	
 
-	<!--  Rivers  -->
+	<!--  Rivers  not even close  -->
 	<Tag name="Rivers">Rivers</Tag>
 
 
@@ -1313,19 +1376,96 @@
 <!--  Tips  -->
 <!--  ............................................................................................................................  -->
 
+	<!--  HUD  Camera info  parts (use same count, separated by comma)  -->
+	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
+
+	<!--  Car descriptions  -->
+	<Tag name="CarDesc_3S">Good car, suited for all tracks, but has slower acceleration, especially at high speeds.</Tag>
+	<Tag name="CarDesc_360">Good looking car, best fit for asphalt tracks. Can also drive on few flat terrain tracks. But completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
+	<Tag name="CarDesc_CT">Good looking, but difficult to drive, having engine at rear. Fit only for asphalt and few flat tracks. Completely undrivable at bumps,jumps,loops or pipes because of low suspension height.</Tag>
+	<Tag name="CarDesc_ES">Best rally car in game, great driving experience on all tracks. A bit high though.</Tag>
+	<Tag name="CarDesc_FN">Another good rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
+	<Tag name="CarDesc_FR4">Quite old, heavy, broad and slow. Good for terrain but not with the best suspension. Isn't suited for faster or stunt tracks.</Tag>
+	<Tag name="CarDesc_HR">Very heavy and slow car, best for terrain and bumps, easy to drive. But useless on fast and stunt tracks.</Tag>
+	<Tag name="CarDesc_LK4">Slow and heavy car. Can handle bumps well. Is stable and easy to drive. But isn't suited for faster tracks.</Tag>
+	<Tag name="CarDesc_M3">Very old car with low power engine. Not fit for jumps. Pick if you want to drive slowly.</Tag>
+	<Tag name="CarDesc_N1">Good car for all tracks. A bit less steerable, but quite stable because of length.</Tag>
+	<Tag name="CarDesc_OT">This is the slowest car. Very old and a bit creepy truck. Can drive only on flat tracks and with turtle speed.</Tag>
+	<Tag name="CarDesc_S1">Second best rally car in game, drivable on all tracks with the best experience, similar to ES.</Tag>
+	<Tag name="CarDesc_S8">Good rally car, drivable on all tracks. Similar to S1, but shorter and more steerable.</Tag>
+	<Tag name="CarDesc_TC6">Good rally car. Has low height. Is a bit older and less powerful.</Tag>
+
+	<Tag name="CarDesc_TW">This big, extreme vehicle is great for long and smooth tracks. But completely useless when narrow or in mud (e.g. in jungle). Also not easy to drive.</Tag>
+	<Tag name="CarDesc_TU">Very futuristic and fast vehicle. Not suited for narrow roads, jumps or mud.</Tag>
+	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
+	<Tag name="CarDesc_SZ">Fastest car meant for gravel. Light and with a powerful engine. Has great aerodynamics and steerability.</Tag>
+	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
+
+	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But being small does slide sideways.</Tag>
+	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
+	<Tag name="CarDesc_V3">A big and heavy spaceship. Very good acceleration at start and strong braking. But doesn't reach high speeds.</Tag>
+	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy.</Tag>
+	<Tag name="CarDesc_Pipes">NOTE: Currently impossible to use in pipes.</Tag>
+
+	<!--  TIP  Hints title+text  (on welcome screen)  -->
+	<Tag name="Hint-0">Rewind</Tag>
+	<Tag name="Hint-0text">If you crashed or you're stuck, hold [Backspace] to move back in time.</Tag>
+	<Tag name="Hint-1">Turns</Tag>
+	<Tag name="Hint-1text">Don't accelerate all the time. Also don't forget to brake before turns, especially sharp ones. If you don't know the road yet, it's better to drive slowly.</Tag>
+	<Tag name="Hint-2">Flipping</Tag>
+	<Tag name="Hint-2text">Hold [Q] or [W] to flip over the car, when upside down or in jumps. Depending on settings, it may cost some fuel.</Tag>
+	<Tag name="Hint-3">Gravel</Tag>
+	<Tag name="Hint-3text">Remember that mostly you will drive on gravel. This means low grip, lower speeds and sliding. Wet gravel is even more slippery. Snow and ice are worst. Deserts are fastest.</Tag>
+	<Tag name="Hint-4">Damage</Tag>
+	<Tag name="Hint-4text">Watch your car's damage, especially in stunt tracks. It will stop working if it is fully damaged and its performance decreases when over 50 %.</Tag>
+	<Tag name="Hint-5">Ghost cars</Tag>
+	<Tag name="Hint-5text">By default, your best drive ghost is an orange car. It will appear after a lap. The green car is the track's ghost.</Tag>
+	<Tag name="Hint-6">Boost</Tag>
+	<Tag name="Hint-6text">Hold [Ctrl] to boost. Depending on the settings, boost is given each lap, regenerates over time, or is infinite.</Tag>
+	<Tag name="Hint-7">Cars</Tag>
+	<Tag name="Hint-7text">Pick the right car type for a track. So, don't use low cars on bumpy terrain, avoid large cars in narrow tracks, and fast super cars aren't meant for slippery surfaces.</Tag>
+	<Tag name="Hint-8">Steering</Tag>
+	<Tag name="Hint-8text">If you don't feel comfortable with steering on keyboard, try different settings in [Setup], tab [Steering], namely range and speed decrease and keys sensitivity in [Input].</Tag>
+	<Tag name="Hint-9">Jumps</Tag>
+	<Tag name="Hint-9text">Don't drive too fast in jumps, else the car will land in a sloppy manner. The ideal landing is on the jump's other end.</Tag>
+	<Tag name="Hint-10">Loops</Tag>
+	<Tag name="Hint-10text">In loops, the camera will automatically switch to an interior view, to make it easier to steer while in a loop.</Tag>
+	<Tag name="Hint-11">Pipes</Tag>
+	<Tag name="Hint-11text">Don't drive too fast in pipes and loops. You will damage the car's bottom due to high acceleration.</Tag>
+	<Tag name="Hint-12">Vehicles</Tag>
+	<Tag name="Hint-12text">Check out other vehicles, we also have hovering spaceships, and tracks on other planets.</Tag>
+	<Tag name="Hint-13">Simulation</Tag>
+	<Tag name="Hint-13text">By default simulation is in easy mode, for beginners. Don't forget to set it to normal if the game feels too easy.</Tag>
+	<Tag name="Hint-14">Fps</Tag>
+	<Tag name="Hint-14text">Press F11 to show the bar with frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
+	<Tag name="Hint-15">Last</Tag>
+	<Tag name="Hint-15text">For more info, check [Help] in the menu.</Tag>
+	<Tag name="Hint-16">Camera</Tag>
+	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
+
+
+	<!--  Game  User Path  -->
+	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
+	<!--  MAIN  Game  Quick Help  (@ is used for new line)  -->
+	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@http://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.@</Tag>
+	<!--  TIP  Slider  -->
+	<Tag name="TipSliderReset">RMB on slider - reset to default value.</Tag>
+
 	<!--  TIP  Track  -->
-	<Tag name="TipTrkListEditor">Tracks list, click to select (for Rename or Duplicate). Press [Load track] to change current track in editor.</Tag>
 	<Tag name="TipLoadTrkEditor">Load track (after change) or Reload current track.</Tag>
 	<Tag name="TipTrkScreenEditor">In game screenshot for selected track.</Tag>
 	<Tag name="TipMinimapScrnEditor">Minimap of selected track, view from top.</Tag>
 	<Tag name="TipTrackDescEditor">Track description text (click to edit).</Tag>
+
+
+	<!--  TIP  Track  Editor  -->
 	<Tag name="TipCopySource">Pick selected track for copy source, used in [Tools] tab.</Tag>
 	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
 	<Tag name="TipRenameTrk">Rename selected track with new name (change name first).</Tag>
 	<Tag name="TipTrkNameEditor">Selected track name, used also for renaming track and as new track name.</Tag>
 	<Tag name="TipDeleteTrk">Permanently delete selected track.</Tag>
 
-	<!--  TIP  Sky  -->
+	<!--  TIP  Sky  (leave tips for last)  -->
 	<Tag name="TipSkyMats">Sky material names.</Tag>
 	<Tag name="TipSunDirPitch">Sun direction - pitch angle.</Tag>
 	<Tag name="TipSunDirYaw">Sun direction - yaw angle.</Tag>
@@ -1333,6 +1473,7 @@
 	<Tag name="TipSunDiffuse">Sun light diffuse (normal) color. R G B components 0 to 1 (eg. 0.9 0.9 0.9)</Tag>
 	<Tag name="TipSunSpecular">Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)</Tag>
 
+	<!--  TIP  Fog  -->
 	<Tag name="TipFogClr">Fog end color when looking under sun.</Tag>
 	<Tag name="TipFogClr2">Fog end color when looking away from sun.</Tag>
 	<Tag name="TipFogClrH">Fog color for height fog.</Tag>
@@ -1343,6 +1484,7 @@
 	<Tag name="TipFogHSmooth">Height fog smooth distance [meters].</Tag>
 	<Tag name="TipDisableFog">Disable fog when editing road from distance.</Tag>
 
+	<!--  TIP  Weather  -->
 	<Tag name="TipRainSnow1">Set 1 Rain/Snow type</Tag>
 	<Tag name="TipRainSnow2">Set 2 Rain/Snow type</Tag>
 	<Tag name="TipRainSnowInt">Rain/Snow intensity (eg. 1000)</Tag> 
@@ -1354,14 +1496,17 @@
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
 	<Tag name="TipTerNormScale">Use if needed to scale terrain texture normals, for lighting. Otherwise default 1.</Tag>
+	<!--  TIP  Terrain  New Hmap  -->
 	<Tag name="TipNewTerrainFlat">Create new, flat terrain.</Tag>
 	<Tag name="TipTerrainGenerate">Generates new terrain from noise functions using all parameters below.</Tag>
+	<!--  TIP  Info  -->
 	<Tag name="TipBrushPick">shift-LMB - on Brushes, pick only shape (don't change mode).</Tag>
-	<Tag name="TipSliderReset">RMB on slider - reset to default value.</Tag>
+	<!--  TIP  Terrain  tools  -->
 	<Tag name="TipTerrainHalf">Resize current terrain heightmap by half (use only for reducing file size).</Tag>
 	<Tag name="TipTerrainDouble">Make terrain size double, leaving current heightmap part in center.</Tag>
 	<Tag name="TipTerrainMove">Move terrain.</Tag>
 	
+	<!--  TIP  Terrain  Layers  -->
 	<Tag name="TipToggleLayer">Turn on/off chosen texture layer.</Tag>
 	<Tag name="TipTerLayers">Recommended use 3 or 4, with noise. Affects Fps. More than 4 will not work.</Tag>
 	<Tag name="TipToggleTriplanar">Use for steep or mountain layers, max use is 2.</Tag>
@@ -1407,21 +1552,26 @@
 	<!--  TIP  Vegetation  -->
 	<Tag name="TipGrassDens">How dense/rare will the grass be on terrain.</Tag>
 	<Tag name="TipTreeDens">How many models (trees, rocks, etc.) will be on track.</Tag>
+	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each model's own value).</Tag>
+	<Tag name="TipImpDist">Far distance at which the 2d impostors dissapear.</Tag>
+
+	<!--  TIP  Vegetation  page,vis  -->
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often and make too many batches, high will cause visible switching and make too many drawn triangles).</Tag>
 	<Tag name="TipGrassVisDist">Visibility distance for grass pages.</Tag>
 	<Tag name="TipModelVisDist">Visibility distance for 3d models, after this they turn into 2d impostors.</Tag>
-	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each model's own value).</Tag>
-	<Tag name="TipImpDist">Far distance at which the 2d impostors dissapear.</Tag>
+
+	<!--  TIP  Grass  -->
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size. Higher will make a smoother transition from road to grass.</Tag>
-	
 	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
 	<Tag name="TipGrassPatchHeightMin">Minimal grass patch height.</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
+	<!--  TIP  Grass  sway  -->
 	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
 	<Tag name="TipGrassSwayDistr">Grass sway effect distribution (how random).</Tag>
+	<!--  TIP  Grass  terrain  -->
 	<Tag name="TipGrTerMaxAngle">Terrain angle above which there won't be any grass (starts fading out, for smooth angle).</Tag>
 	<Tag name="TipGrTerMinHeight">Terrain height below which there won't be any grass (starts fading out, for smooth distance).</Tag>
 	<Tag name="TipGrTerMaxHeight">Terrain height above which there won't be any grass (starts fading out, for smooth distance).</Tag>
@@ -1446,14 +1596,10 @@
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
 	<Tag name="TipModelPrev">Model preview image.</Tag>
-
+	<!--  TIP  Vegetation  terrain  -->
 	<Tag name="TipLTrMaxTerAng">Terrain angle above which model won't appear.</Tag>
 	<Tag name="TipLTrMinTerH">Terrain height below which model won't appear.</Tag>
 	<Tag name="TipLTrMaxTerH">Terrain height above which model won't appear.</Tag>
 	<Tag name="TipLTrFlDepth">Maximal depth in fluid allowed (set 0 to exclude from fluids).</Tag>
-
-
-	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
-	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@http://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.@</Tag>
 
 </MyGUI>
