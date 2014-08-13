@@ -430,7 +430,7 @@ int main(int argc, char* argv[])
 				if (!z.empty())
 				{	su += z;
 					if (n < nn-1)
-						su += "> ";  ///par concat char
+						su += "--";  ///par concat char
 			}	}
 			lay_use[i]->push_back(su);
 
@@ -546,11 +546,11 @@ int main(int argc, char* argv[])
 					if (nLn)  nLn = false;
 					fname = false;
 											
-					og << " :" << l;  // lay line number
+					og << ":" << l;  // lay line number
 
 					const string& su = (*lu)[l];  // hierarchy
 					if (su != su_old)
-					{	og << "  " << su;  nLn = true;  }
+					{	og << "--" << su;  nLn = true;  }
 					su_old = su;
 			}	}
 			if (!fname)
@@ -586,7 +586,7 @@ int main(int argc, char* argv[])
 					}
 					fname = false;
 					
-					os << " :" << l;  // line number
+					os << ":" << l;  // line number
 			}	}
 			if (!fname)
 				nLn = true;
