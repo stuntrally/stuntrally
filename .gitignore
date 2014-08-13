@@ -26,11 +26,7 @@ StuntRally*.*
 SR?Editor*.*
 
 #--  transl
-locale/translation_templates
-locale/translations-export
-locale/stuntrally.pot
-locale/translations
-
+locale/translation*
 .tx
+*.pot
 sr.log
-sr.pot
