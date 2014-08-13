@@ -192,17 +192,23 @@ string replaceTagsPass(const string& _line, bool& _replaceResult)
 //  translate, replaces all tags #{..} with transl map
 string Transl(const string& _line)
 {
-	string result(_line);
-	TrimClr(result);  //clr
+	string str(_line);
+	TrimClr(str);  //clr
 
 	bool replace = false;
 	do
 	{
-		result = replaceTagsPass(result, replace);
+		str = replaceTagsPass(str, replace);
 	}
 	while (replace);
 
-	return result;
+	//  remove spaces  (web display issue)
+	str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
+
+	//  replace spaces with _
+	//for (int i=0; i < str.length(); ++i)
+	//	if (str[i] == ' ')  str[i] = '_';
+	return str;
 }
 
 
@@ -226,10 +232,10 @@ int main(int argc, char* argv[])
 		
 
 	//  log
-	#define log(s)  if (bLog)  ol << s << endl;
-	ofstream ol;
+	#define log(s)  if (bLog)  ofl << s << endl;
+	ofstream ofl;
 	if (bLog)
-		ol.open(slog.c_str(), ios_base::out);
+		ofl.open(slog.c_str(), ios_base::out);
 
 
 	cout << "*** Start ***" << endl;
@@ -246,7 +252,7 @@ int main(int argc, char* argv[])
 	//-----------------------------------------------------------------------------
 	px = path + px;
 	cout << "Reading xml: " << px << endl;
-	log("Reading xml: " << px);
+	log("Reading xml: " << px << endl);
 
 	fi.open(px.c_str(), ios_base::in);
 	if (fi.fail())
@@ -298,7 +304,7 @@ int main(int argc, char* argv[])
 						dupl[text] = name;
 					else
 					{	string dut = dupl[text];
-						if (!found(dut, "Hint-"))
+						if (!found(name, "Hint-"))
 						{	log("WARN: duplicate tag text: " << text << endl <<
 								"   for tag: " << name << endl << "   is in: " << dut);
 					}	}
@@ -355,6 +361,12 @@ int main(int argc, char* argv[])
 	cout << "Source files: " << file_src.size() << "  gui: " << file_lay.size() << endl;
 	//getchar();
 
+	//  shorter widget type names
+	map<string,string> map_wt;
+	map_wt["TextBox"] = "Text";    map_wt["TabItem"] = "Tab";
+	map_wt["EditBox"] = "Edit";    map_wt["ImageBox"] = "Image";
+	map_wt["ComboBox"] = "Combo";  map_wt["TabControl"] = "TabC";
+
 	
 	//  read  layout  file lines (all contents)
 	///-----------------------------------------------------------------------------
@@ -379,7 +391,7 @@ int main(int argc, char* argv[])
 			cout << "Can't open: " << sf.c_str() << endl;
 
 		//  widgets captions hierarchy (parents)
-		vecstr wh;
+		vecstr wh, wt;
 		while (!fi.eof())
 		{
 			fi.getline(s,si);
@@ -389,8 +401,8 @@ int main(int argc, char* argv[])
 			if (found(ss,"<Widget type="))
 			if (!found(ss,"/>"))  // but not 1 line widget
 			{
-				#if 0  //  not needed, too much
 				string type = GetAttr(ss, "type=\"");
+				#if 0  //  not needed, too much
 				string name = GetAttr(ss, "name=\"");
 				//string ww = !name.empty() ? name : !type.empty() ? type : "w";
 				//  use type if doesn't have a name
@@ -398,12 +410,15 @@ int main(int argc, char* argv[])
 				#else
 				string ww;
 				#endif
-				wh.push_back(ww);
+				string ty = map_wt[type];  // shorter
+				if (!ty.empty())
+					type = ty;
+				wh.push_back(ww);  wt.push_back(type);
 			}
 			//  closing
 			if (found(ss,"</Widget>"))
 			{
-				wh.pop_back();
+				wh.pop_back();  wt.pop_back();
 			}
 			
 			if (!wh.empty())
@@ -414,24 +429,33 @@ int main(int argc, char* argv[])
 					//eg.  value="#804060#{HDRTab}"/>
 					string v = GetAttr(ss, "value=\"");
 					v = Transl(v);
+					//if (v.length() > 14)  // max len
+					//	v = v.substr(0,14);
 					wh[wh.size()-1] = v;
 				}
-				//key="tip" ..
+				//key="tip"
 			}
 			
 			lay_lin[i]->push_back(s);
 
 			//  combine hierarchy to 1 string
 			string su,z;
-			int nn = wh.size()-1 /*not last*/, n;
+			int nn = wh.size()/*-1 /*not last*/, n;
 			for (n=0; n < nn; ++n)
 			{
-				const string& z = wh[n];
+				string z = wh[n];  // captions
+				//  type for last
+				if (n == nn-1)
+					z = wt[n];
+				
 				if (!z.empty())
 				{	su += z;
 					if (n < nn-1)
-						su += "--";  ///par concat char
+						su += ".";  ///par concat char
 			}	}
+			if (su.empty())
+				su = "Root";
+
 			lay_use[i]->push_back(su);
 
 			//log(su);  //test
@@ -550,7 +574,7 @@ int main(int argc, char* argv[])
 
 					const string& su = (*lu)[l];  // hierarchy
 					if (su != su_old)
-					{	og << "--" << su;  nLn = true;  }
+					{	og << ".." << su;  nLn = true;  }  ///par concat, start
 					su_old = su;
 			}	}
 			if (!fname)
@@ -612,13 +636,10 @@ int main(int argc, char* argv[])
 	//-----------------------------------------------------------------------------
 	ofstream of;
 	of.open(pot.c_str(), ios_base::out);
-
-	log(endl << "EMPTY tag occurences for: ");
+	stringstream oe, ol;
 	
-	of << "# SOME DESCRIPTIVE TITLE.\n";
-	of << "# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER\n";
-	of << "# This file is distributed under the same license as the PACKAGE package.\n";
-	of << "# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.\n";
+	of << "# Stunt Rally translation.\n";
+	of << "# .pot template by CryHam, 2014.\n";
 	of << "#\n";
 	of << "#, fuzzy\n";
 	of << "msgid \"\"\n";
@@ -639,26 +660,41 @@ int main(int argc, char* argv[])
 	for (t=0; t < tt; ++t)
 	{
 		const Tag& ta = tags[t];
+		const string& s = ta.name;
 
 		if (ta.cmt.empty())
-			log(ta.name << "COMMENT empty");
+			log(s << "COMMENT empty for: " << s);
 
 		of << "#. " << ta.cmt << endl;  // comment
-		// "#: " << 
+		// of << "#: ";
 		if (!ta.gui.empty())
 		of << ta.gui << endl;  // occurences
 		if (!ta.src.empty())
 		of << ta.src << endl;
 
+		l = ta.gui.length() + ta.src .length();
+		if (l > 200)  // par
+			ol << "  " << s << " " << l << endl;
+
 		if (ta.gui.empty() && ta.src.empty())
-			log(ta.name);
+		if (!found(s,"SC_") && !found(s,"CarDesc_") &&  // false, are used
+			!found(s,"Hint-") && !found(s,"InputMap") &&
+			!found(s,"LS_") && !found(s,"CarType_") &&
+			!found(s,"MessageBox_") && !found(s,"Diff"))
+			oe << "  " << s << endl;
 		
-		of << "msgctxt \"" << ta.name << "\"" << endl;  // context, tag name in xml
+		of << "msgctxt \"" << s << "\"" << endl;  // context, tag name in xml
 		of <<   "msgid \"" << ta.text << "\"" << endl;  // english text
 
 		of << "msgstr \"\"" << endl;  // empty, translation
 		of << endl;
 	}
+
+	log(endl << "EMPTY tag occurences for: ");
+	log(oe.str());
+
+	log("LONG tag occurences for: ");
+	log(ol.str());
 
 	cout << endl << "*** End ***" << endl;
 	return 0;
