@@ -37,7 +37,6 @@ file1 = sys.argv[1]
 file2 = sys.argv[2]
 
 f1 = open(file1, 'r')
-	
 f2 = open(file2, 'w')
 
 msgs = {}
@@ -92,7 +91,7 @@ elif file1.endswith(".po") and file2.endswith(".xml"):
 			msgid = line.split("\"")[1].replace("\\n", "\n")
 			last = "msgctxt"
 		if line.strip().startswith("msgstr"):
-			msgstr =line.split("\"")[1].replace("\\n", "\n")
+			msgstr = line.split("\"")[1].replace("\\n", "\n")
 			last = "msgstr"
 	# add last line
 	msgs[msgid] = msgstr
