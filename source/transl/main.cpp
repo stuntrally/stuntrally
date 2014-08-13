@@ -27,7 +27,7 @@ struct Tag
 	//  actual string (tag) and its english text
 	string name, text;
 	
-	//  occurences of string
+	//  occurrences of string
 	//  in gui .layout files
 	string gui;
 	//  in source files .cpp
@@ -511,9 +511,9 @@ int main(int argc, char* argv[])
 	
 	
 	///-----------------------------------------------------------------------------
-	//  for each  tag  search through all files for occurences
+	//  for each  tag  search through all files for occurrences
 	///-----------------------------------------------------------------------------
-	cout << endl << "Searching tags occurences in sources" << endl;
+	cout << endl << "Searching tags occurrences in sources" << endl;
 	size_t t, tt = tags.size(), l, ll;
 	const vecstr* ln, *lu;  string tag, su_old;
 	string::size_type p;
@@ -668,7 +668,7 @@ int main(int argc, char* argv[])
 		of << "#. " << ta.cmt << endl;  // comment
 		// of << "#: ";
 		if (!ta.gui.empty())
-		of << ta.gui << endl;  // occurences
+		of << ta.gui << endl;  // occurrences
 		if (!ta.src.empty())
 		of << ta.src << endl;
 
@@ -690,10 +690,10 @@ int main(int argc, char* argv[])
 		of << endl;
 	}
 
-	log(endl << "EMPTY tag occurences for: ");
+	log(endl << "EMPTY tag occurrences for: ");
 	log(oe.str());
 
-	log("LONG tag occurences for: ");
+	log("LONG tag occurrences for: ");
 	log(ol.str());
 
 	cout << endl << "*** End ***" << endl;
