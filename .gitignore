@@ -1,15 +1,36 @@
+#--  sr data
 data/ghosts/original
 data/tracks
-locale/translation_templates
-locale/translations-export
-locale/stuntrally.pot
+
+#--  build
 *build
 build*
 Debug*
 Release*
+bin
+
+CMakeLists.txt.user*
+
+#-- win bin
 *.dll
 *.pdb
-bin
+*.exe
+
+#-- vs crap
+*.ncb
+*.suo
+*.user
+
+*.lnk
 StuntRally*.*
 SR?Editor*.*
-CMakeLists.txt.user*
+
+#--  transl
+locale/translation_templates
+locale/translations-export
+locale/stuntrally.pot
+locale/translations
+
+.tx
+sr.log
+sr.pot

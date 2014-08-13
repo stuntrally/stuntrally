@@ -565,7 +565,7 @@ int main(int argc, char* argv[])
 					{
 						if (!nLn)
 							og << "#: ";
-						og << lay[i];  // lay file name
+						og << lay[i]+" ";  // lay file name
 					}
 					if (nLn)  nLn = false;
 					fname = false;
