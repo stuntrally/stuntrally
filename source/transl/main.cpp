@@ -413,6 +413,8 @@ int main(int argc, char* argv[])
 				string ty = map_wt[type];  // shorter
 				if (!ty.empty())
 					type = ty;
+				if (found(ss,"CheckBox") /*&& type == "Button"*/)
+					type = "Check";
 				wh.push_back(ww);  wt.push_back(type);
 			}
 			//  closing
@@ -545,7 +547,7 @@ int main(int argc, char* argv[])
 		//  for each gui file
 		//--------------------------------
 		ii = file_lay.size();
-		bool nLn = false;
+		bool nLn = false;  su_old = "";
 		for (i=0; i < ii; ++i)
 		{
 			ln = lay_lin[i];  lu = lay_use[i];
@@ -673,7 +675,7 @@ int main(int argc, char* argv[])
 		of << ta.src << endl;
 
 		l = ta.gui.length() + ta.src .length();
-		if (l > 200)  // par
+		if (l > 300)  ///par 200
 			ol << "  " << s << " " << l << endl;
 
 		if (ta.gui.empty() && ta.src.empty())

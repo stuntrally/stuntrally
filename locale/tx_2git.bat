@@ -6,4 +6,4 @@ git commit -m "Sync translations."
 ::git push origin master
 "C:\Program Files\TortoiseGit\bin\TortoiseGitProc.exe" /command:push /path:"c:\sr"
 
-pause
+::pause
