@@ -5,7 +5,6 @@ def get_files(dir):
 
 tdir = 'translations/stuntrally.srpot';
 fpo = get_files(tdir)
-#`which python2` ./xml_po_parser.py ./translations-export/pofiles/stuntrally/${loc}.po ../data/gui/core_language_${loc}_tag.xml
 
 for po in fpo:
 	p2 = po[0:2]
