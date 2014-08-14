@@ -906,8 +906,10 @@
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="scale">Scale</Tag>
+	<!--  Terrain  Layers  buttons  -->
 	<Tag name="Test">Test</Tag>
 	<Tag name="Update">Update</Tag>
+	<Tag name="Swap">Swap</Tag>
 
 	<!--  Terrain  Blendmap  -->
 	<Tag name="AngleMin">Angle Min</Tag>
@@ -919,17 +921,17 @@
 	<Tag name="TerLHSm">Height smooth</Tag>
 	<Tag name="TerLNoise">Noise</Tag>
 	<Tag name="TerLNoiseOnly">Only Noise</Tag>
-	<Tag name="Swap">Swap</Tag>
 	
 	<!--  Terrain  generator  -->
 	<Tag name="Generator">Generator</Tag>
 	<Tag name="TerGenScale">Scale Height</Tag>
+	<Tag name="TerGenOfsX">Offset X</Tag>
+	<Tag name="TerGenOfsY">Offset Y</Tag>
+	<!--  Terrain  generator  noise params  -->
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="TerGenOct">Octaves</Tag>
 	<Tag name="TerGenPers">Persistance noise</Tag>
 	<Tag name="TerGenPow">Power (shape)</Tag>
-	<Tag name="TerGenOfsX">Offset X</Tag>
-	<Tag name="TerGenOfsY">Offset Y</Tag>
 	
 
 	<!--  Terrain  surface  particles  -->
@@ -940,7 +942,7 @@
 	<Tag name="trailColor">trail color</Tag>
 	<Tag name="ParAmount">Particle amounts</Tag>
 
-	<!--  Terrain  surface  -->
+	<!--  Terrain  surface  params  -->
 	<Tag name="Surface">Surface</Tag>
 	<Tag name="Type">Type</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
@@ -1024,6 +1026,7 @@
 	<Tag name="Column">Column</Tag>
 	<Tag name="Advanced">Advanced</Tag>
 	
+	<!--  Road  materials  -->
 	<Tag name="RoadMaterials">Road materials</Tag>
 	<Tag name="PipeMaterials">Pipe materials</Tag>
 	<Tag name="TexCoordMul">Tex Coord mul.</Tag>
@@ -1032,24 +1035,27 @@
 	<Tag name="LengthDim">Length dim.</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
 	<Tag name="HeightOffset">Height offset</Tag>
-	<Tag name="SkirtLength">Skirt Length</Tag>
-	<Tag name="SkirtHeight">Skirt Height</Tag>
 	<Tag name="MergeLength">Merge length</Tag>
 	<Tag name="LODPointsDist">LOD points dist.</Tag>
 	<Tag name="ColumnNSides">Column N sides</Tag>
 	<Tag name="ColumnRadius">Column Radius</Tag>
 	<Tag name="PipeWStepsMul">Pipe W steps mul.</Tag>
 	<Tag name="PipeLStepsMul">Pipe L steps mul.</Tag>
+	<!--  Road  build  skirt is the gap patch  -->
+	<Tag name="SkirtLength">Skirt Length</Tag>
+	<Tag name="SkirtHeight">Skirt Height</Tag>
 
 
-	<!--  Road Point  Main  -->
-	<Tag name="Road_OnTerrain">On Terrain</Tag>
+	<!--  Road Point  Main  dim  -->
 	<Tag name="Road_Length">Length</Tag>
 	<Tag name="Road_Height">Height</Tag>
 	<Tag name="Road_Width">Width</Tag>
+	<!--  Road Point  Main  angles  -->
 	<Tag name="Road_Yaw">Yaw</Tag>
 	<Tag name="Road_Roll">Roll</Tag>
 	<Tag name="Road_Pipe">Pipe</Tag>
+	<!--  Road Point  toggle  -->
+	<Tag name="Road_OnTerrain">On Terrain</Tag>
 	<Tag name="Road_Column">Column</Tag>
 	<Tag name="Road_Loop">Loop</Tag>
 	<Tag name="Road_OnPipe">On Pipe</Tag>
@@ -1057,9 +1063,11 @@
 	<!--  Road Point  short: checkpoint radius  -->
 	<Tag name="Road_ChkR">ChkR</Tag>
 
-	<!--  Road Point  cur short  -->
+	<!--  Road Point  short: current  -->
 	<Tag name="Road_Cur">Cur</Tag>
+	<!--  Road Point  short: new  -->
 	<Tag name="Road_New">New</Tag>
+	<!--  Road Point  short: selection  -->
 	<Tag name="Road_sel">sel</Tag>
 
 	<!--  Road Point  angles type  -->
@@ -1067,12 +1075,15 @@
 	<Tag name="Road_AngleManual">Manual</Tag>
 	<Tag name="Road_AngleAuto">Auto</Tag>
 	<Tag name="Road_AngleBoth">Both</Tag>
+	<!--  Road  direction  -->
 	<Tag name="Road_Dir">Direction</Tag>
 	
 	
-	<!--  Objects, Fluids  window  -->
+	<!--  Objects, Fluids  short: position  -->
 	<Tag name="Obj_Pos">Pos.</Tag>
+	<!--  Objects, Fluids  short: rotation  -->
 	<Tag name="Obj_Rot">Rot.</Tag>
+	<!--  Objects, Fluids  window  -->
 	<Tag name="Tile">Tile</Tag>
 	
 
@@ -1136,7 +1147,7 @@
 	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	<Tag name="AllowSaveOrigTrk">Allow saving original tracks</Tag>
 	
-	<!--  Settings  camera views 6  -->
+	<!--  Settings  camera views  -->
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="Top">Top</Tag>
 	<Tag name="Left">Left</Tag>
