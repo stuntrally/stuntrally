@@ -9,3 +9,7 @@ http://blenderartists.org/forum/showthread.php?24038-Free-high-res-skymaps-%28Ma
 New High resolution sky pack for Blender
 by: 0ptikz
 http://blenderartists.org/forum/showthread.php?224065-New-High-resolution-sky-pack-for-Blender
+
+Released under an 'I don't give an damn' license.
+Meaning you can use them for anything you want, including commercial work.
+The only thing I ask is that you don't sell them. That's it.
