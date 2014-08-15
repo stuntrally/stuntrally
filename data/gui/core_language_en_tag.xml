@@ -332,7 +332,7 @@
 	<Tag name="TCS">TCS (traction control)</Tag>
 	<Tag name="TipTCS">Prevents wheel spinning when accelerating (default: off).</Tag>
 
-	<!--  Setup  steeting  -->
+	<!--  Setup  steering  -->
 	<Tag name="Gravel">Gravel</Tag>
 	<Tag name="Asphalt">Asphalt</Tag>
 	<Tag name="SpeedSensitiveSteering">Speed Sensitive Steering</Tag>
