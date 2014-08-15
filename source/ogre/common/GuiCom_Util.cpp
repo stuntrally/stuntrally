@@ -394,8 +394,8 @@ void CGuiCom::tabMainMenu(Tab tab, size_t id)
 	#ifndef SR_EDITOR
 	if (tab == app->mWndTabsGame && id == TAB_Car)
 		app->gui->CarListUpd();  // off filtering
-	if (tab == app->mWndTabsGame && id == TAB_Multi)
-		app->gui->evBtnNetRefresh(0);  // upd games list
+	//if (tab == app->mWndTabsGame && id == TAB_Multi)
+	//	app->gui->evBtnNetRefresh(0);  // upd games list (don't, breaks game start)
 	#endif
 
 	if (id != 0)  return;  // <back
