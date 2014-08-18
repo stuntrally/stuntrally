@@ -511,7 +511,7 @@
 	<Tag name="InputStartAltMMB">alt-MMB - отмена вращ.</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - угол трубы (0 нет трубы)</Tag>
 	<Tag name="TerrainEmissiveLight">Ландшафт излучает свет</Tag>
-	<Tag name="TipDiffusePrev">Распространяет текстуру предварительного просмотра изображения.</Tag>
+	<Tag name="Column">Колонна</Tag>
 	<Tag name="Finished">Завершено</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - пред.,след. слой вкладка</Tag>
 	<Tag name="SimModeHard">Тяжело</Tag>
@@ -571,6 +571,7 @@
 	<Tag name="LS_TER">Загрузка ландшафта</Tag>
 	<Tag name="Test">Тест</Tag>
 	<Tag name="Continue">Продолжить</Tag>
+	<Tag name="TipDiffusePrev">Распространяет текстуру предварительного просмотра изображения.</Tag>
 	<Tag name="Hint-9text">Не едь слишком быстро на прыжках, иначе авто приземлиться небрежно. В идеале нужно приземлиться на другом конце прыжка.</Tag>
 	<Tag name="InputReloadTrack">F5 - перезагрузить трек</Tag>
 	<Tag name="InputIncreaseSensitivity">Чувствит.</Tag>
@@ -1022,7 +1023,7 @@
 	<Tag name="TipRainSnowInt">Интенсивность дождь/снег (напр. 1000)</Tag>
 	<Tag name="TrackLength">Длина</Tag>
 	<Tag name="BumpWavelen">Ухаб: длина волны</Tag>
-	<Tag name="Column">Колонна</Tag>
+	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
 	<Tag name="TipRoadDist">Как далеко от дороги появиться модель.</Tag>
 	<Tag name="FramesPerSec">Кадров в секунду</Tag>
 	<Tag name="ChampInfo2">Обычно чемпионаты длинные, много треков, но легко пройти.</Tag>

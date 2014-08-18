@@ -511,7 +511,7 @@
 	<Tag name="InputStartAltMMB">alt-MMB - reset rotation</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - pipe angle  (no pipe when 0)</Tag>
 	<Tag name="TerrainEmissiveLight">Terrain has emissive light</Tag>
-	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
+	<Tag name="Column">Stĺpec</Tag>
 	<Tag name="Finished">Dokončené</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - prev,next Layer tab</Tag>
 	<Tag name="SimModeHard">Hard (difficult)</Tag>
@@ -571,6 +571,7 @@
 	<Tag name="LS_TER">Loading terrain</Tag>
 	<Tag name="Test">Test</Tag>
 	<Tag name="Continue">Pokračovať</Tag>
+	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
 	<Tag name="Hint-9text">Don't drive too fast in jumps, else the car will land in a sloppy manner. The ideal landing is on the jump's other end.</Tag>
 	<Tag name="InputReloadTrack">F5 - reload track</Tag>
 	<Tag name="InputIncreaseSensitivity">Citlivosť</Tag>
@@ -1022,7 +1023,7 @@
 	<Tag name="TipRainSnowInt">Rain/Snow intensity (eg. 1000)</Tag>
 	<Tag name="TrackLength">Dĺžka</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
-	<Tag name="Column">Stĺpec</Tag>
+	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
 	<Tag name="TipRoadDist">How far from road will the model appear.</Tag>
 	<Tag name="FramesPerSec">Snímok za sekundu</Tag>
 	<Tag name="ChampInfo2">Championships are usually long, have many tracks, but are easy to pass.</Tag>

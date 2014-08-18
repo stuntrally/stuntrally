@@ -511,7 +511,7 @@
 	<Tag name="InputStartAltMMB">alt-MMB - riavvia la rotazione</Tag>
 	<Tag name="InputRoadPipeAngle">[,]   - angolo tubo  (no tubo quando è 0)</Tag>
 	<Tag name="TerrainEmissiveLight">Terreno con luce emissiva</Tag>
-	<Tag name="TipDiffusePrev">Anteprima immagine di diffusione texture.</Tag>
+	<Tag name="Column">Colonna</Tag>
 	<Tag name="Finished">Completato</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - prec,pross scheda layer</Tag>
 	<Tag name="SimModeHard">Difficile (difficoltà)</Tag>
@@ -571,6 +571,7 @@
 	<Tag name="LS_TER">Caricamento terreno</Tag>
 	<Tag name="Test">Test</Tag>
 	<Tag name="Continue">Continua</Tag>
+	<Tag name="TipDiffusePrev">Anteprima immagine di diffusione texture.</Tag>
 	<Tag name="Hint-9text">Don't drive too fast in jumps, else the car will land in a sloppy manner. The ideal landing is on the jump's other end.</Tag>
 	<Tag name="InputReloadTrack">F5 - ricarica la pista</Tag>
 	<Tag name="InputIncreaseSensitivity">Sensitività</Tag>
@@ -1022,7 +1023,7 @@
 	<Tag name="TipRainSnowInt">Intensità pioggia/neve (es. 1000)</Tag>
 	<Tag name="TrackLength">Lunghezza</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
-	<Tag name="Column">Colonna</Tag>
+	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
 	<Tag name="TipRoadDist">Quanto distante dalla strada verrà visualizzato il modello.</Tag>
 	<Tag name="FramesPerSec">Frame al secondo</Tag>
 	<Tag name="ChampInfo2">I campionati solitamente durano di più e sono composti da più piste, ma sono facilmente superabili.</Tag>

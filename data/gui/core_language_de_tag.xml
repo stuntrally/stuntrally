@@ -511,7 +511,7 @@
 	<Tag name="InputStartAltMMB">Alt-MMB - Rotation zurücks.</Tag>
 	<Tag name="InputRoadPipeAngle">[,] - Rohrwinkel (0 = kein Rohr)</Tag>
 	<Tag name="TerrainEmissiveLight">Gelände strahlt Licht aus</Tag>
-	<Tag name="TipDiffusePrev">Vorschaubild der Textur.</Tag>
+	<Tag name="Column">Säule</Tag>
 	<Tag name="Finished">Abgeschlossen</Tag>
 	<Tag name="InputNextLayTab">Alt-1,2 - vorh./nächster Schicht-Tab</Tag>
 	<Tag name="SimModeHard">Schwierig (kompliziert)</Tag>
@@ -571,6 +571,7 @@
 	<Tag name="LS_TER">Lade Terrain</Tag>
 	<Tag name="Test">Test</Tag>
 	<Tag name="Continue">Fortsetzen</Tag>
+	<Tag name="TipDiffusePrev">Vorschaubild der Textur.</Tag>
 	<Tag name="Hint-9text">Fahren Sie nicht zu schnell auf Rampen, ansonsten wird das Auto auf schlampige Weise landen. Der ideale Landepunkt ist auf dem anderen Ende der Rampe.</Tag>
 	<Tag name="InputReloadTrack">F5 - Neu laden</Tag>
 	<Tag name="InputIncreaseSensitivity">Empfindlichkeit</Tag>
@@ -1022,7 +1023,7 @@
 	<Tag name="TipRainSnowInt">Regen-/Schneeintensität (z.B. 1000)</Tag>
 	<Tag name="TrackLength">Länge</Tag>
 	<Tag name="BumpWavelen">Bump: WaveLen</Tag>
-	<Tag name="Column">Säule</Tag>
+	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
 	<Tag name="TipRoadDist">Entfernung vom Modell zur Straße.</Tag>
 	<Tag name="FramesPerSec">max. Frequenz (Hz)</Tag>
 	<Tag name="ChampInfo2">Meisterschaften sind meistens lang, haben viele Strecken, aber sind einfach zu bestehen.</Tag>

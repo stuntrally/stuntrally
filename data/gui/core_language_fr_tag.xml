@@ -205,7 +205,7 @@
 	<Tag name="TipRoadDist2">Distance additionnelle à la route</Tag>
 	<Tag name="InputBrushFilter">1,2 - fréquence du filtre (taille du noyau)</Tag>
 	<Tag name="Video">Vidéo</Tag>
-	<Tag name="TipBrushPick">shift-LMB - on Brushes, pick only shape (don't change mode).</Tag>
+	<Tag name="TipBrushPick">Maj.-Clic gauche - sur les brosses, pour changer uniquement la forme (et non le mode).</Tag>
 	<Tag name="Hint-13text">Par défaut, la simulation est en mode facile. N'oubliez pas de la mettre en mode normal si le jeu est trop facile pour vous.</Tag>
 	<Tag name="ViewStart">Vue du Départ</Tag>
 	<Tag name="TipToggleGrass">Activer ou désactiver ce calque d'herbe.</Tag>
@@ -511,7 +511,7 @@
 	<Tag name="InputStartAltMMB">Alt-Clic du milieu - réinit. la rotation</Tag>
 	<Tag name="InputRoadPipeAngle">[,] - angle du tuyau (pas de tuyau quand égal à 0)</Tag>
 	<Tag name="TerrainEmissiveLight">Le terrain dispose d'une lumière émissive</Tag>
-	<Tag name="TipDiffusePrev">Aperçu de la texture.</Tag>
+	<Tag name="Column">Colonne</Tag>
 	<Tag name="Finished">Terminé</Tag>
 	<Tag name="InputNextLayTab">Alt-1,2 - onglet de Calque préc.,suiv.</Tag>
 	<Tag name="SimModeHard">Expert (difficile)</Tag>
@@ -571,6 +571,7 @@
 	<Tag name="LS_TER">Chargement du terrain</Tag>
 	<Tag name="Test">Test</Tag>
 	<Tag name="Continue">Continuer</Tag>
+	<Tag name="TipDiffusePrev">Aperçu de la texture.</Tag>
 	<Tag name="Hint-9text">N'allez pas trop vite dans les sauts, sinon vous atterrirez d'une mauvaise manière. La manière idéale est d'atterrir sur la portion opposée du saut.</Tag>
 	<Tag name="InputReloadTrack">F5 - rechargement du circuit</Tag>
 	<Tag name="InputIncreaseSensitivity">Sensibilité</Tag>
@@ -1022,7 +1023,7 @@
 	<Tag name="TipRainSnowInt">Intensité de la pluie/neige (par exemple 1000)</Tag>
 	<Tag name="TrackLength">Longueur</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
-	<Tag name="Column">Colonne</Tag>
+	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
 	<Tag name="TipRoadDist">À quelle distance de la route le modèle commencera à apparaître.</Tag>
 	<Tag name="FramesPerSec">Images par seconde</Tag>
 	<Tag name="ChampInfo2">Les championnats sont généralement longs, ont plusieurs circuits, mais sont faciles à réussir.</Tag>

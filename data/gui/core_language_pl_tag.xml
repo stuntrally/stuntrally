@@ -511,7 +511,7 @@
 	<Tag name="InputStartAltMMB">alt-MMB - resetuj obrót</Tag>
 	<Tag name="InputRoadPipeAngle">[,] - kąt rury (brak rury gdy 0)</Tag>
 	<Tag name="TerrainEmissiveLight">Teren emituje światło</Tag>
-	<Tag name="TipDiffusePrev">Podgląd tekstury koloru diffuse.</Tag>
+	<Tag name="Column">Kolumna</Tag>
 	<Tag name="Finished">Ukończone</Tag>
 	<Tag name="InputNextLayTab">alt-1,2 - poprz.,następna zakładka Warstwy</Tag>
 	<Tag name="SimModeHard">Trudny (skomplikowany)</Tag>
@@ -571,6 +571,7 @@
 	<Tag name="LS_TER">Wczytywanie terenu</Tag>
 	<Tag name="Test">Test</Tag>
 	<Tag name="Continue">Kontynuuj</Tag>
+	<Tag name="TipDiffusePrev">Podgląd tekstury koloru diffuse.</Tag>
 	<Tag name="Hint-9text">Nie jedź zbyt szybko w skokach, bo auto będzie lądować w niechlujny sposób. Idealne miejsce lądowania to drugi koniec skoku.</Tag>
 	<Tag name="InputReloadTrack">F5 - przeładuj trasę</Tag>
 	<Tag name="InputIncreaseSensitivity">Czułość</Tag>
@@ -1022,7 +1023,7 @@
 	<Tag name="TipRainSnowInt">Intensywność deszczu/śniegu (np. 1000)</Tag>
 	<Tag name="TrackLength">Długość</Tag>
 	<Tag name="BumpWavelen">Wyboje: Częstość</Tag>
-	<Tag name="Column">Kolumna</Tag>
+	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
 	<Tag name="TipRoadDist">Jak daleko od drogi będzie się pojawiał model.</Tag>
 	<Tag name="FramesPerSec">Klatki na sekundę</Tag>
 	<Tag name="ChampInfo2">Mistrzostwa są zazwyczaj długie, mają wiele tras, ale są łatwe do przejścia.</Tag>
