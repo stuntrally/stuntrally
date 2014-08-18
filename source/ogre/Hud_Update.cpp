@@ -919,7 +919,11 @@ void CHud::UpdRot(int baseCarId, int carId, float vel, float rpm)
 	}
 	
 	//  visible
-	bool hide = !app->carModels[c]->mbVisible;
+	int cg = app->isGhost2nd && !app->bRplPlay &&
+		app->carModels[c]->eType == CarModel::CT_GHOST &&
+		c < app->carModels.size()-1 ? 1 : 0;
+
+	bool hide = !app->carModels[c+cg]->mbVisible;
 	if (hide)
 	{	h.vMiniPos[c].x = -100.f;
 		h.vMiniPos[c].y = 0.f;  }
