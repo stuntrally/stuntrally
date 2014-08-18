@@ -396,7 +396,6 @@ void CHud::Update(int carId, float time)
 	if (h.txDamage && pCar && h.txDamage->getVisible())
 	{
 		float d = std::min(100.f, pCar->dynamics.fDamage);
-		//h.txDamage->setCaption(TR("#{Damage}\n     ")+fToStr(d,0,3)+" %");  d*=0.01f;
 		h.txDamage->setCaption(fToStr(d,0,3)+" %");  d*=0.01f;
 		float e = std::min(1.f, 0.8f + d*2.f);
 		h.txDamage->setTextColour(Colour(e-d*d*0.4f, std::max(0.f, e-d), std::max(0.f, e-d*2.f) ));
