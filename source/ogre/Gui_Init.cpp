@@ -411,6 +411,8 @@ void CGui::InitGui()
 	ck= &ckRplGhostOther;	ck->Init("RplChkGhostOther",&pSet->rpl_ghostother);
 	ck= &ckRplTrackGhost;	ck->Init("RplChkTrackGhost",&pSet->rpl_trackghost);
 	Slv(RplNumViewports, (pSet->rpl_numViews-1) / 3.f);
+	sv= &svGhoHideDist;		sv->Init("GhoHideDist",		&pSet->ghoHideDist,    0.f, 30.f, 1.5f, 1,4);  sv->DefaultF(5.f);
+	sv= &svGhoHideDistTrk;	sv->Init("GhoHideDistTrk",	&pSet->ghoHideDistTrk, 0.f, 30.f, 1.5f, 1,4);  sv->DefaultF(5.f);
 
 	//  radios, filter
 	ck= &ckRplGhosts;	ck->Init("RplBtnGhosts",  &pSet->rpl_listghosts);  Cev(RplGhosts);

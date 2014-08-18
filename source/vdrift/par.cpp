@@ -30,8 +30,6 @@ SParams::SParams()
 	chkBeamSx = 5.f;  chkBeamSy = 44.f;
 //  ghost
 	ghostHideTime = 0.2f;
-	ghostHideDist    = 4.f*4.f;
-	ghostHideDistTrk = 5.f*5.f;
 
 //  camera bounce, force factors
 	camBncF  = -0.0016f;  camBncFo = -0.0016f;  camBncFof = -0.0016f;

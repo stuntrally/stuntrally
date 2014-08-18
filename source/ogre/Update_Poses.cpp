@@ -449,13 +449,13 @@ void App::updatePoses(float time)
 			else
 			{	//  hide ghost when close to player
 				float d = carM->pMainNode->getPosition().squaredDistance(playerCar->pMainNode->getPosition());
-				if (d < gPar.ghostHideDist)
+				if (d < pSet->ghoHideDist * pSet->ghoHideDist)
 					newVisible = false;
 
 				if (carM->isGhostTrk() && cgh >= 0)  // hide track's ghost when near ghost
 				{
 					float d = carM->pMainNode->getPosition().squaredDistance(carModels[cgh]->pMainNode->getPosition());
-					if (d < gPar.ghostHideDistTrk)
+					if (d < pSet->ghoHideDistTrk * pSet->ghoHideDistTrk)
 						newVisible = false;
 				}
 				if (curVisible == newVisible)

@@ -30,8 +30,6 @@ struct SParams
 	,chkBeamSx, chkBeamSy
 //  ghost
 	,ghostHideTime
-	,ghostHideDist
-	,ghostHideDistTrk
 
 //  camera bounce sim
 	,camBncF, camBncFo, camBncFof

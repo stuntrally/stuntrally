@@ -170,6 +170,7 @@ public:
 	bool rpl_ghostother, rpl_trackghost;
 	bool rpl_ghostpar, rpl_ghostrewind, rpl_listghosts;
 	int rpl_listview, rpl_numViews;
+	float ghoHideDist, ghoHideDistTrk;  // ghost hide dist, when close
 	
 	//  network
 	std::string nickname, netGameName;

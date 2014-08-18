@@ -2142,7 +2142,7 @@
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#FFF060#{View}"/>
 				<Widget type="Button" skin="CheckBox" position="32 60 380 24" name="RplChkGhost">
-					<Property key="TextColour" value="0.86 0.95 1"/>
+					<Property key="TextColour" value="1 0.95 0.86"/>
 					<Property key="Caption" value="#{RplGhost}"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 90 380 24" name="RplChkTrackGhost">
@@ -2169,7 +2169,7 @@
 					<Property key="TextColour" value="0.4 0.6 0.8"/>
 					<Property key="Caption" value="#{Particles}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 266 466 20">
+				<Widget type="TextBox" skin="TextBox" position="32 266 576 20">
 					<Property key="TextColour" value="0.6 0.75 0.9"/>
 					<Property key="Caption" value="#{RplMaxNumViewports} *"/>
 				</Widget>
@@ -2177,6 +2177,28 @@
 					<Property key="TextColour" value="0.6 0.8 1"/>
 				</Widget>
 				<Widget type="Slider" skin="Slider" position="80 290 160 22" name="RplNumViewports"/>
+
+				<Widget type="TextBox" skin="TextBox" position="32 380 576 20">
+					<Property key="TextColour" value="0.7 0.8 0.9"/>
+					<Property key="Caption" value="#{GhostHideDist}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 408 288 20">
+					<Property key="TextColour" value="0.9 0.8 0.7"/>
+					<Property key="Caption" value="#{Ghost}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 432 60 20" name="GhoHideDistVal">
+					<Property key="TextColour" value="1 0.9 0.8"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="92 432 240 18" name="GhoHideDist"/>
+
+				<Widget type="TextBox" skin="TextBox" position="32 456 288 20">
+					<Property key="TextColour" value="0.7 0.8 0.7"/>
+					<Property key="Caption" value="#{Track}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 480 60 20" name="GhoHideDistTrkVal">
+					<Property key="TextColour" value="0.8 1 0.8"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="92 480 240 18" name="GhoHideDistTrk"/>
 			</Widget>
 		</Widget>
 	</Widget>

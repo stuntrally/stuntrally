@@ -417,15 +417,18 @@
 	<Tag name="RplFileSize">File size</Tag>
 	<Tag name="RplRecTime">Recorded   time</Tag>
 
-	<!--  Replay  View setup  -->
-	<Tag name="RplAutoRec">Auto record replay</Tag>
+	<!--  Replay  View  Main  -->
 	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
+	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
+	<!--  Replay  View  other  -->
+	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
+	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
+	<!--  Replay  View  setup  -->
+	<Tag name="RplAutoRec">Auto record replay</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="RplAlpha">Transparent ghost</Tag>
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
-	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
-	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
-	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
+	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
 
 
 	<!--  Screen  -->
@@ -461,7 +464,7 @@
 	<Tag name="GraphicsAll_Impossible">Impossible</Tag>
 
 
-	<!--  Network Multiplayer  headers  -->
+	<!--  Network Multiplayer  headers  --> 
 	<Tag name="Multiplayer">Multiplayer</Tag>
 	<Tag name="Game name">Game name</Tag>
 	<Tag name="Laps">Laps</Tag>

@@ -323,9 +323,10 @@ public:
 	void btnRplLoad(WP), btnRplSave(WP);
 	void btnRplDelete(WP), btnRplRename(WP);
 	
-	//  chk options
+	//  chk, options
 	Ck ckRplAutoRec, ckRplBestOnly, ckRplGhost, ckRplParticles;
 	Ck ckRplRewind, ckRplGhostOther, ckRplTrackGhost;
+	SV svGhoHideDist, svGhoHideDistTrk;
 
 	//  list filtering
 	Btn rbRplCur, rbRplAll;  // radio
