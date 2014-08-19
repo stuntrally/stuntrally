@@ -1023,7 +1023,7 @@
 	<Tag name="TipRainSnowInt">Интенсивность дождь/снег (напр. 1000)</Tag>
 	<Tag name="TrackLength">Длина</Tag>
 	<Tag name="BumpWavelen">Ухаб: длина волны</Tag>
-	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
+	<Tag name="GhostHideDist">Убрать призраков если близко</Tag>
 	<Tag name="TipRoadDist">Как далеко от дороги появиться модель.</Tag>
 	<Tag name="FramesPerSec">Кадров в секунду</Tag>
 	<Tag name="ChampInfo2">Обычно чемпионаты длинные, много треков, но легко пройти.</Tag>

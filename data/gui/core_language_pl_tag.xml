@@ -1023,7 +1023,7 @@
 	<Tag name="TipRainSnowInt">Intensywność deszczu/śniegu (np. 1000)</Tag>
 	<Tag name="TrackLength">Długość</Tag>
 	<Tag name="BumpWavelen">Wyboje: Częstość</Tag>
-	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
+	<Tag name="GhostHideDist">Ukryj duchy, gdy odległość jest mniejsza od</Tag>
 	<Tag name="TipRoadDist">Jak daleko od drogi będzie się pojawiał model.</Tag>
 	<Tag name="FramesPerSec">Klatki na sekundę</Tag>
 	<Tag name="ChampInfo2">Mistrzostwa są zazwyczaj długie, mają wiele tras, ale są łatwe do przejścia.</Tag>
