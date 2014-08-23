@@ -20,7 +20,7 @@ tx push -s
 ::echo Pulling .po translations back
 echo.
 
-tx pull -a
+tx pull -a --minimum-perc=10
 
 echo.
 echo Converting .po to .xml

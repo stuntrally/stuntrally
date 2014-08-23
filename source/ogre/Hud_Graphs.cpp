@@ -391,10 +391,9 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	size_t gsi = pApp->graphs.size();
 	bool tireEdit = false;
 
-	//  RANGE  gui sld ..
+	//  RANGE
 	//const Dbl fMAX = 9000.0, max_y = 80.0, max_x = 1.0;
 	//const Dbl fMAX = 7000.0, max_y = 180.0, max_x = 12.0, pow_x = 1.0;
-	//const Dbl fMAX = 7000.0, max_y = 5080.0, max_x = 502.0, pow_x = 5.5;
 	Dbl fMAX = pSet->te_yf, max_y = pSet->te_xfy, max_x = pSet->te_xfx, pow_x = pSet->te_xf_pow;
 	if (pApp->scn->sc->asphalt)  max_y *= 0.5;
 
@@ -419,8 +418,6 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			MATHVECTOR<Dbl,3> v = dynamics.body.GetForce();
 			(-dynamics.Orientation()).RotateVector(v);
 			float m = dynamics.body.GetMass();
-			//LogO("mass: "+fToStr(m,1,5)+"  x: "+fToStr(v[0]/m,2,4)+"  y: "+fToStr(v[1]/m,2,4)+"  z: "+fToStr(v[2]/m,2,4));
-
 			for (int i=0; i < 3; ++i)
 				pApp->graphs[i]->AddVal( std::max(0.f, std::min(1.f, float(
 					v[i]/m *0.63f /9.81f/3.f + (i==2 ? 0.f : 0.5f) ) )));
