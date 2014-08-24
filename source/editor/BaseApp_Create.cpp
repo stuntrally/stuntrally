@@ -124,17 +124,14 @@ void BaseApp::createFrameListener()
 {
 	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing ***");
 
-	Ogre::OverlayManager& ovr = Ogre::OverlayManager::getSingleton();  Ogre::Overlay* o;
-	o = ovr.getByName("Editor/FpsOverlay");  if (o) o->show();
-	ovDebug = ovr.getByName("Editor/DebugOverlay");
-	ovDbg  = ovr.getOverlayElement("Editor/DebugText");
-
+	Ogre::OverlayManager& ovr = Ogre::OverlayManager::getSingleton();
+	//  overlays-
 	ovBrushPrv = ovr.getByName("Editor/BrushPrvOverlay");
 	ovBrushMtr = ovr.getOverlayElement("Editor/BrushPrvPanel");
 	ovTerPrv = ovr.getByName("Editor/TerPrvOverlay");  ovTerPrv->hide();
 	ovTerMtr = ovr.getOverlayElement("Editor/TerPrvPanel");
 
-
+	//  input
 	mInputWrapper = new SFO::InputWrapper(mSDLWindow, mWindow);
 	mInputWrapper->setMouseEventCallback(this);
 	mInputWrapper->setKeyboardEventCallback(this);
@@ -179,26 +176,27 @@ void BaseApp::Run( bool showDialog )
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
 	:mRoot(0), mCamera(0), mViewport(0)
-	,mSceneMgr(0), mWindow(0), imgCur(0)
-	,bckFps(0), txFps(0), txCamPos(0), fStFade(0.f)
-	,mShowDialog(1), mShutDown(false), bWindowResized(true), bFirstRenderFrame(true)
-	,alt(0), ctrl(0), shift(0)
-	,mbLeft(0), mbRight(0), mbMiddle(0)
-	,ndSky(0)
+	,mSceneMgr(0), mWindow(0),  mGui(0), mPlatform(0)
 
-	,ovDebug(0), ovDbg(0)
+	,pSet(0), bGuiFocus(0), bMoveCam(0), mDTime(0)
+	,edMode(ED_Deform), edModeOld(ED_Deform)
+	,mInputWrapper(NULL), mSDLWindow(NULL)
+
 	,ovBrushPrv(0),ovBrushMtr(0), ovTerPrv(0),ovTerMtr(0)
+	,imgCur(0), bckFps(0), txFps(0), txCamPos(0), fStFade(0.f)
+	,bckInput(0), txInput(0)
 
-	,mbWireFrame(0), mx(0),my(0),mz(0),  mGui(0), mPlatform(0)
+	,mShowDialog(1), mShutDown(false), bWindowResized(true), bFirstRenderFrame(true)
+	,ndSky(0), mbWireFrame(0)
+
+	,alt(0), ctrl(0), shift(0)
+	,mx(0),my(0),mz(0),  mbLeft(0), mbRight(0), mbMiddle(0)
 
 	,mWndMain(0), mWndTrack(0),mWndEdit(0),mWndHelp(0),mWndOpts(0), mWndPick(0)
 	,mWndTabsTrack(0),mWndTabsEdit(0),mWndTabsHelp(0),mWndTabsOpts(0)
 	,mWndBrush(0), mWndCam(0), mWndStart(0)
 	,mWndRoadCur(0), mWndRoadStats(0)
 	,mWndFluids(0), mWndObjects(0), mWndRivers(0)
-	
-	,pSet(0), bMoveCam(0), mDTime(0), edMode(ED_Deform), edModeOld(ED_Deform), bGuiFocus(0)
-	,mInputWrapper(NULL), mSDLWindow(NULL)
 {
 }
 
@@ -521,18 +519,26 @@ void BaseApp::baseInitGui()
 	//  Fps
 	bckFps = mGui->createWidget<ImageBox>("ImageBox",
 		0,0, 212,25, Align::Default, "Pointer", "FpsB");
-	bckFps->setImageTexture("Border_Center.png");
+	bckFps->setImageTexture("back_fps.png");
 
 	txFps = bckFps->createWidget<TextBox>("TextBox",
 		1,1, 212,25, Align::Default, "FpsT");
-	txFps->setFontName("hud.fps");
-
-	bckFps->setVisible(false);
+	txFps->setFontName("hud.fps");  bckFps->setVisible(false);
 
 	//  Cam Pos
 	txCamPos = mGui->createWidget<TextBox>("TextBox",
 		208,2, 600,40, Align::Default, "Pointer", "CamT");
 	txCamPos->setFontName("hud.fps");
-	txCamPos->setTextShadow(true);
-	txCamPos->setVisible(false);
+	txCamPos->setTextShadow(true);  txCamPos->setVisible(false);
+
+	//  Input bar
+	bckInput = mGui->createWidget<ImageBox>("ImageBox",
+		0,0, 640,64, Align::Default, "Pointer", "InpB");
+	bckInput->setImageTexture("border_rect.png");
+
+	txInput = bckInput->createWidget<TextBox>("TextBox",
+		40,8, 630,60, Align::Default, "InpT");
+	txInput->setFontName("hud.text");
+	txInput->setFontHeight(40);
+	txInput->setTextShadow(true);  bckInput->setVisible(false);
 }

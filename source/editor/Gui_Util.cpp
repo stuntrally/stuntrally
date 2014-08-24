@@ -406,6 +406,8 @@ void CGui::GuiUpdate()
 		gcom->SizeGUI();
 		gcom->updTrkListDim();
 		viewCanvas->setCoord(GetViewSize());
+
+		//slSizeMinimap(0);
 		//LoadTrack();  // shouldnt be needed ...
 	}
 

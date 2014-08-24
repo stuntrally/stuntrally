@@ -211,7 +211,6 @@ void CGui::InitGui()
 	sv= &svMiniUpd;		sv->Init("MiniUpd",		&pSet->mini_skip, 0, 20);  sv->DefaultI(4);
 
 	ck= &ckFps;			ck->Init("Fps",			&pSet->show_fps);  Cev(Fps);
-	app->bckFps->setVisible(pSet->show_fps);
 	ck= &ckWireframe;	ck->Init("Wireframe",	&app->mbWireFrame);  Cev(Wireframe);
 	ck= &ckCamPos;		ck->Init("CamPos",		&pSet->camPos);    Cev(CamPos);
 	ck= &ckInputBar;	ck->Init("InputBar",	&pSet->inputBar);  Cev(InputBar);

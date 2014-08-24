@@ -90,8 +90,8 @@ protected:
 	SFO::SDLCursorManager* mCursorManager;
 
 	///  ovelay
-	Ogre::Overlay* ovDebug, *ovBrushPrv, *ovTerPrv;
-	Ogre::OverlayElement *ovDbg, *ovBrushMtr, *ovTerMtr;
+	Ogre::Overlay *ovBrushPrv, *ovTerPrv;
+	Ogre::OverlayElement *ovBrushMtr, *ovTerMtr;
 	float fStFade;
 
 	bool alt, ctrl, shift;  // key modifiers
@@ -124,8 +124,8 @@ protected:
 
 	//MyGUI::VectorWidgetPtr
 	std::vector<WP> vwGui;  // all widgets to destroy
-	Img bckFps, imgCur;
-	Txt txFps, txCamPos;
+	Img bckFps, imgCur, bckInput;
+	Txt txFps, txCamPos, txInput;
 
 	Wnd mWndMain, mWndTrack,mWndEdit,mWndHelp,mWndOpts, mWndPick;  // menu, windows
 	Tab mWndTabsTrack,mWndTabsEdit,mWndTabsHelp,mWndTabsOpts;  // main tabs on windows

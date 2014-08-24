@@ -79,7 +79,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		{	first=false;
 			for (i=Kmax; i > 0; --i)  tkey[i] = 0.f;
 		}
-		String ss = "";
+		String ss = "   ";
 		//  pressed
 		for (i=Kmax; i > 0; --i)
 			if  (mInputWrapper->isKeyDown(SDL_Scancode(i)))
@@ -91,14 +91,14 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			la = SDL_SCANCODE_LALT,   ra = SDL_SCANCODE_RALT,
 			ls = SDL_SCANCODE_LSHIFT, rs = SDL_SCANCODE_RSHIFT;
 
-		if (tkey[lc] > 0.f || tkey[rc] > 0.f)	ss += "Ctrl ";
-		if (tkey[la] > 0.f || tkey[ra] > 0.f)	ss += "Alt ";
-		if (tkey[ls] > 0.f || tkey[rs] > 0.f)	ss += "Shift ";
+		if (tkey[lc] > 0.f || tkey[rc] > 0.f)	ss += "#D0F0D0Ctrl  ";
+		if (tkey[la] > 0.f || tkey[ra] > 0.f)	ss += "#D0F0D0Alt  ";
+		if (tkey[ls] > 0.f || tkey[rs] > 0.f)	ss += "#D0F0D0Shift  ";
 
 		//  mouse buttons
-		if (mbLeft)  ss += "LMB ";
-		if (mbRight)  ss += "RMB ";
-		if (mbMiddle)  ss += "MMB ";
+		if (mbLeft)  ss += "#C0FFFFLMB  ";
+		if (mbRight)  ss += "#C0FFFFRMB  ";
+		if (mbMiddle)  ss += "#C0FFFFMMB  ";
 
 		//  all
 		for (i=Kmax; i > 0; --i)
@@ -108,7 +108,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 				if (i!=lc && i!=la && i!=ls && i!=rc && i!=ra && i!=rs)
 				{
 					String s = String(SDL_GetKeyName(SDL_GetKeyFromScancode(static_cast<SDL_Scancode>(i))));
-					ss += s + " ";
+					s = StringUtil::replaceAll(s, "Keypad", "#FFFFC0Num ");
+					ss += "#FFFFFF" + s + "  ";
 				}
 		}	}
 		
@@ -116,10 +117,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		static int mzd = 0;
 		if (mz > 0)  mzd = 30;
 		if (mz < 0)  mzd = -30;
-		if (mzd > 0)  {  ss += "Wheel up";  --mzd;  }
-		if (mzd < 0)  {  ss += "Wheel dn";  ++mzd;  }
-		//ovInfo->setCaption(ss);
-		ovDbg->setCaption(ss);
+		if (mzd > 0)  {  ss += "#D0D8FFWheel up";  --mzd;  }
+		if (mzd < 0)  {  ss += "#D0D8FFWheel down";  ++mzd;  }
+		txInput->setCaption(ss);
 	}
 
 	//  keys up/dn - trklist

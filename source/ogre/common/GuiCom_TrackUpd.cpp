@@ -318,5 +318,8 @@ void CGuiCom::updTrkListDim()
 	ic.width = app->gui->liPickW[CGui::P_Grs];  app->gui->liGrs->setCoord(ic);
 	ic.width = app->gui->liPickW[CGui::P_Veg];  app->gui->liVeg->setCoord(ic);
 	ic.width = app->gui->liPickW[CGui::P_Rd ];  app->gui->liRd->setCoord(ic);
+
+	float ih = 0.045f;
+	app->bckInput->setRealCoord(0.2f, 1.f-ih, 0.5f, ih);
 	#endif
 }

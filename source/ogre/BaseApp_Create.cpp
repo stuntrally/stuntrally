@@ -749,7 +749,7 @@ void BaseApp::baseInitGui()
 	//  Fps
 	bckFps = mGui->createWidget<ImageBox>("ImageBox",
 		0,0, 212,25, Align::Default, "Pointer", "FpsB");
-	bckFps->setImageTexture("Border_Center.png");
+	bckFps->setImageTexture("back_fps.png");
 
 	txFps = bckFps->createWidget<TextBox>("TextBox",
 		1,1, 212,25, Align::Default, "FpsT");

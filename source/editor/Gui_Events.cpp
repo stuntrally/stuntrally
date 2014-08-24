@@ -313,17 +313,11 @@ void CGui::SldUpd_Game()
 
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-void CGui::chkCamPos(Ck*){
-	app->txCamPos->setVisible(pSet->camPos);  }
+void CGui::chkCamPos(Ck*){     app->txCamPos->setVisible(pSet->camPos);  }
+void CGui::chkInputBar(Ck*){   app->bckInput->setVisible(pSet->inputBar);  }
 
-void CGui::chkInputBar(Ck*){	
-	if (pSet->inputBar)  app->ovDebug->show();  else  app->ovDebug->hide();  }
-
-void CGui::chkFps(Ck*){
-	app->bckFps->setVisible(pSet->show_fps);  }
-
-void CGui::chkWireframe(Ck*){
-	app->UpdWireframe();  }
+void CGui::chkFps(Ck*){        app->bckFps->setVisible(pSet->show_fps);  }
+void CGui::chkWireframe(Ck*){  app->UpdWireframe();  }
 
 void CGui::slSizeRoadP(SV*)
 {

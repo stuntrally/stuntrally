@@ -120,10 +120,7 @@ void App::createScene()  // once, init
 	#if 0
 	gui->ToolBrushesPrv();
 	#endif
-	
-
-	if (pSet->inputBar)  ovDebug->show();
-	gui->chkCamPos(0);
+		
 
 	//  load
 	if (pSet->autostart)
@@ -134,6 +131,11 @@ void App::createScene()  // once, init
 
 	iObjTNew = 0;
 	//SetObjNewType(0);  //?white
+
+
+	gui->chkInputBar(0);  // upd vis
+	gui->chkCamPos(0);
+	gui->chkFps(0);
 }
 
 void App::destroyScene()

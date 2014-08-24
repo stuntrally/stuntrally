@@ -1,33 +1,4 @@
 
-Editor/DebugOverlay
-{
-	zorder 500
-	container BorderPanel(Editor/DebugPanel)
-	{
-		metrics_mode pixels
-		vert_align bottom
-		left  300
-		width 500
-		top	-50
-		height 50
-		material hud/Times
-
-		element TextArea(Editor/DebugText)
-		{
-			metrics_mode pixels
-			left 50
-			top 13
-			width 600
-			height 50
-			font_name Console
-			char_height 36
-			//caption Info
-			colour_top	0.8 0.9 1.0
-			colour_bottom 1.0 1.0 1.0
-		}
-	}
-}
-
 Editor/BrushPrvOverlay
 {
 	zorder 500
