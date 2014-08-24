@@ -1,34 +1,4 @@
 
-Editor/StatusOverlay
-{
-	zorder 500
-	container BorderPanel(Editor/StatusPanel)
-	{
-		metrics_mode pixels
-		vert_align bottom
-		left  70
-		width 120
-		top	-25
-		height	 25
-		material hud/Times
-
-		element TextArea(Editor/StatusText)
-		{
-			metrics_mode pixels
-			left 20
-			top 5
-			width 70
-			height 22
-			font_name Console
-			char_height 21
-			//caption 
-			colour_top	0.0 0.5 1.0
-			colour_bottom 1.0 1.0 1.0
-		}
-				
-	}
-}
-
 Editor/CameraOverlay
 {
 	zorder 500

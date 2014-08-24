@@ -127,8 +127,6 @@ void BaseApp::createFrameListener()
 	Ogre::OverlayManager& ovr = Ogre::OverlayManager::getSingleton();  Ogre::Overlay* o;
 	o = ovr.getByName("Editor/FpsOverlay");  if (o) o->show();
 	o = ovr.getByName("Editor/StatusOverlay");  if (o) o->show();
-	ovSt = ovr.getOverlayElement("Editor/StatusPanel");  if (ovSt)  ovSt->hide();
-	ovStat= ovr.getOverlayElement("Editor/StatusText");
 	ovPos= ovr.getOverlayElement("Editor/Pos");
 	mDebugOverlay= ovr.getByName("Editor/DebugOverlay");  //mDebugOverlay->show();
 	ovDbg = ovr.getOverlayElement("Editor/DebugText");
@@ -191,8 +189,7 @@ BaseApp::BaseApp()
 	,mbLeft(0), mbRight(0), mbMiddle(0)
 	,ndSky(0)
 
-	,mDebugOverlay(0), ovSt(0)
-	,ovPos(0), ovDbg(0), ovInfo(0), ovStat(0)
+	,mDebugOverlay(0), ovPos(0), ovDbg(0), ovInfo(0)
 	,ovBrushPrv(0),ovBrushMtr(0), ovTerPrv(0),ovTerMtr(0)
 
 	,mbWireFrame(0), mx(0),my(0),mz(0),  mGui(0), mPlatform(0)
