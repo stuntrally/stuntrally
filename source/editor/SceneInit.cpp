@@ -239,7 +239,7 @@ void App::LoadTrackEv()
 
 	//  road ~
 	scn->road = new SplineRoad(this);
-	scn->road->Setup("sphere.mesh", 1.4f*pSet->road_sphr, scn->terrain, mSceneMgr, mCamera);
+	scn->road->Setup("sphere.mesh", pSet->road_sphr, scn->terrain, mSceneMgr, mCamera);
 	scn->road->LoadFile(gcom->TrkDir()+"road.xml");
 	scn->UpdPSSMMaterials();
 	
@@ -261,8 +261,9 @@ void App::LoadTrackEv()
 	gui->SetGuiFromXmls();  ///
 	
 	Rnd2TexSetup();
-	UpdVisGui();
-	UpdStartPos();
+	//UpdVisGui();
+	//UpdStartPos();
+	UpdEditWnds();  //
 
 	try {
 	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");

@@ -119,9 +119,10 @@ void CGui::InitGui()
 	app->mInputWrapper->setMouseVisible(app->bGuiFocus || !app->bMoveCam);
 	gcom->GuiCenterMouse();
 	
-	//  hide  ---
+	//  hide all wnd  ---
 	app->SetEdMode(ED_Deform);
-	app->UpdEditWnds();  // UpdVisHit(); //after track
+	app->UpdEditWnds();
+	app->mWndBrush->setVisible(false);
 	
 
 	#if 0  ///0 _tool_ fix video capture cursor
@@ -204,7 +205,7 @@ void CGui::InitGui()
 	ck= &ckMinimap;		ck->Init("Minimap",		&pSet->trackmap);  Cev(Minimap);
 	sv= &svSizeMinimap;	sv->Init("SizeMinimap",	&pSet->size_minimap, 0.15f,2.f);  sv->DefaultF(0.55f);  Sev(SizeMinimap);
 
-	sv= &svSizeRoadP;	sv->Init("SizeRoadP",	&pSet->road_sphr, 0.1f,12.f); sv->DefaultF(1.5f);  Sev(SizeRoadP);
+	sv= &svSizeRoadP;	sv->Init("SizeRoadP",	&pSet->road_sphr, 0.1f,12.f);  sv->DefaultF(2.f);  Sev(SizeRoadP);
 
 	sv= &svTerUpd;		sv->Init("TerUpd",		&pSet->ter_skip,  0, 20);  sv->DefaultI(1);
 	sv= &svMiniUpd;		sv->Init("MiniUpd",		&pSet->mini_skip, 0, 20);  sv->DefaultI(4);

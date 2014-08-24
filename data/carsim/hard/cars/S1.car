@@ -73,7 +73,7 @@ torque-curve-13 = 5500, 510
 torque-curve-14 = 6000, 468
 torque-curve-15 = 6300, 441
 torque-curve-16 = 7000, 400
-real-pow-tq-mul = 1.8
+real-pow-tq-mul = 1.6
 
 [ clutch ]
 max-torque-mul = 1.3
@@ -97,7 +97,7 @@ torque = 0
 torque-dec = 0
 
 [ diff-rear ]
-anti-slip = 12700.0
+anti-slip = 7000.0
 torque = 0
 torque-dec = 0
 
