@@ -1275,7 +1275,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\data\hud\CarDbg.overlay"
+					>
+				</File>
+				<File
 					RelativePath="..\data\materials\core.h"
+					>
+				</File>
+				<File
+					RelativePath="..\data\hud\Focus.material"
 					>
 				</File>
 				<File
@@ -1288,6 +1296,10 @@
 				</File>
 				<File
 					RelativePath="..\data\materials\grassdens.shaderset"
+					>
+				</File>
+				<File
+					RelativePath="..\data\hud\Hud.material"
 					>
 				</File>
 				<File

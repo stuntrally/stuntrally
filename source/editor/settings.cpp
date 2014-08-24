@@ -111,7 +111,7 @@ SETTINGS::SETTINGS()  ///  Defaults
 	,cam_x(0), cam_y(50),cam_z(-120),  cam_dx(0), cam_dy(0), cam_dz(1)
 	,bFog(0), bTrees(0), bWeather(0)
 	,cam_speed(1.f), cam_inert(1.f)
-	,ter_skip(4), road_sphr(1.f), mini_skip(4)
+	,ter_skip(4), road_sphr(2.f), mini_skip(4)
 	//  video
 	,windowx(800), windowy(600)
 	,fullscreen(false), vsync(false)

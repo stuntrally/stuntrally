@@ -126,13 +126,10 @@ void BaseApp::createFrameListener()
 
 	Ogre::OverlayManager& ovr = Ogre::OverlayManager::getSingleton();  Ogre::Overlay* o;
 	o = ovr.getByName("Editor/FpsOverlay");  if (o) o->show();
-	o = ovr.getByName("Editor/StatusOverlay");  if (o) o->show();
-	ovPos= ovr.getOverlayElement("Editor/Pos");
-	mDebugOverlay= ovr.getByName("Editor/DebugOverlay");  //mDebugOverlay->show();
-	ovDbg = ovr.getOverlayElement("Editor/DebugText");
-	ovInfo= ovr.getOverlayElement("Editor/Info");
+	ovDebug = ovr.getByName("Editor/DebugOverlay");
+	ovDbg  = ovr.getOverlayElement("Editor/DebugText");
 
-	ovBrushPrv = ovr.getByName("Editor/BrushPrvOverlay");  //ovBrushPrv->show();
+	ovBrushPrv = ovr.getByName("Editor/BrushPrvOverlay");
 	ovBrushMtr = ovr.getOverlayElement("Editor/BrushPrvPanel");
 	ovTerPrv = ovr.getByName("Editor/TerPrvOverlay");  ovTerPrv->hide();
 	ovTerMtr = ovr.getOverlayElement("Editor/TerPrvPanel");
@@ -183,13 +180,13 @@ void BaseApp::Run( bool showDialog )
 BaseApp::BaseApp()
 	:mRoot(0), mCamera(0), mViewport(0)
 	,mSceneMgr(0), mWindow(0), imgCur(0)
-	,bckFps(0), txFps(0)
+	,bckFps(0), txFps(0), txCamPos(0), fStFade(0.f)
 	,mShowDialog(1), mShutDown(false), bWindowResized(true), bFirstRenderFrame(true)
 	,alt(0), ctrl(0), shift(0)
 	,mbLeft(0), mbRight(0), mbMiddle(0)
 	,ndSky(0)
 
-	,mDebugOverlay(0), ovPos(0), ovDbg(0), ovInfo(0)
+	,ovDebug(0), ovDbg(0)
 	,ovBrushPrv(0),ovBrushMtr(0), ovTerPrv(0),ovTerMtr(0)
 
 	,mbWireFrame(0), mx(0),my(0),mz(0),  mGui(0), mPlatform(0)
@@ -531,4 +528,11 @@ void BaseApp::baseInitGui()
 	txFps->setFontName("hud.fps");
 
 	bckFps->setVisible(false);
+
+	//  Cam Pos
+	txCamPos = mGui->createWidget<TextBox>("TextBox",
+		208,2, 600,40, Align::Default, "Pointer", "CamT");
+	txCamPos->setFontName("hud.fps");
+	txCamPos->setTextShadow(true);
+	txCamPos->setVisible(false);
 }

@@ -1,107 +1,7 @@
 
-Editor/CameraOverlay
-{
-	zorder 500
-	container BorderPanel(Editor/CameraPanel)
-	{
-		metrics_mode pixels
-		vert_align bottom
-		left  70
-		width 180
-		top	-50
-		height	25
-		//material hud/info
-
-		element TextArea(Editor/Camera)
-		{
-			metrics_mode pixels
-			left 8
-			top 2
-			width 170
-			height 22
-			font_name Console
-			char_height 21
-			caption Camera
-			colour_top	0.4 0.7 0.7
-			colour_bottom 0.9 1.0 1.0
-		}
-				
-	}
-
-	container BorderPanel(Editor/CameraInfoPanel)
-	{
-		metrics_mode pixels
-		vert_align bottom
-		left  250
-		width 750
-		top	-50
-		height	50
-		//material hud/info
-
-		element TextArea(Editor/CameraInfo)
-		{
-			metrics_mode pixels
-			left 15
-			top 2
-			width 620
-			height 24
-			font_name Console
-			char_height 23
-			caption Camera Info
-			colour_top	0.4 0.7 0.5
-			colour_bottom 0.9 1.0 0.95
-		}
-				
-	}
-
-}
-
-Editor/FpsOverlay
-{
-	zorder 500
-	container BorderPanel(Editor/StatPanel)
-	{
-		metrics_mode pixels
-		vert_align top
-		left  0
-		top   0
-		width 210
-		height 25
-		//material Core/StatsBlockCenter
-		//material Menu/FocusOvr
-
-		element TextArea(Editor/Pos)
-		{
-			metrics_mode pixels
-			left 208
-			top 4
-			width 90
-			height 22
-			font_name Console
-			char_height 20
-			//caption Pos
-			//colour_top	0.31 0.52 0.63
-			//colour_bottom 0.87 0.93 0.98
-			colour_top	0.01 0.02 0.03
-			colour_bottom 0.07 0.13 0.18
-		}
-	}
-}
-
-
 Editor/DebugOverlay
 {
 	zorder 500
-	container BorderPanel(Editor/DebugPanelB)
-	{
-		metrics_mode pixels
-		vert_align bottom
-		left  300
-		width 500
-		top	-50
-		height 50
-		//material hud/Times
-	}
 	container BorderPanel(Editor/DebugPanel)
 	{
 		metrics_mode pixels
@@ -110,7 +10,7 @@ Editor/DebugOverlay
 		width 500
 		top	-50
 		height 50
-		//material hud/info
+		material hud/Times
 
 		element TextArea(Editor/DebugText)
 		{
@@ -124,34 +24,6 @@ Editor/DebugOverlay
 			//caption Info
 			colour_top	0.8 0.9 1.0
 			colour_bottom 1.0 1.0 1.0
-		}
-		
-		element TextArea(Editor/DebugText2)
-		{
-			metrics_mode pixels
-			left 10
-			top 30
-			width 600
-			height 23
-			// 20 18
-			font_name Console
-			char_height 22
-			//caption Info
-			colour_top	0.7 0.7 0.8
-			colour_bottom 0.8 0.9 1.0
-		}
-		
-		element TextArea(Editor/Info)
-		{
-			metrics_mode pixels
-			left 20
-			top 5
-			width 600
-			height 25
-			font_name Console
-			char_height 24
-			colour_top	0.7 0.7 0.8
-			colour_bottom 0.8 0.9 1.0
 		}
 	}
 }

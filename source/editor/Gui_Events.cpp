@@ -314,10 +314,10 @@ void CGui::SldUpd_Game()
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 void CGui::chkCamPos(Ck*){
-	if (pSet->camPos)  app->ovPos->show();  else  app->ovPos->hide();  }
+	app->txCamPos->setVisible(pSet->camPos);  }
 
 void CGui::chkInputBar(Ck*){	
-	if (pSet->inputBar)  app->mDebugOverlay->show();  else  app->mDebugOverlay->hide();  }
+	if (pSet->inputBar)  app->ovDebug->show();  else  app->ovDebug->hide();  }
 
 void CGui::chkFps(Ck*){
 	app->bckFps->setVisible(pSet->show_fps);  }

@@ -122,8 +122,8 @@ void App::createScene()  // once, init
 	#endif
 	
 
-	if (pSet->inputBar)  mDebugOverlay->show();
-	if (!pSet->camPos)  ovPos->hide();
+	if (pSet->inputBar)  ovDebug->show();
+	gui->chkCamPos(0);
 
 	//  load
 	if (pSet->autostart)
