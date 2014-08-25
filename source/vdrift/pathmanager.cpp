@@ -119,7 +119,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	{
 		char const* xdg_data_home = getenv("XDG_DATA_HOME");
 		user_data = (xdg_data_home ? xdg_data_home / stuntrally
-					: fs::path(home_dir) / ".local/share/games" / stuntrally).string();
+					: fs::path(home_dir) / ".local/share" / stuntrally).string();
 	}
 	#endif
 
