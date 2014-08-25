@@ -313,12 +313,13 @@ void CGuiCom::boundedMove(Widget* moving, const IntPoint& point)
 //----------------------------------------------------------------------------------------------------------------
 void CGuiCom::GuiInitLang()
 {
-	languages["en"] = TR("#{LANG_EN}");  languages["de"] = TR("#{LANG_DE}");
-	languages["fr"] = TR("#{LANG_FR}");  languages["pl"] = TR("#{LANG_PL}");
-	languages["ru"] = TR("#{LANG_RU}");  languages["fi"] = TR("#{LANG_FI}");
-	languages["pt"] = TR("#{LANG_PT}");  languages["ro"] = TR("#{LANG_RO}");
-	languages["it"] = TR("#{LANG_IT}");  languages["sk"] = TR("#{LANG_SK}");
-
+	if (languages.empty())
+	{	languages["en"] = TR("#{LANG_EN}");  languages["de"] = TR("#{LANG_DE}");
+		languages["fr"] = TR("#{LANG_FR}");  languages["pl"] = TR("#{LANG_PL}");
+		languages["ru"] = TR("#{LANG_RU}");  languages["fi"] = TR("#{LANG_FI}");
+		languages["pt"] = TR("#{LANG_PT}");  languages["ro"] = TR("#{LANG_RO}");
+		languages["it"] = TR("#{LANG_IT}");  languages["sk"] = TR("#{LANG_SK}");
+	}
 	ComboBoxPtr combo = fCmb("Lang");
 	if (!combo)  return;
 	combo->eventComboChangePosition += newDelegate(this, &CGuiCom::comboLanguage);

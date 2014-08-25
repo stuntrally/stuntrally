@@ -1335,6 +1335,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\data\materials2\rnd.material"
+					>
+				</File>
+				<File
 					RelativePath="..\data\materials\shadowcaster.mat"
 					>
 				</File>
