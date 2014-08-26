@@ -311,7 +311,7 @@ void CAR::UpdateSounds(float dt)
 	}
 
 
-	// tire squeal
+	///  tire squeal
 	for (int i = 0; i < 4; i++)
 	{
 		// make sure we don't get overlap
@@ -332,6 +332,7 @@ void CAR::UpdateSounds(float dt)
 		case TRACKSURFACE::NONE:
 						default:		snd = tiresqueal;	maxgain = 0.0;	break;
 		}	/// todo: more,sounds.. sand,snow,grass-new,mud..
+		// TODO: sum slip, spin, stop tire sounds
 
 		float pitch = std::min(1.f, std::max(0.f, (whVel[i]-5.0f)*0.1f ));
 		pitch = 1.0 - pitch;
