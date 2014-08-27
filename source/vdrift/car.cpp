@@ -298,7 +298,6 @@ float CAR::GetTireSquealAmount(WHEEL_POSITION i, float* slide, float* s1, float*
 		
 	float d = dynamics.GetWheelContact(WHEEL_POSITION(i)).GetDepth() - 2*GetTireRadius(WHEEL_POSITION(i));
 	bool inAir = d > 0.f;  //d > 0.9f || d < 0.f;  //*!
-	//if (onGround)  *onGround = !inAir;
 	if (inAir)  // not on ground 
 		return 0;
 
@@ -307,22 +306,27 @@ float CAR::GetTireSquealAmount(WHEEL_POSITION i, float* slide, float* s1, float*
 	QUATERNION<float> wheelspace;
 	wheelspace = dynamics.GetUprightOrientation(WHEEL_POSITION(i));
 	(-wheelspace).RotateVector(groundvel);
+
 	float wheelspeed = dynamics.GetWheel(WHEEL_POSITION(i)).GetAngularVelocity()*dynamics.GetWheel(WHEEL_POSITION(i)).GetRadius();
 	groundvel[0] -= wheelspeed;
 	groundvel[1] *= 2.0;
 	groundvel[2] = 0;
+
 	float squeal = (groundvel.Magnitude() - 3.0) * 0.2;
 	if (slide)  *slide = squeal + 0.6;
+	/// TODO: spin, slide, stop ...
 
 	Dbl slideratio = dynamics.GetWheel(i).slips.slideratio;
 	Dbl slipratio = dynamics.GetWheel(i).slips.slipratio;
 	if (s1)  *s1 = slideratio;
 	if (s2)  *s2 = slipratio;
+
 	double maxratio = std::max(std::abs(slideratio), std::abs(slipratio));
 	float squealfactor = std::max(0.0, maxratio - 1.0);
 	squeal *= squealfactor;
+
 	if (squeal < 0)  squeal = 0;
-	if (squeal > 1)  squeal = 1;
+	if (squeal > 1)  squeal = 1;  // 0..1
 	return squeal;
 }
 
