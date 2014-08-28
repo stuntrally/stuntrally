@@ -191,7 +191,7 @@ void App::CreateGraphs()
 
 
 	case Gh_TireEdit:  /// tires edit pacejka
-		for (int i=0; i < TireNG*2; ++i)
+		for (int i=0; i < TireNG * 4; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			int c = i%TireNG;  bool b = i >= TireNG;
@@ -214,7 +214,7 @@ void App::CreateGraphs()
 		break;
 
 	case Gh_Tires4Edit:  /// all tires pacejka vis,edit
-		for (int i=0; i < TireNG*2; ++i)
+		for (int i=0; i < TireNG * 2; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			int c = 2;  bool b = i >= TireNG;
@@ -599,7 +599,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 	{	static int ii = 0;  ++ii;  // skip upd cntr
 		const int im = pApp->iUpdTireGr > 0 ? 2 : 8;  // faster when editing val
-		if (ii >= im && gsi >= TireNG*2)
+		if (ii >= im && gsi >= TireNG * 2)
 		{	ii = 0;  pApp->iUpdTireGr = 0;
 
 			const CARTIRE* tire = dynamics.GetTire(FRONT_LEFT);
@@ -684,7 +684,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 	{	static int ii = 0;  ++ii;  // skip upd cntr
 		const int im = 1;  //pApp->iUpdTireGr > 0 ? 2 : 8;  // faster when editing val
-		if (ii >= im && gsi >= TireNG*2)
+		if (ii >= im && gsi >= TireNG * 2)
 		{	ii = 0;  pApp->iUpdTireGr = 0;
 
 			Dbl* ft = new Dbl[TireLenG];
