@@ -542,8 +542,8 @@ bool BaseApp::keyReleased(const SDL_KeyboardEvent& arg)
 
 	if (bAssignKey) return true;
 
-	if (mGui && (isFocGui || isTweak()))  {
-
+	if (mGui && (isFocGui || isTweak()))
+	{
 		OIS::KeyCode kc = mInputWrapper->sdl2OISKeyCode(arg.keysym.sym);
 
 		MyGUI::InputManager::getInstance().injectKeyRelease(MyGUI::KeyCode::Enum(kc));
@@ -572,11 +572,9 @@ bool BaseApp::mouseMoved(const SFO::MouseMotionEvent &arg)
 	///  Follow Camera Controls
 	int i = 0;  //Log("cam: "+toStr(iCurCam));
 	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it,++i)
-	if (i == iCurCam)
-	{
-		if ((*it)->fCam)
+		if (i == iCurCam && (*it)->fCam)
 			(*it)->fCam->Move( mbLeft, mbRight, mbMiddle, shift, arg.xrel, arg.yrel, arg.zrel );
-	}
+
 	return true;
 }
 

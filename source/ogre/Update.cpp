@@ -68,12 +68,22 @@ void App::UpdThr()
 	}
 }
 
-		
+	
+bool App::isTweakTab()
+{
+	int tt = !gui->tabTweak ? 0 : gui->tabTweak->getIndexSelected();
+	return isTweak() && tt != 1 && tt != 2;
+}
+
+
+///  Newtork update  . . . .
 void App::DoNetworking()
 {
 	bool doNetworking = (mClient && mClient->getState() == P2PGameClient::GAME);
-	// Note that there is no pause when in networked game
-	bool gui = isFocGui || isTweak();
+	
+	//  no pause in networked game
+	int tt = !gui->tabTweak ? 0 : gui->tabTweak->getIndexSelected();
+	bool gui = isFocGui || isTweakTab();
 	pGame->pause = bRplPlay ? (bRplPause || gui) : (gui && !doNetworking);
 
 	//  handle networking stuff

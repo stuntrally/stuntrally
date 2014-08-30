@@ -72,6 +72,8 @@ public:
 	virtual bool frameStart(Ogre::Real time);  void DoNetworking();
 	virtual bool frameEnd(Ogre::Real time);
 	float fLastFrameDT;
+
+	bool isTweakTab();
 		
 	BtOgre::DebugDrawer *dbgdraw;  /// blt dbg
 
