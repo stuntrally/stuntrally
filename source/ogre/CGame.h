@@ -162,6 +162,7 @@ public:
 	void UpdateGraphs(), GraphsNewVals();
 
 	///* tire edit */
+	const static int TireNG;
 	int iEdTire, iTireLoad, iCurLat,iCurLong,iCurAlign, iUpdTireGr;
 
 	///  car perf test

@@ -368,8 +368,10 @@ void CGui::chkReverse(Ck*){  gcom->ReadTrkStats();  }
 //  graphs
 void CGui::chkGraphs(Ck*)
 {
+	bool te = pSet->graphs_type == Gh_TireEdit;
 	for (int i=0; i < app->graphs.size(); ++i)
-		app->graphs[i]->SetVisible(pSet->show_graphs);
+		app->graphs[i]->SetVisible(!te ? pSet->show_graphs :  // reference vis
+			pSet->show_graphs && (i < 2*App::TireNG || i >= 4*App::TireNG || pSet->te_reference));
 }
 void CGui::comboGraphs(CMB)
 {
@@ -377,7 +379,7 @@ void CGui::comboGraphs(CMB)
 		valGraphsType->setCaption(toStr(val));
 	if (bGI /*&& pSet->graphs_type != v*/)  {
 		pSet->graphs_type = (eGraphType)val;
-		app->DestroyGraphs();  app->CreateGraphs(); }
+		app->DestroyGraphs();  app->CreateGraphs();  }
 }
 
 //  Startup

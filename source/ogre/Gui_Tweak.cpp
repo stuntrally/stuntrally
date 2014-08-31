@@ -152,12 +152,16 @@ void CGui::editTweakTireSet(Ed ed)
 		txtTweakTire->setCaption("");
 }														
 
-void CGui::listTwkTiresUser(Li, size_t)
+void CGui::listTwkTiresUser(Li li, size_t id)
 {
+	if (id==ITEM_NONE || li->getItemCount() == 0)  return;
+	pGame->PickTireRef(li->getItemNameAt(id).substr(7));
 	liTwkTiresOrig->setIndexSelected(ITEM_NONE);
 }
-void CGui::listTwkTiresOrig(Li, size_t)
+void CGui::listTwkTiresOrig(Li li, size_t id)
 {
+	if (id==ITEM_NONE || li->getItemCount() == 0)  return;
+	pGame->PickTireRef(li->getItemNameAt(id).substr(7));
 	liTwkTiresUser->setIndexSelected(ITEM_NONE);
 }
 
@@ -165,10 +169,12 @@ void CGui::btnTweakTireLoad(WP)
 {
 	// load as current ? rename ?
 }
-void CGui::btnTweakTireLoadRef(WP)
+
+void CGui::chkTEupd(Ck*)
 {
-	// todo: reference tire graphs ..
+	chkGraphs(0);
 }
+
 
 void CGui::FillTweakLists()
 {

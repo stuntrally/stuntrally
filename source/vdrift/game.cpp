@@ -36,7 +36,8 @@ GAME::GAME(ostream & info_out, ostream & err_out, SETTINGS* pSettings) :
 	particle_timer(0), race_laps(0),
 	track(info_out, err_out), /*tracknode(NULL),*/
 	framerate(1.0 / pSettings->game_fq),
-	app(NULL)
+	app(NULL),
+	tire_ref_id(0)
 {
 	track.pGame = this;
 	carcontrols_local.first = NULL;
@@ -235,6 +236,18 @@ bool GAME::LoadTires()
 	return true;
 }
 CARTIRE* TRACKSURFACE::pTireDefault = 0;  //-
+
+//  for graphs only
+void GAME::PickTireRef(std::string name)
+{
+	tire_ref = name;
+	int id = tires_map[name]-1;
+	if (id == -1)
+	{	id = 0;  info_output << "Reference tire not found: " << name << endl;  }
+	tire_ref_id = id;
+	/*if (!cars.empty())
+		cars.begin()->GraphsNewVals(0.1);*/
+}
 
 
 ///  Suspension factors

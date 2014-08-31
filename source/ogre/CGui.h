@@ -145,7 +145,7 @@ public:
 	Ed edTweakTireSet;  void editTweakTireSet(Ed);
 	Li liTwkTiresUser, liTwkTiresOrig;
 	void listTwkTiresUser(Li, size_t), listTwkTiresOrig(Li, size_t);
-	void btnTweakTireLoad(WP), btnTweakTireLoadRef(WP);
+	void btnTweakTireLoad(WP);
 	void FillTweakLists();
 	
 	///  surface
@@ -221,6 +221,7 @@ public:
 	//  graphs
 	SV svTC_r, svTC_xr;
 	SV svTE_yf, svTE_xfx, svTE_xfy, svTE_xpow;
+	Ck ckTE_Common, ckTE_Reference;  void chkTEupd(Ck*);
 	
 	//  Hud dbg,other
 	Ck ckFps;  CK(Wireframe);

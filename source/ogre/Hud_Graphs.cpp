@@ -42,8 +42,8 @@ inline double negPow(double x, double y)
 
 ///  Create Graphs  .-_/\._-
 //-----------------------------------------------------------------------------------
-const int TireNG = 4,    // tire graphs count (for variable load)
-        TireLenG = 256;  // tire graphs data length
+const int App::TireNG = 4,   // tire graphs count (for variable load)
+			TireLenG = 256;  // tire graphs data length
 const static String TireVar[2] = {"variable Load", "variable camber"};
 
 void App::CreateGraphs()
@@ -191,23 +191,26 @@ void App::CreateGraphs()
 
 
 	case Gh_TireEdit:  /// tires edit pacejka
-		for (int i=0; i < TireNG * 4; ++i)
+		for (int j=0; j < 4; ++j)
+		for (int i=0; i < TireNG; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGui);
-			int c = i%TireNG;  bool b = i >= TireNG;
-			gv->Create(TireLenG, String("graph")+(b?"B":"A")+toStr(c), i>0 ? 0.f : 0.4f, true);
+			int c = i;  bool b = j==1 || j==3, r = j >= 2;
+			gv->Create(TireLenG,
+				String("graph") + (b?"B":"A") + toStr(c*3/2) /*+ (r?"r":"")*/,
+				i==0 && !b ? 0.4f : 0.f, true);
 			if (c == 0)
-			{	gv->CreateGrid(10,10, 0.2f, 0.4f);
+			{	gv->CreateGrid(10,10, 0.2f, r ? 0.4f : 0.5f /*al*/);
 				if (b)	gv->CreateTitle("", 5+8+c +2, 0.f, -2, 24);
 				else	gv->CreateTitle("", 5+c   +2, 0.7f, 3, 24);
 			}else if (i == 1)
-				gv->CreateTitle("Tire forces", 5, 0.3f, -2, 24);
+				gv->CreateTitle(r ? "Reference" : "Tire forces", 5, 0.3f, -2, 24);
 			else if (i == 2)
 				gv->CreateTitle("", 5, 0.5f, -2, 24);
 			
-			gv->SetSize(0.f, 0.41f, 0.35f, 0.50f);
+			gv->SetSize(r ? 0.355f : 0.f, 0.41f, 0.35f, 0.50f);
 
-			gv->SetVisible(pSet->show_graphs);
+			gv->SetVisible(pSet->show_graphs && (j < 2 || pSet->te_reference));
 			graphs.push_back(gv);
 		}
 		tireEdit = true;
@@ -391,11 +394,12 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	size_t gsi = pApp->graphs.size();
 	bool tireEdit = false;
 
-	//  RANGE
+	//  TE range
 	//const Dbl fMAX = 9000.0, max_y = 80.0, max_x = 1.0;
 	//const Dbl fMAX = 7000.0, max_y = 180.0, max_x = 12.0, pow_x = 1.0;
 	Dbl fMAX = pSet->te_yf, max_y = pSet->te_xfy, max_x = pSet->te_xfx, pow_x = pSet->te_xf_pow;
 	if (pApp->scn->sc->asphalt)  max_y *= 0.5;
+	const int TireNG = App::TireNG;
 
 	switch (pApp->pSet->graphs_type)
 	{
@@ -599,82 +603,92 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 	{	static int ii = 0;  ++ii;  // skip upd cntr
 		const int im = pApp->iUpdTireGr > 0 ? 2 : 8;  // faster when editing val
-		if (ii >= im && gsi >= TireNG * 2)
+		if (ii >= im && gsi >= TireNG * 4)
 		{	ii = 0;  pApp->iUpdTireGr = 0;
 
-			const CARTIRE* tire = dynamics.GetTire(FRONT_LEFT);
 			Dbl* ft = new Dbl[TireLenG];
 
 			Dbl fmin, fmax, frng, maxF;
 			const bool common = 1;  // common range for all
-			const bool cust = 1;
+			const bool cust = pSet->te_common;  // each graph own max value, scale all to 1
 
-			///  Fy lateral --
-			for (int i=0; i < TireNG; ++i)
+			int i,j,g,x;
+			const int jj = pSet->te_reference ? 2 : 1;
+			for (j=0; j < jj; ++j)
 			{
-				bool comi = common || i == 0;
-				if (comi)
-				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
+				const CARTIRE* tire = j == 0 ? dynamics.GetTire(FRONT_LEFT) :  // norm tire
+					&pGame->tires[pGame->tire_ref_id];  // reference
 				
-				for (int x=0; x < TireLenG; ++x)
-				{	Dbl x0 = Dbl(x) / TireLenG;	 //Dbl yy = max_y * 2.0 * (x-LEN*0.5) / LEN;
-					Dbl yy = max_y * pow(x0, pow_x);
-					Dbl n = (TireNG-1-i+1) * 0.65;
-					Dbl fy = !pApp->iTireLoad ? tire->Pacejka_Fy(yy, n, 0, 1.0, maxF)  // normF
-											: tire->Pacejka_Fy(yy, 3, n-2, 1.0, maxF); // camber
-					ft[x] = fy;
+				///  Fy lateral --
+				g = j*TireNG*2;
+				for (i=0; i < TireNG; ++i)
+				{
+					GraphView* gv = pApp->graphs[g+i];
+					bool comi = common || i == 0;
+					if (comi)
+					{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
+					
+					for (x=0; x < TireLenG; ++x)
+					{	Dbl x0 = Dbl(x) / TireLenG;	 //Dbl yy = max_y * 2.0 * (x-LEN*0.5) / LEN;
+						Dbl yy = max_y * pow(x0, pow_x);
+						Dbl n = (TireNG-1-i+1) * 0.65;
+						Dbl fy = !pApp->iTireLoad ? tire->Pacejka_Fy(yy, n, 0, 1.0, maxF)  // normF
+												: tire->Pacejka_Fy(yy, 3, n-2, 1.0, maxF); // camber
+						ft[x] = fy;
 
-					if (comi)  // get min, max
-					{	if (fy < fmin)  fmin = fy;
-						if (fy > fmax)  fmax = fy;  }
+						if (comi)  // get min, max
+						{	if (fy < fmin)  fmin = fy;
+							if (fy > fmax)  fmax = fy;  }
+					}
+					if (comi)  // get range
+						frng = 1.0 / (fmax - fmin);
+					if (cust)
+					{	fmax = fMAX;  fmin = 0.0;  frng = 1.0 / (fmax - fmin);  }
+					
+					for (x = 0; x < TireLenG; ++x)
+						gv->AddVal( (ft[x] - fmin) * frng );
+					gv->SetUpdate();
+
+					if (i==0)
+						gv->UpdTitle("Fy Lateral--\n"
+							"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_y,0,1)+"\n");
 				}
-				if (comi)  // get range
-					frng = 1.0 / (fmax - fmin);
-				if (cust)
-				{	fmax = fMAX;  fmin = 0.0;  frng = 1.0 / (fmax - fmin);  }
-				
-				for (int x = 0; x < TireLenG; ++x)
-					pApp->graphs[i]->AddVal( (ft[x] - fmin) * frng );
-				pApp->graphs[i]->SetUpdate();
 
-				if (i==0)
-					pApp->graphs[i]->UpdTitle("Fy Lateral--\n"
-						"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_y,0,1)+"\n");
-			}
+				///  Fx long |
+				g = j*TireNG*2 + TireNG;
+				for (i=0; i < TireNG; ++i)
+				{
+					GraphView* gv = pApp->graphs[g+i];
+					bool comi = common || i == 0;
+					if (comi)
+					{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
+					
+					for (x=0; x < TireLenG; ++x)
+					{	Dbl x0 = Dbl(x) / TireLenG;
+						Dbl xx = max_x * pow(x0, pow_x);
+						Dbl n = (TireNG-1-i+1) * 0.65;
+						Dbl fx = pApp->iEdTire != 2 ? tire->Pacejka_Fx(xx, n, 1.0, maxF)  // normF
+								 : (!pApp->iTireLoad ? tire->Pacejka_Mz(xx, 0, n, 0.0, 1.0, maxF)    // align- norm
+													 : tire->Pacejka_Mz(0, xx, n, 0.0, 1.0, maxF));  // align- camber
+						ft[x] = fx;
 
-			///  Fx long |
-			for (int i=0; i < TireNG; ++i)
-			{
-				bool comi = common || i == 0;
-				if (comi)
-				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
-				
-				for (int x=0; x < TireLenG; ++x)
-				{	Dbl x0 = Dbl(x) / TireLenG;
-					Dbl xx = max_x * pow(x0, pow_x);
-					Dbl n = (TireNG-1-i+1) * 0.65;
-					Dbl fx = pApp->iEdTire != 2 ? tire->Pacejka_Fx(xx, n, 1.0, maxF)  // normF
-							 : (!pApp->iTireLoad ? tire->Pacejka_Mz(xx, 0, n, 0.0, 1.0, maxF)    // align- norm
-												 : tire->Pacejka_Mz(0, xx, n, 0.0, 1.0, maxF));  // align- camber
-					ft[x] = fx;
+						if (comi)  // get min, max
+						{	if (fx < fmin)  fmin = fx;
+							if (fx > fmax)  fmax = fx;  }
+					}
+					if (comi)  // get range
+						frng = 1.0 / (fmax - fmin);
+					if (cust)
+					{	fmax = fMAX;  fmin = 0.0;  frng = 1.0 / (fmax - fmin);  }
+					
+					for (x = 0; x < TireLenG; ++x)
+						gv->AddVal( (ft[x] - fmin) * frng );
+					gv->SetUpdate();
 
-					if (comi)  // get min, max
-					{	if (fx < fmin)  fmin = fx;
-						if (fx > fmax)  fmax = fx;  }
-				}
-				if (comi)  // get range
-					frng = 1.0 / (fmax - fmin);
-				if (cust)
-				{	fmax = fMAX;  fmin = 0.0;  frng = 1.0 / (fmax - fmin);  }
-				
-				for (int x = 0; x < TireLenG; ++x)
-					pApp->graphs[i+TireNG]->AddVal( (ft[x] - fmin) * frng );
-				pApp->graphs[i+TireNG]->SetUpdate();
-
-				if (i==0)
-					pApp->graphs[i+TireNG]->UpdTitle("Fx Longit |\n"
-						"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_x,0,1)+"\n");
-			}
+					if (i==0)
+						gv->UpdTitle("Fx Longit |\n"
+							"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_x,1,2)+"\n");
+			}	}
 			delete[]ft;
 		}
 	}	tireEdit = true;
@@ -701,6 +715,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				const CARWHEEL& wh = dynamics.GetWheel(wp);
 				const CARWHEEL::SlideSlip& t = wh.slips;
 
+				GraphView* gv = pApp->graphs[i];
 				bool comi = common || i == 0;
 				if (comi)
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
@@ -726,11 +741,11 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				{	fmax = fMAX;  fmin = 0.0;  frng = 1.0 / (fmax - fmin);  }
 				
 				for (int x = 0; x < TireLenG; ++x)
-					pApp->graphs[i]->AddVal( (ft[x] - fmin) * frng );
-				pApp->graphs[i]->SetUpdate();
+					gv->AddVal( (ft[x] - fmin) * frng );
+				gv->SetUpdate();
 
 				if (i==0)
-					pApp->graphs[i]->UpdTitle("Fy Lateral --   "
+					gv->UpdTitle("Fy Lateral --   "
 						/*"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_y,0,1)+"\n"/**/);
 			}
 
@@ -742,6 +757,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				const CARWHEEL& wh = dynamics.GetWheel(wp);
 				const CARWHEEL::SlideSlip& t = wh.slips;
 
+				GraphView* gv = pApp->graphs[i+TireNG];
 				bool comi = common || i == 0;
 				if (comi)
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
@@ -767,11 +783,11 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				{	fmax = fMAX;  fmin = 0.0;  frng = 1.0 / (fmax - fmin);  }
 				
 				for (int x = 0; x < TireLenG; ++x)
-					pApp->graphs[i+TireNG]->AddVal( (ft[x] - fmin) * frng );
-				pApp->graphs[i+TireNG]->SetUpdate();
+					gv->AddVal( (ft[x] - fmin) * frng );
+				gv->SetUpdate();
 
 				if (i==0)
-					pApp->graphs[i+TireNG]->UpdTitle("Fx Longit |   "
+					gv->UpdTitle("Fx Longit |   "
 						/*"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_x,0,1)+"\n"/**/);
 			}
 			delete[]ft;

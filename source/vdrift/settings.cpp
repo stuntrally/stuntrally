@@ -67,6 +67,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graphs.tc_r", tc_r);			Param(c,w, "graphs.tc_xr", tc_xr);
 	Param(c,w, "graphs.te_yf", te_yf);			Param(c,w, "graphs.te_xf_pow", te_xf_pow);
 	Param(c,w, "graphs.te_xfx", te_xfx);		Param(c,w, "graphs.te_xfy", te_xfy);
+	Param(c,w, "graphs.te_reference", te_reference);	Param(c,w, "graphs.te_common", te_common);
 
 	
 	//  hud
@@ -80,7 +81,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_show.check_arrow", check_arrow);	Param(c,w, "hud_show.check_beam", check_beam);
 	Param(c,w, "hud_show.opponents", show_opponents);	Param(c,w, "hud_show.opplist_sort", opplist_sort);
 	Param(c,w, "hud_show.graphs", show_graphs);			Param(c,w, "hud_show.graphs_type", (int&)graphs_type);
-
+	
 	Param(c,w, "gui.tracks_view", tracks_view);		Param(c,w, "gui.cars_view", cars_view);
 	Param(c,w, "gui.tracks_sort", tracks_sort);		Param(c,w, "gui.tracks_sortup", tracks_sortup);
 	Param(c,w, "gui.cars_sort", cars_sort);			Param(c,w, "gui.car_ed_tab", car_ed_tab);
@@ -246,8 +247,9 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,game_fq(82.f), blt_fq(160.f), blt_iter(24), dyn_iter(30)
 	,multi_thr(0), thread_sleep(5), perf_speed(100000)
 	//  graphs
-	,tc_r(6000), tc_xr(1.f)
-	,te_yf(7000), te_xf_pow(1.0), te_xfy(160), te_xfx(12)
+	,tc_r(6000.f), tc_xr(1.f)
+	,te_yf(8000.f), te_xf_pow(1.f), te_xfy(160.f), te_xfx(12.f)
+	,te_reference(0), te_common(1)
 
 	//  sound
 	,vol_master(1.f), vol_engine(0.6f), vol_tires(1.f), vol_env(1.f), vol_susp(1.f)

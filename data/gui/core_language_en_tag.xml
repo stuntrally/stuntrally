@@ -771,17 +771,22 @@
 	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
 	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
 
-	<!--  Game Input  Tweak extras  -->
+	<!--  Game Input  Tweak edit  -->
+	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
+	<Tag name="TweakEdit2">Alt-Shift-Z - save file and reload game</Tag>
+	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
+
+	<!--  Game Input  Tweak tire edit  -->
 	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
 	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
 	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
 	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
 	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
-	
-	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
-	<Tag name="TweakEdit2">Alt-Shift-Z - save file and reload game</Tag>
-	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
 
+	<!--  Game Input  Tweak tire graphs  -->
+	<Tag name="TireEdCommonY">Common y range</Tag>
+	<Tag name="TireEdReference">Show reference graph</Tag>
+	
 
 
 	<!--  Sound  main  -->

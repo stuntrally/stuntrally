@@ -146,6 +146,7 @@ public:
 	//  graphs vis
 	float tc_r, tc_xr;  // tire circles max
 	float te_yf, te_xfx, te_xfy, te_xf_pow;  // tire edit max
+	bool te_reference, te_common;
 
 	
 	//  effects

@@ -575,14 +575,17 @@ void CGui::InitGui()
 	edUserDir->setCaption(PATHMANAGER::UserConfigDir());
 
 
-	///  graphs  ----
+	///  tire graphs  ----
 	sv= &svTC_r;	sv->Init("TC_r",	&pSet->tc_r,  0.5f, 2.f, 1.5f, 1,4);	sv->DefaultF(1.f);
 	sv= &svTC_xr;	sv->Init("TC_xr",	&pSet->tc_xr, 0.f, 5.f,  1.5f, 1,4);	sv->DefaultF(1.f);
 
 	sv= &svTE_yf;	sv->Init("TE_yf",	&pSet->te_yf, 5000.f, 10000.f, 1.f, 0,4);	sv->DefaultF(7000.f);
 	sv= &svTE_xfx;	sv->Init("TE_xfx",	&pSet->te_xfx, 4.f, 42.f,  2.f, 1,4);	sv->DefaultF(12.f);
 	sv= &svTE_xfy;	sv->Init("TE_xfy",	&pSet->te_xfy, 90.f, 560.f, 2.f, 0,3);	sv->DefaultF(160.f);
-	sv= &svTE_xpow;	sv->Init("TE_xpow",	&pSet->te_xf_pow, 1.f, 2.f, 1.f, 1,3);	sv->DefaultF(1.f);
+	sv= &svTE_xpow;	sv->Init("TE_xpow",	&pSet->te_xf_pow, 0.5f, 2.f, 1.f, 1,3);	sv->DefaultF(1.f);
+
+	ck= &ckTE_Common;		ck->Init("TE_Common",		&pSet->te_common);
+	ck= &ckTE_Reference;	ck->Init("TE_Reference",	&pSet->te_reference);  Cev(TEupd);
 
 
 	///  tweak car
@@ -608,8 +611,8 @@ void CGui::InitGui()
 
 	liTwkTiresUser = fLi("TweakTiresUser");  Lev(liTwkTiresUser, TwkTiresUser);
 	liTwkTiresOrig = fLi("TweakTiresOrig");  Lev(liTwkTiresOrig, TwkTiresOrig);
-	Btn("TweakTireLoad",    btnTweakTireLoad);
-	Btn("TweakTireLoadRef", btnTweakTireLoadRef);
+	Btn("TweakTireLoad",  btnTweakTireLoad);
+
 
 	///  tweak surfaces  ----
 	liTwkSurfaces = fLi("TweakSurfaces");  Lev(liTwkSurfaces, TwkSurfaces);

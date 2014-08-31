@@ -116,6 +116,9 @@ public:
 	std::map <std::string, int> tires_map;  // name to tires id
 	bool LoadTire(CARTIRE& ct, std::string path, std::string& file);
 	bool LoadTires();
+	//  ref graphs, tire edit
+	std::string tire_ref;  int tire_ref_id;
+	void PickTireRef(std::string name);
 
 	std::vector <TRACKSURFACE> surfaces;  /// New  all surfaces
 	std::map <std::string, int> surf_map;  // name to surface id

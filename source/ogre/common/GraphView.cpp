@@ -249,7 +249,7 @@ void GraphView::Update()
 	float fx = 0.f, fAdd = 1.f / size;  // screen x
 
 	moLine->beginUpdate(0);
-	moLine->position(fx, vals[i], 0.f);
+	moLine->position(fx, vals[i], 0.f);  // line start
 	for (size_t n=0; n < size; ++n)
 	{
 		moLine->position(fx, vals[i], 0.f);
@@ -260,4 +260,3 @@ void GraphView::Update()
 	}
 	moLine->end();
 }
-
