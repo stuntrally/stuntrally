@@ -549,7 +549,7 @@
 	<Tag name="RplDelete">Удалить</Tag>
 	<Tag name="TipAutoRear">Не отмечайте для ручного переключения задней передачи.</Tag>
 	<Tag name="TipToggleModel">Включить или отключить модель.</Tag>
-	<Tag name="Hint-12text">Посмотрите на другие траспортные средства, имеются также парящие косм. корабли и треки на других планетах.</Tag>
+	<Tag name="TireEdReference">Show reference graph</Tag>
 	<Tag name="TipTrailClr">Цвет следов от шины. R G B A значение от 0 до 1 (напр. 0.4 0.4 0.2 0.6)</Tag>
 	<Tag name="MinimapTerrain">Ландшафт</Tag>
 	<Tag name="MinimapRotate">Вращать</Tag>
@@ -819,6 +819,7 @@
 	<Tag name="Disconnected">Разъединён</Tag>
 	<Tag name="TipModelVisDist">Дистанция видимости для 3d моделей, после этого они превращаются в 2d спрайты.</Tag>
 	<Tag name="NetAddress">Адрес</Tag>
+	<Tag name="TireEdCommonY">Common y range</Tag>
 	<Tag name="Road_sel">выб</Tag>
 	<Tag name="AutoLoad">Автозагр. трека</Tag>
 	<Tag name="Car_MaxTorque">Макс. кр. момент</Tag>
@@ -911,6 +912,7 @@
 	<Tag name="Road1SurfOnly">Только 1 дор. повер.</Tag>
 	<Tag name="AlignSmooth">Ровность</Tag>
 	<Tag name="RollingResist">Сопротив. вращ.</Tag>
+	<Tag name="Hint-12text">Посмотрите на другие траспортные средства, имеются также парящие косм. корабли и треки на других планетах.</Tag>
 	<Tag name="TipGrassDens">Как часто/редко трава будет на ландшафте.</Tag>
 	<Tag name="Find">Найти</Tag>
 	<Tag name="InputRplCtrl1">Backspace - пок./скрыть индик. (держи ctrl для мыши)</Tag>

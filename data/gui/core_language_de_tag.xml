@@ -549,7 +549,7 @@
 	<Tag name="RplDelete">Löschen</Tag>
 	<Tag name="TipAutoRear">Für manuellen Rückwärtsgang Haken rausnehmen.</Tag>
 	<Tag name="TipToggleModel">Modell aktivieren oder deaktivieren.</Tag>
-	<Tag name="Hint-12text">Versuchen Sie es auch mit anderen Fahrzeugen; wir haben auch schwebende Raumschiffe und Strecken auf anderen Planeten.</Tag>
+	<Tag name="TireEdReference">Show reference graph</Tag>
 	<Tag name="TipTrailClr">Farbe der Reifenspuren. R-, G-, B-, A-Komponenten von 0 bis 1 (z.B. 0.4 0.4 0.2 0.6).</Tag>
 	<Tag name="MinimapTerrain">Gelände</Tag>
 	<Tag name="MinimapRotate">Drehen</Tag>
@@ -819,6 +819,7 @@
 	<Tag name="Disconnected">Getrennt</Tag>
 	<Tag name="TipModelVisDist">Sichtbarkeitsdistanz für 3D-Modelle, nach der werden sie zu 2D-Betrügern.</Tag>
 	<Tag name="NetAddress">Adresse</Tag>
+	<Tag name="TireEdCommonY">Common y range</Tag>
 	<Tag name="Road_sel">sel</Tag>
 	<Tag name="AutoLoad">Strecke autom. laden</Tag>
 	<Tag name="Car_MaxTorque">Max. Drehmoment</Tag>
@@ -911,6 +912,7 @@
 	<Tag name="Road1SurfOnly">Nur 1 Straßenbelag</Tag>
 	<Tag name="AlignSmooth">Glättungsgröße</Tag>
 	<Tag name="RollingResist">Rollwiderstand</Tag>
+	<Tag name="Hint-12text">Versuchen Sie es auch mit anderen Fahrzeugen; wir haben auch schwebende Raumschiffe und Strecken auf anderen Planeten.</Tag>
 	<Tag name="TipGrassDens">Wie häufig/selten wird das Gras auf Gelände aufkommen.</Tag>
 	<Tag name="Find">Suchen</Tag>
 	<Tag name="InputRplCtrl1">Rücktaste - Steuerung zeigen/verbergen (Ctrl für Maus)</Tag>

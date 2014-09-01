@@ -549,7 +549,7 @@
 	<Tag name="RplDelete">Cancella</Tag>
 	<Tag name="TipAutoRear">Deseleziona per guidare con la retro manuale.</Tag>
 	<Tag name="TipToggleModel">Attiva/disattiva il modello.</Tag>
-	<Tag name="Hint-12text">Check out other vehicles, we also have hovering spaceships, and tracks on other planets.</Tag>
+	<Tag name="TireEdReference">Show reference graph</Tag>
 	<Tag name="TipTrailClr">Colore delle scie di gomme. Elementi R G B A da 0 a 1 (es. 0.4 0.4 0.2 0.6)</Tag>
 	<Tag name="MinimapTerrain">Terreno</Tag>
 	<Tag name="MinimapRotate">Ruota</Tag>
@@ -819,6 +819,7 @@
 	<Tag name="Disconnected">Disconnesso</Tag>
 	<Tag name="TipModelVisDist">Distanza di visibilità per i modelli in 3d, dopo l'applicazione si trasformano in impostori in 2d.</Tag>
 	<Tag name="NetAddress">Indirizzo</Tag>
+	<Tag name="TireEdCommonY">Common y range</Tag>
 	<Tag name="Road_sel">sel</Tag>
 	<Tag name="AutoLoad">Avvio automatico della pista</Tag>
 	<Tag name="Car_MaxTorque">Torque mass.</Tag>
@@ -911,6 +912,7 @@
 	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
 	<Tag name="AlignSmooth">Dim. smooth</Tag>
 	<Tag name="RollingResist">Rolling Resistance</Tag>
+	<Tag name="Hint-12text">Check out other vehicles, we also have hovering spaceships, and tracks on other planets.</Tag>
 	<Tag name="TipGrassDens">Quanto fitta/scarsa sarà l'erba presente sul terreno.</Tag>
 	<Tag name="Find">Trova</Tag>
 	<Tag name="InputRplCtrl1">Backspace - mostra/nascondi i controlli (tieni premuto ctrl per usare il mouse)</Tag>
