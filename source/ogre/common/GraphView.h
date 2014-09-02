@@ -42,6 +42,10 @@ public:
 
 	void SetVisible(bool visible);  // show/hide
 	
+	//void SetRange(bool autoMin=false, bool autoMax=false,
+	//				float fMin=0.f, float fMax=1.f);  // TODO ..
+	//void CreteValTxt();  // TODO for static range .. auto ?
+	
 	//  Update, fill
 	void AddVal(float val);  // adds value at end of graph, moves left (in buffer)
 	void Update();		// ogre update (on screen)
@@ -53,6 +57,9 @@ protected:
 	std::vector<float> vals;  // values buffer
 	int iCurX;  // cur id to insert new val
 	bool buffered, manualUpd;
+	
+	//float rmin, rmax, range;  // SetRange
+	//bool autoMin, autoMax;  float timeUpdAuto; //?
 
 	Ogre::SceneManager* mSceneMgr;  // for creating
 	Ogre::RenderWindow* mWindow;    // gui resolution-

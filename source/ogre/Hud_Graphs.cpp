@@ -607,7 +607,6 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		{	ii = 0;  pApp->iUpdTireGr = 0;
 
 			Dbl* ft = new Dbl[TireLenG];
-
 			Dbl fmin, fmax, frng, maxF;
 			const bool common = 1;  // common range for all
 			const bool cust = pSet->te_common;  // each graph own max value, scale all to 1
@@ -702,7 +701,6 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		{	ii = 0;  pApp->iUpdTireGr = 0;
 
 			Dbl* ft = new Dbl[TireLenG];
-
 			Dbl fmin, fmax, frng, maxF;
 			const bool common = 1;  // common range for all
 			const bool cust = 1;
