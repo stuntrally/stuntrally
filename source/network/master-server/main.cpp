@@ -1,4 +1,4 @@
-// Copyright Tapio Vierros 2011-2012
+// Copyright Tapio Vierros 2011-2014
 // Licensed under GPLv3 or later.
 // See License.txt for more info on licensing.
 
@@ -6,16 +6,17 @@
 #include <string>
 #include <map>
 #include <ctime>
+#include <boost/algorithm/string/replace.hpp>
 #include "../enet-wrapper.hpp"
 #include "../protocol.hpp"
 #ifdef __linux
 #include <unistd.h> // for daemon()
 #endif
 
-#define VERSIONSTRING "0.6"
+#define VERSIONSTRING "0.7"
 
 #define DEFAULT_ZOMBIE_TIMEOUT 5
-unsigned g_zombietimeout = DEFAULT_ZOMBIE_TIMEOUT;  // How many seconds without update until a game becomes zombie
+unsigned g_zombieTimeout = DEFAULT_ZOMBIE_TIMEOUT;  // How many seconds without update until a game becomes zombie
 
 // TODO: Linux syslog support for daemon
 
@@ -24,6 +25,16 @@ enum LogLevel {
 	NORMAL  = 1,
 	VERBOSE = 2
 } g_loglevel = NORMAL;
+
+struct Stats {
+	Stats() { memset(this, 0, sizeof(Stats)); }
+	time_t launchTime;
+	int port;
+	unsigned listRequests;
+	unsigned gamesCreated;
+	unsigned gamesStarted;
+	unsigned gamesWaiting;
+} g_stats;
 
 /// This prints the current time, but only if enough seconds has passed since last time
 void handleTimePrinting(int silencetime = 60) {
@@ -61,12 +72,14 @@ public:
 			// Assign ID
 			game.id = m_next_id;
 			++m_next_id;
+			g_stats.gamesCreated++;
 		}
 		// Update timestamp
 		game.timestamp = (uint32_t)std::time(NULL);
 		// Save
 		boost::mutex::scoped_lock lock(m_mutex);
 		m_games[game.id] = game;
+		g_stats.gamesWaiting = m_games.size();
 	}
 
 	/// Gets the games.
@@ -84,12 +97,13 @@ public:
 			// Loop through the games
 			while (it != m_games.end()) {
 				// Check condition
-				if ((uint32_t)std::time(NULL) > it->second.timestamp + g_zombietimeout) {
+				if ((uint32_t)std::time(NULL) > it->second.timestamp + g_zombieTimeout) {
 					out(VERBOSE) << "Zombie game: \"" << it->second.name << "\"" << std::endl;
 					m_games.erase(it++);
 					++removecount;
 				} else ++it;
 			}
+			g_stats.gamesWaiting = m_games.size();
 		}
 		if (removecount > 0)
 			out(VERBOSE) << "Removed " << removecount << " game(s) due to time out." << std::endl;
@@ -136,6 +150,7 @@ public:
 		switch (e.packet_data[0]) {
 			case protocol::GAME_LIST: {
 				out(VERBOSE) << "Game list request received from " << e.peer_address << std::endl;
+				g_stats.listRequests++;
 				protocol::GameList games = m_glm.getGames();
 				// Send an info packet for each game
 				for (protocol::GameList::iterator it = games.begin(); it != games.end(); ++it) {
@@ -162,6 +177,7 @@ public:
 			}
 			case protocol::START_GAME: {
 				out(VERBOSE) << "A game started" << std::endl;
+				g_stats.gamesStarted++;
 				break;
 			}
 			default: {
@@ -176,11 +192,67 @@ private:
 };
 
 
+class StatusPage {
+public:
+	StatusPage(std::string file): m_format(FORMAT_PLAIN), m_fileName(file) {
+		if (m_fileName.find(".html") != std::string::npos)
+			m_format = FORMAT_HTML;
+	}
+
+	void write(const Stats& stats) {
+		if (m_fileName.empty()) return;
+		std::string text = m_templates[m_format];
+		boost::replace_all(text, "%DATE%", boost::lexical_cast<std::string>(ctime(&stats.launchTime)));
+		boost::replace_all(text, "%PORT%", boost::lexical_cast<std::string>(stats.port));
+		boost::replace_all(text, "%GAMES%", boost::lexical_cast<std::string>(stats.gamesWaiting));
+		boost::replace_all(text, "%CREATED%", boost::lexical_cast<std::string>(stats.gamesCreated));
+		boost::replace_all(text, "%STARTED%", boost::lexical_cast<std::string>(stats.gamesStarted));
+		boost::replace_all(text, "%LISTS%", boost::lexical_cast<std::string>(stats.listRequests));
+		std::ofstream f(m_fileName.c_str());
+		f << text << std::flush;
+	}
+
+private:
+	enum { FORMAT_PLAIN, FORMAT_HTML, NUM_FORMATS } m_format;
+	std::string m_fileName;
+	static const std::string m_templates[];
+};
+
+const std::string StatusPage::m_templates[] = {
+	"Stunt Rall Master Server Status Page\n"
+	"====================================\n"
+	"\n"
+	"Currently, there are %GAMES% available games.\n"
+	"\n"
+	"Started on %DATE%"
+	"Since then, there has been %LISTS% game list requests,\n"
+	"%CREATED% lobbies created and %STARTED% games started.\n"
+	"\n"
+	"Running on port %PORT%.\n"
+	,
+
+	"<!DOCTYPE html>\n"
+	"<html>\n"
+	"<head>\n"
+	"	<title>Stunt Rally Master Server</title>\n"
+	"</head>\n"
+	"<body>\n"
+	"	<h1>Stunt Rally Master Server Status Page</h1>\n"
+	"	<p>Currently, there are %GAMES% available games.</p>\n"
+	"	<p>Since %DATE%, there has been %LISTS% game list requests, "
+		"%CREATED% lobbies created and %STARTED% games started.</p>\n"
+	"	<small>Running on port %PORT%.</small>\n"
+	"</body>\n"
+	"</html>\n"
+};
+
+
 /// Program entry point
 int main(int argc, char** argv) {
 	std::cout << "Stunt Rally Master Server - version " << VERSIONSTRING << std::endl;
 	int port = protocol::DEFAULT_PORT;
 	bool daemonize = false;
+	std::string statusFile;
 
 	// Command line handling
 	for (int i = 1; i < argc; ++i) {
@@ -202,6 +274,8 @@ int main(int argc, char** argv) {
 				<< "                              default: " << DEFAULT_ZOMBIE_TIMEOUT << std::endl
 				<< "  -p, --port <portnumber>     listen given port for connections" << std::endl
 				<< "                              default: " << protocol::DEFAULT_PORT << std::endl
+				<< "  -s, --status <file>         periodically dump status to given file" << std::endl
+				<< "                              uses HTML if file name has .html extension" << std::endl
 				;
 			return 0;
 		} else if (arg == "--verbose" || arg == "-V") {
@@ -216,7 +290,10 @@ int main(int argc, char** argv) {
 			port = atoi(argv[i+1]);
 			++i;
 		} else if ((arg == "--timeout" || arg == "-t") && i < argc-1) {
-			g_zombietimeout = atoi(argv[i+1]);
+			g_zombieTimeout = atoi(argv[i+1]);
+			++i;
+		} else if ((arg == "--status" || arg == "-s") && i < argc-1) {
+			statusFile = argv[i+1];
 			++i;
 		} else {
 			out(ERROR) << "Invalid argument " << arg << std::endl;
@@ -234,15 +311,23 @@ int main(int argc, char** argv) {
 	}
 #endif
 
-	out(VERBOSE) << "Verbose mode" << std::endl;
+	g_stats.launchTime = std::time(NULL);
+	g_stats.port = port;
+
+	out(VERBOSE) << "Verbose mode enabled" << std::endl;
+
+	StatusPage status(statusFile);
+	out(VERBOSE) << (statusFile.empty() ? "Not creating status page" : ("Using status page " + statusFile)) << std::endl;
 
 	try {
 		GameListManager games;
 		Server server(games, port); // Launches a thread for listening the traffic
 
 		while (true) {
+			status.write(g_stats);
+
 			// Periodically remove zombie games
-			boost::this_thread::sleep(boost::posix_time::milliseconds(g_zombietimeout * 1000));
+			boost::this_thread::sleep(boost::posix_time::milliseconds(g_zombieTimeout * 1000));
 			games.purgeGames();
 		}
 	} catch (const std::exception& e) {
