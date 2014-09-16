@@ -234,6 +234,8 @@ const std::string StatusPage::m_templates[] = {
 	"<!DOCTYPE html>\n"
 	"<html>\n"
 	"<head>\n"
+	"	<meta http-equiv=\"refresh\" content=\"10\">\n"
+	"	<link href=\"style.css\" rel=\"stylesheet\" type=\"text/css\">\n"
 	"	<title>Stunt Rally Master Server</title>\n"
 	"</head>\n"
 	"<body>\n"
