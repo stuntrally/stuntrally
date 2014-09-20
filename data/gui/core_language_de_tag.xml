@@ -549,7 +549,7 @@
 	<Tag name="RplDelete">Löschen</Tag>
 	<Tag name="TipAutoRear">Für manuellen Rückwärtsgang Haken rausnehmen.</Tag>
 	<Tag name="TipToggleModel">Modell aktivieren oder deaktivieren.</Tag>
-	<Tag name="TireEdReference">Show reference graph</Tag>
+	<Tag name="TireEdReference">Referenzgraph anzeigen</Tag>
 	<Tag name="TipTrailClr">Farbe der Reifenspuren. R-, G-, B-, A-Komponenten von 0 bis 1 (z.B. 0.4 0.4 0.2 0.6).</Tag>
 	<Tag name="MinimapTerrain">Gelände</Tag>
 	<Tag name="MinimapRotate">Drehen</Tag>

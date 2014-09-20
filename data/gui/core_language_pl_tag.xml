@@ -549,7 +549,7 @@
 	<Tag name="RplDelete">Usuń</Tag>
 	<Tag name="TipAutoRear">Odznacz dla ręcznej zmiany wstecznego.</Tag>
 	<Tag name="TipToggleModel">Włącz / wyłącz ten model.</Tag>
-	<Tag name="TireEdReference">Show reference graph</Tag>
+	<Tag name="TireEdReference">Pokaż wykres odniesienia</Tag>
 	<Tag name="TipTrailClr">Kolor śladu opon. R G B A składowe 0 do 1 (np. 0.4 0.4 0.2 0.6)</Tag>
 	<Tag name="MinimapTerrain">Teren</Tag>
 	<Tag name="MinimapRotate">Obrót</Tag>
@@ -819,7 +819,7 @@
 	<Tag name="Disconnected">Rozłączono</Tag>
 	<Tag name="TipModelVisDist">Dystans widoczności modeli 3d, po tym stają się 2d atrapami.</Tag>
 	<Tag name="NetAddress">Adres</Tag>
-	<Tag name="TireEdCommonY">Common y range</Tag>
+	<Tag name="TireEdCommonY">Wpólny zakres y</Tag>
 	<Tag name="Road_sel">zazn</Tag>
 	<Tag name="AutoLoad">Autom. wczytywanie trasy</Tag>
 	<Tag name="Car_MaxTorque">Maks. moment</Tag>

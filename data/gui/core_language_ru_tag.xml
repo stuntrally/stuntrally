@@ -228,7 +228,7 @@
 	<Tag name="CarDesc_ES">Лучшее авто для ралли в игре, великолепное, по опыту, управление на всех треках. Хотя немного высокий.</Tag>
 	<Tag name="Suspension">Подвеска</Tag>
 	<Tag name="Add">Добавить</Tag>
-	<Tag name="TerrainSize">Размер ландшафта</Tag>
+	<Tag name="TerrainSize">Размер ландш.</Tag>
 	<Tag name="SC_Australia">Австралия</Tag>
 	<Tag name="TipLTrFlDepth">Максимально допустимая глубина жидкости (установите 0, чтобы исключить глубину).</Tag>
 	<Tag name="RoadWallFullCollis">Полн. столк. с дорогой</Tag>
@@ -264,7 +264,7 @@
 	<Tag name="ScreenshotPng">Скриншоты сохр. в .png</Tag>
 	<Tag name="Triplanar">Трех плоскостной</Tag>
 	<Tag name="View">Вид</Tag>
-	<Tag name="TriSize">Размер треугольника</Tag>
+	<Tag name="TriSize">Размер треуг.</Tag>
 	<Tag name="Leave">Выход</Tag>
 	<Tag name="TerLAngSm">Ровный угол</Tag>
 	<Tag name="Tools">Инстр.</Tag>
@@ -314,7 +314,7 @@
 	<Tag name="TipTrackDescEditor">Описание трека (нажми для редактирования).</Tag>
 	<Tag name="Sound">Звук</Tag>
 	<Tag name="CameraLoopChange">Изм. камеру в петлях</Tag>
-	<Tag name="NewTerrainFlat">Новая плоскость</Tag>
+	<Tag name="NewTerrainFlat">Новый</Tag>
 	<Tag name="Car">Авто</Tag>
 	<Tag name="Challenge">Вызов</Tag>
 	<Tag name="FuelLap">Нитро за круг</Tag>
@@ -549,7 +549,7 @@
 	<Tag name="RplDelete">Удалить</Tag>
 	<Tag name="TipAutoRear">Не отмечайте для ручного переключения задней передачи.</Tag>
 	<Tag name="TipToggleModel">Включить или отключить модель.</Tag>
-	<Tag name="TireEdReference">Show reference graph</Tag>
+	<Tag name="TireEdReference">Показ. схему связи</Tag>
 	<Tag name="TipTrailClr">Цвет следов от шины. R G B A значение от 0 до 1 (напр. 0.4 0.4 0.2 0.6)</Tag>
 	<Tag name="MinimapTerrain">Ландшафт</Tag>
 	<Tag name="MinimapRotate">Вращать</Tag>
@@ -719,7 +719,7 @@
 	<Tag name="TrackBestTime">Луч. время</Tag>
 	<Tag name="InputRoadMMB">MMB (или Num /,*)</Tag>
 	<Tag name="Textures">Текстуры</Tag>
-	<Tag name="TipTerVertCount">Количество вершин ландшафта на одной стороне (квадраты). Применяется с кнопками [Новая равнина] или [Менять размеры].</Tag>
+	<Tag name="TipTerVertCount">Количество вершин ландшафта на одной стороне (квадраты). Применяется с кнопками [Новый] или [Изм. разм.].</Tag>
 	<Tag name="Updated">Обновил</Tag>
 	<Tag name="RplCurrent">Текущий</Tag>
 	<Tag name="InputBrushFreq">O,P  -  частота шума (шкала)</Tag>
@@ -744,7 +744,7 @@
 	<Tag name="InputObjectsPaste">shift-Ins - вставить выб.</Tag>
 	<Tag name="ConnectingTo">Соед. с</Tag>
 	<Tag name="InputTopView">Alt-Z - вид сверху</Tag>
-	<Tag name="TipTerSize">Результирующая площадь в метрах (боковая длина). Равняется подсчитаной вершине кратной размеру треугольника.</Tag>
+	<Tag name="TipTerSize">Результирующая область в метрах (длина стороны). Равняется количеству вершин умноженной на размер треугольника.</Tag>
 	<Tag name="FogStart">начало</Tag>
 	<Tag name="InputToggleGUIMode">F1 или ` - режим GUI</Tag>
 	<Tag name="InpSet_AxisFullInv">1 ось инверсия</Tag>
@@ -819,7 +819,7 @@
 	<Tag name="Disconnected">Разъединён</Tag>
 	<Tag name="TipModelVisDist">Дистанция видимости для 3d моделей, после этого они превращаются в 2d спрайты.</Tag>
 	<Tag name="NetAddress">Адрес</Tag>
-	<Tag name="TireEdCommonY">Common y range</Tag>
+	<Tag name="TireEdCommonY">Общий y диап.</Tag>
 	<Tag name="Road_sel">выб</Tag>
 	<Tag name="AutoLoad">Автозагр. трека</Tag>
 	<Tag name="Car_MaxTorque">Макс. кр. момент</Tag>
@@ -850,7 +850,7 @@
 	<Tag name="TipChangeSat">Изменяет насыщенность цвета авто (белый-черный).</Tag>
 	<Tag name="MaterialProperties">Свойства материала</Tag>
 	<Tag name="Loading">Загружаю</Tag>
-	<Tag name="HeightmapSize">Высота карты</Tag>
+	<Tag name="HeightmapSize">Кол. вершин</Tag>
 	<Tag name="TipToggleLayer">Включить/выключить выбранную текстуру слоя.</Tag>
 	<Tag name="TipGrassLayerDens">Густота травы для слоя (как часто она появляется).</Tag>
 	<Tag name="Ping">Пинг</Tag>
@@ -1007,7 +1007,7 @@
 	<Tag name="InputMapGeneral">Общий</Tag>
 	<Tag name="TipTrkTerImg">Мини-карта выбранного трека, вид сверху.</Tag>
 	<Tag name="LS_GAME">Загрузка игры</Tag>
-	<Tag name="TerHeightMap">Высота карты ландш.</Tag>
+	<Tag name="TerHeightMap">Кол. верш. ландш.</Tag>
 	<Tag name="long">длинный</Tag>
 	<Tag name="PipeWStepsMul">Трубы W множ. шаги</Tag>
 	<Tag name="WarningsInfo">Консоль ошибок трека, оповещений и намеков.</Tag>
@@ -1015,7 +1015,7 @@
 	<Tag name="UnitBhp">л. с.</Tag>
 	<Tag name="CarDesc_M3">Очень старое авто с двигателем малой мощности. Не подходит для прыжков. Выбирай, если ты хочешь водить медленно.</Tag>
 	<Tag name="InpSet_AxisHalfInv">Пол оси инверсия</Tag>
-	<Tag name="ScaleTerHeight">Высота ландшафта</Tag>
+	<Tag name="ScaleTerHeight">Высоты ланд.</Tag>
 	<Tag name="TipTerLHSm">Диапазон ровной высоты (переход).</Tag>
 	<Tag name="SimModeNormal">Норма (симуляция)</Tag>
 	<Tag name="EnterSave">Enter - сохр.</Tag>
