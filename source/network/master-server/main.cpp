@@ -13,7 +13,7 @@
 #include <unistd.h> // for daemon()
 #endif
 
-#define VERSIONSTRING "0.7"
+#define VERSIONSTRING "0.7.1"
 
 #define DEFAULT_ZOMBIE_TIMEOUT 5
 unsigned g_zombieTimeout = DEFAULT_ZOMBIE_TIMEOUT;  // How many seconds without update until a game becomes zombie
@@ -234,7 +234,9 @@ const std::string StatusPage::m_templates[] = {
 	"<!DOCTYPE html>\n"
 	"<html>\n"
 	"<head>\n"
-	"	<title>Stunt Rally Master Server</title>\n"
+	"	<meta http-equiv=\"refresh\" content=\"10\">\n"
+	"	<link href=\"style.css\" rel=\"stylesheet\" type=\"text/css\">\n"
+	"	<title>[%GAMES%] Stunt Rally Master Server</title>\n"
 	"</head>\n"
 	"<body>\n"
 	"	<h1>Stunt Rally Master Server Status Page</h1>\n"
