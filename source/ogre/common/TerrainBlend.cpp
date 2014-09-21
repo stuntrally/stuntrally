@@ -20,7 +20,7 @@
 #include <OgreTextureManager.h>
 #include <OgreRenderTexture.h>
 #include "../../shiny/Main/Factory.hpp"
-#include "../../paged-geom/GrassLoader.h"
+//#include "../../paged-geom/GrassLoader.h"
 using namespace Ogre;
 
 

@@ -55,12 +55,12 @@ void DebugDrawer::step()
 	{
 		mWorld->debugDrawWorld();
 		mLineDrawer->update();
-		mNode->needUpdate();
+		//mNode->needUpdate();
 		mLineDrawer->clear();
 	}else{
 		mLineDrawer->clear();
 		mLineDrawer->update();
-		mNode->needUpdate();
+		//mNode->needUpdate();
 	}
 }
 

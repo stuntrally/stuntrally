@@ -18,7 +18,7 @@ include_directories(btOgre ogre ogre/common paged-geom road tinyxml vdrift bulle
 # Compile our libraries  ------
 if (BUILD_GAME OR BUILD_EDITOR)
 
-	foreach(ourlib  oics tinyxml paged-geom bullet btOgre)
+    foreach(ourlib  oics tinyxml bullet btOgre)
 		add_subdirectory(${ourlib})
 		list(APPEND OURLIBS ${ourlib})
 	endforeach()

@@ -12,10 +12,10 @@
 #include <OgreTexture.h>
 #include <vector>
 
-
 namespace Ogre {  class Camera;  class SceneManager;  }
 class SETTINGS;  class App;
 
+#if 0
 
 
 class CarReflection
@@ -81,3 +81,5 @@ private:
 	SETTINGS* pSet;
 	App* pApp;
 };
+
+#endif

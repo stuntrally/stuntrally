@@ -11,7 +11,7 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
-#include "../paged-geom/PagedGeometry.h"
+//#include "../paged-geom/PagedGeometry.h"
 #include "common/WaterRTT.h"
 #include "common/MultiList2.h"
 #include "common/Gui_Popup.h"
@@ -32,7 +32,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,hud(0), gui(0), gcom(0), input(0)
 	,mThread(), mTimer(0.f)
 	// game
-	,blendMtr(0), blendMapSize(513), dbgdraw(0)
+	,blendMtr(0), blendMapSize(513)//, dbgdraw(0)
 	,carIdWin(-1), iRplCarOfs(0)
 	// other
 	,newGameRpl(0), curLoadState(0)
@@ -79,7 +79,7 @@ App::~App()
 	if (mThread.joinable())
 		mThread.join();
 
-	OGRE_DELETE dbgdraw;
+	//OGRE_DELETE dbgdraw;
 
 	gui->viewBox->destroy();
 	delete gui->viewBox;

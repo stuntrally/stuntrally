@@ -15,7 +15,7 @@
 //#include "BulletDynamics/Dynamics/btRigidBody.h"
 #include "../shiny/Main/Factory.hpp"
 #include "../sdl4ogre/sdlinputwrapper.hpp"
-#include "../paged-geom/GrassLoader.h"
+//#include "../paged-geom/GrassLoader.h"
 #include <MyGUI.h>
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>

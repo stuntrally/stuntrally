@@ -1065,7 +1065,7 @@ void GeometryPage::addEntityToBoundingBox(Ogre::Entity *ent, const Ogre::Vector3
 	//Update bounding box
 	Ogre::Matrix4 mat(rotation);
 	mat.setScale(scale);
-	Ogre::AxisAlignedBox entBounds = ent->getBoundingBox();
+	Ogre::AxisAlignedBox entBounds = ent->getMesh()->getBounds();
 	entBounds.transform(mat);
 
 	Ogre::Vector3 relPosition = position - _centerPoint;

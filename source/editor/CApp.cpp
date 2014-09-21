@@ -8,7 +8,7 @@
 #include "../ogre/common/GuiCom.h"
 #include "../ogre/common/CScene.h"
 #include "../road/Road.h"
-#include "../paged-geom/PagedGeometry.h"
+//#include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/WaterRTT.h"
 #include "../ogre/common/RenderBoxScene.h"
 #include "settings.h"

@@ -11,7 +11,7 @@
 #include "../road/Road.h"
 #include "../vdrift/game.h"
 #include "../vdrift/quickprof.h"
-#include "../paged-geom/PagedGeometry.h"
+//#include "../paged-geom/PagedGeometry.h"
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"
 #include "LinearMath/btDefaultMotionState.h"
@@ -380,8 +380,8 @@ bool App::frameStart(Real time)
 		//  update all cube maps
 		PROFILER.beginBlock("g.refl");
 		for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); it++)
-		if (!(*it)->isGhost() && (*it)->pReflect)
-			(*it)->pReflect->Update(iLoad1stFrames == -1);
+		//if (!(*it)->isGhost() && (*it)->pReflect)
+		//	(*it)->pReflect->Update(iLoad1stFrames == -1);
 		PROFILER.endBlock("g.refl");
 
 
@@ -412,10 +412,11 @@ bool App::frameStart(Real time)
 		}
 
 		//**  bullet bebug draw
+#if 0
 		if (dbgdraw)  {							// DBG_DrawWireframe
 			dbgdraw->setDebugMode(pSet->bltDebug ? 1 /*+(1<<13) 255*/ : 0);
 			dbgdraw->step();  }
-
+#endif
 
 		///  terrain mtr from blend maps
 		// now in CarModel::Update

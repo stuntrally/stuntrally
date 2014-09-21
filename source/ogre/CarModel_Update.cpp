@@ -176,7 +176,7 @@ void CarModel::UpdTrackPercent()
 //-------------------------------------------------------------------------------------------------------
 void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 {	
-	pReflect->camPosition = pMainNode->getPosition();
+	//pReflect->camPosition = pMainNode->getPosition();
 	int w,i;
 	
 	//  upd chk mtr

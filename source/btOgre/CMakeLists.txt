@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 2.8)
 set(LIBNAME "btOgre")
 
 # Sources
-file(GLOB SOURCE_FILES *.cpp)
-
+#file(GLOB SOURCE_FILES *.cpp)
+set(SOURCE_FILES BtOgre.cpp BtOgreAnim.cpp)
 # Create a static library
 add_library(${LIBNAME} STATIC ${SOURCE_FILES})
 

@@ -185,11 +185,11 @@ BaseApp::BaseApp()
 	,bckFps(0),txFps(0), imgBack(0),imgLoad(0)
 	,bckLoad(0),bckLoadBar(0),barLoad(0), txLoadBig(0),txLoad(0)
 	,barSizeX(0), barSizeY(0)
-
+/*
 	,mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0), mCameraBlurLogic(0)
 	,mGodRaysLogic(0), mSoftParticlesLogic(0), mGBufferLogic(0)
 	,mDepthOfFieldLogic(0), mFilmGrainLogic(0)
-	
+	*/
 	,mShowDialog(0), mShutDown(0)
 
 	,bWindowResized(0), mLoadingBar(0), roadUpdTm(0.f)
@@ -230,7 +230,6 @@ BaseApp::~BaseApp()
 	//if (mSplitMgr)
 		//refreshCompositor(false);
 
-	Ogre::CompositorManager::getSingleton().removeAll();
 	delete mLoadingBar;
 	delete mSplitMgr;
 	
@@ -258,7 +257,7 @@ BaseApp::~BaseApp()
 
 
 	OGRE_DELETE mRoot;
-	delete mHDRLogic;  mHDRLogic = 0;
+	//delete mHDRLogic;  mHDRLogic = 0;
 
 	SDL_SetWindowFullscreen(mSDLWindow, 0);
 	SDL_DestroyWindow(mSDLWindow);
@@ -405,8 +404,10 @@ bool BaseApp::setup()
 	if (!configure())
 		return false;
 
-
-	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/Ogre::ST_EXTERIOR_FAR/**/);
+	const size_t numThreads = std::max<int>(1, Ogre::PlatformInformation::getNumLogicalCores());
+	Ogre::InstancingTheadedCullingMethod threadedCullingMethod = Ogre::INSTANCING_CULLING_SINGLETHREAD;
+	if(numThreads > 1) Ogre::InstancingTheadedCullingMethod threadedCullingMethod = Ogre::INSTANCING_CULLING_THREADED;
+	mSceneMgr = Ogre::Root::getSingleton().createSceneManager(Ogre::ST_GENERIC, numThreads, threadedCullingMethod);
 
 	#if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0) 
 	Ogre::OverlaySystem* pOverlaySystem = new Ogre::OverlaySystem();
@@ -511,8 +512,8 @@ void BaseApp::loadResources()
 void BaseApp::LoadingOn()
 {
 	mSplitMgr->SetBackground(Ogre::ColourValue(0.15,0.165,0.18));
-	mSplitMgr->mGuiViewport->setBackgroundColour(Ogre::ColourValue(0.15,0.165,0.18,1.0));
-	mSplitMgr->mGuiViewport->setClearEveryFrame(true);
+	//mSplitMgr->mGuiViewport->setBackgroundColour(Ogre::ColourValue(0.15,0.165,0.18,1.0));
+	//mSplitMgr->mGuiViewport->setClearEveryFrame(true);
 	mLoadingBar->start(mWindow, 1, 1, 1 );
 
 	// Turn off  rendering except overlays
@@ -524,7 +525,7 @@ void BaseApp::LoadingOff()
 {
 	// Turn On  full rendering
 	mSplitMgr->SetBackground(Ogre::ColourValue(0.5,0.65,0.8));
-	mSplitMgr->mGuiViewport->setBackgroundColour(Ogre::ColourValue(0.5,0.65,0.8));
+	//mSplitMgr->mGuiViewport->setBackgroundColour(Ogre::ColourValue(0.5,0.65,0.8));
 	mSceneMgr->clearSpecialCaseRenderQueues();
 	mSceneMgr->setSpecialCaseRenderQueueMode(Ogre::SceneManager::SCRQM_EXCLUDE);
 	mLoadingBar->finish();

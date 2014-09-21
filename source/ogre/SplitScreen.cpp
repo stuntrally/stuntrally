@@ -21,8 +21,6 @@
 #include <OgreLogManager.h>
 #include <OgreParticleSystem.h>
 #include <OgreParticleEmitter.h>
-#include <OgreCompositorManager.h>
-#include <OgreCompositorChain.h>
 #include <OgreSceneNode.h>
 #include "MyGUI_PointerManager.h"
 using namespace Ogre;
@@ -44,8 +42,8 @@ SplitScr::~SplitScr()
 
 void SplitScr::SetBackground(const Ogre::ColourValue& value)
 {
-	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
-		(*vpIt)->setBackgroundColour(value);
+	//for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
+	//	(*vpIt)->setBackgroundColour(value);
 }
 
 void SplitScr::UpdateCamDist()
@@ -59,7 +57,6 @@ void SplitScr::CleanUp()
 {
 	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
 	{
-		CompositorManager::getSingleton().removeCompositorChain(*vpIt);
 		mWindow->removeViewport( (*vpIt)->getZOrder() );
 	}
 	mViewports.clear();
@@ -167,9 +164,6 @@ void SplitScr::Align()
 	}
 	
 	AdjustRatio();
-	
-	// Add compositing filters for the new viewports
-	if (pApp)  pApp->recreateCompositor();
 }
 
 
@@ -238,7 +232,7 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 			evt.source->getCamera()->setFOVy(Degree(0.5f*pSet->fov_min));
 
 		//update soft particle Depth Target
-
+		/*
 		if (pApp->pSet->softparticles && pApp->pSet->all_effects)
 		{
 			Ogre::CompositorInstance  *compositor = Ogre::CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer");
@@ -249,6 +243,7 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 					sh::Factory::getInstance().setTextureAlias("SceneDepth", depthTexture->getName());
 			}
 		}
+		*/
 	}
 	else
 	{

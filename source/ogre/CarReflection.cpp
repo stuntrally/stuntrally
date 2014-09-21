@@ -17,7 +17,7 @@
 #include <OgreSceneNode.h>
 using namespace Ogre;
 
-
+#if 0
 CarReflection::CarReflection(SETTINGS* set, App* app, SceneManager* sceneMgr, unsigned int index, char suffix)
 	: iCam(0), iCounter(0)
 {
@@ -166,3 +166,5 @@ void CarReflection::Update(bool first)
 	//cubetex->convertToImage(im);
 	//im.save("cube.dds");
 }
+
+#endif

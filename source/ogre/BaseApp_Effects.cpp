@@ -10,11 +10,7 @@
 //#include "HDRCompositor.h"
 
 #include <OgreRoot.h>
-#include <OgreCompositorManager.h>
-#include <OgreCompositionTargetPass.h>
-#include <OgreCompositionPass.h>
 #include <OgreTechnique.h>
-#include <OgreCompositor.h>
 using namespace Ogre;
 
 
@@ -26,13 +22,15 @@ void BaseApp::createViewports()
 
 bool BaseApp::AnyEffectEnabled()
 {
+	return false;
 	//any new effect need to be added here to have UI Rendered on it
-	return pSet->all_effects && (pSet->softparticles || /*?*/pSet->bloom || pSet->hdr || pSet->blur || pSet->ssao || pSet->godrays || pSet->dof || pSet->filmgrain);
+	//return pSet->all_effects && (pSet->softparticles || /*?*/pSet->bloom || pSet->hdr || pSet->blur || pSet->ssao || pSet->godrays || pSet->dof || pSet->filmgrain);
 }
 
 bool BaseApp::NeedMRTBuffer()
 {
-	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays);
+	return false;
+	//return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays);
 }
 
 
@@ -40,6 +38,7 @@ bool BaseApp::NeedMRTBuffer()
 //-------------------------------------------------------------------------------------
 void BaseApp::refreshCompositor(bool disableAll)
 {
+#if 0
 	CompositorManager& cmp = CompositorManager::getSingleton();
 
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
@@ -120,12 +119,14 @@ void BaseApp::refreshCompositor(bool disableAll)
 
 		cmp.setCompositorEnabled((*it), "gbufferUIRender", AnyEffectEnabled());
 	}
+#endif
 }
 
 //-------------------------------------------------------------------------------------
 void BaseApp::recreateCompositor()
 {
-	CompositorManager& cmp = CompositorManager::getSingleton(); 
+#if 0
+	CompositorManager& cmp = CompositorManager::getSingleton();
 
 	if (!pSet->all_effects)  // disable compositor
 	{
@@ -321,5 +322,6 @@ void BaseApp::recreateCompositor()
 
 	}
 	refreshCompositor();
+#endif
 }
 

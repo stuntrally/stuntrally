@@ -50,6 +50,7 @@ public:
 		
 	///  effects
 	class SplitScr* mSplitMgr;
+	/*
 	class HDRLogic* mHDRLogic; class MotionBlurLogic* mMotionBlurLogic;
 	class CameraBlurLogic* mCameraBlurLogic;
 	class SSAOLogic* mSSAOLogic;
@@ -58,7 +59,10 @@ public:
 	class DepthOfFieldLogic* mDepthOfFieldLogic;
 	class GBufferLogic* mGBufferLogic;
 	class FilmGrainLogic* mFilmGrainLogic;
+	*/
+
 	void recreateCompositor();
+
 	bool AnyEffectEnabled();
 	bool NeedMRTBuffer();
 	float motionBlurIntensity;

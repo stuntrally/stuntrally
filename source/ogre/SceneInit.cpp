@@ -16,7 +16,7 @@
 #include "common/GraphView.h"
 
 #include "../network/gameclient.hpp"
-#include "../paged-geom/PagedGeometry.h"
+//#include "../paged-geom/PagedGeometry.h"
 #include "../shiny/Main/Factory.hpp"
 
 #include <boost/thread.hpp>
@@ -125,6 +125,7 @@ void App::createScene()
 
     //  bullet Debug drawing
     //------------------------------------
+#if 0
     if (pSet->bltLines)
 	{	dbgdraw = new BtOgre::DebugDrawer(
 			mSceneMgr->getRootSceneNode(),
@@ -133,6 +134,7 @@ void App::createScene()
 		pGame->collision.world->getDebugDrawer()->setDebugMode(
 			1 /*0xfe/*8+(1<<13)*/);
 	}
+#endif
 	
 	//  load
 	if (pSet->autostart)

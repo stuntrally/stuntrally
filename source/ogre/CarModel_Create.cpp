@@ -42,7 +42,7 @@ CarModel::CarModel(int index, int colorId, eCarType type, const string& name,
 	:mSceneMgr(sceneMgr), pSet(set), pGame(game), sc(s), mCamera(cam), pApp(app)
 	,iIndex(index), iColor(colorId % 6), sDirname(name), eType(type), vtype(V_Car)
 	,fCam(0), pMainNode(0), pCar(0), terrain(0), ndSph(0), brakes(0)
-	,pReflect(0), color(0,1,0), maxangle(26.f)
+	/*,pReflect(0)*/, color(0,1,0), maxangle(26.f)
 	,hideTime(1.f), mbVisible(true), bLightMapEnabled(true), bBraking(false)
 	,iCamNextOld(0), bLastChkOld(0), bInSt(0), bWrongChk(0),  iFirst(0)
 	,angCarY(0), vStartPos(0,0,0), pNickTxt(0)
@@ -157,7 +157,7 @@ void CarModel::Load(int startId)
 //------------------------------------------------------------------------------------------------------
 CarModel::~CarModel()
 {
-	delete pReflect;  pReflect = 0;
+	//delete pReflect;  pReflect = 0;
 	
 	delete fCam;  fCam = 0;
 	
@@ -738,12 +738,14 @@ void CarModel::setMtrNames()
 //  ----------------- Reflection ------------------------
 void CarModel::CreateReflection()
 {
+	/*
 	char suffix = (eType == CT_TRACK ? 'Z' : (eType == CT_GHOST2 ? 'V' :' '));
 	pReflect = new CarReflection(pSet, pApp, mSceneMgr, iIndex, suffix);
 	for (int i=0; i < NumMaterials; i++)
 		pReflect->sMtr[i] = sMtr[i];
 
 	pReflect->Create();
+	*/
 }
 
 void CarModel::requestedConfiguration(sh::MaterialInstance* m, const string& configuration)

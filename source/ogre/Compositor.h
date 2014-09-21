@@ -1,5 +1,7 @@
 // adapted from OGRE compositor sample
 #pragma once
+
+#if 0
 #include "CGame.h"
 
 #include <OgrePrerequisites.h>
@@ -128,3 +130,5 @@ public:
 private:
 	BaseApp * mApp;
 };
+
+#endif

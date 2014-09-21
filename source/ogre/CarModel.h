@@ -118,7 +118,7 @@ public:
 	void setVisible(bool visible);  // hide/show
 	bool mbVisible;  float hideTime;
 		
-	CarReflection* pReflect;
+	//CarReflection* pReflect;
 		
 	//  VDrift car
 	CAR* pCar;  // all need this set (even ghost, has it from 1st car)

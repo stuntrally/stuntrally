@@ -4,6 +4,7 @@
 #include <string>
 
 #include <OgreMaterial.h>
+#include <OgreSharedPtr.h>
 
 #include "../../Main/Platform.hpp"
 

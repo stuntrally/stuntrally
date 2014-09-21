@@ -275,8 +275,8 @@ void App::recreateReflections()
 {
 	for (std::vector<CarModel*>::iterator it = carModels.begin(); it!=carModels.end(); it++)
 	{	
-		delete (*it)->pReflect;
-		(*it)->CreateReflection();
+		//delete (*it)->pReflect;
+		//(*it)->CreateReflection();
 	}
 }
 

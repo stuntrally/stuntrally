@@ -19,12 +19,14 @@
 	#include "../../btOgre/BtOgreGP.h"
 #endif
 #include "../../vdrift/pathmanager.h"
+/*
 #include "../../paged-geom/GrassLoader.h"
 #include "../../paged-geom/BatchPage.h"
 #include "../../paged-geom/WindBatchPage.h"
 #include "../../paged-geom/ImpostorPage.h"
 #include "../../paged-geom/TreeLoader2D.h"
 #include "../../paged-geom/MersenneTwister.h"
+*/
 #include <boost/filesystem.hpp>
 #include <OgreTimer.h>
 #include <OgreTerrain.h>
@@ -69,6 +71,7 @@ void CScene::updGrsTer()
 
 void CScene::CreateTrees()
 {
+#if 0
 	Ogre::Timer ti;
 	updGrsTer();
 		
@@ -438,4 +441,5 @@ void CScene::CreateTrees()
 	}
 	//imgRoadSize = 0;
 	LogO(String("::: Time Trees: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+#endif
 }
