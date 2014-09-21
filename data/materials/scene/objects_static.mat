@@ -393,3 +393,26 @@ material windmill_fan
 	diffuse 1.4 1.4 1.4
 	specular 0.4 0.4 0.4 16
 }
+
+
+material rock_n2_alien
+{
+    parent base
+	diffuseMap rock_L2.jpg
+	normalMap rock_n2_norm.png
+	terrain_light_map true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.8
+	//specular 0.5 0.5 1.0 32
+}
+
+material rock_n5_alien
+{
+    parent base
+	diffuseMap rock_n5_alien.jpg
+	normalMap rock_n5_norm.png
+	terrain_light_map true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.8
+	//specular 0.5 0.5 1.0 32
+}

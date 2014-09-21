@@ -48,6 +48,8 @@
 <s m="sky/magic"           c="#A0A0FF"   p="30"  y="-41"  />
 <s m="sky/magicdark"       c="#7070B0"   p="31"  y="-30"  />
 
+<s m="sky/magic_alien"     c="#70A974"   p="30"  y="-41"  />
+
 
 <!-- common:  a - from track (not used)  sc - scenery (for name and color)  z - appears on sceneries (not used, for filters)  -->
 
@@ -167,6 +169,15 @@
 <t a="Y1"  sc="Y"  t="ycrystals_fine_d"   n="ycrystals_fine_n"   s="17.15" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="0"  ab="10" z="Y" d="" />
 <t a="Y1"  sc="Y"  t="ycrystals_med_d"    n="ycrystals_med_n"    s="12.59" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="14" ab="31" z="Y" d="" />
 <t a="Y1"  sc="Y"  t="ycrystals_big_d"    n="ycrystals_big_n"    s="17.15" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="38" ab="90" z="Y" d="" />
+
+<t a="L1"  sc="L"  t="alien_cracks_d"     n="desert_cracks_n"    s="9.09"  su="DesertFast"     tp="0" du="0.8" ds="1.0" md="0.1" tr="0.46 0.46 0.08 0.7"  aa="8"  ab="22" z="L" />
+<t a="L1"  sc="L"  t="a_alien_mntn4_d"    n="adesert_mntn4_n"    s="20.29" su="DesertBumpy"    tp="0" du="0.6" ds="1.0" md="0.5" tr="0.48 0.30 0.20 0.8"  aa="21" ab="40" z="L" />
+<t a="L1"  sc="L"  t="a_alien_stone_d"    n="adesert_stone_n"    s="11.54" su="DesertFast"     tp="0" du="0.5" ds="1.0" md="0.7" tr="0.25 0.10 0.08 0.8"  aa="0"  ab="18" z="L" />
+<t a="L1"  sc="L"  t="alien_mntn_d"       n="desert_mntn_n"      s="26.21" su="Rocks"          tp="1" du="0.4" ds="1.0" md="0.7" tr="0.42 0.36 0.08 0.8"  aa="23" ab="44" z="L" />
+<t a="L1"  sc="L"  t="alien_sand2_d"      n="desert_sand2_n"     s="16.21" su="DesertFast"     tp="0" du="0.9" ds="1.0" md="0.1" tr="0.48 0.46 0.08 0.7"  aa="15" ab="27" z="L" />
+<t a="L1"  sc="L"  t="alien_sand_big_d"   n="desert_sand_big_n"  s="9.63"  su="DesertBumpy"    tp="0" du="0.9" ds="1.0" md="0.1" tr="0.48 0.46 0.08 0.7"  aa="15" ab="27" z="L" />
+<t a="L1"  sc="L"  t="alien_sand_d"       n="desert_sand_n"      s="12.06" su="DesertFast"     tp="0" du="0.8" ds="1.0" md="0.1" tr="0.46 0.46 0.08 0.7"  aa="0"  ab="10" z="L" />
+
 <!--
 <t a="Z1"  sc="Z"  t="zdesert_sand2_d"    n="desert_sand2_n"     s="16.21" su="DesertFast"     tp="0" du="0.9" ds="1.0" md="0.1" tr="0.16 0.16 0.16 0.7"  aa="15" ab="27" z="Z" />
 <t a="Z4"  sc="Z"  t="zdesert_sand_big_d" n="desert_sand_big_n"  s="9.63"  su="DesertBumpy"    tp="0" du="0.9" ds="1.0" md="0.1" tr="0.16 0.16 0.16 0.7"  aa="15" ab="27" z="Z" />
@@ -218,6 +229,10 @@
 <r a="W2"  sc="W"  m="roadSnowGrn"   su="roadSnow"       du="0.4" ds="0.5" md="0.2" tr="0.30 0.40 0.30 0.8" z="W" />
 <r a="W9"  sc="W"  m="roadIce"       su="roadSnow"       du="0.3" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
 <r a="W9"  sc="W"  m="roadCrystal"   su="roadDesert"     du="0.0" ds="0.0" md="0.0" tr="0.00 0.10 0.20 0.5" z="Y" />
+
+<r a="L1"  sc="L"  m="roadAlienD"    su="roadDesert"     du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="L" />
+<r a="L1"  sc="L"  m="roadAlien"     su="roadJungle"     du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" z="L" />
+<r a="L1"  sc="L"  m="roadAlienStone" su="roadForest"    du="0.0" ds="0.2" md="0.0" tr="0.30 0.20 0.10 0.7" z="L" />
 
 
 <!-- grass -->
@@ -289,6 +304,10 @@
 <g a="X4"  sc="X"  g="grassX13p"         c="grClrJungle"    xa="2.50" xb="2.84" ya="2.32" yb="2.93" z="X" />
 <g a="X1"  sc="X"  g="grassXc"           c="grClrWinter"    xa="2.67" xb="3.23" ya="1.96" yb="2.26" z="X" />
 <g a="X6"  sc="X"  g="grassXv"           c="grClrWinter"    xa="2.86" xb="3.02" ya="2.86" yb="3.20" z="X" />
+
+<g a="L1"  sc="L"  g="grass4v-alien"     c="grClrDesert"    xa="1.82" xb="2.80" ya="1.22" yb="2.26" z="L" />
+<g a="L1"  sc="L"  g="grassX10b-alien"   c="grClrWinter"    xa="2.80" xb="3.18" ya="3.25" yb="3.69" z="L" />
+<g a="L1"  sc="L"  g="grassXc-alien"     c="grClrWinter"    xa="2.67" xb="3.23" ya="1.96" yb="2.26" z="L" />
 
 
 <!-- vegetation -->
@@ -437,6 +456,7 @@
 <v a="G1"  sc="G"  p="treeGW-41aspMid"      sa="1.15" sb="1.67"  wx="0.43" wy="0.010"  ab="11.93" rd="1" fd="0.0" z="G" />
 <v a="O1"  sc="O"  p="treeGY-36aspMed"      sa="0.92" sb="1.22"  wx="0.70" wy="0.010"  ab="30.63" rd="1" fd="0.0" z="O" />
 
+
 <v a="Y1"  sc="Y"  p="crystal1"             sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
 <v a="Y1"  sc="Y"  p="crystal2"             sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
 <v a="Y1"  sc="Y"  p="crystal_cube4"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
@@ -444,5 +464,17 @@
 <v a="Y1"  sc="Y"  p="crystal_form1"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
 <v a="Y1"  sc="Y"  p="crystal_form2"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
 <v a="Y1"  sc="Y"  p="crystal_form3"        sa="0.80" sb="1.20"  wx="0.00" wy="0.000"  ab="26.93" rd="1" fd="0.0" z="Y" />
+
+
+<v a="L1"  sc="L"  p="gum_tree_alien"       sa="1.45" sb="2.22"  wx="0.30" wy="0.004"  ab="20.48" rd="1" fd="0.0" z="L" />
+<v a="L1"  sc="L"  p="jungle_tree_alien"    sa="1.61" sb="2.05"  wx="0.40" wy="0.002"  ab="29.26" rd="1" fd="0.0" z="L" />
+
+<v a="L1"  sc="L"  p="rock_L2"              sa="0.77" sb="1.25"  wx="0.00" wy="0.000"  ab="30.41" rd="1" fd="2.0" z="L" />
+<v a="L1"  sc="L"  p="rock_L3"              sa="1.23" sb="1.61"  wx="0.00" wy="0.000"  ab="36.70" rd="1" fd="2.0" z="L" />
+<v a="L1"  sc="L"  p="rock_L4"              sa="1.16" sb="1.89"  wx="0.00" wy="0.000"  ab="38.10" rd="1" fd="2.0" z="L" />
+
+<v a="L1"  sc="L"  p="shroom1_1_alien"      sa="0.15" sb="0.25"  wx="0.00" wy="0.000"  ab="21.14" rd="1" fd="0.0" z="L" />
+<v a="L1"  sc="L"  p="shroom1_2_alien"      sa="0.32" sb="0.49"  wx="0.00" wy="0.000"  ab="32.73" rd="1" fd="0.0" z="L" />
+<v a="L1"  sc="L"  p="shroom1_3_alien"      sa="0.20" sb="0.30"  wx="0.00" wy="0.000"  ab="21.33" rd="1" fd="0.0" z="L" />
 
 </presets>

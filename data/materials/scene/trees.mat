@@ -603,3 +603,111 @@ material crystal_form3
 	bump_scale 3
 }
 
+
+//  Alien
+//------------------------------------------------------------------
+
+material gum_branch_alien
+{
+    parent base
+    diffuseMap gum_branch_alien.png
+    ambient 0.59 0.59 0.59
+    diffuse 0.59 0.59 0.59
+    alpha_rejection greater 128
+    cull_hardware none
+    transparent true
+    tree_wind true
+}
+
+material gum_bark_alien
+{
+    parent base
+    diffuseMap gum_bark_alien.png
+    ambient 0.8 0.8 0.8
+    diffuse 0.64 0.64 0.64
+    specular 0.12 0.12 0.12 32
+    tree_wind true
+}
+
+material jungle_tree_alien
+{
+    parent base
+	transparent true
+	tree_wind true
+	terrain_light_map true
+    alpha_rejection greater 128
+	diffuseMap jungle_tree_alien.png
+	normalMap jungle_tree_normal.png
+	//specMap jungle_tree_spec.png
+	specular 0.4 0.4 0.4 32
+	cull_hardware none
+	receives_shadows false
+}
+
+
+material rock_L2
+{
+    parent base
+	diffuseMap rock_L2.jpg
+	normalMap rock_n2_norm.png
+	terrain_light_map true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.8
+	//specular 0.5 0.5 1.0 32
+}
+
+material rock_L3
+{
+    parent base
+	diffuseMap rock_L3.jpg
+	normalMap rock_n3_norm.png
+	terrain_light_map true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.8
+	//specular 0.5 0.5 1.0 32
+}
+
+material rock_L4
+{
+    parent base
+	diffuseMap rock_L4.jpg
+	normalMap rock_n4_norm.png
+	terrain_light_map true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.8
+	//specular 0.5 0.5 1.0 32
+}
+
+
+material shroom1_alien
+{
+    parent base
+	diffuseMap shroom_alien.png
+	normalMap shroom2_norm.png
+	terrain_light_map true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.8
+	//specular 0.5 0.5 1.0 32
+}
+
+material shroom2_alien
+{
+    parent base
+	diffuseMap shroom_alien.png
+	normalMap shroom2_norm.png
+	terrain_light_map true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.8
+	//specular 0.5 0.5 1.0 32
+}
+
+material shroom3_alien
+{
+    parent base
+	diffuseMap shroom_alien.png
+	normalMap shroom2_norm.png
+	terrain_light_map true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.8
+	//specular 0.5 0.5 1.0 32
+}

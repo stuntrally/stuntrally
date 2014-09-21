@@ -489,6 +489,21 @@ material pipeAsphaltRed
 	receives_shadows false
 }
 
+material pipeMetal
+{
+	parent base
+	diffuseMap metal_pipe.png
+	ambient 1.0 1.0 1.0
+	diffuse 1.0 1.0 1.0
+	specular 1.0 1.0 1.0 4
+	specMap metal_pipe_spec.png
+	normalMap metal_pipe_norm.png
+	bump_scale 0.1
+	depth_bias 3
+	cull_hardware none
+	receives_shadows false
+}
+
 
 //  road  Wall
 //--------------------------------------------------------------------------------------
@@ -718,4 +733,82 @@ material road_col_Desert
 	diffuseMap concrete1w.jpg
 	normalMap normal_1.png
 	bump_scale 2.0
+}
+
+
+//  Alien
+material road_wall_alien
+{
+	parent road_wall
+	ambient 0.8 0.8 0.8
+	diffuse 0.7 0.7 0.7
+	specular 0.18 0.21 0.14 8
+	diffuseMap alien_wall.jpg
+	normalMap normal_1.png
+	bump_scale 2.0
+}
+
+material pipe_wall_alien
+{
+	parent pipe_wall
+	ambient 0.8 0.8 0.8
+	diffuse 0.7 0.7 0.7
+	specular 0.18 0.21 0.14 8
+	diffuseMap alien_wall.jpg
+	normalMap normal_1.png
+	bump_scale 2.0
+}
+
+material road_col_alien
+{
+	parent base
+	ambient 0.8 0.8 0.8
+	diffuse 0.7 0.7 0.7
+	specular 0.35 0.36 0.35 32
+	diffuseMap alien_wall.jpg
+	normalMap normal_1.png
+}
+
+material pipeGlassAlien
+{
+	parent pipe_glass
+	ambient 0.35 0.48 0.55
+	diffuse 0.76 0.82 0.90
+	diffuseMap roadGlass_alien.png
+	specMap roadGlass_spec2h.png
+	normalMap normal_3.jpg
+	bump_scale 0.15
+}
+
+material pipeGlassAlienBlue
+{
+	parent pipe_glass
+	ambient 0.0 0.34 0.87
+	diffuse 0.0 0.31 0.82
+	diffuseMap roadGlass_alien.png
+	specMap roadGlass_spec2h.png
+	normalMap normal_3.jpg
+	bump_scale 0.15
+}
+
+material pipeGlassAlienGreen
+{
+	parent pipe_glass
+	ambient 0.25 0.96 0.3
+	diffuse 0.25 0.8 0.2
+	diffuseMap roadGlass_alien.png
+	specMap roadGlass_spec2h.png
+	normalMap normal_3.jpg
+	bump_scale 0.15
+}
+
+material pipeGlassAlienYellow
+{
+	parent pipe_glass
+	ambient 0.7 0.95 0.1
+	diffuse 0.5 1.0 0.0
+	diffuseMap roadGlass_alien.png
+	specMap roadGlass_spec2h.png
+	normalMap normal_3.jpg
+	bump_scale 0.15
 }

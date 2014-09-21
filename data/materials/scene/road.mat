@@ -692,6 +692,69 @@ material roadMoss
 }
 
 
+// Alien1
+
+material roadAlienD
+{
+	parent road
+	diffuseMap roadAlienD.jpg
+	ambient 0.85 0.85 0.85
+	diffuse 0.81 0.8 0.75
+	specular 0.36 0.34 0.3 18
+}
+
+material roadAlienD_ter
+{
+	parent road_terrain
+	ambient 0.65 0.72 0.64
+	diffuse 0.87 0.95 0.88
+	specular 0.36 0.34 0.32 18
+	diffuseMap roadAlienD.jpg
+	normalMap normal_1.png
+}
+
+// Alien2
+material roadAlien_ter
+{
+	parent road_terrain
+	diffuseMap roadAlien.jpg
+	ambient 0.85 0.95 0.85
+	diffuse 0.8 0.9 0.75
+	specular 0.3 0.6 0.5 64
+	normalMap normal_1.png
+}
+
+material roadAlien
+{
+	parent road
+	diffuseMap roadAlien.jpg
+	ambient 0.8 0.9 0.8
+	diffuse 0.6 0.7 0.6
+	specular 0.3 0.5 0.6 32
+}
+
+// alien stone
+material roadAlienStone
+{
+	parent road
+	diffuseMap roadSnow.jpg
+	ambient 0.727 0.784 0.567
+	diffuse 0.537 0.586 0.489
+	specular 0.3 0.3 0.3 14
+}
+
+material roadAlienStone_ter
+{
+	parent road_terrain
+	diffuseMap roadSnow.jpg
+	ambient 0.727 0.784 0.567
+	diffuse 0.537 0.586 0.489
+	specular 0.3 0.3 0.3 14
+	normalMap normal_2.png
+	bump_scale 1
+}
+
+
 
 ///  test new gravel
 

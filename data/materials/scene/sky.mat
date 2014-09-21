@@ -209,3 +209,9 @@ material sky/night_blue
     parent base_sky
     texture sky-night.jpg
 }
+
+material sky/magic_alien
+{
+    parent base_sky
+    texture magic_alien.jpg
+}

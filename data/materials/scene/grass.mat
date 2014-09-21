@@ -204,3 +204,11 @@ material grassX13p {  parent grass
     diffuseMap grassX13p.png  }
 
 
+material grass4v-alien {  parent grass
+    diffuseMap grass4v-alien.png  }
+
+material grassX10b-alien {  parent grass
+    diffuseMap grassX10b-alien.png  }
+
+material grassXc-alien {  parent grass
+    diffuseMap grassXc-alien.png  }
