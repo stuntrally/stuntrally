@@ -680,7 +680,7 @@
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
 	<Tag name="Car_MassFront">Mass on front</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate (shift - global)   alt-RMB - pitch (shift - roll)</Tag>
-	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
+	<Tag name="SC_Alien">Alien</Tag>
 	<Tag name="Brush_ShapeTriangle">Triang</Tag>
 	<Tag name="TerGenOfsX">Posun X</Tag>
 	<Tag name="Brush_Freq">Freq</Tag>
@@ -707,6 +707,7 @@
 	<Tag name="CarDesc_FR4">Quite old, heavy, broad and slow. Good for terrain but not with the best suspension. Isn't suited for faster or stunt tracks.</Tag>
 	<Tag name="SunDir">Sun dir.</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
+	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
 	<Tag name="SC_Canyon">Kaňon</Tag>
 	<Tag name="TipTrkViewShort">Short list view.</Tag>
 	<Tag name="TipSmokeInt">Smoke particles intensity.</Tag>
@@ -960,6 +961,7 @@
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
 	<Tag name="jumps">jumps</Tag>
 	<Tag name="TBBest">Najlepšie</Tag>
+	<Tag name="Trilinear">Trilineárna</Tag>
 	<Tag name="Near">Blízko</Tag>
 	<Tag name="RestartApply">Restart game, to apply *changes.</Tag>
 	<Tag name="InputMultiplier">Multiplier</Tag>
@@ -1094,7 +1096,7 @@
 	<Tag name="HeightMin">Height Min</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
 	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
-	<Tag name="Trilinear">Trilineárna</Tag>
+	<Tag name="SC_Other">Other</Tag>
 	<Tag name="NetNew">Nová hra</Tag>
 	<Tag name="Gravity">Gravitácia</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - reset scale to 1 (with shift to 0.5)</Tag>

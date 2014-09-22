@@ -680,7 +680,7 @@
 	<Tag name="InputToggleCam">Tab - Kamera/Edit-modus umsch.</Tag>
 	<Tag name="Car_MassFront">Masse vorne</Tag>
 	<Tag name="InputStartAltLMB">Alt-LMT - rotieren (Umschalt: global); Alt-RMT - nicken (Umschalt: rollen)</Tag>
-	<Tag name="InputRoadAngSnap">5,6 - Winkel rasten ein</Tag>
+	<Tag name="SC_Alien">Alien</Tag>
 	<Tag name="Brush_ShapeTriangle">Dreieck</Tag>
 	<Tag name="TerGenOfsX">X-Versatz</Tag>
 	<Tag name="Brush_Freq">Freq</Tag>
@@ -707,6 +707,7 @@
 	<Tag name="CarDesc_FR4">Recht alt, schwer und langsam. Gut für Gelände aber nicht mit der besten Aufhängung. Ist nicht für schnellere oder Stunt-Strecken geeignet.</Tag>
 	<Tag name="SunDir">Sonnenrichtung</Tag>
 	<Tag name="InputRoadPick">Leer - Auswahl</Tag>
+	<Tag name="InputRoadAngSnap">5,6 - Winkel rasten ein</Tag>
 	<Tag name="SC_Canyon">Schlucht</Tag>
 	<Tag name="TipTrkViewShort">Kurze Listenansicht.</Tag>
 	<Tag name="TipSmokeInt">Intensität der Rauchpartikel.</Tag>
@@ -960,6 +961,7 @@
 	<Tag name="InputRoadEdit">R - Straße bearbeiten</Tag>
 	<Tag name="jumps">Sprünge</Tag>
 	<Tag name="TBBest">Beste</Tag>
+	<Tag name="Trilinear">Trilinear</Tag>
 	<Tag name="Near">Nah</Tag>
 	<Tag name="RestartApply">Spiel neustarten, um *Änderungen anzuwenden.</Tag>
 	<Tag name="InputMultiplier">Faktor</Tag>
@@ -1094,7 +1096,7 @@
 	<Tag name="HeightMin">Min. Höhe</Tag>
 	<Tag name="InputUpdate">F8 - Aktualisieren</Tag>
 	<Tag name="TrackDifficulties">Schwierigkeit der Strecke</Tag>
-	<Tag name="Trilinear">Trilinear</Tag>
+	<Tag name="SC_Other">Other</Tag>
 	<Tag name="NetNew">Neues Spiel</Tag>
 	<Tag name="Gravity">Schwerkraft</Tag>
 	<Tag name="InputObjectsScaleReset">Umschalt-3 - Skalierung auf 1 (Mit Umschalt auf 0,5)</Tag>

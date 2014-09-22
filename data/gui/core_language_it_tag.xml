@@ -680,7 +680,7 @@
 	<Tag name="InputToggleCam">Tab - modalità camera/modifica</Tag>
 	<Tag name="Car_MassFront">Mass on front</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - ruota (shift - globale)   alt-RMB - pitch (shift - rotola)</Tag>
-	<Tag name="InputRoadAngSnap">5,6   - snap angoli</Tag>
+	<Tag name="SC_Alien">Alien</Tag>
 	<Tag name="Brush_ShapeTriangle">Triang</Tag>
 	<Tag name="TerGenOfsX">Offset X</Tag>
 	<Tag name="Brush_Freq">Freq</Tag>
@@ -707,6 +707,7 @@
 	<Tag name="CarDesc_FR4">Abbastanza vecchia, pesanta, larga e lenta. Buona sui terreni ma non con sospensioni robuste. Non è adatta per piste veloci e acrobatiche.</Tag>
 	<Tag name="SunDir">Direz. sole</Tag>
 	<Tag name="InputRoadPick">Spazio - prendi uno/nessuno</Tag>
+	<Tag name="InputRoadAngSnap">5,6   - snap angoli</Tag>
 	<Tag name="SC_Canyon">Canyon</Tag>
 	<Tag name="TipTrkViewShort">Breve elenco.</Tag>
 	<Tag name="TipSmokeInt">Intensità particelle di fumo.</Tag>
@@ -960,6 +961,7 @@
 	<Tag name="InputRoadEdit">R - modifica la modalità di strada</Tag>
 	<Tag name="jumps">salti</Tag>
 	<Tag name="TBBest">Migliore</Tag>
+	<Tag name="Trilinear">Trilineare</Tag>
 	<Tag name="Near">Vicino</Tag>
 	<Tag name="RestartApply">Riavvia il gioco, per applicare i *cambiamenti.</Tag>
 	<Tag name="InputMultiplier">Moltiplicatore</Tag>
@@ -1094,7 +1096,7 @@
 	<Tag name="HeightMin">Altezza min.</Tag>
 	<Tag name="InputUpdate">F8 - aagiorna la pista</Tag>
 	<Tag name="TrackDifficulties">Piste con difficoltà differenti</Tag>
-	<Tag name="Trilinear">Trilineare</Tag>
+	<Tag name="SC_Other">Other</Tag>
 	<Tag name="NetNew">Nuovo gioco</Tag>
 	<Tag name="Gravity">Gravità</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - riavvia scala a 1 (con shift a 0.5)</Tag>

@@ -192,7 +192,7 @@
 	<Tag name="InputRoadChkRadius">K,L  - checkpoint radius  (ChkR 0 - none)</Tag>
 	<Tag name="TipCarSpeed">Classificação da vel. do carro, mais significa carro mais veloz. Aviso, no cascalho, carros muito rápidos não serão mais rápidos já que não terão aderência suficiente.</Tag>
 	<Tag name="InputRoadInsAlt">alt-shift - no início   alt-ctrl - no fim</Tag>
-	<Tag name="RearThrottleInverse">Rear throttle inverse</Tag>
+	<Tag name="RearThrottleInverse">Inverter aceleração da ré</Tag>
 	<Tag name="MessageBox_Yes">Sim</Tag>
 	<Tag name="BlendMap">Blendmap</Tag>
 	<Tag name="InputMapPrevCamera">Câmera Anterior</Tag>
@@ -211,7 +211,7 @@
 	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
 	<Tag name="SSS_SpeedFactor">Fator de Velocidade</Tag>
 	<Tag name="CarDesc_TC6">Good rally car. Has low height. Is a bit older and less powerful.</Tag>
-	<Tag name="Shadows">Shadows</Tag>
+	<Tag name="Shadows">Sombras</Tag>
 	<Tag name="TipNewTerrainFlat">Create new, flat terrain.</Tag>
 	<Tag name="MessageBox_Try">Tentar</Tag>
 	<Tag name="InputMapRewind">Voltar no tempo</Tag>
@@ -375,7 +375,7 @@
 	<Tag name="Development">Development</Tag>
 	<Tag name="SetCamTo">Set camera to</Tag>
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
-	<Tag name="SingleRace">Corrida Solo</Tag>
+	<Tag name="SingleRace">Corrida Simples</Tag>
 	<Tag name="TipNewGameCar">Reiniciar corrida.</Tag>
 	<Tag name="Road_Loop">Loop</Tag>
 	<Tag name="Road_AngleManual">Manual</Tag>
@@ -453,12 +453,12 @@
 	<Tag name="SC_Mars">Marte</Tag>
 	<Tag name="Hint-14text">Press F11 to show the bar with frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
 	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each model's own value).</Tag>
-	<Tag name="TireTrails">Tire Trails</Tag>
+	<Tag name="TireTrails">Rastro dos Pneus</Tag>
 	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
 	<Tag name="TipFogClrRGBA">R G B A components 0 to 1 (eg. 0.7 0.8 0.9 1). Last can be used to lower maximum density (1 is full).</Tag>
 	<Tag name="Language">Idioma</Tag>
 	<Tag name="Hint-0text">If you crashed or you're stuck, hold [Backspace] to move back in time.</Tag>
-	<Tag name="ReflMode_static">Static</Tag>
+	<Tag name="ReflMode_static">Estático</Tag>
 	<Tag name="InputCameraMode">Camera mode</Tag>
 	<Tag name="Enabled">Enabled</Tag>
 	<Tag name="Rivers">Rivers</Tag>
@@ -490,7 +490,7 @@
 	<Tag name="Multiplayer">Multiplayer</Tag>
 	<Tag name="ListeningOnPort">Escutando na porta</Tag>
 	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
-	<Tag name="Particles">Particles</Tag>
+	<Tag name="Particles">Partículas</Tag>
 	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
 	<Tag name="Other">Other</Tag>
 	<Tag name="TrackPipes">Pipes</Tag>
@@ -621,7 +621,7 @@
 	<Tag name="Intensity">Intensidade</Tag>
 	<Tag name="TipTerErrorNorm">Default terrain error in percent. Less for flat, more for high terrains.</Tag>
 	<Tag name="NetGameName">Nome do Jogo</Tag>
-	<Tag name="TexSize">Texture size</Tag>
+	<Tag name="TexSize">Tamanho da textura</Tag>
 	<Tag name="TipSunAmbient">Sun light ambient (constant) color. R G B components 0 to 1 (eg. 0.4 0.4 0.4)</Tag>
 	<Tag name="TipParType3">Tire Particle type 3 (global for track).</Tag>
 	<Tag name="ChngTrkTab">changed in [Track] tab</Tag>
@@ -634,7 +634,7 @@
 	<Tag name="FOV">View angle</Tag>
 	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
 	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
-	<Tag name="WaterReflection">Reflection</Tag>
+	<Tag name="WaterReflection">Reflexão</Tag>
 	<Tag name="intensity">intensity</Tag>
 	<Tag name="Fog">Fog</Tag>
 	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
@@ -657,7 +657,7 @@
 	<Tag name="InputRoadLMB">LMB (or Arrows)</Tag>
 	<Tag name="WrongChk">Checkpoint Errado</Tag>
 	<Tag name="NeedRestart">* precisa reiniciar</Tag>
-	<Tag name="Water">Water</Tag>
+	<Tag name="Water">Água</Tag>
 	<Tag name="mud">mud</Tag>
 	<Tag name="NetMasterConnectionError">Não foi possível chegar ao servidor mestre.</Tag>
 	<Tag name="ChampInfo">No modo tutorial/campeonato você pilota por uma série de pistas. É necessária uma pontuação mínima (que depende do seu tempo) para passar para a próxima etapa. É possível trocar de carro.</Tag>
@@ -680,7 +680,7 @@
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
 	<Tag name="Car_MassFront">Peso na frente</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate (shift - global)   alt-RMB - pitch (shift - roll)</Tag>
-	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
+	<Tag name="SC_Alien">Alien</Tag>
 	<Tag name="Brush_ShapeTriangle">Triang</Tag>
 	<Tag name="TerGenOfsX">Offset X</Tag>
 	<Tag name="Brush_Freq">Freq</Tag>
@@ -707,6 +707,7 @@
 	<Tag name="CarDesc_FR4">Quite old, heavy, broad and slow. Good for terrain but not with the best suspension. Isn't suited for faster or stunt tracks.</Tag>
 	<Tag name="SunDir">Sun dir.</Tag>
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
+	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
 	<Tag name="SC_Canyon">Canyon</Tag>
 	<Tag name="TipTrkViewShort">Exibição de lista curta.</Tag>
 	<Tag name="TipSmokeInt">Smoke particles intensity.</Tag>
@@ -749,7 +750,7 @@
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
 	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
 	<Tag name="TipGrassMaterial">Grass material (type) for this layer, chosen to match track's scenery.</Tag>
-	<Tag name="TipRearThrottleInverse">Inverse throttle and brake function in rear gear.</Tag>
+	<Tag name="TipRearThrottleInverse">Inverte a função do acelerador e do freio na marcha ré.</Tag>
 	<Tag name="LS_ROAD">Carregando Pista</Tag>
 	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
 	<Tag name="Pick">Pick</Tag>
@@ -774,7 +775,7 @@
 	<Tag name="TipChangeBright">Mudar brilho da cor do carro (escuro-claro).</Tag>
 	<Tag name="InputRoadAltMMB">alt-RMB (or 3,4)</Tag>
 	<Tag name="Any">Qualquer um</Tag>
-	<Tag name="Size">Size</Tag>
+	<Tag name="Size">Tamanho</Tag>
 	<Tag name="Reset">Reset</Tag>
 	<Tag name="ReplaysMenu">Replays</Tag>
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
@@ -825,7 +826,7 @@
 	<Tag name="Car_MaxTorque">Torque Max.</Tag>
 	<Tag name="RplGhost">Mostrar fantasma - melhor volta</Tag>
 	<Tag name="SplitVertically">Dividir Verticalmente</Tag>
-	<Tag name="Reflections">Reflections</Tag>
+	<Tag name="Reflections">Reflexos</Tag>
 	<Tag name="FogNormal">Normal</Tag>
 	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
 	<Tag name="TipRainSnow1">Set 1 Rain/Snow type</Tag>
@@ -863,7 +864,7 @@
 	<Tag name="TipFogClr">Fog end color when looking under sun.</Tag>
 	<Tag name="speed">speed</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
-	<Tag name="WaterRefraction">Refraction</Tag>
+	<Tag name="WaterRefraction">Refração</Tag>
 	<Tag name="SpecularPowerEm">Emissive power</Tag>
 	<Tag name="Far">Longe</Tag>
 	<Tag name="RplGhosts">Fantasmas</Tag>
@@ -882,7 +883,7 @@
 	<Tag name="TipDeleteTrk">Permanently delete selected track.</Tag>
 	<Tag name="Setup">Configuração</Tag>
 	<Tag name="Hint-7text">Pick the right car type for a track. So, don't use low cars on bumpy terrain, avoid large cars in narrow tracks, and fast super cars aren't meant for slippery surfaces.</Tag>
-	<Tag name="ReflMode_full">Full</Tag>
+	<Tag name="ReflMode_full">Completo</Tag>
 	<Tag name="TipDisableWeather">Disable weather particles.</Tag>
 	<Tag name="TerUpdSkip">Pular atualização do terreno</Tag>
 	<Tag name="Length">Duração</Tag>
@@ -960,6 +961,7 @@
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
 	<Tag name="jumps">saltos</Tag>
 	<Tag name="TBBest">Melhor</Tag>
+	<Tag name="Trilinear">Trilinear</Tag>
 	<Tag name="Near">Perto</Tag>
 	<Tag name="RestartApply">Reinicie o jogo para aplicar *alterações.</Tag>
 	<Tag name="InputMultiplier">Multiplier</Tag>
@@ -999,7 +1001,7 @@
 	<Tag name="Hint-3text">Remember that mostly you will drive on gravel. This means low grip, lower speeds and sliding. Wet gravel is even more slippery. Snow and ice are worst. Deserts are fastest.</Tag>
 	<Tag name="NormalsScale">Normals scale</Tag>
 	<Tag name="SC_Jungle">Selva</Tag>
-	<Tag name="Vegetation">Vegetation</Tag>
+	<Tag name="Vegetation">Vegetação</Tag>
 	<Tag name="SpeedUnit">Unid. de velocidade</Tag>
 	<Tag name="Used">Used</Tag>
 	<Tag name="TipImpDist">Far distance at which the 2d impostors dissapear.</Tag>
@@ -1033,7 +1035,7 @@
 	<Tag name="CameraBounce">Dynamic camera bouncing</Tag>
 	<Tag name="DistMult">Distance mul</Tag>
 	<Tag name="InputStartWidth">; &apos;  -  adjust start box width (for road width)</Tag>
-	<Tag name="ImpostorsOnly">Impostors Only (low quality)</Tag>
+	<Tag name="ImpostorsOnly">Apenas Impostores (baixa qualidade)</Tag>
 	<Tag name="Error">Erro</Tag>
 	<Tag name="Small">Pequeno</Tag>
 	<Tag name="Resolution">Resolução</Tag>
@@ -1094,7 +1096,7 @@
 	<Tag name="HeightMin">Height Min</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
 	<Tag name="TrackDifficulties">Pistas de vários níveis de dificuldade</Tag>
-	<Tag name="Trilinear">Trilinear</Tag>
+	<Tag name="SC_Other">Other</Tag>
 	<Tag name="NetNew">Novo jogo</Tag>
 	<Tag name="Gravity">Gravity</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - reset scale to 1 (with shift to 0.5)</Tag>

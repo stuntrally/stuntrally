@@ -680,7 +680,7 @@
 	<Tag name="InputToggleCam">Tab - камера / ред.  режим</Tag>
 	<Tag name="Car_MassFront">На перед</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - вращ. (shift - глоб.)   alt-RMB - накл.  (shift - вращ.)</Tag>
-	<Tag name="InputRoadAngSnap">5,6   - захват углов</Tag>
+	<Tag name="SC_Alien">Alien</Tag>
 	<Tag name="Brush_ShapeTriangle">Треуг.</Tag>
 	<Tag name="TerGenOfsX">Смещ. X</Tag>
 	<Tag name="Brush_Freq">Част.</Tag>
@@ -707,6 +707,7 @@
 	<Tag name="CarDesc_FR4">Довольно старый, тяжёлый, широкий и медленный. Хороший для земной местности, но не с лучшей подвеской. Не подходит для треков побыстрее или с трюками.</Tag>
 	<Tag name="SunDir">Напр. солнца</Tag>
 	<Tag name="InputRoadPick">Space - 1 выбрать/нет</Tag>
+	<Tag name="InputRoadAngSnap">5,6   - захват углов</Tag>
 	<Tag name="SC_Canyon">Каньон</Tag>
 	<Tag name="TipTrkViewShort">Просмотр коротким списком.</Tag>
 	<Tag name="TipSmokeInt">Интенсивность частиц дыма.</Tag>
@@ -960,6 +961,7 @@
 	<Tag name="InputRoadEdit">R - ред. дорогу</Tag>
 	<Tag name="jumps">прыжки</Tag>
 	<Tag name="TBBest">Лучш.</Tag>
+	<Tag name="Trilinear">Трилинейный</Tag>
 	<Tag name="Near">Близко</Tag>
 	<Tag name="RestartApply">Для применения изменений перезагрузите игру.</Tag>
 	<Tag name="InputMultiplier">Коэффициент</Tag>
@@ -1094,7 +1096,7 @@
 	<Tag name="HeightMin">Мин. высота</Tag>
 	<Tag name="InputUpdate">F8 - обновить трек</Tag>
 	<Tag name="TrackDifficulties">Разные сложности трека</Tag>
-	<Tag name="Trilinear">Трилинейный</Tag>
+	<Tag name="SC_Other">Other</Tag>
 	<Tag name="NetNew">Новая игра</Tag>
 	<Tag name="Gravity">Тяжесть</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - сброс шкалы до 1 (с shift до 0.5)</Tag>
