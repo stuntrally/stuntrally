@@ -3562,7 +3562,7 @@
 							<Property key="TextColour" value="0.65 0.8 0.9"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="248 490 524 24">
+						<Widget type="TextBox" skin="TextBox" position="248 432 484 24">
 							<Property key="Caption" value="#{TipSliderReset}"/>
 							<Property key="TextColour" value="0.45 0.55 0.65"/>
 						</Widget>

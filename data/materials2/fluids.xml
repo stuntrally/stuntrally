@@ -63,4 +63,6 @@
 		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
 		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" />
 
+	<fluid name="acid green"	material="Acid_green" density="500" angDamp="0.9" linDamp="0.4" heightDamp="1" fDamage="5" />
+
 </fluids>
