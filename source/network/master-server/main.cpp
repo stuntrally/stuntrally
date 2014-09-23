@@ -219,10 +219,10 @@ private:
 };
 
 const std::string StatusPage::m_templates[] = {
-	"Stunt Rall Master Server Status Page\n"
+	"Stunt Rally Master Server Status Page\n"
 	"====================================\n"
 	"\n"
-	"Currently, there are %GAMES% available games.\n"
+	"Currently there are %GAMES% available games.\n"
 	"\n"
 	"Started on %DATE%"
 	"Since then, there has been %LISTS% game list requests,\n"
@@ -239,10 +239,10 @@ const std::string StatusPage::m_templates[] = {
 	"	<title>[%GAMES%] Stunt Rally Master Server</title>\n"
 	"</head>\n"
 	"<body>\n"
-	"	<h1>Stunt Rally Master Server Status Page</h1>\n"
-	"	<p>Currently, there are %GAMES% available games.</p>\n"
-	"	<p>Since %DATE%, there has been %LISTS% game list requests, "
-		"%CREATED% lobbies created and %STARTED% games started.</p>\n"
+	"	<h1>Stunt Rally</br>Master Server</br>Status Page</h1>\n"
+	"	<p>Currently there are %GAMES% available games.</p>\n"
+	"	<p>Since %DATE% there have been:</br>%LISTS% game list requests,</br>"
+		"%CREATED% lobbies created and</br>%STARTED% games started.</p>\n"
 	"	<small>Running on port %PORT%.</small>\n"
 	"</body>\n"
 	"</html>\n"
