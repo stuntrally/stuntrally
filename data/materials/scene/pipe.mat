@@ -489,19 +489,39 @@ material pipeAsphaltRed
 	receives_shadows false
 }
 
+//  pipe metal
 material pipeMetal
 {
 	parent base
 	diffuseMap metal_pipe.png
 	ambient 1.0 1.0 1.0
 	diffuse 1.0 1.0 1.0
-	specular 1.0 1.0 1.0 4
-	specMap metal_pipe_spec.png
+	specular 0.3 0.3 0.3 16
+	//specMap metal_pipe_spec.png
 	normalMap metal_pipe_norm.png
-	bump_scale 0.1
+	bump_scale 0.12
 	depth_bias 3
 	cull_hardware none
 	receives_shadows false
+}
+
+material pipeMetalOrn
+{
+	parent pipeMetal
+	diffuseMap metal_pipe.png
+	ambient 1.2 1.0 0.8
+	diffuse 1.2 1.0 0.8
+	specular 0.5 0.3 0.4 16
+	bump_scale 0.2
+}
+
+material pipeMetalBlue
+{
+	parent pipeMetal
+	ambient 0.8 0.9 1.0
+	diffuse 0.8 0.9 1.0
+	specular 0.2 0.3 0.4 24
+	bump_scale 0.05
 }
 
 
