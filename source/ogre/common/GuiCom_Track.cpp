@@ -353,7 +353,7 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 		inf(7, ti.obstacles,3);  inf(8, ti.objects,3);
 
 		infTrk[ch][11]->setCaption(clrsLong[ti.longn] + str0(ti.longn));
-		a = ti.longn / 8.f;
+		a = ti.longn / 9.f;
 		imInfTrk[ch][11]->setAlpha(a);  infTrk[ch][11]->setAlpha(0.5f + 0.5f * a);
 		  infTrk[ch][9]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
 		imInfTrk[ch][9]->setAlpha(0.2f + 0.8f * ti.diff / 6.f);
