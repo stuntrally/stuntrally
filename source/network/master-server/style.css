@@ -1,0 +1,19 @@
+body {
+	font-family: monospace;
+	max-width: 400px;
+	height: 100%;
+	margin: 0 auto;
+	background: #a7cfdf;
+}
+
+h1 {
+	text-shadow: 2px 2px 2px rgba(150, 150, 150, 1);
+}
+
+body p:nth-child(2) {
+	font-weight: bold;
+}
+
+small {
+	color: #777;
+}
