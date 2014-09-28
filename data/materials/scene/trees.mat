@@ -611,12 +611,14 @@ material gum_branch_alien
 {
     parent base
     diffuseMap gum_branch_alien.png
-    ambient 0.59 0.59 0.59
-    diffuse 0.59 0.59 0.59
+    ambient 1.0 1.2 0.9
+    diffuse 1.0 1.2 0.9
+    specular 0.12 0.12 0.12 32
     alpha_rejection greater 128
     cull_hardware none
     transparent true
     tree_wind true
+	//receives_shadows false
 }
 
 material gum_bark_alien
@@ -632,14 +634,16 @@ material gum_bark_alien
 material jungle_tree_alien
 {
     parent base
-	transparent true
-	tree_wind true
-	terrain_light_map true
-    alpha_rejection greater 128
 	diffuseMap jungle_tree_alien.png
 	normalMap jungle_tree_normal.png
 	//specMap jungle_tree_spec.png
+    ambient 0.6 0.7 0.6
+    diffuse 0.6 0.72 0.7
 	specular 0.4 0.4 0.4 32
+    alpha_rejection greater 128
+	transparent true
+	tree_wind true
+	terrain_light_map true
 	cull_hardware none
 	receives_shadows false
 }
@@ -653,7 +657,7 @@ material rock_L2
 	terrain_light_map true
 	ambient 1.0 1.0 1.0
 	diffuse 0.7 0.7 0.8
-	//specular 0.5 0.5 1.0 32
+	specular 0.3 0.5 0.2 32
 }
 
 material rock_L3

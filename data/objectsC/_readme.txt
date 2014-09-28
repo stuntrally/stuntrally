@@ -45,4 +45,4 @@ Alien-building/base set
 Author: rubberduck
 License(s): CC0
 http://opengameart.org/content/alien-buildingbase-set
-textures by nobiax/yughes, CC0
+textures by nobiax/yughues, CC0
