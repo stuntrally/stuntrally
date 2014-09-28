@@ -32,6 +32,7 @@
 #define SOFT_PARTICLES  (@shPropertyBool(soft_particles) &&  @shGlobalSettingBool(soft_particles))
 #define SELECTED_GLOW  @shGlobalSettingBool(editor)
 #define SPECULAR_ALPHA  @shPropertyBool(specular_alpha)
+#define SPECMAP_RGB  @shPropertyBool(specMap_rgb)
 
 #if (TERRAIN_LIGHT_MAP) || (ENV_MAP) || (SOFT_PARTICLES) || (FOG_G)
 #define NEED_WORLD_MATRIX
@@ -502,12 +503,18 @@
 
 		#if !SPEC_MAP
 			specular = pow(specDot, spec_mul * shininess) * matSpec;
+			
 			#if CAR_PAINT_MAP
 			specular += pow(specDot, 1024) * matSpec;  // sun on car body
 			#endif
 		#else
 			float4 specTex = shSample(specMap, UV.xy);
-			specular = pow(specDot, /*spec_mul */ specTex.a * 255 * smul) * specTex.xyz * matSpec;
+			#if !SPECMAP_RGB						/* spec_mul */ 
+			specular = pow(specDot, specTex.a * 255 * smul) * specTex.xyz * matSpec;
+			#else
+			specular = pow(specDot, shininess * smul) * specTex.xyz * matSpec;
+			#endif
+			
 			#if CAR_PAINT_MAP
 			specular += pow(specDot, 1024) * specTex.xyz * matSpec;
 			#endif

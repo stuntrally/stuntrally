@@ -50,6 +50,9 @@ material pipe_glass
     specular_alpha true
     env_alpha 0 0 0 0
 
+    //  use true for rgb only
+    specMap_rgb false
+
 	normalMap
 	reflMap
 	alphaMap
@@ -112,6 +115,7 @@ material pipe_glass
 		    fresnelScaleBiasPower2 $fresnelScaleBiasPower2
 			specular2 $specular2
 			env_alpha $env_alpha
+			specMap_rgb $specMap_rgb
 		}
 
 		texture_unit diffuseMap
@@ -238,6 +242,7 @@ material pipe_glass
 		    fresnelScaleBiasPower2 $fresnelScaleBiasPower2
 			specular2 $specular2
 			env_alpha $env_alpha
+			specMap_rgb $specMap_rgb
 		}
 
 		texture_unit diffuseMap

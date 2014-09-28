@@ -49,6 +49,9 @@ material base
 	//  glass only
     specular_alpha false
     env_alpha 0 0 0 0
+    //  use true for rgb only,  eg. if specMap is jpg,  uses [specular], 4th value for power
+    //    if false, has to be rgba (png) with rgb intensity and power in a
+    specMap_rgb false
 	
 	normalMap
 	reflMap
@@ -110,6 +113,7 @@ material base
 		    fresnelScaleBiasPower2 $fresnelScaleBiasPower2
 			specular2 $specular2
 			env_alpha $env_alpha
+			specMap_rgb $specMap_rgb
 		}
 
 		texture_unit diffuseMap
