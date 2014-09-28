@@ -245,6 +245,7 @@ int main(int argc, char* argv[])
 
 	vector <Tag> tags;
 	size_t i,ii;
+	int tip=0,inp=0,und=0;
 	ifstream fi;
 
 
@@ -299,6 +300,11 @@ int main(int argc, char* argv[])
 					t.cmt = sCmt;
 					tags.push_back(t);
 					transl[name] = text;  //+
+
+					//  stats-
+					if (name.substr(0,5) == "Input")  ++inp;
+					if (name.substr(0,3) == "Tip")    ++tip;
+					if (found(name,"_"))  ++und;
 					
 					if (dupl[text].empty())  // duplicates check
 						dupl[text] = name;
@@ -315,7 +321,9 @@ int main(int argc, char* argv[])
 	}	}
 	fi.close();
 
-	cout << "Tags Count: " << tags.size() << endl << endl;
+	cout << "Tags Count: " << tags.size()
+		<< "   Input: " << inp << "  Tips: " << tip << "  _: " << und
+		<< "  Normal: " << tags.size()-inp-tip-und  << endl << endl;
 	if (tags.size()==0)
 	{	cout << "No tags !" << endl;
 		log("No tags !");
