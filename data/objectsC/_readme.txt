@@ -39,3 +39,10 @@ Calinou's high-resolution texture pack (with normal maps)
 Author: Calinou
 License(s): CC-BY-SA 3.0
 http://opengameart.org/content/calinous-high-resolution-texture-pack-with-normal-maps
+
+----  alien_*
+Alien-building/base set
+Author: rubberduck
+License(s): CC0
+http://opengameart.org/content/alien-buildingbase-set
+textures by nobiax/yughes, CC0
