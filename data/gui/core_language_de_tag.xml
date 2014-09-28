@@ -680,7 +680,7 @@
 	<Tag name="InputToggleCam">Tab - Kamera/Edit-modus umsch.</Tag>
 	<Tag name="Car_MassFront">Masse vorne</Tag>
 	<Tag name="InputStartAltLMB">Alt-LMT - rotieren (Umschalt: global); Alt-RMT - nicken (Umschalt: rollen)</Tag>
-	<Tag name="SC_Alien">Alien</Tag>
+	<Tag name="SC_Alien">Außerirdisch</Tag>
 	<Tag name="Brush_ShapeTriangle">Dreieck</Tag>
 	<Tag name="TerGenOfsX">X-Versatz</Tag>
 	<Tag name="Brush_Freq">Freq</Tag>
@@ -1096,7 +1096,7 @@
 	<Tag name="HeightMin">Min. Höhe</Tag>
 	<Tag name="InputUpdate">F8 - Aktualisieren</Tag>
 	<Tag name="TrackDifficulties">Schwierigkeit der Strecke</Tag>
-	<Tag name="SC_Other">Other</Tag>
+	<Tag name="SC_Other">Fremd</Tag>
 	<Tag name="NetNew">Neues Spiel</Tag>
 	<Tag name="Gravity">Schwerkraft</Tag>
 	<Tag name="InputObjectsScaleReset">Umschalt-3 - Skalierung auf 1 (Mit Umschalt auf 0,5)</Tag>

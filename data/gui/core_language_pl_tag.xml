@@ -680,7 +680,7 @@
 	<Tag name="InputToggleCam">Tab - tryb kamery / edycji</Tag>
 	<Tag name="Car_MassFront">Masy na przodzie</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - obróć (shift - globalnie)  alt-RMB - pochyl (shift - skrzyw.)</Tag>
-	<Tag name="SC_Alien">Alien</Tag>
+	<Tag name="SC_Alien">Obca</Tag>
 	<Tag name="Brush_ShapeTriangle">Trójkąt</Tag>
 	<Tag name="TerGenOfsX">Przesunięcie X</Tag>
 	<Tag name="Brush_Freq">Częst</Tag>
@@ -1096,7 +1096,7 @@
 	<Tag name="HeightMin">Wysokość Min</Tag>
 	<Tag name="InputUpdate">F8 - odśwież trasę</Tag>
 	<Tag name="TrackDifficulties">Różne trudności trasy</Tag>
-	<Tag name="SC_Other">Other</Tag>
+	<Tag name="SC_Other">Inna</Tag>
 	<Tag name="NetNew">Nowa gra</Tag>
 	<Tag name="Gravity">Grawitacja</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - resetuj skalę na 1 (shift na 0.5)</Tag>

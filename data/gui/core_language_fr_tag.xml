@@ -331,7 +331,7 @@
 	<Tag name="TipCopySource">Prendre le circuit sélectionné comme source pour la copie, utilisé dans l'onglet [Outils].</Tag>
 	<Tag name="InputMapNextTab">Onglet suivant</Tag>
 	<Tag name="InputBrushSize">,= (ou molette) - taille</Tag>
-	<Tag name="Car_StopTimeFrom">Temps d'arrêt de</Tag>
+	<Tag name="Car_StopTimeFrom">Temps d'arrêt à</Tag>
 	<Tag name="SC_JungleDark">JungleSombre</Tag>
 	<Tag name="Saving">Sauvegarde</Tag>
 	<Tag name="EscQuit">Esc quitte</Tag>
@@ -350,7 +350,7 @@
 	<Tag name="CountdownTime">Compte à rebours avant une course</Tag>
 	<Tag name="ReflMode_single">Unique</Tag>
 	<Tag name="InputRoadSelectMany">Sélectionner (plusieurs)</Tag>
-	<Tag name="Car_TopSpeed">Vitesse maxmimale</Tag>
+	<Tag name="Car_TopSpeed">Vitesse maximale</Tag>
 	<Tag name="HDR">HDR + ébouissement</Tag>
 	<Tag name="Hint-4text">Faites attention aux dégâts de votre véhicule, notamment dans les circuits acrobatiques. Votre véhicule ne fonctionnera plus s'il est complètement endommagé et sa performance sera amoindrie à partir de 50 %.</Tag>
 	<Tag name="TipABS">Évite le blocage des roues au freinage (par défaut : désactivé).</Tag>
@@ -680,7 +680,7 @@
 	<Tag name="InputToggleCam">Tab - changer entre mode édition et caméra</Tag>
 	<Tag name="Car_MassFront">Masse à l'avant</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate (shift - global)   alt-RMB - pitch (shift - roll)</Tag>
-	<Tag name="SC_Alien">Alien</Tag>
+	<Tag name="SC_Alien">Extraterrestre</Tag>
 	<Tag name="Brush_ShapeTriangle">Triang</Tag>
 	<Tag name="TerGenOfsX">Décalage X</Tag>
 	<Tag name="Brush_Freq">Fréq.</Tag>
@@ -871,7 +871,7 @@
 	<Tag name="CarType">Type</Tag>
 	<Tag name="Tile">Répéter</Tag>
 	<Tag name="SC_Crystals">Cristaux</Tag>
-	<Tag name="RplBestOnly">Enregistrer le fantôme pour le meilleur temps seulement</Tag>
+	<Tag name="RplBestOnly">Fantôme pour le meilleur temps seulement</Tag>
 	<Tag name="InputFluidsMode">W - éditer les liquides</Tag>
 	<Tag name="Front">Avant</Tag>
 	<Tag name="InputInverse">Inverse</Tag>
@@ -1027,7 +1027,7 @@
 	<Tag name="TipRainSnowInt">Intensité de la pluie/neige (par exemple 1000)</Tag>
 	<Tag name="TrackLength">Longueur</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
-	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
+	<Tag name="GhostHideDist">Cacher les fantômes s'ils sont à moins de</Tag>
 	<Tag name="TipRoadDist">À quelle distance de la route le modèle commencera à apparaître.</Tag>
 	<Tag name="FramesPerSec">Images par seconde</Tag>
 	<Tag name="ChampInfo2">Les championnats sont généralement longs, ont plusieurs circuits, mais sont faciles à réussir.</Tag>
@@ -1096,7 +1096,7 @@
 	<Tag name="HeightMin">Hauteur Min</Tag>
 	<Tag name="InputUpdate">F8 - mettre à jour la piste</Tag>
 	<Tag name="TrackDifficulties">Différentes difficultés</Tag>
-	<Tag name="SC_Other">Other</Tag>
+	<Tag name="SC_Other">Autre</Tag>
 	<Tag name="NetNew">Nouvelle partie</Tag>
 	<Tag name="Gravity">Gravité</Tag>
 	<Tag name="InputObjectsScaleReset">Maj.-3 - réinit. l'échelle à 1 (avec Maj. à 0.5)</Tag>
