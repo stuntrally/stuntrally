@@ -871,6 +871,7 @@
 	<Tag name="CarType">Tyyppi</Tag>
 	<Tag name="Tile">Tile</Tag>
 	<Tag name="SC_Crystals">Crystals</Tag>
+	<Tag name="SC_Stone">Stone</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
 	<Tag name="InputFluidsMode">W - muokkaa nesteitä</Tag>
 	<Tag name="Front">Front</Tag>

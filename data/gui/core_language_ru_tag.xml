@@ -871,6 +871,7 @@
 	<Tag name="CarType">Тип</Tag>
 	<Tag name="Tile">Плитка</Tag>
 	<Tag name="SC_Crystals">Кристаллы</Tag>
+	<Tag name="SC_Stone">Stone</Tag>
 	<Tag name="RplBestOnly">Сохр. призрака с лучш. временем</Tag>
 	<Tag name="InputFluidsMode">W - ред. жидкости</Tag>
 	<Tag name="Front">Перед</Tag>

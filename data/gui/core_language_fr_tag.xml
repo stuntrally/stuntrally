@@ -871,6 +871,7 @@
 	<Tag name="CarType">Type</Tag>
 	<Tag name="Tile">Répéter</Tag>
 	<Tag name="SC_Crystals">Cristaux</Tag>
+	<Tag name="SC_Stone">Stone</Tag>
 	<Tag name="RplBestOnly">Fantôme pour le meilleur temps seulement</Tag>
 	<Tag name="InputFluidsMode">W - éditer les liquides</Tag>
 	<Tag name="Front">Avant</Tag>

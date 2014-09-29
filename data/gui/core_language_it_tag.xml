@@ -871,6 +871,7 @@
 	<Tag name="CarType">Tipo</Tag>
 	<Tag name="Tile">Tile</Tag>
 	<Tag name="SC_Crystals">Cristalli</Tag>
+	<Tag name="SC_Stone">Stone</Tag>
 	<Tag name="RplBestOnly">Salva il fantasma solo per il tempo migliore</Tag>
 	<Tag name="InputFluidsMode">W - modifica i flussi</Tag>
 	<Tag name="Front">Frontale</Tag>

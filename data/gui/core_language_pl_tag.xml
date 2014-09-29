@@ -871,6 +871,7 @@
 	<Tag name="CarType">Typ</Tag>
 	<Tag name="Tile">Rozciąg</Tag>
 	<Tag name="SC_Crystals">Kryształy</Tag>
+	<Tag name="SC_Stone">Stone</Tag>
 	<Tag name="RplBestOnly">Zapisuj ducha tylko dla lepszych czasów</Tag>
 	<Tag name="InputFluidsMode">W - edytuj ciecze</Tag>
 	<Tag name="Front">Przód</Tag>

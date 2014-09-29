@@ -871,6 +871,7 @@
 	<Tag name="CarType">Klasse</Tag>
 	<Tag name="Tile">Kacheln</Tag>
 	<Tag name="SC_Crystals">Kristalle</Tag>
+	<Tag name="SC_Stone">Stone</Tag>
 	<Tag name="RplBestOnly">Geist nur für beste Zeit speichern</Tag>
 	<Tag name="InputFluidsMode">W - Gewässer bearbeiten</Tag>
 	<Tag name="Front">Vorne</Tag>
