@@ -382,7 +382,8 @@ void App::newPoses(float time)  // time only for camera update
 									pGame->snd_chk.Play();  //)
 							}
 							else
-							if (carM->iInChk != carM->iCurChk)
+							if (carM->iInChk != carM->iCurChk &&
+								!scn->sc->noWrongChks)  // denies
 							{
 								carM->bWrongChk = true;
 								

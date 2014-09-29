@@ -1125,6 +1125,7 @@
 	<Tag name="Gravity">Gravity</Tag>
 	<Tag name="Wind">Wind</Tag>
 	<Tag name="DenyReversed">Deny reversed direction</Tag>
+	<Tag name="NoWrongChks">Don't show wrong checkpoint messages</Tag>
 
 	<!--  Editor Warnings  -->
 	<Tag name="Warnings">Warnings</Tag>

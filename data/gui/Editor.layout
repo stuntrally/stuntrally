@@ -1232,7 +1232,7 @@
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="32 152 276 24" name="TiresAsphalt">
 					<Property key="Caption" value="#{Tires}: #{Asphalt}"/>
-					<Property key="TextColour" value="0.8 0.7 0.7"/>
+					<Property key="TextColour" value="0.7 0.7 0.7"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="380 60 264 24">
 					<Property key="Caption" value="#{Gravity}"/>
@@ -1253,6 +1253,10 @@
 				<Widget type="Button" skin="CheckBox" position="32 196 320 24" name="DenyReversed">
 					<Property key="Caption" value="#{DenyReversed}"/>
 					<Property key="TextColour" value="0.6 0.8 0.8"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 240 320 24" name="NoWrongChks">
+					<Property key="Caption" value="#{NoWrongChks}"/>
+					<Property key="TextColour" value="0.8 0.7 0.7"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">

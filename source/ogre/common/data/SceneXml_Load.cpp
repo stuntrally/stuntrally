@@ -170,6 +170,7 @@ bool Scene::LoadXml(String file, bool bTer)
 
 		a = e->Attribute("denyRev");	if (a)  denyReversed = s2i(a) > 0;
 		a = e->Attribute("gravity");	if (a)  gravity = s2r(a);
+		a = e->Attribute("noWrongChks"); if (a)  noWrongChks = s2i(a) > 0;
 	}
 
 	///  car start
@@ -478,6 +479,8 @@ bool Scene::SaveXml(String file)
 			car.SetAttribute("damage",	toStrC( damageMul ));
 		if (!td.road1mtr)
 			car.SetAttribute("road1mtr", td.road1mtr ? "1":"0");
+		if (noWrongChks)
+			car.SetAttribute("noWrongChks", noWrongChks ? "1":"0");
 
 		if (denyReversed)
 			car.SetAttribute("denyRev",	"1");

@@ -292,6 +292,7 @@ public:
 	//  game
 	bool asphalt;  // use asphalt tires car
 	bool denyReversed;  // track (road) dir
+	bool noWrongChks;  // dont show "wrong checkpoint" messages
 
 	float windAmt;  //, windDirYaw, windTurbulFreq,windTurbulAmp;
 	float damageMul;  // reduce car damage in loops
@@ -337,6 +338,7 @@ public:
 	
 	//  base track (new from) for info
 	std::string baseTrk;
+
 	
 	//  methods
 	Scene();  void Default(), UpdateFluidsId(), UpdateSurfId();

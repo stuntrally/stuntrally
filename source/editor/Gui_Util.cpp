@@ -95,6 +95,7 @@ void CGui::SetGuiFromXmls()
 	ckDenyReversed.Upd(&sc->denyReversed);
 	ckTiresAsphalt.Upd(&sc->asphalt);
 	ckTerrainEmissive.Upd(&sc->td.emissive);
+	ckNoWrongChks.Upd(&sc->noWrongChks);
 	SldUpd_Game();
 	
 	//  [Surface]
