@@ -61,7 +61,7 @@ const String CGuiCom::clrsDiff[9] =  // difficulty
 const String CGuiCom::clrsRating[6] =  // rating
 	{"#808080", "#606060", "#7090A0", "#60C8D8", "#A0D0F0", "#E0F0FF"};
 const String CGuiCom::clrsLong[10] =  // long
-	{"#E0D0D0", "#E8C0C0", "#F0B0B0", "#F8A0A0", "#FF9090", "#FF8080", "#F07070", "#F06060", "#E04040", "#D02020"};
+	{"#E0D0D0", "#E8C0C0", "#F0B0B0", "#F8A0A0", "#FF9090", "#FF8080", "#F07070", "#F06060", "#E04040", "#D03030"};
 
 void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 {

@@ -259,6 +259,7 @@
 	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
 	<Tag name="SC_Alien">Alien</Tag>
 	<Tag name="SC_Other">Other</Tag>
+	<Tag name="SC_Stone">Stone</Tag>
 	
 
 <!--  ..............................................................................................  -->
