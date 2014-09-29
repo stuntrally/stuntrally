@@ -73,6 +73,10 @@ My license is also  CC-0
 43  savanna_dry
 44  savanna_green
 
+52  stones_gray
+112 stones_color
+218 stones_brown
+
 245 ycrystals_fine
 249 ycrystals_med
 124 ycrystals_big
