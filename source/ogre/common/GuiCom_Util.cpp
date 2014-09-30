@@ -73,7 +73,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnN["X"] = "Unidentified";  scnN["R"] = "Mars";
 	scnN["Y"] = "Crystals";      scnN["GW"]= "GreeceWhite";
 	scnN["L"] = "Alien";         scnN["N"] = "Other";
-	scnN["P"] = "Stone";
+	scnN["P"] = "Stone";         scnN["H"] = "Space";
 	//  scenery colors for track names
 	scnClr["Asphalt"]      = "#B0E0E0";
 	scnClr["Jungle"]       = "#50FF50";  scnClr["JungleDark"]   = "#40C040";
@@ -91,7 +91,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnClr["Unidentified"] = "#8080D0";  scnClr["Mars"]         = "#A04840";
 	scnClr["Crystals"]     = "#4090F0";  scnClr["GreeceWhite"]  = "#C0C0A0";
 	scnClr["Alien"]        = "#D0FFA0";  scnClr["Other"]        = "#E0C0D0";
-	scnClr["Stone"]        = "#A0A0A0";  
+	scnClr["Stone"]        = "#A0A0A0";  scnClr["Space"]        = "#A0B8D0";
 }
 
 int TrkL::idSort = 0;

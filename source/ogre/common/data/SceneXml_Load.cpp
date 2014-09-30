@@ -621,13 +621,14 @@ bool Scene::SaveXml(String file)
 			tex.SetAttribute("surf",	l->surfName.c_str());
 			setDmst();
 			ter.InsertEndChild(tex);
-		
-			TiXmlElement par("par");
-				par.SetAttribute("dust",	sParDust.c_str());
-				par.SetAttribute("mud",		sParMud.c_str());
-				par.SetAttribute("smoke",	sParSmoke.c_str());
-			ter.InsertEndChild(par);
 		}
+		
+		TiXmlElement par("par");
+			par.SetAttribute("dust",	sParDust.c_str());
+			par.SetAttribute("mud",		sParMud.c_str());
+			par.SetAttribute("smoke",	sParSmoke.c_str());
+		ter.InsertEndChild(par);
+
 	root.InsertEndChild(ter);
 	
 
