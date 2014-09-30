@@ -416,3 +416,152 @@ material rock_n5_alien
 	diffuse 0.7 0.7 0.8
 	//specular 0.5 0.5 1.0 32
 }
+
+
+//  alien contructions
+material metal_01
+{
+    parent base
+	diffuseMap metal_01.jpg
+	normalMap metal_01_norm.jpg
+	specMap metal_01_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.6 0.6 0.6 20
+	env_map true
+    fresnel false
+    refl_amount 0.05
+    reflMap metal_01_spec.jpg
+}
+
+material metal_02
+{
+    parent base
+	diffuseMap metal_02.jpg
+	normalMap metal_02_norm.jpg
+	specMap metal_02_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.8 0.8 0.8 16
+	env_map true
+    fresnel false
+    refl_amount 0.05
+    reflMap metal_02_spec.jpg
+}
+
+material metal_02_dark
+{
+    parent base
+	diffuseMap metal_02_dark.jpg
+	normalMap metal_02_norm.jpg
+	specMap metal_02_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.7 0.7 0.7 32
+	env_map true
+    fresnel false
+    refl_amount 0.01
+}
+
+material metal_03_green
+{
+    parent base
+	diffuseMap metal_03_green.jpg
+	normalMap metal_03_norm.jpg
+	specMap metal_03_green_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.5 0.5 0.5 24
+}
+
+material metal_03_red
+{
+    parent base
+	diffuseMap metal_03_red.jpg
+	normalMap metal_03_norm.jpg
+	specMap metal_03_red_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.8 0.8 0.8 32
+}
+
+material metal_04
+{
+    parent base
+	diffuseMap metal_04.jpg
+	normalMap metal_04_norm.jpg
+	specMap metal_04_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 12
+}
+
+material metal_05
+{
+    parent base
+	diffuseMap metal_05.jpg
+	normalMap metal_05_norm.jpg
+	specMap metal_05_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 16
+}
+
+material metal_06
+{
+    parent base
+	diffuseMap metal_06.jpg
+	normalMap metal_06_norm.jpg
+	specMap metal_06_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 12
+	env_map true
+    fresnel false
+    refl_amount 0.05
+    reflMap metal_06.jpg
+}
+
+material metal_07
+{
+    parent base
+	diffuseMap metal_07.jpg
+	normalMap metal_07_norm.jpg
+	specMap metal_07_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 24
+}
+
+material metal_08
+{
+    parent base
+	diffuseMap metal_08.jpg
+	normalMap metal_08_norm.png
+	specMap metal_08_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 20
+}
+
+material metal_details
+{
+    parent base
+	diffuseMap metal_details.png
+	normalMap metal_details_norm.jpg
+	specMap metal_details_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 16
+}
