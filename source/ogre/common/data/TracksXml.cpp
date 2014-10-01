@@ -143,11 +143,14 @@ bool TracksXml::LoadIni(std::string file)
 			size_t p2 = t.name.find('-'), p1;
 			if (p2 != string::npos)
 			{
-				p1 = t.name.find_first_of("1234567890", 1);  //1 ignore 0W
-				if (p1 != string::npos && p1 <= p2-1)
+				p1 = t.name.find_first_of("1234567890");
+				if (p1 != string::npos && p2-p1 > 0)
 				{
-					string ss = t.name.substr(p1, p2-1);
+					string ss = t.name.substr(p1, p2-p1);
 					t.nn = atoi(ss.c_str());
+					t.nn += uchar(t.name[0])<<16;  // meh
+					t.nn += uchar(t.name[1])<<8;
+					//LogO(t.name+"  "+ss+"  "+toStr(t.nn));
 			}	}
 			
 				t.testC = t.name.length() > 5 ? t.name.substr(0,5)=="TestC" : false;
