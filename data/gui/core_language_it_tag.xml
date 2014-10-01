@@ -421,6 +421,7 @@
 	<Tag name="ColumnNSides">Lati colonna N</Tag>
 	<Tag name="RplAutoRec">Registrazione replay automatica</Tag>
 	<Tag name="TipCarsList">Lista delle auto. Premi Invio o [Nuovo gioco] per guidare.</Tag>
+	<Tag name="NoWrongChks">Don't show wrong checkpoint messages</Tag>
 	<Tag name="HDROrigImage">Oscurità bloom</Tag>
 	<Tag name="Brushes">Brush</Tag>
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (o rotellina) - flusso precedente/seguente</Tag>
@@ -798,6 +799,7 @@
 	<Tag name="Road_Yaw">Yaw</Tag>
 	<Tag name="CarDesc_UV">Questo veicolo vantaggiato di grosse ruote è alimentato da quattro motori elettrici. Adatto per quasi tutti i tipi di pista, tranne su quelle di stretta misura. Ottimo per esplorare altri pianeti. Offre cattiva aerodinamica e rimane incollata nel fango.</Tag>
 	<Tag name="RoadPointSize">Dimensioni dei punti stradali</Tag>
+	<Tag name="SC_Space">Space</Tag>
 	<Tag name="TipTCS">Impedisce che le ruote girino durante l'accelerazione (default: disattivato).</Tag>
 	<Tag name="InputRoadColumn">End - attiva/disattiva colonna</Tag>
 	<Tag name="Substract">Rimuovi</Tag>

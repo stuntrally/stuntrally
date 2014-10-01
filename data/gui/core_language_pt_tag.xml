@@ -421,6 +421,7 @@
 	<Tag name="ColumnNSides">Column N sides</Tag>
 	<Tag name="RplAutoRec">Gravar replay automaticamente</Tag>
 	<Tag name="TipCarsList">Lista de carros. Pressione Enter ou [Novo Jogo] para dirigir com ele.</Tag>
+	<Tag name="NoWrongChks">Don't show wrong checkpoint messages</Tag>
 	<Tag name="HDROrigImage">Bloom Darken</Tag>
 	<Tag name="Brushes">Brushes</Tag>
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
@@ -798,6 +799,7 @@
 	<Tag name="Road_Yaw">Yaw</Tag>
 	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
 	<Tag name="RoadPointSize">Road points size</Tag>
+	<Tag name="SC_Space">Space</Tag>
 	<Tag name="TipTCS">Previne que as rodas patinem ao acelerar (padrão: desligado).</Tag>
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
 	<Tag name="Substract">Substract</Tag>

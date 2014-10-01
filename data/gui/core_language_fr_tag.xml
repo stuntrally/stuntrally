@@ -421,6 +421,7 @@
 	<Tag name="ColumnNSides">Côtés d'une colonne</Tag>
 	<Tag name="RplAutoRec">Enregistrer un replay automatiquement</Tag>
 	<Tag name="TipCarsList">Liste des voitures. Appuyez sur Entrée ou [Nouvelle partie] pour les conduire.</Tag>
+	<Tag name="NoWrongChks">Don't show wrong checkpoint messages</Tag>
 	<Tag name="HDROrigImage">Intensité de l'ébouissement</Tag>
 	<Tag name="Brushes">Pinceaux</Tag>
 	<Tag name="InputFluidsPrevNext">Pg.préc,Pg.suiv. (ou molette) - liquide précédent/suivant</Tag>
@@ -798,6 +799,7 @@
 	<Tag name="Road_Yaw">Angle horizontal</Tag>
 	<Tag name="CarDesc_UV">Ce gros véhicule utilitaire est propulsé par 4 moteurs électriques. Adaptée à quasiment tous les circuits, sauf les plus étroits. Excellent pour explorer d'autres planètes. Mais ce véhicule gère mal les sauts et se coince dans la boue.</Tag>
 	<Tag name="RoadPointSize">Taille des points de la route</Tag>
+	<Tag name="SC_Space">Space</Tag>
 	<Tag name="TipTCS">Évite de tourner les roues en accélérant (par défaut : désactivé).</Tag>
 	<Tag name="InputRoadColumn">Fin - activer/désactiver la colonne</Tag>
 	<Tag name="Substract">Soustraire</Tag>

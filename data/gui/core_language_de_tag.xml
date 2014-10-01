@@ -421,6 +421,7 @@
 	<Tag name="ColumnNSides">Anzahl Säulenseiten</Tag>
 	<Tag name="RplAutoRec">Automatisch aufnehmen</Tag>
 	<Tag name="TipCarsList">Autoliste. Drücken Sie die Eingabetaste oder klicken Sie auf [Neues Spiel], um mit dem ausgewähltem Auto zu fahren.</Tag>
+	<Tag name="NoWrongChks">Don't show wrong checkpoint messages</Tag>
 	<Tag name="HDROrigImage">Überstrahlung abdunkeln</Tag>
 	<Tag name="Brushes">Pinsel</Tag>
 	<Tag name="InputFluidsPrevNext">Bild/Mausrad auf/ab - Gewässer vor/zurück</Tag>
@@ -798,6 +799,7 @@
 	<Tag name="Road_Yaw">Gier</Tag>
 	<Tag name="CarDesc_UV">Dieses großradige Gebrauchsfahrzeug wird von 4 Elektromotoren angetrieben. Es für für nahezu alle Strecken, außer die engen, geeignet. Großartig zum Erforschen anderer Planeten. Aber es hat eine schlechte Aerodynamik und bleibt im Schlamm stecken.</Tag>
 	<Tag name="RoadPointSize">Straßenpunkte-Größe</Tag>
+	<Tag name="SC_Space">Space</Tag>
 	<Tag name="TipTCS">Verhindert das Rutschen der Reifen beim Beschleunigen (Standard: aus)</Tag>
 	<Tag name="InputRoadColumn">Ende - Säule an/aus</Tag>
 	<Tag name="Substract">Subtrahieren</Tag>
@@ -871,7 +873,7 @@
 	<Tag name="CarType">Klasse</Tag>
 	<Tag name="Tile">Kacheln</Tag>
 	<Tag name="SC_Crystals">Kristalle</Tag>
-	<Tag name="SC_Stone">Stone</Tag>
+	<Tag name="SC_Stone">Stein</Tag>
 	<Tag name="RplBestOnly">Geist nur für beste Zeit speichern</Tag>
 	<Tag name="InputFluidsMode">W - Gewässer bearbeiten</Tag>
 	<Tag name="Front">Vorne</Tag>

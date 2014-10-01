@@ -421,6 +421,7 @@
 	<Tag name="ColumnNSides">Верт. N стороны</Tag>
 	<Tag name="RplAutoRec">Автозап. повтора</Tag>
 	<Tag name="TipCarsList">Список автомобилей. Нажми Enter или [Новая игра], чтобы на нем поехать.</Tag>
+	<Tag name="NoWrongChks">Don't show wrong checkpoint messages</Tag>
 	<Tag name="HDROrigImage">Затемнение</Tag>
 	<Tag name="Brushes">Кисти</Tag>
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (или Wheel) - пред./след. жидкость</Tag>
@@ -798,6 +799,7 @@
 	<Tag name="Road_Yaw">Откл.</Tag>
 	<Tag name="CarDesc_UV">Универсальное авто с большими колёсами, снабженный 4 электродвигателями. Подходит для почти всех треков, за исключением узких. Великолепный для исследования других планет. Но плохая аэродинамика и застревает в грязи.</Tag>
 	<Tag name="RoadPointSize">Размер точек дороги</Tag>
+	<Tag name="SC_Space">Space</Tag>
 	<Tag name="TipTCS">Предотвращает кручение колеса при ускорении (по умолчанию: выключено).</Tag>
 	<Tag name="InputRoadColumn">End - вкл./выкл. колонну</Tag>
 	<Tag name="Substract">Основа</Tag>
