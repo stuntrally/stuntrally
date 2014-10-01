@@ -8,6 +8,7 @@
 
 #include <SDL_syswm.h>
 #include <SDL_endian.h>
+#include <stdexcept>
 
 namespace SFO
 {
