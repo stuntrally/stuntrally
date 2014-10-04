@@ -137,6 +137,14 @@ bool TracksXml::LoadIni(std::string file)
 			t.name = name;
 			t.scenery = scenery;
 			t.author = author;
+
+			string shrt;  //-  name short  (without prefix)
+			size_t p = t.name.find("-");
+			if (p != string::npos /*&& !(name[0]=='T' && name[1]=='e')*/)
+				shrt = t.name.substr(p+1);  // short name
+			else
+				shrt = t.name;
+			t.nshrt = shrt;
 			
 			//  get number from name, id for scenery
 			t.nn = 0;

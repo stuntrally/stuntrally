@@ -66,37 +66,50 @@ const String CGuiCom::clrsLong[10] =  // long
 void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 {
 	String c = GetSceneryColor(name);
-
 	Mli2 li = trkList;
-	li->addItem(c+name, 0);
+
+	//  split -
+	string pre, shrt;
+	size_t p = name.find("-");  // Test
+	if (p != string::npos /*&& !(name[0]=='T' && name[1]=='e')*/)
+	{
+		pre = name.substr(0,p);
+		shrt = name.substr(p+1);  // short name
+	}else
+	{	pre = name;  shrt = name;  }
+	
+	//  add  name = prefix-short
+	li->addItem(c+ pre, 0);
+	int l = li->getItemCount()-1;
+	li->setSubItemNameAt(1,l, c+ name);
+	li->setSubItemNameAt(2,l, c+ shrt);
 
 	if (!ti)  return;  //  details
-	int l = li->getItemCount()-1;
-	
-	li->setSubItemNameAt(1,l, c+ toStr(ti->n/10)+toStr(ti->n%10));
-	li->setSubItemNameAt(2,l, c+ TR("#{SC_"+ti->scenery+"}"));
-	li->setSubItemNameAt(3,l, c+ fToStr(ti->crtver,1,3));
+	li->setSubItemNameAt(3,l, c+ toStr(ti->n/10)+toStr(ti->n%10));
+	li->setSubItemNameAt(4,l, c+ TR("#{SC_"+ti->scenery+"}"));
+	li->setSubItemNameAt(5,l, c+ fToStr(ti->crtver,1,3));
+
 	//list->setSubItemNameAt(4,l, ti->created);  list->setSubItemNameAt(5,l, ti->modified);
 	#define toS(clr,v)  (v > 0) ? (String(clr)+"  "+toStr(v)) : " "
-	li->setSubItemNameAt(4,l, toS(clrsDiff[ti->diff], ti->diff));
-	li->setSubItemNameAt(5,l, toS(clrsRating[ti->rating], ti->rating));
+	li->setSubItemNameAt(6,l, toS(clrsDiff[ti->diff], ti->diff));
+	li->setSubItemNameAt(7,l, toS(clrsRating[ti->rating], ti->rating));
 	//todo: rateuser drivenlaps
-	li->setSubItemNameAt(6,l, toS("#D070A0",ti->objects));
-	li->setSubItemNameAt(7,l, toS("#C09060",ti->obstacles));
-	li->setSubItemNameAt(8,l, toS("#80C0FF",ti->fluids));
-	li->setSubItemNameAt(9,l, toS("#40FF00",ti->bumps));
-	li->setSubItemNameAt(10,l,toS("#FFA030",ti->jumps));
-	li->setSubItemNameAt(11,l,toS("#00FFFF",ti->loops));
-	li->setSubItemNameAt(12,l,toS("#FFFF00",ti->pipes));
-	li->setSubItemNameAt(13,l,toS("#C0C0C0",ti->banked));
-	li->setSubItemNameAt(14,l,toS("#C080FF",ti->frenzy));
-	li->setSubItemNameAt(15,l,toS(clrsLong[ti->longn], ti->longn));
+	li->setSubItemNameAt(8,l, toS("#D070A0",ti->objects));
+	li->setSubItemNameAt(9,l, toS("#C09060",ti->obstacles));
+	li->setSubItemNameAt(10,l,toS("#80C0FF",ti->fluids));
+	li->setSubItemNameAt(11,l,toS("#40FF00",ti->bumps));
+	li->setSubItemNameAt(12,l,toS("#FFA030",ti->jumps));
+	li->setSubItemNameAt(13,l,toS("#00FFFF",ti->loops));
+	li->setSubItemNameAt(14,l,toS("#FFFF00",ti->pipes));
+	li->setSubItemNameAt(15,l,toS("#C0C0C0",ti->banked));
+	li->setSubItemNameAt(16,l,toS("#C080FF",ti->frenzy));
+	li->setSubItemNameAt(17,l,toS(clrsLong[ti->longn], ti->longn));
 }
 
 //  * * * *  CONST  * * * *
-//  column widths in MultiList2
-const int wi = 26;  // track detailed
-const int CGuiCom::colTrk[32] = {150, 40, 80, 40, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 24};
+//  column widths in MultiList2,  track detailed
+const int wi = 17;            // id name nm   N  scn ver
+const int CGuiCom::colTrk[32] = {40, 90, 80, 25, 70, 25, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 24};
 #ifndef SR_EDITOR
 const int CGui::colCar[16] = {34, 27, 37, 52, 24};  // car
 const int CGui::colCh [16] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
@@ -147,9 +160,12 @@ void CGuiCom::GuiInitTrack()
 	BtnC("TrkView2", btnTrkView2);  imgTrkIco2 = fImg("TrkView2icons2");
 	
 	li->removeAllColumns();  int c=0;
-	li->addColumn("#E0FFE0"+TR("#{Name}"), colTrk[c++]);
+	li->addColumn("#C0E0C0""id", colTrk[c++]);  // prefix
+	li->addColumn("#D0FFD0"+TR("#{Name}"), colTrk[c++]);  // full
+	li->addColumn("#E0FFE0"+TR("#{Name}"), colTrk[c++]);  // short
+
 	li->addColumn("#80FF80""N", colTrk[c++]);
-	li->addColumn("#80FF80"+TR("#{Scenery}"), colTrk[c++]);
+	li->addColumn("#80FFC0"+TR("#{Scenery}"), colTrk[c++]);
 	li->addColumn("#80FF80""ver", colTrk[c++]);  // created- modified-
 
 	li->addColumn("#C0D0FF""diff", colTrk[c++]);  //todo: rateuser, drivenlaps ..
@@ -157,13 +173,13 @@ void CGuiCom::GuiInitTrack()
 
 	li->addColumn("#FF80C0""o", colTrk[c++]);   // objects
 	li->addColumn("#C09060""c", colTrk[c++]);   // obstacles
-	li->addColumn("#80C0FF""f", colTrk[c++]);   // fluids
-	li->addColumn("#40FF00""B", colTrk[c++]);   // Bumps
+	li->addColumn("#80C0FF""f", colTrk[c++]);   //  fluids
+	li->addColumn("#40FF00""B", colTrk[c++]);   //  Bumps
 	li->addColumn("#FFA030""J", colTrk[c++]);   // Jumps
 	li->addColumn("#00FFFF""L", colTrk[c++]);   // Loops
 	li->addColumn("#FFFF00""P", colTrk[c++]);   // Pipes
-	li->addColumn("#C0C0C0""b", colTrk[c++]);   // banked
-	li->addColumn("#C080FF""f", colTrk[c++]);   // frenzy
+	li->addColumn("#C0C0C0""b", colTrk[c++]);   //  banked
+	li->addColumn("#C080FF""f", colTrk[c++]);   //  frenzy
 	li->addColumn("#FFA0A0""l", colTrk[c++]);	// longn
 	li->addColumn(" ", colTrk[c++]);
 

@@ -24,7 +24,7 @@ class TrackInfo
 public:
 	int n;  // unique id for track, from ini
 	float crtver;  // created in ver
-	std::string name, scenery, author;
+	std::string name, nshrt,  scenery, author;
 	Date created, modified;
 
 	//  track characteristics  (char)

@@ -46,25 +46,30 @@ bool TrkSort(const TrkL& t1, const TrkL& t2)
 		if (t1.ti->test   != t2.ti->test)    return t1.ti->test;   // Test after
 		if (t1.ti->vdrift != t2.ti->vdrift)  return t1.ti->vdrift; // vdrift next
 		
-		if (TrkL::idSort > 1)
-		{		 if (TrkL::idSort==2) {  if (t1.ti->scenery != t2.ti->scenery)  return t1.ti->scenery < t2.ti->scenery;  }
-			else if (TrkL::idSort==3) {  if (t1.ti->crtver  != t2.ti->crtver)   return t1.ti->crtver  < t2.ti->crtver;   }
-			else if (TrkL::idSort==4) {  if (t1.ti->diff    != t2.ti->diff)     return t1.ti->diff    < t2.ti->diff;     }
-			else if (TrkL::idSort==5) {  if (t1.ti->rating  != t2.ti->rating)   return t1.ti->rating  < t2.ti->rating;   }
-			else if (TrkL::idSort==6) {  if (t1.ti->objects != t2.ti->objects)  return t1.ti->objects < t2.ti->objects;  }
-			else if (TrkL::idSort==7) {  if (t1.ti->fluids  != t2.ti->fluids)   return t1.ti->fluids  < t2.ti->fluids;   }
-			else if (TrkL::idSort==8) {  if (t1.ti->bumps   != t2.ti->bumps)    return t1.ti->bumps   < t2.ti->bumps;    }
-			else if (TrkL::idSort==9) {  if (t1.ti->jumps   != t2.ti->jumps)    return t1.ti->jumps   < t2.ti->jumps;    }
-			else if (TrkL::idSort==10){  if (t1.ti->loops   != t2.ti->loops)    return t1.ti->loops   < t2.ti->loops;    }
-			else if (TrkL::idSort==11){  if (t1.ti->pipes   != t2.ti->pipes)    return t1.ti->pipes   < t2.ti->pipes;    }
-			else if (TrkL::idSort==12){  if (t1.ti->banked  != t2.ti->banked)   return t1.ti->banked  < t2.ti->banked;   }
-			else if (TrkL::idSort==13){  if (t1.ti->frenzy  != t2.ti->frenzy)   return t1.ti->frenzy  < t2.ti->frenzy;   }
-			else if (TrkL::idSort==14){  if (t1.ti->longn   != t2.ti->longn)    return t1.ti->longn   < t2.ti->longn;    }
-		}
-		else if (TrkL::idSort==1)	// 1 n
+		if (TrkL::idSort > 3)
+		{		 if (TrkL::idSort==4) {  if (t1.ti->scenery  != t2.ti->scenery)   return t1.ti->scenery  < t2.ti->scenery;   }
+			else if (TrkL::idSort==5) {  if (t1.ti->crtver   != t2.ti->crtver)    return t1.ti->crtver   < t2.ti->crtver;    }
+			else if (TrkL::idSort==6) {  if (t1.ti->diff     != t2.ti->diff)      return t1.ti->diff     < t2.ti->diff;      }
+			else if (TrkL::idSort==7) {  if (t1.ti->rating   != t2.ti->rating)    return t1.ti->rating   < t2.ti->rating;    }
+			else if (TrkL::idSort==8) {  if (t1.ti->objects  != t2.ti->objects)   return t1.ti->objects  < t2.ti->objects;   }
+			else if (TrkL::idSort==9) {  if (t1.ti->obstacles!= t2.ti->obstacles) return t1.ti->obstacles< t2.ti->obstacles; }
+			else if (TrkL::idSort==10){  if (t1.ti->fluids   != t2.ti->fluids)    return t1.ti->fluids   < t2.ti->fluids;    }
+			else if (TrkL::idSort==11){  if (t1.ti->bumps    != t2.ti->bumps)     return t1.ti->bumps    < t2.ti->bumps;     }
+			else if (TrkL::idSort==12){  if (t1.ti->jumps    != t2.ti->jumps)     return t1.ti->jumps    < t2.ti->jumps;     }
+			else if (TrkL::idSort==13){  if (t1.ti->loops    != t2.ti->loops)     return t1.ti->loops    < t2.ti->loops;     }
+			else if (TrkL::idSort==14){  if (t1.ti->pipes    != t2.ti->pipes)     return t1.ti->pipes    < t2.ti->pipes;     }
+			else if (TrkL::idSort==15){  if (t1.ti->banked   != t2.ti->banked)    return t1.ti->banked   < t2.ti->banked;    }
+			else if (TrkL::idSort==16){  if (t1.ti->frenzy   != t2.ti->frenzy)    return t1.ti->frenzy   < t2.ti->frenzy;    }
+			else if (TrkL::idSort==17){  if (t1.ti->longn    != t2.ti->longn)     return t1.ti->longn    < t2.ti->longn;     }
+		}else
+		if (TrkL::idSort == 3)  // n
 			if (t1.ti->n != t2.ti->n)  return t1.ti->n < t2.ti->n;
 
-		//if (TrkL::idSort==0)		// 0 name, default
+		if (TrkL::idSort == 0)  // name short  [id] col
+			return t1.ti->nshrt < t2.ti->nshrt;
+
+		// 0 full name+nn, default  [name col]
+		if (TrkL::idSort == 1 || TrkL::idSort == 2)
 		if (t1.name[0] == t2.name[0] &&
 			t1.ti->nn != t2.ti->nn)
 			return t1.ti->nn < t2.ti->nn;  // using nn in name too
@@ -88,7 +93,7 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 		int ii = 0, si = -1;  bool bFound = false;
 
 		//  sort
-		TrkL::idSort = min(14, (int)trkList->mSortColumnIndex);
+		TrkL::idSort = min(17, (int)trkList->mSortColumnIndex);
 
 		std::list<TrkL> liTrk2 = liTrk;  // copy
 		liTrk2.sort(TrkSort);
@@ -166,7 +171,7 @@ void CGuiCom::listTrackChng(Mli2 li, size_t pos)
 	if (!li)  return;
 	size_t i = li->getIndexSelected();  if (i==ITEM_NONE)  return;
 
-	const UString& sl = li->getItemNameAt(i);  String s = sl, s1 = s;
+	const UString& sl = li->getSubItemNameAt(1,i);  String s = sl, s1 = s;
 	s = StringUtil::replaceAll(s, "*", "");
 	bListTrackU = s1 != s ? 1 : 0;
 	if (s[0] == '#')  s = s.substr(7);
@@ -253,24 +258,30 @@ void CGuiCom::updTrkListDim()
 	//  tracks list
 	//-------------------------------
 	if (!trkList)  return;
-	bool full = pSet->tracks_view;
+	bool full = pSet->tracks_view;  int fi = full?1:0;
+
+	const static char colVis[2][32] =
+	{{0,0,1, 0,0,0, 1,1, 0,0,0,0,0,0,0,0,0,0},
+	 {1,0,1, 1,1,1, 1,1, 1,1,1,1,1,1,1,1,1,1}};
 
 	int c, sum = 0, cnt = trkList->getColumnCount();
-	for (c=0; c < cnt; ++c)  sum += colTrk[c];
+	for (c=0; c < cnt; ++c)  if (colVis[1][c])  sum += colTrk[c];
 
 	const IntCoord& wi = app->mWndOpts->getCoord();
 	int sw = 0, xico1 = 0, xico2 = 0, wico = 0;
-
+	
 	for (c=0; c < cnt; ++c)
 	{
-		float wf = float(colTrk[c]) / sum * 0.65/*width*/ * wi.width * 0.97/*frame*/;
-		int w = c==cnt-1 ? 18 : (full || c==0 || c==cnt-1 ? wf : 0);
+		float wf = float(colTrk[c]) / sum * 0.625/*width*/ * wi.width * 0.97/*frame*/;
+		bool vis = colVis[fi][c];
+		int w = c==cnt-1 ? 18 :  vis ? wf : 0;
 		trkList->setColumnWidthAt(c, w);
 		sw += w;
-		if (c == 4)  wico = w;
-		if (c < 4)  xico1 += w;
-		if (c < 8)  xico2 += w;
-	}
+		//if (vis)
+		{	if (c == 6)  wico = w;
+			if (c < 6)   xico1 += w;
+			if (c < 10)  xico2 += w;
+	}	}
 
 	int xt = 0.018*wi.width, yt = 0.06*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
 	trkList->setCoord(xt, yt, sw + 8/*frame*/, 0.70/*height*/*wi.height);

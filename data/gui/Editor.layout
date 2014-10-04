@@ -725,7 +725,7 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562" name="TabTrack">
 				<Property key="Caption" value="#D0E8FF#{Track}"/>
-				<Widget type="TextBox" skin="TextBox" position="176 468 60 24" name="TrackText">
+				<Widget type="TextBox" skin="TextBox" position="176 470 60 24" name="TrackText">
 					<Property key="InheritsAlpha" value="true"/>
 					<Property key="Colour" value="0 0 0"/>
 					<Property key="Caption" value="#{Track}"/>
@@ -1053,6 +1053,7 @@
 					<Property key="Colour" value="0.6 1 0.8"/>
 					<Property key="TextColour" value="0.6 1 0.8"/>
 					<Property key="MaxTextLength" value="20"/>
+					<Property key="FontName" value="font.small"/>
 					<UserString key="tip" value="#{TipTrkNameEditor}"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="692 505 87 24" name="TrackDelete">
