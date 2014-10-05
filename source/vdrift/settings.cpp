@@ -23,6 +23,11 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	
 	SerializeCommon(w,c);
 	
+	//  game common
+	Param(c,w, "game.track", gui.track);				Param(c,w, "game.track_user", gui.track_user);
+	Param(c,w, "graph_veget.trees", gui.trees);
+
+
 	//  cars
 	for (int i=0; i < 6; ++i)
 	{
@@ -60,7 +65,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	
 	Param(c,w, "game.collis_cars", gui.collis_cars);	Param(c,w, "game.collis_veget", gui.collis_veget);
 	Param(c,w, "game.collis_roadw", gui.collis_roadw);	Param(c,w, "game.dyn_objects", gui.dyn_objects);
-	Param(c,w, "game.track", gui.track);				Param(c,w, "game.track_user", gui.track_user);
+	
 	Param(c,w, "game.trk_reverse", gui.trackreverse);	Param(c,w, "game.sim_mode", gui.sim_mode);
 	Param(c,w, "game.local_players", gui.local_players); Param(c,w, "game.num_laps", gui.num_laps);
 	Param(c,w, "game.start_order", gui.start_order);	Param(c,w, "game.split_vertically", split_vertically);
@@ -83,7 +88,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_show.check_arrow", check_arrow);	Param(c,w, "hud_show.check_beam", check_beam);
 	Param(c,w, "hud_show.opponents", show_opponents);	Param(c,w, "hud_show.opplist_sort", opplist_sort);
 	Param(c,w, "hud_show.graphs", show_graphs);			Param(c,w, "hud_show.graphs_type", (int&)graphs_type);
-	
+	//  gui
 	Param(c,w, "gui.tracks_view", tracks_view);		Param(c,w, "gui.cars_view", cars_view);
 	Param(c,w, "gui.tracks_sort", tracks_sort);		Param(c,w, "gui.tracks_sortup", tracks_sortup);
 	Param(c,w, "gui.cars_sort", cars_sort);			Param(c,w, "gui.car_ed_tab", car_ed_tab);
@@ -104,42 +109,27 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 
 	//  graphics
-	Param(c,w, "graph_detail.preset", preset);
-	Param(c,w, "graph_detail.tex_filter", tex_filt);		Param(c,w, "graph_detail.anisotropy", anisotropy);
-	Param(c,w, "graph_detail.view_dist", view_distance);
-	Param(c,w, "graph_detail.ter_detail", terdetail);		Param(c,w, "graph_detail.ter_dist", terdist);
-	Param(c,w, "graph_detail.road_dist", road_dist);		Param(c,w, "graph_detail.tex_size", tex_size);
-	Param(c,w, "graph_detail.ter_mtr", ter_mtr);			Param(c,w, "graph_detail.ter_tripl", ter_tripl);
-
 	Param(c,w, "graph_par.particles", particles);			Param(c,w, "graph_par.trails", trails);
 	Param(c,w, "graph_par.particles_len", particles_len);	Param(c,w, "graph_par.trail_len", trails_len);
 
 	Param(c,w, "graph_reflect.skip_frames", refl_skip);		Param(c,w, "graph_reflect.faces_once", refl_faces);
 	Param(c,w, "graph_reflect.map_size", refl_size);		Param(c,w, "graph_reflect.dist", refl_dist);
 	Param(c,w, "graph_reflect.mode", refl_mode);
-	Param(c,w, "graph_reflect.water_reflect", water_reflect); Param(c,w, "graph_reflect.water_refract", water_refract);
-	Param(c,w, "graph_reflect.water_rttsize", water_rttsize);
-	
-	Param(c,w, "graph_shadow.dist", shadow_dist);			Param(c,w, "graph_shadow.size", shadow_size);
-	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
-	Param(c,w, "graph_shadow.shader_mode", shader_mode);	Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
-
-	Param(c,w, "graph_veget.trees", gui.trees);				Param(c,w, "graph_veget.grass", grass);
-	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
-	Param(c,w, "graph_veget.use_imposters", use_imposters); Param(c,w, "graph_veget.imposters_only", imposters_only);
 
 	//  misc
 	Param(c,w, "misc.version", version);
 	Param(c,w, "misc.bulletDebug", bltDebug);		Param(c,w, "misc.bulletLines", bltLines);
 	Param(c,w, "misc.profilerTxt", profilerTxt);	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
-	Param(c,w, "misc.loadingback", loadingbackground);
 	Param(c,w, "misc.dev_keys", dev_keys);			Param(c,w, "misc.dev_no_prvs", dev_no_prvs);
-	Param(c,w, "misc.show_welcome", show_welcome);
 
+	Param(c,w, "misc.show_welcome", show_welcome);	Param(c,w, "misc.loadingback", loadingbackground);
+
+	//  network
 	Param(c,w, "network.nickname", nickname);		Param(c,w, "network.master_server_address", master_server_address);
 	Param(c,w, "network.local_port", local_port);	Param(c,w, "network.master_server_port", master_server_port);
 	Param(c,w, "network.game_name", netGameName);
 
+	//  replay
 	Param(c,w, "replay.rec", rpl_rec);				Param(c,w, "replay.ghost", rpl_ghost);
 	Param(c,w, "replay.bestonly", rpl_bestonly);	Param(c,w, "replay.trackghost", rpl_trackghost);
 	Param(c,w, "replay.listview", rpl_listview);	Param(c,w, "replay.listghosts", rpl_listghosts);
@@ -147,10 +137,12 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "replay.num_views", rpl_numViews);	Param(c,w, "replay.ghostrewind", rpl_ghostrewind);
 	Param(c,w, "replay.ghoHideDist", ghoHideDist);	Param(c,w, "replay.ghoHideDistTrk", ghoHideDistTrk);
 	
+	//  sim
 	Param(c,w, "sim.game_freq", game_fq);			Param(c,w, "sim.multi_thr", multi_thr);
 	Param(c,w, "sim.bullet_freq", blt_fq);			Param(c,w, "sim.bullet_iter", blt_iter);
 	Param(c,w, "sim.dynamics_iter", dyn_iter);		Param(c,w, "sim.thread_sleep", thread_sleep);
 	Param(c,w, "sim.perf_speed", perf_speed);
+
 	
 	//  sound
 	Param(c,w, "sound.volume", vol_master);			Param(c,w, "sound.vol_engine", vol_engine);
@@ -185,7 +177,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 SETTINGS::SETTINGS()   ///  Defaults
 	:version(100)  // old
 	//  hud
-	,show_fps(1), show_gauges(1), trackmap(1)
+	,show_gauges(1), trackmap(1)
 	,show_cam(1), show_times(0), show_digits(1)
 	,show_opponents(1), opplist_sort(true), cam_tilt(1)
 	,car_dbgtxt(0), car_dbgbars(0), car_dbgsurf(0), show_graphs(0)
@@ -203,15 +195,8 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,cars_view(0), cars_sort(1), cars_sortup(1)
 	,champ_type(0),tut_type(0),chall_type(0), car_ed_tab(0), champ_info(1)
 	//  graphics
-	,preset(4)
-	,tex_filt(2), anisotropy(4), view_distance(2000), bFog(0)
-	,terdetail(2), terdist(100), road_dist(1.0), tex_size(1), ter_mtr(2), ter_tripl(0)
-	,horizon(0)
+	, bFog(0)
 	,refl_skip(200), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode(1)
-	,water_reflect(0), water_refract(0), water_rttsize(0)
-	,shadow_type(Sh_Depth), shadow_size(2), shadow_count(3), shadow_dist(3000)
-	,lightmap_size(0) //-
-	,grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true), imposters_only(false)
 	,particles(true), trails(true), particles_len(1.f), trails_len(1.f), boost_fov(true)
 
 	//  car
@@ -257,11 +242,12 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,vignRadius(2.85), vignDarkness(0.34)
 	//  not in gui
 	,boostFromExhaust(0), net_local_plr(-1)
-	,shader_mode("")
 {
-	//  track
-	gui.track = "Isl6-Flooded";  gui.track_user = false;  gui.trackreverse = false;
-	gui.sim_mode = "easy";
+
+	//  track common
+	gui.track = "Isl6-Flooded";  gui.track_user = false;
+	gui.trees = 1.f;
+
 
 	cam_view.resize(4);
 	//  cars
@@ -271,6 +257,9 @@ SETTINGS::SETTINGS()   ///  Defaults
 		gui.car_gloss[i] = 0.5f;  gui.car_refl[i] = 1.f;  }
 
 	//  game
+	gui.trackreverse = false;
+	gui.sim_mode = "easy";
+
 	gui.local_players = 1;  gui.num_laps = 2;
 	gui.collis_veget = true;  gui.collis_cars = false;
 	gui.collis_roadw = false;  gui.dyn_objects = true;
@@ -280,7 +269,6 @@ SETTINGS::SETTINGS()   ///  Defaults
 
 	gui.flip_type = 1;  gui.rewind_type = 1;
 	gui.damage_type = 1;  gui.damage_dec = 0.f;
-	gui.trees = 1.f;
 	//
 	gui.rpl_rec = 1;  gui.champ_rev = false;  gui.start_order = 0;
 	gui.champ_num = -1;  gui.pre_time = 2.f;  gui.chall_num = -1;

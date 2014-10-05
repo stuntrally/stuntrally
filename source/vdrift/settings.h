@@ -28,8 +28,6 @@ const static std::string csGraphNames[Gh_ALL] = {
 	"Torque Curve, gears", "Engine torque & power",
 	"Clutch, Rpm, Gear" };
 
-enum eShadowType  {  Sh_None=0, Sh_Depth, Sh_Soft  };
-
 
 class SETTINGS : public SETcom
 {
@@ -61,19 +59,8 @@ public:
 		tut_type, champ_type, chall_type, car_ed_tab;
 
 
-	//  graphics common
-	int preset;  // last set, info only
-	int anisotropy, tex_filt, tex_size, ter_mtr, ter_tripl;  bool bFog;
-	float view_distance, terdetail, terdist, road_dist;
-	bool horizon;
-	
-	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type; //eShadowType
-	bool use_imposters, imposters_only;
-	float grass, trees_dist, grass_dist;
-	bool water_reflect, water_refract;  int water_rttsize;
-	std::string shader_mode;
-
 	//  graphics
+	bool bFog;
 	int refl_skip, refl_faces, refl_size;  float refl_dist;
 	int refl_mode;  // 0 static, 1 single, 2 full
 
@@ -95,7 +82,10 @@ public:
 	class GameSet
 	{
 	public:
-		std::string track;  bool track_user, trackreverse;
+		std::string track;  bool track_user;
+		float trees;  // common
+		
+		bool trackreverse;
 		std::vector<std::string> car;  //[4]
 		std::vector<float> car_hue, car_sat, car_val, car_gloss, car_refl;  //[6] also for ghosts
 
@@ -104,7 +94,7 @@ public:
 		std::string sim_mode;
 		bool collis_veget, collis_cars, collis_roadw, dyn_objects;
 		int boost_type, flip_type, damage_type, rewind_type;
-		float trees, damage_dec;
+		float damage_dec;
 
 		float boost_power, boost_max, boost_min, boost_per_km, boost_add_sec;
 		void BoostDefault();

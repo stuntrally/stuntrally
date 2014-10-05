@@ -21,33 +21,18 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	
 	SerializeCommon(w,c);
 	
-	Param(c,w, "game.track", gui.track);			Param(c,w, "game.track_user", gui.track_user);
+	//  game common
+	Param(c,w, "game.track", gui.track);				Param(c,w, "game.track_user", gui.track_user);
+	Param(c,w, "graph_veget.trees", gui.trees);
 
-	Param(c,w, "hud_show.trackmap", trackmap);				Param(c,w, "hud_size.minimap", size_minimap);
-	Param(c,w, "hud_show.mini_num", num_mini);				Param(c,w, "hud_show.brushpreview", brush_prv);
+
+	Param(c,w, "hud_show.trackmap", trackmap);			Param(c,w, "hud_size.minimap", size_minimap);
+	Param(c,w, "hud_show.mini_num", num_mini);			Param(c,w, "hud_show.brushpreview", brush_prv);
 	Param(c,w, "hud_show.tracks_view", tracks_view);
-	Param(c,w, "hud_show.tracks_sort", tracks_sort);		Param(c,w, "hud_show.tracks_sortup", tracks_sortup);
-
-	Param(c,w, "graph_detail.preset", preset);
-	Param(c,w, "graph_detail.tex_filter", tex_filt);			Param(c,w, "graph_detail.anisotropy", anisotropy);
-	Param(c,w, "graph_detail.view_dist", view_distance);
-	Param(c,w, "graph_detail.ter_detail", terdetail);		Param(c,w, "graph_detail.ter_dist", terdist);
-	Param(c,w, "graph_detail.road_dist", road_dist);		Param(c,w, "graph_detail.tex_size", tex_size);
-	Param(c,w, "graph_detail.ter_mtr", ter_mtr);			Param(c,w, "graph_detail.ter_tripl", ter_tripl);
-
-	Param(c,w, "graph_shadow.dist", shadow_dist);			Param(c,w, "graph_shadow.size", shadow_size);
-	Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
-	Param(c,w, "graph_shadow.shader_mode", shader_mode);	Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
-	
-	Param(c,w, "graph_reflect.water_reflect", water_reflect); Param(c,w, "graph_reflect.water_refract", water_refract);
-	Param(c,w, "graph_reflect.water_rttsize", water_rttsize);
-
-	Param(c,w, "graph_veget.trees", gui.trees);				Param(c,w, "graph_veget.grass", grass);
-	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
-	Param(c,w, "graph_veget.use_imposters", use_imposters); Param(c,w, "graph_veget.imposters_only", imposters_only);
+	Param(c,w, "hud_show.tracks_sort", tracks_sort);	Param(c,w, "hud_show.tracks_sortup", tracks_sortup);
 	
 	Param(c,w, "misc.allow_save", allow_save);
-	Param(c,w, "misc.inputBar", inputBar);		Param(c,w, "misc.camPos", camPos);
+	Param(c,w, "misc.inputBar", inputBar);			Param(c,w, "misc.camPos", camPos);
 	Param(c,w, "misc.version", version);
 	Param(c,w, "misc.check_load", check_load);		Param(c,w, "misc.check_save", check_save);
 	
@@ -82,16 +67,6 @@ SETTINGS::SETTINGS()  ///  Defaults
 	//  show
 	,trackmap(1), size_minimap(0.5), num_mini(0), brush_prv(1)
 	,tracks_view(0), tracks_sort(0), tracks_sortup(0)
-	//  graphics
-	,preset(4)
-	,tex_filt(2), anisotropy(8), view_distance(3600)
-	,terdetail(1.f), terdist(300), road_dist(1.0), tex_size(1), ter_mtr(2), ter_tripl(0)
-	,horizon(0)
-	,shadow_dist(2000), shadow_size(2), shadow_count(3), shadow_type(Sh_Depth)
-	,lightmap_size(0)
-	,grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(false), imposters_only(false)
-	,water_reflect(0), water_refract(0), water_rttsize(0)
-	,shader_mode("")
 	//  misc
 	,allow_save(0)
 	,check_load(0), check_save(1)
@@ -113,6 +88,8 @@ SETTINGS::SETTINGS()  ///  Defaults
 	//  pick
 	,pick_setpar(1)
 {
+
+	//  track common
 	gui.track = "Isl6-Flooded";  gui.track_user = false;
 	gui.trees = 1.f;
 }

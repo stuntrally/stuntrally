@@ -5,8 +5,6 @@
 
 #define SET_VER  2400  // 2.4
 
-enum eShadowType  {  Sh_None=0, Sh_Depth, Sh_Soft  };
-
 
 class SETTINGS : public SETcom
 {
@@ -19,18 +17,6 @@ public:
 	bool trackmap, brush_prv;  int num_mini;
 	float size_minimap;
 	int tracks_view, tracks_sort;  bool tracks_sortup;
-
-	//  graphics common
-	int preset;
-	int anisotropy, tex_filt, tex_size, ter_mtr, ter_tripl;
-	float view_distance, terdetail, terdist, road_dist;
-	bool horizon;
-	
-	float shadow_dist;  int shadow_size, lightmap_size, shadow_count, shadow_type;
-	bool use_imposters, imposters_only;
-	float grass, trees_dist, grass_dist;
-	bool water_reflect, water_refract;  int water_rttsize;
-	std::string shader_mode;
 
 	class GameSet
 	{
@@ -56,6 +42,7 @@ public:
 
 	//  align ter
 	float al_w_mul, al_w_add, al_smooth;
+
 	//  tweak
 	std::string tweak_mtr;
 	//  pick
