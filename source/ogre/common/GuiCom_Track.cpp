@@ -158,6 +158,7 @@ void CGuiCom::GuiInitTrack()
 	ButtonPtr btn;
 	BtnC("TrkView1", btnTrkView1);  imgTrkIco1 = fImg("TrkView2icons1");
 	BtnC("TrkView2", btnTrkView2);  imgTrkIco2 = fImg("TrkView2icons2");
+	BtnC("TrkFilter", btnTrkFilter);
 	
 	li->removeAllColumns();  int c=0;
 	li->addColumn("#C0E0C0""id", colTrk[c++]);  // prefix
@@ -182,6 +183,19 @@ void CGuiCom::GuiInitTrack()
 	li->addColumn("#C080FF""f", colTrk[c++]);   //  frenzy
 	li->addColumn("#FFA0A0""l", colTrk[c++]);	// longn
 	li->addColumn(" ", colTrk[c++]);
+	
+	//  columns, filters  ---
+	SV* sv;  Ck* ck;
+	for (i=0; i < COL_VIS; ++i)
+	{
+		ck= &chTrkColVis[i];  ck->Init("vis"+toStr(i), &pSet->col_vis[0][i]);  CevC(TrkColVis);
+	}
+	for (i=0; i < COL_FIL; ++i)
+	{	string si = toStr(i);
+		int a = pSet->colFil[0][i], b = pSet->colFil[1][i];
+		sv= &svTrkFilMin[i];  sv->Init("min"+si, &pSet->col_fil[0][i], a,b);  sv->DefaultI(a);  SevC(TrkFil);
+		sv= &svTrkFilMax[i];  sv->Init("max"+si, &pSet->col_fil[1][i], a,b);  sv->DefaultI(b);  SevC(TrkFil);
+	}
 
 	FillTrackLists();  //once
 

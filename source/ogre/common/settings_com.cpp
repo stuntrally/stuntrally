@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "settings_com.h"
+#include "Def_Str.h"
 #include <stdio.h>
 
 
@@ -59,18 +60,43 @@ void SETcom::SerializeCommon(bool w, CONFIGFILE & c)
 	Param(c,w, "gui_tracks.view", tracks_view);
 	Param(c,w, "gui_tracks.sort", tracks_sort);		Param(c,w, "gui_tracks.sortup", tracks_sortup);
 
-	//  cols, filt
-	/*int i,v;
+	//  columns, filters
 	std::string s;
-	gui_tracks
-	for (v=0; v<2; ++v)
-	{
-		s = "";
-		for (i=0; i<18; ++i)
+	int i,v,ii,a;
+	
+	if (w)	//  write
+		for (v=0; v < 2; ++v)
 		{
+			s = "";  ii = COL_VIS;
+			for (i=0; i < ii; ++i)
+			{
+				s += iToStr(col_vis[v][i]);
+				if (i < ii-1)  s += " ";
+			}
+			Param(c,w, "gui_tracks.columns"+iToStr(v), s);
 
+			s = "";  ii = COL_FIL;
+			for (i=0; i < ii; ++i)
+			{
+				s += iToStr(col_fil[v][i]);
+				if (i < ii-1)  s += " ";
+			}
+			Param(c,w, "gui_tracks.filters"+iToStr(v), s);
 		}
-	}/**/
+	else	//  read
+		for (v=0; v < 2; ++v)
+		{
+			if (Param(c,w, "gui_tracks.columns"+iToStr(v), s))
+			{	std::stringstream sc(s);
+				for (i=0; i < COL_VIS; ++i)
+				{	sc >> a;  col_vis[v][i] = a > 0;  }
+			}
+
+			if (Param(c,w, "gui_tracks.filters"+iToStr(v), s))
+			{	std::stringstream sf(s);
+				for (i=0; i < COL_FIL; ++i)
+				{	sf >> a;  col_fil[v][i] = a;  }
+		}	}
 }
 
 
@@ -111,19 +137,18 @@ SETcom::SETcom()   ///  Defaults
 	,tracks_view(0), tracks_sort(2), tracks_sortup(1)
 {
 
+	int i,v;
+	for (v=0; v < 2; ++v)
+	{	for (i=0; i < COL_FIL; ++i)  col_fil[v][i] = colFil[v][i];
+		for (i=0; i < COL_VIS; ++i)  col_vis[v][i] = colVis[v][i];
+	}
+}
+
 	//  tracks list columns  --
-	const static bool colVis[2][18] =
+const bool SETcom::colVis[2][COL_VIS] =
 	{{0,0,1, 0,0,0, 1,1, 0,0,0,0,0,0,0,0,0,0},
 	 {1,0,1, 1,1,1, 1,1, 1,1,1,1,1,1,1,1,1,1}};
-	int i,v;
-	for (v=0; v<2; ++v)
-	for (i=0; i<18; ++i)
-		col_vis[v].push_back(colVis[v][i]);
-		
-	const static char colFil[2][13] =
+	
+const char SETcom::colFil[2][COL_FIL] =
 	{{01, 0,0, 0,0,0,0,0,0,0,0,0,0},
-	 {30, 9,9, 9,9,9,9,9,9,9,9,9,9}};
-	for (v=0; v<2; ++v)
-	for (i=0; i<18; ++i)
-		col_fil[v].push_back(colFil[v][i]);
-}
+	 {25, 6,5, 4,3,5,5,4,5,4,5,5,9}};

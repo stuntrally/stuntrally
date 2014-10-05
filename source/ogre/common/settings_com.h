@@ -48,8 +48,14 @@ public:
 	//  track
 	int tracks_view, tracks_sort;  bool tracks_sortup;
 
-	std::vector<bool> col_vis[2];  //18 visible columns for track views
-	std::vector<int>  col_fil[2];  //13 filtering range for columns 0min-1max
+	#define COL_VIS 18
+	#define COL_FIL 13
+	
+	bool col_vis[2][COL_VIS];  // visible columns for track views
+	int  col_fil[2][COL_FIL];  // filtering range for columns 0min-1max
+
+	const static bool colVis[2][COL_VIS];
+	const static char colFil[2][COL_FIL];
 	
 
 //------------------------------------------

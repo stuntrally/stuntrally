@@ -127,7 +127,8 @@ protected:
 	Img bckFps, imgCur, bckInput;
 	Txt txFps, txCamPos, txInput;
 
-	Wnd mWndMain, mWndTrack,mWndEdit,mWndHelp,mWndOpts, mWndPick;  // menu, windows
+	Wnd mWndMain, mWndTrack,mWndEdit,mWndHelp,mWndOpts;  // menu, windows
+	Wnd mWndTrkFilt, mWndPick;
 	Tab mWndTabsTrack,mWndTabsEdit,mWndTabsHelp,mWndTabsOpts;  // main tabs on windows
 
 	///  main menu

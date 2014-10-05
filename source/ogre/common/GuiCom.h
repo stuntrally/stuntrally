@@ -7,6 +7,7 @@
 #include <MyGUI_WidgetToolTip.h>
 #include <MyGUI_Enumerator.h>
 #include <OgreString.h>
+#include "settings_com.h"
 
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;  }
@@ -119,6 +120,7 @@ public:
 	Img imgTrkIco1, imgTrkIco2, imgMiniPos[2];
 	MyGUI::RotatingSkin* imgMiniRot[2];
 
+
 	//  st - road stats,dim  inf - tracks.ini ratings
 	const static int StTrk = 14, InfTrk = 12;
 	Txt stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
@@ -129,13 +131,19 @@ public:
 	void ReadTrkStats();
 
 	//  track views
-	void btnTrkView1(WP), btnTrkView2(WP);
+	void btnTrkView1(WP), btnTrkView2(WP), btnTrkFilter(WP);
 	void ChangeTrackView();
 	void updTrkListDim();
+
+
+	//  columns, filters  ---
+	Ck chTrkColVis[COL_VIS];  void chkTrkColVis(Ck*);
+	SV svTrkFilMin[COL_FIL], svTrkFilMax[COL_FIL];  void slTrkFil(SV*);
 
 	//  const list column widths
 	const static int colTrk[32];
 	const static Ogre::String clrsDiff[9], clrsRating[6], clrsLong[10];
+
 
 	//  track find
 	Ogre::String sTrkFind;

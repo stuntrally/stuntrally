@@ -451,7 +451,7 @@ void CGuiCom::CreateFonts()
 
 		//  setup font				   // par
 		float size = sizes[i] * (1.f - 1.5f * (GetGuiMargin(2000) - GetGuiMargin(pSet->windowy)));
-		LogO("-- "+name+"  size: "+fToStr(size,2,4));
+		LogO("-- "+name+"  size: "+fToStr(size,1,3));
 
 		//  create
 	#if 0  //  mygui from svn

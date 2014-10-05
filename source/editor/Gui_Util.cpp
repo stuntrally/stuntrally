@@ -193,6 +193,7 @@ void App::UpdVisGui()
 	mWndOpts->setVisible(notMain && pSet->inMenu == WND_Options);
 
 	if (!g)  mWndPick->setVisible(false);
+	if (!g)  mWndTrkFilt->setVisible(false);
 	if (!g && gui->wndColor)  gui->wndColor->setVisible(false);
 	if (gcom->bnQuit)  gcom->bnQuit->setVisible(g);
 

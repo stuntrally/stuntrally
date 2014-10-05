@@ -51,6 +51,7 @@ void CGui::InitGui()
 	app->mWndTrack = fWnd("TrackWnd");  app->mWndEdit = fWnd("EditorWnd");
 	app->mWndOpts = fWnd("OptionsWnd"); app->mWndHelp = fWnd("HelpWnd");
 	app->mWndPick = fWnd("PickWnd");
+	app->mWndTrkFilt = fWnd("TrackFilterWnd");
 
 	app->mWndCam =   fWnd("CamWnd");    app->mWndCam->setPosition(0,64);
 	app->mWndStart = fWnd("StartWnd");  app->mWndStart->setPosition(0,64);

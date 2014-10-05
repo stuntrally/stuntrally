@@ -44,13 +44,13 @@ void CGui::InitGui()
 
 	//  load
 	app->vwGui = LayoutManager::getInstance().loadLayout("Game.layout");
-	//FontManager::getInstance().
 
 
 	//  wnds
 	app->mWndMain = fWnd("MainMenuWnd");  app->mWndWelcome = fWnd("WelcomeWnd");
 	app->mWndGame = fWnd("GameWnd");  app->mWndReplays = fWnd("ReplaysWnd");
 	app->mWndHelp = fWnd("HelpWnd");  app->mWndOpts = fWnd("OptionsWnd");
+	app->mWndTrkFilt = fWnd("TrackFilterWnd");
 
 	app->mWndChampStage = fWnd("WndChampStage");  app->mWndChampStage->setVisible(false);
 	app->mWndChampEnd   = fWnd("WndChampEnd");    app->mWndChampEnd->setVisible(false);

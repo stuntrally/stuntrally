@@ -45,6 +45,7 @@ public:
 	std::string tweak_mtr;
 	//  pick
 	bool pick_setpar;
+
 	
 //------------------------------------------
 	SETTINGS();

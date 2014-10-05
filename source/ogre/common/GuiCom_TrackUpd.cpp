@@ -103,10 +103,11 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 		for (std::list<TrkL>::iterator i = liTrk2.begin(); i != liTrk2.end(); ++i)
 		{
 			String name = (*i).name, nlow = name;  StringUtil::toLowerCase(nlow);
+			const TrackInfo* ti = (*i).ti;
 			if (sTrkFind == "" || strstr(nlow.c_str(), sTrkFind.c_str()) != 0)
-			/// todo: filtering gui..
-			//if ((*i).ti->rating > 2)
-			//if ((*i).ti->diff > 3)
+			if (!ti ||
+				ti->diff   >= pSet->col_fil[0][1] && ti->diff   <= pSet->col_fil[1][1] &&
+				ti->rating >= pSet->col_fil[0][2] && ti->rating <= pSet->col_fil[1][2])
 			{
 				AddTrkL(name, 0, (*i).ti);
 				if (!pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
@@ -234,12 +235,12 @@ void CGui::edRplFind(EditPtr ed)
 //  view change
 //-----------------------------------------------------------------------------------------------------------
 #ifndef SR_EDITOR
-void CGui::btnCarView1(WP wp) {  pSet->cars_view = 0;  gcom->updTrkListDim();  }
-void CGui::btnCarView2(WP wp) {  pSet->cars_view = 1;  gcom->updTrkListDim();  }
+void CGui::btnCarView1(WP) {  pSet->cars_view = 0;  gcom->updTrkListDim();  }
+void CGui::btnCarView2(WP) {  pSet->cars_view = 1;  gcom->updTrkListDim();  }
 #endif
 
-void CGuiCom::btnTrkView1(WP wp) {  pSet->tracks_view = 0;  ChangeTrackView();  }
-void CGuiCom::btnTrkView2(WP wp) {  pSet->tracks_view = 1;  ChangeTrackView();  }
+void CGuiCom::btnTrkView1(WP) {  pSet->tracks_view = 0;  ChangeTrackView();  }
+void CGuiCom::btnTrkView2(WP) {  pSet->tracks_view = 1;  ChangeTrackView();  }
 
 void CGuiCom::ChangeTrackView()
 {
@@ -251,6 +252,25 @@ void CGuiCom::ChangeTrackView()
 
 	updTrkListDim();  // change size, columns
 }
+
+
+///  upd trkList  cols vis
+void CGuiCom::btnTrkFilter(WP)
+{
+	app->mWndTrkFilt->setVisible( !app->mWndTrkFilt->getVisible());
+}
+
+void CGuiCom::chkTrkColVis(Ck* ck)
+{
+	updTrkListDim();
+}
+
+void CGuiCom::slTrkFil(SV* sv)
+{
+	TrackListUpd();
+}
+
+
 
 //  adjust list size, columns
 void CGuiCom::updTrkListDim()
