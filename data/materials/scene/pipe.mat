@@ -762,7 +762,7 @@ material road_col_Desert
 
 
 //  Alien
-material road_wall_alien
+material road_wall_Alien
 {
 	parent road_wall
 	ambient 0.8 0.8 0.8
@@ -773,7 +773,7 @@ material road_wall_alien
 	bump_scale 2.0
 }
 
-material pipe_wall_alien
+material pipe_wall_Alien
 {
 	parent pipe_wall
 	ambient 0.8 0.8 0.8
@@ -784,7 +784,7 @@ material pipe_wall_alien
 	bump_scale 2.0
 }
 
-material road_col_alien
+material road_col_Alien
 {
 	parent base
 	ambient 0.8 0.8 0.8
@@ -827,7 +827,7 @@ material pipeGlassAlienGreen
 	bump_scale 0.15
 }
 
-material pipeGlassAlienYellow
+material pipeGlassAlienLime
 {
 	parent pipe_glass
 	ambient 0.7 0.95 0.1
