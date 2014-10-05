@@ -276,7 +276,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,shader_mode("")
 {
 	//  track
-	gui.track = "J1-Curly";  gui.track_user = false;  gui.trackreverse = false;
+	gui.track = "Isl6-Flooded";  gui.track_user = false;  gui.trackreverse = false;
 	gui.sim_mode = "easy";
 
 	cam_view.resize(4);

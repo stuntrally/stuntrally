@@ -130,7 +130,6 @@ SETTINGS::SETTINGS()  ///  Defaults
 	//  pick
 	,pick_setpar(1)
 {
-	gui.track = "J1-T";
-	gui.track_user = false;
+	gui.track = "Isl6-Flooded";  gui.track_user = false;
 	gui.trees = 1.f;
 }
