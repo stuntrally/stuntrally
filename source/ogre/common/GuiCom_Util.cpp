@@ -56,14 +56,14 @@ CGuiCom::CGuiCom(App* app1)
 		for (i=0; i < InfTrk; ++i){  infTrk[t][i] = 0;  imInfTrk[t][i] = 0;  }
 	}
 	
-	//  short scenery names
+	//  short scenery names  for sc clr in presets.xml
 	scnN["AP"]= "Asphalt";
 	scnN["J"] = "Jungle";        scnN["JD"]= "JungleDark";
 	scnN["D"] = "Desert";        scnN["DM"]= "DesertMud";
 	scnN["S"] = "Savanna";       scnN["SD"]= "SavannaDry";
 	scnN["W"] = "Winter";        scnN["WW"]= "WinterWet";
 	scnN["F"] = "Forest";        scnN["FM"]= "ForestMntn";
-	scnN["FY"]= "ForestYellow";  scnN["E"] = "Finland";
+	scnN["E"] = "Finland";       scnN["FY"]= "ForestYellow";
 	scnN["I"] = "Island";        scnN["ID"]= "IslandDark";
 	scnN["M"] = "Mud";           scnN["A"] = "Australia";
 	scnN["G"] = "Greece";        scnN["C"] = "Canyon";
@@ -74,6 +74,25 @@ CGuiCom::CGuiCom(App* app1)
 	scnN["Y"] = "Crystals";      scnN["GW"]= "GreeceWhite";
 	scnN["L"] = "Alien";         scnN["N"] = "Other";
 	scnN["P"] = "Stone";         scnN["H"] = "Space";
+
+	//  short scenery names
+	//scnN["Jng"] = "Jungle";        scnN["JngD"]= "JungleDark";
+	//scnN["Des"] = "Desert";        scnN["DesM"]= "DesertMud";
+	//scnN["Sav"] = "Savanna";       scnN["SavD"]= "SavannaDry";
+	//scnN["Wnt"] = "Winter";        scnN["Wet"]= "WinterWet";
+	//scnN["For"] = "Forest";        scnN["ForM"]= "ForestMntn";
+	//scnN["ForY"]= "ForestYellow";  scnN["Fin"] = "Finland";
+	//scnN["Isl"] = "Island";        scnN["IslD"]= "IslandDark";
+	//scnN["Mud"] = "Mud";           scnN["Aus"] = "Australia";
+	//scnN["Grc"] = "Greece";        scnN["Can"] = "Canyon";
+	//scnN["Atm"] = "Autumn";        scnN["AtmD"]= "AutumnDark";
+	//scnN["Mos"] = "Moss";          
+	//scnN["Vlc"] = "Volcanic";      scnN["VlcD"]= "VolcanicDark";
+	//scnN["Uni"] = "Unidentified";  scnN["Mrs"] = "Mars";
+	//scnN["Cry"] = "Crystals";      scnN["GrcW"]= "GreeceWhite";
+	//scnN["Aln"] = "Alien";         scnN["Oth"] = "Other";
+	//scnN["Stn"] = "Stone";         scnN["Spc"] = "Space";
+
 	//  scenery colors for track names
 	scnClr["Asphalt"]      = "#B0E0E0";
 	scnClr["Jungle"]       = "#50FF50";  scnClr["JungleDark"]   = "#40C040";

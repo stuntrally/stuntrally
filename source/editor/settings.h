@@ -16,14 +16,12 @@ public:
 	//  show
 	bool trackmap, brush_prv;  int num_mini;
 	float size_minimap;
-	int tracks_view, tracks_sort;  bool tracks_sortup;
 
 	class GameSet
 	{
 	public:
-		//  track
 		std::string track;  bool track_user;
-		float trees;
+		float trees;  // common
 	} gui;
 	
 	//  misc

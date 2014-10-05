@@ -54,9 +54,9 @@ public:
 	eGraphType graphs_type;
 	int car_dbgtxtclr, car_dbgtxtcnt;
 	//  gui
-	bool tracks_sortup, cars_sortup, champ_info;
-	int tracks_view, tracks_sort, cars_view, cars_sort,
-		tut_type, champ_type, chall_type, car_ed_tab;
+	bool cars_sortup;  int cars_view, cars_sort;
+	int tut_type, champ_type, chall_type, car_ed_tab;
+	bool champ_info;
 
 
 	//  graphics

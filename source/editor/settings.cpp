@@ -15,6 +15,7 @@ void SETTINGS::Save(std::string sfile)
 	Serialize(true, c);  c.Write();
 }
 
+
 void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 {
 	c.bFltFull = false;
@@ -66,7 +67,6 @@ SETTINGS::SETTINGS()  ///  Defaults
 	:version(100)  // old
 	//  show
 	,trackmap(1), size_minimap(0.5), num_mini(0), brush_prv(1)
-	,tracks_view(0), tracks_sort(0), tracks_sortup(0)
 	//  misc
 	,allow_save(0)
 	,check_load(0), check_save(1)

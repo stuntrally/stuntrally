@@ -5,33 +5,10 @@
 
 void SETcom::SerializeCommon(bool w, CONFIGFILE & c)
 {
-
-	//  game
+	//  menu
 	Param(c,w, "game.start_in_main", startInMain);
 	Param(c,w, "game.in_menu", inMenu);				Param(c,w, "game.in_main", isMain);
 	
-	//Param(c,w, "gui.tracks_view", tracks_view);
-	//Param(c,w, "gui.tracks_sort", tracks_sort);		Param(c,w, "gui.tracks_sortup", tracks_sortup);
-
-	//  graphics
-	//Param(c,w, "graph_detail.preset", preset);
-	//Param(c,w, "graph_detail.tex_filter", tex_filt);		Param(c,w, "graph_detail.anisotropy", anisotropy);
-	//Param(c,w, "graph_detail.view_dist", view_distance);
-	//Param(c,w, "graph_detail.ter_detail", terdetail);		Param(c,w, "graph_detail.ter_dist", terdist);
-	//Param(c,w, "graph_detail.road_dist", road_dist);		Param(c,w, "graph_detail.tex_size", tex_size);
-	//Param(c,w, "graph_detail.ter_mtr", ter_mtr);			Param(c,w, "graph_detail.ter_tripl", ter_tripl);
-
-	//Param(c,w, "graph_reflect.water_reflect", water_reflect); Param(c,w, "graph_reflect.water_refract", water_refract);
-	//Param(c,w, "graph_reflect.water_rttsize", water_rttsize);
-	
-	//Param(c,w, "graph_shadow.dist", shadow_dist);			Param(c,w, "graph_shadow.size", shadow_size);
-	//Param(c,w, "graph_shadow.count",shadow_count);			Param(c,w, "graph_shadow.type", shadow_type);
-	//Param(c,w, "graph_shadow.shader_mode", shader_mode);	Param(c,w, "graph_shadow.lightmap_size", lightmap_size);
-
-	//Param(c,w, "graph_veget.trees", gui.trees);				Param(c,w, "graph_veget.grass", grass);
-	//Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
-	//Param(c,w, "graph_veget.use_imposters", use_imposters); Param(c,w, "graph_veget.imposters_only", imposters_only);
-
 	//  misc
 	Param(c,w, "misc.autostart", autostart);		Param(c,w, "misc.ogredialog", ogre_dialog);
 	Param(c,w, "misc.escquit", escquit);
@@ -48,9 +25,6 @@ void SETcom::SerializeCommon(bool w, CONFIGFILE & c)
 
 	Param(c,w, "video.limit_fps", limit_fps);
 	Param(c,w, "video.limit_fps_val", limit_fps_val);	Param(c,w, "video.limit_sleep", limit_sleep);
-
-	//  hud
-	Param(c,w, "hud_show.fps", show_fps);
 
 
 	//  graphics  ----
@@ -76,14 +50,34 @@ void SETcom::SerializeCommon(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_veget.grass", grass);
 	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
 	Param(c,w, "graph_veget.use_imposters", use_imposters); Param(c,w, "graph_veget.imposters_only", imposters_only);
+
+
+	//  hud
+	Param(c,w, "hud_show.fps", show_fps);
+
+	//  gui tracks  ---
+	Param(c,w, "gui_tracks.view", tracks_view);
+	Param(c,w, "gui_tracks.sort", tracks_sort);		Param(c,w, "gui_tracks.sortup", tracks_sortup);
+
+	//  cols, filt
+	/*int i,v;
+	std::string s;
+	gui_tracks
+	for (v=0; v<2; ++v)
+	{
+		s = "";
+		for (i=0; i<18; ++i)
+		{
+
+		}
+	}/**/
 }
 
-SETcom::SETcom()   ///  Defaults
-	//  gui
-	//,tracks_view(0), tracks_sort(0), tracks_sortup(1)
 
+SETcom::SETcom()   ///  Defaults
 	//  menu
 	:isMain(1), startInMain(1), inMenu(0)
+
 	//  misc
 	,autostart(0), ogre_dialog(0), escquit(0)
 	,language("")  // "" = autodetect lang
@@ -98,9 +92,6 @@ SETcom::SETcom()   ///  Defaults
 
 	,limit_fps(0), limit_fps_val(60.f), limit_sleep(-1)
 
-	//  hud
-	,show_fps(0)
-
 	//  graphics
 	,preset(4)
 	,shader_mode(""), horizon(0), lightmap_size(0) //-
@@ -112,6 +103,12 @@ SETcom::SETcom()   ///  Defaults
 	,water_reflect(0), water_refract(0), water_rttsize(0)
 	,shadow_type(Sh_Depth), shadow_size(2), shadow_count(3), shadow_dist(1000.f)
 	,grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true), imposters_only(false)
+
+	//  hud
+	,show_fps(0)
+
+	//  gui tracks
+	,tracks_view(0), tracks_sort(2), tracks_sortup(1)
 {
 
 	//  tracks list columns  --

@@ -46,6 +46,8 @@ public:
 
 
 	//  track
+	int tracks_view, tracks_sort;  bool tracks_sortup;
+
 	std::vector<bool> col_vis[2];  //18 visible columns for track views
 	std::vector<int>  col_fil[2];  //13 filtering range for columns 0min-1max
 	
