@@ -30,7 +30,8 @@ using namespace Ogre;
 //  ctor
 //----------------------------------------------------------------------------------------------------------------------
 App::App(SETTINGS* pSet1)
-	:bTerUpd(0), curBr(0), brLockPos(0)
+	:mFactory(0)
+	,bTerUpd(0), curBr(0), brLockPos(0)
 	,vNew(0,0,0)
 	,ndPos(0), mpos(0), asp(4.f/3.f)
 	,ndCar(0),entCar(0), ndStBox(0),entStBox(0), ndFluidBox(0),entFluidBox(0), ndObjBox(0),entObjBox(0)
