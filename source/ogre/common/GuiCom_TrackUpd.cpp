@@ -260,12 +260,8 @@ void CGuiCom::updTrkListDim()
 	if (!trkList)  return;
 	bool full = pSet->tracks_view;  int fi = full?1:0;
 
-	const static char colVis[2][32] =
-	{{0,0,1, 0,0,0, 1,1, 0,0,0,0,0,0,0,0,0,0},
-	 {1,0,1, 1,1,1, 1,1, 1,1,1,1,1,1,1,1,1,1}};
-
 	int c, sum = 0, cnt = trkList->getColumnCount();
-	for (c=0; c < cnt; ++c)  if (colVis[1][c])  sum += colTrk[c];
+	for (c=0; c < cnt-1; ++c)  if (pSet->col_vis[1][c])  sum += colTrk[c];
 
 	const IntCoord& wi = app->mWndOpts->getCoord();
 	int sw = 0, xico1 = 0, xico2 = 0, wico = 0;
@@ -273,15 +269,13 @@ void CGuiCom::updTrkListDim()
 	for (c=0; c < cnt; ++c)
 	{
 		float wf = float(colTrk[c]) / sum * 0.625/*width*/ * wi.width * 0.97/*frame*/;
-		bool vis = colVis[fi][c];
-		int w = c==cnt-1 ? 18 :  vis ? wf : 0;
+		int w = c==cnt-1 ? 18 :  pSet->col_vis[fi][c] ? wf : 0;
 		trkList->setColumnWidthAt(c, w);
 		sw += w;
-		//if (vis)
-		{	if (c == 6)  wico = w;
-			if (c < 6)   xico1 += w;
-			if (c < 10)  xico2 += w;
-	}	}
+		if (c == 6)  wico = w;
+		if (c < 6)   xico1 += w;
+		if (c < 10)  xico2 += w;
+	}
 
 	int xt = 0.018*wi.width, yt = 0.06*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
 	trkList->setCoord(xt, yt, sw + 8/*frame*/, 0.70/*height*/*wi.height);

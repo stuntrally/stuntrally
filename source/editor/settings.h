@@ -1,28 +1,26 @@
 #pragma once
 #include "../vdrift/configfile.h"
+#include "../ogre/common/settings_com.h"
 
 
 #define SET_VER  2400  // 2.4
 
 enum eShadowType  {  Sh_None=0, Sh_Depth, Sh_Soft  };
 
-class SETTINGS
+
+class SETTINGS : public SETcom
 {
 public:
 ///  params
 //------------------------------------------
 	int version;  // file version
-
+	
 	//  show
-	bool show_fps, trackmap, brush_prv;  int num_mini;
+	bool trackmap, brush_prv;  int num_mini;
 	float size_minimap;
 	int tracks_view, tracks_sort;  bool tracks_sortup;
-	//  track
-	std::vector<bool> col_vis[2];  //18+1 visible columns for track views
-	std::vector<int>  col_fil[2];  //13 filtering range for columns 0min-1max
 
 	//  graphics common
-	bool limit_fps;  float limit_fps_val;  int limit_sleep;
 	int preset;
 	int anisotropy, tex_filt, tex_size, ter_mtr, ter_tripl;
 	float view_distance, terdetail, terdist, road_dist;
@@ -42,23 +40,14 @@ public:
 		float trees;
 	} gui;
 	
-	//  startup
-	bool autostart, escquit, ogre_dialog, allow_save;
-	bool inputBar,camPos, mouse_capture;
 	//  misc
-	std::string language;
-	bool isMain, startInMain;  int inMenu;  // last menu id
-	bool check_load, check_save, screen_png;
+	bool allow_save, inputBar, camPos;
+	bool check_load, check_save;
 
 	//  settings
 	bool bFog, bTrees, bWeather;
 	int ter_skip, mini_skip;  float road_sphr;
 	float cam_speed, cam_inert, cam_x,cam_y,cam_z, cam_dx,cam_dy,cam_dz;
-	
-	//  video
-	int windowx, windowy;
-	bool fullscreen;  int fsaa;  bool vsync;
-	std::string buffer, rendersystem;
 	
 	//  ter generate
 	float gen_scale, gen_ofsx,gen_ofsy, gen_freq, gen_persist, gen_pow;  int gen_oct;

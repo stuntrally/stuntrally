@@ -20,6 +20,10 @@ void SETTINGS::Save(std::string sfile)
 void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 {
 	c.bFltFull = false;
+	
+	SerializeCommon(w,c);
+	
+	//  cars
 	for (int i=0; i < 6; ++i)
 	{
 		char ss[64];  sprintf(ss, "car%d.", i+1);   std::string s = ss;
@@ -44,8 +48,6 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "car1.steer_sim_normal", steer_sim[1]);
 
 	//  game
-	Param(c,w, "game.start_in_main", startInMain);
-	Param(c,w, "game.in_menu", inMenu);				Param(c,w, "game.in_main", isMain);
 	Param(c,w, "game.pre_time", gui.pre_time);			Param(c,w, "game.chall_num", gui.chall_num);  //rem-
 	Param(c,w, "game.champ_num", gui.champ_num);		Param(c,w, "game.champ_rev", gui.champ_rev);
 	Param(c,w, "game.boost_type", gui.boost_type);		Param(c,w, "game.flip_type", gui.flip_type);
@@ -71,7 +73,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	
 	//  hud
-	Param(c,w, "hud_show.fps", show_fps);				Param(c,w, "hud_show.mph", show_mph);
+	Param(c,w, "hud_show.mph", show_mph);
 	Param(c,w, "hud_show.gauges", show_gauges);			Param(c,w, "hud_show.show_digits", show_digits);
 	Param(c,w, "hud_show.trackmap", trackmap);			Param(c,w, "hud_show.times", show_times);
 	Param(c,w, "hud_show.caminfo", show_cam);			Param(c,w, "hud_show.cam_tilt", cam_tilt);
@@ -127,13 +129,11 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "graph_veget.use_imposters", use_imposters); Param(c,w, "graph_veget.imposters_only", imposters_only);
 
 	//  misc
-	Param(c,w, "misc.version", version);			Param(c,w, "misc.autostartgame", autostart);
-	Param(c,w, "misc.ogredialog", ogre_dialog);		Param(c,w, "misc.escquit", escquit);
+	Param(c,w, "misc.version", version);
 	Param(c,w, "misc.bulletDebug", bltDebug);		Param(c,w, "misc.bulletLines", bltLines);
 	Param(c,w, "misc.profilerTxt", profilerTxt);	Param(c,w, "misc.bulletProfilerTxt", bltProfilerTxt);
-	Param(c,w, "misc.language", language);			Param(c,w, "misc.loadingback", loadingbackground);
+	Param(c,w, "misc.loadingback", loadingbackground);
 	Param(c,w, "misc.dev_keys", dev_keys);			Param(c,w, "misc.dev_no_prvs", dev_no_prvs);
-	Param(c,w, "misc.screenshot_png", screen_png);	Param(c,w, "misc.mouse_capture", mouse_capture);
 	Param(c,w, "misc.show_welcome", show_welcome);
 
 	Param(c,w, "network.nickname", nickname);		Param(c,w, "network.master_server_address", master_server_address);
@@ -178,14 +178,6 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video_eff.hdr_adaptationScale", hdrAdaptationScale);
 	Param(c,w, "video_eff.hdr_vignettingRadius", vignRadius);  Param(c,w, "video_eff.hdr_vignettingDarkness", vignDarkness);
 	
-	//  video
-	Param(c,w, "video.windowx", windowx);			Param(c,w, "video.windowy", windowy);
-	Param(c,w, "video.fullscreen", fullscreen);		Param(c,w, "video.vsync", vsync);
-	Param(c,w, "video.fsaa", fsaa);
-	Param(c,w, "video.buffer", buffer);				Param(c,w, "video.rendersystem", rendersystem);
-	Param(c,w, "video.limit_fps", limit_fps);
-	Param(c,w, "video.limit_fps_val", limit_fps_val);	Param(c,w, "video.limit_sleep", limit_sleep);
-	
 	// not in gui-
 	Param(c,w, "misc.boostFromExhaust", boostFromExhaust);
 }
@@ -225,14 +217,12 @@ SETTINGS::SETTINGS()   ///  Defaults
 	//  car
 	,autoshift(1), autorear(1), rear_inv(1), show_mph(0)
 	//  misc
-	,isMain(1), startInMain(1), inMenu(0), rpl_rec(0)
-	,screen_png(0), dev_keys(0), dev_no_prvs(0)
-	,split_vertically(true), language("") // "" = autodetect lang
+	,rpl_rec(0)
+	,dev_keys(0), dev_no_prvs(0)
+	,split_vertically(true)
 	//  misc
-	,autostart(0), ogre_dialog(0), escquit(0)
 	,bltDebug(0), bltLines(1),  bltProfilerTxt(0), profilerTxt(0)
-	,loadingbackground(true), mouse_capture(true)
-	,show_welcome(true)
+	,loadingbackground(true), show_welcome(true)
 	//  network
 	,nickname("Player"), netGameName("Default Game")
 	,master_server_address("localhost")
@@ -255,12 +245,6 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,vol_master(1.f), vol_engine(0.6f), vol_tires(1.f), vol_env(1.f), vol_susp(1.f)
 	,vol_fl_splash(1.f),vol_fl_cont(1.f), vol_car_crash(1.f),vol_car_scrap(1.f)
 	,vol_hud(1.f), snd_chk(0), snd_chkwr(1)
-	//  video
-	,windowx(800), windowy(600)
-	,fullscreen(false), vsync(false)
-	,limit_fps(0), limit_fps_val(60.f), limit_sleep(-1)
-	,rendersystem("Default")
-	,buffer("FBO"), fsaa(0)
 	//  video eff
 	,all_effects(false), godrays(false), filmgrain(false)
 	,bloom(false), bloom_int(0.13), bloom_orig(0.9), hdr(false)
@@ -309,24 +293,8 @@ SETTINGS::SETTINGS()   ///  Defaults
 	sss_velfactor[0] = 1.f;  sss_velfactor[1] = 1.f;
 	steer_range[0] = 1.0;  steer_range[1] = 0.7;
 	steer_sim[0] = 0.51;  steer_sim[1] = 0.81;
-
-
-	//  track  --
-	const static bool colVis[2][18] =
-	{{0,0,1, 0,0,0, 1,1, 0,0,0,0,0,0,0,0,0,0},
-	 {1,0,1, 1,1,1, 1,1, 1,1,1,1,1,1,1,1,1,1}};
-	int i,v;
-	for (v=0; v<2; ++v)
-	for (i=0; i<18; ++i)
-		col_vis[v].push_back(colVis[v][i]);
-		
-	const static char colFil[2][13] =
-	{{01, 0,0, 0,0,0,0,0,0,0,0,0,0},
-	 {30, 9,9, 9,9,9,9,9,9,9,9,9,9}};
-	for (v=0; v<2; ++v)
-	for (i=0; i<18; ++i)
-		col_fil[v].push_back(colFil[v][i]);
 }
+
 
 SETTINGS::GameSet::GameSet()
 {

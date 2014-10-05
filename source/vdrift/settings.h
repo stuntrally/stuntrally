@@ -1,5 +1,6 @@
 #pragma once
 #include "configfile.h"
+#include "../ogre/common/settings_com.h"
 
 
 #define SET_VER  2401  // 2.4
@@ -29,15 +30,15 @@ const static std::string csGraphNames[Gh_ALL] = {
 
 enum eShadowType  {  Sh_None=0, Sh_Depth, Sh_Soft  };
 
-class SETTINGS
+
+class SETTINGS : public SETcom
 {
 public:
 //------------------------------------------
 	int version;  // file version
 
 	//  show
-	bool show_fps,
-		show_gauges, show_digits,
+	bool show_gauges, show_digits,
 		trackmap, mini_zoomed, mini_rotated, mini_terrain, mini_border,
 		check_beam, check_arrow,
 		show_times, show_opponents, opplist_sort,
@@ -58,9 +59,6 @@ public:
 	bool tracks_sortup, cars_sortup, champ_info;
 	int tracks_view, tracks_sort, cars_view, cars_sort,
 		tut_type, champ_type, chall_type, car_ed_tab;
-	//  track
-	std::vector<bool> col_vis[2];  //18 visible columns for track views
-	std::vector<int>  col_fil[2];  //13 filtering range for columns 0min-1max
 
 
 	//  graphics common
@@ -125,16 +123,12 @@ public:
 
 	
 	//  misc
-	bool isMain;  int inMenu;  // last menu id
-	bool screen_png, dev_keys, dev_no_prvs;  // dev
-	std::string language;
+	bool dev_keys, dev_no_prvs;  // dev
 	bool split_vertically;
 	
 	//  startup, other
-	bool autostart, escquit, startInMain;
 	bool bltDebug, bltLines, bltProfilerTxt, profilerTxt;
-	bool loadingbackground, ogre_dialog;
-	bool mouse_capture, show_welcome;
+	bool loadingbackground, show_welcome;
 
 	//  sound
 	float vol_master, vol_hud,
@@ -163,12 +157,6 @@ public:
 	float hdrAdaptationScale;
 	float vignRadius, vignDarkness;
 
-	//  screen
-	int windowx, windowy, fsaa;
-	bool fullscreen, vsync;
-	std::string buffer, rendersystem;
-	bool limit_fps;  float limit_fps_val;  int limit_sleep;
-	
 	//  replay
 	bool rpl_rec, rpl_ghost, rpl_bestonly;
 	bool rpl_ghostother, rpl_trackghost;
