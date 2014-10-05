@@ -132,4 +132,21 @@ SETTINGS::SETTINGS()  ///  Defaults
 {
 	gui.track = "Isl6-Flooded";  gui.track_user = false;
 	gui.trees = 1.f;
+
+
+	//  track  --
+	const static bool colVis[2][18+1] =
+	{{0,0,1, 0,0,0, 1,1, 0,0,0,0,0,0,0,0,0,0,0},
+	 {1,0,1, 1,1,1, 1,1, 1,1,1,1,1,1,1,1,1,1,0}};
+	int i,v;
+	for (v=0; v<2; ++v)
+	for (i=0; i<18+1; ++i)
+		col_vis[v].push_back(colVis[v][i]);
+		
+	const static char colFil[2][13] =
+	{{01, 0,0, 0,0,0,0,0,0,0,0,0,0},
+	 {30, 9,9, 9,9,9,9,9,9,9,9,9,9}};
+	for (v=0; v<2; ++v)
+	for (i=0; i<18; ++i)
+		col_fil[v].push_back(colFil[v][i]);
 }

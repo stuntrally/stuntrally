@@ -17,6 +17,9 @@ public:
 	bool show_fps, trackmap, brush_prv;  int num_mini;
 	float size_minimap;
 	int tracks_view, tracks_sort;  bool tracks_sortup;
+	//  track
+	std::vector<bool> col_vis[2];  //18+1 visible columns for track views
+	std::vector<int>  col_fil[2];  //13 filtering range for columns 0min-1max
 
 	//  graphics common
 	bool limit_fps;  float limit_fps_val;  int limit_sleep;

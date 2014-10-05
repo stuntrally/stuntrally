@@ -58,6 +58,9 @@ public:
 	bool tracks_sortup, cars_sortup, champ_info;
 	int tracks_view, tracks_sort, cars_view, cars_sort,
 		tut_type, champ_type, chall_type, car_ed_tab;
+	//  track
+	std::vector<bool> col_vis[2];  //18 visible columns for track views
+	std::vector<int>  col_fil[2];  //13 filtering range for columns 0min-1max
 
 
 	//  graphics common

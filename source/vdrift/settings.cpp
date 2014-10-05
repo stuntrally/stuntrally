@@ -309,6 +309,23 @@ SETTINGS::SETTINGS()   ///  Defaults
 	sss_velfactor[0] = 1.f;  sss_velfactor[1] = 1.f;
 	steer_range[0] = 1.0;  steer_range[1] = 0.7;
 	steer_sim[0] = 0.51;  steer_sim[1] = 0.81;
+
+
+	//  track  --
+	const static bool colVis[2][18] =
+	{{0,0,1, 0,0,0, 1,1, 0,0,0,0,0,0,0,0,0,0},
+	 {1,0,1, 1,1,1, 1,1, 1,1,1,1,1,1,1,1,1,1}};
+	int i,v;
+	for (v=0; v<2; ++v)
+	for (i=0; i<18; ++i)
+		col_vis[v].push_back(colVis[v][i]);
+		
+	const static char colFil[2][13] =
+	{{01, 0,0, 0,0,0,0,0,0,0,0,0,0},
+	 {30, 9,9, 9,9,9,9,9,9,9,9,9,9}};
+	for (v=0; v<2; ++v)
+	for (i=0; i<18; ++i)
+		col_fil[v].push_back(colFil[v][i]);
 }
 
 SETTINGS::GameSet::GameSet()
