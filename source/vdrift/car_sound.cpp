@@ -156,7 +156,8 @@ void CAR::UpdateSounds(float dt)
 			suspVel[w] = fr.suspVel[w];
 			suspDisp[w] = fr.suspDisp[w];
 			//  fluids
-			whH_all += fr.whH[w];
+			if (fr.whP[w] >= 0)  // solid no snd
+				whH_all += fr.whH[w];
 			if (fr.whP[w] >= 1)  mud = true;
 		}
 	}
@@ -186,7 +187,8 @@ void CAR::UpdateSounds(float dt)
 			suspVel[w] = dynamics.GetSuspension(wp).GetVelocity();
 			suspDisp[w] = dynamics.GetSuspension(wp).GetDisplacementPercent();
 			//  fluids
-			whH_all += dynamics.whH[w];
+			if (dynamics.whP[w] >= 0)  // solid no snd
+				whH_all += dynamics.whH[w];
 			if (dynamics.whP[w] >= 1)  mud = true;
 		}
 
@@ -254,7 +256,7 @@ void CAR::UpdateSounds(float dt)
 			(*s)->Set3DEffects(!incar);*/
 	}
 
-	// engine
+	//  engine
 	float total_gain = 0.0, loudest = 0.0;
 	std::list <std::pair <SOUNDSOURCE *, float> > gainlist;
 
@@ -422,12 +424,13 @@ void CAR::UpdateSounds(float dt)
 	water_cont.SetGain(std::min(1.f, velW * 1.5f) * pSet->vol_fl_cont);
 	water_cont.SetPitch(std::max(0.7f, std::min(1.3f, velW)));
 	water_cont.SetPosition(engPos);
+
 	
 	//  boost
 	boostsnd.SetGain(boostVal * 0.55f * pSet->vol_engine);
 	boostsnd.SetPosition(engPos); //back?-
 	
-	// crash
+	//  crash
 	{
 		crashdetection.Update(speed, dt);
 		float crashdecel = crashdetection.GetMaxDecel();
