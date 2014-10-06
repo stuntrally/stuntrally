@@ -55,7 +55,7 @@
 
 <!-- terrain -->
 <!-- t - diff tex  n - norm tex  (t,n filename no ext)  s - scale  su - surface  tp - triplanar  du - dust  ds - dust size  md - mud  tr - trail color  aa,ab - min,max ter angle  -->
-
+																					   
 <t a="A3"  sc="A"  t="adesert_cracks_d"   n="desert_cracks_n"    s="10.50" su="DesertFast"     tp="0" du="0.6" ds="1.0" md="0.5" tr="0.48 0.30 0.20 0.8"  aa="13" ab="27" z="AV" />
 <t a="A1"  sc="A"  t="adesert_mntn2_d"    n="desert_mntn2_n"     s="34.04" su="Rocks"          tp="1" du="0.7" ds="1.0" md="0.4" tr="0.46 0.26 0.08 0.7"  aa="28" ab="90" z="AIR" />
 <t a="C3"  sc="C"  t="adesert_mntn2o_d"   n="desert_mntn2_n"     s="30.41" su="Rocks"          tp="1" du="0.0" ds="0.2" md="0.1" tr="0.30 0.20 0.15 0.7"  aa="28" ab="40" z="C" />
@@ -194,8 +194,6 @@
 <t a="Z1"  sc="Z"  t="zdesert_wet_d"      n="desert_wet_n"       s="8.78"  su="DesertFast"     tp="0" du="0.5" ds="0.7" md="0.0" tr="0.20 0.20 0.20 0.7"  aa="0"  ab="13" z="Z" />
 -->
 <t a="Tes" sc="D"  t="zAsphalt_d"         n="ground_cracks2_n"   s="10.14" su="Asphalt"        tp="0" du="0.0" ds="0.6" md="0.0" tr="0.10 0.10 0.10 0.6"  aa="0" ab="90"  z="D" />
-
-<t a="Z1"  sc="Z"  t="alien_cracks_d"     n="desert_cracks_n"    s="9.09"  su="DesertFast"     tp="0" du="0.8" ds="1.0" md="0.1" tr="0.46 0.46 0.08 0.7"  aa="8"  ab="22" z="L" />
 
 
 <!-- road -->

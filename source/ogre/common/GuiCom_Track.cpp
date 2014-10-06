@@ -188,7 +188,7 @@ void CGuiCom::GuiInitTrack()
 	SV* sv;  Ck* ck;
 	for (i=0; i < COL_VIS; ++i)
 	{
-		ck= &chTrkColVis[i];  ck->Init("vis"+toStr(i), &pSet->col_vis[0][i]);  CevC(TrkColVis);
+		ck= &chTrkColVis[i];  ck->Init("col"+toStr(i), &pSet->col_vis[0][i]);  CevC(TrkColVis);
 	}
 	for (i=0; i < COL_FIL; ++i)
 	{	string si = toStr(i);

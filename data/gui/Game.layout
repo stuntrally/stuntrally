@@ -134,63 +134,64 @@
 	<Widget type="Window" skin="WindowC" position="16 88 700 600" align="Center" layer="Popup" name="TrackFilterWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="MaxSize" value="2560 1600"/>
-		<Property key="Caption" value="#A0FFA0#{Track} - #{TerFilter}"/>
+		<Property key="Caption" value="#A0A0FF#{Track} - #{TerFilter}"/>
+		<Property key="Colour" value="0.5 0.5 0.7"/>
 		<Property key="Alpha" value="1.0"/>
 		<Property key="Snap" value="true"/>
 		<Property key="Visible" value="false"/>
-		<Widget type="Button" skin="CheckBox" position="32 25 140 24" name="vis0">
+		<Widget type="Button" skin="CheckBox" position="32 25 140 24" name="col0">
 			<Property key="Caption" value="#C0E0C0 id"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 50 140 24" name="vis1">
-			<Property key="Caption" value="#D0FFD0#{Name} full"/>
+		<Widget type="Button" skin="CheckBox" position="32 50 240 24" name="col1">
+			<Property key="Caption" value="#C8E8C8#{Name} (#{Big})"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 75 140 24" name="vis2">
-			<Property key="Caption" value="#E0FFE0#{Name} short"/>
+		<Widget type="Button" skin="CheckBox" position="32 75 240 24" name="col2">
+			<Property key="Caption" value="#E0FFE0#{Name}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 100 140 24" name="vis3">
+		<Widget type="Button" skin="CheckBox" position="32 100 140 24" name="col3">
 			<Property key="Caption" value="#80FF80 N"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 125 140 24" name="vis4">
+		<Widget type="Button" skin="CheckBox" position="32 125 140 24" name="col4">
 			<Property key="Caption" value="#80FFC0#{Scenery}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 150 140 24" name="vis5">
+		<Widget type="Button" skin="CheckBox" position="32 150 140 24" name="col5">
 			<Property key="Caption" value="#C0E0F0 ver"/>
 		</Widget>
 
-		<Widget type="Button" skin="CheckBox" position="32 175 140 24" name="vis6">
+		<Widget type="Button" skin="CheckBox" position="32 175 140 24" name="col6">
 			<Property key="Caption" value="#FFC080#{difficulty}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 200 140 24" name="vis7">
+		<Widget type="Button" skin="CheckBox" position="32 200 140 24" name="col7">
 			<Property key="Caption" value="#90D0FF#{rating}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 225 140 24" name="vis8">
+		<Widget type="Button" skin="CheckBox" position="32 225 140 24" name="col8">
 			<Property key="Caption" value="#FF80C0#{objects}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 250 140 24" name="vis9">
+		<Widget type="Button" skin="CheckBox" position="32 250 140 24" name="col9">
 			<Property key="Caption" value="#C09060#{obstacles}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 275 140 24" name="vis10">
+		<Widget type="Button" skin="CheckBox" position="32 275 140 24" name="col10">
 			<Property key="Caption" value="#80C0FF#{fluids}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 300 140 24" name="vis11">
+		<Widget type="Button" skin="CheckBox" position="32 300 140 24" name="col11">
 			<Property key="Caption" value="#40FF00#{bumps}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 325 140 24" name="vis12">
+		<Widget type="Button" skin="CheckBox" position="32 325 140 24" name="col12">
 			<Property key="Caption" value="#FFA030#{jumps}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 350 140 24" name="vis13">
+		<Widget type="Button" skin="CheckBox" position="32 350 140 24" name="col13">
 			<Property key="Caption" value="#00FFFF#{loops}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 375 140 24" name="vis14">
+		<Widget type="Button" skin="CheckBox" position="32 375 140 24" name="col14">
 			<Property key="Caption" value="#FFFF00#{pipes}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 400 140 24" name="vis15">
+		<Widget type="Button" skin="CheckBox" position="32 400 140 24" name="col15">
 			<Property key="Caption" value="#C0C0C0#{banked}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 425 140 24" name="vis16">
+		<Widget type="Button" skin="CheckBox" position="32 425 140 24" name="col16">
 			<Property key="Caption" value="#C080FF#{frenzy}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 450 140 24" name="vis17">
+		<Widget type="Button" skin="CheckBox" position="32 450 140 24" name="col17">
 			<Property key="Caption" value="#FFA0A0#{long}"/>
 		</Widget>
 
