@@ -1,4 +1,6 @@
 #pragma once
+#include <map>
+#include <string>
 
 class FluidsXml;
 class BltObjects;
