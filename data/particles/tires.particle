@@ -1,5 +1,6 @@
 //  Dust  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+//  Aus
 particle_system Adust
 {
 	material			Dust
@@ -43,6 +44,7 @@ particle_system Adust
 	}
 }
 
+//  Desert
 particle_system Dust
 {
 	material			Dust
@@ -88,7 +90,7 @@ particle_system Dust
 	}
 }
 
-//  dust2
+//  Island
 particle_system DustSmall
 {
 	material			Dust
@@ -134,6 +136,7 @@ particle_system DustSmall
 	}
 }
 
+//  Winter
 particle_system DustW
 {
 	material			Dust
@@ -178,6 +181,53 @@ particle_system DustW
 		alpha	-0.130
 	}
 }
+
+//  Alien
+particle_system DustAlien
+{
+	material			Dust
+	quota				1000
+	particle_width		1.3
+	particle_height		1.0
+	cull_each			true
+	billboard_type		point
+	//renderer			billboard
+    sorted				true
+
+	emitter Box
+	{
+		angle	30
+		position	0 0.2 0
+		direction	0 1 0
+		width	0.45
+		height	0.35
+		depth	0.45  //h
+
+		colour				0.65 0.85 0.65  0.5
+		colour_range_start	0.65 0.85 0.65  0.4
+		colour_range_end	0.45 0.8  0.45  0.6
+
+		//emission_rate	20
+		velocity_min	0.0
+		velocity_max	0.4
+		time_to_live_min	4
+		time_to_live_max	7
+	}
+
+	affector Scaler
+	{
+		rate	0.5
+	}
+
+	affector ColourFader
+	{
+		red		-0.018
+		green	-0.011
+		blue	-0.017
+		alpha	-0.130
+	}
+}
+
 
 
 //  Mud  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
