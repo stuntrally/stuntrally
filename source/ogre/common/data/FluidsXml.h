@@ -21,7 +21,9 @@ public:
 	int idParticles;  // index for wheel particles (0water, 1mud soft, 2mud hard, -1 none)
 
 	float fDamage;  // damage per sec, per wheel (div by 4)
+
 	bool solid;  // if true will collide, rigid
+	int surf;  // surface id from name for solid
 	
 	FluidParams();
 };
@@ -38,5 +40,5 @@ public:
 	
 	//  methods
 	//FluidsXml();  void Default();
-	bool LoadXml(std::string file);
+	bool LoadXml(std::string file, std::map <std::string, int>* surf_map=0);
 };

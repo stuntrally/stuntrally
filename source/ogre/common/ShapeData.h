@@ -10,8 +10,9 @@ const static int  // & 0xFF !
 	SU_Terrain		= 0x500,
 	SU_Vegetation	= 0x600,  // trees, rocks etc
 	SU_Border		= 0x700,  // world border planes
-	SU_ObjectStatic	= 0x800;
-	//SU_ObjectDynamic= 0x900;  //..
+	SU_ObjectStatic	= 0x800,
+	SU_Fluid 		= 0x900; //+surfId  solid fluids, ice etc
+	//SU_ObjectDynamic= 0xA00;  //..
 
 
 //  info  for special collision objects  (fluids, triggers)

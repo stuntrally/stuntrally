@@ -122,7 +122,7 @@ bool TracksXml::LoadIni(std::string file)
 		//  starting with digit
 		if (strlen(s) > 0 && s[0] >= '0' && s[0] <= '9')
 		{
-		//114,E1-Lakes  v=2.0 06/04/13 07/04/13 :Finland  |o=0 w=1 ~=1 J=2 L=0 P=0 /=1 s=1 l=2 !=2 *=4  T=107.8  a:CH
+		//114,Fin1-Lakes  v=2.0 06/04/13 07/04/13 :Finland  |o=0 w=1 ~=1 J=2 L=0 P=0 /=1 s=1 l=2 !=2 *=4  T=107.8  a:CH
 			sscanf(s,
 			"%d,%s v=%f %d/%d/%d %u/%u/%u :%s |o=%d c=%d w=%d ~=%d J=%d L=%d P=%d /=%d s=%d l=%d !=%d *=%d  T=%f a:%s"
 				,&t.n, name, &t.crtver

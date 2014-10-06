@@ -526,8 +526,18 @@ bool COLLISION_WORLD::CastRay(
 				
 				//case SU_RoadWall: //case SU_RoadColumn:
 				//case SU_Vegetation: case SU_Border:
+				
 				//case SU_ObjectStatic: //case SU_ObjectDynamic:
-				//  fluids.. ?
+
+				case SU_Fluid:  //  solid fluids
+				{
+					int id = mtr;
+					surf = &pApp->pGame->surfaces[id];
+
+					if (cd)
+					{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 1;  }
+				}	break;
+				
 				default:
 				{
 					int id = td.layerRoad[0].surfId;

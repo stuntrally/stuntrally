@@ -79,6 +79,8 @@ void CScene::CreateBltFluids()
 	for (int i=0; i < sc->fluids.size(); i++)
 	{
 		FluidBox& fb = sc->fluids[i];
+		const FluidParams& fp = sc->pFluidsXml->fls[fb.id];
+
 		///  add bullet trigger box   . . . . . . . . .
 		btVector3 pc(fb.pos.x, -fb.pos.z, fb.pos.y -fb.size.y/2);  // center
 		btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
@@ -87,18 +89,23 @@ void CScene::CreateBltFluids()
 		btCollisionShape* bshp = 0;
 		btScalar t = sc->td.fTerWorldSize*0.5f;  // not bigger than terrain
 		bshp = new btBoxShape(btVector3(std::min(t, fb.size.x*0.5f), std::min(t, fb.size.z*0.5f), fb.size.y*0.5f));
-		//shp->setUserPointer((void*)SU_Fluid);
+
+		//  solid surf
+		uint id = SU_Fluid;  if (fp.solid)  id += fp.surf;
+		bshp->setUserPointer((void*)id);
 
 		btCollisionObject* bco = new btCollisionObject();
 		bco->setActivationState(DISABLE_SIMULATION);
 		bco->setCollisionShape(bshp);	bco->setWorldTransform(tr);
 
-		const FluidParams& fp = sc->pFluidsXml->fls[fb.id];
 		if (!fp.solid)  // fluid
 			bco->setCollisionFlags(bco->getCollisionFlags() |
-				/*btCollisionObject::CF_STATIC_OBJECT |*/ btCollisionObject::CF_NO_CONTACT_RESPONSE/**/);
+				btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_NO_CONTACT_RESPONSE/**/);
 		else  // solid
-		{	bco->setFriction(0.6f);  bco->setRestitution(0.f);  }  //par?..
+		{	bco->setCollisionFlags(bco->getCollisionFlags() |
+				btCollisionObject::CF_STATIC_OBJECT);
+			bco->setFriction(0.6f);  bco->setRestitution(0.f);  //par?..
+		}
 		
 		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
 		#ifndef SR_EDITOR

@@ -15,9 +15,9 @@ using Ogre::String;
 #endif
 
 
-void CData::Load()
+void CData::Load(std::map <std::string, int>* surf_map)
 {
-	fluids->LoadXml(PATHMANAGER::Data() + "/materials2/fluids.xml");
+	fluids->LoadXml(PATHMANAGER::Data() + "/materials2/fluids.xml", /**/surf_map);
 	LogO(String("**** Loaded Fluids: ") + toStr(fluids->fls.size()));
 
 	objs->LoadXml();  //  collisions.xml

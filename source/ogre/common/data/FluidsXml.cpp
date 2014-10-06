@@ -11,14 +11,15 @@ FluidParams::FluidParams()
 	,bWhForce(false), whMaxAngVel(100.f), whSpinDamp(10)
 	,whForceLong(30.f), whForceUp(50.f), whSteerMul(1.f)
 	,bumpFqX(20.f), bumpFqY(30.f),bumpAmp(0.2f), bumpAng(0.5f)
-	,idParticles(0), fDamage(0.f), solid(false)
+	,idParticles(0), fDamage(0.f)
+	,solid(false), surf(0)
 {	}
 
 
 //  Load
 //--------------------------------------------------------------------------------------------------------------------------------------
 
-bool FluidsXml::LoadXml(std::string file)
+bool FluidsXml::LoadXml(std::string file, std::map <std::string, int>* surf_map)
 {
 	XMLDocument doc;
 	XMLError e = doc.LoadFile(file.c_str());
@@ -61,7 +62,18 @@ bool FluidsXml::LoadXml(std::string file)
 		
 		a = eFl->Attribute("idParticles");	if (a)  fp.idParticles = s2i(a);
 		a = eFl->Attribute("fDamage");		if (a)  fp.fDamage = s2r(a);
+
 		a = eFl->Attribute("solid");		if (a)  fp.solid = s2i(a) > 0;
+		a = eFl->Attribute("surf");
+		if (a)
+		{	std::string s(a);
+			int id = surf_map ? (*surf_map)[s]-1 : -1;
+			if (id == -1)
+			{	id = 4;  // default if not found
+				LogO("! Warning: Surface not found: "+s+" for (solid) fluid: "+fp.name);
+			}
+			fp.surf = id;
+		}
 		//
 
 		fls.push_back(fp);
