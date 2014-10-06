@@ -59,10 +59,14 @@
 		bWhForce="1" whMaxAngVel="50" whSpinDamp="30"  whForceLong="80" whForceUp="10"
 		bumpFqX="21.2" bumpFqY="26.2" bumpAmp="0.8" bumpAngle="30" whSteerMul="1.3" idParticles="2" />
 
+
 	<fluid name="grease jelly"	material="Grease_jelly" density="800"  angDamp="1.2" linDamp="0.4" heightDamp="3"
 		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
 		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" />
 
 	<fluid name="acid green"	material="Acid_green" density="500" angDamp="0.9" linDamp="0.4" heightDamp="1" fDamage="5" />
+
+	<fluid name="ice solid"		material="Ice"		density="500" angDamp="0.9" linDamp="0.4" heightDamp="1"
+		solid="1" surf="roadSnow" idParticles="-1" />
 
 </fluids>

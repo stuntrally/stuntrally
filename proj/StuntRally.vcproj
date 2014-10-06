@@ -1036,6 +1036,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\data\carsim\normal\surfaces.cfg"
+				>
+			</File>
+			<File
 				RelativePath="..\data\particles\tires.particle"
 				>
 			</File>
