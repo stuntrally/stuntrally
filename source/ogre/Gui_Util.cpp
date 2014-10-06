@@ -485,6 +485,7 @@ void CGui::toggleGui(bool toggle)
 	if (app->mWndReplays) app->mWndReplays->setVisible(notMain && pSet->inMenu == MNU_Replays);
 	if (app->mWndHelp)	app->mWndHelp->setVisible(notMain && pSet->inMenu == MNU_Help);
 	if (app->mWndOpts)	app->mWndOpts->setVisible(notMain && pSet->inMenu == MNU_Options);
+	if (!app->isFocGui)  app->mWndTrkFilt->setVisible(false);
 	
 	//  load Readme editbox from file
 	if (app->mWndHelp && app->mWndHelp->getVisible() && loadReadme)

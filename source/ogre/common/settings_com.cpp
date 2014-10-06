@@ -57,7 +57,7 @@ void SETcom::SerializeCommon(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_show.fps", show_fps);
 
 	//  gui tracks  ---
-	Param(c,w, "gui_tracks.view", tracks_view);
+	Param(c,w, "gui_tracks.view", tracks_view);		Param(c,w, "gui_tracks.filter", tracks_filter);
 	Param(c,w, "gui_tracks.sort", tracks_sort);		Param(c,w, "gui_tracks.sortup", tracks_sortup);
 
 	//  columns, filters
@@ -134,7 +134,8 @@ SETcom::SETcom()   ///  Defaults
 	,show_fps(0)
 
 	//  gui tracks
-	,tracks_view(0), tracks_sort(2), tracks_sortup(1)
+	,tracks_view(0), tracks_filter(0)
+	,tracks_sort(2), tracks_sortup(1)
 {
 
 	int i,v;

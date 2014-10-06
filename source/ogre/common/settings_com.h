@@ -46,7 +46,8 @@ public:
 
 
 	//  track
-	int tracks_view, tracks_sort;  bool tracks_sortup;
+	int tracks_view, tracks_sort;
+	bool tracks_sortup, tracks_filter;
 
 	#define COL_VIS 18
 	#define COL_FIL 13

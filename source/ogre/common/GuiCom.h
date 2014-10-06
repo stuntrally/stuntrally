@@ -137,8 +137,10 @@ public:
 
 
 	//  columns, filters  ---
+	Ck chTrkFilter;  void chkTrkFilter(Ck*);
 	Ck chTrkColVis[COL_VIS];  void chkTrkColVis(Ck*);
 	SV svTrkFilMin[COL_FIL], svTrkFilMax[COL_FIL];  void slTrkFil(SV*);
+	void ChkUpd_Col();
 
 	//  const list column widths
 	const static int colTrk[32];

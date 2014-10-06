@@ -105,9 +105,21 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 			String name = (*i).name, nlow = name;  StringUtil::toLowerCase(nlow);
 			const TrackInfo* ti = (*i).ti;
 			if (sTrkFind == "" || strstr(nlow.c_str(), sTrkFind.c_str()) != 0)
-			if (!ti ||
-				ti->diff   >= pSet->col_fil[0][1] && ti->diff   <= pSet->col_fil[1][1] &&
-				ti->rating >= pSet->col_fil[0][2] && ti->rating <= pSet->col_fil[1][2])
+			if (!ti || !pSet->tracks_filter ||  //  filtering
+				ti->ver      >= pSet->col_fil[0][0]  && ti->ver      <= pSet->col_fil[1][0]  &&
+				ti->diff     >= pSet->col_fil[0][1]  && ti->diff     <= pSet->col_fil[1][1]  &&
+				ti->rating   >= pSet->col_fil[0][2]  && ti->rating   <= pSet->col_fil[1][2]  &&
+
+				ti->objects  >= pSet->col_fil[0][3]  && ti->objects  <= pSet->col_fil[1][3]  &&
+				ti->obstacles>= pSet->col_fil[0][4]  && ti->obstacles<= pSet->col_fil[1][4]  &&
+				ti->fluids   >= pSet->col_fil[0][5]  && ti->fluids   <= pSet->col_fil[1][5]  &&
+				ti->bumps    >= pSet->col_fil[0][6]  && ti->bumps    <= pSet->col_fil[1][6]  &&
+				ti->jumps    >= pSet->col_fil[0][7]  && ti->jumps    <= pSet->col_fil[1][7]  &&
+				ti->loops    >= pSet->col_fil[0][8]  && ti->loops    <= pSet->col_fil[1][8]  &&
+				ti->pipes    >= pSet->col_fil[0][9]  && ti->pipes    <= pSet->col_fil[1][9]  &&
+				ti->banked   >= pSet->col_fil[0][10] && ti->banked   <= pSet->col_fil[1][10] &&
+				ti->frenzy   >= pSet->col_fil[0][11] && ti->frenzy   <= pSet->col_fil[1][11] &&
+				ti->longn    >= pSet->col_fil[0][12] && ti->longn    <= pSet->col_fil[1][12])
 			{
 				AddTrkL(name, 0, (*i).ti);
 				if (!pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
@@ -250,11 +262,12 @@ void CGuiCom::ChangeTrackView()
 	imgPrv[0]->setVisible(!full);   imgTrkIco1->setVisible(full);
 	trkDesc[0]->setVisible(!full);	imgTrkIco2->setVisible(full);
 
+	ChkUpd_Col();
 	updTrkListDim();  // change size, columns
 }
 
 
-///  upd trkList  cols vis
+///  tracks list  cols,filter
 void CGuiCom::btnTrkFilter(WP)
 {
 	app->mWndTrkFilt->setVisible( !app->mWndTrkFilt->getVisible());
@@ -264,12 +277,14 @@ void CGuiCom::chkTrkColVis(Ck* ck)
 {
 	updTrkListDim();
 }
-
 void CGuiCom::slTrkFil(SV* sv)
 {
 	TrackListUpd();
 }
-
+void CGuiCom::chkTrkFilter(Ck* ck)
+{
+	TrackListUpd();
+}
 
 
 //  adjust list size, columns
@@ -281,7 +296,7 @@ void CGuiCom::updTrkListDim()
 	bool full = pSet->tracks_view;  int fi = full?1:0;
 
 	int c, sum = 0, cnt = trkList->getColumnCount();
-	for (c=0; c < cnt-1; ++c)  if (pSet->col_vis[1][c])  sum += colTrk[c];
+	for (c=0; c < cnt-1; ++c)  if (pSet->colVis[1][c])  sum += colTrk[c];
 
 	const IntCoord& wi = app->mWndOpts->getCoord();
 	int sw = 0, xico1 = 0, xico2 = 0, wico = 0;

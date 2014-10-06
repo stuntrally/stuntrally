@@ -63,6 +63,22 @@ const String CGuiCom::clrsRating[6] =  // rating
 const String CGuiCom::clrsLong[10] =  // long
 	{"#E0D0D0", "#E8C0C0", "#F0B0B0", "#F8A0A0", "#FF9090", "#FF8080", "#F07070", "#F06060", "#E04040", "#D03030"};
 
+
+//  * * * *  CONST  * * * *
+//  column widths in MultiList2,  track detailed
+const int wi = 17;            // id name nm   N  scn ver
+const int CGuiCom::colTrk[32] = {40, 90, 80, 25, 70, 25, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 24};
+#ifndef SR_EDITOR
+const int CGui::colCar[16] = {34, 27, 37, 52, 24};  // car
+const int CGui::colCh [16] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
+const int CGui::colChL[16] = {36, 180, 90, 100, 50, 60, 60, 60, 50};  // challs
+const int CGui::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
+#endif
+
+//-----------------------------------------------------------------------------------------------------------
+
+
+//  Add tracks list item
 void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 {
 	String c = GetSceneryColor(name);
@@ -106,16 +122,6 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	li->setSubItemNameAt(17,l,toS(clrsLong[ti->longn], ti->longn));
 }
 
-//  * * * *  CONST  * * * *
-//  column widths in MultiList2,  track detailed
-const int wi = 17;            // id name nm   N  scn ver
-const int CGuiCom::colTrk[32] = {40, 90, 80, 25, 70, 25, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 24};
-#ifndef SR_EDITOR
-const int CGui::colCar[16] = {34, 27, 37, 52, 24};  // car
-const int CGui::colCh [16] = {30, 180, 120, 50, 80, 80, 60, 40};  // champs
-const int CGui::colChL[16] = {36, 180, 90, 100, 50, 60, 60, 60, 50};  // challs
-const int CGui::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
-#endif
 
 void CGuiCom::initMiniPos(int i)
 {
@@ -124,6 +130,7 @@ void CGuiCom::initMiniPos(int i)
 	IntSize si = imgMiniPos[i]->getSize();
 	imgMiniRot[i]->setCenter(IntPoint(si.width*0.7f, si.height*0.7f));  //0.5?
 }
+
 
 //  Gui Init [Track] once
 //-----------------------------------------------------------------------------------------------------------
@@ -159,7 +166,10 @@ void CGuiCom::GuiInitTrack()
 	BtnC("TrkView1", btnTrkView1);  imgTrkIco1 = fImg("TrkView2icons1");
 	BtnC("TrkView2", btnTrkView2);  imgTrkIco2 = fImg("TrkView2icons2");
 	BtnC("TrkFilter", btnTrkFilter);
+	SV* sv;  Ck* ck;
+	ck= &chTrkFilter;  ck->Init("TracksFilter", &pSet->tracks_filter);  CevC(TrkFilter);
 	
+	//  columns  ----
 	li->removeAllColumns();  int c=0;
 	li->addColumn("#C0E0C0""id", colTrk[c++]);  // prefix
 	li->addColumn("#D0FFD0"+TR("#{Name}"), colTrk[c++]);  // full
@@ -185,11 +195,11 @@ void CGuiCom::GuiInitTrack()
 	li->addColumn(" ", colTrk[c++]);
 	
 	//  columns, filters  ---
-	SV* sv;  Ck* ck;
 	for (i=0; i < COL_VIS; ++i)
 	{
-		ck= &chTrkColVis[i];  ck->Init("col"+toStr(i), &pSet->col_vis[0][i]);  CevC(TrkColVis);
+		ck= &chTrkColVis[i];  ck->Init("col"+toStr(i), &pSet->col_vis[pSet->tracks_view][i]);  CevC(TrkColVis);
 	}
+	//ChkUpd_Col();
 	for (i=0; i < COL_FIL; ++i)
 	{	string si = toStr(i);
 		int a = pSet->colFil[0][i], b = pSet->colFil[1][i];
@@ -206,6 +216,12 @@ void CGuiCom::GuiInitTrack()
 	listTrackChng(trkList,0);
 
 	ChangeTrackView();
+}
+
+void CGuiCom::ChkUpd_Col()
+{
+	for (int i=0; i < COL_VIS; ++i)
+		chTrkColVis[i].Upd(&pSet->col_vis[pSet->tracks_view][i]);
 }
 
 

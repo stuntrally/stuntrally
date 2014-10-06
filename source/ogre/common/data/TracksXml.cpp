@@ -23,8 +23,8 @@ string dt2s(const Date& dt)
 
 //-------------------------------------------------------------------------------------
 TrackInfo::TrackInfo()
-	:n(-1), crtver(0.f), name("none")
-	,scenery("none"), author("none")
+	:n(-1), crtver(0.f), ver(0)
+	,name("none"), scenery("none"), author("none")
 	,objects(0), fluids(0), bumps(0)
 	,jumps(0), loops(0), pipes(0)
 	,banked(0), frenzy(0), longn(0)
@@ -137,6 +137,7 @@ bool TracksXml::LoadIni(std::string file)
 			t.name = name;
 			t.scenery = scenery;
 			t.author = author;
+			t.ver = int(t.crtver*10.f);
 
 			string shrt;  //-  name short  (without prefix)
 			size_t p = t.name.find("-");

@@ -29,8 +29,6 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "hud_show.trackmap", trackmap);			Param(c,w, "hud_size.minimap", size_minimap);
 	Param(c,w, "hud_show.mini_num", num_mini);			Param(c,w, "hud_show.brushpreview", brush_prv);
-	Param(c,w, "hud_show.tracks_view", tracks_view);
-	Param(c,w, "hud_show.tracks_sort", tracks_sort);	Param(c,w, "hud_show.tracks_sortup", tracks_sortup);
 	
 	Param(c,w, "misc.allow_save", allow_save);
 	Param(c,w, "misc.inputBar", inputBar);			Param(c,w, "misc.camPos", camPos);
