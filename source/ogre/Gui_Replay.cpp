@@ -204,6 +204,8 @@ void CGui::UpdRplPlayBtn()
 void CGui::updReplaysList()
 {
 	if (!rplList)  return;
+	//Ogre::Timer ti;
+
 	rplList->removeAllItems();
 
 	strlist li;
@@ -217,12 +219,14 @@ void CGui::updReplaysList()
 		if (sRplFind == "" || strstr(slow.c_str(), sRplFind.c_str()) != 0)
 		if (pSet->rpl_listview != 1 || StringUtil::startsWith(s,pSet->game.track, false))
 		{
-			string ss = s.substr(0,1);  //gcom->scnClr[gcom->scnN[]];
-			size_type f = s.find_first_of('_');
+			size_type f = s.find_first_of("_-0123456789");
+			string ss;
 			if (f != string::npos)  ss = s.substr(0,f);
+			else  ss = s.substr(0,1);  //gcom->scnClr[gcom->scnN[]];
 			rplList->addItem(gcom->GetSceneryColor(ss) + s);
 		}
 	}
+	//LogO(String("::: Time ReplaysList: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
 
 
