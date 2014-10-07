@@ -191,6 +191,7 @@ material gplant1 {  parent grass
     diffuseMap gplant1.png  }
 
 
+//  unidentified
 material grassXc {  parent grass
     diffuseMap grassXc.png  }
 
@@ -203,7 +204,7 @@ material grassX10b {  parent grass
 material grassX13p {  parent grass
     diffuseMap grassX13p.png  }
 
-
+//  alien
 material grass4v-alien {  parent grass
     diffuseMap grass4v-alien.png  }
 
@@ -212,3 +213,28 @@ material grassX10b-alien {  parent grass
 
 material grassXc-alien {  parent grass
     diffuseMap grassXc-alien.png  }
+
+//  black desert
+material grassZ10 {  parent grass
+	emissive 0.3 0.3 0.3
+    diffuseMap grassZ10.png  }
+
+material grassZ11 {  parent grass
+	emissive 0.2 0.2 0.2
+    diffuseMap grassZ11.png  }
+
+material grassZ13p {  parent grass
+	emissive 0.2 0.2 0.2
+    diffuseMap grassZ13p.png  }
+
+material grassZ13r {  parent grass
+	emissive 0.2 0.2 0.2
+    diffuseMap grassZ13r.png  }
+
+material grassZ14r {  parent grass
+	emissive 0.2 0.2 0.2
+    diffuseMap grassZ14r.png  }
+
+material grassZ1r {  parent grass
+	emissive 0.2 0.2 0.2
+    diffuseMap grassZ1r.png  }

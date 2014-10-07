@@ -317,6 +317,13 @@
 <g a="L1"  sc="L"  g="grassX10b-alien"   c="grClrWinter"    xa="2.80" xb="3.18" ya="3.25" yb="3.69" z="L" />
 <g a="L1"  sc="L"  g="grassXc-alien"     c="grClrWinter"    xa="2.67" xb="3.23" ya="1.96" yb="2.26" z="L" />
 
+<g a="Z1"  sc="Z"  g="grassZ10"      c="grClrWinter"    xa="1.87" xb="2.23" ya="1.86" yb="2.26" z="Z" />
+<g a="Z1"  sc="Z"  g="grassZ11"      c="grClrWinter"    xa="1.87" xb="2.23" ya="1.86" yb="2.26" z="Z" />
+<g a="Z1"  sc="Z"  g="grassZ13p"     c="grClrWinter"    xa="1.87" xb="2.23" ya="1.86" yb="2.26" z="Z" />
+<g a="Z1"  sc="Z"  g="grassZ13r"     c="grClrWinter"    xa="1.87" xb="2.23" ya="1.86" yb="2.26" z="Z" />
+<g a="Z1"  sc="Z"  g="grassZ14r"     c="grClrWinter"    xa="1.87" xb="2.23" ya="1.86" yb="2.26" z="Z" />
+<g a="Z1"  sc="Z"  g="grassZ1r"      c="grClrWinter"    xa="1.87" xb="2.23" ya="1.86" yb="2.26" z="Z" />
+
 
 <!-- vegetation -->
 <!-- p - .mesh name  sa,sb - min,max scale  wx,wy - wind fx,fy  ab - max ter angle  rd - min road dist  fd - max fluid depth -->
@@ -484,5 +491,8 @@
 <v a="L1"  sc="L"  p="shroom1_1_alien"      sa="0.15" sb="0.25"  wx="0.00" wy="0.000"  ab="21.14" rd="1" fd="0.0" z="L" />
 <v a="L1"  sc="L"  p="shroom1_2_alien"      sa="0.32" sb="0.49"  wx="0.00" wy="0.000"  ab="32.73" rd="1" fd="0.0" z="L" />
 <v a="L1"  sc="L"  p="shroom1_3_alien"      sa="0.20" sb="0.30"  wx="0.00" wy="0.000"  ab="21.33" rd="1" fd="0.0" z="L" />
+
+<v a="Z1"  sc="Z"  p="gum_tree_black"       sa="1.45" sb="2.22"  wx="0.30" wy="0.004"  ab="20.48" rd="1" fd="0.0" z="Z" />
+<v a="Z1"  sc="Z"  p="fern2_black"          sa="0.30" sb="0.44"  wx="0.00" wy="0.000"  ab="29.12" rd="1" fd="0.5" z="Z" />
 
 </presets>
