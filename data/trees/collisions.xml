@@ -10,6 +10,7 @@
 
 		<object mesh= "fern.mesh" />
 		<object mesh= "fern2.mesh" />
+		<object mesh= "fern2_black.mesh" />
 
 		<object mesh= "plant1.mesh" />
 		<object mesh= "plant2.mesh" />
@@ -64,8 +65,17 @@
 	<object mesh= "gum_tree.mesh">
 		<shape type="capsZ" ofs="-0.1 0.3 4" r="0.35" h="9.0" frict="0.7" restit="0.9" />
 	</object>
+	<object mesh= "gum_tree_alien.mesh">
+		<shape type="capsZ" ofs="-0.1 0.3 4" r="0.35" h="9.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "gum_tree_black.mesh">
+		<shape type="capsZ" ofs="-0.1 0.3 4" r="0.35" h="9.0" frict="0.7" restit="0.9" />
+	</object>
 	
 	<object mesh= "jungle_tree.mesh">
+		<shape type="capsZ" ofs="-0.2 -0.1 2" r="0.7" h="9.0" frict="0.7" restit="0.9" />
+	</object>
+	<object mesh= "jungle_tree_alien.mesh">
 		<shape type="capsZ" ofs="-0.2 -0.1 2" r="0.7" h="9.0" frict="0.7" restit="0.9" />
 	</object>
 
