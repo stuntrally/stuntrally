@@ -180,19 +180,18 @@
 <t a="Y1"  sc="Y"  t="ycrystals_big_d"    n="ycrystals_big_n"    s="17.15" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="38" ab="90" z="Y" d="" />
 
 <t a="L1"  sc="L"  t="alien_cracks_d"     n="desert_cracks_n"    s="9.09"  su="DesertFast"     tp="0" du="0.8" ds="1.0" md="0.1" tr="0.46 0.46 0.08 0.7"  aa="8"  ab="22" z="L" />
-<t a="L1"  sc="L"  t="a_alien_mntn4_d"    n="adesert_mntn4_n"    s="20.29" su="DesertBumpy"    tp="0" du="0.6" ds="1.0" md="0.5" tr="0.48 0.30 0.20 0.8"  aa="21" ab="40" z="L" />
-<t a="L1"  sc="L"  t="a_alien_stone_d"    n="adesert_stone_n"    s="11.54" su="DesertFast"     tp="0" du="0.5" ds="1.0" md="0.7" tr="0.25 0.10 0.08 0.8"  aa="0"  ab="18" z="L" />
 <t a="L1"  sc="L"  t="alien_mntn_d"       n="desert_mntn_n"      s="26.21" su="Rocks"          tp="1" du="0.4" ds="1.0" md="0.7" tr="0.42 0.36 0.08 0.8"  aa="23" ab="44" z="L" />
+<t a="L1"  sc="L"  t="alien_mntn4_d"      n="adesert_mntn4_n"    s="20.29" su="DesertBumpy"    tp="0" du="0.6" ds="1.0" md="0.5" tr="0.48 0.30 0.20 0.8"  aa="21" ab="40" z="L" />
+<t a="L1"  sc="L"  t="alien_stone_d"      n="adesert_stone_n"    s="11.54" su="DesertFast"     tp="0" du="0.5" ds="1.0" md="0.7" tr="0.25 0.10 0.08 0.8"  aa="0"  ab="18" z="L" />
 <t a="L1"  sc="L"  t="alien_sand2_d"      n="desert_sand2_n"     s="16.21" su="DesertFast"     tp="0" du="0.9" ds="1.0" md="0.1" tr="0.48 0.46 0.08 0.7"  aa="15" ab="27" z="L" />
 <t a="L1"  sc="L"  t="alien_sand_big_d"   n="desert_sand_big_n"  s="9.63"  su="DesertBumpy"    tp="0" du="0.9" ds="1.0" md="0.1" tr="0.48 0.46 0.08 0.7"  aa="15" ab="27" z="L" />
 <t a="L1"  sc="L"  t="alien_sand_d"       n="desert_sand_n"      s="12.06" su="DesertFast"     tp="0" du="0.8" ds="1.0" md="0.1" tr="0.46 0.46 0.08 0.7"  aa="0"  ab="10" z="L" />
 
-<!--
 <t a="Z1"  sc="Z"  t="zdesert_sand2_d"    n="desert_sand2_n"     s="16.21" su="DesertFast"     tp="0" du="0.9" ds="1.0" md="0.1" tr="0.16 0.16 0.16 0.7"  aa="15" ab="27" z="Z" />
 <t a="Z4"  sc="Z"  t="zdesert_sand_big_d" n="desert_sand_big_n"  s="9.63"  su="DesertBumpy"    tp="0" du="0.9" ds="1.0" md="0.1" tr="0.16 0.16 0.16 0.7"  aa="15" ab="27" z="Z" />
 <t a="Z1"  sc="Z"  t="zdesert_sand_d"     n="desert_sand_n"      s="12.06" su="DesertFast"     tp="0" du="0.8" ds="1.0" md="0.1" tr="0.16 0.16 0.16 0.7"  aa="0"  ab="10" z="Z" />
 <t a="Z1"  sc="Z"  t="zdesert_wet_d"      n="desert_wet_n"       s="8.78"  su="DesertFast"     tp="0" du="0.5" ds="0.7" md="0.0" tr="0.20 0.20 0.20 0.7"  aa="0"  ab="13" z="Z" />
--->
+
 <t a="Tes" sc="D"  t="zAsphalt_d"         n="ground_cracks2_n"   s="10.14" su="Asphalt"        tp="0" du="0.0" ds="0.6" md="0.0" tr="0.10 0.10 0.10 0.6"  aa="0" ab="90"  z="D" />
 
 
