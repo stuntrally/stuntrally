@@ -576,6 +576,29 @@ material roadDesertOrn_ter
 }
 
 
+// Black Desert
+
+material roadDesertBlack
+{
+	parent road
+	diffuseMap roadAsphalt.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 1.0 1.0 1.0
+	specular 0.12 0.12 0.12 18
+}
+
+material roadDesertBlack_ter
+{
+	parent road_terrain
+	ambient 1.0 1.0 1.0
+	diffuse 1.0 1.0 1.0
+	specular 0.10 0.10 0.10 22
+	diffuseMap roadDesertBlack.jpg
+	normalMap roadDesert_n.jpg
+	bump_scale 0.7
+}
+
+
 // Savannah
 
 material roadSavannah

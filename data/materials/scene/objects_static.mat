@@ -91,6 +91,30 @@ material obelisk
 	terrain_light_map true
 }
 
+//  black
+material pyramid_small_black
+{
+	parent base
+	diffuseMap pyramid_small.dds
+	normalMap pyramid_small_norm.png
+	ambient 0.3 0.34 0.4
+	diffuse 0.2 0.24 0.3
+	specular 0.05 0.05 0.07 24
+	terrain_light_map true
+	bump_scale 1.5
+}
+material pyramid_big_black
+{
+	parent base
+	diffuseMap pyramid_big.dds
+	normalMap pyramid_big_norm.png
+	ambient 0.3 0.34 0.4
+	diffuse 0.1 0.14 0.2
+	specular 0.05 0.05 0.07 24
+	terrain_light_map true
+	bump_scale 1.5
+}
+
 //---------------------------------------------------
 
 material Temple

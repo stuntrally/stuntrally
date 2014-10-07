@@ -740,10 +740,10 @@ material gum_branch_black
 {
     parent base
     diffuseMap gum_branch_alien.png
-    ambient 1.0 1.0 1.0
-    diffuse 1.0 1.0 1.0
+    ambient 0.9 0.9 0.9
+    diffuse 0.9 0.9 0.9
     specular 0.12 0.16 0.2 32
-    emissive 0.1 0.2 0.9
+    emissive 0.08 0.15 0.8
     alpha_rejection greater 128
     cull_hardware none
     transparent true
