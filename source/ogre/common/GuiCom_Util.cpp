@@ -92,6 +92,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnN["Cry"] = "Crystals";      scnN["GrcW"]= "GreeceWhite";
 	scnN["Aln"] = "Alien";         scnN["Oth"] = "Other";
 	scnN["Stn"] = "Stone";         scnN["Spc"] = "Space";
+	scnN["Blk"] = "BlackDesert";
 
 	//  scenery colors  for track names
 	scnClr["Asphalt"]      = "#B0E0E0";
@@ -111,6 +112,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnClr["Crystals"]     = "#4090F0";  scnClr["GreeceWhite"]  = "#C0C0A0";
 	scnClr["Alien"]        = "#D0FFA0";  scnClr["Other"]        = "#E0C0D0";
 	scnClr["Stone"]        = "#A0A0A0";  scnClr["Space"]        = "#A0B8D0";
+	scnClr["BlackDesert"]  = "#202020";
 }
 
 int TrkL::idSort = 0;

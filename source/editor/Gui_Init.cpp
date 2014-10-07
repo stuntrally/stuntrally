@@ -363,8 +363,8 @@ void CGui::InitGui()
 	
 	///  [Vegetation]
 	//------------------------------------------------------------------------
-	sv= &svGrassDens;	sv->Init("GrassDens",	&sc->densGrass, 0.f, 1.f, 2.f);  sv->DefaultF(0.2f);
-	sv= &svTreesDens;	sv->Init("TreesDens",	&sc->densTrees, 0.f, 3.f, 2.f);  sv->DefaultF(0.3f);
+	sv= &svGrassDens;	sv->Init("GrassDens",	&sc->densGrass, 0.f, 1.f, 2.f, 3,5);  sv->DefaultF(0.2f);
+	sv= &svTreesDens;	sv->Init("TreesDens",	&sc->densTrees, 0.f, 3.f, 2.f, 2,4);  sv->DefaultF(0.3f);
 
 	Ed(GrPage, editTrGr);  Ed(GrDist, editTrGr);
 	Ed(TrPage, editTrGr);  Ed(TrDist, editTrGr);  Ed(TrImpDist, editTrGr);
