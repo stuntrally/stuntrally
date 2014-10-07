@@ -398,6 +398,7 @@
 	<Tag name="difficulty">Dificuldade</Tag>
 	<Tag name="TrackInAir">No ar</Tag>
 	<Tag name="TipReverse">Inverter direção da pista.</Tag>
+	<Tag name="SC_BlackDesert">BlackDesert</Tag>
 	<Tag name="RplVersion">Versão</Tag>
 	<Tag name="Stages">Etapas</Tag>
 	<Tag name="Options">Opções</Tag>

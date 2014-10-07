@@ -398,6 +398,7 @@
 	<Tag name="difficulty">difficulty</Tag>
 	<Tag name="TrackInAir">În aer</Tag>
 	<Tag name="TipReverse">Direcția traseului inversă</Tag>
+	<Tag name="SC_BlackDesert">BlackDesert</Tag>
 	<Tag name="RplVersion">Version</Tag>
 	<Tag name="Stages">Stages</Tag>
 	<Tag name="Options">Opțiuni</Tag>

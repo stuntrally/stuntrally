@@ -398,6 +398,7 @@
 	<Tag name="difficulty">difficulty</Tag>
 	<Tag name="TrackInAir">In air</Tag>
 	<Tag name="TipReverse">Reverse track direction.</Tag>
+	<Tag name="SC_BlackDesert">BlackDesert</Tag>
 	<Tag name="RplVersion">Verzia</Tag>
 	<Tag name="Stages">Etapy</Tag>
 	<Tag name="Options">Možnosti</Tag>

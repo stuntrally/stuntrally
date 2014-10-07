@@ -398,6 +398,7 @@
 	<Tag name="difficulty">Schwierigkeit</Tag>
 	<Tag name="TrackInAir">Luft</Tag>
 	<Tag name="TipReverse">Streckenrichtung umkehren.</Tag>
+	<Tag name="SC_BlackDesert">BlackDesert</Tag>
 	<Tag name="RplVersion">Version</Tag>
 	<Tag name="Stages">Etappen</Tag>
 	<Tag name="Options">Einstellungen</Tag>
@@ -421,7 +422,7 @@
 	<Tag name="ColumnNSides">Anzahl Säulenseiten</Tag>
 	<Tag name="RplAutoRec">Automatisch aufnehmen</Tag>
 	<Tag name="TipCarsList">Autoliste. Drücken Sie die Eingabetaste oder klicken Sie auf [Neues Spiel], um mit dem ausgewähltem Auto zu fahren.</Tag>
-	<Tag name="NoWrongChks">Don't show wrong checkpoint messages</Tag>
+	<Tag name="NoWrongChks">Falsche Kontrollpunktmitteilungen nicht anzeigen</Tag>
 	<Tag name="HDROrigImage">Überstrahlung abdunkeln</Tag>
 	<Tag name="Brushes">Pinsel</Tag>
 	<Tag name="InputFluidsPrevNext">Bild/Mausrad auf/ab - Gewässer vor/zurück</Tag>
@@ -799,7 +800,7 @@
 	<Tag name="Road_Yaw">Gier</Tag>
 	<Tag name="CarDesc_UV">Dieses großradige Gebrauchsfahrzeug wird von 4 Elektromotoren angetrieben. Es für für nahezu alle Strecken, außer die engen, geeignet. Großartig zum Erforschen anderer Planeten. Aber es hat eine schlechte Aerodynamik und bleibt im Schlamm stecken.</Tag>
 	<Tag name="RoadPointSize">Straßenpunkte-Größe</Tag>
-	<Tag name="SC_Space">Space</Tag>
+	<Tag name="SC_Space">Weltraum</Tag>
 	<Tag name="TipTCS">Verhindert das Rutschen der Reifen beim Beschleunigen (Standard: aus)</Tag>
 	<Tag name="InputRoadColumn">Ende - Säule an/aus</Tag>
 	<Tag name="Substract">Subtrahieren</Tag>

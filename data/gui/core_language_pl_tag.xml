@@ -398,6 +398,7 @@
 	<Tag name="difficulty">trudność</Tag>
 	<Tag name="TrackInAir">W powietrzu</Tag>
 	<Tag name="TipReverse">Odwrotny kierunek trasy.</Tag>
+	<Tag name="SC_BlackDesert">BlackDesert</Tag>
 	<Tag name="RplVersion">Wersja</Tag>
 	<Tag name="Stages">Etapy</Tag>
 	<Tag name="Options">Opcje</Tag>
@@ -421,7 +422,7 @@
 	<Tag name="ColumnNSides">Boków kolumny</Tag>
 	<Tag name="RplAutoRec">Autom. nagrywanie powtórki</Tag>
 	<Tag name="TipCarsList">Lista aut. Naciśnij Enter lub [Nowa Gra] by jechać wybranym.</Tag>
-	<Tag name="NoWrongChks">Don't show wrong checkpoint messages</Tag>
+	<Tag name="NoWrongChks">Nie pokazuj komunikatów \</Tag>
 	<Tag name="HDROrigImage">Blask Ciemniej</Tag>
 	<Tag name="Brushes">Pędzle</Tag>
 	<Tag name="InputFluidsPrevNext">PgUp,PgDn (lub kółko) - poprz./następna ciecz</Tag>
@@ -799,7 +800,7 @@
 	<Tag name="Road_Yaw">Obr</Tag>
 	<Tag name="CarDesc_UV">Ten użytkowy pojazd z wielkimi kołami, napędzają 4 silniki elektryczne. Dobry na większość tras, gdy nie jest wąsko. Świetny do zwiedzania innych planet. Ale ma złą aerodynamikę i utyka w błocie.</Tag>
 	<Tag name="RoadPointSize">Wielkość punktów drogi</Tag>
-	<Tag name="SC_Space">Space</Tag>
+	<Tag name="SC_Space">Kosmos</Tag>
 	<Tag name="TipTCS">Zapobiega poślizgowi kół przy przyśpieszaniu (domyślnie: wył.)</Tag>
 	<Tag name="InputRoadColumn">End - wył./wł. kolumnę</Tag>
 	<Tag name="Substract">Odejmij</Tag>
@@ -873,7 +874,7 @@
 	<Tag name="CarType">Typ</Tag>
 	<Tag name="Tile">Rozciąg</Tag>
 	<Tag name="SC_Crystals">Kryształy</Tag>
-	<Tag name="SC_Stone">Stone</Tag>
+	<Tag name="SC_Stone">Kamień</Tag>
 	<Tag name="RplBestOnly">Zapisuj ducha tylko dla lepszych czasów</Tag>
 	<Tag name="InputFluidsMode">W - edytuj ciecze</Tag>
 	<Tag name="Front">Przód</Tag>

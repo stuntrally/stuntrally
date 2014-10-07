@@ -398,6 +398,7 @@
 	<Tag name="difficulty">difficoltà</Tag>
 	<Tag name="TrackInAir">In aria</Tag>
 	<Tag name="TipReverse">Direzione di pista al contrario.</Tag>
+	<Tag name="SC_BlackDesert">BlackDesert</Tag>
 	<Tag name="RplVersion">Versione</Tag>
 	<Tag name="Stages">Stage</Tag>
 	<Tag name="Options">Opzioni</Tag>

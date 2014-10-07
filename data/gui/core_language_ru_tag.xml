@@ -398,6 +398,7 @@
 	<Tag name="difficulty">сложность</Tag>
 	<Tag name="TrackInAir">В воздухе</Tag>
 	<Tag name="TipReverse">Обратное направление трека.</Tag>
+	<Tag name="SC_BlackDesert">BlackDesert</Tag>
 	<Tag name="RplVersion">Версия</Tag>
 	<Tag name="Stages">Этапы</Tag>
 	<Tag name="Options">Опции</Tag>

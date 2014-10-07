@@ -398,6 +398,7 @@
 	<Tag name="difficulty">difficulté</Tag>
 	<Tag name="TrackInAir">Dans l'air</Tag>
 	<Tag name="TipReverse">Inverse la direction du circuit.</Tag>
+	<Tag name="SC_BlackDesert">BlackDesert</Tag>
 	<Tag name="RplVersion">Version</Tag>
 	<Tag name="Stages">Étapes</Tag>
 	<Tag name="Options">Réglages</Tag>
