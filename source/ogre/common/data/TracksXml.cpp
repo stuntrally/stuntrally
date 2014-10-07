@@ -3,10 +3,13 @@
 #include "TracksXml.h"
 #include "tinyxml.h"
 #include "tinyxml2.h"
+#include <set>
 
-using namespace Ogre;
 using namespace std;
 using namespace tinyxml2;
+using Ogre::uchar;
+
+//#define LOG_SCN  // log and count all sceneries
 
 
 Date s2dt(const char* a)
@@ -41,7 +44,7 @@ UserTrkInfo::UserTrkInfo()
 ///  User Load
 ///------------------------------------------------------------------------------------
 
-bool UserXml::LoadXml(std::string file)
+bool UserXml::LoadXml(string file)
 {
 	XMLDocument doc;
 	XMLError e = doc.LoadFile(file.c_str());
@@ -77,7 +80,7 @@ bool UserXml::LoadXml(std::string file)
 ///  User Save
 ///------------------------------------------------------------------------------------
 
-bool UserXml::SaveXml(std::string file)
+bool UserXml::SaveXml(string file)
 {
 	TiXmlDocument xml;	TiXmlElement root("tracks");
 
@@ -103,7 +106,7 @@ bool UserXml::SaveXml(std::string file)
 //--------------------------------------------------------------------------------------------------------------------------------------
 //  Load Ini
 //--------------------------------------------------------------------------------------------------------------------------------------
-bool TracksXml::LoadIni(std::string file)
+bool TracksXml::LoadIni(string file)
 {
 	//  clear
 	trks.clear();  trkmap.clear();  times.clear();
@@ -113,7 +116,12 @@ bool TracksXml::LoadIni(std::string file)
 	float time=0.f;
 	TrackInfo t;
 
-	std::ifstream fs(file.c_str());
+	#ifdef LOG_SCN
+	set<string> scns;
+	map<string, int> scn_trks;
+	#endif
+
+	ifstream fs(file.c_str());
 	if (fs.fail())  return false;
 	while (fs.good())
 	{
@@ -138,6 +146,10 @@ bool TracksXml::LoadIni(std::string file)
 			t.scenery = scenery;
 			t.author = author;
 			t.ver = int(t.crtver*10.f);
+			#ifdef LOG_SCN
+			scns.insert(scenery);
+			++scn_trks[scenery];
+			#endif
 
 			string shrt;  //-  name short  (without prefix)
 			size_t p = t.name.find("-");
@@ -172,6 +184,19 @@ bool TracksXml::LoadIni(std::string file)
 			times[name] = time;
 		}
 	}
+
+	#ifdef LOG_SCN  // * Log sceneries with stats *
+	int c;  i=1;
+	stringstream ss;  ss << fixed;
+	ss << "Sceneries:\n""Num - Name - tracks count""\n";
+	for (set<string>::iterator it = scns.begin(); it != scns.end(); ++it,++i)
+	{	c = scn_trks[*it];
+		ss << right << setw(2) << i << "  " << setw(13) << left << *it << "  "
+		   << c << (c<=2 ? " !" : "") << (c==1 ? "!" : "") << endl;
+	}
+	LogO(ss.str());
+	#endif
+	
 	return true;
 }
 
@@ -188,7 +213,7 @@ CarInfo::CarInfo()
 ///  Load  cars.xml
 //-------------------------------------------------------------------------------------
 
-bool CarsXml::LoadXml(std::string file)
+bool CarsXml::LoadXml(string file)
 {
 	XMLDocument doc;
 	XMLError e = doc.LoadFile(file.c_str());
