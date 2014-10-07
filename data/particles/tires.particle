@@ -233,8 +233,8 @@ particle_system DustBlack
 {
 	material			Dust
 	quota				1000
-	particle_width		1.4
-	particle_height		1.2
+	particle_width		1.9
+	particle_height		1.6
 	cull_each			true
 	billboard_type		point
 	//renderer			billboard
@@ -249,9 +249,9 @@ particle_system DustBlack
 		height	0.35
 		depth	0.45  //h
 
-		colour				0.25 0.25 0.25  0.5
-		colour_range_start	0.25 0.25 0.25  0.4
-		colour_range_end	0.26 0.26 0.26  0.6
+		colour				0.11 0.11 0.12 0.7
+		colour_range_start	0.11 0.11 0.12 0.6
+		colour_range_end	0.12 0.12 0.13 0.8
 
 		//emission_rate	20
 		velocity_min	0.0
@@ -262,15 +262,15 @@ particle_system DustBlack
 
 	affector Scaler
 	{
-		rate	0.5
+		rate	0.6
 	}
 
 	affector ColourFader
 	{
-		red		-0.004
-		green	-0.004
-		blue	-0.004
-		alpha	-0.130
+		red		-0.012
+		green	-0.012
+		blue	-0.012
+		alpha	-0.120
 	}
 }
 
