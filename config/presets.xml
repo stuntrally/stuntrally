@@ -198,49 +198,50 @@
 <!-- road -->
 <!-- m - road material  rest same as for t (above) -->
 
-<r a="D16" sc="D"  m="roadAsphalt"   su="Asphalt"        du="0.0" ds="0.9" md="0.0" tr="0.00 0.00 0.00 0.0" z="D" />
+<r a="D16" sc="D"  m="roadAsphalt"     su="Asphalt"      du="0.0" ds="0.9" md="0.0" tr="0.00 0.00 0.00 0.0" z="D" />
 
-<r a="A3"  sc="A"  m="roadAdesert"   su="roadAdesert"    du="0.5" ds="0.6" md="0.0" tr="0.54 0.30 0.22 0.7" z="ACR" />
+<r a="A3"  sc="A"  m="roadAdesert"     su="roadAdesert"  du="0.5" ds="0.6" md="0.0" tr="0.54 0.30 0.22 0.7" z="ACR" />
 <r a="A1"  sc="A"  m="roadAdesertDark" su="roadAdesert"  du="0.5" ds="0.6" md="0.0" tr="0.44 0.30 0.22 0.7" z="ACR" />
-<r a="C1"  sc="C"  m="roadCdesert"   su="roadDesert"     du="0.5" ds="0.6" md="0.0" tr="0.44 0.30 0.22 0.7" z="C" />
+<r a="C1"  sc="C"  m="roadCdesert"     su="roadDesert"   du="0.5" ds="0.6" md="0.0" tr="0.44 0.30 0.22 0.7" z="C" />
+									
+<r a="D1"  sc="D"  m="roadDesert"      su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="D" />
+<r a="D2"  sc="D"  m="roadDesertOrn"   su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.70 0.61 0.36 0.7" z="D" />
+<r a="G1"  sc="G"  m="roadDesertD"     su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="G" />
+<r a="G2"  sc="G"  m="roadGDesert"     su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.40 0.36 0.26 0.5" z="G" />
+									
+<r a="J3"  sc="J"  m="roadJDark"       su="roadJungle"   du="0.0" ds="0.2" md="0.2" tr="0.40 0.36 0.16 0.8" z="J" />
+<r a="V6"  sc="V"  m="roadJDarkD"      su="roadDesert"   du="0.0" ds="0.1" md="0.0" tr="0.20 0.20 0.10 0.9" z="V" />
+<r a="V9"  sc="V"  m="roadJDarkDs"     su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.30 0.1" z="V" />
+<r a="F1"  sc="F"  m="roadJungle"      su="roadForest"   du="0.0" ds="0.2" md="0.2" tr="0.30 0.26 0.16 0.8" z="CFGJT" />
+									
+<r a="O1"  sc="O"  m="roadMoss"        su="roadJungle"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" z="O" />
+<r a="M1"  sc="M"  m="roadMud"         su="roadGravel"   du="0.0" ds="1.0" md="0.8" tr="0.21 0.13 0.00 0.8" z="DJMTV" />
+									
+<r a="E2"  sc="E"  m="roadNdirt"       su="roadGravel"   du="0.0" ds="1.0" md="0.6" tr="0.13 0.13 0.13 0.8" z="EVW" />
+<r a="E1"  sc="E"  m="roadNgravel"     su="roadGravel"   du="0.0" ds="1.0" md="0.6" tr="0.13 0.13 0.13 0.8" z="EF" />
+									
+<r a="I1"  sc="I"  m="roadSand"        su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.35 0.5" z="DIV" />
+<r a="D8"  sc="D"  m="roadSand2"       su="roadDesert"   du="0.4" ds="0.8" md="0.0" tr="0.50 0.46 0.26 0.7" z="DI" />
+									
+<r a="V1"  sc="V"  m="roadSandDark"    su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.30 0.1" z="IV" />
+<r a="X1"  sc="X"  m="roadSandMagic"   su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.32 0.46 0.8" z="X" />
+									
+<r a="I4"  sc="I"  m="roadSandSet"     su="roadGravel"   du="1.3" ds="0.5" md="0.0" tr="0.48 0.32 0.22 0.7" z="I" />
+<r a="T2"  sc="T"  m="roadSandShore"   su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.20 0.13 0.06 0.7" z="FIT" />
+<r a="G8"  sc="G"  m="roadSandWhite"   su="roadDesert"   du="0.6" ds="0.6" md="0.0" tr="0.70 0.70 0.70 0.7" z="G" />
 
-<r a="D1"  sc="D"  m="roadDesert"    su="roadDesert"     du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="D" />
-<r a="D2"  sc="D"  m="roadDesertOrn" su="roadDesert"     du="0.4" ds="0.9" md="0.0" tr="0.70 0.61 0.36 0.7" z="D" />
-<r a="G1"  sc="G"  m="roadDesertD"   su="roadDesert"     du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="G" />
-<r a="G2"  sc="G"  m="roadGDesert"   su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.40 0.36 0.26 0.5" z="G" />
+<r a="S2"  sc="S"  m="roadSavannah"    su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="ST" />
+<r a="T6"  sc="T"  m="roadStone"       su="roadForest"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.20 0.10 0.7" z="DT" />
 
-<r a="J3"  sc="J"  m="roadJDark"     su="roadJungle"     du="0.0" ds="0.2" md="0.2" tr="0.40 0.36 0.16 0.8" z="J" />
-<r a="V6"  sc="V"  m="roadJDarkD"    su="roadDesert"     du="0.0" ds="0.1" md="0.0" tr="0.20 0.20 0.10 0.9" z="V" />
-<r a="V9"  sc="V"  m="roadJDarkDs"   su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.30 0.1" z="V" />
-<r a="F1"  sc="F"  m="roadJungle"    su="roadForest"     du="0.0" ds="0.2" md="0.2" tr="0.30 0.26 0.16 0.8" z="CFGJT" />
+<r a="W1"  sc="W"  m="roadSnow"        su="roadSnow"     du="0.9" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
+<r a="W2"  sc="W"  m="roadSnowGrn"     su="roadSnow"     du="0.4" ds="0.5" md="0.2" tr="0.30 0.40 0.30 0.8" z="W" />
+<r a="W9"  sc="W"  m="roadIce"         su="roadSnow"     du="0.3" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
+<r a="W9"  sc="W"  m="roadCrystal"     su="roadDesert"   du="0.0" ds="0.0" md="0.0" tr="0.00 0.10 0.20 0.5" z="Y" />
 
-<r a="O1"  sc="O"  m="roadMoss"      su="roadJungle"     du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" z="O" />
-<r a="M1"  sc="M"  m="roadMud"       su="roadGravel"     du="0.0" ds="1.0" md="0.8" tr="0.21 0.13 0.00 0.8" z="DJMTV" />
-
-<r a="E2"  sc="E"  m="roadNdirt"     su="roadGravel"     du="0.0" ds="1.0" md="0.6" tr="0.13 0.13 0.13 0.8" z="EVW" />
-<r a="E1"  sc="E"  m="roadNgravel"   su="roadGravel"     du="0.0" ds="1.0" md="0.6" tr="0.13 0.13 0.13 0.8" z="EF" />
-
-<r a="I1"  sc="I"  m="roadSand"      su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.35 0.5" z="DIV" />
-<r a="D8"  sc="D"  m="roadSand2"     su="roadDesert"     du="0.4" ds="0.8" md="0.0" tr="0.50 0.46 0.26 0.7" z="DI" />
-
-<r a="V1"  sc="V"  m="roadSandDark"  su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.30 0.1" z="IV" />
-<r a="X1"  sc="X"  m="roadSandMagic" su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.30 0.32 0.46 0.8" z="X" />
-
-<r a="I4"  sc="I"  m="roadSandSet"   su="roadGravel"     du="1.3" ds="0.5" md="0.0" tr="0.48 0.32 0.22 0.7" z="I" />
-<r a="T2"  sc="T"  m="roadSandShore" su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.20 0.13 0.06 0.7" z="FIT" />
-<r a="G8"  sc="G"  m="roadSandWhite" su="roadDesert"     du="0.6" ds="0.6" md="0.0" tr="0.70 0.70 0.70 0.7" z="G" />
-
-<r a="S2"  sc="S"  m="roadSavannah"  su="roadGravel"     du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="ST" />
-<r a="T6"  sc="T"  m="roadStone"     su="roadForest"     du="0.0" ds="0.2" md="0.0" tr="0.30 0.20 0.10 0.7" z="DT" />
-
-<r a="W1"  sc="W"  m="roadSnow"      su="roadSnow"       du="0.9" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
-<r a="W2"  sc="W"  m="roadSnowGrn"   su="roadSnow"       du="0.4" ds="0.5" md="0.2" tr="0.30 0.40 0.30 0.8" z="W" />
-<r a="W9"  sc="W"  m="roadIce"       su="roadSnow"       du="0.3" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
-<r a="W9"  sc="W"  m="roadCrystal"   su="roadDesert"     du="0.0" ds="0.0" md="0.0" tr="0.00 0.10 0.20 0.5" z="Y" />
-
-<r a="L1"  sc="L"  m="roadAlienD"    su="roadDesert"     du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="L" />
-<r a="L1"  sc="L"  m="roadAlien"     su="roadJungle"     du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" z="L" />
-<r a="L1"  sc="L"  m="roadAlienStone" su="roadForest"    du="0.0" ds="0.2" md="0.0" tr="0.30 0.20 0.10 0.7" z="L" />
+<r a="L1"  sc="L"  m="roadAlienD"      su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="L" />
+<r a="L1"  sc="L"  m="roadAlien"       su="roadJungle"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" z="L" />
+<r a="L1"  sc="L"  m="roadAlienStone"  su="roadForest"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.20 0.10 0.7" z="L" />
+<r a="Z1"  sc="Z"  m="roadDesertBlack" su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 
 
 <!-- grass -->
