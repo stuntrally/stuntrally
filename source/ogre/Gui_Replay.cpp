@@ -201,6 +201,7 @@ void CGui::UpdRplPlayBtn()
 }
 
 
+//  List
 void CGui::updReplaysList()
 {
 	if (!rplList)  return;
@@ -279,4 +280,66 @@ void CGui::btnRplRename(WP)
 	if (fs::exists(file))
 		fs::rename(file, fileNew);
 	updReplaysList();
+}
+
+
+
+//  rename old trk names
+bool Replay::fixOldTrkName(string& s)
+{
+	if (s.length() > 3)
+	if (s[0]>='A' && s[0]<='Z' && (s[2]=='-' || s[3]=='-'))
+	{
+		if (s[0]=='J')  s= "Jng" +s.substr(1);  else
+		if (s[0]=='D')  s= "Des" +s.substr(1);  else
+		if (s[0]=='S')  s= "Sav" +s.substr(1);  else
+		if (s[0]=='W')  s= "Wnt" +s.substr(1);  else
+		if (s[0]=='F')  s= "For" +s.substr(1);  else
+		if (s[0]=='E')  s= "Fin" +s.substr(1);  else
+		if (s[0]=='I')  s= "Isl" +s.substr(1);  else
+		if (s[0]=='M')  s= "Mud" +s.substr(1);  else
+		if (s[0]=='A')  s= "Aus" +s.substr(1);  else
+		if (s[0]=='G')  s= "Grc" +s.substr(1);  else
+		if (s[0]=='C')  s= "Can" +s.substr(1);  else
+		if (s[0]=='T')  s= "Atm" +s.substr(1);  else
+		if (s[0]=='O')  s= "Mos" +s.substr(1);  else          
+		if (s[0]=='V')  s= "Vlc" +s.substr(1);  else
+		if (s[0]=='X')  s= "Uni" +s.substr(1);  else
+		if (s[0]=='R')  s= "Mrs" +s.substr(1);  else
+		if (s[0]=='Y')  s= "Cry" +s.substr(1);
+	}
+	return false;
+}
+
+void CGui::btnRenameOldTrk(WP)
+{
+	LogO("--------  Renaming old files");
+	std::vector<string> pp;
+	pp.push_back(PATHMANAGER::Replays());
+	pp.push_back(PATHMANAGER::Ghosts() +"/easy");
+	pp.push_back(PATHMANAGER::Ghosts() +"/normal");
+	pp.push_back(PATHMANAGER::Records()+"/easy");
+	pp.push_back(PATHMANAGER::Records()+"/normal");
+	strlist li;
+	for (int ip=0; ip < pp.size(); ++ip)
+	{
+		li.clear();
+		string p = pp[ip];
+		PATHMANAGER::DirList(p, li);
+		LogO("PATH: "+p);
+		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
+		{
+			String s = *i, sn;
+			if (s.length() > 3)
+			if (s[0]>='A' && s[0]<='Z' && (s[2]=='-' || s[3]=='-'))
+			{	sn = s;
+				if (Replay::fixOldTrkName(sn))
+				if (!fs::exists(p+"/"+s))       LogO(s+" to "+sn+"  source doesnt exist!");
+				/**/else if (fs::exists(p+"/"+sn))  LogO(s+" to "+sn+"  destination already exists");
+				else
+				{	LogO(s+" to "+sn);
+					fs::rename(p+"/"+s, p+"/"+sn);
+			}	}
+	}	}
+	LogO("--------  End");
 }

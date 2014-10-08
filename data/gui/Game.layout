@@ -2333,6 +2333,12 @@
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<UserString key="tip" value="#{TipFind}"/>
 				</Widget>
+				<Widget type="Button" skin="Button" position="434 360 172 24" name="RenameOldTrk">
+					<Property key="Caption" value="#{RenameAllOld}"/>
+					<Property key="TextColour" value="1 0.8 0.8"/>
+					<Property key="Colour" value="1 0.8 0.8"/>
+					<Property key="Alpha" value="0.7"/>
+				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#FFF060#{View}"/>

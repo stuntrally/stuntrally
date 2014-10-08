@@ -2,6 +2,7 @@
 #include "ReplayGame.h"
 #include "common/Def_Str.h"
 #include <OgreTimer.h>
+#include <string>
 
 //  replay load log and check
 #define LOG_RPL
@@ -20,7 +21,7 @@ void ReplayHeader::Default()
 	memset(track, 0, sizeof(track));  track_user = 0;
 	memset(car, 0, sizeof(car));
 
-	ver = 9;
+	ver = 10;
 	frameSize = sizeof(ReplayFrame);
 	numPlayers = 1;
 	trees = 1.f;
@@ -110,7 +111,17 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	memcpy(&header, buf, sizeof(ReplayHeader));
 	header.numPlayers = std::max(1, std::min(4, header.numPlayers));  // range 1..4
 	header.SafeEnd0();
-	if (header.ver < 9)  header.sim_mode[0]=0;  // versions below 9 have no sim mode
+
+	//  old fixes--
+	if (header.ver < 9)
+		header.sim_mode[0]=0;  // versions below 9 have no sim mode
+	if (header.ver <= 9)
+	if (!header.track_user)  // ver below 2.5
+	{
+		std::string trk = header.track;
+		fixOldTrkName(trk);
+		strcpy(header.track, trk.c_str());
+	}
 
     #ifdef LOG_RPL
 		if (!onlyHdr)
@@ -468,11 +479,11 @@ bool TrackGhost::LoadFile(std::string file)
 		TrackFrame fr;
 		fi.read((char*)&fr, header.frameSize/**/);
 
-		if (i > 0 && fr.time < frames[i-1].time)
+		if (i > 0 && fr.time <= frames[i-1].time)
 		{
 			#ifdef LOG_RPL
 				LogO(">- Load trk ghost  BAD frame time  id:"+toStr(i)
-					+"  t-1:"+fToStr(frames[i-1].time,5,7)+" > t:"+fToStr(fr.time,5,7));
+					+"  t-1:"+fToStr(frames[i-1].time,5,7)+" >= t:"+fToStr(fr.time,5,7));
 			#endif
 		}else
 			frames.push_back(fr);

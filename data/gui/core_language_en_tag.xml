@@ -405,6 +405,7 @@
 	<Tag name="RplSave">Save</Tag>
 	<Tag name="RplDelete">Delete</Tag>
 	<Tag name="RplRename">Rename</Tag>
+	<Tag name="RenameAllOld">Rename All Old</Tag>
 
 	<Tag name="AlreadyExists">Already exists</Tag>
 

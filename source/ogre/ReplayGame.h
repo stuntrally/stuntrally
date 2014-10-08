@@ -154,6 +154,8 @@ public:
 	void CopyFrom(const Replay& rpl);
 	void DeleteFrames(int carNum, double fromTime);
 
+	static bool fixOldTrkName(std::string& trk);  // old
+
 	ReplayHeader header;
 private:
 	std::vector<ReplayFrame> frames[4];  // 4 players max
