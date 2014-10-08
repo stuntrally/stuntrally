@@ -22,7 +22,6 @@ material Mud
     alpha_rejection greater 64
     scene_blend alpha_blend
     soft_particles true
-    diffuse_address_mode clamp
 }
 
 material Dust
@@ -31,7 +30,6 @@ material Dust
 	diffuseMap dust.png
 	scene_blend alpha_blend
 	soft_particles true
-    diffuse_address_mode clamp
 }
 
 material Smoke
@@ -40,7 +38,6 @@ material Smoke
 	diffuseMap smoke.png
 	scene_blend alpha_blend
 	soft_particles true
-    diffuse_address_mode clamp
 }
 
 material MarsDust
@@ -49,6 +46,5 @@ material MarsDust
 	diffuseMap dust.png
 	scene_blend alpha_blend
 	soft_particles true
-    diffuse_address_mode clamp
 }
 
