@@ -32,13 +32,20 @@ void CGui::slRplPosEv(SL)  // change play pos
 	//	fCam->update(fabs(v-oldt)/10.f, 0);  //..?
 }
 
+String CGui::getRplName()
+{
+	String name;
+	int i = rplList->getIndexSelected(), p;  if (i == ITEM_NONE)  return name;
+	name = rplList->getItemNameAt(i);
+	if (name.length() > 7 && name[0]=='#')  name = name.substr(7);
+	return name;
+}
+
+
 void CGui::btnRplLoad(WP)  // Load
 {
 	//  from list
-	int i = rplList->getIndexSelected();
-	if (i == MyGUI::ITEM_NONE)  return;
-
-	String name = rplList->getItemNameAt(i).substr(7);
+	String name = getRplName();  if (name.empty())  return;
 	string file = GetRplListDir() + "/" + name + ".rpl";
 
 	if (!app->replay.LoadFile(file))
@@ -46,14 +53,30 @@ void CGui::btnRplLoad(WP)  // Load
 		Message::createMessageBox(
 			"Message", TR("#{Replay} - #{RplLoad}"), TR("#{Error}."),
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
-	}
-	else  // car, track change
-	{
+	}else
+	{	//  car, track change
 		const ReplayHeader& h = app->replay.header;
 		string car = h.car, trk = h.track;
 		bool usr = h.track_user == 1;
-		//todo: check if cars, trk exist..
 
+		//  check if cars, track exist
+		String er;  int p;
+		if (!h.track_user && !fs::exists(PATHMANAGER::Tracks()+"/"+trk))
+			er += TR("#{Track}: ")+trk+TR(" - #{DoesntExist}.\n");
+		if (h.track_user && !fs::exists(PATHMANAGER::TracksUser()+"/"+trk))
+			er += TR("#{Track} (#{TweakUser}): ")+trk+TR(" - #{DoesntExist}.\n");
+		if (!fs::exists(PATHMANAGER::Cars()+"/"+car))
+			er += TR("#{Car}: ")+car+TR(" - #{DoesntExist}.\n");
+		for (p=1; p < h.numPlayers; ++p)
+			if (!fs::exists(PATHMANAGER::Cars()+"/"+h.cars[p-1]))
+				er += TR("#{Car}: ")+h.cars[p-1]+TR(" - #{DoesntExist}.\n");
+
+		if (!er.empty())
+		{	Message::createMessageBox(
+				"Message", TR("#{Replay} - #{RplLoad} - #{Error}"), "\n"+er,
+				MessageBoxStyle::IconError | MessageBoxStyle::Ok);
+			return;
+		}
 		//trackreverse 	num_laps
 		//collis_veget, collis_cars, collis_roadw, dyn_objects;
 		//int boost_type, flip_type;  float boost_power;
@@ -69,7 +92,7 @@ void CGui::btnRplLoad(WP)  // Load
 		BackFromChs();
 		LogO("RPL btn Load  players: "+toStr(h.numPlayers)+" netw: "+ toStr(h.networked));
 
-		for (int p=1; p < h.numPlayers; ++p)
+		for (p=1; p < h.numPlayers; ++p)
 		{	pSet->game.car[p] = h.cars[p-1];
 			pSet->game.car_hue[p] = h.hue[p];  pSet->game.car_sat[p] = h.sat[p];  pSet->game.car_val[p] = h.val[p];
 		}
@@ -103,11 +126,10 @@ void CGui::btnRplSave(WP)  // Save
 //  list change
 void CGui::listRplChng(List* li, size_t pos)
 {
-	size_t i = li->getIndexSelected();  if (i == ITEM_NONE)  return;
-	String name = li->getItemNameAt(i).substr(7);
+	String name = getRplName();  if (name.empty())  return;
 	string file = GetRplListDir() + "/" + name + ".rpl";
-	if (!valRplName)  return;  valRplName->setCaption(name);
-	if (!valRplInfo)  return;  edRplName->setCaption(name);
+	valRplName->setCaption(name);
+	edRplName->setCaption(name);
 	
 	//  load replay header, upd info text
 	Replay rpl;  char stm[128];
@@ -234,8 +256,7 @@ void CGui::updReplaysList()
 //  Delete
 void CGui::btnRplDelete(WP)
 {
-	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
-	string name = rplList->getItemNameAt(i).substr(7);
+	String name = getRplName();  if (name.empty())  return;
 
 	Message* message = Message::createMessageBox(
 		"Message", TR("#{Replay} - #{RplDelete} ?"), name,
@@ -245,8 +266,7 @@ void CGui::btnRplDelete(WP)
 void CGui::msgRplDelete(Message* sender, MessageBoxStyle result)
 {
 	if (result != MessageBoxStyle::Yes)  return;
-	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
-	string name = rplList->getItemNameAt(i).substr(7);
+	String name = getRplName();  if (name.empty())  return;
 	string file = GetRplListDir() +"/"+ name + ".rpl";
 
 	if (fs::exists(file))
@@ -258,8 +278,7 @@ void CGui::msgRplDelete(Message* sender, MessageBoxStyle result)
 void CGui::btnRplRename(WP)
 {
 	if (pSet->rpl_listghosts)  return;  // cant rename ghosts
-	size_t i = rplList->getIndexSelected();  if (i == ITEM_NONE)  return;
-	string name = rplList->getItemNameAt(i).substr(7);
+	String name = getRplName();  if (name.empty())  return;
 	string edit = edRplName->getCaption();
 
 	if (name == edit)  // same name
@@ -287,7 +306,10 @@ void CGui::btnRplRename(WP)
 //  rename old trk names
 bool Replay::fixOldTrkName(string& s)
 {
-	if (s.length() > 3)
+	if (s.length() <= 4)  return false;
+	
+	if (s[0]=='0' && s[1]=='W')
+		s = s.substr(1);
 	if (s[0]>='A' && s[0]<='Z' && (s[2]=='-' || s[3]=='-'))
 	{
 		if (s[0]=='J')  s= "Jng" +s.substr(1);  else
@@ -306,7 +328,8 @@ bool Replay::fixOldTrkName(string& s)
 		if (s[0]=='V')  s= "Vlc" +s.substr(1);  else
 		if (s[0]=='X')  s= "Uni" +s.substr(1);  else
 		if (s[0]=='R')  s= "Mrs" +s.substr(1);  else
-		if (s[0]=='Y')  s= "Cry" +s.substr(1);
+		if (s[0]=='Y')  s= "Cry" +s.substr(1);  else  return false;
+		return true;
 	}
 	return false;
 }

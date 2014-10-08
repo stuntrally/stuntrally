@@ -321,6 +321,7 @@ public:
 
 	//  gui save
 	Ed edRplName, edRplDesc;
+	Ogre::String getRplName();
 	void btnRplLoad(WP), btnRplSave(WP);
 	void btnRplDelete(WP), btnRplRename(WP);
 	
