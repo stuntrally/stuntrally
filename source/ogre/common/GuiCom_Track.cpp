@@ -167,7 +167,7 @@ void CGuiCom::GuiInitTrack()
 	BtnC("TrkView2", btnTrkView2);  imgTrkIco2 = fImg("TrkView2icons2");
 	BtnC("TrkFilter", btnTrkFilter);
 	SV* sv;  Ck* ck;
-	ck= &chTrkFilter;  ck->Init("TracksFilter", &pSet->tracks_filter);  CevC(TrkFilter);
+	ck= &ckTrkFilter;  ck->Init("TracksFilter", &pSet->tracks_filter);  CevC(TrkFilter);
 	
 	//  columns  ----
 	li->removeAllColumns();  int c=0;
@@ -197,7 +197,7 @@ void CGuiCom::GuiInitTrack()
 	//  columns, filters  ---
 	for (i=0; i < COL_VIS; ++i)
 	{
-		ck= &chTrkColVis[i];  ck->Init("col"+toStr(i), &pSet->col_vis[pSet->tracks_view][i]);  CevC(TrkColVis);
+		ck= &ckTrkColVis[i];  ck->Init("col"+toStr(i), &pSet->col_vis[pSet->tracks_view][i]);  CevC(TrkColVis);
 	}
 	//ChkUpd_Col();
 	for (i=0; i < COL_FIL; ++i)
@@ -221,7 +221,7 @@ void CGuiCom::GuiInitTrack()
 void CGuiCom::ChkUpd_Col()
 {
 	for (int i=0; i < COL_VIS; ++i)
-		chTrkColVis[i].Upd(&pSet->col_vis[pSet->tracks_view][i]);
+		ckTrkColVis[i].Upd(&pSet->col_vis[pSet->tracks_view][i]);
 }
 
 
