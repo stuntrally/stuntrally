@@ -180,7 +180,7 @@
 	<Tag name="SC_SavannaDry">SavaneSèche</Tag>
 	<Tag name="InputRoadHeight">- changer la hauteur</Tag>
 	<Tag name="InputObjectsSimulate">C - simuler ou non les objets dynamiques</Tag>
-	<Tag name="OpponentsList">Liste des opposants</Tag>
+	<Tag name="OpponentsList">Liste des adversaires</Tag>
 	<Tag name="BackMenu">Retour</Tag>
 	<Tag name="BasedOn">basé sur</Tag>
 	<Tag name="UnitKg">kg</Tag>
@@ -398,7 +398,7 @@
 	<Tag name="difficulty">difficulté</Tag>
 	<Tag name="TrackInAir">Dans l'air</Tag>
 	<Tag name="TipReverse">Inverse la direction du circuit.</Tag>
-	<Tag name="SC_BlackDesert">BlackDesert</Tag>
+	<Tag name="SC_BlackDesert">DésertNoir</Tag>
 	<Tag name="RplVersion">Version</Tag>
 	<Tag name="Stages">Étapes</Tag>
 	<Tag name="Options">Réglages</Tag>
@@ -530,7 +530,7 @@
 	<Tag name="TipGrassPrev">Image d'aperçu de ce calque d'herbe (changé avec le matériau).</Tag>
 	<Tag name="InputRoadShiftReverse">Maj.-Insér. - coller Maj.-Ctrl-Insér. - inversé</Tag>
 	<Tag name="TipMudInt">Intensité des particules de boue.</Tag>
-	<Tag name="InputObjectsDel">Supr. - supprimer la sélection</Tag>
+	<Tag name="InputObjectsDel">Suppr. - supprimer la sélection</Tag>
 	<Tag name="Obj_Rot">Rot.</Tag>
 	<Tag name="Transparency">Transparence</Tag>
 	<Tag name="NetWrongPassword">Mot de passe incorrect.</Tag>
@@ -551,7 +551,7 @@
 	<Tag name="RplDelete">Supprimer</Tag>
 	<Tag name="TipAutoRear">Décochez pour aller en marche arrière manuellement.</Tag>
 	<Tag name="TipToggleModel">Activer ou desactiver ce modèle</Tag>
-	<Tag name="TireEdReference">Show reference graph</Tag>
+	<Tag name="TireEdReference">Montrer le diagramme de référence</Tag>
 	<Tag name="TipTrailClr">Couleur des traces de pneus. Composants R V B A de 0 à 1 (exemple : 0.4 0.4 0.2 0.6)</Tag>
 	<Tag name="MinimapTerrain">Terrain</Tag>
 	<Tag name="MinimapRotate">Pivoter</Tag>
@@ -603,7 +603,7 @@
 	<Tag name="Chall_Extreme">Extrême</Tag>
 	<Tag name="PreviewCam">Caméra d'aperçu</Tag>
 	<Tag name="CarType_Hover">Aéroglisseur</Tag>
-	<Tag name="InputFluidsDel">Supr. - supprimer la sélection</Tag>
+	<Tag name="InputFluidsDel">Suppr. - supprimer la sélection</Tag>
 	<Tag name="SC_DesertMud">DésertBoueux</Tag>
 	<Tag name="InputRoadMove">- déplacer le point</Tag>
 	<Tag name="EdInputBar">Barre d'entrée Ctrl-I</Tag>
@@ -663,7 +663,7 @@
 	<Tag name="mud">boue</Tag>
 	<Tag name="NetMasterConnectionError">Impossible d'atteindre le serveur maître.</Tag>
 	<Tag name="ChampInfo">En mode tutoriel/championnat, vous conduisez sur une série de circuits. Un score minimum (en fonction de votre temps) est nécessaire pour passer au stage suivant. Il est possible d'utiliser n'importe quelle voiture.</Tag>
-	<Tag name="TipTerrainDouble">Doubler la taille du terrain tout en gardant l'Heightmap au centre.</Tag>
+	<Tag name="TipTerrainDouble">Doubler la taille du terrain tout en gardant la carte d'altitude au centre.</Tag>
 	<Tag name="InputRoadRMB">Clic droit (ou pavé num. +,-)</Tag>
 	<Tag name="UnitS">s</Tag>
 	<Tag name="TrackNotFound">Circuit non trouvé !</Tag>
@@ -724,7 +724,7 @@
 	<Tag name="Textures">Textures</Tag>
 	<Tag name="TipTerVertCount">Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize].</Tag>
 	<Tag name="Updated">Mis à jour</Tag>
-	<Tag name="RplCurrent">Courrante</Tag>
+	<Tag name="RplCurrent">Circuit actuel</Tag>
 	<Tag name="InputBrushFreq">O,P - fréquence du bruit (échelle)</Tag>
 	<Tag name="CarDesc_O">Une sphère rotative expérimentale, parfaitement stabilisée. Utilise la propulsion d'un vaisseau pour se déplacer facilement dans n'importe quelle direction. Très rapide, mais bondit facilement.</Tag>
 	<Tag name="CantSaveOrgTrack">Impossible d'écraser un circuit intégré au jeu. Dupliquez-le d'abord.</Tag>
@@ -800,7 +800,7 @@
 	<Tag name="Road_Yaw">Angle horizontal</Tag>
 	<Tag name="CarDesc_UV">Ce gros véhicule utilitaire est propulsé par 4 moteurs électriques. Adaptée à quasiment tous les circuits, sauf les plus étroits. Excellent pour explorer d'autres planètes. Mais ce véhicule gère mal les sauts et se coince dans la boue.</Tag>
 	<Tag name="RoadPointSize">Taille des points de la route</Tag>
-	<Tag name="SC_Space">Space</Tag>
+	<Tag name="SC_Space">Espace</Tag>
 	<Tag name="TipTCS">Évite de tourner les roues en accélérant (par défaut : désactivé).</Tag>
 	<Tag name="InputRoadColumn">Fin - activer/désactiver la colonne</Tag>
 	<Tag name="Substract">Soustraire</Tag>
@@ -874,7 +874,7 @@
 	<Tag name="CarType">Type</Tag>
 	<Tag name="Tile">Répéter</Tag>
 	<Tag name="SC_Crystals">Cristaux</Tag>
-	<Tag name="SC_Stone">Stone</Tag>
+	<Tag name="SC_Stone">Pierre</Tag>
 	<Tag name="RplBestOnly">Fantôme pour le meilleur temps seulement</Tag>
 	<Tag name="InputFluidsMode">W - éditer les liquides</Tag>
 	<Tag name="Front">Avant</Tag>

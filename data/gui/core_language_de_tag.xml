@@ -398,7 +398,7 @@
 	<Tag name="difficulty">Schwierigkeit</Tag>
 	<Tag name="TrackInAir">Luft</Tag>
 	<Tag name="TipReverse">Streckenrichtung umkehren.</Tag>
-	<Tag name="SC_BlackDesert">BlackDesert</Tag>
+	<Tag name="SC_BlackDesert">SchwarzWüste</Tag>
 	<Tag name="RplVersion">Version</Tag>
 	<Tag name="Stages">Etappen</Tag>
 	<Tag name="Options">Einstellungen</Tag>
@@ -823,7 +823,7 @@
 	<Tag name="Disconnected">Getrennt</Tag>
 	<Tag name="TipModelVisDist">Sichtbarkeitsdistanz für 3D-Modelle, nach der werden sie zu 2D-Betrügern.</Tag>
 	<Tag name="NetAddress">Adresse</Tag>
-	<Tag name="TireEdCommonY">Common y range</Tag>
+	<Tag name="TireEdCommonY">Gemeinsame Y-Reichweite</Tag>
 	<Tag name="Road_sel">sel</Tag>
 	<Tag name="AutoLoad">Strecke autom. laden</Tag>
 	<Tag name="Car_MaxTorque">Max. Drehmoment</Tag>
