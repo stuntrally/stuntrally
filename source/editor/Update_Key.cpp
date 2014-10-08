@@ -627,6 +627,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			if (ctrl && gcom->edTrkFind /*&& bGuiFocus &&
 				!pSet->isMain && pSet->inMenu == WND_Edit && mWndTabsEdit->getIndexSelected() == 1*/)
 			{
+				if (wf == gcom->edTrkFind)  // ctrl-F  twice to toggle filtering
+				{	gcom->ckTrkFilter.Invert();  return true;  }
 				gui->GuiShortcut(WND_Track, 1);  // Track tab
 				InputManager::getInstance().resetKeyFocusWidget();
 				InputManager::getInstance().setKeyFocusWidget(gcom->edTrkFind);

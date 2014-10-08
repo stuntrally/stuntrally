@@ -162,6 +162,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 	//  not main menus
 	//--------------------------------------------------------------------------------------------------------------
+	bool trkTab = !pSet->isMain && pSet->inMenu == MNU_Single && mWndTabsGame->getIndexSelected() == TAB_Track;
+	//bool Fspc = isFocGui && trkTab && wf == gcom->edTrkFind;
 	if (!tweak)
 	{
 		Widget* wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
@@ -197,11 +199,12 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(L):
 				if (rpl) {  ++iRplCarOfs;  return true;  }
 				break;
-
+				
 			case key(F):	// focus on find edit
-				if (ctrl && gcom->edTrkFind && (pSet->dev_keys || isFocGui &&
-					!pSet->isMain && pSet->inMenu == MNU_Single && mWndTabsGame->getIndexSelected() == TAB_Track))
+				if (ctrl && gcom->edTrkFind && (pSet->dev_keys || isFocGui && trkTab))
 				{
+					if (wf == gcom->edTrkFind)  // ctrl-F  twice to toggle filtering
+					{	gcom->ckTrkFilter.Invert();  return true;  }
 					if (pSet->dev_keys)
 						gui->GuiShortcut(MNU_Single, 1);	// Track tab
 					MyGUI::InputManager::getInstance().resetKeyFocusWidget();
