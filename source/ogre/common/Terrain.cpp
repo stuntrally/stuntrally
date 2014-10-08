@@ -171,6 +171,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 	sun = app->mSceneMgr->createLight("Sun");
 	sun->setType(Light::LT_DIRECTIONAL);  UpdSun();
 
+	changeShadows();
 
 	///  --------  fill HeightField data --------
 	if (bTer)
@@ -260,12 +261,12 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 		mHorizonGroup->freeTemporaryResources();
 	}
 	}
-
-	LogO(String("::: Time Terrain: ") + fToStr(tm.getMilliseconds(),0,3) + " ms");
 	
 	changeShadows();
 
 	UpdBlendmap();  //
+
+	LogO(String("::: Time Terrain: ") + fToStr(tm.getMilliseconds(),0,3) + " ms");
 }
 
 
