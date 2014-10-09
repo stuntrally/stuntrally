@@ -14,6 +14,7 @@
 #include <OgreAxisAlignedBox.h>
 
 namespace Ogre {  class SceneManager;  class SceneNode;  class Entity;  class Terrain;  class Camera;  }
+class btTriangleMesh;
 
 #if defined(_WIN32) && defined(SR_EDITOR)
 	// win doesnt need bullet somehow
@@ -99,25 +100,28 @@ public:
 	
 
 private:
-#define vec std::vector
+///  ***  MESH  ****
+//---------------------------------------------------------------------------------------
 
-	//  mesh create  -------
-	void CreateMesh(Ogre::SubMesh* submesh, Ogre::AxisAlignedBox& aabox,
-		const vec<Ogre::Vector3>& pos, const vec<Ogre::Vector3>& norm, const vec<Ogre::Vector4>& clr,
-		const vec<Ogre::Vector2>& tcs, const vec<Ogre::uint16>& idx, Ogre::String sMtrName);
-	void AddMesh(Ogre::MeshPtr mesh, Ogre::String sMesh, const Ogre::AxisAlignedBox& aabox,
+	void CreateMesh( Ogre::SubMesh* submesh, Ogre::AxisAlignedBox& aabox,
+		const std::vector<Ogre::Vector3>& pos, const std::vector<Ogre::Vector3>& norm, const std::vector<Ogre::Vector4>& clr,
+		const std::vector<Ogre::Vector2>& tcs, const std::vector<Ogre::uint16>& idx, Ogre::String sMtrName);
+
+	void AddMesh( Ogre::MeshPtr mesh, Ogre::String sMesh, const Ogre::AxisAlignedBox& aabox,
 		Ogre::Entity** pEnt, Ogre::SceneNode** pNode, Ogre::String sEnd);
 
-	vec<Ogre::uint16> idx, idxB;	// mesh indices
+	std::vector<Ogre::uint16>    idx, idxB;	  // mesh indices
 
-	vec<Ogre::Vector3> posBt;  // for bullet trimesh
-	vec<class btTriangleMesh*> vbtTriMesh;  // for delete
+	std::vector<Ogre::Vector3>   posBt;       // for bullet trimesh
+	std::vector<btTriangleMesh*> vbtTriMesh;  // for delete
 
-	vec<Ogre::Vector3>* at_pos;
+	std::vector<Ogre::Vector3>*  at_pos;
 
 	//  add triangle, with index check
 	void addTri(int f1, int f2, int f3, int i);
-	int at_size, at_ilBt;  bool bltTri,blendTri;  // pars for addTri
+
+	int at_size, at_ilBt;
+	bool bltTri, blendTri;  // pars for addTri
 	
 	
 ///  ***  Rebuild Geom DATA  ***
@@ -125,41 +129,44 @@ private:
 	
 	struct DataRoad  // global
 	{
-		int segs;       // count
-		int sMin,sMax;  // range
+		int segs;        // count
+		int sMin, sMax;  // range
 		
 		bool editorAlign, bulletFull;  // ed,options
 		
 		DataRoad(bool edAlign, bool bltFull)
 			:editorAlign(edAlign), bulletFull(bltFull)
-			,segs(2),sMin(0),sMax(1)  //-
+			,segs(2), sMin(0), sMax(1)  //-
 		{	}
 	};
 
 	void PrepassRange(DataRoad& DR);
 	void PrepassAngles(DataRoad& DR);
 
-	struct DataLod0  // at Lod 0
+	struct DataLod0   // at Lod 0
 	{
-		vec<int> viLSteps0;
-		vec<Ogre::Real> vSegTc0;  // tex coords
-		vec<Ogre::Vector3> vnSeg0;  // normals
+		std::vector<int>            viLSteps0;
+		std::vector<Ogre::Real>     vSegTc0;  // tex coords
+		std::vector<Ogre::Vector3>  vnSeg0;   // normals
 	};
 
-	struct DataLod  // for current Lod
+	struct DataLod   // for current Lod
 	{
 		//>  data at cur lod
-		vec<int> viL, viW;  // num steps for seg Length, Width
-		vec<int> vbSegMrg;  // bool 0 if seg merged, 1 if new
-		vec<Ogre::Real> vSegTc, vSegLen;
-		vec<Ogre::Vector3> vwSeg;
-		vec<vec <int> > viwLS;  //  width steps per length point, for each seg
-		vec<int> viwEq;			// 1 if equal width steps at whole length, in seg
+		std::vector<int>  viL, viW;  // num steps for seg Length, Width
+		std::vector<int>  vbSegMrg;  // bool 0 if seg merged, 1 if new
+		
+		std::vector<Ogre::Real>     vSegTc, vSegLen;
+		std::vector<Ogre::Vector3>  vwSeg;
+		
+		std::vector<std::vector <int> >  viwLS;  //  width steps per length point, for each seg
+		std::vector<int>  viwEq;	             // 1 if equal width steps at whole length, in seg
 
 		Ogre::Real tcLen;      // total tex coord length u
 		Ogre::Real sumLenMrg;  // total length to determine merging
 		int mrgCnt;            // stats, merges counter
 
+		//  LOD vars
 		int lod, iLodDiv;  //.
 		Ogre::Real fLenDim;
 		bool isLod0;
@@ -170,7 +177,7 @@ private:
 		{	}
 	};
 	
-	struct StatsLod  // stats for cuurent Lod
+	struct StatsLod   // stats for cuurent Lod
 	{	//#  stats
 		Ogre::Real roadLen, rdOnT, rdPipe, rdOnPipe;
 		Ogre::Real avgWidth, stMaxH, stMinH;
@@ -190,11 +197,13 @@ private:
 		DataLod0& DL0, DataLod& DL, StatsLod& ST,
 		int lod, bool editorAlign);
 
-	struct DataLodMesh  // mesh data for lod  (from merged segs)
-	{	//>  W-wall  C-column  B-blend
-		vec<Ogre::Vector4> clr0/*empty*/, clr, clrB;
-		vec<Ogre::Vector3> pos,norm, posW,normW, posC,normC, posLod, posB,normB;
-		vec<Ogre::Vector2> tcs, tcsW, tcsC, tcsB;
+	struct DataLodMesh   // mesh data for lod  (from merged segs)
+	{
+		//>  W-wall  C-column  B-blend
+		std::vector<Ogre::Vector4>  clr0/*empty*/, clr, clrB;
+		std::vector<Ogre::Vector3>  pos,norm, posW,normW, posC,normC, posLod, posB,normB;
+		std::vector<Ogre::Vector2>  tcs, tcsW, tcsC, tcsB;
+
 		int iLmrg, iLmrgW, iLmrgC, iLmrgB;
 		
 		DataLodMesh()
@@ -211,11 +220,9 @@ private:
 		int segM);
 	
 //---------------------------------------------------------------------------------------
-	
-#undef vec
 
 
-//  vars  -----------
+//  vars
 	friend class App;
 	friend class CGui;
 public:

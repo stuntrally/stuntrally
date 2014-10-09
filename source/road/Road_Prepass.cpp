@@ -163,8 +163,9 @@ void SplineRoad::PrepassLod(
 	int lod, bool editorAlign)
 {
 	DL.lod = lod;
-	int iLodDiv = ciLodDivs[lod];
 	DL.isLod0 = lod == 0;
+
+	int iLodDiv = ciLodDivs[lod];
 	DL.fLenDim = fLenDim0 * iLodDiv;
 		
 	//if (isLod0)?
@@ -301,6 +302,7 @@ void SplineRoad::PrepassLod(
 	ST.stats = DL.isLod0 && iDirtyId == -1;
 	End0Stats(DL,ST);
 }
+
 
 
 //---------------------------------------------------------------------------------------
