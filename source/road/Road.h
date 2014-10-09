@@ -21,6 +21,12 @@ namespace Ogre {  class SceneManager;  class SceneNode;  class Entity;  class Te
 	#include "btBulletCollisionCommon.h"
 #endif
 
+#ifdef SR_EDITOR
+#define LogR(a)  //LogO(String("~ Road  ") + a);
+#else
+#define LogR(a)
+#endif
+
 #define  LODs  4
 #define  MTRs  4
 
@@ -110,12 +116,12 @@ private:
 	vec<Ogre::Vector3>* at_pos;
 
 	//  add triangle, with index check
-	inline void addTri(int f1, int f2, int f3, int i);
+	void addTri(int f1, int f2, int f3, int i);
 	int at_size, at_ilBt;  bool bltTri,blendTri;  // pars for addTri
 	
 	
-	///  ***  Rebuild Geom DATA  ***
-	//---------------------------------------------------------------------------------------
+///  ***  Rebuild Geom DATA  ***
+//---------------------------------------------------------------------------------------
 	
 	struct DataRoad  // global
 	{
@@ -204,9 +210,10 @@ private:
 		DataLodMesh& DLM,
 		int segM);
 	
-	//---------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 	
 #undef vec
+
 
 //  vars  -----------
 	friend class App;
@@ -263,6 +270,8 @@ public:
 		Ogre::Real OnTer, Pipes, OnPipe;
 		Ogre::Real bankAvg, bankMax;  // banking angle
 	} st;
+	void EndStats(const DataRoad& DR, const StatsLod& ST);
+
 	Ogre::String  sTxtDesc;  // track description text
 
 

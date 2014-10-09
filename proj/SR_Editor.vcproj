@@ -303,6 +303,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\road\Road_Prepass.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\road\Road_Rebuild.cpp"
 				>
 			</File>
