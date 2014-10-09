@@ -169,11 +169,13 @@ private:
 		Ogre::Real roadLen, rdOnT, rdPipe, rdOnPipe;
 		Ogre::Real avgWidth, stMaxH, stMinH;
 		Ogre::Real bankAvg, bankMax;
+		bool stats;
 
 		StatsLod()
 			:roadLen(0.f), rdOnT(0.f), rdPipe(0.f), rdOnPipe(0.f)
 			,avgWidth(0.f), stMaxH(FLT_MIN), stMinH(FLT_MAX)
 			,bankAvg(0.f), bankMax(0.f)
+			,stats(0)
 		{	}
 	};
 	

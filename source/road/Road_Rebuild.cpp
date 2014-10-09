@@ -47,7 +47,7 @@ const static stWiPntW wiPntW[ciwW+1][2] = {  // section shape
 
 
 ///  Rebuild geometry
-//---------------------------------------------------------
+//------------------------------------------------------------------------------
 
 void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 {
@@ -82,9 +82,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	PrepassAngles(DR);
 
 
-	///--------------------------------------------------------------------------------------------------------------------------
 	///  LOD
-	///--------------------------------------------------------------------------------------------------------------------------
+	///------------------------------------------
 
 	DataLod0 DL0;
 
@@ -96,19 +95,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		StatsLod ST;
 
 		PrepassLod(DR,DL0,DL,ST, lod, editorAlign);
-
-		//#  stats  at lod0, whole road
-		bool stats = lod == 0 && iDirtyId == -1;
-		if (stats)
-		{	st.Length = ST.roadLen;  st.WidthAvg = ST.avgWidth / ST.roadLen;
-			st.OnTer = ST.rdOnT / ST.roadLen * 100.f;
-			st.Pipes = ST.rdPipe / ST.roadLen * 100.f;
-			st.OnPipe = ST.rdOnPipe / ST.roadLen * 100.f;
-			segsMrg = DL.mrgCnt;
-		}
 		
 
-		//--------------------------------------------------------------------------------------------------------------------------
 		///  segment
 		//--------------------------------------------------------------------------------------------------------------------------
 
@@ -653,7 +641,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					posLod.clear();
 				}
 				//#  stats--
-				if (stats)
+				if (ST.stats)
 				{
 					rs.mrgLod = (iMrgSegs % 2)*2+1;  //-
 					iMrgSegs++;	 // count, full
@@ -749,7 +737,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		//--------------------------------------------------------------------------------------------------------------------------
 	
 		//#  stats
-		if (stats)
+		if (ST.stats)
 		{
 			st.HeightDiff = max(0.f, ST.stMaxH - ST.stMinH);
 			st.bankAvg = ST.bankAvg / DR.segs;
@@ -989,4 +977,13 @@ void SplineRoad::PrepassLod(
 	}
 
 
+	//#  stats  at lod0, whole road
+	ST.stats = DL.isLod0 && iDirtyId == -1;
+	if (ST.stats)
+	{	st.Length = ST.roadLen;  st.WidthAvg = ST.avgWidth / ST.roadLen;
+		st.OnTer = ST.rdOnT / ST.roadLen * 100.f;
+		st.Pipes = ST.rdPipe / ST.roadLen * 100.f;
+		st.OnPipe = ST.rdOnPipe / ST.roadLen * 100.f;
+		segsMrg = DL.mrgCnt;
+	}
 }
