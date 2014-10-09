@@ -61,7 +61,8 @@ public:  // for car checking
 };
 
 
-//  Spline Base, only interpolation  ---------
+//  Spline Base, only interpolation
+//------------------------------------------------------
 class SplineBase
 {
 public:
@@ -112,7 +113,8 @@ protected:
 };
 
 
-//  Spline Edit, base with editing  ---------
+//  Spline Edit, base with editing
+//--------------------------------------------------------------------------------------
 class SplineEdit : public SplineBase
 {
 public:
@@ -131,17 +133,16 @@ public:
 	inline Ogre::Real getTerH(const Ogre::Vector3& p)
 	{	return mTerrain ? mTerrain->getHeightAtWorldPosition(p.x, 0.f, p.z) : 0.f;  }
 
-	void UpdPointsH();
+	void UpdPointsH();  // set markers pos, h on ter
 	
 
 	///  Edit  ====
 	void Move1(int id, Ogre::Vector3 relPos);
 	void Move(Ogre::Vector3 relPos);  // 1 or sel
-
 	void Scale1(int id, Ogre::Real posMul, Ogre::Real hMul);
 
-	///  change point vars
 
+	///  change point vars
 	void AddWidth(Ogre::Real relW);
 	void AddYaw( Ogre::Real relA,Ogre::Real snapA, bool alt);
 	void AddRoll(Ogre::Real relA,Ogre::Real snapA, bool alt);
@@ -153,20 +154,23 @@ public:
 	void RotateSel(Ogre::Real relA, Ogre::Vector3 axis, int addYawRoll);
 	void ScaleSel(Ogre::Real posMul);
 
-
+	
 protected:	
 	SplinePoint newP;  // new point for insert
 
-	//  chosen stays, SelPoint is under mouse (Pick) or none
+	//  selection
+	//  chosen stays, SelPoint is under mouse Pick
 	int iSelPoint, iChosen;  // -1 if none
-	std::set<int> vSel;  // selection
+	std::set<int> vSel;  // selected points
 	
-	bool bSelChng;
+	bool bSelChng;  // rebuild road after end of selection change
+
 
 	//  rebuild, mark only  ----
 	bool rebuild;
 	int iDirtyId;
 	void Rebuild(bool full=false);
+
 
 	Ogre::Real fHeight;	 /// above terrain  ?for each point-
 
