@@ -75,14 +75,12 @@ public:
 	void setPos(int index, const Ogre::Vector3& value);
 
 
-	//  get value over the whole spline
-	Ogre::Vector3 interpolate(Ogre::Real t) const;
 	//  get value at a single segment of the spline
 	Ogre::Vector3 interpolate(int id, Ogre::Real t) const;
 
-	//  interp 1dim vars
+	//  interpolate 1 dim vars
 	Ogre::Real interpWidth(int id, Ogre::Real t) const;
-	Ogre::Real interpAYaw(int id, Ogre::Real t) const;
+	Ogre::Real interpAYaw( int id, Ogre::Real t) const;
 	Ogre::Real interpARoll(int id, Ogre::Real t) const;
 	
 	void recalcTangents(), preAngle(int i);

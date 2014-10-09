@@ -66,18 +66,6 @@ SplineBase::~SplineBase()
 {	}
 
 
-//  Interpolate  whole spline  not used-
-//---------------------------------------------------------------------
-Vector3 SplineBase::interpolate(Real t) const
-{
-	//  get which segment this is in
-	Real fSeg = t * (mP.size() - 1);
-	unsigned int seg = (unsigned int)fSeg;
-	t = fSeg - seg;
-
-	return interpolate(seg, t);
-}
-
 //  Interpolate  segment
 //---------------------------------------------------------------------
 Vector3 SplineBase::interpolate(int id, Real t) const
