@@ -3,6 +3,7 @@
 
 namespace Ogre {  class Terrain;  }
 
+
 class TerUtil  //  helper
 {
 public:
@@ -16,6 +17,8 @@ public:
 enum AngType {  AT_Manual=0, AT_Auto, AT_Both, AT_ALL  };
 const static std::string csAngType[AT_ALL] = {"Manual", "Auto", "Both"};
 
+
+//  point vars  ---------
 class SplinePoint
 {
 public:
@@ -45,7 +48,7 @@ public:
 };
 
 
-class CheckSphere
+class CheckSphere  //  checkpoint
 {
 public:  // for car checking
 	Ogre::Vector3 pos;
@@ -58,6 +61,7 @@ public:  // for car checking
 };
 
 
+//  Spline Base, only interpolation  ---------
 class SplineBase
 {
 public:
@@ -68,7 +72,6 @@ public:
 	
 	//  points
 	void clear();
-	void addPoint(const Ogre::Vector3& p);
 	inline int getNumPoints() const {  return (int)mP.size();  }
 
 	//  get next, prev points

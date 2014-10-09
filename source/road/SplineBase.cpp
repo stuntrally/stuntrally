@@ -220,16 +220,6 @@ void SplineBase::clear()
 	mP.clear();
 }
 
-//  add  not used-
-void SplineBase::addPoint(const Vector3& p)
-{
-	SplinePoint pt;
-	pt.pos = p;  //..
-	mP.push_back(pt);
-
-	recalcTangents();
-}
-
 
 //  default point
 //
