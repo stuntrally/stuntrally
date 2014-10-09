@@ -254,24 +254,24 @@ void CGui::comboPipeMtr(Cmb cmb, size_t val)
 	int id = atoi(sn.c_str())-1;  if (id < 0 || id >= MTRs)  return;
 
 	String s = cmb->getItemNameAt(val);
-	app->scn->road->SetMtrPipe(id, s);  app->scn->road->RebuildRoad(true);  scn->UpdPSSMMaterials();
+	app->scn->road->SetMtrPipe(id, s);  app->scn->road->Rebuild(true);  scn->UpdPSSMMaterials();
 	UpdSurfList();
 }
 
 void CGui::comboRoadWMtr(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	app->scn->road->sMtrWall = s;  app->scn->road->RebuildRoad(true);  scn->UpdPSSMMaterials();
+	app->scn->road->sMtrWall = s;  app->scn->road->Rebuild(true);  scn->UpdPSSMMaterials();
 }
 void CGui::comboPipeWMtr(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	app->scn->road->sMtrWallPipe = s;  app->scn->road->RebuildRoad(true);  scn->UpdPSSMMaterials();
+	app->scn->road->sMtrWallPipe = s;  app->scn->road->Rebuild(true);  scn->UpdPSSMMaterials();
 }
 void CGui::comboRoadColMtr(Cmb cmb, size_t val)
 {
 	String s = cmb->getItemNameAt(val);
-	app->scn->road->sMtrCol = s;  app->scn->road->RebuildRoad(true);  scn->UpdPSSMMaterials();
+	app->scn->road->sMtrCol = s;  app->scn->road->Rebuild(true);  scn->UpdPSSMMaterials();
 }
 
 void CGui::editRoad(Ed ed)
@@ -672,6 +672,6 @@ void CGui::listPickRd(Mli2 li, size_t pos)
 	}
 	//  upd
 	btnRoad[idRdPick]->setCaption(s);
-	app->scn->road->RebuildRoad(true);  scn->UpdPSSMMaterials();
+	app->scn->road->Rebuild(true);  scn->UpdPSSMMaterials();
 	UpdSurfList();
 }

@@ -340,7 +340,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			
 			//  looped  todo: finish set..
 			case key(N):  road->isLooped = !road->isLooped;
-				road->recalcTangents();  road->RebuildRoad(true);  break;
+				road->recalcTangents();  road->Rebuild(true);  break;
 		}
 	}
 
@@ -637,7 +637,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 		//  road
 		case key(R):  if (bEdit()){  SetEdMode(ED_Road);	UpdEditWnds();  }	break;
-		case key(B):  if (road)  {  road->UpdPointsH();  road->RebuildRoad(true);  }  break;
+		case key(B):  if (road)  {  road->UpdPointsH();  road->Rebuild(true);  }  break;
 		case key(T):  if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->getVisible());  break;
 		case key(M):  if (edMode == ED_Road && road)  road->ToggleMerge();  break;
 

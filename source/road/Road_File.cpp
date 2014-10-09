@@ -60,7 +60,7 @@ SplineRoad::~SplineRoad()
 void SplineRoad::ToggleMerge()
 {
 	bMerge = !bMerge;
-	RebuildRoad(true);
+	Rebuild(true);
 }
 
 
@@ -340,7 +340,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 	iChosen = -1;  //std::max(0, std::min((int)(mP.size()-1), iChosen));
 	
 	SetChecks();
-	if (build)  RebuildRoad(true);
+	if (build)  Rebuild(true);
 	return true;
 }
 

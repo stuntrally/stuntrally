@@ -124,41 +124,51 @@ public:
 		,fHeight(0.1f)
 	{	}
 	
-	//  helpers
+	
+	//  terrain helpers
 	Ogre::Terrain* mTerrain;  // for on terrain, height snap
 
 	inline Ogre::Real getTerH(const Ogre::Vector3& p)
 	{	return mTerrain ? mTerrain->getHeightAtWorldPosition(p.x, 0.f, p.z) : 0.f;  }
 
+	void UpdPointsH();
+	
+
+	///  Edit  ====
+	void Move1(int id, Ogre::Vector3 relPos);
+	void Move(Ogre::Vector3 relPos);  // 1 or sel
+
+	void Scale1(int id, Ogre::Real posMul, Ogre::Real hMul);
 
 	///  change point vars
 
 	void AddWidth(Ogre::Real relW);
-
 	void AddYaw( Ogre::Real relA,Ogre::Real snapA, bool alt);
 	void AddRoll(Ogre::Real relA,Ogre::Real snapA, bool alt);
 
 
-	//  selected rot, scale
-	Ogre::Vector3 getPos0();
+	//  Edit Selected  ====
+	Ogre::Vector3 getPos0();  // selection center point (or chosen)
+
 	void RotateSel(Ogre::Real relA, Ogre::Vector3 axis, int addYawRoll);
 	void ScaleSel(Ogre::Real posMul);
 
-	
+
+protected:	
 	SplinePoint newP;  // new point for insert
 
+	//  chosen stays, SelPoint is under mouse (Pick) or none
 	int iSelPoint, iChosen;  // -1 if none
 	std::set<int> vSel;  // selection
 	
 	bool bSelChng;
 
+	//  rebuild, mark only  ----
 	bool rebuild;
 	int iDirtyId;
+	void Rebuild(bool full=false);
 
-	void RebuildRoad(bool full=false);
-
-	Ogre::Real fHeight;	 // above terrain  ?for each point-
+	Ogre::Real fHeight;	 /// above terrain  ?for each point-
 
 	std::vector<Ogre::SceneNode*> vMarkNodes;  // markers
-
 };

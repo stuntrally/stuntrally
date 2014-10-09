@@ -301,7 +301,7 @@ void App::UpdateTrackEv()
 
 	//  road ~
 	scn->road->mTerrain = scn->terrain;
-	scn->road->RebuildRoad(true);
+	scn->road->Rebuild(true);
 	scn->UpdPSSMMaterials();
 
 	//CreateObjects();

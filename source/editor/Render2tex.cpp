@@ -458,7 +458,7 @@ void App::AlignTerToRoad()
 		scn->road->mP[*it].onTer = true;
 
 	//  restore orig road width
-	scn->road->RebuildRoad(true);
+	scn->road->Rebuild(true);
 	
 	// todo: ?restore road sel after load F5..
 

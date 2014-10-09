@@ -80,8 +80,6 @@ public:
 	void Insert(eIns ins), Delete();
 
 	
-	void Move1(int id, Ogre::Vector3 relPos), Move(Ogre::Vector3 relPos);
-	void Scale1(int id, Ogre::Real posMul, Ogre::Real hMul);
 	void MirrorSel(bool alt);
 
 	//  modify point
@@ -97,7 +95,7 @@ public:
 	bool CopySel();  void Paste(bool reverse=false), DelSel();
 
 	//  util
-	void SetTerHitVis(bool visible), UpdRot(), UpdPointsH();
+	void SetTerHitVis(bool visible), UpdRot();
 	
 	bool bCastShadow;  // true for depth shadows
 	bool bRoadWFullCol;  // road wall full collision (all triangles, or just side)
@@ -128,7 +126,6 @@ private:
 		DelLastMarker(), UpdAllMarkers(), DestroyMarkers();
 
 	Ogre::String sMarkerMesh;  Ogre::Real fMarkerScale, fScRot,fScHit;
-	std::vector<Ogre::SceneNode*> vMarkNodes;  // markers
 
 	Ogre::SceneNode *ndSel,*ndChosen,*ndRot,*ndHit,*ndChk, *lastNdSel,*lastNdChosen;
 	Ogre::Entity* entSel,*entChs,*entRot,*entHit,*entChk;

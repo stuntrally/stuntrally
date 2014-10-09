@@ -435,7 +435,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		road->fLodBias = pSet->road_dist;  // after rebuild
 
 		if (bSelChngOld && !road->bSelChng)
-			road->RebuildRoad(true);
+			road->Rebuild(true);
 
 		bSelChngOld = road->bSelChng;
 		road->bSelChng = false;

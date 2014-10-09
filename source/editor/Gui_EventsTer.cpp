@@ -360,7 +360,7 @@ void CGui::btnScaleTerH(WP)
 	//  road upd
 	if (0) //road)  // doesnt work here..
 	{	app->scn->road->UpdPointsH();
-		app->scn->road->RebuildRoad(true);
+		app->scn->road->Rebuild(true);
 	}
 
 	//  start pos

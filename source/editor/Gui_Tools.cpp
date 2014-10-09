@@ -136,7 +136,7 @@ void CGui::btnCopyRoad(WP)
 	String from = PathCopyTrk();
 	app->scn->road->LoadFile(from + "/road.xml");
 
-	SetGuiFromXmls();	app->scn->road->RebuildRoad(true);
+	SetGuiFromXmls();	app->scn->road->Rebuild(true);
 	scn->UpdPSSMMaterials();	app->scn->road->UpdAllMarkers();
 }
 
@@ -158,7 +158,7 @@ void CGui::btnCopyRoadPars(WP)
 	app->scn->road->skirtLen = rd.skirtLen;	app->scn->road->skirtH = rd.skirtH;
 	app->scn->road->setMrgLen = rd.setMrgLen;  app->scn->road->lposLen = rd.lposLen;
 
-	SetGuiFromXmls();	app->scn->road->RebuildRoad(true);
+	SetGuiFromXmls();	app->scn->road->Rebuild(true);
 	scn->UpdPSSMMaterials();	app->scn->road->UpdAllMarkers();
 }
 
@@ -173,7 +173,7 @@ void CGui::btnDeleteRoad(WP)
 		app->scn->road->iChosen = app->scn->road->getNumPoints()-1;
 		app->scn->road->Delete();
 	}
-	//app->scn->road->RebuildRoad(true);
+	//app->scn->road->Rebuild(true);
 }
 void CGui::btnDeleteFluids(WP)
 {
@@ -224,7 +224,7 @@ void CGui::btnScaleAll(WP)
 	//  road upd
 	if (0) //road)  // doesnt work here..
 	{	app->scn->road->UpdPointsH();
-		app->scn->road->RebuildRoad(true);
+		app->scn->road->Rebuild(true);
 	}
 
 	//  start pos

@@ -71,7 +71,7 @@ void SplineRoad::Pick(Camera* mCamera, Real mx, Real my,  bool bRay, bool bAddH,
 
 //  Move point
 ///-------------------------------------------------------------------------------------
-void SplineRoad::Move1(int id, Vector3 relPos)
+void SplineEdit::Move1(int id, Vector3 relPos)
 {
 	Vector3 pos = getPos(id) + relPos;
 	if (mP[id].onTer)
@@ -80,7 +80,7 @@ void SplineRoad::Move1(int id, Vector3 relPos)
 	vMarkNodes[id]->setPosition(pos);  // upd marker
 }
 
-void SplineRoad::Move(Vector3 relPos)
+void SplineEdit::Move(Vector3 relPos)
 {
 	if (!vSel.empty())  // move sel
 	{	for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
@@ -92,11 +92,11 @@ void SplineRoad::Move(Vector3 relPos)
 		newP.pos.y += relPos.y;  return;  }
 	else
 	{	Move1(iChosen, relPos);
-		RebuildRoad();	}
+		Rebuild();	}
 }
 
 //  Scale1 (for tools)
-void SplineRoad::Scale1(int id, Real posMul, Real hMul)
+void SplineEdit::Scale1(int id, Real posMul, Real hMul)
 {
 	Vector3 pos = getPos(id);
 	if (posMul != 0.f)
@@ -111,7 +111,7 @@ void SplineRoad::Scale1(int id, Real posMul, Real hMul)
 }
 
 //  Update Points onTer
-void SplineRoad::UpdPointsH()
+void SplineEdit::UpdPointsH()
 {
 	for (int id=0; id < getNumPoints(); ++id)
 	{	
@@ -209,7 +209,7 @@ void SplineRoad::MirrorSel(bool alt)
 		}
 	}
 	recalcTangents();
-	RebuildRoad(true);
+	Rebuild(true);
 }
 
 
@@ -249,7 +249,7 @@ void SplineRoad::Insert(eIns ins)
 	AddMarker(pt.pos);
 	if (ins	!= INS_End)
 		UpdAllMarkers();/**/
-	RebuildRoad(/*true*/);
+	Rebuild(/*true*/);
 }
 
 ///  Delete point
@@ -277,7 +277,7 @@ void SplineRoad::Delete()
 	
 	recalcTangents();
 	UpdAllMarkers();
-	RebuildRoad(/*true*/);
+	Rebuild(/*true*/);
 }
 
 
@@ -324,7 +324,7 @@ void SplineRoad::Paste(bool reverse)
 	}
 	if (reverse)  // rot 180
 		RotateSel(180, Vector3::UNIT_Y, 1);
-	RebuildRoad(true);
+	Rebuild(true);
 }
 
 void SplineRoad::DelSel()
@@ -351,7 +351,7 @@ void SplineRoad::DelSel()
 	
 	recalcTangents();
 	UpdAllMarkers();
-	RebuildRoad(true);
+	Rebuild(true);
 }
 
 
@@ -422,7 +422,7 @@ void SplineRoad::LastPoint()
 
 
 //  mark need to rebuild geometry
-void SplineEdit::RebuildRoad(bool full)
+void SplineEdit::Rebuild(bool full)
 {
 	rebuild = true;
 	if (full)
@@ -485,7 +485,7 @@ void SplineEdit::AddWidth(Real relW)    ///  Width
 
 	mP[iChosen].width  += relW;
 	
-	RebuildRoad();
+	Rebuild();
 }
 
 void SplineEdit::AddYaw(Real relA, Real snapA, bool alt)    ///  Yaw
@@ -501,7 +501,7 @@ void SplineEdit::AddYaw(Real relA, Real snapA, bool alt)    ///  Yaw
 	else
 	{	Real a = mP[iChosen].mYaw;  int i = a / snapA + (relA > 0.f ? 1 :-1);  mP[iChosen].mYaw = i * snapA;  }
 	
-	RebuildRoad();
+	Rebuild();
 }
 
 void SplineEdit::AddRoll(Real relA, Real snapA, bool alt)   ///  Roll
@@ -516,7 +516,7 @@ void SplineEdit::AddRoll(Real relA, Real snapA, bool alt)   ///  Roll
 	else
 	{	Real a = mP[iChosen].mRoll;  int i = a / snapA + (relA > 0.f ? 1 :-1);  mP[iChosen].mRoll = i * snapA;  }
 
-	RebuildRoad();
+	Rebuild();
 }
 
 
@@ -587,7 +587,7 @@ void SplineRoad::AddPipe(Real relP)    ///  Pipe
 			newP.pipe = std::max(0.f, std::min(1.f, newP.pipe + relP));  return;  }
 	mP[iChosen].pipe  = std::max(0.f, std::min(1.f, mP[iChosen].pipe + relP));
 
-	RebuildRoad();
+	Rebuild();
 }
 
 void SplineRoad::ChgMtrId(int relId)   ///  Mtr Id
