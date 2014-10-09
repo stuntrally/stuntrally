@@ -26,10 +26,8 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 	edWadd(0.f),edWmul(1.f)
 {
 	Defaults();
-	iMrgSegs = 0;  segsMrg = 0;  iOldHide = -1;
-	st.Length = 0.f;  st.WidthAvg = 0.f;  st.HeightDiff = 0.f;
-	st.OnTer = 0.f;  st.Pipes = 0.f;  st.OnPipe = 0.f;
-	st.bankAvg = 0.f;  st.bankMax = 0.f;
+	st.Reset();
+	iOldHide = -1;
 }
 void SplineRoad::Defaults()
 {
@@ -49,8 +47,22 @@ void SplineRoad::Defaults()
 	iChkId1 = 0;  iChkId1Rev = 0;
 }
 
+//  ctor stats
+SplineRoad::Stats::Stats()
+{
+	Reset();
+}
+void SplineRoad::Stats::Reset()
+{
+	iMrgSegs = 0;  segsMrg = 0;
+	Length = 0.f;  WidthAvg = 0.f;  HeightDiff = 0.f;
+	OnTer = 0.f;   Pipes = 0.f;  OnPipe = 0.f;
+	bankAvg = 0.f;  bankMax = 0.f;
+}
+
 SplineRoad::~SplineRoad()
 {	}
+
 
 void SplineRoad::ToggleMerge()
 {
@@ -63,7 +75,7 @@ void SplineRoad::ToggleMerge()
 //--------------------------------------------------------------------------------------------------------
 void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 {
-	iVis = 0;  iTris = 0;
+	st.iVis = 0;  st.iTris = 0;
 	const Real fDist[LODs+1] = {-800/*!temp -120*/, 40, 80, 140, 1000};
 	
 	const Plane& pl = mCamera->getFrustumPlane(FRUSTUM_PLANE_NEAR);
@@ -105,7 +117,7 @@ void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 				rs.blend[i].ent->setVisible(vis);
 			//if (rs.col.ent && i==0)
 			//	rs.col.ent->setVisible(vis);
-			if (vis) {  ++iVis;  iTris += rs.nTri[i];  }
+			if (vis) {  ++st.iVis;  st.iTris += rs.nTri[i];  }
 		}
 	}
 }

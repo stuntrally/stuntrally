@@ -72,8 +72,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		PrepassLod(DR,DL0,DL,ST, lod, editorAlign);
 		
 
-		///  segment
-		//-------------------------------------------
+		///  Segment
+		//-----------------------------------
 
 		DataLodMesh DLM;
 		DL.tcLen = 0.f;
@@ -103,31 +103,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 }
 
 
-//  add triangle
-//--------------------------------------------------------------------------------------------------------------------------
-void SplineRoad::addTri(int f1, int f2, int f3, int i)
-{
-	/*bool ok = true;  const int fmax = 65530; //16bit
-	if (f1 >= at_size || f1 > fmax)  {  LogRE("idx too big: "+toStr(f1)+" >= "+toStr(at_size));  ok = 0;  }
-	if (f2 >= at_size || f2 > fmax)  {  LogRE("idx too big: "+toStr(f2)+" >= "+toStr(at_size));  ok = 0;  }
-	if (f3 >= at_size || f3 > fmax)  {  LogRE("idx too big: "+toStr(f3)+" >= "+toStr(at_size));  ok = 0;  }
-	if (!ok)  return;/**/
-
-	idx.push_back(f1);  idx.push_back(f2);  idx.push_back(f3);
-	if (blendTri)
-	{
-		idxB.push_back(f1);  idxB.push_back(f2);  idxB.push_back(f3);
-	}
-
-	if (bltTri && i > 0 && i < at_ilBt)
-	{
-		posBt.push_back((*at_pos)[f1]);
-		posBt.push_back((*at_pos)[f2]);
-		posBt.push_back((*at_pos)[f3]);
-	}
-}
-
-
+//  Prepass Range
 //---------------------------------------------------------------------------------------
 void SplineRoad::PrepassRange(DataRoad& DR)
 {
@@ -152,7 +128,7 @@ void SplineRoad::PrepassRange(DataRoad& DR)
 		DR.sMax = std::min(DR.segs-1, DR.sMax);
 }
 
-///  Auto angles prepass ...
+//  Auto Angles Prepass  ~~~
 //---------------------------------------------------------------------------------------
 void SplineRoad::PrepassAngles(DataRoad& DR)
 {
@@ -282,7 +258,7 @@ void SplineRoad::PrepassLod(
 			ST.rdOnT += len;  //#
 
 
-		//  tc  seg il* len
+		//  tc  seg il * len
 		Real l = 0.f;
 		for (int i = 0; i < il; ++i)  // length +1
 		{
@@ -322,19 +298,12 @@ void SplineRoad::PrepassLod(
 		//LogR("seg "+toStr(seg)+"  >> "+ss);
 	}
 
-
-	//#  stats  at lod0, whole road
 	ST.stats = DL.isLod0 && iDirtyId == -1;
-	if (ST.stats)
-	{	st.Length = ST.roadLen;  st.WidthAvg = ST.avgWidth / ST.roadLen;
-		st.OnTer = ST.rdOnT / ST.roadLen * 100.f;
-		st.Pipes = ST.rdPipe / ST.roadLen * 100.f;
-		st.OnPipe = ST.rdOnPipe / ST.roadLen * 100.f;
-		segsMrg = DL.mrgCnt;
-	}
+	End0Stats(DL,ST);
 }
 
-//-----------
+
+//---------------------------------------------------------------------------------------
 void SplineRoad::DataLodMesh::Clear()
 {	iLmrg = 0;	iLmrgW = 0;  iLmrgC = 0;  iLmrgB = 0;
 
@@ -344,6 +313,18 @@ void SplineRoad::DataLodMesh::Clear()
 	posB.clear(); normB.clear(); tcsB.clear(); clrB.clear();
 }
 
+
+void SplineRoad::End0Stats(const DataLod& DL, const StatsLod& ST)
+{
+	//#  stats  at lod0, whole road
+	if (!ST.stats)  return;
+
+	st.Length = ST.roadLen;  st.WidthAvg = ST.avgWidth / ST.roadLen;
+	st.OnTer = ST.rdOnT / ST.roadLen * 100.f;
+	st.Pipes = ST.rdPipe / ST.roadLen * 100.f;
+	st.OnPipe = ST.rdOnPipe / ST.roadLen * 100.f;
+	st.segsMrg = DL.mrgCnt;
+}
 
 void SplineRoad::EndStats(const DataRoad& DR, const StatsLod& ST)
 {	//#  stats

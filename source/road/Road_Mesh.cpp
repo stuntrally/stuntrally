@@ -83,6 +83,7 @@ void SplineRoad::CreateMesh(SubMesh* mesh, AxisAlignedBox& aabox,
 	mesh->setMaterialName(sMtrName);
 }
 
+
 //  add mesh to scene
 //---------------------------------------------------------
 
@@ -101,6 +102,31 @@ void SplineRoad::AddMesh(MeshPtr mesh, String sMesh, const AxisAlignedBox& aabox
 	(*pNode)->attachObject(*pEnt);
 	(*pEnt)->setVisible(false);  (*pEnt)->setCastShadows(false);
 	(*pEnt)->setVisibilityFlags(RV_Road);
+}
+
+
+//  add triangle to bullet
+//---------------------------------------------------------
+void SplineRoad::addTri(int f1, int f2, int f3, int i)
+{
+	/*bool ok = true;  const int fmax = 65530; //16bit
+	if (f1 >= at_size || f1 > fmax)  {  LogRE("idx too big: "+toStr(f1)+" >= "+toStr(at_size));  ok = 0;  }
+	if (f2 >= at_size || f2 > fmax)  {  LogRE("idx too big: "+toStr(f2)+" >= "+toStr(at_size));  ok = 0;  }
+	if (f3 >= at_size || f3 > fmax)  {  LogRE("idx too big: "+toStr(f3)+" >= "+toStr(at_size));  ok = 0;  }
+	if (!ok)  return;/**/
+
+	idx.push_back(f1);  idx.push_back(f2);  idx.push_back(f3);
+	if (blendTri)
+	{
+		idxB.push_back(f1);  idxB.push_back(f2);  idxB.push_back(f3);
+	}
+
+	if (bltTri && i > 0 && i < at_ilBt)
+	{
+		posBt.push_back((*at_pos)[f1]);
+		posBt.push_back((*at_pos)[f2]);
+		posBt.push_back((*at_pos)[f3]);
+	}
 }
 
 
@@ -180,6 +206,7 @@ void SplineRoad::DestroySeg(int id)
 	rs.lpos.clear();
 }
 
+
 void SplineRoad::DestroyRoad()
 {
 #ifndef SR_EDITOR
@@ -192,9 +219,5 @@ void SplineRoad::DestroyRoad()
 	vSegs.clear();
 
 	idStr = 0;
-	iMrgSegs = 0;  segsMrg = 0;
-	//  stats
-	st.Length = 0.f;  st.WidthAvg = 0.f;  st.HeightDiff = 0.f;
-	st.OnTer = 0.f;  st.Pipes = 0.f;  st.OnPipe = 0.f;
-	st.bankAvg = 0.f;  st.bankMax = 0.f;
+	st.Reset();
 }

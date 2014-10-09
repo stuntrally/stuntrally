@@ -227,9 +227,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 
 			int lp = !bCur ? -1 : road->vSegs[road->iChosen].lpos.size();
 			rdValSt[7]->setCaption(toStr(lp));
-			rdValSt[8]->setCaption(fToStr(road->segsMrg+1,0,2));
-			rdValSt[9]->setCaption(fToStr(road->iVis,0,2));
-			rdValSt[10]->setCaption(fToStr(road->iTris/1000.f,1,4)+"k");
+			rdValSt[8]->setCaption(fToStr(road->st.segsMrg+1,0,2));
+			rdValSt[9]->setCaption(fToStr(road->st.iVis,0,2));
+			rdValSt[10]->setCaption(fToStr(road->st.iTris/1000.f,1,4)+"k");
 		}
 
 		//  edit  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

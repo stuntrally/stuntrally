@@ -220,18 +220,18 @@ private:
 	friend class CGui;
 public:
 	Ogre::Vector3 posHit;  bool bHitTer;
+	
+	int iOldHide, idStr;  // upd var
 
-	float fLodBias;
+	float fLodBias;      // upd par, detail
+	
 	bool bCastShadow;    // true for depth shadows
 	bool bRoadWFullCol;  // road wall full collision (all triangles, or just side)
-	
+
 
 	//  road data Segments
 	std::deque<RoadSeg> vSegs;
 
-	//  info
-	int iMrgSegs, segsMrg,  iOldHide;
-	int iVis, iTris, idStr;
 
 ///  params, from xml
 	//  materials
@@ -262,19 +262,26 @@ public:
 	Ogre::Real colR;             // column radius
 	Ogre::Real ilPmul, iwPmul;   // length,width steps multipliers for pipe
 
+	Ogre::String  sTxtDesc;  // track description text
+
+	// params for editor tool: align terrain to road
+	float edWadd, edWmul;  // const added width and width multipler for whole road
+
 
 	//  stats  ----
 	struct Stats  // for info only
 	{
+		int iMrgSegs, segsMrg;
+		int iVis, iTris;  // in upd vis
+
 		Ogre::Real Length, WidthAvg, HeightDiff;
 		Ogre::Real OnTer, Pipes, OnPipe;
 		Ogre::Real bankAvg, bankMax;  // banking angle
+		
+		Stats();
+		void Reset();
 	} st;
+
+	void End0Stats(const DataLod& DL, const StatsLod& ST);
 	void EndStats(const DataRoad& DR, const StatsLod& ST);
-
-	Ogre::String  sTxtDesc;  // track description text
-
-
-	// params for editor tool: align terrain to road
-	float edWadd, edWmul;  // const added width and width multipler for whole road
 };

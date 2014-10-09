@@ -574,8 +574,8 @@ void SplineRoad::BuildSeg(
 		//#  stats--
 		if (ST.stats)
 		{
-			rs.mrgLod = (iMrgSegs % 2)*2+1;  //-
-			iMrgSegs++;	 // count, full
+			rs.mrgLod = (st.iMrgSegs % 2)*2+1;  //-
+			st.iMrgSegs++;	 // count, full
 		}
 
 
