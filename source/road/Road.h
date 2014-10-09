@@ -49,7 +49,7 @@ struct RoadSeg
 enum eIns{  INS_Begin, INS_Cur, INS_CurPre, INS_End  };
 
 
-class SplineRoad : public SplineBase
+class SplineRoad : public SplineEdit
 {
 public:
 	#ifdef SR_EDITOR
@@ -67,7 +67,7 @@ public:
 	bool LoadFile(Ogre::String fname, bool build=true), SaveFile(Ogre::String fname);
 	
 	//  Rebuild
-	void RebuildRoad(bool full=false), RebuildRoadInt(bool editorAlign=false, bool edBulletFull=false),
+	void RebuildRoadInt(bool editorAlign=false, bool edBulletFull=false),
 		Destroy(), DestroyRoad(), DestroySeg(int id);
 
 	//  Update
@@ -77,21 +77,15 @@ public:
 
 
 	//  Manipulate  -------
-	SplinePoint newP;  // new point for insert
 	void Insert(eIns ins), Delete();
 
-	///  change point
-	inline Ogre::Real getTerH(const Ogre::Vector3& p)
-	{	return mTerrain ? mTerrain->getHeightAtWorldPosition(p.x, 0.f, p.z) : 0.f;  }
 	
-	void Move1(int id, Ogre::Vector3 relPos), Move(Ogre::Vector3 relPos);  Ogre::Vector3 getPos0();
-	void RotateSel(Ogre::Real relA, Ogre::Vector3 axis, int addYawRoll);
-	void Scale1(int id, Ogre::Real posMul, Ogre::Real hMul), ScaleSel(Ogre::Real posMul);
+	void Move1(int id, Ogre::Vector3 relPos), Move(Ogre::Vector3 relPos);
+	void Scale1(int id, Ogre::Real posMul, Ogre::Real hMul);
 	void MirrorSel(bool alt);
 
 	//  modify point
 	void ToggleOnTerrain(), ToggleColumns(), ToggleOnPipe(), ToggleLoopChk();  // on chosen point
-	void AddWidth(Ogre::Real relW), AddYaw(Ogre::Real relA,Ogre::Real snapA, bool alt),AddRoll(Ogre::Real relA,Ogre::Real snapA, bool alt);
 	void AddPipe(Ogre::Real relP), ChgMtrId(int relId), ChgAngType(int relId), AngZero();
 	void AddChkR(Ogre::Real relR, bool dontCheckR=false), AddBoxW(Ogre::Real rel),AddBoxH(Ogre::Real rel), Set1stChk();
 	const Ogre::String& getMtrStr(int seg);  bool isPipe(int seg);
@@ -143,32 +137,27 @@ private:
 //  vars  -----------
 	//  setup
 	Ogre::SceneManager* mSceneMgr;
-	Ogre::Terrain* mTerrain;	// for height snap
 public:
 	Ogre::Camera* mCamera;
 private:
 	friend class App;
 	friend class CGui;
 
-	int iSelPoint, iChosen;  // -1 if none
-	std::set<int> vSel;  // selection
-	
 	//  road data Segments
 	std::deque<RoadSeg> vSegs;
 	//  info
 	int iMrgSegs, segsMrg,  iOldHide;
-	bool rebuild;  int iVis, iTris, iDirtyId, idStr;
+	int iVis, iTris, idStr;
 
 	Ogre::String  sMtrPipe[MTRs];  // use SetMtrPipe to set
 	bool bMtrPipeGlass[MTRs];  // glass in mtr name
 public:
-	Ogre::Vector3 posHit;  bool bHitTer, bSelChng;  float fLodBias;
+	Ogre::Vector3 posHit;  bool bHitTer;  float fLodBias;
 
 	///  params, from xml
 	Ogre::String  sMtrRoad[MTRs], sMtrWall,sMtrWallPipe, sMtrCol;
 	void SetMtrPipe(int i, Ogre::String sMtr);
 
-	Ogre::Real fHeight;	 // above terrain  ?for each point-
 	Ogre::Real tcMul,tcMulW,tcMulP,tcMulPW,tcMulC;	// tex coord mul per unit length - road,wall,pipe,pipewall,column
 
 	Ogre::Real lenDiv0;	 // triangle dim in length

@@ -47,14 +47,6 @@ const static stWiPntW wiPntW[ciwW+1][2] = {  // section shape
 
 ///  Rebuild
 //---------------------------------------------------------
-void SplineRoad::RebuildRoad(bool full)
-{
-	rebuild = true;
-	if (full)
-		iDirtyId = -1;
-	else
-		iDirtyId = iChosen;
-}
 
 void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 {

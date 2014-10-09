@@ -125,7 +125,7 @@ void SplineRoad::UpdPointsH()
 }
 
 //  Scale selected
-void SplineRoad::ScaleSel(Real posMul)
+void SplineEdit::ScaleSel(Real posMul)
 {
 	Vector3 pos0(0,0,0);  // = getPos0() ?
 	if (iChosen != -1)  // 0 or chosen point
@@ -141,7 +141,7 @@ void SplineRoad::ScaleSel(Real posMul)
 	}
 }
 
-Vector3 SplineRoad::getPos0()
+Vector3 SplineEdit::getPos0()
 {
 	Vector3 pos0(0,0,0);
 	if (iChosen == -1)  // geom center
@@ -157,7 +157,7 @@ Vector3 SplineRoad::getPos0()
 }
 
 //  Rotate selected
-void SplineRoad::RotateSel(Real relA, Vector3 axis, int addYawRoll)
+void SplineEdit::RotateSel(Real relA, Vector3 axis, int addYawRoll)
 {
 	if (vSel.empty())  return;
 	Vector3 pos0 = getPos0();
@@ -421,6 +421,17 @@ void SplineRoad::LastPoint()
 }
 
 
+//  mark need to rebuild geometry
+void SplineEdit::RebuildRoad(bool full)
+{
+	rebuild = true;
+	if (full)
+		iDirtyId = -1;
+	else
+		iDirtyId = iChosen;
+}
+
+
 //  modify, controls+-
 //--------------------------------------------------------------------------------------
 void SplineRoad::AddChkR(Real relR, bool dontCheckR)    ///  ChkR
@@ -462,7 +473,7 @@ void SplineRoad::AddBoxH(Real rel)
 	vStBoxDim.y = std::max(5.f, vStBoxDim.y + rel);
 }
 
-void SplineRoad::AddWidth(Real relW)    ///  Width
+void SplineEdit::AddWidth(Real relW)    ///  Width
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
@@ -477,7 +488,7 @@ void SplineRoad::AddWidth(Real relW)    ///  Width
 	RebuildRoad();
 }
 
-void SplineRoad::AddYaw(Real relA, Real snapA, bool alt)    ///  Yaw
+void SplineEdit::AddYaw(Real relA, Real snapA, bool alt)    ///  Yaw
 {	
 	if (!vSel.empty()) {  // rotate sel
 		RotateSel(snapA==0.f ? relA : (relA > 0.f ? snapA : -snapA),
@@ -493,7 +504,7 @@ void SplineRoad::AddYaw(Real relA, Real snapA, bool alt)    ///  Yaw
 	RebuildRoad();
 }
 
-void SplineRoad::AddRoll(Real relA, Real snapA, bool alt)   ///  Roll
+void SplineEdit::AddRoll(Real relA, Real snapA, bool alt)   ///  Roll
 {
 	if (!vSel.empty()) {  // scale sel
 		ScaleSel(relA * 0.02f);
