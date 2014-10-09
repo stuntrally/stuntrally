@@ -49,7 +49,7 @@ struct RoadSeg
 enum eIns{  INS_Begin, INS_Cur, INS_CurPre, INS_End  };
 
 
-class SplineRoad : public SplineEdit
+class SplineRoad : public SplineMarkEd
 {
 public:
 	#ifdef SR_EDITOR
@@ -64,32 +64,34 @@ public:
 
 	///  Main
 	//   call this first at init
-	void Setup(Ogre::String sMarkerMeshFile, Ogre::Real scale,
-		Ogre::Terrain* terrain, Ogre::SceneManager* sceneMgr,  Ogre::Camera* camera);
 	bool LoadFile(Ogre::String fname, bool build=true), SaveFile(Ogre::String fname);
 	
 	//  Rebuild
 	void RebuildRoadInt(bool editorAlign=false, bool edBulletFull=false);
 	void Destroy(), DestroyRoad(), DestroySeg(int id);
 
+
 	//  Update
-	void UpdLodVis(/*Camera* pCam,*/ float fBias=1.f, bool bFull=false), SetForRnd(Ogre::String sMtr),UnsetForRnd();
-	void Pick(Ogre::Camera* mCamera, Ogre::Real mx, Ogre::Real my,  bool bRay=true, bool bAddH=false, bool bHide=false);
-	void ToggleMerge(), SetChecks();
+	void UpdLodVis(/*Camera* pCam,*/ float fBias=1.f, bool bFull=false);
+	void SetForRnd(Ogre::String sMtr),UnsetForRnd();
+
+	void Pick(Ogre::Camera* mCamera, Ogre::Real mx, Ogre::Real my,
+			bool bRay=true, bool bAddH=false, bool bHide=false);
+	void ToggleMerge();
 
 
-	//  Manipulate  -------
-	void Insert(eIns ins), Delete();
+	//  Insert  -------
+	void Insert(eIns ins);
+	void Delete(), DelSel();
 
-	//  edit start
-	void AddBoxW(Ogre::Real rel),AddBoxH(Ogre::Real rel), Set1stChk();
-	const Ogre::String& getMtrStr(int seg);  bool isPipe(int seg);
-	
 	bool CopySel();
-	void Paste(bool reverse=false), DelSel();
+	void Paste(bool reverse=false);
 
-	//  util
-	void SetTerHitVis(bool visible), UpdRot();
+
+	//  other
+	const Ogre::String& getMtrStr(int seg);
+	bool isPipe(int seg);
+	
 	
 	bool bCastShadow;  // true for depth shadows
 	bool bRoadWFullCol;  // road wall full collision (all triangles, or just side)
@@ -115,46 +117,37 @@ private:
 	int at_size, at_ilBt;  bool bltTri,blendTri;  // pars for addTri
 
 
-	//  control/edit markers  -------
-	void AddMarker(Ogre::Vector3 pos), SelectMarker(bool bHide=false),
-		DelLastMarker(), UpdAllMarkers(), DestroyMarkers();
-
-	Ogre::String sMarkerMesh;  Ogre::Real fMarkerScale, fScRot,fScHit;
-
-	Ogre::SceneNode *ndSel,*ndChosen,*ndRot,*ndHit,*ndChk, *lastNdSel,*lastNdChosen;
-	Ogre::Entity* entSel,*entChs,*entRot,*entHit,*entChk;
-
-
 //  vars  -----------
-	//  setup
-	Ogre::SceneManager* mSceneMgr;
-public:
-	Ogre::Camera* mCamera;
-private:
 	friend class App;
 	friend class CGui;
+public:
+	Ogre::Vector3 posHit;  bool bHitTer;
+	float fLodBias;
 
 	//  road data Segments
 	std::deque<RoadSeg> vSegs;
+
 	//  info
 	int iMrgSegs, segsMrg,  iOldHide;
 	int iVis, iTris, idStr;
 
+///  params, from xml
+	//  materials
 	Ogre::String  sMtrPipe[MTRs];  // use SetMtrPipe to set
 	bool bMtrPipeGlass[MTRs];  // glass in mtr name
-public:
-	Ogre::Vector3 posHit;  bool bHitTer;  float fLodBias;
 
-	///  params, from xml
 	Ogre::String  sMtrRoad[MTRs], sMtrWall,sMtrWallPipe, sMtrCol;
 	void SetMtrPipe(int i, Ogre::String sMtr);
 
-	Ogre::Real tcMul,tcMulW,tcMulP,tcMulPW,tcMulC;	// tex coord mul per unit length - road,wall,pipe,pipewall,column
+
+	//  geometry  ----
+	//  tex coord multipliers (scale) per unit length - road,wall,pipe,pipewall,column
+	Ogre::Real tcMul, tcMulW, tcMulP, tcMulPW, tcMulC;
 
 	Ogre::Real lenDiv0;	 // triangle dim in length
 	int  iw0;		// width divs
 
-	Ogre::Real skirtLen,skirtH;//, skirtPipeMul;  // skirt dims (for hiding gaps)
+	Ogre::Real skirtLen, skirtH;  //, skirtPipeMul;  // skirt dims (for hiding gaps)
 
 	Ogre::Real setMrgLen;  // length below which segments are merged
 	bool bMerge;
@@ -162,22 +155,19 @@ public:
 
 	int  colN;		// column regular polygon sides
 	Ogre::Real colR;		// column radius
-	Ogre::Real ilPmul,iwPmul;	 // length,width steps multiplier for pipe
+	Ogre::Real ilPmul, iwPmul;	 // length,width steps multipliers for pipe
 
-	struct stats  //  for info
+
+	//  stats  ----
+	struct stats  // for info only
 	{
 		Ogre::Real Length, WidthAvg, HeightDiff;
 		Ogre::Real OnTer, Pipes, OnPipe;
 		Ogre::Real bankAvg, bankMax;  // banking angle
 	} st;
 	Ogre::String  sTxtDesc;  // track description text
-	
-	std::vector<CheckSphere> mChks;  // checkpoint spheres
-	Ogre::Real chksRoadLen;   // for %, sum of all mChks[].dist (without last)
-	Ogre::Vector3 vStBoxDim;  // start/finish box half dimensions
-	int iDir;  // -1 or +1  if road points go +/-1 with car start orientation
-	int iChkId1,iChkId1Rev;   // 1st chekpoint index (and for reversed) for mChks[]
+
 
 	// params for editor tool: align terrain to road
-	float edWadd,edWmul;  // const added width and width multipler for whole road
+	float edWadd, edWmul;  // const added width and width multipler for whole road
 };

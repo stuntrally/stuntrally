@@ -86,65 +86,6 @@ int SplineEdit::GetSelCnt()
 }
 
 
-///  Pick marker
-//---------------------------------------------------------------------------------------------------------------
-void SplineRoad::Pick(Camera* mCamera, Real mx, Real my,  bool bRay, bool bAddH, bool bHide)
-{
-	iSelPoint = -1;
-	//if (vMarkNodes.size() != getNumPoints())
-	//	return;  // assert
-	
-	Ray ray = mCamera->getCameraToViewportRay(mx,my);  // 0..1
-	const Vector3& pos = mCamera->getDerivedPosition(), dir = ray.getDirection();
-	const Plane& pl = mCamera->getFrustumPlane(FRUSTUM_PLANE_NEAR);
-	Real plDist = FLT_MAX;
-	const Real sphR = 2.4f;  //par
-
-	for (int i=0; i < (int)getNumPoints(); ++i)
-	{
-		// ray to sphere dist
-		const Vector3& posSph = getPos(i);
-		const Vector3 ps = pos - posSph;
-		Vector3 crs = ps.crossProduct(dir);
-		Real dist = crs.length() / dir.length();
-		// dist to camera
-		Real plD = pl.getDistance(posSph);
-
-		if (dist < sphR &&
-			plD > 0 && plD < plDist)
-		{
-			plDist = plD;
-			iSelPoint = i;
-		}
-	}
-	
-	SelectMarker(bHide);
-	//  hide/show all markers
-	int iHide = bHide ? 1 : 0;
-	if (iHide != iOldHide)
-	{	iOldHide = iHide;
-		for (size_t i=0; i < vMarkNodes.size(); ++i)
-			vMarkNodes[i]->setVisible(bAddH);
-	}
-	
-	//  ray terrain hit pos
-	if (bRay && ndHit && mTerrain)
-	{
-		std::pair<bool, Vector3> p = mTerrain->rayIntersects(ray);
-		bHitTer = p.first;  //ndHit->setVisible(bHitTer);
-		posHit = p.second;
-		
-		if (bHitTer)
-		{
-			Vector3 pos = posHit;
-			//if (iChosen == -1)  // for new
-			if (!newP.onTer && bAddH)
-				pos.y = newP.pos.y;
-			ndHit->setPosition(pos);
-		}
-	}
-}
-
 
 //  Move point
 ///-------------------------------------------------------------------------------------
@@ -291,148 +232,6 @@ void SplineEdit::MirrorSel(bool alt)
 		}
 	}
 	recalcTangents();
-	Rebuild(true);
-}
-
-
-///  Add point
-///-------------------------------------------------------------------------------------
-void SplineRoad::Insert(eIns ins)
-{
-	RoadSeg rs;  SplinePoint pt = newP;  // new
-	pt.chk1st = false;  // clear 1st chk
-	
-	if (pt.onTer)
-		pt.pos.y = getTerH(pt.pos) + fHeight;
-
-	if (ins	== INS_Begin)
-		iChosen = -1;
-
-	if (ins == INS_End)  // end
-	{
-		mP.push_back(pt);  //recalcTangents();
-		vSegs.push_back(rs);
-		iChosen = getNumPoints()-1;  //sel last
-	}
-	else if (iChosen == -1)  // begin  or none sel
-	{
-		mP.push_front(pt);
-		vSegs.push_front(rs);  //recalcTangents();
-	}
-	else  // middle
-	{
-		mP.insert(mP.begin()+iChosen+1, pt);
-		vSegs.insert(vSegs.begin()+iChosen+1, rs);
-		if (ins == INS_Cur)  // INS_CurPre
-			iChosen++;
-	}
-	recalcTangents();
-
-	AddMarker(pt.pos);
-	if (ins	!= INS_End)
-		UpdAllMarkers();/**/
-	Rebuild(/*true*/);
-}
-
-///  Delete point
-///-------------------------------------------------------------------------------------
-void SplineRoad::Delete()
-{
-	if (iChosen == -1)  return;
-	bool last = (iChosen == getNumPoints()-1);
-
-	// remove from sel all ?.
-	vSel.erase(getNumPoints()-1);
-
-	DestroySeg(iChosen);
-	DelLastMarker();/**/
-	lastNdChosen = 0;
-
-	if (last)	mP.pop_back();
-	else		mP.erase(mP.begin() + iChosen);
-	if (last)	vSegs.pop_back();
-	else		vSegs.erase(vSegs.begin() + iChosen);
-	
-	if (iChosen >= getNumPoints())
-		iChosen = getNumPoints()-1;
-	//iChosen = -1;  // cancel sel-
-	
-	recalcTangents();
-	UpdAllMarkers();
-	Rebuild(/*true*/);
-}
-
-
-//  hit pos
-void SplineRoad::SetTerHitVis(bool visible)
-{
-	if (ndHit)
-		ndHit->setVisible(visible);
-}
-
-
-///  selection copy, paste, delete
-//--------------------------------------------------------------------------------------
-
-std::deque<SplinePoint> SplineRoad::mPc;  // copy points
-
-bool SplineRoad::CopySel()
-{
-	if (vSel.empty())  return false;
-	
-	mPc.clear();
-	for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
-		mPc.push_back(mP[*it]);
-	return true;
-}
-
-void SplineRoad::Paste(bool reverse)
-{
-	if (!bHitTer || iChosen==-1 || mPc.size()==0)  return;
-	
-	Vector3 c(0,0,0);  // center of sel points
-	for (int i=0; i < mPc.size(); ++i)
-		c += mPc[i].pos;
-	c *= 1.f / Real(mPc.size());
-	c.y = 0.f;  //c xz only
-
-	vSel.clear();
-	for (int i=0; i < mPc.size(); ++i)
-	{
-		newP = mPc[i];  // [!reverse ? i : mPc.size()-1-i];
-		newP.pos += posHit - c;  // move center to hit pos
-		Insert(INS_Cur/*INS_CurPre*/);
-		vSel.insert(iChosen);  // select just inserted
-	}
-	if (reverse)  // rot 180
-		RotateSel(180, Vector3::UNIT_Y, 1);
-	Rebuild(true);
-}
-
-void SplineRoad::DelSel()
-{
-	if (vSel.empty())  return;
-	for (std::set<int>::reverse_iterator it = vSel.rbegin(); it != vSel.rend(); ++it)
-	{
-		iChosen = *it;
-		//Delete();
-		bool last = (iChosen == getNumPoints()-1);
-
-		DestroySeg(iChosen);
-		DelLastMarker();/**/
-		lastNdChosen = 0;
-
-		if (last)	mP.pop_back();
-		else		mP.erase(mP.begin() + iChosen);
-		if (last)	vSegs.pop_back();
-		else		vSegs.erase(vSegs.begin() + iChosen);
-	}
-	if (iChosen >= getNumPoints())
-		iChosen = getNumPoints()-1;
-	vSel.clear();
-	
-	recalcTangents();
-	UpdAllMarkers();
 	Rebuild(true);
 }
 
@@ -602,57 +401,6 @@ void SplineEdit::AngZero()   ///  Angles set 0
 }
 
 
-//  Checkpoints
-//--------------------------------------------------------------------------------------
-void SplineEdit::AddChkR(Real relR, bool dontCheckR)    ///  ChkR
-{
-	int seg = iChosen;
-	if (seg == -1)  return;
-	mP[seg].chkR = std::max(0.f, mP[seg].chkR + relR);
-	if (dontCheckR)  return;
-
-	//  disallow between 0..1
-	if (relR < 0.f && mP[seg].chkR < 1.f)
-		mP[seg].chkR = 0.f;
-	else
-	if (relR > 0.f && mP[seg].chkR < 1.f)
-		mP[seg].chkR = 1.f;
-	
-	//  max radius  (or const on bridges or pipes)
-	int all = getNumPoints();
-	if (all < 2)  return;
-	int next = (seg+1) % all, prev = (seg-1+all) % all;
-	bool bridge = !mP[seg].onTer || !mP[next].onTer || !mP[prev].onTer;
-	bool pipe = mP[seg].pipe > 0.5f;  // || mP[next].pipe > 0.5f || mP[prev].pipe > 0.5f;
-
-	Real maxR = pipe ? 1.7f : bridge ? 1.f : 2.5f;
-	if (bridge || pipe)
-	{	if (relR > 0.f)  mP[seg].chkR = maxR;  else
-		if (relR < 0.f)  mP[seg].chkR = 0.f;
-	}else
-	if (relR > 0.f && mP[seg].chkR > maxR)
-		mP[seg].chkR = maxR;
-}
-
-void SplineRoad::AddBoxW(Real rel)
-{
-	vStBoxDim.z = std::max(6.f, vStBoxDim.z + rel);
-}
-void SplineRoad::AddBoxH(Real rel)
-{
-	vStBoxDim.y = std::max(5.f, vStBoxDim.y + rel);
-}
-
-void SplineRoad::Set1stChk()
-{
-	if (iChosen < 0 || iChosen >= getNumPoints())  return;
-	if (mP[iChosen].chkR < 0.5f)  return;
-
-	for (int i=0; i < getNumPoints(); ++i)  // clear from all
-		mP[i].chk1st = false;
-	mP[iChosen].chk1st = true;  // set this
-}
-
 //  util
 bool SplineRoad::isPipe(int seg)
 {
@@ -673,4 +421,204 @@ const String& SplineRoad::getMtrStr(int seg)
 	int i = mP[seg].idMtr;
 	if (i < 0)  return sHid;
 	return !isPipe(seg) ? sMtrRoad[i] : sMtrPipe[i];
+}
+
+void SplineRoad::SetMtrPipe(int i, Ogre::String sMtr)
+{
+	sMtrPipe[i] = sMtr;  // check if glass in mtr name
+	bMtrPipeGlass[i] = strstr(sMtr.c_str(), "lass") != 0;
+}
+
+
+///  Add point
+///-------------------------------------------------------------------------------------
+void SplineRoad::Insert(eIns ins)
+{
+	RoadSeg rs;  SplinePoint pt = newP;  // new
+	pt.chk1st = false;  // clear 1st chk
+	
+	if (pt.onTer)
+		pt.pos.y = getTerH(pt.pos) + fHeight;
+
+	if (ins	== INS_Begin)
+		iChosen = -1;
+
+	if (ins == INS_End)  // end
+	{
+		mP.push_back(pt);  //recalcTangents();
+		vSegs.push_back(rs);
+		iChosen = getNumPoints()-1;  //sel last
+	}
+	else if (iChosen == -1)  // begin  or none sel
+	{
+		mP.push_front(pt);
+		vSegs.push_front(rs);  //recalcTangents();
+	}
+	else  // middle
+	{
+		mP.insert(mP.begin()+iChosen+1, pt);
+		vSegs.insert(vSegs.begin()+iChosen+1, rs);
+		if (ins == INS_Cur)  // INS_CurPre
+			iChosen++;
+	}
+	recalcTangents();
+
+	AddMarker(pt.pos);
+	if (ins	!= INS_End)
+		UpdAllMarkers();/**/
+	Rebuild(/*true*/);
+}
+
+///  Delete point
+///-------------------------------------------------------------------------------------
+void SplineRoad::Delete()
+{
+	if (iChosen == -1)  return;
+	bool last = (iChosen == getNumPoints()-1);
+
+	// remove from sel all ?.
+	vSel.erase(getNumPoints()-1);
+
+	DestroySeg(iChosen);
+	DelLastMarker();/**/
+	lastNdChosen = 0;
+
+	if (last)	mP.pop_back();
+	else		mP.erase(mP.begin() + iChosen);
+	if (last)	vSegs.pop_back();
+	else		vSegs.erase(vSegs.begin() + iChosen);
+	
+	if (iChosen >= getNumPoints())
+		iChosen = getNumPoints()-1;
+	//iChosen = -1;  // cancel sel-
+	
+	recalcTangents();
+	UpdAllMarkers();
+	Rebuild(/*true*/);
+}
+
+
+///  selection copy, paste, delete
+//--------------------------------------------------------------------------------------
+
+std::deque<SplinePoint> SplineRoad::mPc;  // copy points
+
+bool SplineRoad::CopySel()
+{
+	if (vSel.empty())  return false;
+	
+	mPc.clear();
+	for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
+		mPc.push_back(mP[*it]);
+	return true;
+}
+
+void SplineRoad::Paste(bool reverse)
+{
+	if (!bHitTer || iChosen==-1 || mPc.size()==0)  return;
+	
+	Vector3 c(0,0,0);  // center of sel points
+	for (int i=0; i < mPc.size(); ++i)
+		c += mPc[i].pos;
+	c *= 1.f / Real(mPc.size());
+	c.y = 0.f;  //c xz only
+
+	vSel.clear();
+	for (int i=0; i < mPc.size(); ++i)
+	{
+		newP = mPc[i];  // [!reverse ? i : mPc.size()-1-i];
+		newP.pos += posHit - c;  // move center to hit pos
+		Insert(INS_Cur/*INS_CurPre*/);
+		vSel.insert(iChosen);  // select just inserted
+	}
+	if (reverse)  // rot 180
+		RotateSel(180, Vector3::UNIT_Y, 1);
+	Rebuild(true);
+}
+
+void SplineRoad::DelSel()
+{
+	if (vSel.empty())  return;
+	for (std::set<int>::reverse_iterator it = vSel.rbegin(); it != vSel.rend(); ++it)
+	{
+		iChosen = *it;
+		//Delete();
+		bool last = (iChosen == getNumPoints()-1);
+
+		DestroySeg(iChosen);
+		DelLastMarker();/**/
+		lastNdChosen = 0;
+
+		if (last)	mP.pop_back();
+		else		mP.erase(mP.begin() + iChosen);
+		if (last)	vSegs.pop_back();
+		else		vSegs.erase(vSegs.begin() + iChosen);
+	}
+	if (iChosen >= getNumPoints())
+		iChosen = getNumPoints()-1;
+	vSel.clear();
+	
+	recalcTangents();
+	UpdAllMarkers();
+	Rebuild(true);
+}
+
+
+///  Pick marker
+//---------------------------------------------------------------------------------------------------------------
+void SplineRoad::Pick(Camera* mCamera, Real mx, Real my,  bool bRay, bool bAddH, bool bHide)
+{
+	iSelPoint = -1;
+	//if (vMarkNodes.size() != getNumPoints())
+	//	return;  // assert
+	
+	Ray ray = mCamera->getCameraToViewportRay(mx,my);  // 0..1
+	const Vector3& pos = mCamera->getDerivedPosition(), dir = ray.getDirection();
+	const Plane& pl = mCamera->getFrustumPlane(FRUSTUM_PLANE_NEAR);
+	Real plDist = FLT_MAX;
+	const Real sphR = 2.4f;  //par
+
+	for (int i=0; i < (int)getNumPoints(); ++i)
+	{
+		// ray to sphere dist
+		const Vector3& posSph = getPos(i);
+		const Vector3 ps = pos - posSph;
+		Vector3 crs = ps.crossProduct(dir);
+		Real dist = crs.length() / dir.length();
+		// dist to camera
+		Real plD = pl.getDistance(posSph);
+
+		if (dist < sphR &&
+			plD > 0 && plD < plDist)
+		{
+			plDist = plD;
+			iSelPoint = i;
+		}
+	}
+	
+	SelectMarker(bHide);
+	//  hide/show all markers
+	int iHide = bHide ? 1 : 0;
+	if (iHide != iOldHide)
+	{	iOldHide = iHide;
+		for (size_t i=0; i < vMarkNodes.size(); ++i)
+			vMarkNodes[i]->setVisible(bAddH);
+	}
+	
+	//  ray terrain hit pos
+	if (bRay && ndHit && mTerrain)
+	{
+		std::pair<bool, Vector3> p = mTerrain->rayIntersects(ray);
+		bHitTer = p.first;  //ndHit->setVisible(bHitTer);
+		posHit = p.second;
+		
+		if (bHitTer)
+		{
+			Vector3 pos = posHit;
+			//if (iChosen == -1)  // for new
+			if (!newP.onTer && bAddH)
+				pos.y = newP.pos.y;
+			ndHit->setPosition(pos);
+		}
+	}
 }

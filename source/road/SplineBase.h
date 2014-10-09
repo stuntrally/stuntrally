@@ -160,8 +160,7 @@ public:
 	void ToggleOnTerrain(), ToggleColumns();
 	void ToggleOnPipe(), ToggleLoopChk();  // on chosen
 
-	void AddChkR(Ogre::Real relR, bool dontCheckR=false);
-	void ChgMtrId(int relId);
+	void ChgMtrId(int relId);  // next
 	void ChgAngType(int relId), AngZero();
 
 
@@ -204,4 +203,72 @@ protected:
 	Ogre::Real fHeight;	 ///geom  above terrain  ?for each point-
 
 	std::vector<Ogre::SceneNode*> vMarkNodes;  // markers
+};
+
+
+//--------------------------------------------------------------------------------------
+//  Spline EditChk,  with checkpoints and car start
+//--------------------------------------------------------------------------------------
+
+class SplineEditChk : public SplineEdit
+{
+public:
+	SplineEditChk()
+		:chksRoadLen(1.f)
+		,iDir(0), iChkId1(0), iChkId1Rev(0)
+	{	}
+
+	void SetChecks();  // Init
+
+	//  edit chks
+	void AddChkR(Ogre::Real relR, bool dontCheckR=false);  // change radius
+	void AddBoxW(Ogre::Real rel), AddBoxH(Ogre::Real rel);  // start dim
+	void Set1stChk();
+
+
+//  checkpoint spheres  ----
+	std::vector<CheckSphere> mChks;
+	Ogre::Vector3 vStBoxDim;   // start/finish box, half dimensions
+
+	int iDir;     // -1 or +1  if road points go +/-1 with car start orientation
+	int iChkId1, iChkId1Rev;   // 1st chekpoint index (and for reversed) for mChks[]
+
+	Ogre::Real chksRoadLen;    // for %, sum of all mChks[].dist (without last)
+};
+
+
+//--------------------------------------------------------------------------------------
+//  Spline MarkEd,  with Markers (spheres)
+//--------------------------------------------------------------------------------------
+
+class SplineMarkEd : public SplineEditChk
+{
+public:
+	SplineMarkEd();
+
+	//  Setup, call this on Init
+	void Setup(Ogre::String sMarkerMeshFile, Ogre::Real scale,
+		Ogre::Terrain* terrain, Ogre::SceneManager* sceneMgr,  Ogre::Camera* camera);
+	
+	void createMarker(Ogre::String name, Ogre::String mat,
+					Ogre::Entity*& ent, Ogre::SceneNode*& nd);
+
+	//  control markers  -------
+	void AddMarker(Ogre::Vector3 pos), SelectMarker(bool bHide=false);
+	void DelLastMarker(), UpdAllMarkers(), DestroyMarkers();
+	//  util
+	void SetTerHitVis(bool visible), UpdRot();
+
+
+//  ogre vars
+	Ogre::SceneManager* mSceneMgr;
+	Ogre::Camera* mCamera;
+
+	//  setup vars
+	Ogre::String sMarkerMesh;
+	Ogre::Real fMarkerScale, fScRot,fScHit;  // scale
+
+	Ogre::SceneNode *ndSel,*ndChosen,*ndRot,*ndHit,*ndChk,
+		*lastNdSel,*lastNdChosen;
+	Ogre::Entity* entSel,*entChs,*entRot,*entHit,*entChk;
 };
