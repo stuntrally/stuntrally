@@ -81,6 +81,9 @@ public:
 	void Insert(eIns ins), Delete();
 
 	///  change point
+	inline Ogre::Real getTerH(const Ogre::Vector3& p)
+	{	return mTerrain ? mTerrain->getHeightAtWorldPosition(p.x, 0.f, p.z) : 0.f;  }
+	
 	void Move1(int id, Ogre::Vector3 relPos), Move(Ogre::Vector3 relPos);  Ogre::Vector3 getPos0();
 	void RotateSel(Ogre::Real relA, Ogre::Vector3 axis, int addYawRoll);
 	void Scale1(int id, Ogre::Real posMul, Ogre::Real hMul), ScaleSel(Ogre::Real posMul);
