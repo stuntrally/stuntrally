@@ -18,8 +18,7 @@
 #include <OgreMeshManager.h>
 #include <OgreEntity.h>
 using namespace Ogre;
-using namespace std;
-using std::vector;
+using std::vector;  using std::min;  using std::max;
 
 #ifdef SR_EDITOR
 #define LogR(a)  //LogO(String("~ Road  ") + a);
@@ -52,31 +51,18 @@ const static stWiPntW wiPntW[ciwW+1][2] = {  // section shape
 
 void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 {
+	using std::vector;  using std::min;  using std::max;
+
 	if (!rebuild && !(editorAlign || bulletFull))  return;
 	rebuild = false;
 
-
-	//  segments range
-	int segs = getNumPoints();
-	if (segs == 0 || segs == 1)  return;
-	using std::vector;  using std::min;  using std::max;
-
 	UpdRot(); //
+
+
+	DataRoad DR(editorAlign,bulletFull);
 	
-	if (vSegs.size() != segs || editorAlign || bulletFull)
-		iDirtyId = -1;  // force full
-		
-	int sMin = 0, sMax = segs;
-	//  update 4 segs only (fast)
-	if (iDirtyId != -1 && segs >= 4)
-	{
-		sMin = iDirtyId-2;
-		sMax = iDirtyId+2;
-		if (!isLooped)
-			sMin = std::max(0, sMin);
-	}
-	if (!isLooped)  // 1 seg less
-		sMax = std::min(segs-1, sMax);
+	PrepassRange(DR);
+	
 	
 	//  full rebuild
 	Ogre::Timer ti;	
@@ -84,7 +70,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	if (iDirtyId == -1)
 	{
 		DestroyRoad();
-		for (int seg=0; seg < segs; ++seg)
+		for (int seg=0; seg < DR.segs; ++seg)
 		{
 			RoadSeg rs;  rs.empty = true;
 			vSegs.push_back(rs);
@@ -92,26 +78,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	}
 
 
-	///  Auto angles prepass ...
-	if (segs > 2)
-	for (int seg=0; seg < segs; ++seg)
-	{
-		int seg0 = getPrev(seg);
-				
-		if (mP[seg].aType == AT_Manual)
-		{	mP[seg].aYaw = mP[seg].mYaw;  mP[seg].aRoll = mP[seg].mRoll;  }
-		else
-		{	mP[seg].aRoll = 0.f;
-			/// ... roll getangle?, +180 loops?, len
-			const Real dist = 0.1f;
-			Vector3 vl = GetLenDir(seg, 0.f, dist) + GetLenDir(seg0, 1.f-dist, 1.f);  //vl.normalise();
-			Vector3 vw = Vector3(vl.z, 0.f, -vl.x);  //vw.normalise();
-			mP[seg].aYaw = TerUtil::GetAngle(vw.x, vw.z) *180.f/PI_d;
-
-			if (mP[seg].aType == AT_Both)
-			{	mP[seg].aYaw += mP[seg].mYaw;  mP[seg].aRoll += mP[seg].mRoll;  }	
-		}
-	}
+	//  Auto angles
+	PrepassAngles(DR);
 
 
 	///--------------------------------------------------------------------------------------------------------------------------
@@ -120,23 +88,14 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 	DataLod0 DL0;
 
-	const int ciLodDivs[LODs] = {1,2,4,8};
-
 	for (int lod = 0; lod < LODs; ++lod)
 	{
-		int iLodDiv = ciLodDivs[lod];
-		Real fLenDim = fLenDim0 * iLodDiv;
 		LogR("LOD: "+toStr(lod)+" ---");
 
 		DataLod DL;
 		StatsLod ST;
 
-		bool isLod0 = lod == 0;
-		
-		PrepassLod(DL0,DL,ST,
-			fLenDim,
-			iLodDiv, isLod0,
-			editorAlign);
+		PrepassLod(DR,DL0,DL,ST, lod, editorAlign);
 
 		//#  stats  at lod0, whole road
 		bool stats = lod == 0 && iDirtyId == -1;
@@ -161,13 +120,13 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		int iLmrg = 0, iLmrgW = 0, iLmrgC = 0, iLmrgB = 0;
 		Vector3 vlOld;
 
-		int sNum = sMax - sMin, segM = sMin;//, sNumO = sNum;
+		int sNum = DR.sMax - DR.sMin, segM = DR.sMin;//, sNumO = sNum;
 		while (sNum > 0)
 		{
-			int seg = (segM + segs) % segs;  // iterator
+			int seg = (segM + DR.segs) % DR.segs;  // iterator
 			int seg1 = getNext(seg), seg0 = getPrev(seg);
 			
-			//if (lod == 0)
+			//if (isLod0)
 			//LogR("[Seg]  cur: " + toStr(seg) + "/" + toStr(sNumO) + "  all:" + toStr(segs));/**/
 
 			//  on terrain  (whole seg)
@@ -179,8 +138,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 			if (bMerge)
 			{
-				bNew = (segM == sMin/*1st*/)	|| DL.vbSegMrg[seg];
-				bNxt = (segM+1 == sMax/*last*/) || DL.vbSegMrg[seg1];  // next is new
+				bNew = (segM == DR.sMin/*1st*/)	|| DL.vbSegMrg[seg];
+				bNxt = (segM+1 == DR.sMax/*last*/) || DL.vbSegMrg[seg1];  // next is new
 			}
 			
 			if (bNew)  //> new seg data
@@ -201,7 +160,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 			///  destroy old
 			RoadSeg& rs = vSegs[seg];
-			if (!rs.empty && lod == 0)
+			if (!rs.empty && DL.isLod0)
 				DestroySeg(seg);
 
 
@@ -335,7 +294,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 						if (onTer1)  //  onTerrain
 						{
 							vP.y = yTer + fHeight * ((w==0 || w==iw) ? 0.15f : 1.f);
-							vN = mTerrain ? TerUtil::GetNormalAt(mTerrain, vP.x, vP.z, fLenDim*0.5f /*0.5f*/) : Vector3::UNIT_Y;
+							vN = mTerrain ? TerUtil::GetNormalAt(mTerrain,
+								vP.x, vP.z, DL.fLenDim*0.5f /*0.5f*/) : Vector3::UNIT_Y;
 						}
 					}else
 					{	///  pipe (_)
@@ -379,7 +339,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					if (w==w1)  vH1 = vP;
 				}
 				//#  stats  banking angle
-				if (lod==0 && i==0)
+				if (DL.isLod0 && i==0)
 				{
 					float h = (vH0.y - vH1.y), w = vH0.distance(vH1), d = fabs(h/w), a = asin(d)*180.f/PI_d;
 					ST.bankAvg += a;
@@ -461,7 +421,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			
 
 			//  lod vis points
-			if (lod == 0)
+			if (DL.isLod0)
 			{	int lps = max(2, (int)(DL.vSegLen[seg] / lposLen));
 
 				for (int p=0; p <= lps; ++p)
@@ -562,7 +522,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					meshW = MeshManager::getSingleton().createManual(sMeshW,"General");
 					meshW->createSubMesh();
 				}
-				bool cols = !posC.empty() && lod == 0;  // cols have no lods
+				bool cols = !posC.empty() && DL.isLod0;  // cols have no lods
 				if (cols)
 				{
 					meshC = MeshManager::getSingleton().createManual(sMeshC,"General");
@@ -679,7 +639,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				rs.road[lod].ent = ent;		rs.wall[lod].ent = entW;	 rs.blend[lod].ent = entB;
 				rs.road[lod].mesh = mesh;	rs.wall[lod].mesh = meshW;	 rs.blend[lod].mesh = meshB;
 				rs.road[lod].smesh = sMesh; rs.wall[lod].smesh = sMeshW; rs.blend[lod].smesh = sMeshB;
-				if (lod==0)  {
+				if (DL.isLod0)  {
 					rs.col.node = nodeC;
 					rs.col.ent = entC;
 					rs.col.mesh = meshC;
@@ -687,7 +647,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				rs.empty = false;  // new
 
 				//  copy lod points
-				if (lod == 0)
+				if (DL.isLod0)
 				{	for (size_t p=0; p < posLod.size(); ++p)
 						rs.lpos.push_back(posLod[p]);
 					posLod.clear();
@@ -702,7 +662,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 				///  bullet trimesh  at lod 0
 				///------------------------------------------------------------------------------------
-				if (lod == 0 && blt)
+				if (DL.isLod0 && blt)
 				{
 					btTriangleMesh* trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
 					#define vToBlt(v)  btVector3(v.x, -v.z, v.y)
@@ -792,7 +752,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		if (stats)
 		{
 			st.HeightDiff = max(0.f, ST.stMaxH - ST.stMinH);
-			st.bankAvg = ST.bankAvg / segs;
+			st.bankAvg = ST.bankAvg / DR.segs;
 			st.bankMax = ST.bankMax;
 			//LogO("RD bank angle:  avg "+fToStr(st.bankAvg,1,3)+"  max "+fToStr(st.bankMax,1,3));
 		}
@@ -835,17 +795,71 @@ void SplineRoad::addTri(int f1, int f2, int f3, int i)
 }
 
 
-///  segment data pre pass
 //---------------------------------------------------------------------------------------
-void SplineRoad::PrepassLod(DataLod0& DL0, DataLod& DL, StatsLod& ST,
-	Real fLenDim,
-	int iLodDiv, bool isLod0, bool editorAlign)
+void SplineRoad::PrepassRange(DataRoad& DR)
 {
-	int segs = getNumPoints();
+	//  segments range
+	DR.segs = getNumPoints();
+	if (DR.segs == 0 || DR.segs == 1)  return;
+
+	
+	if (vSegs.size() != DR.segs || DR.editorAlign || DR.bulletFull)
+		iDirtyId = -1;  // force full
 		
-	//if (lod==0)?
-	LogR("--- seg prepass ---");
-	for (int seg=0; seg < segs; ++seg)
+	DR.sMin = 0;  DR.sMax = DR.segs;
+	//  update 4 segs only (fast)
+	if (iDirtyId != -1 && DR.segs >= 4)
+	{
+		DR.sMin = iDirtyId-2;
+		DR.sMax = iDirtyId+2;
+		if (!isLooped)
+			DR.sMin = std::max(0, DR.sMin);
+	}
+	if (!isLooped)  // 1 seg less
+		DR.sMax = std::min(DR.segs-1, DR.sMax);
+}
+
+///  Auto angles prepass ...
+//---------------------------------------------------------------------------------------
+void SplineRoad::PrepassAngles(DataRoad& DR)
+{
+	if (DR.segs > 2)
+	for (int seg=0; seg < DR.segs; ++seg)
+	{
+		int seg0 = getPrev(seg);
+				
+		if (mP[seg].aType == AT_Manual)
+		{	mP[seg].aYaw = mP[seg].mYaw;  mP[seg].aRoll = mP[seg].mRoll;  }
+		else
+		{	mP[seg].aRoll = 0.f;
+			/// ... roll getangle?, +180 loops?, len
+			const Real dist = 0.1f;
+			Vector3 vl = GetLenDir(seg, 0.f, dist) + GetLenDir(seg0, 1.f-dist, 1.f);  //vl.normalise();
+			Vector3 vw = Vector3(vl.z, 0.f, -vl.x);  //vw.normalise();
+			mP[seg].aYaw = TerUtil::GetAngle(vw.x, vw.z) *180.f/PI_d;
+
+			if (mP[seg].aType == AT_Both)
+			{	mP[seg].aYaw += mP[seg].mYaw;  mP[seg].aRoll += mP[seg].mRoll;  }	
+		}
+	}
+}
+
+///  Prepass LOD,  data for segments
+//---------------------------------------------------------------------------------------
+const int ciLodDivs[LODs] = {1,2,4,8};
+
+void SplineRoad::PrepassLod(
+	const DataRoad& DR,
+	DataLod0& DL0, DataLod& DL, StatsLod& ST,
+	int lod, bool editorAlign)
+{
+	int iLodDiv = ciLodDivs[lod];
+	DL.isLod0 = lod == 0;
+	DL.fLenDim = fLenDim0 * iLodDiv;
+		
+	//if (isLod0)?
+	LogR("--- Lod segs prepass ---");
+	for (int seg=0; seg < DR.segs; ++seg)
 	{
 		int seg1 = getNext(seg), seg0 = getPrev(seg);
 
@@ -863,7 +877,7 @@ void SplineRoad::PrepassLod(DataLod0& DL0, DataLod& DL, StatsLod& ST,
 
 		//  length steps  |
 		Real len = GetSegLen(seg);
-		int  il = int(len / fLenDim) / iwl * iwl + iwl;
+		int  il = int(len / DL.fLenDim) / iwl * iwl + iwl;
 		Real lenAdd = 1.f / il;
 		
 		DL.viL.push_back(il);
@@ -899,7 +913,7 @@ void SplineRoad::PrepassLod(DataLod0& DL0, DataLod& DL, StatsLod& ST,
 		
 		LogR("seg "+toStr(seg)+"  iw "+toStr(iw)+"  il "+toStr(il)+"  pp "+toStr(sp));
 		
-		if (isLod0)
+		if (DL.isLod0)
 			DL0.viLSteps0.push_back(il);
 
 
@@ -915,7 +929,7 @@ void SplineRoad::PrepassLod(DataLod0& DL0, DataLod& DL, StatsLod& ST,
 			vw = GetRot(ay,ar);  // from angles
 			
 		///  normal <dir>  /
-		if (isLod0)
+		if (DL.isLod0)
 		{	Vector3 vn = vl.crossProduct(vw);  vn.normalise();
 			//if (vn.y < 0.f)  vn = -vn;  // always up y+
 			DL0.vnSeg0.push_back(vn);
@@ -943,13 +957,13 @@ void SplineRoad::PrepassLod(DataLod0& DL0, DataLod& DL, StatsLod& ST,
 			l += lenAdd;  DL.tcLen += vl.length();
 		}
 		DL.vSegTc.push_back(DL.tcLen);
-		if (isLod0)
+		if (DL.isLod0)
 			DL0.vSegTc0.push_back(DL.tcLen);
 	}
 
 	
 	LogR("--- seg prepass2  viwLS  ---");
-	for (int seg=0; seg < segs; ++seg)
+	for (int seg=0; seg < DR.segs; ++seg)
 	{
 		int seg1 = getNext(seg);
 		int il = DL.viL[seg];

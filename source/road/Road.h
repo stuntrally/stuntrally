@@ -117,6 +117,22 @@ private:
 	///  ***  Rebuild Geom DATA  ***
 	//---------------------------------------------------------------------------------------
 	
+	struct DataRoad  // global
+	{
+		int segs;       // count
+		int sMin,sMax;  // range
+		
+		bool editorAlign, bulletFull;  // ed,options
+		
+		DataRoad(bool edAlign, bool bltFull)
+			:editorAlign(edAlign), bulletFull(bltFull)
+			,segs(2),sMin(0),sMax(1)  //-
+		{	}
+	};
+
+	void PrepassRange(DataRoad& DR);
+	void PrepassAngles(DataRoad& DR);
+
 	struct DataLod0  // at Lod 0
 	{
 		vec<int> viLSteps0;
@@ -137,9 +153,14 @@ private:
 		Ogre::Real tcLen;      // total tex coord length u
 		Ogre::Real sumLenMrg;  // total length to determine merging
 		int mrgCnt;            // stats, merges counter
+
+		int lod, iLodDiv;  //.
+		Ogre::Real fLenDim;
+		bool isLod0;
 		
 		DataLod()
 			:tcLen(0.f), sumLenMrg(0.f), mrgCnt(0)
+			,lod(0), iLodDiv(1), fLenDim(1.f), isLod0(true)  //-
 		{	}
 	};
 	
@@ -157,10 +178,9 @@ private:
 	};
 	
 	void PrepassLod(
+		const DataRoad& DR,
 		DataLod0& DL0, DataLod& DT, StatsLod& ST,
-		Ogre::Real fLenDim,
-		int iLodDiv, bool isLod0,
-		bool editorAlign);
+		int lod, bool editorAlign);
 
 	
 	//---------------------------------------------------------------------------------------
