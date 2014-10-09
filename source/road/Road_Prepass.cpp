@@ -83,7 +83,9 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 		while (sNum > 0)
 		{
-			BuildSeg(DR,DL0,DL,ST,DLM, segM);
+			DataSeg DS;
+			
+			BuildSeg(DR,DL0,DL,ST,DLM, DS, segM);
 			
 			--sNum;  ++segM;  // next
 		}

@@ -42,21 +42,23 @@ const static stWiPntW wiPntW[ciwW+1][2] = {  // section shape
 
 
 //  Build Segment Geometry
-//-----------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------
 void SplineRoad::BuildSeg(
 	const DataRoad& DR,
 	DataLod0& DL0, DataLod& DL, StatsLod& ST,
 	DataLodMesh& DLM,
+	DataSeg& DS,
 	int segM)
 {
 	int seg = (segM + DR.segs) % DR.segs;  // iterator
 	int seg1 = getNext(seg), seg0 = getPrev(seg);
+	/**/DS.seg = seg;  DS.seg1 = seg1;  DS.seg0 = seg0;
 	
 	//if (isLod0)
 	//LogR("[Seg]  cur: " + toStr(seg) + "/" + toStr(sNumO) + "  all:" + toStr(segs));/**/
 
 	//  on terrain  (whole seg)
-	bool onTer = mP[seg].onTer && mP[seg1].onTer;
+	DS.onTer = mP[seg].onTer && mP[seg1].onTer;
 	
 	// on merging segs only for game in whole road rebuild
 	// off for editor (partial, 4segs rebuild)
@@ -85,21 +87,23 @@ void SplineRoad::BuildSeg(
 
 
 	//  material
-	int mid = mP[seg].idMtr, mtrId = max(0,mid);
-	bool pipe = isPipe(seg);
-	rs.sMtrRd = pipe ? sMtrPipe[mtrId] : (sMtrRoad[mtrId] + (onTer ? "_ter" :""));
+	int mid = mP[seg].idMtr;
+	DS.mtrId = max(0,mid);
+	DS.pipe = isPipe(seg);
+	rs.sMtrRd = DS.pipe ? sMtrPipe[DS.mtrId]
+						: (sMtrRoad[DS.mtrId] + (DS.onTer ? "_ter" :""));
 
 	/// >  blend 2 materials
-	bool hasBlend = false;
-	if (mid != mP[seg1].idMtr && !pipe && !isPipe(seg1))
+	DS.hasBlend = false;
+	if (mid != mP[seg1].idMtr && !DS.pipe && !isPipe(seg1))
 	{
-		hasBlend = true;
+		DS.hasBlend = true;
 		int mtrB = max(0,mP[seg1].idMtr);
-		rs.sMtrB = sMtrRoad[mtrB] + (onTer ? "_ter" :"");
+		rs.sMtrB = sMtrRoad[mtrB] + (DS.onTer ? "_ter" :"");
 	}
 	
 	//  skirt /\ not for bridges
-	bool useSkirt = onTer || pipe;  // pipe own factor..
+	bool useSkirt = DS.onTer || DS.pipe;  // pipe own factor..
 	Real skLen = useSkirt ? g_SkirtLen : 0.f, skH = useSkirt ? g_SkirtH : 0.f;
 	
 	
@@ -124,7 +128,7 @@ void SplineRoad::BuildSeg(
 	while (ar21 > asw)  ar21 -= 2*asw;	while (ar21 <-asw)  ar21 += 2*asw;
 
 	//  tc begin,range
-	Real tcBeg = (seg > 0) ? DL.vSegTc[seg-1]       : 0.f,  tcEnd  = DL.vSegTc[seg],        tcRng  = tcEnd - tcBeg;
+	Real tcBeg = (seg > 0) ? DL.vSegTc[seg-1]  : 0.f,  tcEnd  = DL.vSegTc[seg],   tcRng  = tcEnd - tcBeg;
 	Real tcBeg0= (seg > 0) ? DL0.vSegTc0[seg-1]: 0.f,  tcEnd0 = DL0.vSegTc0[seg], tcRng0 = tcEnd0 - tcBeg0;
 	Real tcRmul = tcRng0 / tcRng;
 	
@@ -167,7 +171,7 @@ void SplineRoad::BuildSeg(
 		vw *= wiMul;
 
 		//  on terrain ~~
-		bool onTer1 = onTer || mP[seg].onTer && i==0 || mP[seg1].onTer && i==il;
+		bool onTer1 = DS.onTer || mP[seg].onTer && i==0 || mP[seg1].onTer && i==il;
 
 		///  normal <dir>  /
 		Vector3 vn = vl.crossProduct(vw);  vn.normalise();
@@ -188,16 +192,16 @@ void SplineRoad::BuildSeg(
 		Real trp = (p1 == 0.f) ? 1.f - l01 : l01;
 		//LogR("   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw)
 		//	/*+(bNew?"  New ":"") +(bNxt?"  Nxt ":"")/**/);
-		if (hasBlend)
+		if (DS.hasBlend)
 			++DLM.iLmrgB;
 		
 		///  road ~    Width  vertices
-		//-----------------------------------------------------------------------------------------------------------------
+		//--------------------------------------------------------------------------------------------
 		Vector3 vH0, vH1;  //#  positions for bank angle
-		int w0 = pipe ? iw/4   : 0,
-			w1 = pipe ? iw*3/4 : iw;
+		int w0 = DS.pipe ? iw/4   : 0,
+			w1 = DS.pipe ? iw*3/4 : iw;
 
-		Real tcL = tc * (pipe ? g_tcMulP : g_tcMul);
+		Real tcL = tc * (DS.pipe ? g_tcMulP : g_tcMul);
 		for (int w=0; w <= iw; ++w)  // width +1
 		{
 			//  pos create
@@ -244,7 +248,7 @@ void SplineRoad::BuildSeg(
 			//>  data road
 			DLM.pos.push_back(vP);   DLM.norm.push_back(vN);
 			DLM.tcs.push_back(vtc);  DLM.clr.push_back(c);
-			if (hasBlend)
+			if (DS.hasBlend)
 			{	// alpha, transition
 				c.z = std::max(0.f, std::min(1.f, float(i)/il ));  //rand()%1000/1000.f;
 				DLM.posB.push_back(vP);   DLM.normB.push_back(vN);
@@ -271,10 +275,10 @@ void SplineRoad::BuildSeg(
 		//------------------------------------------------------------------------------------
 		Real uv = 0.f;  // tc long
 
-		if (!onTer)
+		if (!DS.onTer)
 		if (i >= 0 && i <= il)  // length +1
 		{	++DLM.iLmrgW;
-			Real tcLW = tc * (pipe ? g_tcMulPW : g_tcMulW);
+			Real tcLW = tc * (DS.pipe ? g_tcMulPW : g_tcMulW);
 			for (int w=0; w <= ciwW; ++w)  // width +1
 			{
 				int pp = (p1 > 0.f || p2 > 0.f) ? 1 : 0;  //  pipe wall
@@ -296,7 +300,7 @@ void SplineRoad::BuildSeg(
 		
 		///  columns |
 		//------------------------------------------------------------------------------------
-		if (!onTer && mP[seg].cols > 0)
+		if (!DS.onTer && mP[seg].cols > 0)
 		if (i == il/2)  // middle-
 		{	++DLM.iLmrgC;
 			const Real r = g_ColRadius;  // column radius
@@ -350,220 +354,14 @@ void SplineRoad::BuildSeg(
 	}
 
 
-	//---------------------------------------------------------------------------------------------------------
 	///  create mesh  indices
-	//---------------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
 	blendTri = false;
 	if (bNxt && !DLM.pos.empty())  /*Merging*/
 	{
-		String sEnd = toStr(idStr);  ++idStr;
-		String sMesh = "rd.mesh." + sEnd, sMeshW = sMesh + "W", sMeshC = sMesh + "C", sMeshB = sMesh + "B";
+		bltTri = blt;  blendTri = DS.hasBlend;
 
-		posBt.clear();
-		idx.clear();  // set for addTri
-		idxB.clear();
-		at_pos = &DLM.pos;  at_size = DLM.pos.size();  at_ilBt = DLM.iLmrg-2;
-		bltTri = blt;  blendTri = hasBlend;
-		
-		///  road ~
-		int iiw = 0;  //LogR( " __idx");
-
-		//  equal width steps
-		if (DL.viwEq[seg]==1)
-			for (int i = 0; i < DLM.iLmrg-1; ++i)  // length-1 +2gap
-			{
-				int iw = DL.viW[seg];  // grid  w-1 x l-1 x2 tris
-				for (int w=0; w < iw; ++w)  // width-1
-				{
-					//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
-					int f0 = iiw + w, f1 = f0 + (iw+1);
-					addTri(f0+0,f1+1,f0+1,i);
-					addTri(f0+0,f1+0,f1+1,i);
-				}
-				iiw += iw+1;
-			}
-		else
-			//  pipe, diff width_
-			for (int i = 0; i < DLM.iLmrg-1; ++i)  // length-1 +2gap
-			{
-				int iw = DL.viwLS[seg][i], iw1 = DL.viwLS[seg][i+1];
-				int sw = iw1 < iw ? 1 : 0;
-				//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
-				
-				//int w=0;  // test fans
-				for (int w=0; w < iw -sw; ++w)  // width-1
-				{
-					int f0 = iiw + w, f1 = f0 + (iw+1);
-					//  |\ |  f0+0  f0+1
-					//  | \|  f1+0  f1+1
-					if (sw==0) {
-						addTri(f0+0,f1+1,f0+1,i);
-						addTri(f0+0,f1+0,f1+1,i);  }
-					else {  // |/|
-						addTri(f0+0,f1+0,f0+1,i);
-						addTri(f0+1,f1+0,f1+1,i);  }
-				}
-
-				///>>>  fix gaps when iw changes - fan tris
-				int ma = iw1 - iw, ms = -ma, m;
-				for (m=0; m < ma; ++m)
-				{
-					int f0 = iiw + iw-1, f1 = f0 + (iw+2)+m;
-					addTri(f0+1,f1+0,f1+1,i);
-				}
-				for (m=0; m < ms; ++m)
-				{
-					int f0 = iiw + iw-sw -m, f1 = f0 + (iw+1);
-					addTri(f0+0,f1+0,f0+1,i);
-				}
-				iiw += iw + 1;
-			}
-		vSegs[seg].nTri[DL.lod] = idx.size()/3;
-		blendTri = false;
-
-
-		//  create Ogre Mesh
-		//-----------------------------------------
-		MeshPtr meshOld = MeshManager::getSingleton().getByName(sMesh);
-		if (!meshOld.isNull())  LogR("Mesh exists !!!" + sMesh);
-
-		AxisAlignedBox aabox;
-		MeshPtr mesh = MeshManager::getSingleton().createManual(sMesh,"General");
-		SubMesh* sm = mesh->createSubMesh();
-		
-		CreateMesh(sm, aabox, DLM.pos,DLM.norm,DLM.clr,DLM.tcs, idx, rs.sMtrRd);
-
-		MeshPtr meshW, meshC, meshB;  // ] | >
-		bool wall = !DLM.posW.empty();
-		if (wall)
-		{
-			meshW = MeshManager::getSingleton().createManual(sMeshW,"General");
-			meshW->createSubMesh();
-		}
-		bool cols = !DLM.posC.empty() && DL.isLod0;  // cols have no lods
-		if (cols)
-		{
-			meshC = MeshManager::getSingleton().createManual(sMeshC,"General");
-			meshC->createSubMesh();
-		}
-		if (hasBlend)
-		{
-			meshB = MeshManager::getSingleton().createManual(sMeshB,"General");
-			sm = meshB->createSubMesh();
-			CreateMesh(sm, aabox, DLM.posB,DLM.normB,DLM.clrB,DLM.tcsB, idxB, rs.sMtrB);
-		}
-		//*=*/wall = 0;  cols = 0;  // test
-
-
-		///  wall ]
-		//------------------------------------------------------------------------------------
-		bool jfw0 = !mP[seg].onTer  && mP[seg0].idMtr < 0;  // jump front wall, ends in air
-		bool jfw1 = !mP[seg1].onTer && mP[seg1].idMtr < 0;
-		bool pipeGlass = pipe && bMtrPipeGlass[ mP[seg].idMtr ];  // pipe glass mtr
-		if (wall)
-		{
-			idx.clear();
-			for (int i = 0; i < DLM.iLmrgW-1; ++i)  // length
-			{	int iiW = i* (ciwW+1);
-
-				for (int w=0; w < ciwW; ++w)  // width
-				{
-					int f0 = iiW + w, f1 = f0 + (ciwW+1);
-					idx.push_back(f0+1);  idx.push_back(f1+1);  idx.push_back(f0+0);
-					idx.push_back(f1+1);  idx.push_back(f1+0);  idx.push_back(f0+0);
-				}
-			}
-			
-			//  front plates start,end  |_|  not in pipes
-			int i,f, b = DLM.posW.size()-ciwW-1;
-			if (!pipe)
-			{
-				int ff = jfw0 ? 6 : 4;
-				for (f=0; f < ff; ++f)
-					for (i=0; i<=2; ++i)  idx.push_back( WFid[f][i] );
-				
-				ff = jfw1 ? 6 : 4;
-				for (f=0; f < ff; ++f)
-					for (i=0; i<=2; ++i)  idx.push_back( WFid[f][2-i]+b );
-
-				vSegs[seg].nTri[DL.lod] += idx.size()/3;
-			}
-			
-			sm = meshW->getSubMesh(0);   // for glass only..
-			rs.sMtrWall = !pipeGlass ? sMtrWall : sMtrWallPipe;
-			if (!DLM.posW.empty())
-				CreateMesh(sm, aabox, DLM.posW,DLM.normW,DLM.clr0,DLM.tcsW, idx, rs.sMtrWall);
-		}
-		
-		
-		///  columns |
-		//------------------------------------------------------------------------------------
-		if (cols)
-		{
-			idx.clear();
-			at_pos = &DLM.posC;
-
-			for (int l=0; l < DLM.iLmrgC; ++l)
-			for (int w=0; w < iwC; ++w)
-			{
-				int f0 = w + l*(iwC+1)*2, f1 = f0 + iwC+1;
-				addTri(f0+0, f1+1, f0+1, 1);
-				addTri(f0+0, f1+0, f1+1, 1);
-			}					
-			vSegs[seg].nTri[DL.lod] += idx.size()/3;
-
-			sm = meshC->getSubMesh(0);
-			//if (!posC.empty())
-			CreateMesh(sm, aabox, DLM.posC,DLM.normC,DLM.clr0,DLM.tcsC, idx, sMtrCol);
-		}
-		
-						
-		//  add Mesh to Scene  -----------------------------------------
-		Entity* ent = 0, *entW = 0, *entC = 0, *entB = 0;
-		SceneNode* node = 0, *nodeW = 0, *nodeC = 0, *nodeB = 0;
-
-		AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
-		if (pipeGlass)
-		{
-			//ent->setCastShadows(true);
-			ent->setRenderQueueGroup(RQG_PipeGlass);
-		}else
-			ent->setRenderQueueGroup(RQG_Road);
-
-		if (wall /*&& !posW.empty()*/)
-		{
-			AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
-			entW->setCastShadows(true);  // only cast
-		}
-		if (cols /*&& !posC.empty()*/)
-		{
-			AddMesh(meshC, sMeshC, aabox, &entC, &nodeC, "C."+sEnd);
-			entC->setVisible(true);
-			if (bCastShadow)
-				entC->setCastShadows(true);
-		}
-		if (hasBlend)
-		{
-			AddMesh(meshB, sMeshB, aabox, &entB, &nodeB, "B."+sEnd);
-			entB->setRenderQueueGroup(RQG_RoadBlend);
-		}
-
-		if (bCastShadow && !onTer)
-			ent->setCastShadows(true);
-
-		
-		//>>  store ogre data  ------------
-		int lod = DL.lod;
-		rs.road[lod].node = node;	rs.wall[lod].node = nodeW;	 rs.blend[lod].node = nodeB;
-		rs.road[lod].ent = ent;		rs.wall[lod].ent = entW;	 rs.blend[lod].ent = entB;
-		rs.road[lod].mesh = mesh;	rs.wall[lod].mesh = meshW;	 rs.blend[lod].mesh = meshB;
-		rs.road[lod].smesh = sMesh; rs.wall[lod].smesh = sMeshW; rs.blend[lod].smesh = sMeshB;
-		if (DL.isLod0)  {
-			rs.col.node = nodeC;
-			rs.col.ent = entC;
-			rs.col.mesh = meshC;
-			rs.col.smesh = sMeshC;  }
-		rs.empty = false;  // new
+		createSeg_Meshes(DL,DLM, DS, rs);
 
 		//  copy lod points
 		if (DL.isLod0)
@@ -579,86 +377,315 @@ void SplineRoad::BuildSeg(
 		}
 
 
-		///  bullet trimesh  at lod 0
-		///------------------------------------------------------------------------------------
+		//  bullet trimesh  at lod 0
 		if (DL.isLod0 && blt)
-		{
-			btTriangleMesh* trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
-			#define vToBlt(v)  btVector3(v.x, -v.z, v.y)
-			#define addTriB(a,b,c)  trimesh->addTriangle(vToBlt(a), vToBlt(b), vToBlt(c))
-
-			size_t si = posBt.size(), a=0;  // %3!
-			for (size_t i=0; i < si/3; ++i,a+=3)
-				addTriB(posBt[a], posBt[a+1], posBt[a+2]);
-
-			// if (cols)  // add columns^..
-			
-			//  Road  ~
-			btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
-			size_t su = (pipe ? SU_Pipe : SU_Road) + mtrId;
-			shape->setUserPointer((void*)su);  // mark as road/pipe + mtrId
-			shape->setMargin(0.01f);  //?
-			
-			btCollisionObject* bco = new btCollisionObject();
-			btTransform tr;  tr.setIdentity();  //tr.setOrigin(pc);
-			bco->setActivationState(DISABLE_SIMULATION);
-			bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
-			bco->setFriction(0.8f);   //+
-			bco->setRestitution(0.f);
-			bco->setCollisionFlags(bco->getCollisionFlags() |
-				btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
-			#ifdef SR_EDITOR
-				pApp->world->addCollisionObject(bco);
-				bco->setUserPointer((void*)111);  // mark road
-			#else
-				pGame->collision.world->addCollisionObject(bco);
-				pGame->collision.shapes.push_back(shape);
-			#endif
-			
-			//  Wall  ]
-			#ifndef SR_EDITOR  // in Game
-			if (wall)
-			{	trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
-				
-				for (int i = 0; i < DLM.iLmrgW-1; ++i)  // length
-				{	int iiW = i* (ciwW+1);
-
-					for (int w=0; w < ciwW; ++w)  // width
-					if (bRoadWFullCol || w==0 || w == ciwW-1)  // only 2 sides|_| optym+
-					{
-						int f0 = iiW + w, f1 = f0 + (ciwW+1);
-						addTriB(DLM.posW[f0+0], DLM.posW[f1+1], DLM.posW[f0+1]);
-						addTriB(DLM.posW[f0+0], DLM.posW[f1+0], DLM.posW[f1+1]);
-					}
-				}
-				//  front plates start,end  |_|
-				int f, b = DLM.posW.size()-ciwW-1;
-				if (!pipe)
-				{
-					int ff = jfw0 ? 6 : 4;
-					for (f=0; f < ff; ++f)
-						addTriB(DLM.posW[WFid[f][0]], DLM.posW[WFid[f][1]], DLM.posW[WFid[f][2]]);
-
-					ff = jfw1 ? 6 : 4;
-					for (f=0; f < ff; ++f)
-						addTriB(DLM.posW[WFid[f][2]+b], DLM.posW[WFid[f][1]+b], DLM.posW[WFid[f][0]+b]);
-				}
-				
-				btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
-				shape->setUserPointer((void*)SU_RoadWall);  //wall and column same object..
-				
-				btCollisionObject* bco = new btCollisionObject();
-				bco->setActivationState(DISABLE_SIMULATION);
-				bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
-				bco->setFriction(0.1f);   //+
-				bco->setRestitution(0.f);
-				bco->setCollisionFlags(bco->getCollisionFlags() |
-					btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
-				pGame->collision.world->addCollisionObject(bco);
-				pGame->collision.shapes.push_back(shape);
-			}
-			#endif
-		}
+			createSeg_Collision(DLM,DS);
 
 	}/*bNxt Merging*/
+}
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------
+void SplineRoad::createSeg_Meshes(
+	DataLod& DL,
+	DataLodMesh& DLM,
+	DataSeg& DS,
+	RoadSeg& rs)
+{
+	String sEnd = toStr(idStr);  ++idStr;
+	String sMesh = "rd.mesh." + sEnd, sMeshW = sMesh + "W", sMeshC = sMesh + "C", sMeshB = sMesh + "B";
+
+	posBt.clear();
+	idx.clear();  // set for addTri
+	idxB.clear();
+	at_pos = &DLM.pos;  at_size = DLM.pos.size();  at_ilBt = DLM.iLmrg-2;
+	int seg = DS.seg, seg1 = DS.seg1, seg0 = DS.seg0;
+	
+	///  road ~
+	int iiw = 0;  //LogR( " __idx");
+
+	//  equal width steps
+	if (DL.viwEq[seg]==1)
+		for (int i = 0; i < DLM.iLmrg-1; ++i)  // length-1 +2gap
+		{
+			int iw = DL.viW[seg];  // grid  w-1 x l-1 x2 tris
+			for (int w=0; w < iw; ++w)  // width-1
+			{
+				//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
+				int f0 = iiw + w, f1 = f0 + (iw+1);
+				addTri(f0+0,f1+1,f0+1,i);
+				addTri(f0+0,f1+0,f1+1,i);
+			}
+			iiw += iw+1;
+		}
+	else
+		//  pipe, diff width_
+		for (int i = 0; i < DLM.iLmrg-1; ++i)  // length-1 +2gap
+		{
+			int iw = DL.viwLS[seg][i], iw1 = DL.viwLS[seg][i+1];
+			int sw = iw1 < iw ? 1 : 0;
+			//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
+			
+			//int w=0;  // test fans
+			for (int w=0; w < iw -sw; ++w)  // width-1
+			{
+				int f0 = iiw + w, f1 = f0 + (iw+1);
+				//  |\ |  f0+0  f0+1
+				//  | \|  f1+0  f1+1
+				if (sw==0) {
+					addTri(f0+0,f1+1,f0+1,i);
+					addTri(f0+0,f1+0,f1+1,i);  }
+				else {  // |/|
+					addTri(f0+0,f1+0,f0+1,i);
+					addTri(f0+1,f1+0,f1+1,i);  }
+			}
+
+			///>>>  fix gaps when iw changes - fan tris
+			int ma = iw1 - iw, ms = -ma, m;
+			for (m=0; m < ma; ++m)
+			{
+				int f0 = iiw + iw-1, f1 = f0 + (iw+2)+m;
+				addTri(f0+1,f1+0,f1+1,i);
+			}
+			for (m=0; m < ms; ++m)
+			{
+				int f0 = iiw + iw-sw -m, f1 = f0 + (iw+1);
+				addTri(f0+0,f1+0,f0+1,i);
+			}
+			iiw += iw + 1;
+		}
+	vSegs[seg].nTri[DL.lod] = idx.size()/3;
+	blendTri = false;
+
+
+	//  create Ogre Mesh
+	//-----------------------------------------
+	MeshPtr meshOld = MeshManager::getSingleton().getByName(sMesh);
+	if (!meshOld.isNull())  LogR("Mesh exists !!!" + sMesh);
+
+	AxisAlignedBox aabox;
+	MeshPtr mesh = MeshManager::getSingleton().createManual(sMesh,"General");
+	SubMesh* sm = mesh->createSubMesh();
+	
+	CreateMesh(sm, aabox, DLM.pos,DLM.norm,DLM.clr,DLM.tcs, idx, rs.sMtrRd);
+
+	MeshPtr meshW, meshC, meshB;  // ] | >
+	bool wall = !DLM.posW.empty();
+	if (wall)
+	{
+		meshW = MeshManager::getSingleton().createManual(sMeshW,"General");
+		meshW->createSubMesh();
+	}
+	bool cols = !DLM.posC.empty() && DL.isLod0;  // cols have no lods
+	if (cols)
+	{
+		meshC = MeshManager::getSingleton().createManual(sMeshC,"General");
+		meshC->createSubMesh();
+	}
+	if (DS.hasBlend)
+	{
+		meshB = MeshManager::getSingleton().createManual(sMeshB,"General");
+		sm = meshB->createSubMesh();
+		CreateMesh(sm, aabox, DLM.posB,DLM.normB,DLM.clrB,DLM.tcsB, idxB, rs.sMtrB);
+	}
+	//*=*/wall = 0;  cols = 0;  // test
+
+
+	///  wall ]
+	//------------------------------------------------------------------------------------
+	DS.jfw0 = !mP[seg].onTer  && mP[seg0].idMtr < 0;  // jump front wall, ends in air
+	DS.jfw1 = !mP[seg1].onTer && mP[seg1].idMtr < 0;
+	bool pipeGlass = DS.pipe && bMtrPipeGlass[ mP[seg].idMtr ];  // pipe glass mtr
+	if (wall)
+	{
+		idx.clear();
+		for (int i = 0; i < DLM.iLmrgW-1; ++i)  // length
+		{	int iiW = i* (ciwW+1);
+
+			for (int w=0; w < ciwW; ++w)  // width
+			{
+				int f0 = iiW + w, f1 = f0 + (ciwW+1);
+				idx.push_back(f0+1);  idx.push_back(f1+1);  idx.push_back(f0+0);
+				idx.push_back(f1+1);  idx.push_back(f1+0);  idx.push_back(f0+0);
+			}
+		}
+		
+		//  front plates start,end  |_|  not in pipes
+		int i,f, b = DLM.posW.size()-ciwW-1;
+		if (!DS.pipe)
+		{
+			int ff = DS.jfw0 ? 6 : 4;
+			for (f=0; f < ff; ++f)
+				for (i=0; i<=2; ++i)  idx.push_back( WFid[f][i] );
+			
+			ff = DS.jfw1 ? 6 : 4;
+			for (f=0; f < ff; ++f)
+				for (i=0; i<=2; ++i)  idx.push_back( WFid[f][2-i]+b );
+
+			vSegs[seg].nTri[DL.lod] += idx.size()/3;
+		}
+		
+		sm = meshW->getSubMesh(0);   // for glass only..
+		rs.sMtrWall = !pipeGlass ? sMtrWall : sMtrWallPipe;
+		if (!DLM.posW.empty())
+			CreateMesh(sm, aabox, DLM.posW,DLM.normW,DLM.clr0,DLM.tcsW, idx, rs.sMtrWall);
+	}
+	
+	
+	///  columns |
+	//------------------------------------------------------------------------------------
+	const int iwC = g_ColNSides;
+	if (cols)
+	{
+		idx.clear();
+		at_pos = &DLM.posC;
+
+		for (int l=0; l < DLM.iLmrgC; ++l)
+		for (int w=0; w < iwC; ++w)
+		{
+			int f0 = w + l*(iwC+1)*2, f1 = f0 + iwC+1;
+			addTri(f0+0, f1+1, f0+1, 1);
+			addTri(f0+0, f1+0, f1+1, 1);
+		}					
+		vSegs[DS.seg].nTri[DL.lod] += idx.size()/3;
+
+		sm = meshC->getSubMesh(0);
+		//if (!posC.empty())
+		CreateMesh(sm, aabox, DLM.posC,DLM.normC,DLM.clr0,DLM.tcsC, idx, sMtrCol);
+	}
+	
+					
+	//  add Mesh to Scene  -----------------------------------------
+	Entity* ent = 0, *entW = 0, *entC = 0, *entB = 0;
+	SceneNode* node = 0, *nodeW = 0, *nodeC = 0, *nodeB = 0;
+
+	AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
+	if (pipeGlass)
+	{
+		//ent->setCastShadows(true);
+		ent->setRenderQueueGroup(RQG_PipeGlass);
+	}else
+		ent->setRenderQueueGroup(RQG_Road);
+
+	if (wall)
+	{
+		AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
+		entW->setCastShadows(true);  // only cast
+	}
+	if (cols /*&& !posC.empty()*/)
+	{
+		AddMesh(meshC, sMeshC, aabox, &entC, &nodeC, "C."+sEnd);
+		entC->setVisible(true);
+		if (bCastShadow)
+			entC->setCastShadows(true);
+	}
+	if (DS.hasBlend)
+	{
+		AddMesh(meshB, sMeshB, aabox, &entB, &nodeB, "B."+sEnd);
+		entB->setRenderQueueGroup(RQG_RoadBlend);
+	}
+
+	if (bCastShadow && !DS.onTer)
+		ent->setCastShadows(true);
+
+	
+	//>>  store ogre data  ------------
+	int lod = DL.lod;
+	rs.road[lod].node = node;	rs.wall[lod].node = nodeW;	 rs.blend[lod].node = nodeB;
+	rs.road[lod].ent = ent;		rs.wall[lod].ent = entW;	 rs.blend[lod].ent = entB;
+	rs.road[lod].mesh = mesh;	rs.wall[lod].mesh = meshW;	 rs.blend[lod].mesh = meshB;
+	rs.road[lod].smesh = sMesh; rs.wall[lod].smesh = sMeshW; rs.blend[lod].smesh = sMeshB;
+	if (DL.isLod0)  {
+		rs.col.node = nodeC;
+		rs.col.ent = entC;
+		rs.col.mesh = meshC;
+		rs.col.smesh = sMeshC;  }
+	rs.empty = false;  // new
+}
+
+
+//  Create Bullet Collision
+//----------------------------------------------------------------------------------------------------------------------------
+void SplineRoad::createSeg_Collision(
+	const DataLodMesh& DLM,
+	DataSeg& DS)
+{
+	btTriangleMesh* trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
+	#define vToBlt(v)  btVector3(v.x, -v.z, v.y)
+	#define addTriB(a,b,c)  trimesh->addTriangle(vToBlt(a), vToBlt(b), vToBlt(c))
+
+	size_t si = posBt.size(), a=0;  // %3!
+	for (size_t i=0; i < si/3; ++i,a+=3)
+		addTriB(posBt[a], posBt[a+1], posBt[a+2]);
+
+	// if (cols)  // add columns^..
+	
+	//  Road  ~
+	btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
+	size_t su = (DS.pipe ? SU_Pipe : SU_Road) + DS.mtrId;
+	shape->setUserPointer((void*)su);  // mark as road/pipe + mtrId
+	shape->setMargin(0.01f);  //?
+	
+	btCollisionObject* bco = new btCollisionObject();
+	btTransform tr;  tr.setIdentity();  //tr.setOrigin(pc);
+	bco->setActivationState(DISABLE_SIMULATION);
+	bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
+	bco->setFriction(0.8f);   //+
+	bco->setRestitution(0.f);
+	bco->setCollisionFlags(bco->getCollisionFlags() |
+		btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
+	#ifdef SR_EDITOR
+		pApp->world->addCollisionObject(bco);
+		bco->setUserPointer((void*)111);  // mark road
+	#else
+		pGame->collision.world->addCollisionObject(bco);
+		pGame->collision.shapes.push_back(shape);
+	#endif
+
+	
+	//  Wall  ]
+	#ifndef SR_EDITOR  // in Game
+	bool wall = !DLM.posW.empty();
+	if (wall)
+	{	trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
+		
+		for (int i = 0; i < DLM.iLmrgW-1; ++i)  // length
+		{	int iiW = i* (ciwW+1);
+
+			for (int w=0; w < ciwW; ++w)  // width
+			if (bRoadWFullCol || w==0 || w == ciwW-1)  // only 2 sides|_| optym+
+			{
+				int f0 = iiW + w, f1 = f0 + (ciwW+1);
+				addTriB(DLM.posW[f0+0], DLM.posW[f1+1], DLM.posW[f0+1]);
+				addTriB(DLM.posW[f0+0], DLM.posW[f1+0], DLM.posW[f1+1]);
+			}
+		}
+		//  front plates start,end  |_|
+		int f, b = DLM.posW.size()-ciwW-1;
+		if (!DS.pipe)
+		{
+			int ff = DS.jfw0 ? 6 : 4;
+			for (f=0; f < ff; ++f)
+				addTriB(DLM.posW[WFid[f][0]], DLM.posW[WFid[f][1]], DLM.posW[WFid[f][2]]);
+
+			ff = DS.jfw1 ? 6 : 4;
+			for (f=0; f < ff; ++f)
+				addTriB(DLM.posW[WFid[f][2]+b], DLM.posW[WFid[f][1]+b], DLM.posW[WFid[f][0]+b]);
+		}
+		
+		btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
+		shape->setUserPointer((void*)SU_RoadWall);  //wall and column same object..
+		
+		btCollisionObject* bco = new btCollisionObject();
+		bco->setActivationState(DISABLE_SIMULATION);
+		bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
+		bco->setFriction(0.1f);   //+
+		bco->setRestitution(0.f);
+		bco->setCollisionFlags(bco->getCollisionFlags() |
+			btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
+		pGame->collision.world->addCollisionObject(bco);
+		pGame->collision.shapes.push_back(shape);
+	}
+	#endif
 }

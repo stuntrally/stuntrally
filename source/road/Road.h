@@ -212,12 +212,34 @@ private:
 		void Clear();
 	};
 	
+	struct DataSeg  // for segment
+	{
+		int seg,seg1,seg0;
+		int mtrId;
+		bool onTer;
+		bool pipe;
+		bool hasBlend;
+		int iwC;
+		bool jfw0,jfw1;  // jump front walls
+	};
 	
 	void BuildSeg(	// Build Segment Geometry
 		const DataRoad& DR,
 		DataLod0& DL0, DataLod& DL, StatsLod& ST,
 		DataLodMesh& DLM,
+		DataSeg& DS,
 		int segM);
+		
+		
+	void createSeg_Meshes(
+		DataLod& DL,
+		DataLodMesh& DLM,
+		DataSeg& DS,
+		RoadSeg& rs);
+	
+	void createSeg_Collision(
+		const DataLodMesh& DLM,
+		DataSeg& DS);
 	
 //---------------------------------------------------------------------------------------
 
