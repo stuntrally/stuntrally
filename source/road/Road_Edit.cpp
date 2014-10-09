@@ -9,6 +9,83 @@
 using namespace Ogre;
 
 
+//  choose, selection
+//--------------------------------------------------------------------------------------
+void SplineEdit::ChoosePoint()
+{
+	iChosen = iSelPoint;
+}
+void SplineEdit::CopyNewPoint()
+{
+	if (iChosen == -1)  return;
+	newP = mP[iChosen];
+}
+
+//  next
+void SplineEdit::PrevPoint()
+{
+	if (getNumPoints() != 0)
+		iChosen = (iChosen-1 + getNumPoints()) % getNumPoints();
+}
+void SplineEdit::NextPoint()
+{
+	if (getNumPoints() != 0)
+		iChosen = (iChosen+1) % getNumPoints();
+}
+
+void SplineEdit::FirstPoint()
+{
+	if (getNumPoints() != 0)
+		iChosen = 0;
+}
+void SplineEdit::LastPoint()
+{
+	if (getNumPoints() != 0)
+		iChosen = getNumPoints()-1;
+}
+
+
+//  mark need to rebuild geometry
+void SplineEdit::Rebuild(bool full)
+{
+	rebuild = true;
+	if (full)
+		iDirtyId = -1;
+	else
+		iDirtyId = iChosen;
+}
+
+
+//  add/rem  select
+void SplineEdit::SelAddPoint()
+{
+	int id = -1;
+	if (iChosen   != -1)  id = iChosen;  else
+	if (iSelPoint != -1)  id = iSelPoint;
+	if (id != -1)
+	{
+		if (vSel.find(id) == vSel.end())
+			vSel.insert(id);
+		else
+			vSel.erase(id);
+	}
+}
+void SplineEdit::SelClear()
+{
+	vSel.clear();
+}
+void SplineEdit::SelAll()
+{
+	vSel.clear();
+	for (size_t i=0; i < mP.size(); ++i)
+		vSel.insert(i);
+}
+int SplineEdit::GetSelCnt()
+{
+	return vSel.size();
+}
+
+
 ///  Pick marker
 //---------------------------------------------------------------------------------------------------------------
 void SplineRoad::Pick(Camera* mCamera, Real mx, Real my,  bool bRay, bool bAddH, bool bHide)
@@ -110,6 +187,7 @@ void SplineEdit::Scale1(int id, Real posMul, Real hMul)
 	vMarkNodes[id]->setPosition(pos);  // upd marker
 }
 
+
 //  Update Points onTer
 void SplineEdit::UpdPointsH()
 {
@@ -122,6 +200,25 @@ void SplineEdit::UpdPointsH()
 		}
 		vMarkNodes[id]->setPosition(pos);  // upd marker
 	}
+}
+
+
+///  Edit Selected
+///-------------------------------------------------------------------------------------
+
+Vector3 SplineEdit::getPos0()
+{
+	Vector3 pos0(0,0,0);
+	if (iChosen == -1)  // geom center
+	{
+		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
+			pos0 += getPos(*it);
+		pos0 /= Real(vSel.size());
+	}
+	else  // or chosen point
+		pos0 = getPos(iChosen);
+		
+	return pos0;
 }
 
 //  Scale selected
@@ -139,21 +236,6 @@ void SplineEdit::ScaleSel(Real posMul)
 		setPos(id, pos);
 		vMarkNodes[id]->setPosition(pos);  // upd marker
 	}
-}
-
-Vector3 SplineEdit::getPos0()
-{
-	Vector3 pos0(0,0,0);
-	if (iChosen == -1)  // geom center
-	{
-		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
-			pos0 += getPos(*it);
-		pos0 /= Real(vSel.size());
-	}
-	else  // or chosen point
-		pos0 = getPos(iChosen);
-		
-	return pos0;
 }
 
 //  Rotate selected
@@ -189,7 +271,7 @@ void SplineEdit::RotateSel(Real relA, Vector3 axis, int addYawRoll)
 }
 
 //  Mirror selected
-void SplineRoad::MirrorSel(bool alt)
+void SplineEdit::MirrorSel(bool alt)
 {
 	if (vSel.empty())  return;
 
@@ -355,123 +437,8 @@ void SplineRoad::DelSel()
 }
 
 
-///  choose, selection
+//  Edit  modify, controls +-
 //--------------------------------------------------------------------------------------
-void SplineRoad::ChoosePoint()
-{
-	iChosen = iSelPoint;
-}
-void SplineRoad::CopyNewPoint()
-{
-	if (iChosen == -1)  return;
-	newP = mP[iChosen];
-}
-
-//  add/rem  select
-void SplineRoad::SelAddPoint()
-{
-	int id = -1;
-	if (iChosen   != -1)  id = iChosen;  else
-	if (iSelPoint != -1)  id = iSelPoint;
-	if (id != -1)
-	{
-		if (vSel.find(id) == vSel.end())
-			vSel.insert(id);
-		else
-			vSel.erase(id);
-	}
-}
-void SplineRoad::SelClear()
-{
-	vSel.clear();
-}
-void SplineRoad::SelAll()
-{
-	vSel.clear();
-	for (size_t i=0; i < mP.size(); ++i)
-		vSel.insert(i);
-}
-int SplineRoad::GetSelCnt()
-{
-	return vSel.size();
-}
-
-
-//  next
-void SplineRoad::PrevPoint()
-{
-	if (getNumPoints() != 0)
-		iChosen = (iChosen-1 + getNumPoints()) % getNumPoints();
-}
-void SplineRoad::NextPoint()
-{
-	if (getNumPoints() != 0)
-		iChosen = (iChosen+1) % getNumPoints();
-}
-
-void SplineRoad::FirstPoint()
-{
-	if (getNumPoints() != 0)
-		iChosen = 0;
-}
-void SplineRoad::LastPoint()
-{
-	if (getNumPoints() != 0)
-		iChosen = getNumPoints()-1;
-}
-
-
-//  mark need to rebuild geometry
-void SplineEdit::Rebuild(bool full)
-{
-	rebuild = true;
-	if (full)
-		iDirtyId = -1;
-	else
-		iDirtyId = iChosen;
-}
-
-
-//  modify, controls+-
-//--------------------------------------------------------------------------------------
-void SplineRoad::AddChkR(Real relR, bool dontCheckR)    ///  ChkR
-{
-	int seg = iChosen;
-	if (seg == -1)  return;
-	mP[seg].chkR = std::max(0.f, mP[seg].chkR + relR);
-	if (dontCheckR)  return;
-
-	//  disallow between 0..1
-	if (relR < 0.f && mP[seg].chkR < 1.f)
-		mP[seg].chkR = 0.f;
-	else
-	if (relR > 0.f && mP[seg].chkR < 1.f)
-		mP[seg].chkR = 1.f;
-	
-	//  max radius  (or const on bridges or pipes)
-	int all = getNumPoints();
-	if (all < 2)  return;
-	int next = (seg+1) % all, prev = (seg-1+all) % all;
-	bool bridge = !mP[seg].onTer || !mP[next].onTer || !mP[prev].onTer;
-	bool pipe = mP[seg].pipe > 0.5f;  // || mP[next].pipe > 0.5f || mP[prev].pipe > 0.5f;
-
-	Real maxR = pipe ? 1.7f : bridge ? 1.f : 2.5f;
-	if (bridge || pipe)
-	{	if (relR > 0.f)  mP[seg].chkR = maxR;  else
-		if (relR < 0.f)  mP[seg].chkR = 0.f;
-	}else
-	if (relR > 0.f && mP[seg].chkR > maxR)
-		mP[seg].chkR = maxR;
-}
-
-void SplineRoad::AddBoxW(Real rel)
-{
-	vStBoxDim.z = std::max(6.f, vStBoxDim.z + rel);
-}
-void SplineRoad::AddBoxH(Real rel)
-{
-	vStBoxDim.y = std::max(5.f, vStBoxDim.y + rel);
-}
 
 void SplineEdit::AddWidth(Real relW)    ///  Width
 {
@@ -519,8 +486,24 @@ void SplineEdit::AddRoll(Real relA, Real snapA, bool alt)   ///  Roll
 	Rebuild();
 }
 
+void SplineEdit::AddPipe(Real relP)    ///  Pipe
+{
+	if (!vSel.empty()) {  // sel
+		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
+			mP[*it].pipe = std::max(0.f, std::min(1.f, mP[*it].pipe + relP));
+		bSelChng = true;	return;  }
 
-void SplineRoad::ToggleOnTerrain()   ///  On Ter
+	if (iChosen == -1)  {  // one
+			newP.pipe = std::max(0.f, std::min(1.f, newP.pipe + relP));  return;  }
+	mP[iChosen].pipe  = std::max(0.f, std::min(1.f, mP[iChosen].pipe + relP));
+
+	Rebuild();
+}
+
+
+//  toggle
+
+void SplineEdit::ToggleOnTerrain()   ///  On Ter
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
@@ -535,7 +518,7 @@ void SplineRoad::ToggleOnTerrain()   ///  On Ter
 		Move(Vector3::ZERO);
 }
 
-void SplineRoad::ToggleColumns()      ///  Column
+void SplineEdit::ToggleColumns()      ///  Column
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
@@ -549,7 +532,7 @@ void SplineRoad::ToggleColumns()      ///  Column
 	Move(Vector3::ZERO);
 }
 
-void SplineRoad::ToggleOnPipe()       ///  On Pipe (for stats only)
+void SplineEdit::ToggleOnPipe()       ///  On Pipe (for stats only)
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
@@ -562,7 +545,7 @@ void SplineRoad::ToggleOnPipe()       ///  On Pipe (for stats only)
 	mP[iChosen].onPipe  = 1-mP[iChosen].onPipe;
 }
 
-void SplineRoad::ToggleLoopChk()       ///  Loop chkR (for camera change)
+void SplineEdit::ToggleLoopChk()       ///  Loop chkR (for camera change)
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
@@ -576,21 +559,7 @@ void SplineRoad::ToggleLoopChk()       ///  Loop chkR (for camera change)
 }
 
 
-void SplineRoad::AddPipe(Real relP)    ///  Pipe
-{
-	if (!vSel.empty()) {  // sel
-		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
-			mP[*it].pipe = std::max(0.f, std::min(1.f, mP[*it].pipe + relP));
-		bSelChng = true;	return;  }
-
-	if (iChosen == -1)  {  // one
-			newP.pipe = std::max(0.f, std::min(1.f, newP.pipe + relP));  return;  }
-	mP[iChosen].pipe  = std::max(0.f, std::min(1.f, mP[iChosen].pipe + relP));
-
-	Rebuild();
-}
-
-void SplineRoad::ChgMtrId(int relId)   ///  Mtr Id
+void SplineEdit::ChgMtrId(int relId)   ///  Mtr Id
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
@@ -604,7 +573,7 @@ void SplineRoad::ChgMtrId(int relId)   ///  Mtr Id
 	Move(Vector3::ZERO);
 }
 
-void SplineRoad::ChgAngType(int relId)   ///  Ang Type
+void SplineEdit::ChgAngType(int relId)   ///  Ang Type
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
@@ -618,7 +587,7 @@ void SplineRoad::ChgAngType(int relId)   ///  Ang Type
 	Move(Vector3::ZERO);
 }
 
-void SplineRoad::AngZero()   ///  Angles set 0
+void SplineEdit::AngZero()   ///  Angles set 0
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
@@ -630,6 +599,48 @@ void SplineRoad::AngZero()   ///  Angles set 0
 	mP[iChosen].mYaw = 0;  mP[iChosen].mRoll = 0;
 
 	Move(Vector3::ZERO);
+}
+
+
+//  Checkpoints
+//--------------------------------------------------------------------------------------
+void SplineEdit::AddChkR(Real relR, bool dontCheckR)    ///  ChkR
+{
+	int seg = iChosen;
+	if (seg == -1)  return;
+	mP[seg].chkR = std::max(0.f, mP[seg].chkR + relR);
+	if (dontCheckR)  return;
+
+	//  disallow between 0..1
+	if (relR < 0.f && mP[seg].chkR < 1.f)
+		mP[seg].chkR = 0.f;
+	else
+	if (relR > 0.f && mP[seg].chkR < 1.f)
+		mP[seg].chkR = 1.f;
+	
+	//  max radius  (or const on bridges or pipes)
+	int all = getNumPoints();
+	if (all < 2)  return;
+	int next = (seg+1) % all, prev = (seg-1+all) % all;
+	bool bridge = !mP[seg].onTer || !mP[next].onTer || !mP[prev].onTer;
+	bool pipe = mP[seg].pipe > 0.5f;  // || mP[next].pipe > 0.5f || mP[prev].pipe > 0.5f;
+
+	Real maxR = pipe ? 1.7f : bridge ? 1.f : 2.5f;
+	if (bridge || pipe)
+	{	if (relR > 0.f)  mP[seg].chkR = maxR;  else
+		if (relR < 0.f)  mP[seg].chkR = 0.f;
+	}else
+	if (relR > 0.f && mP[seg].chkR > maxR)
+		mP[seg].chkR = maxR;
+}
+
+void SplineRoad::AddBoxW(Real rel)
+{
+	vStBoxDim.z = std::max(6.f, vStBoxDim.z + rel);
+}
+void SplineRoad::AddBoxH(Real rel)
+{
+	vStBoxDim.y = std::max(5.f, vStBoxDim.y + rel);
 }
 
 void SplineRoad::Set1stChk()

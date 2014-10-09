@@ -59,16 +59,18 @@ public:
 		class GAME* pGame;  ///*
 		SplineRoad(GAME* pgame);
 	#endif
-	virtual ~SplineRoad();  void Defaults();
+	virtual ~SplineRoad();
+	void Defaults();
 
 	///  Main
-	void Setup(Ogre::String sMarkerMeshFile, Ogre::Real scale,  // call this first at init
+	//   call this first at init
+	void Setup(Ogre::String sMarkerMeshFile, Ogre::Real scale,
 		Ogre::Terrain* terrain, Ogre::SceneManager* sceneMgr,  Ogre::Camera* camera);
 	bool LoadFile(Ogre::String fname, bool build=true), SaveFile(Ogre::String fname);
 	
 	//  Rebuild
-	void RebuildRoadInt(bool editorAlign=false, bool edBulletFull=false),
-		Destroy(), DestroyRoad(), DestroySeg(int id);
+	void RebuildRoadInt(bool editorAlign=false, bool edBulletFull=false);
+	void Destroy(), DestroyRoad(), DestroySeg(int id);
 
 	//  Update
 	void UpdLodVis(/*Camera* pCam,*/ float fBias=1.f, bool bFull=false), SetForRnd(Ogre::String sMtr),UnsetForRnd();
@@ -79,20 +81,12 @@ public:
 	//  Manipulate  -------
 	void Insert(eIns ins), Delete();
 
-	
-	void MirrorSel(bool alt);
-
-	//  modify point
-	void ToggleOnTerrain(), ToggleColumns(), ToggleOnPipe(), ToggleLoopChk();  // on chosen point
-	void AddPipe(Ogre::Real relP), ChgMtrId(int relId), ChgAngType(int relId), AngZero();
-	void AddChkR(Ogre::Real relR, bool dontCheckR=false), AddBoxW(Ogre::Real rel),AddBoxH(Ogre::Real rel), Set1stChk();
+	//  edit start
+	void AddBoxW(Ogre::Real rel),AddBoxH(Ogre::Real rel), Set1stChk();
 	const Ogre::String& getMtrStr(int seg);  bool isPipe(int seg);
 	
-	//  point sel
-	void PrevPoint(),NextPoint(), FirstPoint(),LastPoint(), ChoosePoint();  // choose one
-	void CopyNewPoint();  // set new point params from chosen
-	void SelAddPoint(),SelClear(),SelAll();  int GetSelCnt();  // select many
-	bool CopySel();  void Paste(bool reverse=false), DelSel();
+	bool CopySel();
+	void Paste(bool reverse=false), DelSel();
 
 	//  util
 	void SetTerHitVis(bool visible), UpdRot();

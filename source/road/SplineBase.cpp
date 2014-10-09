@@ -162,19 +162,6 @@ Real SplineBase::interpARoll(int id, Real t) const
 }
 
 
-void SplineBase::preAngle(int i)
-{
-	int i1 = getNext(i);
-	//  more than 180 swirl - wrong at start/end
-	const Real asw = 180;
-	Real ay = mP[i].aYaw, ay1 = mP[i1].aYaw, ay21 = ay1-ay;
-
-	while (ay21 > asw) {  LogO(">a1.yw21: "+toStr(ay21)+"  ay2: "+toStr(ay1)+"  ay1: "+toStr(ay));  ay21 -= 2*asw;  ay1 -= 2*asw;  }
-	while (ay21 <-asw) {  LogO("<a2.yw21: "+toStr(ay21)+"  ay2: "+toStr(ay1)+"  ay1: "+toStr(ay));  ay21 += 2*asw;  ay1 += 2*asw;  }
-	mP[i].aY = ay;  mP[i1].aY = ay1;
-}
-
-
 //  Tangents
 //---------------------------------------------------------------------
 void SplineBase::recalcTangents()

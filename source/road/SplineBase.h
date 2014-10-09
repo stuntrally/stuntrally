@@ -18,7 +18,9 @@ enum AngType {  AT_Manual=0, AT_Auto, AT_Both, AT_ALL  };
 const static std::string csAngType[AT_ALL] = {"Manual", "Auto", "Both"};
 
 
-//  point vars  ---------
+
+//  point,  variables
+//------------------------------------------------------
 class SplinePoint
 {
 public:
@@ -34,10 +36,12 @@ public:
 	//  on/off
 	bool onTer;   // sticked on terrain
 	int cols;     // has column
+
 	int onPipe;   // for stats only (driven on pipe)
 	int loopChk;  // chk is start or end of loop (for auto camera change)
 
-	Ogre::Real pipe;    // pipe width
+	//  next
+	Ogre::Real pipe;    // pipe amount 0..1
 	int idMtr;    // material id road/pipe
 	
 	Ogre::Real chkR;    // checkpoint sphere radius (0-none)
@@ -48,9 +52,11 @@ public:
 };
 
 
-class CheckSphere  //  checkpoint
+//  checkpoint
+//  for car checking
+class CheckSphere
 {
-public:  // for car checking
+public:
 	Ogre::Vector3 pos;
 	Ogre::Real r,r2;  // radius, r*r
 	bool loop;  // for car camera change
@@ -61,7 +67,9 @@ public:  // for car checking
 };
 
 
-//  Spline Base, only interpolation
+
+//------------------------------------------------------
+//  Spline Base,  only interpolation
 //------------------------------------------------------
 class SplineBase
 {
@@ -96,7 +104,7 @@ public:
 	Ogre::Real interpAYaw( int id, Ogre::Real t) const;
 	Ogre::Real interpARoll(int id, Ogre::Real t) const;
 	
-	void recalcTangents(), preAngle(int i);
+	void recalcTangents();
 
 
 	//  dir, length		
@@ -113,8 +121,11 @@ protected:
 };
 
 
-//  Spline Edit, base with editing
+
 //--------------------------------------------------------------------------------------
+//  Spline Edit,  base with editing
+//--------------------------------------------------------------------------------------
+
 class SplineEdit : public SplineBase
 {
 public:
@@ -136,16 +147,33 @@ public:
 	void UpdPointsH();  // set markers pos, h on ter
 	
 
+	//  point sel  ----
+	void ChoosePoint();  // choose one
+	void PrevPoint(),NextPoint(), FirstPoint(),LastPoint();
+	void CopyNewPoint();  // set new point params from chosen
+
+	void SelAddPoint();  // toggle sel
+	void SelClear(),SelAll();
+	int GetSelCnt();  // select many
+
+	//  modify road point  ----
+	void ToggleOnTerrain(), ToggleColumns();
+	void ToggleOnPipe(), ToggleLoopChk();  // on chosen
+
+	void AddChkR(Ogre::Real relR, bool dontCheckR=false);
+	void ChgMtrId(int relId);
+	void ChgAngType(int relId), AngZero();
+
+
 	///  Edit  ====
 	void Move1(int id, Ogre::Vector3 relPos);
 	void Move(Ogre::Vector3 relPos);  // 1 or sel
 	void Scale1(int id, Ogre::Real posMul, Ogre::Real hMul);
 
-
-	///  change point vars
 	void AddWidth(Ogre::Real relW);
-	void AddYaw( Ogre::Real relA,Ogre::Real snapA, bool alt);
-	void AddRoll(Ogre::Real relA,Ogre::Real snapA, bool alt);
+	void AddRoll(Ogre::Real relA,Ogre::Real snapA, bool alt);  // changes camber
+	void AddYaw( Ogre::Real relA,Ogre::Real snapA, bool alt);  // auto-
+	void AddPipe(Ogre::Real relP);
 
 
 	//  Edit Selected  ====
@@ -153,16 +181,17 @@ public:
 
 	void RotateSel(Ogre::Real relA, Ogre::Vector3 axis, int addYawRoll);
 	void ScaleSel(Ogre::Real posMul);
+	void MirrorSel(bool alt);  // reverse order of points
 
 	
 protected:	
 	SplinePoint newP;  // new point for insert
 
-	//  selection
+	//  selection  ----
 	//  chosen stays, SelPoint is under mouse Pick
-	int iSelPoint, iChosen;  // -1 if none
+	int iChosen, iSelPoint;  // -1 if none
 	std::set<int> vSel;  // selected points
-	
+
 	bool bSelChng;  // rebuild road after end of selection change
 
 
@@ -172,7 +201,7 @@ protected:
 	void Rebuild(bool full=false);
 
 
-	Ogre::Real fHeight;	 /// above terrain  ?for each point-
+	Ogre::Real fHeight;	 ///geom  above terrain  ?for each point-
 
 	std::vector<Ogre::SceneNode*> vMarkNodes;  // markers
 };
