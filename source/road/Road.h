@@ -181,7 +181,7 @@ private:
 	
 	void PrepassLod(
 		const DataRoad& DR,
-		DataLod0& DL0, DataLod& DT, StatsLod& ST,
+		DataLod0& DL0, DataLod& DL, StatsLod& ST,
 		int lod, bool editorAlign);
 
 	struct DataLodMesh  // mesh data for lod  (from merged segs)
@@ -196,6 +196,13 @@ private:
 		{	}
 		void Clear();
 	};
+	
+	
+	void BuildSeg(	// Build Segment Geometry
+		const DataRoad& DR,
+		DataLod0& DL0, DataLod& DL, StatsLod& ST,
+		DataLodMesh& DLM,
+		int segM);
 	
 	//---------------------------------------------------------------------------------------
 	
