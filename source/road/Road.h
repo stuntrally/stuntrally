@@ -184,6 +184,18 @@ private:
 		DataLod0& DL0, DataLod& DT, StatsLod& ST,
 		int lod, bool editorAlign);
 
+	struct DataLodMesh  // mesh data for lod  (from merged segs)
+	{	//>  W-wall  C-column  B-blend
+		vec<Ogre::Vector4> clr0/*empty*/, clr, clrB;
+		vec<Ogre::Vector3> pos,norm, posW,normW, posC,normC, posLod, posB,normB;
+		vec<Ogre::Vector2> tcs, tcsW, tcsC, tcsB;
+		int iLmrg, iLmrgW, iLmrgC, iLmrgB;
+		
+		DataLodMesh()
+			:iLmrg(0), iLmrgW(0), iLmrgC(0), iLmrgB(0)
+		{	}
+		void Clear();
+	};
 	
 	//---------------------------------------------------------------------------------------
 	
