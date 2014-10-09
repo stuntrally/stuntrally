@@ -45,7 +45,7 @@ const static stWiPntW wiPntW[ciwW+1][2] = {  // section shape
 	{{ 0.5f, -0.0f, 0.5f, -1.0f, 0.0f}, { 0.28f, 0.68f,0.2f,  1.0f, 0.0f}}};
 
 
-///  Rebuild
+///  Rebuild geometry
 //---------------------------------------------------------
 
 void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
@@ -121,12 +121,12 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	vector<Real> vSegTc0;
 	vector<Vector3> vnSeg0;  // normals
 
-	const int lodDivs[LODs] = {1,2,4,8};
+	const int ciLodDivs[LODs] = {1,2,4,8};
 
 	for (int lod = 0; lod < LODs; ++lod)
 	{
-		int lodDiv = lodDivs[lod];
-		Real lenDiv = lenDiv0 * lodDiv;
+		int iLodDiv = ciLodDivs[lod];
+		Real fLenDim = fLenDim0 * iLodDiv;
 		LogR("LOD: "+toStr(lod)+" ---");
 
 
@@ -160,13 +160,13 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			bool pipe = sp > 0.f || sp1 > 0.f;
 			int wmin = pipe ? 5 : 1;  // min w steps  //par
 
-			int iw = max(1/*wmin*/, (int)(p * iw0 / lodDiv));  //* wid/widDiv..
+			int iw = max(1/*wmin*/, (int)(p * iWidthDiv0 / iLodDiv));  //* wid/widDiv..
 			viW.push_back(iw);
-			int iwl = max(1, (int)(pl * iw0 / lodDiv));
+			int iwl = max(1, (int)(pl * iWidthDiv0 / iLodDiv));
 
 			//  length steps  |
 			Real len = GetSegLen(seg);
-			int  il = int(len / lenDiv) / iwl * iwl + iwl;
+			int  il = int(len / fLenDim) / iwl * iwl + iwl;
 			Real la = 1.f / il;
 			viL.push_back(il);
 			vSegLen.push_back(len);
@@ -469,7 +469,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 						if (onTer1)  //  onTerrain
 						{
 							vP.y = yTer + fHeight * ((w==0 || w==iw) ? 0.15f : 1.f);
-							vN = mTerrain ? TerUtil::GetNormalAt(mTerrain, vP.x, vP.z, lenDiv*0.5f /*0.5f*/) : Vector3::UNIT_Y;
+							vN = mTerrain ? TerUtil::GetNormalAt(mTerrain, vP.x, vP.z, fLenDim*0.5f /*0.5f*/) : Vector3::UNIT_Y;
 						}
 					}else
 					{	///  pipe (_)

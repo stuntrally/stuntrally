@@ -151,12 +151,12 @@ void CGui::btnCopyRoadPars(WP)
 	{	app->scn->road->sMtrRoad[i] = rd.sMtrRoad[i];
 		app->scn->road->SetMtrPipe(i, rd.sMtrPipe[i]);  }
 
-	app->scn->road->tcMul = rd.tcMul;		app->scn->road->colN = rd.colN;
-	app->scn->road->lenDiv0 = rd.lenDiv0;	app->scn->road->colR = rd.colR;
-	app->scn->road->iw0 =	rd.iw0;			app->scn->road->iwPmul = rd.iwPmul;
-	app->scn->road->fHeight =	rd.fHeight;	app->scn->road->ilPmul = rd.ilPmul;
-	app->scn->road->skirtLen = rd.skirtLen;	app->scn->road->skirtH = rd.skirtH;
-	app->scn->road->setMrgLen = rd.setMrgLen;  app->scn->road->lposLen = rd.lposLen;
+	app->scn->road->tcMul = rd.tcMul;			app->scn->road->colN = rd.colN;
+	app->scn->road->fLenDim0 = rd.fLenDim0;		app->scn->road->colR = rd.colR;
+	app->scn->road->iWidthDiv0 = rd.iWidthDiv0;	app->scn->road->iwPmul = rd.iwPmul;
+	app->scn->road->fHeight = rd.fHeight;		app->scn->road->ilPmul = rd.ilPmul;
+	app->scn->road->skirtLen = rd.skirtLen;		app->scn->road->skirtH = rd.skirtH;
+	app->scn->road->setMrgLen = rd.setMrgLen;	app->scn->road->lposLen = rd.lposLen;
 
 	SetGuiFromXmls();	app->scn->road->Rebuild(true);
 	scn->UpdPSSMMaterials();	app->scn->road->UpdAllMarkers();

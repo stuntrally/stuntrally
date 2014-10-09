@@ -228,6 +228,7 @@ public:
 //  checkpoint spheres  ----
 	std::vector<CheckSphere> mChks;
 	Ogre::Vector3 vStBoxDim;   // start/finish box, half dimensions
+	///TODO: vStPos for !isLooped, vStBoxDim at end, ed mode..
 
 	int iDir;     // -1 or +1  if road points go +/-1 with car start orientation
 	int iChkId1, iChkId1Rev;   // 1st chekpoint index (and for reversed) for mChks[]

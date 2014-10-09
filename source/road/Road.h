@@ -62,8 +62,7 @@ public:
 	virtual ~SplineRoad();
 	void Defaults();
 
-	///  Main
-	//   call this first at init
+	//  File
 	bool LoadFile(Ogre::String fname, bool build=true), SaveFile(Ogre::String fname);
 	
 	//  Rebuild
@@ -92,10 +91,6 @@ public:
 	const Ogre::String& getMtrStr(int seg);
 	bool isPipe(int seg);
 	
-	
-	bool bCastShadow;  // true for depth shadows
-	bool bRoadWFullCol;  // road wall full collision (all triangles, or just side)
-	
 
 private:
 	//  mesh create  -------
@@ -122,7 +117,11 @@ private:
 	friend class CGui;
 public:
 	Ogre::Vector3 posHit;  bool bHitTer;
+
 	float fLodBias;
+	bool bCastShadow;    // true for depth shadows
+	bool bRoadWFullCol;  // road wall full collision (all triangles, or just side)
+	
 
 	//  road data Segments
 	std::deque<RoadSeg> vSegs;
@@ -141,21 +140,24 @@ public:
 
 
 	//  geometry  ----
-	//  tex coord multipliers (scale) per unit length - road,wall,pipe,pipewall,column
+	//  tex coord multipliers (scale) per unit length
+			//  road, wall, pipe, pipewall, column
 	Ogre::Real tcMul, tcMulW, tcMulP, tcMulPW, tcMulC;
 
-	Ogre::Real lenDiv0;	 // triangle dim in length
-	int  iw0;		// width divs
+	Ogre::Real fLenDim0;	// triangle dim in length
+	int  iWidthDiv0;		// width divisions (const for road, except pipes)
 
-	Ogre::Real skirtLen, skirtH;  //, skirtPipeMul;  // skirt dims (for hiding gaps)
+	//  skirt  for hiding gaps
+	Ogre::Real skirtLen, skirtH;
 
-	Ogre::Real setMrgLen;  // length below which segments are merged
+	//  merge  for less batches
+	Ogre::Real setMrgLen;   // length below which segments are merged
 	bool bMerge;
-	Ogre::Real lposLen;    // length between LOD points
+	Ogre::Real lposLen;     // length between LOD points
 
-	int  colN;		// column regular polygon sides
-	Ogre::Real colR;		// column radius
-	Ogre::Real ilPmul, iwPmul;	 // length,width steps multipliers for pipe
+	int  colN;                   // column regular polygon sides
+	Ogre::Real colR;             // column radius
+	Ogre::Real ilPmul, iwPmul;   // length,width steps multipliers for pipe
 
 
 	//  stats  ----
