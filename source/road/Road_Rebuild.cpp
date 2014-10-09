@@ -103,7 +103,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		DataLodMesh DLM;
 		DL.tcLen = 0.f;
 
-		int sNum = DR.sMax - DR.sMin, segM = DR.sMin;//, sNumO = sNum;
+		int sNum = DR.sMax - DR.sMin, segM = DR.sMin;
 		while (sNum > 0)
 		{
 			int seg = (segM + DR.segs) % DR.segs;  // iterator
@@ -121,7 +121,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 			if (bMerge)
 			{
-				bNew = (segM == DR.sMin/*1st*/)	|| DL.vbSegMrg[seg];
+				bNew = (segM   == DR.sMin/*1st*/)  || DL.vbSegMrg[seg];
 				bNxt = (segM+1 == DR.sMax/*last*/) || DL.vbSegMrg[seg1];  // next is new
 			}
 			
@@ -212,8 +212,6 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				else		/// angles ()__
 				{	Real ay = ay1 + ay21 * l;  // linear-
 					Real ar = ar1 + ar21 * l;
-					//Real ay = interpAYaw(seg,l);  // spline~
-					//Real ar = interpARoll(seg,l);  // err swirl..
 					vw = GetRot(ay,ar);  // from angles
 				}
 				vw.normalise();

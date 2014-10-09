@@ -101,8 +101,6 @@ public:
 
 	//  interpolate 1 dim vars
 	Ogre::Real interpWidth(int id, Ogre::Real t) const;
-	Ogre::Real interpAYaw( int id, Ogre::Real t) const;
-	Ogre::Real interpARoll(int id, Ogre::Real t) const;
 	
 	void recalcTangents();
 

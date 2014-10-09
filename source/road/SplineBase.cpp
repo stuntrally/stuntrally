@@ -135,32 +135,6 @@ Real SplineBase::interpWidth(int id, Real t) const
 	return tm.x*p1 + tm.y*p2 + tm.z*n1 + tm.w*n2;
 }
 
-Real SplineBase::interpAYaw(int id, Real t) const  // ..
-{
-	int id1 = getNext(id);
-	const Real& p1 = mP[id].aYaw, p2 = mP[id1].aYaw;
-	if (t == 0.0f)	    return p1;
-	else if(t == 1.0f)  return p2;
-	const Real& n1 = mP[id].tYaw, n2 = mP[id1].tYaw;
-
-	Real t2 = t*t, t3 = t2*t;
-	Vector4 tm(	t3* 2 + t2*-3 + 1,  t3*-2 + t2* 3,  t3 + t2*-2 + t,  t3 - t2 );
-	return tm.x*p1 + tm.y*p2 + tm.z*n1 + tm.w*n2;
-}
-
-Real SplineBase::interpARoll(int id, Real t) const
-{
-	int id1 = getNext(id);
-	const Real& p1 = mP[id].aRoll, p2 = mP[id1].aRoll;
-	if (t == 0.0f)	    return p1;
-	else if(t == 1.0f)  return p2;
-	const Real& n1 = mP[id].tRoll, n2 = mP[id1].tRoll;
-
-	Real t2 = t*t, t3 = t2*t;
-	Vector4 tm(	t3* 2 + t2*-3 + 1,  t3*-2 + t2* 3,  t3 + t2*-2 + t,  t3 - t2 );
-	return tm.x*p1 + tm.y*p2 + tm.z*n1 + tm.w*n2;
-}
-
 
 //  Tangents
 //---------------------------------------------------------------------
