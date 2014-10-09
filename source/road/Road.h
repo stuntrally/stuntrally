@@ -75,6 +75,7 @@ public:
 	void Pick(Ogre::Camera* mCamera, Ogre::Real mx, Ogre::Real my,  bool bRay=true, bool bAddH=false, bool bHide=false);
 	void ToggleMerge(), SetChecks();
 
+
 	//  Manipulate  -------
 	SplinePoint newP;  // new point for insert
 	void Insert(eIns ins), Delete();
@@ -108,7 +109,7 @@ public:
 	
 
 private:
-	//  mesh create
+	//  mesh create  -------
 	void CreateMesh(Ogre::SubMesh* submesh, Ogre::AxisAlignedBox& aabox,
 		const std::vector<Ogre::Vector3>& pos, const std::vector<Ogre::Vector3>& norm, const std::vector<Ogre::Vector4>& clr,
 		const std::vector<Ogre::Vector2>& tcs, const std::vector<Ogre::uint16>& idx, Ogre::String sMtrName);
@@ -116,26 +117,27 @@ private:
 		Ogre::Entity** pEnt, Ogre::SceneNode** pNode, Ogre::String sEnd);
 
 	std::vector<Ogre::uint16> idx, idxB;	// mesh indices
-//#ifndef SR_EDITOR
+
 	std::vector<Ogre::Vector3> posBt;  // for bullet trimesh
 	std::vector<class btTriangleMesh*> vbtTriMesh;  // for delete
-//#endif
+
 	std::vector<Ogre::Vector3>* at_pos;
+
 	//  add triangle, with index check
 	inline void addTri(int f1, int f2, int f3, int i);
 	int at_size, at_ilBt;  bool bltTri,blendTri;  // pars for addTri
 
-	//  markers
+
+	//  control/edit markers  -------
 	void AddMarker(Ogre::Vector3 pos), SelectMarker(bool bHide=false),
 		DelLastMarker(), UpdAllMarkers(), DestroyMarkers();
 
 	Ogre::String sMarkerMesh;  Ogre::Real fMarkerScale, fScRot,fScHit;
 	std::vector<Ogre::SceneNode*> vMarkNodes;  // markers
-	//  control markers
+
 	Ogre::SceneNode *ndSel,*ndChosen,*ndRot,*ndHit,*ndChk, *lastNdSel,*lastNdChosen;
 	Ogre::Entity* entSel,*entChs,*entRot,*entHit,*entChk;
 
-	static std::deque<SplinePoint> mPc;  // copy points
 
 //  vars  -----------
 	//  setup

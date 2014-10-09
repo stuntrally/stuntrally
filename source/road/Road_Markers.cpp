@@ -1,6 +1,6 @@
 #include "pch.h"
-//#include "Def_Str.h"
 #include "Road.h"
+#include "../ogre/common/Def_Str.h"
 #include "../ogre/common/RenderConst.h"
 
 #include <OgreSceneManager.h>
@@ -45,7 +45,7 @@ void SplineRoad::AddMarker(Vector3 pos)
 {
 	if (sMarkerMesh == "")  return;
 	Entity* ent;  SceneNode* nod;
-	String name = "sphere"+StringConverter::toString(getNumPoints());
+	String name = "sphere"+toStr(getNumPoints());
 	ent = mSceneMgr->createEntity(sMarkerMesh/*,name*/);
 	ent->setMaterialName("sphere_norm");  ent->setCastShadows(false);  ent->setVisibilityFlags(RV_Hud);
 	nod = mSceneMgr->getRootSceneNode()->createChildSceneNode(/*name,*/pos);
@@ -62,7 +62,7 @@ void SplineRoad::DelLastMarker()
 		lastNdChosen = 0;
 	if (lastNdSel == last)
 		lastNdSel = 0;
-	String name = "sphere"+StringConverter::toString(getNumPoints()-1);
+	String name = "sphere"+toStr(getNumPoints()-1);
 	mSceneMgr->destroyEntity(name);
 	mSceneMgr->destroySceneNode(vMarkNodes[getNumPoints()-1]);
 	vMarkNodes.pop_back();
@@ -74,7 +74,7 @@ void SplineRoad::DestroyMarkers()
 	if (sMarkerMesh == "")  return;
 	for (size_t i=0; i < vMarkNodes.size(); ++i)
 	{
-		String name = "sphere"+StringConverter::toString(i);
+		String name = "sphere"+toStr(i);
 		mSceneMgr->destroyEntity(name);
 		mSceneMgr->destroySceneNode(vMarkNodes[i]);
 	}
