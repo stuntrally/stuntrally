@@ -150,7 +150,7 @@ void SplineMarkEd::UpdAllMarkers()
 	{
 		Vector3& pos = mP[i].pos;  //- update on ter pos (move 0)
 		if (mP[i].onTer)
-			pos.y = getTerH(pos) + fHeight;
+			pos.y = getTerH(pos) + g_Height;
 
 		SceneNode* nd = vMarkNodes[i];
 		nd->setPosition(pos/*getPos(i)*/);

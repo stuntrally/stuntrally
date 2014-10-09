@@ -230,6 +230,7 @@ public:
 	
 	int iOldHide, idStr;  // upd var
 
+	bool bMerge;
 	float fLodBias;      // upd par, detail
 	
 	bool bCastShadow;    // true for depth shadows
@@ -252,27 +253,26 @@ public:
 	//  geometry  ----
 	//  tex coord multipliers (scale) per unit length
 			//  road, wall, pipe, pipewall, column
-	Ogre::Real tcMul, tcMulW, tcMulP, tcMulPW, tcMulC;
+	Ogre::Real g_tcMul, g_tcMulW,  g_tcMulP, g_tcMulPW,  g_tcMulC;
 
-	Ogre::Real fLenDim0;	// triangle dim in length
-	int  iWidthDiv0;		// width divisions (const for road, except pipes)
+	Ogre::Real g_LenDim0;	// triangle dim in length
+	int  g_iWidthDiv0;		// width divisions (const for road, except pipes)
 
 	//  skirt  for hiding gaps
-	Ogre::Real skirtLen, skirtH;
+	Ogre::Real g_SkirtLen, g_SkirtH;
 
 	//  merge  for less batches
-	Ogre::Real setMrgLen;   // length below which segments are merged
-	bool bMerge;
-	Ogre::Real lposLen;     // length between LOD points
+	Ogre::Real g_MergeLen;     // length below which segments are merged
+	Ogre::Real g_LodPntLen;    // length between LOD points
 
-	int  colN;                   // column regular polygon sides
-	Ogre::Real colR;             // column radius
-	Ogre::Real ilPmul, iwPmul;   // length,width steps multipliers for pipe
+	int  g_ColNSides;          // column regular polygon sides
+	Ogre::Real g_ColRadius;    // column radius
+	Ogre::Real g_P_il_mul, g_P_iw_mul;   // length,width steps multipliers for pipe
 
 	Ogre::String  sTxtDesc;  // track description text
 
 	// params for editor tool: align terrain to road
-	float edWadd, edWmul;  // const added width and width multipler for whole road
+	float ed_Wadd, ed_Wmul;  // const added width and width multipler for whole road
 
 
 	//  stats  ----

@@ -166,7 +166,7 @@ void SplineRoad::PrepassLod(
 	DL.isLod0 = lod == 0;
 
 	int iLodDiv = ciLodDivs[lod];
-	DL.fLenDim = fLenDim0 * iLodDiv;
+	DL.fLenDim = g_LenDim0 * iLodDiv;
 		
 	//if (isLod0)?
 	LogR("--- Lod segs prepass ---");
@@ -176,15 +176,15 @@ void SplineRoad::PrepassLod(
 
 		//  width steps  --
 		Real sp = mP[seg].pipe, sp1 = mP[seg1].pipe, sp0 = mP[seg0].pipe;
-		Real p = sp * iwPmul, pl = max(sp, sp1)* iwPmul/4;
+		Real p = sp * g_P_iw_mul, pl = max(sp, sp1)* g_P_iw_mul/4;
 		if (p < 0.f)  p = 1.f;  else  p = 1.f + p;
 		if (pl< 0.f)  pl= 1.f;  else  pl= 1.f + pl;
 		bool pipe = sp > 0.f || sp1 > 0.f;
 		int wmin = pipe ? 5 : 1;  // min w steps  //par
 
-		int iw = max(1/*wmin*/, (int)(p * iWidthDiv0 / iLodDiv));  //* wid/widDiv..
+		int iw = max(1/*wmin*/, (int)(p * g_iWidthDiv0 / iLodDiv));  //* wid/widDiv..
 		DL.viW.push_back(iw);
-		int iwl = max(1, (int)(pl * iWidthDiv0 / iLodDiv));
+		int iwl = max(1, (int)(pl * g_iWidthDiv0 / iLodDiv));
 
 		//  length steps  |
 		Real len = GetSegLen(seg);
@@ -216,8 +216,8 @@ void SplineRoad::PrepassLod(
 		{	DL.sumLenMrg = 0.f;  ++DL.mrgCnt;
 			DL.vbSegMrg.push_back(1);
 		}
-		else  if (DL.sumLenMrg >= setMrgLen)
-		{	DL.sumLenMrg -= setMrgLen;  ++DL.mrgCnt;
+		else  if (DL.sumLenMrg >= g_MergeLen)
+		{	DL.sumLenMrg -= g_MergeLen;  ++DL.mrgCnt;
 			DL.vbSegMrg.push_back(1);  // bNew
 		}else
 			DL.vbSegMrg.push_back(0);  // merged
@@ -249,7 +249,7 @@ void SplineRoad::PrepassLod(
 		{
 		Real wiMul = mP[seg].width;
 		if (editorAlign)  // wider road for align terrain tool
-			wiMul = wiMul*edWmul + edWadd;
+			wiMul = wiMul*ed_Wmul + ed_Wadd;
 		vw *= wiMul;
 		DL.vwSeg.push_back(vw);
 		}

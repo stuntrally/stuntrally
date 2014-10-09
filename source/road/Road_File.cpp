@@ -23,7 +23,7 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 	idStr(0),
 	fLodBias(1.f),
 	bCastShadow(0), bRoadWFullCol(0),
-	edWadd(0.f),edWmul(1.f)
+	ed_Wadd(0.f),ed_Wmul(1.f)
 {
 	Defaults();
 	st.Reset();
@@ -36,12 +36,12 @@ void SplineRoad::Defaults()
 	{	sMtrRoad[i] = "";  sMtrPipe[i] = "";  bMtrPipeGlass[i] = true;  }
 	sMtrWall = "road_wall";  sMtrCol = "road_col";  sMtrWallPipe = "pipe_wall";
 	
-	tcMul = 0.1f;  tcMulW = 0.2f;  tcMulP = 0.1f;  tcMulPW = 0.3f;  tcMulC = 0.2f;
+	g_tcMul = 0.1f;  g_tcMulW = 0.2f;  g_tcMulP = 0.1f;  g_tcMulPW = 0.3f;  g_tcMulC = 0.2f;
 
-	fLenDim0 = 1.f;  iWidthDiv0 = 8;  iwPmul = 4;  ilPmul = 1;
-	skirtLen = 1.f;  skirtH = 0.12f;  fHeight = 0.1f;
-	setMrgLen = 180.f;  bMerge = false;  lposLen = 10.f;
-	colN = 4; colR = 2.f;
+	g_LenDim0 = 1.f;  g_iWidthDiv0 = 8;  g_P_iw_mul = 4;  g_P_il_mul = 1;
+	g_SkirtLen = 1.f;  g_SkirtH = 0.12f;  g_Height = 0.1f;
+	g_MergeLen = 180.f;  bMerge = false;  g_LodPntLen = 10.f;
+	g_ColNSides = 4; g_ColRadius = 2.f;
 
 	iDir = -1;  vStBoxDim = Vector3(1.5f, 5,12);  // /long |height -width
 	iChkId1 = 0;  iChkId1Rev = 0;
@@ -191,30 +191,30 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		a = n->Attribute("col");	if (a)  sMtrCol  = String(a);
 	}
 	n = root->FirstChildElement("dim");	if (n)  {
-		a = n->Attribute("tcMul");		if (a)  tcMul = s2r(a);
-		a = n->Attribute("tcW");		if (a)  tcMulW = s2r(a);
-		a = n->Attribute("tcP");		if (a)  tcMulP = s2r(a);
-		a = n->Attribute("tcPW");		if (a)  tcMulPW = s2r(a);
-		a = n->Attribute("tcC");		if (a)  tcMulC = s2r(a);
+		a = n->Attribute("tcMul");		if (a)  g_tcMul = s2r(a);
+		a = n->Attribute("tcW");		if (a)  g_tcMulW = s2r(a);
+		a = n->Attribute("tcP");		if (a)  g_tcMulP = s2r(a);
+		a = n->Attribute("tcPW");		if (a)  g_tcMulPW = s2r(a);
+		a = n->Attribute("tcC");		if (a)  g_tcMulC = s2r(a);
 
-		a = n->Attribute("lenDim");		if (a)  fLenDim0 = s2r(a);
-		a = n->Attribute("widthSteps");	if (a)  iWidthDiv0 = s2i(a);
-		a = n->Attribute("heightOfs");	if (a)  fHeight = s2r(a);
+		a = n->Attribute("lenDim");		if (a)  g_LenDim0 = s2r(a);
+		a = n->Attribute("widthSteps");	if (a)  g_iWidthDiv0 = s2i(a);
+		a = n->Attribute("heightOfs");	if (a)  g_Height = s2r(a);
 	}
 	n = root->FirstChildElement("mrg");	if (n)  {
-		a = n->Attribute("skirtLen");	if (a)  skirtLen = s2r(a);
-		a = n->Attribute("skirtH");		if (a)  skirtH   = s2r(a);
+		a = n->Attribute("skirtLen");	if (a)  g_SkirtLen = s2r(a);
+		a = n->Attribute("skirtH");		if (a)  g_SkirtH   = s2r(a);
 
 		a = n->Attribute("merge");		if (a)  bMerge  = s2i(a) > 0;  // is always 1
-		a = n->Attribute("mergeLen");	if (a)  setMrgLen = s2r(a);
-		a = n->Attribute("lodPntLen");	if (a)  lposLen = s2r(a);
+		a = n->Attribute("mergeLen");	if (a)  g_MergeLen = s2r(a);
+		a = n->Attribute("lodPntLen");	if (a)  g_LodPntLen = s2r(a);
 	}
 	int iP1 = 0;
 	n = root->FirstChildElement("geom");	if (n)  {
-		a = n->Attribute("colN");	if (a)  colN = s2i(a);
-		a = n->Attribute("colR");	if (a)  colR = s2r(a);
-		a = n->Attribute("wsPm");	if (a)  iwPmul = s2r(a);
-		a = n->Attribute("lsPm");	if (a)  ilPmul = s2r(a);
+		a = n->Attribute("colN");	if (a)  g_ColNSides = s2i(a);
+		a = n->Attribute("colR");	if (a)  g_ColRadius = s2r(a);
+		a = n->Attribute("wsPm");	if (a)  g_P_iw_mul = s2r(a);
+		a = n->Attribute("lsPm");	if (a)  g_P_il_mul = s2r(a);
 		a = n->Attribute("stBox");	if (a)  vStBoxDim = s2v(a);
 		a = n->Attribute("iDir");	if (a)  iDir = s2i(a);
 		a = n->Attribute("iChk1");	if (a)  iP1 = s2i(a);
@@ -306,24 +306,24 @@ bool SplineRoad::SaveFile(String fname)
 	root.InsertEndChild(mtr);
 	
 	TiXmlElement dim("dim");
-		dim.SetAttribute("tcMul",		toStrC( tcMul ));
-		dim.SetAttribute("tcW",			toStrC( tcMulW ));
-		dim.SetAttribute("tcP",			toStrC( tcMulP ));
-		dim.SetAttribute("tcPW",		toStrC( tcMulPW ));
-		dim.SetAttribute("tcC",			toStrC( tcMulC ));
+		dim.SetAttribute("tcMul",		toStrC( g_tcMul ));
+		dim.SetAttribute("tcW",			toStrC( g_tcMulW ));
+		dim.SetAttribute("tcP",			toStrC( g_tcMulP ));
+		dim.SetAttribute("tcPW",		toStrC( g_tcMulPW ));
+		dim.SetAttribute("tcC",			toStrC( g_tcMulC ));
 
-		dim.SetAttribute("lenDim",		toStrC( fLenDim0 ));
-		dim.SetAttribute("widthSteps",	toStrC( iWidthDiv0 ));
-		dim.SetAttribute("heightOfs",	toStrC( fHeight ));
+		dim.SetAttribute("lenDim",		toStrC( g_LenDim0 ));
+		dim.SetAttribute("widthSteps",	toStrC( g_iWidthDiv0 ));
+		dim.SetAttribute("heightOfs",	toStrC( g_Height ));
 	root.InsertEndChild(dim);
 
 	TiXmlElement mrg("mrg");
-		mrg.SetAttribute("skirtLen",	toStrC( skirtLen ));
-		mrg.SetAttribute("skirtH",		toStrC( skirtH ));
+		mrg.SetAttribute("skirtLen",	toStrC( g_SkirtLen ));
+		mrg.SetAttribute("skirtH",		toStrC( g_SkirtH ));
 
 		mrg.SetAttribute("merge",		"1");  // always 1 for game, 0 set in editor
-		mrg.SetAttribute("mergeLen",	toStrC( setMrgLen ));
-		mrg.SetAttribute("lodPntLen",	toStrC( lposLen ));
+		mrg.SetAttribute("mergeLen",	toStrC( g_MergeLen ));
+		mrg.SetAttribute("lodPntLen",	toStrC( g_LodPntLen ));
 	root.InsertEndChild(mrg);
 
 	int num = getNumPoints();
@@ -333,10 +333,10 @@ bool SplineRoad::SaveFile(String fname)
 			iP1 = i;
 	
 	TiXmlElement geo("geom");
-		geo.SetAttribute("colN",	toStrC( colN ));
-		geo.SetAttribute("colR",	toStrC( colR ));
-		geo.SetAttribute("wsPm",	toStrC( iwPmul ));
-		geo.SetAttribute("lsPm",	toStrC( ilPmul ));
+		geo.SetAttribute("colN",	toStrC( g_ColNSides ));
+		geo.SetAttribute("colR",	toStrC( g_ColRadius ));
+		geo.SetAttribute("wsPm",	toStrC( g_P_iw_mul ));
+		geo.SetAttribute("lsPm",	toStrC( g_P_il_mul ));
 		geo.SetAttribute("stBox",	toStrC( vStBoxDim ));
 		geo.SetAttribute("iDir",	toStrC( iDir ));
 		geo.SetAttribute("iChk1",	toStrC( iP1 ));

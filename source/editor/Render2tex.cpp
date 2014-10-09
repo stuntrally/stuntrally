@@ -343,8 +343,8 @@ void App::AlignTerToRoad()
 	Ogre::Timer ti;
 
 	///  create bullet road for selected segments
-	road->edWmul = pSet->al_w_mul;
-	road->edWadd = pSet->al_w_add;
+	road->ed_Wmul = pSet->al_w_mul;
+	road->ed_Wadd = pSet->al_w_add;
 	road->RebuildRoadInt(true);
 
 	//  terrain

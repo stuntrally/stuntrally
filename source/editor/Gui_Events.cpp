@@ -280,8 +280,9 @@ void CGui::editRoad(Ed ed)
 	Real r = s2r(ed->getCaption());
 	String n = ed->getName();
 
-		 if (n=="RdHeightOfs")	app->scn->road->fHeight = r;
-	else if (n=="RdSkirtLen")	app->scn->road->skirtLen = r;else if (n=="RdSkirtH")	app->scn->road->skirtH = r;
+		 if (n=="RdHeightOfs")	app->scn->road->g_Height = r;
+	else if (n=="RdSkirtLen")	app->scn->road->g_SkirtLen = r;
+	else if (n=="RdSkirtH")		app->scn->road->g_SkirtH = r;
 	//app->scn->road->RebuildRoad(true);  //on Enter ?..
 }
 
@@ -291,13 +292,13 @@ void CGui::SldUpd_Road()
 	if (!app->scn->road)  return;
 	SplineRoad& r = *app->scn->road;
 	
-	svRdTcMul.UpdF(&r.tcMul);	svRdTcMulW.UpdF(&r.tcMulW);
-	svRdTcMulP.UpdF(&r.tcMulP);	svRdTcMulPW.UpdF(&r.tcMulPW);
-	svRdTcMulC.UpdF(&r.tcMulC);
-	svRdLenDim.UpdF(&r.fLenDim0);  svRdWidthSteps.UpdI(&r.iWidthDiv0);
-	svRdPwsM.UpdF(&r.iwPmul);  svRdPlsM.UpdF(&r.ilPmul);
-	svRdMergeLen.UpdF(&r.setMrgLen);  svRdLodPLen.UpdF(&r.lposLen);
-	svRdColN.UpdI(&r.colN);  svRdColR.UpdF(&r.colR);
+	svRdTcMul.UpdF(&r.g_tcMul);       svRdTcMulW.UpdF(&r.g_tcMulW);
+	svRdTcMulP.UpdF(&r.g_tcMulP);     svRdTcMulPW.UpdF(&r.g_tcMulPW);
+	svRdTcMulC.UpdF(&r.g_tcMulC);
+	svRdLenDim.UpdF(&r.g_LenDim0);    svRdWidthSteps.UpdI(&r.g_iWidthDiv0);
+	svRdPwsM.UpdF(&r.g_P_iw_mul);     svRdPlsM.UpdF(&r.g_P_il_mul);
+	svRdMergeLen.UpdF(&r.g_MergeLen); svRdLodPLen.UpdF(&r.g_LodPntLen);
+	svRdColN.UpdI(&r.g_ColNSides);    svRdColR.UpdF(&r.g_ColRadius);
 }
 
 

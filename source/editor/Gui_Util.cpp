@@ -85,8 +85,8 @@ void CGui::SetGuiFromXmls()
 	_Cmb(cmbRoadWMtr, rd->sMtrWall);  _Cmb(cmbRoadColMtr, rd->sMtrCol);
 	_Cmb(cmbPipeWMtr, rd->sMtrWallPipe);
 
-	_Ed(RdHeightOfs, rd->fHeight);
-	_Ed(RdSkirtLen, rd->skirtLen);  _Ed(RdSkirtH, rd->skirtH);
+	_Ed(RdHeightOfs, rd->g_Height);
+	_Ed(RdSkirtLen, rd->g_SkirtLen);  _Ed(RdSkirtH, rd->g_SkirtH);
 	SldUpd_Road();
 	ckRoad1Mtr.Upd();
 	

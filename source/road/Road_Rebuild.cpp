@@ -100,11 +100,11 @@ void SplineRoad::BuildSeg(
 	
 	//  skirt /\ not for bridges
 	bool useSkirt = onTer || pipe;  // pipe own factor..
-	Real skLen = useSkirt ? skirtLen : 0.f, skH = useSkirt ? skirtH : 0.f;
+	Real skLen = useSkirt ? g_SkirtLen : 0.f, skH = useSkirt ? g_SkirtH : 0.f;
 	
 	
 	//  seg params  -----------------
-	const int iwC = colN;  // column  polygon steps
+	const int iwC = g_ColNSides;  // column  polygon steps
 				
 	//  steps len
 	int il = DL.viL[seg];
@@ -163,7 +163,7 @@ void SplineRoad::BuildSeg(
 		//Real wiMul = wi1 + wi12 * l;  // linear-
 		Real wiMul = interpWidth(seg, l);  // spline~
 		if (DR.editorAlign)  // wider road for align terrain tool
-			wiMul = wiMul*edWmul + edWadd;
+			wiMul = wiMul*ed_Wmul + ed_Wadd;
 		vw *= wiMul;
 
 		//  on terrain ~~
@@ -197,7 +197,7 @@ void SplineRoad::BuildSeg(
 		int w0 = pipe ? iw/4   : 0,
 			w1 = pipe ? iw*3/4 : iw;
 
-		Real tcL = tc * (pipe ? tcMulP : tcMul);
+		Real tcL = tc * (pipe ? g_tcMulP : g_tcMul);
 		for (int w=0; w <= iw; ++w)  // width +1
 		{
 			//  pos create
@@ -211,7 +211,7 @@ void SplineRoad::BuildSeg(
 				yTer = mTerrain ? mTerrain->getHeightAtWorldPosition(vP.x, 0, vP.z) : 0.f;
 				if (onTer1)  //  onTerrain
 				{
-					vP.y = yTer + fHeight * ((w==0 || w==iw) ? 0.15f : 1.f);
+					vP.y = yTer + g_Height * ((w==0 || w==iw) ? 0.15f : 1.f);
 					vN = mTerrain ? TerUtil::GetNormalAt(mTerrain,
 						vP.x, vP.z, DL.fLenDim*0.5f /*0.5f*/) : Vector3::UNIT_Y;
 				}
@@ -274,7 +274,7 @@ void SplineRoad::BuildSeg(
 		if (!onTer)
 		if (i >= 0 && i <= il)  // length +1
 		{	++DLM.iLmrgW;
-			Real tcLW = tc * (pipe ? tcMulPW : tcMulW);
+			Real tcLW = tc * (pipe ? g_tcMulPW : g_tcMulW);
 			for (int w=0; w <= ciwW; ++w)  // width +1
 			{
 				int pp = (p1 > 0.f || p2 > 0.f) ? 1 : 0;  //  pipe wall
@@ -299,7 +299,7 @@ void SplineRoad::BuildSeg(
 		if (!onTer && mP[seg].cols > 0)
 		if (i == il/2)  // middle-
 		{	++DLM.iLmrgC;
-			const Real r = colR;  // column radius
+			const Real r = g_ColRadius;  // column radius
 
 			for (int h=0; h <= 1; ++h)  // height
 			for (int w=0; w <= iwC; ++w)  // width +1
@@ -324,7 +324,7 @@ void SplineRoad::BuildSeg(
 
 				//>  data Col
 				DLM.posC.push_back(vP);  DLM.normC.push_back(vN);
-				DLM.tcsC.push_back(Vector2( Real(w)/iwC * 4, vP.y * tcMulC ));  //par
+				DLM.tcsC.push_back(Vector2( Real(w)/iwC * 4, vP.y * g_tcMulC ));  //par
 			}
 		}
 		
@@ -340,7 +340,7 @@ void SplineRoad::BuildSeg(
 
 	//  lod vis points
 	if (DL.isLod0)
-	{	int lps = max(2, (int)(DL.vSegLen[seg] / lposLen));
+	{	int lps = max(2, (int)(DL.vSegLen[seg] / g_LodPntLen));
 
 		for (int p=0; p <= lps; ++p)
 		{

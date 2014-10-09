@@ -93,7 +93,7 @@ void SplineEdit::Move1(int id, Vector3 relPos)
 {
 	Vector3 pos = getPos(id) + relPos;
 	if (mP[id].onTer)
-		pos.y = getTerH(pos) + fHeight;
+		pos.y = getTerH(pos) + g_Height;
 	setPos(id, pos);
 	vMarkNodes[id]->setPosition(pos);  // upd marker
 }
@@ -123,7 +123,7 @@ void SplineEdit::Scale1(int id, Real posMul, Real hMul)
 		pos.y *= hMul;
 	
 	if (mP[id].onTer)
-		pos.y = getTerH(pos) + fHeight;
+		pos.y = getTerH(pos) + g_Height;
 	setPos(id, pos);
 	vMarkNodes[id]->setPosition(pos);  // upd marker
 }
@@ -136,7 +136,7 @@ void SplineEdit::UpdPointsH()
 	{	
 		Vector3 pos = getPos(id);
 		if (mP[id].onTer)
-		{	pos.y = getTerH(pos) + fHeight;
+		{	pos.y = getTerH(pos) + g_Height;
 			setPos(id, pos);
 		}
 		vMarkNodes[id]->setPosition(pos);  // upd marker
@@ -179,7 +179,7 @@ void SplineEdit::ScaleSel(Real posMul)
 	{	int id = *it;
 		Vector3 pos = (getPos(id) - pos0) * (1.f + posMul) + pos0;
 		if (mP[id].onTer)
-			pos.y = getTerH(pos) + fHeight;
+			pos.y = getTerH(pos) + g_Height;
 		setPos(id, pos);
 		vMarkNodes[id]->setPosition(pos);  // upd marker
 	}
@@ -202,7 +202,7 @@ void SplineEdit::RotateSel(Real relA, Vector3 axis, int addYawRoll)
 
 		pos = npos;
 		if (mP[*it].onTer)
-			pos.y = getTerH(pos) + fHeight;
+			pos.y = getTerH(pos) + g_Height;
 		setPos(*it, pos);
 		
 		if (addYawRoll==1)  // todo: get from axis?
@@ -446,7 +446,7 @@ void SplineRoad::Insert(eIns ins)
 	pt.chk1st = false;  // clear 1st chk
 	
 	if (pt.onTer)
-		pt.pos.y = getTerH(pt.pos) + fHeight;
+		pt.pos.y = getTerH(pt.pos) + g_Height;
 
 	if (ins	== INS_Begin)
 		iChosen = -1;

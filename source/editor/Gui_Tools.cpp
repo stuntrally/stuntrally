@@ -143,20 +143,29 @@ void CGui::btnCopyRoad(WP)
 //  copy road pars
 void CGui::btnCopyRoadPars(WP)
 {
-	if (!ChkTrkCopy() || !app->scn->road)  return;
+	SplineRoad* r = app->scn->road;
+	if (!ChkTrkCopy() || !r)  return;
 	String from = PathCopyTrk();
 	SplineRoad rd(app);  rd.LoadFile(from + "/road.xml",false);
 
 	for (int i=0; i < MTRs; ++i)
-	{	app->scn->road->sMtrRoad[i] = rd.sMtrRoad[i];
-		app->scn->road->SetMtrPipe(i, rd.sMtrPipe[i]);  }
+	{	r->sMtrRoad[i] = rd.sMtrRoad[i];
+		r->SetMtrPipe(i, rd.sMtrPipe[i]);  }
 
-	app->scn->road->tcMul = rd.tcMul;			app->scn->road->colN = rd.colN;
-	app->scn->road->fLenDim0 = rd.fLenDim0;		app->scn->road->colR = rd.colR;
-	app->scn->road->iWidthDiv0 = rd.iWidthDiv0;	app->scn->road->iwPmul = rd.iwPmul;
-	app->scn->road->fHeight = rd.fHeight;		app->scn->road->ilPmul = rd.ilPmul;
-	app->scn->road->skirtLen = rd.skirtLen;		app->scn->road->skirtH = rd.skirtH;
-	app->scn->road->setMrgLen = rd.setMrgLen;	app->scn->road->lposLen = rd.lposLen;
+	r->g_tcMul  = rd.g_tcMul;	r->g_tcMulW = rd.g_tcMulW;
+	r->g_tcMulP = rd.g_tcMulP;	r->g_tcMulPW= rd.g_tcMulPW;
+	r->g_tcMulC = rd.g_tcMulC;
+	r->g_LenDim0 = rd.g_LenDim0;
+	r->g_iWidthDiv0 = rd.g_iWidthDiv0;
+	r->g_ColNSides = rd.g_ColNSides;
+	r->g_ColRadius = rd.g_ColRadius;
+	r->g_P_iw_mul = rd.g_P_iw_mul;
+	r->g_P_il_mul = rd.g_P_il_mul;
+	r->g_Height = rd.g_Height;
+	r->g_SkirtLen = rd.g_SkirtLen;
+	r->g_SkirtH = rd.g_SkirtH;
+	r->g_MergeLen = rd.g_MergeLen;
+	r->g_LodPntLen = rd.g_LodPntLen;
 
 	SetGuiFromXmls();	app->scn->road->Rebuild(true);
 	scn->UpdPSSMMaterials();	app->scn->road->UpdAllMarkers();

@@ -180,11 +180,11 @@ void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 			Warn(INFO,"Road points are far.");
 
 		//  big road, merge len
-		if (cnt > 200 && road->setMrgLen < 600.f)
+		if (cnt > 200 && road->g_MergeLen < 600.f)
 			Warn(INFO,"Road has over 200 points, use recommended merge length 600 or more.");
-		else if (cnt > 120 && road->setMrgLen < 300.f)
+		else if (cnt > 120 && road->g_MergeLen < 300.f)
 			Warn(INFO,"Road has over 120 points, use recommended merge length 300 or more.");
-		else if (cnt > 50 && road->setMrgLen < 80.f)
+		else if (cnt > 50 && road->g_MergeLen < 80.f)
 			Warn(INFO,"Road has over 50 points, use recommended merge length 80 or more.");
 	}
 	

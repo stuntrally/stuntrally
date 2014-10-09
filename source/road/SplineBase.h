@@ -132,7 +132,7 @@ public:
 		,iSelPoint(-1), iChosen(-1)
 		,bSelChng(0)
 		,rebuild(false), iDirtyId(-1)
-		,fHeight(0.1f)
+		,g_Height(0.1f)
 	{	}
 	
 	
@@ -197,7 +197,7 @@ protected:
 	void Rebuild(bool full=false);
 
 
-	Ogre::Real fHeight;	 ///geom  above terrain  ?for each point-
+	Ogre::Real g_Height;	 ///geom  above terrain  ?for each point-
 
 	std::vector<Ogre::SceneNode*> vMarkNodes;  // markers
 };
