@@ -26,13 +26,6 @@ Vector3 TerUtil::GetNormalAt(Terrain* terrain, float x, float z, float s)
 
 float TerUtil::GetAngleAt(Terrain* terrain, float x, float z, float s)
 {
-	//float* hf = terrain ? terrain->getHeightData() : sc->td.hfHeight;
-	//Real t = sc->td.fTriangleSize * 2.f;
-	//Vector3 vx(t, hf[a+1] - hf[a-1], 0);  // x+1 - x-1
-	//Vector3 vz(0, hf[a+wx] - hf[a-wx], t);	// z+1 - z-1
-	//Vector3 norm = -vx.crossProduct(vz);  norm.normalise();
-	//Real ang = Math::ACos(norm.y).valueDegrees();
-
 	Real y0=0;
 	Vector3 vx(x-s, y0, z), vz(x, y0, z-s);
 	Vector3 vX(x+s, y0, z), vZ(x, y0, z+s);
@@ -66,12 +59,49 @@ SplineBase::~SplineBase()
 {	}
 
 
+//  seg length
+//---------------------------------------------------------------------
+Real SplineBase::GetSegLen(int seg)
+{
+	//  iterations-1 quality
+	#define lenQ  5
+
+	Real len = 0;
+	Vector3 p0;
+	for (int i=0; i <= lenQ; ++i)
+	{
+		Vector3 p = interpolate(seg, Real(i) / lenQ);
+		if (i > 0)
+		{
+			Vector3 l = p - p0;
+			len += l.length();
+		}
+		p0 = p;
+	}
+	return len;
+}
+
+//  length dir
+Vector3 SplineBase::GetLenDir(int seg, Real l, Real la)
+{
+	Vector3 vL0 = interpolate(seg, l);
+	Vector3 vL1 = interpolate(seg, la);
+	return vL1 - vL0;
+}
+
+//  rot dir
+Vector3 SplineBase::GetRot(Real aYaw, Real aRoll)
+{
+	Real ay = aYaw * PI_d/180.f, ar = aRoll * PI_d/180.f;
+	Real cb = cosf(ar);
+	return Vector3( cosf(ay)*cb, sinf(ar), -sinf(ay)*cb );
+}
+
+
 //  Interpolate  segment
 //---------------------------------------------------------------------
 Vector3 SplineBase::interpolate(int id, Real t) const
 {
-	//assert (id < mPos.size() && "index out of bounds");
-
 	int id1 = getNext(id);
 	const Vector3& p1 = mP[id].pos, p2 = mP[id1].pos;
 
@@ -134,19 +164,14 @@ Real SplineBase::interpARoll(int id, Real t) const
 
 void SplineBase::preAngle(int i)
 {
-	//LogO("pre + " + toStr(i));
 	int i1 = getNext(i);
 	//  more than 180 swirl - wrong at start/end
 	const Real asw = 180;
 	Real ay = mP[i].aYaw, ay1 = mP[i1].aYaw, ay21 = ay1-ay;
-	//Real ar = mP[i].aRoll,ar1 = mP[i1].aRoll,ar21 = ar1-ar;
 
 	while (ay21 > asw) {  LogO(">a1.yw21: "+toStr(ay21)+"  ay2: "+toStr(ay1)+"  ay1: "+toStr(ay));  ay21 -= 2*asw;  ay1 -= 2*asw;  }
 	while (ay21 <-asw) {  LogO("<a2.yw21: "+toStr(ay21)+"  ay2: "+toStr(ay1)+"  ay1: "+toStr(ay));  ay21 += 2*asw;  ay1 += 2*asw;  }
-	//while (ar21 > asw) {  LogO(">a3.rl21: "+toStr(ar21)+"  ar2: "+toStr(ar1)+"  ar1: "+toStr(ar));  ar21 -= 2*asw;  ar1 -= 2*asw;  }
-	//while (ar21 <-asw) {  LogO("<a4.rl21: "+toStr(ar21)+"  ar2: "+toStr(ar1)+"  ar1: "+toStr(ar));  ar21 += 2*asw;  ar1 += 2*asw;  }
 	mP[i].aY = ay;  mP[i1].aY = ay1;
-	//mP[i].aR = ar;  mP[i1].aR = ar1;
 }
 
 
@@ -166,11 +191,6 @@ void SplineBase::recalcTangents()
 		int next = getNext(i), prev = getPrev(i);
 		mP[i].tan = 0.5 * (mP[next].pos - mP[prev].pos);
 		mP[i].wtan= 0.5 * (mP[next].width - mP[prev].width);
-		
-		/*preAngle(prev);  preAngle(i);  preAngle(next);
-
-		mP[i].tYaw  = 0.5 * (mP[next].aY - mP[prev].aY);
-		mP[i].tRoll = 0.5 * (mP[next].aR - mP[prev].aR);/**/
 	}
 }
 
@@ -178,13 +198,11 @@ void SplineBase::recalcTangents()
 //---------------------------------------------------------------------
 const Vector3& SplineBase::getPos(int index) const
 {
-	//assert (index < mPos.size() && "index out of bounds");
 	return mP[index].pos;
 }
 
 void SplineBase::setPos(int index, const Vector3& value)
 {
-	//assert (index < mPos.size() && "index out of bounds");
 	mP[index].pos = value;
 
 	recalcTangents();
@@ -228,3 +246,5 @@ void SplinePoint::SetDefault()
 	onPipe = 0;  loopChk = 0;
 	chk1st = false;
 }
+
+

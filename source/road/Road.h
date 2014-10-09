@@ -100,8 +100,6 @@ public:
 	bool CopySel();  void Paste(bool reverse=false), DelSel();
 
 	//  util
-	Ogre::Real GetSegLen(int seg);  Ogre::Vector3 GetLenDir(int seg, Ogre::Real l, Ogre::Real la);
-	static Ogre::Vector3 GetRot(Ogre::Real ayaw, Ogre::Real ang);
 	void SetTerHitVis(bool visible), UpdRot(), UpdPointsH();
 	
 	bool bCastShadow;  // true for depth shadows

@@ -64,18 +64,27 @@ public:
 	SplineBase();
 	~SplineBase();
 	friend class CGui;
-	
 
+	
+	//  points
 	void clear();
 	void addPoint(const Ogre::Vector3& p);
 	inline int getNumPoints() const {  return (int)mP.size();  }
 
+	//  get next, prev points
+	inline int getPrev(int id) const {  int s = (int)mP.size();  return isLooped ?  (id-1+s) % s : std::max(0,   id-1);  }
+	inline int getNext(int id) const {  int s = (int)mP.size();  return isLooped ?  (id+1) % s   : std::min(s-1, id+1);  }
 
+
+	//  pos
 	const Ogre::Vector3& getPos(int index) const;
 	void setPos(int index, const Ogre::Vector3& value);
 
+	SplinePoint& getPoint(int index);
 
-	//  get value at a single segment of the spline
+	
+	//  interpolate
+	//  get value at a single segment of the spline  t = 0..1
 	Ogre::Vector3 interpolate(int id, Ogre::Real t) const;
 
 	//  interpolate 1 dim vars
@@ -84,16 +93,16 @@ public:
 	Ogre::Real interpARoll(int id, Ogre::Real t) const;
 	
 	void recalcTangents(), preAngle(int i);
-	
-	SplinePoint& getPoint(int index);
-	
-	//  get next, prev points
-	inline int getPrev(int id) const {  int s = (int)mP.size();  return isLooped ?  (id-1+s) % s : std::max(0,   id-1);  }
-	inline int getNext(int id) const {  int s = (int)mP.size();  return isLooped ?  (id+1) % s   : std::min(s-1, id+1);  }
+
+
+	//  dir, length		
+	Ogre::Real GetSegLen(int seg);
+	Ogre::Vector3 GetLenDir(int seg, Ogre::Real l, Ogre::Real la);
+	static Ogre::Vector3 GetRot(Ogre::Real ayaw, Ogre::Real ang);
 
 
 protected:
-	bool isLooped;  //=closed
+	bool isLooped;  //=closed, if false begin and end are not connected
 
 	std::deque<SplinePoint> mP;  // points
 	static std::deque<SplinePoint> mPc;  // copy points

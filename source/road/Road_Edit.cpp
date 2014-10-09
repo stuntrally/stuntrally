@@ -281,46 +281,6 @@ void SplineRoad::Delete()
 }
 
 
-///  util
-//---------------------------------------------------------------------------------------------------------------
-
-//  seg len
-Real SplineRoad::GetSegLen(int seg)
-{
-	//  iterations-1 quality
-	#define lenQ  5
-
-	Real len = 0;
-	Vector3 p0;
-	for (int i=0; i <= lenQ; ++i)
-	{
-		Vector3 p = interpolate(seg, Real(i) / lenQ);
-		if (i > 0)
-		{
-			Vector3 l = p - p0;
-			len += l.length();
-		}
-		p0 = p;
-	}
-	return len;
-}
-
-//  len dir
-Vector3 SplineRoad::GetLenDir(int seg, Real l, Real la)
-{
-	Vector3 vL0 = interpolate(seg, l);
-	Vector3 vL1 = interpolate(seg, la);
-	return vL1 - vL0;
-}
-
-//  rot
-Vector3 SplineRoad::GetRot(Real aYaw, Real aRoll)
-{
-	Real ay = aYaw * PI_d/180.f, ar = aRoll * PI_d/180.f;
-	Real cb = cosf(ar);
-	return Vector3( cosf(ay)*cb, sinf(ar), -sinf(ay)*cb );
-}
-
 //  hit pos
 void SplineRoad::SetTerHitVis(bool visible)
 {
