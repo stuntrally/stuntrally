@@ -100,13 +100,13 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		///  segment
 		//--------------------------------------------------------------------------------------------------------------------------
 
+		//DataLodMesh DLM;
 		//>  mesh data  W-wall  C-column  B-blend
 		vector<Vector4> clr0/*empty*/, clr, clrB;
 		vector<Vector3> pos,norm, posW,normW, posC,normC, posLod, posB,normB;
 		vector<Vector2> tcs, tcsW, tcsC, tcsB;
-		Real tc1 = 0;  DL.tcLen = 0;
+		DL.tcLen = 0;
 		int iLmrg = 0, iLmrgW = 0, iLmrgC = 0, iLmrgB = 0;
-		Vector3 vlOld;
 
 		int sNum = DR.sMax - DR.sMin, segM = DR.sMin;//, sNumO = sNum;
 		while (sNum > 0)
