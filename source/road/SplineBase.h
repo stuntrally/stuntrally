@@ -114,7 +114,7 @@ public:
 
 
 protected:
-	bool isLooped;  //=closed, if false begin and end are not connected
+	bool isLooped;  ///=closed, if false begin and end are not connected
 
 	std::deque<SplinePoint> mP;  // points
 	static std::deque<SplinePoint> mPc;  // copy points
@@ -141,8 +141,7 @@ public:
 	//  terrain helpers
 	Ogre::Terrain* mTerrain;  // for on terrain, height snap
 
-	inline Ogre::Real getTerH(const Ogre::Vector3& p)
-	{	return mTerrain ? mTerrain->getHeightAtWorldPosition(p.x, 0.f, p.z) : 0.f;  }
+	Ogre::Real getTerH(const Ogre::Vector3& p);
 
 	void UpdPointsH();  // set markers pos, h on ter
 	

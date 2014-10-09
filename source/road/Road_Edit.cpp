@@ -143,6 +143,12 @@ void SplineEdit::UpdPointsH()
 	}
 }
 
+Real SplineEdit::getTerH(const Vector3& p)
+{
+	return mTerrain ? mTerrain->getHeightAtWorldPosition(p.x, 0.f, p.z) : 0.f;
+}
+
+
 
 ///  Edit Selected
 ///-------------------------------------------------------------------------------------
@@ -401,6 +407,8 @@ void SplineEdit::AngZero()   ///  Angles set 0
 }
 
 
+//---------------------------------------------------------------------------------------------------------------
+
 //  util
 bool SplineRoad::isPipe(int seg)
 {
@@ -501,7 +509,7 @@ void SplineRoad::Delete()
 ///  selection copy, paste, delete
 //--------------------------------------------------------------------------------------
 
-std::deque<SplinePoint> SplineRoad::mPc;  // copy points
+std::deque<SplinePoint> SplineBase::mPc;  // copy points
 
 bool SplineRoad::CopySel()
 {
