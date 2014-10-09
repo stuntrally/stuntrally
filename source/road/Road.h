@@ -156,6 +156,13 @@ private:
 		{	}
 	};
 	
+	void PrepassLod(
+		DataLod0& DL0, DataLod& DT, StatsLod& ST,
+		Ogre::Real fLenDim,
+		int iLodDiv, bool isLod0,
+		bool editorAlign);
+
+	
 	//---------------------------------------------------------------------------------------
 	
 #undef vec
@@ -209,7 +216,7 @@ public:
 
 
 	//  stats  ----
-	struct stats  // for info only
+	struct Stats  // for info only
 	{
 		Ogre::Real Length, WidthAvg, HeightDiff;
 		Ogre::Real OnTer, Pipes, OnPipe;

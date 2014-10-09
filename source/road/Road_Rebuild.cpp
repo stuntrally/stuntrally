@@ -18,6 +18,8 @@
 #include <OgreMeshManager.h>
 #include <OgreEntity.h>
 using namespace Ogre;
+using namespace std;
+using std::vector;
 
 #ifdef SR_EDITOR
 #define LogR(a)  //LogO(String("~ Road  ") + a);
@@ -129,139 +131,12 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		DataLod DL;
 		StatsLod ST;
 
-
-		///  segment data pre pass
-		//---------------------------------------------------------------------------------------
+		bool isLod0 = lod == 0;
 		
-		//if (lod==0)?
-		LogR("--- seg prepass ---");
-		for (int seg=0; seg < segs; ++seg)
-		{
-			int seg1 = getNext(seg), seg0 = getPrev(seg);
-
-			//  width steps  --
-			Real sp = mP[seg].pipe, sp1 = mP[seg1].pipe, sp0 = mP[seg0].pipe;
-			Real p = sp * iwPmul, pl = max(sp, sp1)* iwPmul/4;
-			if (p < 0.f)  p = 1.f;  else  p = 1.f + p;
-			if (pl< 0.f)  pl= 1.f;  else  pl= 1.f + pl;
-			bool pipe = sp > 0.f || sp1 > 0.f;
-			int wmin = pipe ? 5 : 1;  // min w steps  //par
-
-			int iw = max(1/*wmin*/, (int)(p * iWidthDiv0 / iLodDiv));  //* wid/widDiv..
-			DL.viW.push_back(iw);
-			int iwl = max(1, (int)(pl * iWidthDiv0 / iLodDiv));
-
-			//  length steps  |
-			Real len = GetSegLen(seg);
-			int  il = int(len / fLenDim) / iwl * iwl + iwl;
-			Real lenAdd = 1.f / il;
-			
-			DL.viL.push_back(il);
-			DL.vSegLen.push_back(len);
-
-			ST.roadLen += len;  //#
-			if (pipe)
-			{	ST.rdPipe += len; //#
-				if (mP[seg].onPipe)  ST.rdOnPipe += len;  //#
-			}
-
-			///-  Merge conditions
-			DL.sumLenMrg += len;
-			//  mtr changes
-			int hid = mP[seg].idMtr, hid1 = mP[seg1].idMtr, hid0 = mP[seg0].idMtr;
-			LogR(toStr(sp0) + "  " + toStr(sp) + "  " + toStr(sp1));
-
-			//  merge road and pipe segs, don't merge transitions
-			if (sp != sp1 || sp != sp0  ||  hid != hid1 || hid != hid0)
-			{	DL.sumLenMrg = 0.f;  ++DL.mrgCnt;
-				DL.vbSegMrg.push_back(1);
-			}
-			else  //  onTer change
-			if (mP[seg].onTer != mP[seg1].onTer || mP[seg].onTer != mP[seg0].onTer)
-			{	DL.sumLenMrg = 0.f;  ++DL.mrgCnt;
-				DL.vbSegMrg.push_back(1);
-			}
-			else  if (DL.sumLenMrg >= setMrgLen)
-			{	DL.sumLenMrg -= setMrgLen;  ++DL.mrgCnt;
-				DL.vbSegMrg.push_back(1);  // bNew
-			}else
-				DL.vbSegMrg.push_back(0);  // merged
-			
-			LogR("seg "+toStr(seg)+"  iw "+toStr(iw)+"  il "+toStr(il)+"  pp "+toStr(sp));
-			
-			if (lod==0)
-				DL0.viLSteps0.push_back(il);
-
-
-			///  length <dir>  |
-			Vector3 vl = GetLenDir(seg, 0, lenAdd), vw;  vl.normalise();
-			Real ay = mP[seg].aYaw, ar = mP[seg].aRoll;
-			
-			///  width <dir>   ---
-			if (mP[seg].onTer && mP[seg1].onTer)  //  perpendicular on xz
-			{	vw = Vector3(vl.z, 0, -vl.x);  vw.normalise(); 
-				//mP[seg].angle = atan2(vl.z, -vl.x)*180.f/PI_d+90.f;  // set yaw..
-			}else
-				vw = GetRot(ay,ar);  // from angles
-				
-			///  normal <dir>  /
-			if (lod == 0)
-			{	Vector3 vn = vl.crossProduct(vw);  vn.normalise();
-				//if (vn.y < 0.f)  vn = -vn;  // always up y+
-				DL0.vnSeg0.push_back(vn);
-			}
-
-			{
-			Real wiMul = mP[seg].width;
-			if (editorAlign)  // wider road for align terrain tool
-				wiMul = wiMul*edWmul + edWadd;
-			vw *= wiMul;
-			DL.vwSeg.push_back(vw);
-			}
-
-			ST.avgWidth += mP[seg].width * len;  //#
-			if (!mP[seg].onTer || !mP[seg1].onTer)
-				ST.rdOnT += len;  //#
-
-
-			//  tc  seg il* len
-			Real l = 0.f;
-			for (int i = 0; i < il; ++i)  // length +1
-			{
-				//  length dir
-				Vector3 vl = GetLenDir(seg, l, l+lenAdd);
-				l += lenAdd;  DL.tcLen += vl.length();
-			}
-			DL.vSegTc.push_back(DL.tcLen);
-			if (lod == 0)  DL0.vSegTc0.push_back(DL.tcLen);
-		}
-
-		
-		LogR("--- seg prepass2  viwLS  ---");
-		for (int seg=0; seg < segs; ++seg)
-		{
-			int seg1 = getNext(seg);
-			int il = DL.viL[seg];
-			vector<int> viwL;
-
-			//  width steps per lenght point in cur seg
-			int iw0 = DL.viW[seg], iw1 = DL.viW[seg1];
-			//String ss="";
-			for (int i = -1; i <= il+1; ++i)  // length +1  +2-gap
-			{
-				int ii = max(0, min(il, i));
-				int iw = iw0 + (int)( Real(ii)/Real(il) * (iw1-iw0) );
-				//if (i==0 || i == il)
-				//	ss += toStr(iw)+" ";
-				viwL.push_back(iw);
-			}
-			int eq = iw1==iw0 ? 1 : 0;
-
-			DL.viwEq.push_back(eq);
-			DL.viwLS.push_back(viwL);
-			//if (!eq)  vbSegMrg[seg] = 1;
-			//LogR("seg "+toStr(seg)+"  >> "+ss);
-		}
+		PrepassLod(DL0,DL,ST,
+			fLenDim,
+			iLodDiv, isLod0,
+			editorAlign);
 
 		//#  stats  at lod0, whole road
 		bool stats = lod == 0 && iDirtyId == -1;
@@ -272,7 +147,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			st.OnPipe = ST.rdOnPipe / ST.roadLen * 100.f;
 			segsMrg = DL.mrgCnt;
 		}
-
+		
 
 		//--------------------------------------------------------------------------------------------------------------------------
 		///  segment
@@ -957,4 +832,147 @@ void SplineRoad::addTri(int f1, int f2, int f3, int i)
 		posBt.push_back((*at_pos)[f2]);
 		posBt.push_back((*at_pos)[f3]);
 	}
+}
+
+
+///  segment data pre pass
+//---------------------------------------------------------------------------------------
+void SplineRoad::PrepassLod(DataLod0& DL0, DataLod& DL, StatsLod& ST,
+	Real fLenDim,
+	int iLodDiv, bool isLod0, bool editorAlign)
+{
+	int segs = getNumPoints();
+		
+	//if (lod==0)?
+	LogR("--- seg prepass ---");
+	for (int seg=0; seg < segs; ++seg)
+	{
+		int seg1 = getNext(seg), seg0 = getPrev(seg);
+
+		//  width steps  --
+		Real sp = mP[seg].pipe, sp1 = mP[seg1].pipe, sp0 = mP[seg0].pipe;
+		Real p = sp * iwPmul, pl = max(sp, sp1)* iwPmul/4;
+		if (p < 0.f)  p = 1.f;  else  p = 1.f + p;
+		if (pl< 0.f)  pl= 1.f;  else  pl= 1.f + pl;
+		bool pipe = sp > 0.f || sp1 > 0.f;
+		int wmin = pipe ? 5 : 1;  // min w steps  //par
+
+		int iw = max(1/*wmin*/, (int)(p * iWidthDiv0 / iLodDiv));  //* wid/widDiv..
+		DL.viW.push_back(iw);
+		int iwl = max(1, (int)(pl * iWidthDiv0 / iLodDiv));
+
+		//  length steps  |
+		Real len = GetSegLen(seg);
+		int  il = int(len / fLenDim) / iwl * iwl + iwl;
+		Real lenAdd = 1.f / il;
+		
+		DL.viL.push_back(il);
+		DL.vSegLen.push_back(len);
+
+		ST.roadLen += len;  //#
+		if (pipe)
+		{	ST.rdPipe += len; //#
+			if (mP[seg].onPipe)  ST.rdOnPipe += len;  //#
+		}
+
+		///-  Merge conditions
+		DL.sumLenMrg += len;
+		//  mtr changes
+		int hid = mP[seg].idMtr, hid1 = mP[seg1].idMtr, hid0 = mP[seg0].idMtr;
+		LogR(toStr(sp0) + "  " + toStr(sp) + "  " + toStr(sp1));
+
+		//  merge road and pipe segs, don't merge transitions
+		if (sp != sp1 || sp != sp0  ||  hid != hid1 || hid != hid0)
+		{	DL.sumLenMrg = 0.f;  ++DL.mrgCnt;
+			DL.vbSegMrg.push_back(1);
+		}
+		else  //  onTer change
+		if (mP[seg].onTer != mP[seg1].onTer || mP[seg].onTer != mP[seg0].onTer)
+		{	DL.sumLenMrg = 0.f;  ++DL.mrgCnt;
+			DL.vbSegMrg.push_back(1);
+		}
+		else  if (DL.sumLenMrg >= setMrgLen)
+		{	DL.sumLenMrg -= setMrgLen;  ++DL.mrgCnt;
+			DL.vbSegMrg.push_back(1);  // bNew
+		}else
+			DL.vbSegMrg.push_back(0);  // merged
+		
+		LogR("seg "+toStr(seg)+"  iw "+toStr(iw)+"  il "+toStr(il)+"  pp "+toStr(sp));
+		
+		if (isLod0)
+			DL0.viLSteps0.push_back(il);
+
+
+		///  length <dir>  |
+		Vector3 vl = GetLenDir(seg, 0, lenAdd), vw;  vl.normalise();
+		Real ay = mP[seg].aYaw, ar = mP[seg].aRoll;
+		
+		///  width <dir>   ---
+		if (mP[seg].onTer && mP[seg1].onTer)  //  perpendicular on xz
+		{	vw = Vector3(vl.z, 0, -vl.x);  vw.normalise(); 
+			//mP[seg].angle = atan2(vl.z, -vl.x)*180.f/PI_d+90.f;  // set yaw..
+		}else
+			vw = GetRot(ay,ar);  // from angles
+			
+		///  normal <dir>  /
+		if (isLod0)
+		{	Vector3 vn = vl.crossProduct(vw);  vn.normalise();
+			//if (vn.y < 0.f)  vn = -vn;  // always up y+
+			DL0.vnSeg0.push_back(vn);
+		}
+
+		{
+		Real wiMul = mP[seg].width;
+		if (editorAlign)  // wider road for align terrain tool
+			wiMul = wiMul*edWmul + edWadd;
+		vw *= wiMul;
+		DL.vwSeg.push_back(vw);
+		}
+
+		ST.avgWidth += mP[seg].width * len;  //#
+		if (!mP[seg].onTer || !mP[seg1].onTer)
+			ST.rdOnT += len;  //#
+
+
+		//  tc  seg il* len
+		Real l = 0.f;
+		for (int i = 0; i < il; ++i)  // length +1
+		{
+			//  length dir
+			Vector3 vl = GetLenDir(seg, l, l+lenAdd);
+			l += lenAdd;  DL.tcLen += vl.length();
+		}
+		DL.vSegTc.push_back(DL.tcLen);
+		if (isLod0)
+			DL0.vSegTc0.push_back(DL.tcLen);
+	}
+
+	
+	LogR("--- seg prepass2  viwLS  ---");
+	for (int seg=0; seg < segs; ++seg)
+	{
+		int seg1 = getNext(seg);
+		int il = DL.viL[seg];
+		std::vector<int> viwL;
+
+		//  width steps per lenght point in cur seg
+		int iw0 = DL.viW[seg], iw1 = DL.viW[seg1];
+		//String ss="";
+		for (int i = -1; i <= il+1; ++i)  // length +1  +2-gap
+		{
+			int ii = max(0, min(il, i));
+			int iw = iw0 + (int)( Real(ii)/Real(il) * (iw1-iw0) );
+			//if (i==0 || i == il)
+			//	ss += toStr(iw)+" ";
+			viwL.push_back(iw);
+		}
+		int eq = iw1==iw0 ? 1 : 0;
+
+		DL.viwEq.push_back(eq);
+		DL.viwLS.push_back(viwL);
+		//if (!eq)  vbSegMrg[seg] = 1;
+		//LogR("seg "+toStr(seg)+"  >> "+ss);
+	}
+
+
 }
