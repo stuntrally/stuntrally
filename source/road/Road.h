@@ -93,8 +93,9 @@ public:
 	const Ogre::String& getMtrStr(int seg);  bool isPipe(int seg);
 	
 	//  point sel
-	void PrevPoint(),NextPoint(), FirstPoint(),LastPoint(), ChoosePoint();
-	void SelAddPoint(),SelClear(),SelAll(), CopyNewPoint();  int GetSelCnt();
+	void PrevPoint(),NextPoint(), FirstPoint(),LastPoint(), ChoosePoint();  // choose one
+	void CopyNewPoint();  // set new point params from chosen
+	void SelAddPoint(),SelClear(),SelAll();  int GetSelCnt();  // select many
 	bool CopySel();  void Paste(bool reverse=false), DelSel();
 
 	//  util

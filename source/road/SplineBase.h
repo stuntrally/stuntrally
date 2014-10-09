@@ -86,19 +86,16 @@ public:
 	Ogre::Real interpARoll(int id, Ogre::Real t) const;
 	
 	void recalcTangents(), preAngle(int i);
-	void setAutoCalculate(bool autoCalc);
 	
 	SplinePoint& getPoint(int index);
 	
 	//  get next, prev points
 	inline int getPrev(int id) const {  int s = (int)mP.size();  return isLooped ?  (id-1+s) % s : std::max(0,   id-1);  }
 	inline int getNext(int id) const {  int s = (int)mP.size();  return isLooped ?  (id+1) % s   : std::min(s-1, id+1);  }
-	//inline int getPrev(int id, int sub=1) const {  int s = (int)mP.size();  return isLooped ?  (id-sub+s) % s : std::max(0, id-sub);    }
-	//inline int getNext(int id, int add=1) const {  int s = (int)mP.size();  return isLooped ?  (id+add) % s   : std::min(s-1, id+add);  }
 
 
 protected:
-	bool mAutoCalc, isLooped;  //=closed
+	bool isLooped;  //=closed
 
 	std::deque<SplinePoint> mP;  // points
 	static std::deque<SplinePoint> mPc;  // copy points

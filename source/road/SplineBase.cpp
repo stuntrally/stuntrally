@@ -59,7 +59,7 @@ float TerUtil::GetAngle(float x, float y)
 
 //  ctor
 SplineBase::SplineBase() :
-	mAutoCalc(1), isLooped(1/**/)
+	isLooped(1/**/)
 {	}
 
 SplineBase::~SplineBase()
@@ -198,8 +198,8 @@ void SplineBase::setPos(int index, const Vector3& value)
 {
 	//assert (index < mPos.size() && "index out of bounds");
 	mP[index].pos = value;
-	if (mAutoCalc)
-		recalcTangents();
+
+	recalcTangents();
 }
 
 SplinePoint& SplineBase::getPoint(int index)
@@ -220,13 +220,8 @@ void SplineBase::addPoint(const Vector3& p)
 	SplinePoint pt;
 	pt.pos = p;  //..
 	mP.push_back(pt);
-	if (mAutoCalc)
-		recalcTangents();
-}
 
-void SplineBase::setAutoCalculate(bool autoCalc)
-{
-	mAutoCalc = autoCalc;
+	recalcTangents();
 }
 
 
