@@ -116,10 +116,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	///  LOD
 	///--------------------------------------------------------------------------------------------------------------------------
 
-	//>  data at lod 0
-	vector<int> viLSteps0;
-	vector<Real> vSegTc0;
-	vector<Vector3> vnSeg0;  // normals
+	DataLod0 DL0;
 
 	const int ciLodDivs[LODs] = {1,2,4,8};
 
@@ -129,24 +126,14 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		Real fLenDim = fLenDim0 * iLodDiv;
 		LogR("LOD: "+toStr(lod)+" ---");
 
+		DataLod DL;
+		StatsLod ST;
+
 
 		///  segment data pre pass
 		//---------------------------------------------------------------------------------------
-
-		//>  data at cur lod
-		vector<int> viL, viW;  // vi num steps for seg Length/Width
-		vector<int> vbSegMrg;  // bool 0 if seg merged, 1 if new
-		vector<Real> vSegTc, vSegLen;
-		vector<Vector3> vwSeg;
-		vector<vector <int> > viwLS;  //  width steps per length point, for each seg
-		vector<int> viwEq;			// 1 if equal width steps at whole length, in seg
-
-		Real sumLenMrg = 0.f, ltc = 0.f;  int mrgGrp = 0;  //#  stats
-		Real roadLen = 0.f, rdOnT = 0.f, rdPipe = 0.f, rdOnPipe = 0.f,
-			avgWidth = 0.f, stMaxH = FLT_MIN, stMinH = FLT_MAX;
-				
 		
-		//if (lod == 0)?
+		//if (lod==0)?
 		LogR("--- seg prepass ---");
 		for (int seg=0; seg < segs; ++seg)
 		{
@@ -161,52 +148,53 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			int wmin = pipe ? 5 : 1;  // min w steps  //par
 
 			int iw = max(1/*wmin*/, (int)(p * iWidthDiv0 / iLodDiv));  //* wid/widDiv..
-			viW.push_back(iw);
+			DL.viW.push_back(iw);
 			int iwl = max(1, (int)(pl * iWidthDiv0 / iLodDiv));
 
 			//  length steps  |
 			Real len = GetSegLen(seg);
 			int  il = int(len / fLenDim) / iwl * iwl + iwl;
-			Real la = 1.f / il;
-			viL.push_back(il);
-			vSegLen.push_back(len);
+			Real lenAdd = 1.f / il;
+			
+			DL.viL.push_back(il);
+			DL.vSegLen.push_back(len);
 
-			roadLen += len;  //#
+			ST.roadLen += len;  //#
 			if (pipe)
-			{	rdPipe += len; //#
-				if (mP[seg].onPipe)  rdOnPipe += len;  //#
+			{	ST.rdPipe += len; //#
+				if (mP[seg].onPipe)  ST.rdOnPipe += len;  //#
 			}
 
 			///-  Merge conditions
-			sumLenMrg += len;
+			DL.sumLenMrg += len;
 			//  mtr changes
 			int hid = mP[seg].idMtr, hid1 = mP[seg1].idMtr, hid0 = mP[seg0].idMtr;
 			LogR(toStr(sp0) + "  " + toStr(sp) + "  " + toStr(sp1));
 
 			//  merge road and pipe segs, don't merge transitions
 			if (sp != sp1 || sp != sp0  ||  hid != hid1 || hid != hid0)
-			{	sumLenMrg = 0.f;  ++mrgGrp;
-				vbSegMrg.push_back(1);
+			{	DL.sumLenMrg = 0.f;  ++DL.mrgCnt;
+				DL.vbSegMrg.push_back(1);
 			}
 			else  //  onTer change
 			if (mP[seg].onTer != mP[seg1].onTer || mP[seg].onTer != mP[seg0].onTer)
-			{	sumLenMrg = 0.f;  ++mrgGrp;
-				vbSegMrg.push_back(1);
+			{	DL.sumLenMrg = 0.f;  ++DL.mrgCnt;
+				DL.vbSegMrg.push_back(1);
 			}
-			else  if (sumLenMrg >= setMrgLen)
-			{	sumLenMrg -= setMrgLen;  ++mrgGrp;
-				vbSegMrg.push_back(1);  // bNew
+			else  if (DL.sumLenMrg >= setMrgLen)
+			{	DL.sumLenMrg -= setMrgLen;  ++DL.mrgCnt;
+				DL.vbSegMrg.push_back(1);  // bNew
 			}else
-				vbSegMrg.push_back(0);  // merged
+				DL.vbSegMrg.push_back(0);  // merged
 			
 			LogR("seg "+toStr(seg)+"  iw "+toStr(iw)+"  il "+toStr(il)+"  pp "+toStr(sp));
 			
 			if (lod==0)
-				viLSteps0.push_back(il);
+				DL0.viLSteps0.push_back(il);
 
 
 			///  length <dir>  |
-			Vector3 vl = GetLenDir(seg, 0, la), vw;  vl.normalise();
+			Vector3 vl = GetLenDir(seg, 0, lenAdd), vw;  vl.normalise();
 			Real ay = mP[seg].aYaw, ar = mP[seg].aRoll;
 			
 			///  width <dir>   ---
@@ -220,30 +208,32 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			if (lod == 0)
 			{	Vector3 vn = vl.crossProduct(vw);  vn.normalise();
 				//if (vn.y < 0.f)  vn = -vn;  // always up y+
-				vnSeg0.push_back(vn);
+				DL0.vnSeg0.push_back(vn);
 			}
 
+			{
 			Real wiMul = mP[seg].width;
 			if (editorAlign)  // wider road for align terrain tool
 				wiMul = wiMul*edWmul + edWadd;
 			vw *= wiMul;
-			vwSeg.push_back(vw);
+			DL.vwSeg.push_back(vw);
+			}
 
-			avgWidth += mP[seg].width * len;  //#
+			ST.avgWidth += mP[seg].width * len;  //#
 			if (!mP[seg].onTer || !mP[seg1].onTer)
-				rdOnT += len;  //#
+				ST.rdOnT += len;  //#
 
 
-			//  tcs  seg il* len
+			//  tc  seg il* len
 			Real l = 0.f;
 			for (int i = 0; i < il; ++i)  // length +1
 			{
 				//  length dir
-				Vector3 vl = GetLenDir(seg, l, l+la);
-				l += la;  ltc += vl.length();
+				Vector3 vl = GetLenDir(seg, l, l+lenAdd);
+				l += lenAdd;  DL.tcLen += vl.length();
 			}
-			vSegTc.push_back(ltc);
-			if (lod == 0)  vSegTc0.push_back(ltc);
+			DL.vSegTc.push_back(DL.tcLen);
+			if (lod == 0)  DL0.vSegTc0.push_back(DL.tcLen);
 		}
 
 		
@@ -251,11 +241,11 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		for (int seg=0; seg < segs; ++seg)
 		{
 			int seg1 = getNext(seg);
-			int il = viL[seg];
+			int il = DL.viL[seg];
 			vector<int> viwL;
 
 			//  width steps per lenght point in cur seg
-			int iw0 = viW[seg], iw1 = viW[seg1];
+			int iw0 = DL.viW[seg], iw1 = DL.viW[seg1];
 			//String ss="";
 			for (int i = -1; i <= il+1; ++i)  // length +1  +2-gap
 			{
@@ -267,8 +257,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			}
 			int eq = iw1==iw0 ? 1 : 0;
 
-			viwEq.push_back(eq);
-			viwLS.push_back(viwL);
+			DL.viwEq.push_back(eq);
+			DL.viwLS.push_back(viwL);
 			//if (!eq)  vbSegMrg[seg] = 1;
 			//LogR("seg "+toStr(seg)+"  >> "+ss);
 		}
@@ -276,13 +266,12 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		//#  stats  at lod0, whole road
 		bool stats = lod == 0 && iDirtyId == -1;
 		if (stats)
-		{	st.Length = roadLen;  st.WidthAvg = avgWidth / roadLen;
-			st.OnTer = rdOnT / roadLen * 100.f;
-			st.Pipes = rdPipe / roadLen * 100.f;
-			st.OnPipe = rdOnPipe / roadLen * 100.f;
-			segsMrg = mrgGrp;
+		{	st.Length = ST.roadLen;  st.WidthAvg = ST.avgWidth / ST.roadLen;
+			st.OnTer = ST.rdOnT / ST.roadLen * 100.f;
+			st.Pipes = ST.rdPipe / ST.roadLen * 100.f;
+			st.OnPipe = ST.rdOnPipe / ST.roadLen * 100.f;
+			segsMrg = DL.mrgCnt;
 		}
-		Real bankAvg = 0.f, bankMax = 0.f;  //#
 
 
 		//--------------------------------------------------------------------------------------------------------------------------
@@ -293,7 +282,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		vector<Vector4> clr0/*empty*/, clr, clrB;
 		vector<Vector3> pos,norm, posW,normW, posC,normC, posLod, posB,normB;
 		vector<Vector2> tcs, tcsW, tcsC, tcsB;
-		Real tc1 = 0;  ltc = 0;
+		Real tc1 = 0;  DL.tcLen = 0;
 		int iLmrg = 0, iLmrgW = 0, iLmrgC = 0, iLmrgB = 0;
 		Vector3 vlOld;
 
@@ -315,8 +304,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 			if (bMerge)
 			{
-				bNew = (segM == sMin/*1st*/)	|| vbSegMrg[seg];
-				bNxt = (segM+1 == sMax/*last*/) || vbSegMrg[seg1];  // next is new
+				bNew = (segM == sMin/*1st*/)	|| DL.vbSegMrg[seg];
+				bNxt = (segM+1 == sMax/*last*/) || DL.vbSegMrg[seg1];  // next is new
 			}
 			
 			if (bNew)  //> new seg data
@@ -364,8 +353,10 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			const int iwC = colN;  // column  polygon steps
 						
 			//  steps len
-			int il = viL[seg];        Real la = 1.f / il;
-			int il0= viLSteps0[seg];  Real la0= 1.f / il0 * skLen;
+			int il = DL.viL[seg];
+			int il0= DL0.viLSteps0[seg];
+			Real la = 1.f / il;
+			Real la0= 1.f / il0 * skLen;
 			Real l = -la0;
 
 			//  width
@@ -379,8 +370,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 			while (ar21 > asw)  ar21 -= 2*asw;	while (ar21 <-asw)  ar21 += 2*asw;
 
 			//  tc begin,range
-			Real tcBeg = (seg > 0) ? vSegTc[seg-1] : 0.f,  tcEnd  = vSegTc[seg],  tcRng  = tcEnd - tcBeg;
-			Real tcBeg0= (seg > 0) ? vSegTc0[seg-1]: 0.f,  tcEnd0 = vSegTc0[seg], tcRng0 = tcEnd0 - tcBeg0;
+			Real tcBeg = (seg > 0) ? DL.vSegTc[seg-1]       : 0.f,  tcEnd  = DL.vSegTc[seg],        tcRng  = tcEnd - tcBeg;
+			Real tcBeg0= (seg > 0) ? DL0.vSegTc0[seg-1]: 0.f,  tcEnd0 = DL0.vSegTc0[seg], tcRng0 = tcEnd0 - tcBeg0;
 			Real tcRmul = tcRng0 / tcRng;
 			
 
@@ -398,8 +389,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				Real len = vl.length();  vl.normalise();
 				
 				//  len tc
-				if (i <= 0)  ltc = 0;
-				Real tc = ltc * tcRmul + tcBeg0;
+				if (i <= 0)  DL.tcLen = 0;
+				Real tc = DL.tcLen * tcRmul + tcBeg0;
 				//  skirt tc
 				if (i == -1)	tc =-skLen* tcRmul + tcBeg0;
 				if (i == il+1)  tc = skLen* tcRmul + tcEnd0;
@@ -428,20 +419,20 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 				///  normal <dir>  /
 				Vector3 vn = vl.crossProduct(vw);  vn.normalise();
-				if (i==0)	vn = vnSeg0[seg];  // seg start=end
-				if (i==il)	vn = vnSeg0[seg1];
+				if (i==0)	vn = DL0.vnSeg0[seg];  // seg start=end
+				if (i==il)	vn = DL0.vnSeg0[seg1];
 				//Vector3 vnu = vn;  if (vnu.y < 0)  vnu = -vnu;  // always up y+
 
 
 				//  width steps <->
 				//int iw = viW[seg];
-				int iw = viwLS[seg][i+1];  //i = -1 .. il+1
+				int iw = DL.viwLS[seg][i+1];  //i = -1 .. il+1
 
 				//  pipe width
 				Real l01 = max(0.f, min(1.f, Real(i)/Real(il) ));
 				Real p1 = mP[seg].pipe, p2 = mP[seg1].pipe;
 				Real fPipe = p1 + (p2-p1)*l01;
-				bool trans = (p1 == 0.f || p2 == 0.f) && !viwEq[seg];
+				bool trans = (p1 == 0.f || p2 == 0.f) && !DL.viwEq[seg];
 				Real trp = (p1 == 0.f) ? 1.f - l01 : l01;
 				//LogR("   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw)
 				//	/*+(bNew?"  New ":"") +(bNxt?"  Nxt ":"")/**/);
@@ -507,8 +498,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 						tcsB.push_back(vtc);  clrB.push_back(c);
 					}					
 					//#  stats
-					if (vP.y < stMinH)  stMinH = vP.y;
-					if (vP.y > stMaxH)  stMaxH = vP.y;
+					if (vP.y < ST.stMinH)  ST.stMinH = vP.y;
+					if (vP.y > ST.stMaxH)  ST.stMaxH = vP.y;
 					if (w==w0)  vH0 = vP;  //#
 					if (w==w1)  vH1 = vP;
 				}
@@ -516,8 +507,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				if (lod==0 && i==0)
 				{
 					float h = (vH0.y - vH1.y), w = vH0.distance(vH1), d = fabs(h/w), a = asin(d)*180.f/PI_d;
-					bankAvg += a;
-					if (a > bankMax)  bankMax = a;
+					ST.bankAvg += a;
+					if (a > ST.bankMax)  ST.bankMax = a;
 					//LogO("RD seg :" + toStr(seg)+ "  h " + fToStr(h,1,3)
 					//	+ "  w " + fToStr(w,1,3)+ "  d " + fToStr(d,1,3)+ "  a " + fToStr(a,1,3) );
 				}
@@ -586,9 +577,9 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				
 				
 				if (i == -1 || i == il)  // add len
-				{	l += la0;  ltc += len;  }
+				{	l += la0;  DL.tcLen += len;  }
 				else
-				{	l += la;  ltc += len;  }
+				{	l += la;  DL.tcLen += len;  }
 			}
 			//  Length  vertices
 			//------------------------------------------------------------------------------------
@@ -596,7 +587,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 			//  lod vis points
 			if (lod == 0)
-			{	int lps = max(2, (int)(vSegLen[seg] / lposLen));
+			{	int lps = max(2, (int)(DL.vSegLen[seg] / lposLen));
 
 				for (int p=0; p <= lps; ++p)
 				{
@@ -625,10 +616,10 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 				int iiw = 0;  //LogR( " __idx");
 
 				//  equal width steps
-				if (viwEq[seg]==1)
+				if (DL.viwEq[seg]==1)
 					for (int i = 0; i < iLmrg-1; ++i)  // length-1 +2gap
 					{
-						int iw = viW[seg];  // grid  w-1 x l-1 x2 tris
+						int iw = DL.viW[seg];  // grid  w-1 x l-1 x2 tris
 						for (int w=0; w < iw; ++w)  // width-1
 						{
 							//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
@@ -642,7 +633,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 					//  pipe, diff width_
 					for (int i = 0; i < iLmrg-1; ++i)  // length-1 +2gap
 					{
-						int iw = viwLS[seg][i], iw1 = viwLS[seg][i+1];
+						int iw = DL.viwLS[seg][i], iw1 = DL.viwLS[seg][i+1];
 						int sw = iw1 < iw ? 1 : 0;
 						//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
 						
@@ -925,9 +916,9 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		//#  stats
 		if (stats)
 		{
-			st.HeightDiff = max(0.f, stMaxH - stMinH);
-			st.bankAvg = bankAvg / segs;
-			st.bankMax = bankMax;
+			st.HeightDiff = max(0.f, ST.stMaxH - ST.stMinH);
+			st.bankAvg = ST.bankAvg / segs;
+			st.bankMax = ST.bankMax;
 			//LogO("RD bank angle:  avg "+fToStr(st.bankAvg,1,3)+"  max "+fToStr(st.bankMax,1,3));
 		}
 	}

@@ -184,6 +184,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		a = n->Attribute("tcP");		if (a)  tcMulP = s2r(a);
 		a = n->Attribute("tcPW");		if (a)  tcMulPW = s2r(a);
 		a = n->Attribute("tcC");		if (a)  tcMulC = s2r(a);
+
 		a = n->Attribute("lenDim");		if (a)  fLenDim0 = s2r(a);
 		a = n->Attribute("widthSteps");	if (a)  iWidthDiv0 = s2i(a);
 		a = n->Attribute("heightOfs");	if (a)  fHeight = s2r(a);

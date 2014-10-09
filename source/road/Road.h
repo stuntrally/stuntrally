@@ -93,24 +93,72 @@ public:
 	
 
 private:
+#define vec std::vector
+
 	//  mesh create  -------
 	void CreateMesh(Ogre::SubMesh* submesh, Ogre::AxisAlignedBox& aabox,
-		const std::vector<Ogre::Vector3>& pos, const std::vector<Ogre::Vector3>& norm, const std::vector<Ogre::Vector4>& clr,
-		const std::vector<Ogre::Vector2>& tcs, const std::vector<Ogre::uint16>& idx, Ogre::String sMtrName);
+		const vec<Ogre::Vector3>& pos, const vec<Ogre::Vector3>& norm, const vec<Ogre::Vector4>& clr,
+		const vec<Ogre::Vector2>& tcs, const vec<Ogre::uint16>& idx, Ogre::String sMtrName);
 	void AddMesh(Ogre::MeshPtr mesh, Ogre::String sMesh, const Ogre::AxisAlignedBox& aabox,
 		Ogre::Entity** pEnt, Ogre::SceneNode** pNode, Ogre::String sEnd);
 
-	std::vector<Ogre::uint16> idx, idxB;	// mesh indices
+	vec<Ogre::uint16> idx, idxB;	// mesh indices
 
-	std::vector<Ogre::Vector3> posBt;  // for bullet trimesh
-	std::vector<class btTriangleMesh*> vbtTriMesh;  // for delete
+	vec<Ogre::Vector3> posBt;  // for bullet trimesh
+	vec<class btTriangleMesh*> vbtTriMesh;  // for delete
 
-	std::vector<Ogre::Vector3>* at_pos;
+	vec<Ogre::Vector3>* at_pos;
 
 	//  add triangle, with index check
 	inline void addTri(int f1, int f2, int f3, int i);
 	int at_size, at_ilBt;  bool bltTri,blendTri;  // pars for addTri
+	
+	
+	///  ***  Rebuild Geom DATA  ***
+	//---------------------------------------------------------------------------------------
+	
+	struct DataLod0  // at Lod 0
+	{
+		vec<int> viLSteps0;
+		vec<Ogre::Real> vSegTc0;  // tex coords
+		vec<Ogre::Vector3> vnSeg0;  // normals
+	};
 
+	struct DataLod  // for current Lod
+	{
+		//>  data at cur lod
+		vec<int> viL, viW;  // num steps for seg Length, Width
+		vec<int> vbSegMrg;  // bool 0 if seg merged, 1 if new
+		vec<Ogre::Real> vSegTc, vSegLen;
+		vec<Ogre::Vector3> vwSeg;
+		vec<vec <int> > viwLS;  //  width steps per length point, for each seg
+		vec<int> viwEq;			// 1 if equal width steps at whole length, in seg
+
+		Ogre::Real tcLen;      // total tex coord length u
+		Ogre::Real sumLenMrg;  // total length to determine merging
+		int mrgCnt;            // stats, merges counter
+		
+		DataLod()
+			:tcLen(0.f), sumLenMrg(0.f), mrgCnt(0)
+		{	}
+	};
+	
+	struct StatsLod  // stats for cuurent Lod
+	{	//#  stats
+		Ogre::Real roadLen, rdOnT, rdPipe, rdOnPipe;
+		Ogre::Real avgWidth, stMaxH, stMinH;
+		Ogre::Real bankAvg, bankMax;
+
+		StatsLod()
+			:roadLen(0.f), rdOnT(0.f), rdPipe(0.f), rdOnPipe(0.f)
+			,avgWidth(0.f), stMaxH(FLT_MIN), stMinH(FLT_MAX)
+			,bankAvg(0.f), bankMax(0.f)
+		{	}
+	};
+	
+	//---------------------------------------------------------------------------------------
+	
+#undef vec
 
 //  vars  -----------
 	friend class App;
