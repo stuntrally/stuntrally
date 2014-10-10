@@ -28,16 +28,16 @@ const static int WFid[6][3] = {{2,1,0},{3,2,0},{5,4,7},{6,5,7}, {7,3,0},{4,3,7}}
 
 struct stWiPntW {  Real x,y, uv, nx,ny;  };  // wall width points
 const static int ciwW = 7;  // wall  width steps - types..
-const static stWiPntW wiPntW[ciwW+1][2] = {  // section shape
+const static stWiPntW wiPntW[ciwW+1][3] = {  // section shape
 	//  normal road                     //  pipe wall
-	{{-0.5f, -0.0f, 0.0f,  1.0f, 0.0f}, {-0.28f, 0.68f,0.0f, -1.0f, 0.0f}},
-	{{-0.5f,  1.2f, 0.5f,  0.5f, 0.5f}, {-0.28f, 0.5f, 0.2f, -0.5f, 0.5f}},
-	{{-0.56f, 1.2f, 0.2f, -0.5f, 0.5f}, {-0.28f, 0.0f, 0.2f, -0.5f, 0.0f}},
-	{{-0.56f,-0.9f, 1.6f, -0.5f,-0.5f}, {-0.2f, -0.9f, 0.5f, -0.1f,-0.5f}},
-	{{ 0.56f,-0.9f, 3.0f,  0.5f,-0.5f}, { 0.2f, -0.9f, 0.5f,  0.1f,-0.5f}},
-	{{ 0.56f, 1.2f, 1.6f,  0.5f, 0.5f}, { 0.28f, 0.0f, 0.2f,  0.5f, 0.0f}},
-	{{ 0.5f,  1.2f, 0.2f, -0.5f, 0.5f}, { 0.28f, 0.5f, 0.2f,  0.5f, 0.5f}},
-	{{ 0.5f, -0.0f, 0.5f, -1.0f, 0.0f}, { 0.28f, 0.68f,0.2f,  1.0f, 0.0f}}};
+	{{-0.5f, -0.0f, 0.0f,  1.0f, 0.0f}, {-0.28f, 0.68f,0.0f, -1.0f, 0.0f}, {-0.14f, 1.5f, 0.0f, -1.0f, 0.0f}},
+	{{-0.5f,  1.2f, 0.5f,  0.5f, 0.5f}, {-0.28f, 0.5f, 0.2f, -0.5f, 0.5f}, {-0.14f, 1.4f, 0.2f, -0.5f, 0.5f}},
+	{{-0.56f, 1.2f, 0.2f, -0.5f, 0.5f}, {-0.28f, 0.0f, 0.2f, -0.5f, 0.0f}, {-0.14f, 1.3f, 0.2f, -0.5f, 0.0f}},
+	{{-0.56f,-0.9f, 1.6f, -0.5f,-0.5f}, {-0.2f, -0.9f, 0.5f, -0.1f,-0.5f}, {-0.1f,  1.2f, 0.5f, -0.1f,-0.5f}},
+	{{ 0.56f,-0.9f, 3.0f,  0.5f,-0.5f}, { 0.2f, -0.9f, 0.5f,  0.1f,-0.5f}, { 0.1f,  1.2f, 0.5f,  0.1f,-0.5f}},
+	{{ 0.56f, 1.2f, 1.6f,  0.5f, 0.5f}, { 0.28f, 0.0f, 0.2f,  0.5f, 0.0f}, { 0.14f, 1.3f, 0.2f,  0.5f, 0.0f}},
+	{{ 0.5f,  1.2f, 0.2f, -0.5f, 0.5f}, { 0.28f, 0.5f, 0.2f,  0.5f, 0.5f}, { 0.14f, 1.4f, 0.2f,  0.5f, 0.5f}},
+	{{ 0.5f, -0.0f, 0.5f, -1.0f, 0.0f}, { 0.28f, 0.68f,0.2f,  1.0f, 0.0f}, { 0.14f, 1.5f, 0.2f,  1.0f, 0.0f}}};
 
 
 
@@ -239,17 +239,18 @@ void SplineRoad::BuildSeg(
 				yTer = mTerrain ? mTerrain->getHeightAtWorldPosition(vP.x, 0, vP.z) : 0.f;
 			}
 			
-			//  skirt, gap patch_
+			//  skirt ends, gap patch_
 			if (i == -1 || i == il+1)
 				vP -= vn * skH;
 
 
-			//  color - for minimap preview
+			///  color  for minimap preview
 			//  ---~~~====~~~---
 			Real brdg = min(1.f, std::abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
 			Real h = max(0.f, 1.f - std::abs(vP.y - yTer) / 30.f);  // for grass dens tex
 			Vector4 c(brdg,fPipe, 1.f, h);
 			Vector2 vtc(tcw * 1.f /**2p..*/, tcL);
+
 
 			//>  data road
 			DLM.pos.push_back(vP);   DLM.norm.push_back(vN);
@@ -259,7 +260,8 @@ void SplineRoad::BuildSeg(
 				c.z = std::max(0.f, std::min(1.f, float(i)/il ));  //rand()%1000/1000.f;
 				DLM.posB.push_back(vP);   DLM.normB.push_back(vN);
 				DLM.tcsB.push_back(vtc);  DLM.clrB.push_back(c);
-			}					
+			}
+			
 			//#  stats
 			if (vP.y < ST.stMinH)  ST.stMinH = vP.y;
 			if (vP.y > ST.stMaxH)  ST.stMaxH = vP.y;
@@ -280,7 +282,8 @@ void SplineRoad::BuildSeg(
 
 		///  wall ]
 		//------------------------------------------------------------------------------------
-		Real uv = 0.f;  // tc long
+		Real uv = 0.f;  // tc
+		bool onP = mP[seg].onPipe==2;
 
 		if (!DS.onTer)
 		if (i >= 0 && i <= il)  // length +1
@@ -289,11 +292,17 @@ void SplineRoad::BuildSeg(
 			Real tcLW = tc * (DS.pipe ? g_tcMulPW : g_tcMulW);
 			for (int w=0; w <= ciwW; ++w)  // width +1
 			{
-				int pp = (p1 > 0.f || p2 > 0.f) ? 1 : 0;  //  pipe wall
+				int pp = (p1 > 0.f || p2 > 0.f) ? (onP ? 2 : 1) : 0;  //  pipe wall
 				stWiPntW wP = wiPntW[w][pp];
 
-				if (trans /*&& (w <= 3 || w >= iwW-3)*/)
-				{	wP.x *= 1 + trp;  wP.y *= 1 - trp;  }
+				if (trans)
+				{
+					//  road to pipe, wall transition
+					wP.x *= 1.f + 0.5f * trp;  // broader
+					wP.y *= 1.f - 1.f * trp;   // flat
+					if (!onP)
+						wP.y -= 0.02f * trp;  //par move start down
+				}
 				uv += wP.uv;
 
 				Vector3 vP = vL0 + vw * wP.x + vn * wP.y;
