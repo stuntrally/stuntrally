@@ -248,7 +248,7 @@
 	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
 	<Tag name="InputMinVal">Min. hodnota</Tag>
 	<Tag name="NetServer">Server</Tag>
-	<Tag name="Always">Vždy</Tag>
+	<Tag name="DoesntExist">Doesn't exist</Tag>
 	<Tag name="Brush_Offset">Posun</Tag>
 	<Tag name="NetworkError">Network Error</Tag>
 	<Tag name="InputMain">Hlavný</Tag>
@@ -382,7 +382,7 @@
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
 	<Tag name="Connected">Connected</Tag>
 	<Tag name="ssao">SSAO</Tag>
-	<Tag name="max">max</Tag>
+	<Tag name="Always">Vždy</Tag>
 	<Tag name="InputObjectsMove">1 - Move   LMB - plane XZ  RMB - Y height</Tag>
 	<Tag name="TweakOriginal">Original</Tag>
 	<Tag name="Stage">Etapa</Tag>
@@ -1033,6 +1033,7 @@
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
 	<Tag name="TipRoadDist">How far from road will the model appear.</Tag>
+	<Tag name="InputStart">Štart</Tag>
 	<Tag name="FramesPerSec">Snímok za sekundu</Tag>
 	<Tag name="ChampInfo2">Championships are usually long, have many tracks, but are easy to pass.</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
@@ -1078,6 +1079,7 @@
 	<Tag name="ColSat">Sýtosť</Tag>
 	<Tag name="Collis.">Collis.</Tag>
 	<Tag name="Scenery">Scenéria</Tag>
+	<Tag name="RenameAllOld">Rename All Old</Tag>
 	<Tag name="SC_Autumn">Jeseň</Tag>
 	<Tag name="Track">Trať</Tag>
 	<Tag name="ScaleMul">Scale multiplier</Tag>
@@ -1112,7 +1114,7 @@
 	<Tag name="InputMapBoost">Zosilnenie</Tag>
 	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>
 	<Tag name="NetChat">Konverzácia</Tag>
-	<Tag name="InputStart">Štart</Tag>
+	<Tag name="max">max</Tag>
 	<Tag name="NetGameProtocolError">Incompatible protocol versions between peers.</Tag>
 	<Tag name="InputBrushOffset">9,0  -  noise generate Offset (position)</Tag>
 	<Tag name="CarYear">Rok</Tag>

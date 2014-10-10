@@ -248,7 +248,7 @@
 	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
 	<Tag name="InputMinVal">Minimiarvo</Tag>
 	<Tag name="NetServer">Palvelin</Tag>
-	<Tag name="Always">Aina</Tag>
+	<Tag name="DoesntExist">Doesn't exist</Tag>
 	<Tag name="Brush_Offset">Siirtymä</Tag>
 	<Tag name="NetworkError">Network Error</Tag>
 	<Tag name="InputMain">Main</Tag>
@@ -382,7 +382,7 @@
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
 	<Tag name="Connected">Connected</Tag>
 	<Tag name="ssao">SSAO</Tag>
-	<Tag name="max">maksimi</Tag>
+	<Tag name="Always">Aina</Tag>
 	<Tag name="InputObjectsMove">1 - Move   LMB - plane XZ  RMB - Y height</Tag>
 	<Tag name="TweakOriginal">Original</Tag>
 	<Tag name="Stage">Vaihe</Tag>
@@ -1033,6 +1033,7 @@
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
 	<Tag name="TipRoadDist">How far from road will the model appear.</Tag>
+	<Tag name="InputStart">Aloita</Tag>
 	<Tag name="FramesPerSec">Frames per second</Tag>
 	<Tag name="ChampInfo2">Championships are usually long, have many tracks, but are easy to pass.</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
@@ -1078,6 +1079,7 @@
 	<Tag name="ColSat">Kylläisyys</Tag>
 	<Tag name="Collis.">Collis.</Tag>
 	<Tag name="Scenery">Scenery</Tag>
+	<Tag name="RenameAllOld">Rename All Old</Tag>
 	<Tag name="SC_Autumn">Autumn</Tag>
 	<Tag name="Track">Rata</Tag>
 	<Tag name="ScaleMul">Scale multiplier</Tag>
@@ -1112,7 +1114,7 @@
 	<Tag name="InputMapBoost">Boost</Tag>
 	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>
 	<Tag name="NetChat">Keskustelu</Tag>
-	<Tag name="InputStart">Aloita</Tag>
+	<Tag name="max">maksimi</Tag>
 	<Tag name="NetGameProtocolError">Vertaisten protokollaversiot ovat epäyhteensopivia.</Tag>
 	<Tag name="InputBrushOffset">9,0  -  noise generate Offset (position)</Tag>
 	<Tag name="CarYear">Vuosi</Tag>

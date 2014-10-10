@@ -248,7 +248,7 @@
 	<Tag name="UserDir">Benutzerpfad (Logs, Konfiguration, Benutzerdaten, etc.)</Tag>
 	<Tag name="InputMinVal">Min. Wert</Tag>
 	<Tag name="NetServer">Server</Tag>
-	<Tag name="Always">Immer</Tag>
+	<Tag name="DoesntExist">Doesn't exist</Tag>
 	<Tag name="Brush_Offset">Abstand</Tag>
 	<Tag name="NetworkError">Netzwerkfehler</Tag>
 	<Tag name="InputMain">Allgemein</Tag>
@@ -382,7 +382,7 @@
 	<Tag name="TipGrassPatchLengthMax">Maximale Länge eines Grasbüschels.</Tag>
 	<Tag name="Connected">Verbunden</Tag>
 	<Tag name="ssao">SSAO</Tag>
-	<Tag name="max">Max.</Tag>
+	<Tag name="Always">Immer</Tag>
 	<Tag name="InputObjectsMove">1 - Bewegen LMT - Ebene XZ RMT - Y Höhe</Tag>
 	<Tag name="TweakOriginal">Original</Tag>
 	<Tag name="Stage">Abschnitt</Tag>
@@ -1033,6 +1033,7 @@
 	<Tag name="BumpWavelen">Bump: WaveLen</Tag>
 	<Tag name="GhostHideDist">Geist bei zu geringer Entfernung ausblenden</Tag>
 	<Tag name="TipRoadDist">Entfernung vom Modell zur Straße.</Tag>
+	<Tag name="InputStart">Start</Tag>
 	<Tag name="FramesPerSec">Bildwiederholfrequenz</Tag>
 	<Tag name="ChampInfo2">Meisterschaften sind meistens lang, haben viele Strecken, aber sind einfach zu bestehen.</Tag>
 	<Tag name="TipModelMinScale">Minimale Skalierung des Modells.</Tag>
@@ -1078,6 +1079,7 @@
 	<Tag name="ColSat">Sättigung</Tag>
 	<Tag name="Collis.">Kollis.</Tag>
 	<Tag name="Scenery">Landschaft</Tag>
+	<Tag name="RenameAllOld">Rename All Old</Tag>
 	<Tag name="SC_Autumn">Herbst</Tag>
 	<Tag name="Track">Strecke</Tag>
 	<Tag name="ScaleMul">Skalierungsfaktor</Tag>
@@ -1112,7 +1114,7 @@
 	<Tag name="InputMapBoost">Boost</Tag>
 	<Tag name="TipTerLAngMin">Minimaler Winkel für die Geländeschicht.</Tag>
 	<Tag name="NetChat">Chat</Tag>
-	<Tag name="InputStart">Start</Tag>
+	<Tag name="max">Max.</Tag>
 	<Tag name="NetGameProtocolError">Inkompatibles Protokoll zwischen den Peers.</Tag>
 	<Tag name="InputBrushOffset">9,0 - Rauschversatz</Tag>
 	<Tag name="CarYear">Jahr</Tag>

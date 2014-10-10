@@ -248,7 +248,7 @@
 	<Tag name="UserDir">Путь пользователя (данные пользователя)</Tag>
 	<Tag name="InputMinVal">Мин. значение</Tag>
 	<Tag name="NetServer">Сервер</Tag>
-	<Tag name="Always">Всегда</Tag>
+	<Tag name="DoesntExist">Doesn't exist</Tag>
 	<Tag name="Brush_Offset">Смещение</Tag>
 	<Tag name="NetworkError">Ошибка сети</Tag>
 	<Tag name="InputMain">Главное</Tag>
@@ -382,7 +382,7 @@
 	<Tag name="TipGrassPatchLengthMax">Максимальная длина участка травы.</Tag>
 	<Tag name="Connected">Соединён</Tag>
 	<Tag name="ssao">SSAO</Tag>
-	<Tag name="max">макс.</Tag>
+	<Tag name="Always">Всегда</Tag>
 	<Tag name="InputObjectsMove">1 - движ. LMB - по XZ  RMB - Y высота</Tag>
 	<Tag name="TweakOriginal">Оригинал</Tag>
 	<Tag name="Stage">Этап</Tag>
@@ -1033,6 +1033,7 @@
 	<Tag name="BumpWavelen">Ухаб: длина волны</Tag>
 	<Tag name="GhostHideDist">Убрать призраков если близко</Tag>
 	<Tag name="TipRoadDist">Как далеко от дороги появиться модель.</Tag>
+	<Tag name="InputStart">Старт</Tag>
 	<Tag name="FramesPerSec">Кадров в секунду</Tag>
 	<Tag name="ChampInfo2">Обычно чемпионаты длинные, много треков, но легко пройти.</Tag>
 	<Tag name="TipModelMinScale">Минимальный масштаб модели.</Tag>
@@ -1078,6 +1079,7 @@
 	<Tag name="ColSat">Насыщен.</Tag>
 	<Tag name="Collis.">Столк.</Tag>
 	<Tag name="Scenery">Окружение</Tag>
+	<Tag name="RenameAllOld">Rename All Old</Tag>
 	<Tag name="SC_Autumn">Осень</Tag>
 	<Tag name="Track">Трек</Tag>
 	<Tag name="ScaleMul">Коэф. масштаба</Tag>
@@ -1112,7 +1114,7 @@
 	<Tag name="InputMapBoost">Турбо</Tag>
 	<Tag name="TipTerLAngMin">Начальный угол ландшафта для слоя.</Tag>
 	<Tag name="NetChat">Чат</Tag>
-	<Tag name="InputStart">Старт</Tag>
+	<Tag name="max">макс.</Tag>
 	<Tag name="NetGameProtocolError">Несовместимая версия протокола между ровнями.</Tag>
 	<Tag name="InputBrushOffset">9,0  -  ген. смещения шума (позиция)</Tag>
 	<Tag name="CarYear">Год</Tag>

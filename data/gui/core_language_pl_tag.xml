@@ -248,7 +248,7 @@
 	<Tag name="UserDir">Katalog użytkownika (logi, konfigi, dane, itp.)</Tag>
 	<Tag name="InputMinVal">Min. Wartość</Tag>
 	<Tag name="NetServer">Serwer</Tag>
-	<Tag name="Always">Zawsze</Tag>
+	<Tag name="DoesntExist">Doesn't exist</Tag>
 	<Tag name="Brush_Offset">Pozycja</Tag>
 	<Tag name="NetworkError">Błąd sieci</Tag>
 	<Tag name="InputMain">Główna</Tag>
@@ -382,7 +382,7 @@
 	<Tag name="TipGrassPatchLengthMax">Maksymalna wysokość trawy.</Tag>
 	<Tag name="Connected">Połączono</Tag>
 	<Tag name="ssao">SSAO</Tag>
-	<Tag name="max">maks</Tag>
+	<Tag name="Always">Zawsze</Tag>
 	<Tag name="InputObjectsMove">1 - Przesuń  LMB płasz. XZ  RMB - Y wysok.</Tag>
 	<Tag name="TweakOriginal">Oryginalny</Tag>
 	<Tag name="Stage">Etap</Tag>
@@ -1033,6 +1033,7 @@
 	<Tag name="BumpWavelen">Wyboje: Częstość</Tag>
 	<Tag name="GhostHideDist">Ukryj duchy, gdy odległość jest mniejsza od</Tag>
 	<Tag name="TipRoadDist">Jak daleko od drogi będzie się pojawiał model.</Tag>
+	<Tag name="InputStart">Start</Tag>
 	<Tag name="FramesPerSec">Klatki na sekundę</Tag>
 	<Tag name="ChampInfo2">Mistrzostwa są zazwyczaj długie, mają wiele tras, ale są łatwe do przejścia.</Tag>
 	<Tag name="TipModelMinScale">Minimalna skala modelu</Tag>
@@ -1078,6 +1079,7 @@
 	<Tag name="ColSat">Nasycenie</Tag>
 	<Tag name="Collis.">Kolizje</Tag>
 	<Tag name="Scenery">Sceneria</Tag>
+	<Tag name="RenameAllOld">Rename All Old</Tag>
 	<Tag name="SC_Autumn">Jesień</Tag>
 	<Tag name="Track">Trasa</Tag>
 	<Tag name="ScaleMul">Mnożnik skali</Tag>
@@ -1112,7 +1114,7 @@
 	<Tag name="InputMapBoost">Dopalacz</Tag>
 	<Tag name="TipTerLAngMin">Kąt początkowy terenu dla warstwy.</Tag>
 	<Tag name="NetChat">Rozmowa</Tag>
-	<Tag name="InputStart">Start</Tag>
+	<Tag name="max">maks</Tag>
 	<Tag name="NetGameProtocolError">Niekompatybilne wersje protokołu między graczami.</Tag>
 	<Tag name="InputBrushOffset">9,0 - przesunięcie generacji szumu (pozycja)</Tag>
 	<Tag name="CarYear">Rok</Tag>

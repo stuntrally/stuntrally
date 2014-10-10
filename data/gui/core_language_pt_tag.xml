@@ -248,7 +248,7 @@
 	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
 	<Tag name="InputMinVal">Valor Mín.</Tag>
 	<Tag name="NetServer">Servidor</Tag>
-	<Tag name="Always">Sempre</Tag>
+	<Tag name="DoesntExist">Doesn't exist</Tag>
 	<Tag name="Brush_Offset">Deslocamento</Tag>
 	<Tag name="NetworkError">Erro de rede</Tag>
 	<Tag name="InputMain">Principal</Tag>
@@ -382,7 +382,7 @@
 	<Tag name="TipGrassPatchLengthMax">Maximal grass patch length.</Tag>
 	<Tag name="Connected">Conectado</Tag>
 	<Tag name="ssao">SSAO</Tag>
-	<Tag name="max">max</Tag>
+	<Tag name="Always">Sempre</Tag>
 	<Tag name="InputObjectsMove">1 - Move   LMB - plane XZ  RMB - Y height</Tag>
 	<Tag name="TweakOriginal">Original</Tag>
 	<Tag name="Stage">Etapa</Tag>
@@ -1033,6 +1033,7 @@
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="GhostHideDist">Esconde fantasma se distância é menor que</Tag>
 	<Tag name="TipRoadDist">How far from road will the model appear.</Tag>
+	<Tag name="InputStart">Start</Tag>
 	<Tag name="FramesPerSec">Frames por segundo</Tag>
 	<Tag name="ChampInfo2">Campeonatos são geralmente longos, com muitas pistas, mas são fáceis de passar.</Tag>
 	<Tag name="TipModelMinScale">Model minimal scale.</Tag>
@@ -1078,6 +1079,7 @@
 	<Tag name="ColSat">Saturação</Tag>
 	<Tag name="Collis.">Colis.</Tag>
 	<Tag name="Scenery">Cenário</Tag>
+	<Tag name="RenameAllOld">Rename All Old</Tag>
 	<Tag name="SC_Autumn">Outono</Tag>
 	<Tag name="Track">Pista</Tag>
 	<Tag name="ScaleMul">Scale multiplier</Tag>
@@ -1112,7 +1114,7 @@
 	<Tag name="InputMapBoost">Turbo</Tag>
 	<Tag name="TipTerLAngMin">Starting terrain angle for layer.</Tag>
 	<Tag name="NetChat">Chat</Tag>
-	<Tag name="InputStart">Start</Tag>
+	<Tag name="max">max</Tag>
 	<Tag name="NetGameProtocolError">Versão incompatível do protocolo entre os jogadores.</Tag>
 	<Tag name="InputBrushOffset">9,0  -  noise generate Offset (position)</Tag>
 	<Tag name="CarYear">Ano</Tag>

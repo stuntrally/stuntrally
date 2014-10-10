@@ -248,7 +248,7 @@
 	<Tag name="UserDir">Percorso utente (log, config, user data, ecc.)</Tag>
 	<Tag name="InputMinVal">Valore min.</Tag>
 	<Tag name="NetServer">Server</Tag>
-	<Tag name="Always">Sempre</Tag>
+	<Tag name="DoesntExist">Doesn't exist</Tag>
 	<Tag name="Brush_Offset">Offset</Tag>
 	<Tag name="NetworkError">Errore di rete</Tag>
 	<Tag name="InputMain">Generale</Tag>
@@ -382,7 +382,7 @@
 	<Tag name="TipGrassPatchLengthMax">Lunghezza massima di patch erba.</Tag>
 	<Tag name="Connected">Connesso</Tag>
 	<Tag name="ssao">SSAO</Tag>
-	<Tag name="max">mass.</Tag>
+	<Tag name="Always">Sempre</Tag>
 	<Tag name="InputObjectsMove">1 - Muovi  LMB - spiana XZ  RMB - Y altezza</Tag>
 	<Tag name="TweakOriginal">Originale</Tag>
 	<Tag name="Stage">Stage</Tag>
@@ -1033,6 +1033,7 @@
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
 	<Tag name="TipRoadDist">Quanto distante dalla strada verrà visualizzato il modello.</Tag>
+	<Tag name="InputStart">Inizia</Tag>
 	<Tag name="FramesPerSec">Frame al secondo</Tag>
 	<Tag name="ChampInfo2">I campionati solitamente durano di più e sono composti da più piste, ma sono facilmente superabili.</Tag>
 	<Tag name="TipModelMinScale">Scala minima del modello.</Tag>
@@ -1078,6 +1079,7 @@
 	<Tag name="ColSat">Saturazione</Tag>
 	<Tag name="Collis.">Collis.</Tag>
 	<Tag name="Scenery">Scenario</Tag>
+	<Tag name="RenameAllOld">Rename All Old</Tag>
 	<Tag name="SC_Autumn">Autunno</Tag>
 	<Tag name="Track">Pista</Tag>
 	<Tag name="ScaleMul">Scala moltiplicatore</Tag>
@@ -1112,7 +1114,7 @@
 	<Tag name="InputMapBoost">Turbo</Tag>
 	<Tag name="TipTerLAngMin">Avvia angolo di terreno per layer.</Tag>
 	<Tag name="NetChat">Chat</Tag>
-	<Tag name="InputStart">Inizia</Tag>
+	<Tag name="max">mass.</Tag>
 	<Tag name="NetGameProtocolError">Versioni del protocollo incompatibili tra i peer.</Tag>
 	<Tag name="InputBrushOffset">9,0  - Offset genera rumore (posizione)</Tag>
 	<Tag name="CarYear">Anno</Tag>

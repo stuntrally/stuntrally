@@ -248,7 +248,7 @@
 	<Tag name="UserDir">Chemin utilisateur (journaux, fichiers de configuration, etc.)</Tag>
 	<Tag name="InputMinVal">Valeur Minimum</Tag>
 	<Tag name="NetServer">Serveur</Tag>
-	<Tag name="Always">Toujours</Tag>
+	<Tag name="DoesntExist">Doesn't exist</Tag>
 	<Tag name="Brush_Offset">Décalage</Tag>
 	<Tag name="NetworkError">Erreur réseau</Tag>
 	<Tag name="InputMain">Principal</Tag>
@@ -382,7 +382,7 @@
 	<Tag name="TipGrassPatchLengthMax">Longueur maximale de l'herbe.</Tag>
 	<Tag name="Connected">Connecté</Tag>
 	<Tag name="ssao">SSAO</Tag>
-	<Tag name="max">max</Tag>
+	<Tag name="Always">Toujours</Tag>
 	<Tag name="InputObjectsMove">1 - se déplacer Clic gauche - plane XZ Clic droit - hauteur Y</Tag>
 	<Tag name="TweakOriginal">Original</Tag>
 	<Tag name="Stage">Étape</Tag>
@@ -1033,6 +1033,7 @@
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="GhostHideDist">Cacher les fantômes s'ils sont à moins de</Tag>
 	<Tag name="TipRoadDist">À quelle distance de la route le modèle commencera à apparaître.</Tag>
+	<Tag name="InputStart">Démarrer</Tag>
 	<Tag name="FramesPerSec">Images par seconde</Tag>
 	<Tag name="ChampInfo2">Les championnats sont généralement longs, ont plusieurs circuits, mais sont faciles à réussir.</Tag>
 	<Tag name="TipModelMinScale">Taille minimum du modèle.</Tag>
@@ -1078,6 +1079,7 @@
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="Collis.">Collision</Tag>
 	<Tag name="Scenery">Scène</Tag>
+	<Tag name="RenameAllOld">Rename All Old</Tag>
 	<Tag name="SC_Autumn">Automne</Tag>
 	<Tag name="Track">Circuit</Tag>
 	<Tag name="ScaleMul">Multiplicateur d'échelle</Tag>
@@ -1112,7 +1114,7 @@
 	<Tag name="InputMapBoost">Boost</Tag>
 	<Tag name="TipTerLAngMin">Angle minimal du terrain afin que le calque s'affiche.</Tag>
 	<Tag name="NetChat">Discussion</Tag>
-	<Tag name="InputStart">Démarrer</Tag>
+	<Tag name="max">max</Tag>
 	<Tag name="NetGameProtocolError">Versions du protocole incompatibles entre les pairs.</Tag>
 	<Tag name="InputBrushOffset">9,0  -  noise generate Offset (position)</Tag>
 	<Tag name="CarYear">Année</Tag>
