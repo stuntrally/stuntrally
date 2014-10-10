@@ -323,7 +323,7 @@ void SplineEdit::ToggleOnTerrain()   ///  On Ter
 		Move(Vector3::ZERO);
 }
 
-void SplineEdit::ToggleColumns()      ///  Column
+void SplineEdit::ToggleColumn()      ///  Column
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
@@ -337,20 +337,23 @@ void SplineEdit::ToggleColumns()      ///  Column
 	Move(Vector3::ZERO);
 }
 
-void SplineEdit::ToggleOnPipe()       ///  On Pipe (for stats only)
+void SplineEdit::ToggleOnPipe(bool old)  ///  On Pipe  (old for stats only,  new also flips normal)
 {
+	#define onp(o)  old ? (o ? 0 : 1) : (o ? 0 : 2)
+	
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
-			mP[*it].onPipe = 1-mP[*it].onPipe;
-		return;  }
+			mP[*it].onPipe = onp(mP[*it].onPipe);
+		bSelChng = true;	return;  }
 
 	if (iChosen == -1)  {  // one
-			newP.onPipe = 1-newP.onPipe;  return;  }
+			newP.onPipe = onp(newP.onPipe);  return;  }
 
-	mP[iChosen].onPipe  = 1-mP[iChosen].onPipe;
+	mP[iChosen].onPipe  = onp(mP[iChosen].onPipe);
+	Move(Vector3::ZERO);
 }
 
-void SplineEdit::ToggleLoopChk()       ///  Loop chkR (for camera change)
+void SplineEdit::ToggleLoopChk()       ///  Loop chkR  (for camera change)
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)

@@ -37,7 +37,7 @@ public:
 	bool onTer;   // sticked on terrain
 	int cols;     // has column
 
-	int onPipe;   // for stats only (driven on pipe)
+	int onPipe;   // driven on pipe  0 off, 1 mark for stats only, 2 inverse normal too
 	int loopChk;  // chk is start or end of loop (for auto camera change)
 
 	//  next
@@ -154,8 +154,9 @@ public:
 	int GetSelCnt();  // select many
 
 	//  modify road point  ----
-	void ToggleOnTerrain(), ToggleColumns();
-	void ToggleOnPipe(), ToggleLoopChk();  // on chosen
+	void ToggleOnTerrain(), ToggleColumn();
+	void ToggleOnPipe(bool old=false);
+	void ToggleLoopChk();  // on chosen
 
 	void ChgMtrId(int relId);  // next
 	void ChgAngType(int relId), AngZero();

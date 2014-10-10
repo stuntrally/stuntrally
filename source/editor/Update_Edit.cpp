@@ -172,8 +172,8 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		rdVal[3]->setCaption(fToStr(sp.aYaw,1,3));
 		rdTxt[4]->setCaption(toStr(sp.aType)+" "+TR("#{Road_Angle"+csAngType[sp.aType]+"}"));
 		rdVal[5]->setCaption(fToStr(angSnap,0,1));
-		
-		rdTxt[6]->setCaption(sp.onPipe ? TR("#{Road_OnPipe}") : TR("#{Road_Pipe}"));
+													  // .old, mark
+		rdTxt[6]->setCaption(sp.onPipe ? (sp.onPipe==1 ?".":"")+ TR("#{Road_OnPipe}") : TR("#{Road_Pipe}"));
 		rdTxt[6]->setTextColour(sp.onPipe ? MyGUI::Colour(1.0,0.45,0.2) : MyGUI::Colour(0.86,0.86,0));
 		rdVal[6]->setCaption(sp.pipe==0.f ? "" : fToStr(sp.pipe,2,4));
 		

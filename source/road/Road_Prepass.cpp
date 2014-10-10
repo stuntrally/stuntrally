@@ -234,7 +234,6 @@ void SplineRoad::PrepassLod(
 		///  width <dir>   ---
 		if (mP[seg].onTer && mP[seg1].onTer)  //  perpendicular on xz
 		{	vw = Vector3(vl.z, 0, -vl.x);  vw.normalise(); 
-			//mP[seg].angle = atan2(vl.z, -vl.x)*180.f/PI_d+90.f;  // set yaw..
 		}else
 			vw = GetRot(ay,ar);  // from angles
 			
@@ -242,8 +241,8 @@ void SplineRoad::PrepassLod(
 		if (DL.isLod0)
 		{	Vector3 vn = vl.crossProduct(vw);  vn.normalise();
 			//  on pipe inv
-			//if (mP[seg].onPipe || mP[seg0].onPipe)
-				//vn = -vn;
+			if (mP[seg].onPipe==2)
+				vn = -vn;
 			DL0.v0_N.push_back(vn);
 		}
 

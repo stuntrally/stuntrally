@@ -174,22 +174,28 @@ void SplineRoad::BuildSeg(
 		bool onTer1 = DS.onTer || mP[seg].onTer && i==0 || mP[seg1].onTer && i==il;
 
 		///  normal <dir>  /
-		Vector3 vn = vl.crossProduct(vw);  vn.normalise();
-		if (i==0)	vn = DL0.v0_N[seg];  // seg start=end
+		Vector3 vn;
+		if (i==0)	vn = DL0.v0_N[seg];  else  // seg start=end
 		if (i==il)	vn = DL0.v0_N[seg1];
-		//Vector3 vnu = vn;  if (vnu.y < 0)  vnu = -vnu;  // always up y+
-
+		else
+		{	vn = vl.crossProduct(vw);  vn.normalise();
+			//  on pipe inv
+			if (mP[seg].onPipe==2)
+				vn = -vn;
+		}
+		
 
 		//  width steps <->
-		//int iw = viW[seg];
 		int iw = DL.v_iWL[seg][i+1];  //i = -1 .. il+1
 
-		//  pipe width
+		//  pipe amount (_)
 		Real l01 = max(0.f, min(1.f, Real(i)/Real(il) ));
 		Real p1 = mP[seg].pipe, p2 = mP[seg1].pipe;
 		Real fPipe = p1 + (p2-p1)*l01;
+		
 		bool trans = (p1 == 0.f || p2 == 0.f) && !DL.v_iwEq[seg];
 		Real trp = (p1 == 0.f) ? 1.f - l01 : l01;
+
 		//LogR("   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw)
 		//	/*+(bNew?"  New ":"") +(bNxt?"  Nxt ":"")/**/);
 		if (DS.hasBlend)
@@ -250,7 +256,7 @@ void SplineRoad::BuildSeg(
 			DLM.pos.push_back(vP);   DLM.norm.push_back(vN);
 			DLM.tcs.push_back(vtc);  DLM.clr.push_back(c);
 			if (DS.hasBlend)
-			{	// alpha, transition
+			{	//  alpha, blend 2nd mtr
 				c.z = std::max(0.f, std::min(1.f, float(i)/il ));  //rand()%1000/1000.f;
 				DLM.posB.push_back(vP);   DLM.normB.push_back(vN);
 				DLM.tcsB.push_back(vtc);  DLM.clrB.push_back(c);
