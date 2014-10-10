@@ -157,7 +157,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 			rdTxt[2]->setCaption(TR("#{Road_Roll}"));		rdKey[2]->setCaption("1 2");
 			rdTxt[3]->setCaption(TR("#{Road_Yaw}"));		rdKey[3]->setCaption("3 4");
 															rdKey[4]->setCaption(TR("#{InputRoadAngType}"));
-			rdTxt[5]->setCaption(TR("#{Road_Snap}"));		rdKey[5]->setCaption("5 6");
+			rdTxt[5]->setCaption(TR("#{Road_Snap}"));		rdKey[5]->setCaption("5");
 			rdTxt[6]->setCaption(TR("#{Road_Pipe}"));		rdKey[6]->setCaption("O P");//[ ]
 			rdTxt[7]->setCaption(TR("#{Road_Column}"));		rdKey[7]->setCaption("End");
 															rdKey[8]->setCaption("9 0");//- =

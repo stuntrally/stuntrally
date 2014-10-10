@@ -1295,10 +1295,10 @@
 
 	<!-- Road  Input  modify advanced  -->
 	<Tag name="InputRoadAngType">alt-1,2   - angles type</Tag>
-	<Tag name="InputRoadAngSnap">5,6   - angles snap</Tag>
+	<Tag name="InputRoadAngSnap">5   - angles snap decrease (shift - increase)</Tag>
 	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
 	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
-	<Tag name="InputRoadOnPipe">8   - mark as driven on pipe</Tag>
+	<Tag name="InputRoadOnPipe">8   - toggle on pipe (ctrl - mark only)</Tag>
 
 
 	<!-- Road  Input  (one)  -->

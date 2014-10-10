@@ -268,6 +268,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(3):  road->AddYaw(-1,angSnap,alt);  break;
 			case key(4):  road->AddYaw( 1,angSnap,alt);  break;
 		}
+		int snap = 0;
 		switch (skey)
 		{
 			//  choose 1
@@ -290,7 +291,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			//  cols
 			case key(END):  case key(KP_1):
 				if (ctrl)	road->LastPoint();
-				else		road->ToggleColumns();  break;
+				else		road->ToggleColumn();  break;
 
 			//  prev,next
 			case key(PAGEUP):  case key(KP_9):
@@ -330,11 +331,10 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 						else		road->ChgAngType(-1);  break;
 			case key(2):  if (alt)	road->ChgAngType(1);  break;
 
-			case key(7):	road->ToggleLoopChk();  break;  
-			case key(8):	road->ToggleOnPipe();  break;
+			case key(7):  road->ToggleLoopChk();  break;  
+			case key(8):  road->ToggleOnPipe(ctrl);  break;
 
-			case key(5):  iSnap = (iSnap-1+ciAngSnapsNum)%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];  break;
-			case key(6):  iSnap = (iSnap+1)%ciAngSnapsNum;                angSnap = crAngSnaps[iSnap];  break;
+			case key(5):  snap = shift ? 1 :-1;  break;
 			
 			case key(U):  AlignTerToRoad();  break;
 			
@@ -342,6 +342,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(N):  road->isLooped = !road->isLooped;
 				road->recalcTangents();  road->Rebuild(true);  break;
 		}
+		if (snap)
+		{	iSnap = (iSnap + (snap < 0 ? -1+ciAngSnapsNum : 1))%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];	}
 	}
 
 	//  ter brush shape
