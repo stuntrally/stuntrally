@@ -153,14 +153,14 @@ private:
 	struct DataLod   // for current Lod
 	{
 		//>  data at cur lod
-		std::vector<int>  v_iL, v_iW;  // num steps for seg Length, Width
+		std::vector<int>  v_iL, v_iW;  // num Length and Width steps for each seg
 		std::vector<int>  v_bMerge;    // bool 0 if seg merged, 1 if new
 		
-		std::vector<Ogre::Real>     v_Tc, v_Len;
-		std::vector<Ogre::Vector3>  v_W;
+		std::vector<Ogre::Real>     v_tc, v_len;  // total length
+		std::vector<Ogre::Vector3>  v_W;   // width dir
 		
-		std::vector<std::vector <int> >  v_iwLS;  //  width steps per length point, for each seg
-		std::vector<int>  v_iwEq;	             // 1 if equal width steps at whole length, in seg
+		std::vector<std::vector <int> >  v_iWL;  //  width steps per length point, for each seg
+		std::vector<int>  v_iwEq;	   // 1 if equal width steps at whole length, in seg, 0 has transition
 
 		Ogre::Real tcLen;      // total tex coord length u
 		Ogre::Real sumLenMrg;  // total length to determine merging

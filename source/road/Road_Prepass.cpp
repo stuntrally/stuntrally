@@ -191,7 +191,7 @@ void SplineRoad::PrepassLod(
 		Real lenAdd = 1.f / il;
 		
 		DL.v_iL.push_back(il);
-		DL.v_Len.push_back(len);
+		DL.v_len.push_back(len);
 
 		ST.roadLen += len;  //#
 		if (pipe)
@@ -269,7 +269,7 @@ void SplineRoad::PrepassLod(
 			Vector3 vl = GetLenDir(seg, l, l+lenAdd);
 			l += lenAdd;  DL.tcLen += vl.length();
 		}
-		DL.v_Tc.push_back(DL.tcLen);
+		DL.v_tc.push_back(DL.tcLen);
 		if (DL.isLod0)
 			DL0.v0_tc.push_back(DL.tcLen);
 	}
@@ -296,7 +296,7 @@ void SplineRoad::PrepassLod(
 		int eq = iw1==iw0 ? 1 : 0;
 
 		DL.v_iwEq.push_back(eq);
-		DL.v_iwLS.push_back(viwL);
+		DL.v_iWL.push_back(viwL);
 		//if (!eq)  vbSegMrg[seg] = 1;
 		//LogR("seg "+toStr(seg)+"  >> "+ss);
 	}

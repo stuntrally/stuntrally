@@ -128,7 +128,7 @@ void SplineRoad::BuildSeg(
 	while (ar21 > asw)  ar21 -= 2*asw;	while (ar21 <-asw)  ar21 += 2*asw;
 
 	//  tc begin,range
-	Real tcBeg = (seg > 0) ? DL.v_Tc[seg-1]  : 0.f,  tcEnd  = DL.v_Tc[seg],   tcRng  = tcEnd - tcBeg;
+	Real tcBeg = (seg > 0) ? DL.v_tc[seg-1]  : 0.f,  tcEnd  = DL.v_tc[seg],   tcRng  = tcEnd - tcBeg;
 	Real tcBeg0= (seg > 0) ? DL0.v0_tc[seg-1]: 0.f,  tcEnd0 = DL0.v0_tc[seg], tcRng0 = tcEnd0 - tcBeg0;
 	Real tcRmul = tcRng0 / tcRng;
 	
@@ -182,7 +182,7 @@ void SplineRoad::BuildSeg(
 
 		//  width steps <->
 		//int iw = viW[seg];
-		int iw = DL.v_iwLS[seg][i+1];  //i = -1 .. il+1
+		int iw = DL.v_iWL[seg][i+1];  //i = -1 .. il+1
 
 		//  pipe width
 		Real l01 = max(0.f, min(1.f, Real(i)/Real(il) ));
@@ -194,6 +194,7 @@ void SplineRoad::BuildSeg(
 		//	/*+(bNew?"  New ":"") +(bNxt?"  Nxt ":"")/**/);
 		if (DS.hasBlend)
 			++DLM.iLmrgB;
+		
 		
 		///  road ~    Width  vertices
 		//--------------------------------------------------------------------------------------------
@@ -260,6 +261,7 @@ void SplineRoad::BuildSeg(
 			if (w==w0)  vH0 = vP;  //#
 			if (w==w1)  vH1 = vP;
 		}
+		
 		//#  stats  banking angle
 		if (DL.isLod0 && i==0)
 		{
@@ -277,7 +279,8 @@ void SplineRoad::BuildSeg(
 
 		if (!DS.onTer)
 		if (i >= 0 && i <= il)  // length +1
-		{	++DLM.iLmrgW;
+		{
+			++DLM.iLmrgW;
 			Real tcLW = tc * (DS.pipe ? g_tcMulPW : g_tcMulW);
 			for (int w=0; w <= ciwW; ++w)  // width +1
 			{
@@ -302,7 +305,8 @@ void SplineRoad::BuildSeg(
 		//------------------------------------------------------------------------------------
 		if (!DS.onTer && mP[seg].cols > 0)
 		if (i == il/2)  // middle-
-		{	++DLM.iLmrgC;
+		{	
+			++DLM.iLmrgC;
 			const Real r = g_ColRadius;  // column radius
 
 			for (int h=0; h <= 1; ++h)  // height
@@ -344,7 +348,7 @@ void SplineRoad::BuildSeg(
 
 	//  lod vis points
 	if (DL.isLod0)
-	{	int lps = max(2, (int)(DL.v_Len[seg] / g_LodPntLen));
+	{	int lps = max(2, (int)(DL.v_len[seg] / g_LodPntLen));
 
 		for (int p=0; p <= lps; ++p)
 		{
@@ -421,7 +425,7 @@ void SplineRoad::createSeg_Meshes(
 		//  pipe, diff width_
 		for (int i = 0; i < DLM.iLmrg-1; ++i)  // length-1 +2gap
 		{
-			int iw = DL.v_iwLS[seg][i], iw1 = DL.v_iwLS[seg][i+1];
+			int iw = DL.v_iWL[seg][i], iw1 = DL.v_iWL[seg][i+1];
 			int sw = iw1 < iw ? 1 : 0;
 			//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
 			
@@ -558,20 +562,19 @@ void SplineRoad::createSeg_Meshes(
 	Entity* ent = 0, *entW = 0, *entC = 0, *entB = 0;
 	SceneNode* node = 0, *nodeW = 0, *nodeC = 0, *nodeB = 0;
 
+	//  road
 	AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
 	if (pipeGlass)
-	{
-		//ent->setCastShadows(true);
 		ent->setRenderQueueGroup(RQG_PipeGlass);
-	}else
+	else
 		ent->setRenderQueueGroup(RQG_Road);
 
 	if (wall)
 	{
 		AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
-		entW->setCastShadows(true);  // only cast
+		entW->setCastShadows(true);
 	}
-	if (cols /*&& !posC.empty()*/)
+	if (cols)
 	{
 		AddMesh(meshC, sMeshC, aabox, &entC, &nodeC, "C."+sEnd);
 		entC->setVisible(true);
@@ -610,7 +613,8 @@ void SplineRoad::createSeg_Collision(
 	DataSeg& DS)
 {
 	btTriangleMesh* trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
-	#define vToBlt(v)  btVector3(v.x, -v.z, v.y)
+	
+	#define vToBlt(v)   btVector3(v.x, -v.z, v.y)
 	#define addTriB(a,b,c)  trimesh->addTriangle(vToBlt(a), vToBlt(b), vToBlt(c))
 
 	size_t si = posBt.size(), a=0;  // %3!
@@ -621,12 +625,14 @@ void SplineRoad::createSeg_Collision(
 	
 	//  Road  ~
 	btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
+	
 	size_t su = (DS.pipe ? SU_Pipe : SU_Road) + DS.mtrId;
 	shape->setUserPointer((void*)su);  // mark as road/pipe + mtrId
 	shape->setMargin(0.01f);  //?
 	
 	btCollisionObject* bco = new btCollisionObject();
 	btTransform tr;  tr.setIdentity();  //tr.setOrigin(pc);
+	
 	bco->setActivationState(DISABLE_SIMULATION);
 	bco->setCollisionShape(shape);	bco->setWorldTransform(tr);
 	bco->setFriction(0.8f);   //+
