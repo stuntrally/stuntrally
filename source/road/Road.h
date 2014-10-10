@@ -145,22 +145,22 @@ private:
 
 	struct DataLod0   // at Lod 0
 	{
-		std::vector<int>            viLSteps0;
-		std::vector<Ogre::Real>     vSegTc0;  // tex coords
-		std::vector<Ogre::Vector3>  vnSeg0;   // normals
+		std::vector<int>            v0_iL;  // length steps
+		std::vector<Ogre::Real>     v0_tc;  // tex coords
+		std::vector<Ogre::Vector3>  v0_N;   // normals
 	};
 
 	struct DataLod   // for current Lod
 	{
 		//>  data at cur lod
-		std::vector<int>  viL, viW;  // num steps for seg Length, Width
-		std::vector<int>  vbSegMrg;  // bool 0 if seg merged, 1 if new
+		std::vector<int>  v_iL, v_iW;  // num steps for seg Length, Width
+		std::vector<int>  v_bMerge;    // bool 0 if seg merged, 1 if new
 		
-		std::vector<Ogre::Real>     vSegTc, vSegLen;
-		std::vector<Ogre::Vector3>  vwSeg;
+		std::vector<Ogre::Real>     v_Tc, v_Len;
+		std::vector<Ogre::Vector3>  v_W;
 		
-		std::vector<std::vector <int> >  viwLS;  //  width steps per length point, for each seg
-		std::vector<int>  viwEq;	             // 1 if equal width steps at whole length, in seg
+		std::vector<std::vector <int> >  v_iwLS;  //  width steps per length point, for each seg
+		std::vector<int>  v_iwEq;	             // 1 if equal width steps at whole length, in seg
 
 		Ogre::Real tcLen;      // total tex coord length u
 		Ogre::Real sumLenMrg;  // total length to determine merging
@@ -223,7 +223,7 @@ private:
 		bool jfw0,jfw1;  // jump front walls
 	};
 	
-	void BuildSeg(	// Build Segment Geometry
+	void BuildSeg(	//  Build Segment Geometry
 		const DataRoad& DR,
 		DataLod0& DL0, DataLod& DL, StatsLod& ST,
 		DataLodMesh& DLM,
@@ -291,9 +291,10 @@ public:
 	Ogre::Real g_ColRadius;    // column radius
 	Ogre::Real g_P_il_mul, g_P_iw_mul;   // length,width steps multipliers for pipe
 
+
 	Ogre::String  sTxtDesc;  // track description text
 
-	// params for editor tool: align terrain to road
+	//  params for editor tool: align terrain to road
 	float ed_Wadd, ed_Wmul;  // const added width and width multipler for whole road
 
 

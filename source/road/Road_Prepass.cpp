@@ -59,7 +59,6 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 	///  LOD
 	//-----------------------------
-
 	DataLod0 DL0;
 
 	for (int lod = 0; lod < LODs; ++lod)
@@ -71,13 +70,10 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 		PrepassLod(DR,DL0,DL,ST, lod, editorAlign);
 		
+		DataLodMesh DLM;
 
 		///  Segment
 		//-----------------------------------
-
-		DataLodMesh DLM;
-		DL.tcLen = 0.f;
-
 		int sNum = DR.sMax - DR.sMin,
 			segM = DR.sMin;
 
@@ -169,6 +165,7 @@ void SplineRoad::PrepassLod(
 
 	int iLodDiv = ciLodDivs[lod];
 	DL.fLenDim = g_LenDim0 * iLodDiv;
+	DL.tcLen = 0.f;
 		
 	//if (isLod0)?
 	LogR("--- Lod segs prepass ---");
@@ -185,7 +182,7 @@ void SplineRoad::PrepassLod(
 		int wmin = pipe ? 5 : 1;  // min w steps  //par
 
 		int iw = max(1/*wmin*/, (int)(p * g_iWidthDiv0 / iLodDiv));  //* wid/widDiv..
-		DL.viW.push_back(iw);
+		DL.v_iW.push_back(iw);
 		int iwl = max(1, (int)(pl * g_iWidthDiv0 / iLodDiv));
 
 		//  length steps  |
@@ -193,8 +190,8 @@ void SplineRoad::PrepassLod(
 		int  il = int(len / DL.fLenDim) / iwl * iwl + iwl;
 		Real lenAdd = 1.f / il;
 		
-		DL.viL.push_back(il);
-		DL.vSegLen.push_back(len);
+		DL.v_iL.push_back(il);
+		DL.v_Len.push_back(len);
 
 		ST.roadLen += len;  //#
 		if (pipe)
@@ -211,23 +208,23 @@ void SplineRoad::PrepassLod(
 		//  merge road and pipe segs, don't merge transitions
 		if (sp != sp1 || sp != sp0  ||  hid != hid1 || hid != hid0)
 		{	DL.sumLenMrg = 0.f;  ++DL.mrgCnt;
-			DL.vbSegMrg.push_back(1);
+			DL.v_bMerge.push_back(1);
 		}
 		else  //  onTer change
 		if (mP[seg].onTer != mP[seg1].onTer || mP[seg].onTer != mP[seg0].onTer)
 		{	DL.sumLenMrg = 0.f;  ++DL.mrgCnt;
-			DL.vbSegMrg.push_back(1);
+			DL.v_bMerge.push_back(1);
 		}
 		else  if (DL.sumLenMrg >= g_MergeLen)
 		{	DL.sumLenMrg -= g_MergeLen;  ++DL.mrgCnt;
-			DL.vbSegMrg.push_back(1);  // bNew
+			DL.v_bMerge.push_back(1);  // bNew
 		}else
-			DL.vbSegMrg.push_back(0);  // merged
+			DL.v_bMerge.push_back(0);  // merged
 		
 		LogR("seg "+toStr(seg)+"  iw "+toStr(iw)+"  il "+toStr(il)+"  pp "+toStr(sp));
 		
 		if (DL.isLod0)
-			DL0.viLSteps0.push_back(il);
+			DL0.v0_iL.push_back(il);
 
 
 		///  length <dir>  |
@@ -244,16 +241,19 @@ void SplineRoad::PrepassLod(
 		///  normal <dir>  /
 		if (DL.isLod0)
 		{	Vector3 vn = vl.crossProduct(vw);  vn.normalise();
-			//if (vn.y < 0.f)  vn = -vn;  // always up y+
-			DL0.vnSeg0.push_back(vn);
+			//  on pipe inv
+			//if (mP[seg].onPipe || mP[seg0].onPipe)
+				//vn = -vn;
+			DL0.v0_N.push_back(vn);
 		}
 
+		//  width
 		{
 		Real wiMul = mP[seg].width;
 		if (editorAlign)  // wider road for align terrain tool
 			wiMul = wiMul*ed_Wmul + ed_Wadd;
 		vw *= wiMul;
-		DL.vwSeg.push_back(vw);
+		DL.v_W.push_back(vw);
 		}
 
 		ST.avgWidth += mP[seg].width * len;  //#
@@ -269,9 +269,9 @@ void SplineRoad::PrepassLod(
 			Vector3 vl = GetLenDir(seg, l, l+lenAdd);
 			l += lenAdd;  DL.tcLen += vl.length();
 		}
-		DL.vSegTc.push_back(DL.tcLen);
+		DL.v_Tc.push_back(DL.tcLen);
 		if (DL.isLod0)
-			DL0.vSegTc0.push_back(DL.tcLen);
+			DL0.v0_tc.push_back(DL.tcLen);
 	}
 
 	
@@ -279,11 +279,11 @@ void SplineRoad::PrepassLod(
 	for (int seg=0; seg < DR.segs; ++seg)
 	{
 		int seg1 = getNext(seg);
-		int il = DL.viL[seg];
+		int il = DL.v_iL[seg];
 		std::vector<int> viwL;
 
-		//  width steps per lenght point in cur seg
-		int iw0 = DL.viW[seg], iw1 = DL.viW[seg1];
+		//  width steps per length point in cur seg
+		int iw0 = DL.v_iW[seg], iw1 = DL.v_iW[seg1];
 		//String ss="";
 		for (int i = -1; i <= il+1; ++i)  // length +1  +2-gap
 		{
@@ -295,12 +295,13 @@ void SplineRoad::PrepassLod(
 		}
 		int eq = iw1==iw0 ? 1 : 0;
 
-		DL.viwEq.push_back(eq);
-		DL.viwLS.push_back(viwL);
+		DL.v_iwEq.push_back(eq);
+		DL.v_iwLS.push_back(viwL);
 		//if (!eq)  vbSegMrg[seg] = 1;
 		//LogR("seg "+toStr(seg)+"  >> "+ss);
 	}
 
+	//  stats done at lod 0 and full rebuild
 	ST.stats = DL.isLod0 && iDirtyId == -1;
 	End0Stats(DL,ST);
 }

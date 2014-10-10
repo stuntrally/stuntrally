@@ -66,8 +66,8 @@ void SplineRoad::BuildSeg(
 
 	if (bMerge)
 	{
-		bNew = (segM   == DR.sMin/*1st*/)  || DL.vbSegMrg[seg];
-		bNxt = (segM+1 == DR.sMax/*last*/) || DL.vbSegMrg[seg1];  // next is new
+		bNew = (segM   == DR.sMin/*1st*/)  || DL.v_bMerge[seg];
+		bNxt = (segM+1 == DR.sMax/*last*/) || DL.v_bMerge[seg1];  // next is new
 	}
 	
 	if (bNew)  //> new seg data
@@ -111,8 +111,8 @@ void SplineRoad::BuildSeg(
 	const int iwC = g_ColNSides;  // column  polygon steps
 				
 	//  steps len
-	int il = DL.viL[seg];
-	int il0= DL0.viLSteps0[seg];
+	int il = DL.v_iL[seg];
+	int il0= DL0.v0_iL[seg];
 	Real la = 1.f / il;
 	Real la0= 1.f / il0 * skLen;
 	Real l = -la0;
@@ -128,8 +128,8 @@ void SplineRoad::BuildSeg(
 	while (ar21 > asw)  ar21 -= 2*asw;	while (ar21 <-asw)  ar21 += 2*asw;
 
 	//  tc begin,range
-	Real tcBeg = (seg > 0) ? DL.vSegTc[seg-1]  : 0.f,  tcEnd  = DL.vSegTc[seg],   tcRng  = tcEnd - tcBeg;
-	Real tcBeg0= (seg > 0) ? DL0.vSegTc0[seg-1]: 0.f,  tcEnd0 = DL0.vSegTc0[seg], tcRng0 = tcEnd0 - tcBeg0;
+	Real tcBeg = (seg > 0) ? DL.v_Tc[seg-1]  : 0.f,  tcEnd  = DL.v_Tc[seg],   tcRng  = tcEnd - tcBeg;
+	Real tcBeg0= (seg > 0) ? DL0.v0_tc[seg-1]: 0.f,  tcEnd0 = DL0.v0_tc[seg], tcRng0 = tcEnd0 - tcBeg0;
 	Real tcRmul = tcRng0 / tcRng;
 	
 
@@ -175,20 +175,20 @@ void SplineRoad::BuildSeg(
 
 		///  normal <dir>  /
 		Vector3 vn = vl.crossProduct(vw);  vn.normalise();
-		if (i==0)	vn = DL0.vnSeg0[seg];  // seg start=end
-		if (i==il)	vn = DL0.vnSeg0[seg1];
+		if (i==0)	vn = DL0.v0_N[seg];  // seg start=end
+		if (i==il)	vn = DL0.v0_N[seg1];
 		//Vector3 vnu = vn;  if (vnu.y < 0)  vnu = -vnu;  // always up y+
 
 
 		//  width steps <->
 		//int iw = viW[seg];
-		int iw = DL.viwLS[seg][i+1];  //i = -1 .. il+1
+		int iw = DL.v_iwLS[seg][i+1];  //i = -1 .. il+1
 
 		//  pipe width
 		Real l01 = max(0.f, min(1.f, Real(i)/Real(il) ));
 		Real p1 = mP[seg].pipe, p2 = mP[seg1].pipe;
 		Real fPipe = p1 + (p2-p1)*l01;
-		bool trans = (p1 == 0.f || p2 == 0.f) && !DL.viwEq[seg];
+		bool trans = (p1 == 0.f || p2 == 0.f) && !DL.v_iwEq[seg];
 		Real trp = (p1 == 0.f) ? 1.f - l01 : l01;
 		//LogR("   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw)
 		//	/*+(bNew?"  New ":"") +(bNxt?"  Nxt ":"")/**/);
@@ -344,7 +344,7 @@ void SplineRoad::BuildSeg(
 
 	//  lod vis points
 	if (DL.isLod0)
-	{	int lps = max(2, (int)(DL.vSegLen[seg] / g_LodPntLen));
+	{	int lps = max(2, (int)(DL.v_Len[seg] / g_LodPntLen));
 
 		for (int p=0; p <= lps; ++p)
 		{
@@ -357,7 +357,7 @@ void SplineRoad::BuildSeg(
 	///  create mesh  indices
 	//------------------------------------------------------------------------------------------------
 	blendTri = false;
-	if (bNxt && !DLM.pos.empty())  /*Merging*/
+	if (bNxt && !DLM.pos.empty())  // Merging
 	{
 		bltTri = blt;  blendTri = DS.hasBlend;
 
@@ -376,12 +376,10 @@ void SplineRoad::BuildSeg(
 			st.iMrgSegs++;	 // count, full
 		}
 
-
 		//  bullet trimesh  at lod 0
 		if (DL.isLod0 && blt)
 			createSeg_Collision(DLM,DS);
-
-	}/*bNxt Merging*/
+	}
 }
 
 
@@ -406,10 +404,10 @@ void SplineRoad::createSeg_Meshes(
 	int iiw = 0;  //LogR( " __idx");
 
 	//  equal width steps
-	if (DL.viwEq[seg]==1)
+	if (DL.v_iwEq[seg]==1)
 		for (int i = 0; i < DLM.iLmrg-1; ++i)  // length-1 +2gap
 		{
-			int iw = DL.viW[seg];  // grid  w-1 x l-1 x2 tris
+			int iw = DL.v_iW[seg];  // grid  w-1 x l-1 x2 tris
 			for (int w=0; w < iw; ++w)  // width-1
 			{
 				//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
@@ -423,7 +421,7 @@ void SplineRoad::createSeg_Meshes(
 		//  pipe, diff width_
 		for (int i = 0; i < DLM.iLmrg-1; ++i)  // length-1 +2gap
 		{
-			int iw = DL.viwLS[seg][i], iw1 = DL.viwLS[seg][i+1];
+			int iw = DL.v_iwLS[seg][i], iw1 = DL.v_iwLS[seg][i+1];
 			int sw = iw1 < iw ? 1 : 0;
 			//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
 			
