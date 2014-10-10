@@ -115,7 +115,7 @@ private:
 	std::vector<Ogre::Vector3>   posBt;       // for bullet trimesh
 	std::vector<btTriangleMesh*> vbtTriMesh;  // for delete
 
-	std::vector<Ogre::Vector3>*  at_pos;
+	const std::vector<Ogre::Vector3>*  at_pos;
 
 	//  add triangle, with index check
 	void addTri(int f1, int f2, int f3, int i);
@@ -223,23 +223,19 @@ private:
 		bool jfw0,jfw1;  // jump front walls
 	};
 	
-	void BuildSeg(	//  Build Segment Geometry
+	//  Build Segment Geometry
+	void BuildSeg(
 		const DataRoad& DR,
-		DataLod0& DL0, DataLod& DL, StatsLod& ST,
-		DataLodMesh& DLM,
-		DataSeg& DS,
-		int segM);
+		const DataLod0& DL0, DataLod& DL, StatsLod& ST,
+		DataLodMesh& DLM, DataSeg& DS, int segM);
 		
 		
 	void createSeg_Meshes(
-		DataLod& DL,
-		DataLodMesh& DLM,
-		DataSeg& DS,
-		RoadSeg& rs);
+		const DataLod& DL,
+		const DataLodMesh& DLM, DataSeg& DS, RoadSeg& rs);
 	
 	void createSeg_Collision(
-		const DataLodMesh& DLM,
-		DataSeg& DS);
+		const DataLodMesh& DLM, const DataSeg& DS);
 	
 //---------------------------------------------------------------------------------------
 
@@ -294,7 +290,7 @@ public:
 
 	Ogre::String  sTxtDesc;  // track description text
 
-	//  params for editor tool: align terrain to road
+	//  for editor tool: align terrain to road
 	float ed_Wadd, ed_Wmul;  // const added width and width multipler for whole road
 
 

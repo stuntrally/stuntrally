@@ -45,9 +45,8 @@ const static stWiPntW wiPntW[ciwW+1][2] = {  // section shape
 //----------------------------------------------------------------------------------------------------------------------------
 void SplineRoad::BuildSeg(
 	const DataRoad& DR,
-	DataLod0& DL0, DataLod& DL, StatsLod& ST,
-	DataLodMesh& DLM,
-	DataSeg& DS,
+	const DataLod0& DL0, DataLod& DL, StatsLod& ST,
+	DataLodMesh& DLM, DataSeg& DS,
 	int segM)
 {
 	int seg = (segM + DR.segs) % DR.segs;  // iterator
@@ -396,10 +395,9 @@ void SplineRoad::BuildSeg(
 
 //----------------------------------------------------------------------------------------------------------------------------
 void SplineRoad::createSeg_Meshes(
-	DataLod& DL,
-	DataLodMesh& DLM,
-	DataSeg& DS,
-	RoadSeg& rs)
+	const DataLod& DL,
+	const DataLodMesh& DLM,
+	DataSeg& DS, RoadSeg& rs)
 {
 	String sEnd = toStr(idStr);  ++idStr;
 	String sMesh = "rd.mesh." + sEnd, sMeshW = sMesh + "W", sMeshC = sMesh + "C", sMeshB = sMesh + "B";
@@ -616,7 +614,7 @@ void SplineRoad::createSeg_Meshes(
 //----------------------------------------------------------------------------------------------------------------------------
 void SplineRoad::createSeg_Collision(
 	const DataLodMesh& DLM,
-	DataSeg& DS)
+	const DataSeg& DS)
 {
 	btTriangleMesh* trimesh = new btTriangleMesh();  vbtTriMesh.push_back(trimesh);
 	
