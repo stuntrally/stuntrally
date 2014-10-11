@@ -484,7 +484,7 @@ void SplineRoad::createSeg_Meshes(
 				for (int m=0; m < dd; ++m)
 				{
 					int f1 = iiw + iw-1 -m;
-					addTri(f0,f1,f1+1,i);
+					addTri(f1+1,f1,f0,i);
 				}
 			}
 			iiw += iw + 1;
