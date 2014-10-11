@@ -227,8 +227,6 @@ public:
 		,iDir(0), iChkId1(0), iChkId1Rev(0)
 	{	}
 
-	void SetChecks();  // Init
-
 	//  edit chks
 	void AddChkR(Ogre::Real relR, bool dontCheckR=false);  // change radius
 	void AddBoxW(Ogre::Real rel), AddBoxH(Ogre::Real rel);  // start dim
@@ -264,7 +262,7 @@ public:
 					Ogre::Entity*& ent, Ogre::SceneNode*& nd);
 
 	//  control markers  -------
-	void AddMarker(Ogre::Vector3 pos), SelectMarker(bool bHide=false);
+	void AddMarker(Ogre::Vector3 pos);
 	void DestroyMarker(int id), DelLastMarker(), UpdAllMarkers(), DestroyMarkers();
 	//  util
 	void SetTerHitVis(bool visible), UpdRot();

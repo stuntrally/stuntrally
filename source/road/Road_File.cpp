@@ -284,7 +284,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 	newP.SetDefault();
 	iChosen = -1;  //std::max(0, std::min((int)(mP.size()-1), iChosen));
 	
-	SetChecks();
+	SetChecks();  // 1st
 	if (build)  Rebuild(true);
 	return true;
 }

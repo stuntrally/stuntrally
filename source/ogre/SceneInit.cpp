@@ -771,5 +771,7 @@ void App::CreateRoad()
 
 	road->bCastShadow = pSet->shadow_type >= Sh_Depth;
 	road->bRoadWFullCol = pSet->gui.collis_roadw;
+
 	road->RebuildRoadInt();
+	road->SetChecks(true);  // 2nd, upd
 }

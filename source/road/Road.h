@@ -83,6 +83,7 @@ public:
 
 	void Pick(Ogre::Camera* mCamera, Ogre::Real mx, Ogre::Real my,
 			bool bRay=true, bool bAddH=false, bool bHide=false);
+	void SelectMarker(bool bHide=false);
 	void ToggleMerge();
 
 
@@ -148,7 +149,11 @@ private:
 		std::vector<int>            v0_iL;  // length steps
 		std::vector<Ogre::Real>     v0_tc;  // tex coords
 		std::vector<Ogre::Vector3>  v0_N;   // normals
-	};
+		void Clear()
+		{	v0_iL.clear();  v0_tc.clear();  v0_N.clear();  }
+	}
+	DL0;  // stays after build since N is used for SetChecks
+	void SetChecks(bool upd=false);  // Init  1st in file load, upd=true 2nd time for N
 
 	struct DataLod   // for current Lod
 	{

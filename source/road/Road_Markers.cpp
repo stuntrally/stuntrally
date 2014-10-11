@@ -129,29 +129,35 @@ void SplineMarkEd::DestroyMarkers()
 
 //  Select
 //-------------------------------------------------------------------------------------
-void SplineMarkEd::SelectMarker(bool bHide)  // Mr Melect Sarker
+void SplineRoad::SelectMarker(bool bHide)  // Mr Melect Sarker
 {
 	if (lastNdSel >= 0)
 		vMarks[lastNdSel].setVis(true);
 	if (lastNdChosen >= 0)
 		vMarks[lastNdChosen].setVis(true);
 
-	if (iChosen == -1 || bHide)
+	int i = iChosen;
+	if (i == -1 || bHide)
 	{	ndChosen->setVisible(false);
 		ndRot->setVisible(false);
 		ndChk->setVisible(false);
 	}else  // chosen
 	{
-		Mark& m = vMarks[iChosen];
+		Mark& m = vMarks[i];
 		m.setVis(false);
 		ndChosen->setPosition(m.nd->getPosition());
 		ndChosen->setScale(m.nd->getScale());
 		ndChosen->setVisible(true);
 		ndRot->setVisible(true);
-		lastNdChosen = iChosen;
+		lastNdChosen = i;
 
-		ndChk->setPosition(m.nd->getPosition());
-		ndChk->setScale(mP[iChosen].chkR * 2.f * mP[iChosen].width * Vector3::UNIT_SCALE);
+		Vector3 pc = m.nd->getPosition();
+		//  move checks in pipe to center (half normal up)
+		if (mP[i].pipe > 0.f && mP[i].onPipe==0)
+			pc += 0.5f * mP[i].width * DL0.v0_N[i];
+		ndChk->setPosition(pc);
+		
+		ndChk->setScale(mP[i].chkR * 2.f * mP[i].width * Vector3::UNIT_SCALE);
 		ndChk->setVisible(true);
 	}	
 
@@ -228,11 +234,8 @@ void SplineEditChk::AddChkR(Real relR, bool dontCheckR)    ///  ChkR
 	if (dontCheckR)  return;
 
 	//  disallow between 0..1
-	if (relR < 0.f && mP[seg].chkR < 1.f)
-		mP[seg].chkR = 0.f;
-	else
-	if (relR > 0.f && mP[seg].chkR < 1.f)
-		mP[seg].chkR = 1.f;
+	if (relR < 0.f && mP[seg].chkR < 1.f)  mP[seg].chkR = 0.f;  else
+	if (relR > 0.f && mP[seg].chkR < 1.f)  mP[seg].chkR = 1.f;
 	
 	//  max radius  (or const on bridges or pipes)
 	int all = getNumPoints();
@@ -241,9 +244,8 @@ void SplineEditChk::AddChkR(Real relR, bool dontCheckR)    ///  ChkR
 	int next = (seg+1) % all, prev = (seg-1+all) % all;
 	bool bridge = !mP[seg].onTer || !mP[next].onTer || !mP[prev].onTer;
 	bool pipe = mP[seg].pipe > 0.5f;
-		// || mP[next].pipe > 0.5f || mP[prev].pipe > 0.5f;
 
-	Real maxR = pipe ? 1.7f : bridge ? 1.f : 2.5f;
+	Real maxR = pipe || bridge ? 1.f : 2.5f;
 	if (bridge || pipe)
 	{	if (relR > 0.f)  mP[seg].chkR = maxR;  else
 		if (relR < 0.f)  mP[seg].chkR = 0.f;
@@ -274,7 +276,7 @@ void SplineEditChk::Set1stChk()
 
 //  Set Checkpoints  after xml load, todo: move after rebuild ..
 //--------------------------------------------------------------------------------------
-void SplineEditChk::SetChecks()
+void SplineRoad::SetChecks(bool upd)
 {
 	///  add checkpoints  * * *
 	mChks.clear();  iChkId1 = 0;
@@ -283,8 +285,15 @@ void SplineEditChk::SetChecks()
 		if (mP[i].chkR > 0.f)
 		{
 			CheckSphere cs;
-			cs.pos = mP[i].pos;  // +ofs_y ?-
+			cs.pos = mP[i].pos;
 			cs.r = mP[i].chkR * mP[i].width;
+			
+			//  move checks in pipe to center (half normal up)
+			if (!DL0.v0_N.empty())
+			if (mP[i].pipe > 0.f && mP[i].onPipe==0)
+			{	cs.pos += 0.5f * mP[i].width * DL0.v0_N[i];
+				cs.r *= 0.5f;  }  // exact-
+			
 			cs.r2 = cs.r * cs.r;
 			cs.loop = mP[i].loopChk > 0;
 
@@ -294,6 +303,7 @@ void SplineEditChk::SetChecks()
 			mChks.push_back(cs);
 		}
 	}
+	if (upd)  return;
 	int num = (int)mChks.size();
 	if (num == 0)  return;
 

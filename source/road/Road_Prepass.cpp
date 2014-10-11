@@ -45,7 +45,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 	///  LOD
 	//-----------------------------
-	DataLod0 DL0;
+	DL0.Clear();
 
 	for (int lod = 0; lod < LODs; ++lod)
 	{
