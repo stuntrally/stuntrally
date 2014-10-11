@@ -198,9 +198,20 @@ protected:
 	void Rebuild(bool full=false);
 
 
-	Ogre::Real g_Height;	 ///geom  above terrain  ?for each point-
+	Ogre::Real g_Height;	 ///geom  above terrain global,  ?for each point-
 
-	std::vector<Ogre::SceneNode*> vMarkNodes;  // markers
+	
+	struct Mark  // marker node  ----
+	{
+		Ogre::SceneNode* nd; //,*ndC;
+		Ogre::Entity* ent; //,*entC;
+		
+		Mark() : nd(0),ent(0) //, ndC(0),entC(0)
+		{	}
+		void setPos(Ogre::Vector3 pos);
+		void setVis(bool vis);
+	};
+	std::vector<Mark> vMarks;
 };
 
 
@@ -254,7 +265,7 @@ public:
 
 	//  control markers  -------
 	void AddMarker(Ogre::Vector3 pos), SelectMarker(bool bHide=false);
-	void DelLastMarker(), UpdAllMarkers(), DestroyMarkers();
+	void DestroyMarker(int id), DelLastMarker(), UpdAllMarkers(), DestroyMarkers();
 	//  util
 	void SetTerHitVis(bool visible), UpdRot();
 
@@ -267,7 +278,7 @@ public:
 	Ogre::String sMarkerMesh;
 	Ogre::Real fMarkerScale, fScRot,fScHit;  // scale
 
-	Ogre::SceneNode *ndSel,*ndChosen,*ndRot,*ndHit,*ndChk,
-		*lastNdSel,*lastNdChosen;
+	Ogre::SceneNode *ndSel,*ndChosen,*ndRot,*ndHit,*ndChk;
+	int lastNdSel, lastNdChosen;
 	Ogre::Entity* entSel,*entChs,*entRot,*entHit,*entChk;
 };

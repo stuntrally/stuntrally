@@ -95,7 +95,7 @@ void SplineEdit::Move1(int id, Vector3 relPos)
 	if (mP[id].onTer)
 		pos.y = getTerH(pos) + g_Height;
 	setPos(id, pos);
-	vMarkNodes[id]->setPosition(pos);  // upd marker
+	vMarks[id].setPos(pos);  // upd marker
 }
 
 void SplineEdit::Move(Vector3 relPos)
@@ -125,7 +125,7 @@ void SplineEdit::Scale1(int id, Real posMul, Real hMul)
 	if (mP[id].onTer)
 		pos.y = getTerH(pos) + g_Height;
 	setPos(id, pos);
-	vMarkNodes[id]->setPosition(pos);  // upd marker
+	vMarks[id].setPos(pos);  // upd marker
 }
 
 
@@ -139,7 +139,7 @@ void SplineEdit::UpdPointsH()
 		{	pos.y = getTerH(pos) + g_Height;
 			setPos(id, pos);
 		}
-		vMarkNodes[id]->setPosition(pos);  // upd marker
+		vMarks[id].setPos(pos);  // upd marker
 	}
 }
 
@@ -181,7 +181,7 @@ void SplineEdit::ScaleSel(Real posMul)
 		if (mP[id].onTer)
 			pos.y = getTerH(pos) + g_Height;
 		setPos(id, pos);
-		vMarkNodes[id]->setPosition(pos);  // upd marker
+		vMarks[id].setPos(pos);  // upd marker
 	}
 }
 
@@ -211,7 +211,7 @@ void SplineEdit::RotateSel(Real relA, Vector3 axis, int addYawRoll)
 			// todo: * mul by cos of yaw ?..
 			mP[*it].mRoll -= relA;  // rot point roll
 		
-		vMarkNodes[*it]->setPosition(pos);
+		vMarks[*it].setPos(pos);
 		//Move1(*it, npos);
 	}
 	bSelChng = true;
@@ -608,12 +608,13 @@ void SplineRoad::Pick(Camera* mCamera, Real mx, Real my,  bool bRay, bool bAddH,
 	}
 	
 	SelectMarker(bHide);
+	
 	//  hide/show all markers
 	int iHide = bHide ? 1 : 0;
 	if (iHide != iOldHide)
 	{	iOldHide = iHide;
-		for (size_t i=0; i < vMarkNodes.size(); ++i)
-			vMarkNodes[i]->setVisible(bAddH);
+		for (size_t i=0; i < vMarks.size(); ++i)
+			vMarks[i].setVis(!bHide);
 	}
 	
 	//  ray terrain hit pos

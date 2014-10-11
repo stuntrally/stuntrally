@@ -16,7 +16,7 @@ SplineMarkEd::SplineMarkEd()
 	:mSceneMgr(0),mCamera(0)
 	,ndSel(0), ndChosen(0), ndRot(0), ndHit(0), ndChk(0)
 	,entSel(0), entChs(0), entRot(0), entHit(0), entChk(0)
-	,lastNdSel(0),lastNdChosen(0)
+	,lastNdSel(-2),lastNdChosen(-2)
 	,fMarkerScale(1.f), fScRot(1.8f),fScHit(0.8f)
 {	}
 
@@ -51,48 +51,79 @@ void SplineMarkEd::Setup(
 }
 
 
+void SplineEdit::Mark::setPos(Ogre::Vector3 pos)
+{
+	nd->setPosition(pos);
+	//ndC->setPosition(pos);
+}
+void SplineEdit::Mark::setVis(bool vis)
+{
+	nd->setVisible(vis);
+	//ndC->setVisible(vis);
+}
+
+
 //  add marker
 //-------------------------------------------------------------------------------------
 void SplineMarkEd::AddMarker(Vector3 pos)
 {
 	if (sMarkerMesh == "")  return;
-	Entity* ent;  SceneNode* nod;
-	String name = "sphere"+toStr(getNumPoints());
-	ent = mSceneMgr->createEntity(sMarkerMesh/*,name*/);
-	ent->setMaterialName("sphere_norm");  ent->setCastShadows(false);  ent->setVisibilityFlags(RV_Hud);
-	nod = mSceneMgr->getRootSceneNode()->createChildSceneNode(/*name,*/pos);
-	nod->attachObject(ent);  nod->scale(fMarkerScale * Vector3::UNIT_SCALE);
-	vMarkNodes.push_back(nod);
+	Entity* ent, *entC;
+	SceneNode* nd, *ndC;
+
+	ent = mSceneMgr->createEntity(sMarkerMesh);
+	ent->setMaterialName("sphere_norm");  ent->setCastShadows(false);
+	ent->setVisibilityFlags(RV_Hud);
+	
+	nd = mSceneMgr->getRootSceneNode()->createChildSceneNode(pos);
+	nd->attachObject(ent);  nd->scale(fMarkerScale * Vector3::UNIT_SCALE);
+
+	//entC = mSceneMgr->createEntity(sMarkerMesh);
+	//entC->setMaterialName("sphere_norm");  entC->setCastShadows(false);
+	//entC->setVisibilityFlags(RV_Hud/*RQG_RoadMarkers*/);
+	
+	//ndC = mSceneMgr->getRootSceneNode()->createChildSceneNode(pos);
+	//ndC->attachObject(entC);  //ndC->setVisible(true);
+
+	Mark m;
+	m.nd = nd;  m.ent = ent;
+	//m.ndC = ndC;  m.entC = entC;
+	vMarks.push_back(m);
+}
+
+void SplineMarkEd::DestroyMarker(int id)
+{
+	Mark& m = vMarks[id];
+	mSceneMgr->destroyEntity(m.ent);
+	//mSceneMgr->destroyEntity(m.entC);
+	mSceneMgr->destroySceneNode(m.nd);
+	//mSceneMgr->destroySceneNode(m.ndC);
 }
 
 //  del last marker
 void SplineMarkEd::DelLastMarker()
 {
 	if (sMarkerMesh == "")  return;
-	SceneNode* last = vMarkNodes[vMarkNodes.size()-1];
+	int last = vMarks.size()-1;
 	if (lastNdChosen == last)
-		lastNdChosen = 0;
+		lastNdChosen = -2;
 	if (lastNdSel == last)
-		lastNdSel = 0;
-	String name = "sphere"+toStr(getNumPoints()-1);
-	mSceneMgr->destroyEntity(name);
-	mSceneMgr->destroySceneNode(vMarkNodes[getNumPoints()-1]);
-	vMarkNodes.pop_back();
+		lastNdSel = -2;
+
+	DestroyMarker(getNumPoints()-1);
+	vMarks.pop_back();
 }
 
 //  destroy all
 void SplineMarkEd::DestroyMarkers()
 {
 	if (sMarkerMesh == "")  return;
-	for (size_t i=0; i < vMarkNodes.size(); ++i)
-	{
-		String name = "sphere"+toStr(i);
-		mSceneMgr->destroyEntity(name);
-		mSceneMgr->destroySceneNode(vMarkNodes[i]);
-	}
-	vMarkNodes.clear();
-	lastNdChosen = 0;
-	lastNdSel = 0;
+	for (size_t i=0; i < vMarks.size(); ++i)
+		DestroyMarker(i);
+
+	vMarks.clear();
+	lastNdChosen = -2;
+	lastNdSel = -2;
 }
 
 
@@ -100,10 +131,10 @@ void SplineMarkEd::DestroyMarkers()
 //-------------------------------------------------------------------------------------
 void SplineMarkEd::SelectMarker(bool bHide)  // Mr Melect Sarker
 {
-	if (lastNdSel)
-		lastNdSel->setVisible(true);
-	if (lastNdChosen)
-		lastNdChosen->setVisible(true);
+	if (lastNdSel >= 0)
+		vMarks[lastNdSel].setVis(true);
+	if (lastNdChosen >= 0)
+		vMarks[lastNdChosen].setVis(true);
 
 	if (iChosen == -1 || bHide)
 	{	ndChosen->setVisible(false);
@@ -111,16 +142,16 @@ void SplineMarkEd::SelectMarker(bool bHide)  // Mr Melect Sarker
 		ndChk->setVisible(false);
 	}else  // chosen
 	{
-		SceneNode* nd = vMarkNodes[iChosen];
-		nd->setVisible(false);
-		ndChosen->setPosition(nd->getPosition());
-		ndChosen->setScale(nd->getScale()*1.0f);
+		Mark& m = vMarks[iChosen];
+		m.setVis(false);
+		ndChosen->setPosition(m.nd->getPosition());
+		ndChosen->setScale(m.nd->getScale());
 		ndChosen->setVisible(true);
 		ndRot->setVisible(true);
-		lastNdChosen = nd;
+		lastNdChosen = iChosen;
 
-		ndChk->setPosition(nd->getPosition());
-		ndChk->setScale(mP[iChosen].chkR * 2 * mP[iChosen].width * Vector3::UNIT_SCALE);
+		ndChk->setPosition(m.nd->getPosition());
+		ndChk->setScale(mP[iChosen].chkR * 2.f * mP[iChosen].width * Vector3::UNIT_SCALE);
 		ndChk->setVisible(true);
 	}	
 
@@ -128,12 +159,12 @@ void SplineMarkEd::SelectMarker(bool bHide)  // Mr Melect Sarker
 		ndSel->setVisible(false);
 	else  // sel
 	{
-		SceneNode* nd = vMarkNodes[iSelPoint];
-		nd->setVisible(false);
-		ndSel->setPosition(nd->getPosition());
-		ndSel->setScale(nd->getScale()*1.0f);
+		Mark& m = vMarks[iSelPoint];
+		m.setVis(false);
+		ndSel->setPosition(m.nd->getPosition());
+		ndSel->setScale(m.nd->getScale());
 		ndSel->setVisible(true);
-		lastNdSel = nd;
+		lastNdSel = iSelPoint;
 	}
 	UpdRot();
 }
@@ -145,16 +176,17 @@ void SplineMarkEd::UpdAllMarkers()
 	for (int i=0; i < getNumPoints(); ++i)
 		Move1(i, Vector3::ZERO);  //-
 
-	for (int i=0; i < (int)vMarkNodes.size(); ++i)
-	if (i < getNumPoints())
+	int si = std::min(getNumPoints(), (int)vMarks.size());  //=
+	for (int i=0; i < si; ++i)
 	{
 		Vector3& pos = mP[i].pos;  //- update on ter pos (move 0)
 		if (mP[i].onTer)
 			pos.y = getTerH(pos) + g_Height;
 
-		SceneNode* nd = vMarkNodes[i];
-		nd->setPosition(pos/*getPos(i)*/);
-		nd->setScale(fMarkerScale * Vector3::UNIT_SCALE);
+		Mark& m = vMarks[i];
+		m.setPos(pos/*getPos(i)*/);
+		m.nd->setScale(fMarkerScale * Vector3::UNIT_SCALE);
+		//m.ndC->setScale(mP[i].chkR * 2.f * mP[i].width * Vector3::UNIT_SCALE);
 	}
 	UpdRot();
 }
