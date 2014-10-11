@@ -403,6 +403,8 @@ void SplineRoad::BuildSeg(
 
 
 //----------------------------------------------------------------------------------------------------------------------------
+//   Create Meshes, from merged segments data
+//----------------------------------------------------------------------------------------------------------------------------
 void SplineRoad::createSeg_Meshes(
 	const DataLod& DL,
 	const DataLodMesh& DLM,
@@ -420,11 +422,13 @@ void SplineRoad::createSeg_Meshes(
 	///  road ~
 	int iiw = 0;  //LogR( " __idx");
 
-	//  equal width steps
+	//  go through whole merged length
+	//  equal width
 	if (DL.v_iwEq[seg]==1)
 		for (int i = 0; i < DLM.iLmrg-1; ++i)  // length-1 +2gap
 		{
-			int iw = DL.v_iW[seg];  // grid  w-1 x l-1 x2 tris
+			//  |\|  grid  w-1 x l-1
+			int iw = DL.v_iW[seg];
 			for (int w=0; w < iw; ++w)  // width-1
 			{
 				//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
@@ -432,44 +436,61 @@ void SplineRoad::createSeg_Meshes(
 				addTri(f0+0,f1+1,f0+1,i);
 				addTri(f0+0,f1+0,f1+1,i);
 			}
-			iiw += iw+1;
+			iiw += iw + 1;
 		}
 	else
-		//  pipe, diff width_
+		///  pipe trans  width steps changing in length
 		for (int i = 0; i < DLM.iLmrg-1; ++i)  // length-1 +2gap
 		{
 			int iw = DL.v_iWL[seg][i], iw1 = DL.v_iWL[seg][i+1];
-			int sw = iw1 < iw ? 1 : 0;
-			//LogR( "   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw));
-			
-			//int w=0;  // test fans
-			for (int w=0; w < iw -sw; ++w)  // width-1
+			int d = iw1 - iw, dd = abs(d);
+
+			//  comment out //addTris to test
+			if (i==0)  LogR("");
+			LogR("   il=" + iToStr(i,3) + " iw=" + iToStr(iw,3) + " d " + toStr(d));
+
+			if (d > 0)	//  inc  iw < iw1
+			for (int w=0; w < iw; ++w)  // width-1
 			{
-				int f0 = iiw + w, f1 = f0 + (iw+1);
+				int f0 = iiw + w, f1 = f0 + iw+1;
 				//  |\ |  f0+0  f0+1
 				//  | \|  f1+0  f1+1
-				if (sw==0) {
-					addTri(f0+0,f1+1,f0+1,i);
-					addTri(f0+0,f1+0,f1+1,i);  }
-				else {  // |/|
-					addTri(f0+0,f1+0,f0+1,i);
-					addTri(f0+1,f1+0,f1+1,i);  }
+				addTri(f0+0,f1+1,f0+1,i);
+				addTri(f0+0,f1+0,f1+1,i);
 			}
-
-			///>>>  fix gaps when iw changes - fan tris
-			int ma = iw1 - iw, ms = -ma, m;
-			for (m=0; m < ma; ++m)
+			else		//  dec  iw1 <= iw
+			for (int w=0; w < iw1; ++w)  // width-1
 			{
-				int f0 = iiw + iw-1, f1 = f0 + (iw+2)+m;
+				int f0 = iiw + w, f1 = f0 + iw+1;
+				//  |/|
+				addTri(f0+0,f1+0,f0+1,i);
 				addTri(f0+1,f1+0,f1+1,i);
 			}
-			for (m=0; m < ms; ++m)
+
+			///  \|/   fan tris
+			///  fix edge gaps, when iw changes
+
+			if (d > 0)  //  inc  iw < iw1
 			{
-				int f0 = iiw + iw-sw -m, f1 = f0 + (iw+1);
-				addTri(f0+0,f1+0,f0+1,i);
+				int f0 = iiw + iw;
+				for (int m=0; m < dd; ++m)
+				{
+					int f1 = f0 + iw+1 +m;
+					addTri(f0,f1,f1+1,i);
+				}
+			}
+			if (d < 0)  //  dec  iw1 < iw
+			{
+				int f0 = iiw + iw + iw1+1;
+				for (int m=0; m < dd; ++m)
+				{
+					int f1 = iiw + iw-1 -m;
+					addTri(f0,f1,f1+1,i);
+				}
 			}
 			iiw += iw + 1;
 		}
+
 	vSegs[seg].nTri[DL.lod] = idx.size()/3;
 	blendTri = false;
 

@@ -36,7 +36,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	Ogre::Timer ti;	
 
 
-	DataRoad DR(editorAlign,bulletFull);
+	DataRoad DR(editorAlign, bulletFull);
 	
 	PrepassRange(DR);
 	
@@ -63,6 +63,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 	for (int lod = 0; lod < LODs; ++lod)
 	{
+		LogR("");
 		LogR("LOD: "+toStr(lod)+" ---");
 
 		DataLod DL;
@@ -96,7 +97,7 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		iOldHide = -1;
 
 
-	if (iDirtyId == -1)  //if (segs <= 4 || sMax - sMin > 4)
+	if (iDirtyId == -1)
 		LogO(String("::: Time Road Rebuild: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
 
@@ -203,7 +204,6 @@ void SplineRoad::PrepassLod(
 		DL.sumLenMrg += len;
 		//  mtr changes
 		int hid = mP[seg].idMtr, hid1 = mP[seg1].idMtr, hid0 = mP[seg0].idMtr;
-		LogR(toStr(sp0) + "  " + toStr(sp) + "  " + toStr(sp1));
 
 		//  merge road and pipe segs, don't merge transitions
 		if (sp != sp1 || sp != sp0  ||  hid != hid1 || hid != hid0)
@@ -221,7 +221,8 @@ void SplineRoad::PrepassLod(
 		}else
 			DL.v_bMerge.push_back(0);  // merged
 		
-		LogR("seg "+toStr(seg)+"  iw "+toStr(iw)+"  il "+toStr(il)+"  pp "+toStr(sp));
+		LogR("seg " + iToStr(seg,3) + "  iw " + iToStr(iw,3) + "  il " + iToStr(il,3) +
+			"  pipe prv" + toStr(sp0) + "  cur " + toStr(sp) + "  nxt" + toStr(sp1));
 		
 		if (DL.isLod0)
 			DL0.v0_iL.push_back(il);
