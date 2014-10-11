@@ -254,6 +254,7 @@ void SplineEditChk::AddChkR(Real relR, bool dontCheckR)    ///  ChkR
 		mP[seg].chkR = maxR;
 }
 
+
 void SplineEditChk::AddBoxW(Real rel)
 {
 	vStBoxDim.z = std::max(6.f, vStBoxDim.z + rel);
@@ -274,7 +275,7 @@ void SplineEditChk::Set1stChk()
 }
 
 
-//  Set Checkpoints  after xml load, todo: move after rebuild ..
+//  Set Checkpoints
 //--------------------------------------------------------------------------------------
 void SplineRoad::SetChecks(bool upd)
 {
