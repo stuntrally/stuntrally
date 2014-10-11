@@ -1,9 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
-#include "Road.h"
 #include "../ogre/common/RenderConst.h"
-
-#include <OgreLogManager.h>
+#include "Road.h"
 #include <OgreSubMesh.h>
 #include <OgreSceneManager.h>
 #include <OgreMeshManager.h>
@@ -110,9 +108,9 @@ void SplineRoad::AddMesh(MeshPtr mesh, String sMesh, const AxisAlignedBox& aabox
 void SplineRoad::addTri(int f1, int f2, int f3, int i)
 {
 	/*bool ok = true;  const int fmax = 65530; //16bit
-	if (f1 >= at_size || f1 > fmax)  {  LogRE("idx too big: "+toStr(f1)+" >= "+toStr(at_size));  ok = 0;  }
-	if (f2 >= at_size || f2 > fmax)  {  LogRE("idx too big: "+toStr(f2)+" >= "+toStr(at_size));  ok = 0;  }
-	if (f3 >= at_size || f3 > fmax)  {  LogRE("idx too big: "+toStr(f3)+" >= "+toStr(at_size));  ok = 0;  }
+	if (f1 >= at_size || f1 > fmax)  {  LogO("idx too big: "+toStr(f1)+" >= "+toStr(at_size));  ok = 0;  }
+	if (f2 >= at_size || f2 > fmax)  {  LogO("idx too big: "+toStr(f2)+" >= "+toStr(at_size));  ok = 0;  }
+	if (f3 >= at_size || f3 > fmax)  {  LogO("idx too big: "+toStr(f3)+" >= "+toStr(at_size));  ok = 0;  }
 	if (!ok)  return;/**/
 
 	idx.push_back(f1);  idx.push_back(f2);  idx.push_back(f3);

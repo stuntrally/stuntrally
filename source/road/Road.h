@@ -23,7 +23,7 @@ class btTriangleMesh;
 #endif
 
 #ifdef SR_EDITOR
-#define LogR(a)  //LogO(String("~ Road  ") + a);
+#define LogR(a)  //LogO(String("~ Road  ") + a)
 #else
 #define LogR(a)
 #endif

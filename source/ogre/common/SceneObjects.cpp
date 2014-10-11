@@ -381,7 +381,7 @@ void App::ToggleObjSim()
 
 	if (!objSim)  // off sim
 	{
-		// Destroy blt world
+		//  Destroy blt world
 		for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
 		{
 			btCollisionObject* obj = world->getCollisionObjectArray()[i];
@@ -402,7 +402,7 @@ void App::ToggleObjSim()
 	}
 	else  // on sim
 	{
-		// Create blt world
+		//  Create blt world
 		scn->CreateBltTerrain();
 		scn->road->RebuildRoadInt(false,true);
 	}

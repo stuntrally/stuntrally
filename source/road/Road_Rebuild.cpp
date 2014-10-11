@@ -13,7 +13,6 @@
 	#include "../bullet/BulletCollision/CollisionDispatch/btCollisionObject.h"
 	#include "../bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #endif
-#include <OgreTimer.h>
 #include <OgreTerrain.h>
 #include <OgreMeshManager.h>
 #include <OgreEntity.h>

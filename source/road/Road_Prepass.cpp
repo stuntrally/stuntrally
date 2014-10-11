@@ -1,22 +1,8 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
-#include "../ogre/common/RenderConst.h"
-#include "../ogre/common/ShapeData.h"
 #include "../vdrift/dbl.h"
 #include "Road.h"
-#ifndef SR_EDITOR
-	#include "../vdrift/game.h"
-#else
-	#include "../editor/CApp.h"
-	#include "../bullet/BulletCollision/CollisionShapes/btTriangleMesh.h"
-	#include "../bullet/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"
-	#include "../bullet/BulletCollision/CollisionDispatch/btCollisionObject.h"
-	#include "../bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
-#endif
 #include <OgreTimer.h>
-#include <OgreTerrain.h>
-#include <OgreMeshManager.h>
-#include <OgreEntity.h>
 using namespace Ogre;
 using std::vector;  using std::min;  using std::max;
 
