@@ -333,7 +333,7 @@ void SplineRoad::BuildSeg(
 				Real yy;
 
 				if (h==0)  // top below road
-				{	yy = vn.y * -0.8f;  //par
+				{	yy = vn.y * (onP ? 1.5f : -0.8f);  //par
 					vP.y += yy;
 				}
 				else  // bottom below ground
