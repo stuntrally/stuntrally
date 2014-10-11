@@ -248,7 +248,7 @@
 	<Tag name="UserDir">Benutzerpfad (Logs, Konfiguration, Benutzerdaten, etc.)</Tag>
 	<Tag name="InputMinVal">Min. Wert</Tag>
 	<Tag name="NetServer">Server</Tag>
-	<Tag name="DoesntExist">Doesn't exist</Tag>
+	<Tag name="DoesntExist">Nicht vorhanden</Tag>
 	<Tag name="Brush_Offset">Abstand</Tag>
 	<Tag name="NetworkError">Netzwerkfehler</Tag>
 	<Tag name="InputMain">Allgemein</Tag>
@@ -709,7 +709,7 @@
 	<Tag name="CarDesc_FR4">Recht alt, schwer und langsam. Gut für Gelände aber nicht mit der besten Aufhängung. Ist nicht für schnellere oder Stunt-Strecken geeignet.</Tag>
 	<Tag name="SunDir">Sonnenrichtung</Tag>
 	<Tag name="InputRoadPick">Leer - Auswahl</Tag>
-	<Tag name="InputRoadAngSnap">5,6 - Winkel rasten ein</Tag>
+	<Tag name="InputRoadAngSnap">5   - angles snap decrease (shift - increase)</Tag>
 	<Tag name="SC_Canyon">Schlucht</Tag>
 	<Tag name="TipTrkViewShort">Kurze Listenansicht.</Tag>
 	<Tag name="TipSmokeInt">Intensität der Rauchpartikel.</Tag>
@@ -943,7 +943,7 @@
 	<Tag name="Copy">Kopieren</Tag>
 	<Tag name="Channel">Kanal</Tag>
 	<Tag name="TipFind">Geben Sie hier einen Teil des Namens der Strecke, nach der Sie suchen, ein (filtert die Liste).</Tag>
-	<Tag name="InputRoadOnPipe">8 - als Auf-Rohr-Abschnitt markieren</Tag>
+	<Tag name="InputRoadOnPipe">8   - toggle on pipe (ctrl - mark only)</Tag>
 	<Tag name="scale">Skalierung</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="InputSaveTrack">F4 - Strecke speichern</Tag>

@@ -709,7 +709,7 @@
 	<Tag name="CarDesc_FR4">Abbastanza vecchia, pesanta, larga e lenta. Buona sui terreni ma non con sospensioni robuste. Non è adatta per piste veloci e acrobatiche.</Tag>
 	<Tag name="SunDir">Direz. sole</Tag>
 	<Tag name="InputRoadPick">Spazio - prendi uno/nessuno</Tag>
-	<Tag name="InputRoadAngSnap">5,6   - snap angoli</Tag>
+	<Tag name="InputRoadAngSnap">5   - angles snap decrease (shift - increase)</Tag>
 	<Tag name="SC_Canyon">Canyon</Tag>
 	<Tag name="TipTrkViewShort">Breve elenco.</Tag>
 	<Tag name="TipSmokeInt">Intensità particelle di fumo.</Tag>
@@ -943,7 +943,7 @@
 	<Tag name="Copy">Copia</Tag>
 	<Tag name="Channel">Canale</Tag>
 	<Tag name="TipFind">Inserisci una parte del nome per cercare (lista dei filtri).</Tag>
-	<Tag name="InputRoadOnPipe">8   - segna come guidato sul tubo</Tag>
+	<Tag name="InputRoadOnPipe">8   - toggle on pipe (ctrl - mark only)</Tag>
 	<Tag name="scale">Scala</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="InputSaveTrack">F4 - salva la pista</Tag>
