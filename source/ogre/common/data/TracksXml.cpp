@@ -184,15 +184,33 @@ bool TracksXml::LoadIni(string file)
 			times[name] = time;
 		}
 	}
+	
+	///  *  Log sceneries with stats  *
+	#ifdef LOG_SCN
+	i=1;  int c,n, nn = trks.size()-1;
 
-	#ifdef LOG_SCN  // * Log sceneries with stats *
-	int c;  i=1;
 	stringstream ss;  ss << fixed;
-	ss << "Sceneries:\n""Num - Name - tracks count""\n";
+	ss << "Sceneries:\n""Num - Name - tracks count - last track in it (num trks back)""\n";
+
 	for (set<string>::iterator it = scns.begin(); it != scns.end(); ++it,++i)
-	{	c = scn_trks[*it];
+	{
+		c = scn_trks[*it];
+		
+		//  find last trk in this scn
+		n = nn;
+		bool srch = true;
+		while (srch && n >= 0)
+		{
+			if (trks[n].scenery == *it)
+				srch = false;
+			else
+				--n;
+		}
+		
 		ss << right << setw(2) << i << "  " << setw(13) << left << *it << "  "
-		   << c << (c<=2 ? " !" : "") << (c==1 ? "!" : "") << endl;
+		   << setw(2) << c << (c==1 ? "!!" : c==2 ? "! " : "  ")
+		   << " " << setw(3) << nn-n << endl;
+		
 	}
 	LogO(ss.str());
 	#endif
