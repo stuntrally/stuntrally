@@ -137,7 +137,7 @@ private:
 		
 		DataRoad(bool edAlign, bool bltFull)
 			:editorAlign(edAlign), bulletFull(bltFull)
-			,segs(2), sMin(0), sMax(1)  //-
+			,segs(0), sMin(0), sMax(0)
 		{	}
 	};
 
