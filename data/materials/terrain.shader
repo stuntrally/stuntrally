@@ -599,7 +599,7 @@
 #endif
 
 #if SHADOWS
-        shUniform(float4, shadowFar_fadeStart) @shSharedParameter(shadowFar_fadeStart)
+        shUniform(float4, shadowFar_fadeStart)  @shSharedParameter(shadowFar_fadeStart)
 #endif
 
 
@@ -664,6 +664,7 @@
         shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, fogClrFinal.rgb, fogL);
 #endif
 
+
 #if MRT
         float3 normal = shSample(normalMap, UV).rgb * 2 - 1;
         normal = normalize(normal);
@@ -674,9 +675,7 @@
         shOutputColour(2) = float4(depth / far, 0, depth / objSpacePosition.w, 0);
 #endif
 
-    //shOutputColour(0).xy = UV;
-
-
+		//shOutputColour(0).xy = UV;
 
     }
 

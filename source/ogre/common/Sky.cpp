@@ -174,6 +174,7 @@ void App::SetFactoryDefaults()
 	fct.setWriteSourceCache(true);
 	fct.setReadMicrocodeCache(true);
 	fct.setWriteMicrocodeCache(true);
+	
 	fct.setGlobalSetting("fog", "true");
 	fct.setGlobalSetting("wind", "true");
 	fct.setGlobalSetting("mrt_output", "false");
