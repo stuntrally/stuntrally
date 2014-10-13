@@ -94,13 +94,13 @@ void SplineRoad::PrepassRange(DataRoad& DR)
 {
 	//  segments range
 	DR.segs = getNumPoints();
+	DR.sMin = 0;  DR.sMax = DR.segs;
 	if (DR.segs == 0 || DR.segs == 1)  return;
 
 	
 	if (vSegs.size() != DR.segs || DR.editorAlign || DR.bulletFull)
 		iDirtyId = -1;  // force full
 		
-	DR.sMin = 0;  DR.sMax = DR.segs;
 	//  update 4 segs only (fast)
 	if (iDirtyId != -1 && DR.segs >= 4)
 	{

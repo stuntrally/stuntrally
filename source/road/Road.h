@@ -153,7 +153,7 @@ private:
 		{	v0_iL.clear();  v0_tc.clear();  v0_N.clear();  }
 	}
 	DL0;  // stays after build since N is used for SetChecks
-	void SetChecks(bool upd=false);  // Init  1st in file load, upd=true 2nd time for N
+	void SetChecks();  // Init  1st in file load, 2nd time for N
 
 	struct DataLod   // for current Lod
 	{

@@ -773,5 +773,5 @@ void App::CreateRoad()
 	road->bRoadWFullCol = pSet->gui.collis_roadw;
 
 	road->RebuildRoadInt();
-	road->SetChecks(true);  // 2nd, upd
+	road->SetChecks();  // 2nd, upd
 }

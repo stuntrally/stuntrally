@@ -277,7 +277,7 @@ void SplineEditChk::Set1stChk()
 
 //  Set Checkpoints
 //--------------------------------------------------------------------------------------
-void SplineRoad::SetChecks(bool upd)
+void SplineRoad::SetChecks()
 {
 	///  add checkpoints  * * *
 	mChks.clear();  iChkId1 = 0;
@@ -304,7 +304,6 @@ void SplineRoad::SetChecks(bool upd)
 			mChks.push_back(cs);
 		}
 	}
-	if (upd)  return;
 	int num = (int)mChks.size();
 	if (num == 0)  return;
 
