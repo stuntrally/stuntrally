@@ -106,7 +106,7 @@ void CScene::CreateBlendTex()
 //--------------------------------------------------------------------------
 void CScene::UpdBlendmap()
 {
-	if (!terrain)  return;
+	//if (!terrain)  return;
 	Ogre::Timer ti;
 
 	size_t size = sc->td.iTerSize-1;  //!^ same as in create

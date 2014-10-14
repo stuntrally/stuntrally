@@ -198,6 +198,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 		//LogO(String("::: Time Hmap: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();  // 4MB ~13ms
 	}
 	///
+	UpdBlendmap();  //
 
 	//  Terrain
 	if (bTer)
@@ -264,7 +265,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 	
 	changeShadows();
 
-	UpdBlendmap();  //
+	//UpdBlendmap();  //
 
 	LogO(String("::: Time Terrain: ") + fToStr(tm.getMilliseconds(),0,3) + " ms");
 }

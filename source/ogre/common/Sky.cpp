@@ -190,12 +190,9 @@ void App::SetFactoryDefaults()
 	fct.setGlobalSetting("editor", "false");
 	#endif
 
-	fct.setSharedParameter("fogColorSun",  sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
-	fct.setSharedParameter("fogColorAway", sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
-	fct.setSharedParameter("fogColorH",    sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
-	fct.setSharedParameter("fogParamsH",   sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
+	scn->UpdFog(false);
 
-	fct.setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(new sh::Vector3(0,0,0)));
+	fct.setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(new sh::Vector3(0.1,0.2,0.5)));
 	fct.setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(new sh::Vector4(0,0,0,0)));
 	fct.setSharedParameter("arrowColour1", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));
 	fct.setSharedParameter("arrowColour2", sh::makeProperty <sh::Vector3>(new sh::Vector3(0,0,0)));

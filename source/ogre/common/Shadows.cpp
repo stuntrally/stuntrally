@@ -64,11 +64,11 @@ void CScene::changeShadows()
 	{
 		mFactory->setSharedParameter("terrainWorldSize", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(terrain->getWorldSize())));
 		mFactory->setTextureAlias("TerrainLightMap", terrain->getLightmap()->getName());
-
-		mFactory->setSharedParameter("ter_scaleNormal", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(1.f / sc->td.normScale)));
-		mFactory->setSharedParameter("ter_specular_pow", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(sc->td.specularPow)));
-		mFactory->setSharedParameter("ter_specular_pow_em", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(sc->td.specularPowEm)));
 	}
+	mFactory->setSharedParameter("ter_scaleNormal", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(1.f / sc->td.normScale)));
+	mFactory->setSharedParameter("ter_specular_pow", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(sc->td.specularPow)));
+	mFactory->setSharedParameter("ter_specular_pow_em", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(sc->td.specularPowEm)));
+
 		
 	// disable 4 shadow textures (does not work because no texcoord's left in shader)
 	if (num == 4)  num = 3;
@@ -131,7 +131,7 @@ void CScene::changeShadows()
 	mSceneMgr->setShadowColour(Ogre::ColourValue(0,0,0,1));
 
 
-	mFactory->setGlobalSetting("shadows", "false");
+	mFactory->setGlobalSetting("shadows", b2s(pSet->shadow_type > Sh_None));
 	mFactory->setGlobalSetting("shadows_pssm", b2s(pSet->shadow_type > Sh_None /*&& pSet->shadow_count > 1*/));
 	mFactory->setGlobalSetting("shadows_depth", b2s(pSet->shadow_type >= Sh_Depth));
 	
@@ -156,20 +156,25 @@ void CScene::changeShadows()
 	mFactory->setGlobalSetting("debug_blend", b2s(app->gui->bDebugBlend));
 #endif
 
-	#if 0
-	//  shadow tex overlay
-	//  add the overlay elements to show the shadow maps
+	#if 0  /// TEST overlays
+	//  add overlay elements to show shadow or terrain maps
 	OverlayManager& mgr = OverlayManager::getSingleton();
 	Overlay* overlay = mgr.getByName("DebugOverlay");
 	if (overlay)
 		mgr.destroy(overlay);
 	overlay = mgr.create("DebugOverlay");
-	
 	TexturePtr tex;
+
+	#if 0  /// shadow
 	for (int i = 0; i < pSet->shadow_count; ++i)
 	{	
 		TexturePtr tex = mSceneMgr->getShadowTexture(i);
-		
+	#else  /// terrain
+	for (int i = 0; i < 2/*pSet->shadow_count*/; ++i)
+	{	
+		TexturePtr tex = !terrain ? mSceneMgr->getShadowTexture(i) :
+			i==0 ? terrain->getCompositeMap() : terrain->getLightmap();
+	#endif
 		// Set up a debug panel to display the shadow
 		if (MaterialManager::getSingleton().resourceExists("Ogre/DebugTexture" + toStr(i)))
 			MaterialManager::getSingleton().remove("Ogre/DebugTexture" + toStr(i));

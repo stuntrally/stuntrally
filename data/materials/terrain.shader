@@ -317,7 +317,7 @@
         blend_weights /= blend_weights.x + blend_weights.y + blend_weights.z;
         
         float2 coord1, coord2, coord3;
-        float4 col1, col2, col3;
+        float4 col1, col2, col3 = float4(1,1,1,1);
         
         // use world position and divide by terrain world size to get a consistent uv scale (-0.5 ... 0.5)
         // this is the same scale that non-triplanar would have
