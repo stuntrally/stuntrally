@@ -241,37 +241,6 @@ SETTINGS::SETTINGS()   ///  Defaults
 	//  not in gui
 	,boostFromExhaust(0), net_local_plr(-1)
 {
-
-	//  track common
-	gui.track = "Isl6-Flooded";  gui.track_user = false;
-	gui.trees = 1.f;
-
-
-	cam_view.resize(4);
-	//  cars
-	for (int i=0; i < 6; ++i)
-	{	if (i < 4)  {  gui.car[i] = "ES";  cam_view[i] = 9;  }
-		gui.car_hue[i] = 0.4f+0.2f*i;  gui.car_sat[i] = 1.f;  gui.car_val[i] = 1.f;
-		gui.car_gloss[i] = 0.5f;  gui.car_refl[i] = 1.f;  }
-
-	//  game
-	gui.trackreverse = false;
-	gui.sim_mode = "easy";
-
-	gui.local_players = 1;  gui.num_laps = 2;
-	gui.collis_veget = true;  gui.collis_cars = false;
-	gui.collis_roadw = false;  gui.dyn_objects = true;
-	
-	gui.boost_type = 2;
-	gui.BoostDefault();
-
-	gui.flip_type = 1;  gui.rewind_type = 1;
-	gui.damage_type = 1;  gui.damage_dec = 0.f;
-	//
-	gui.rpl_rec = 1;  gui.champ_rev = false;  gui.start_order = 0;
-	gui.champ_num = -1;  gui.pre_time = 2.f;  gui.chall_num = -1;
-	game = gui;
-
 	//  car setup  (update in game-default.cfg)
 	abs[0] = 0;  abs[1] = 0;
 	tcs[0] = 0;  tcs[1] = 0;
@@ -279,14 +248,40 @@ SETTINGS::SETTINGS()   ///  Defaults
 	sss_velfactor[0] = 1.f;  sss_velfactor[1] = 1.f;
 	steer_range[0] = 1.0;  steer_range[1] = 0.7;
 	steer_sim[0] = 0.51;  steer_sim[1] = 0.81;
+
+	cam_view.resize(4);
+	for (int i=0; i < 4; ++i)
+		cam_view[i] = 9;
 }
 
 
 SETTINGS::GameSet::GameSet()
+	:track("Isl6-Flooded"), track_user(false)
+	,trees(1.f)  // common
+	,trackreverse(false)
+	//  game setup
+	,local_players(1), num_laps(2)
+	,sim_mode("easy")
+	,collis_veget(true), collis_cars(false), collis_roadw(false), dyn_objects(true)
+	,boost_type(2), flip_type(1), damage_type(1), rewind_type(1), damage_dec(0.f)
+	,rpl_rec(1)
+	//  champ
+	,champ_num(-1), chall_num(-1)
+	,champ_rev(false)	
+	,pre_time(2.f), start_order(0)
 {
 	car_hue.resize(6);  car_sat.resize(6);  car_val.resize(6);
 	car_gloss.resize(6);  car_refl.resize(6);
 	car.resize(4);
+
+	BoostDefault();
+
+	//  cars
+	for (int i=0; i < 6; ++i)
+	{	if (i < 4)  car[i] = "ES";
+		car_hue[i] = 0.4f+0.2f*i;  car_sat[i] = 1.f;  car_val[i] = 1.f;
+		car_gloss[i] = 0.5f;  car_refl[i] = 1.f;
+	}
 }
 
 void SETTINGS::GameSet::BoostDefault()
