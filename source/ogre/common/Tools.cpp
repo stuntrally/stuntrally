@@ -325,7 +325,7 @@ void CGui::ToolGhosts()
 		//float timeB = timeTrk * 1.1f;  // champs factor mostly 0.1
 		//const float decFactor = 1.5f;
 		//float score = max(0.f, (1.f + (timeB-timeES)/timeB * decFactor) * 100.f);
-		float place = app->GetRacePos(timeES,timeTrk,1.f,false);
+		//float place = app->GetRacePos(timeES,timeTrk,1.f,false);
 
 		///  write
 	#if 0

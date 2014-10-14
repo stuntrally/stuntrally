@@ -68,8 +68,8 @@ void SplineEdit::Mark::setVis(bool vis)
 void SplineMarkEd::AddMarker(Vector3 pos)
 {
 	if (sMarkerMesh == "")  return;
-	Entity* ent, *entC;
-	SceneNode* nd, *ndC;
+	Entity* ent;//, *entC;
+	SceneNode* nd;//, *ndC;
 
 	ent = mSceneMgr->createEntity(sMarkerMesh);
 	ent->setMaterialName("sphere_norm");  ent->setCastShadows(false);

@@ -110,6 +110,7 @@ void HDRLogic::setApp(BaseApp* app)
 }
 
 HDRListener::HDRListener(BaseApp* app) : mApp(app)
+	,mVpWidth(1024), mVpHeight(768), mBloomSize(4)
 {
 }
 HDRListener::~HDRListener()
@@ -531,6 +532,7 @@ CompositorInstance::Listener* DepthOfFieldLogic::createListener(CompositorInstan
 }
 
 DepthOfFieldListener::DepthOfFieldListener(BaseApp* app) : mApp(app)
+	,mViewportWidth(1024), mViewportHeight(768)
 {
 }
 DepthOfFieldListener::~DepthOfFieldListener()
@@ -630,7 +632,6 @@ public:
 	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
 	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
 	int mViewportWidth,mViewportHeight;
-
 };
 
 CompositorInstance::Listener* FilmGrainLogic::createListener(CompositorInstance* instance)
@@ -649,6 +650,7 @@ void FilmGrainLogic::setApp(BaseApp* app)
 
 
 FilmGrainListener::FilmGrainListener(BaseApp* app) : mApp(app)
+	,mViewportWidth(1024), mViewportHeight(768)
 {
 }
 FilmGrainListener::~FilmGrainListener()
@@ -713,6 +715,7 @@ CompositorInstance::Listener* CameraBlurLogic::createListener(CompositorInstance
 }
 
 CameraBlurListener::CameraBlurListener(BaseApp* app) : mApp(0)
+	,mRequiresTextureFlipping(0), compositorinstance(0)
 {
 	mApp = (App*)app;
 }

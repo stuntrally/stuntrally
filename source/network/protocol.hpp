@@ -30,7 +30,8 @@ const unsigned DEFAULT_PORT = 4243;
  * It will be transmitted as 8-bit unsigned int.
  * On change, bump GAME_PROTOCOL_VERSION, MASTER_PROTOCOL_VERSION
  */
-enum PacketType {
+enum PacketType
+{
 	HANDSHAKE = 0,
 	PING,
 	PONG,
@@ -51,7 +52,8 @@ enum PacketType {
 /**
  * @brief Contains error codes that tell the reason of disconnecting.
  */
-enum ErrorCodes {
+enum ErrorCodes
+{
 	WRONG_PASSWORD = 1,
 	INCOMPATIBLE_GAME_PROTOCOL,
 	INCOMPATIBLE_MASTER_PROTOCOL
@@ -62,15 +64,17 @@ enum ErrorCodes {
  * This stuff needs to be validated before accepting a new connection as a peer.
  * On change, bump GAME_PROTOCOL_VERSION
  */
-struct HandshakePackage {
+struct HandshakePackage
+{
 	uint8_t packet_type;
 	uint32_t master_protocol_version;
 	uint32_t game_protocol_version;
 	char password[16];
-	HandshakePackage(std::string passwd = ""):
-		packet_type(HANDSHAKE),
-		master_protocol_version(MASTER_PROTOCOL_VERSION),
-		game_protocol_version(GAME_PROTOCOL_VERSION)
+
+	HandshakePackage(std::string passwd = "")
+		:packet_type(HANDSHAKE)
+		,master_protocol_version(MASTER_PROTOCOL_VERSION)
+		,game_protocol_version(GAME_PROTOCOL_VERSION)
 	{
 		memset(password, 0, sizeof(password));
 		strcpy(password, passwd.c_str());
@@ -82,7 +86,8 @@ struct HandshakePackage {
  * @brief Contains information about one game that is available for joining.
  * On change, bump GAME_PROTOCOL_VERSION, MASTER_PROTOCOL_VERSION
  */
-struct GameInfo {
+struct GameInfo
+{
 	uint8_t packet_type;
 	uint32_t id;        // Set by server
 	uint32_t address;   // Set by server
@@ -104,12 +109,21 @@ struct GameInfo {
 	uint8_t damage_type, rewind_type;
 	float damage_lap_dec, boost_lap_inc, rewind_lap_inc;  //todo
 
-	GameInfo(): packet_type(GAME_STATUS), id() {
-		name[0] = '\0';  track[0] = '\0';  sim_mode[0] = '\0';  }
+	GameInfo()
+		:packet_type(GAME_STATUS), id(0), address(0), port(0), timestamp(0)
+		,players(0), collisions(0), laps(0), locked(0), reversed(0)
+		,flip_type(0), boost_type(0), boost_power(0.8f)
+		,start_order(0)
+		,tree_collis(0), tree_mult(1.f)
+		,damage_type(0), rewind_type(0)
+		,damage_lap_dec(0), boost_lap_inc(0), rewind_lap_inc(0)
+	{
+		name[0] = '\0';  track[0] = '\0';  sim_mode[0] = '\0';
+	}
 
-	bool operator==(const GameInfo& other) { return id == other.id; }
-	bool operator!=(const GameInfo& other) { return !(*this == other); }
-	operator bool() { return id > 0; }
+	bool operator==(const GameInfo& other) {  return id == other.id;  }
+	bool operator!=(const GameInfo& other) {  return !(*this == other);  }
+	operator bool() {  return id > 0;  }
 };
 
 typedef std::map<uint32_t, protocol::GameInfo> GameList;
@@ -120,14 +134,17 @@ typedef std::map<uint32_t, protocol::GameInfo> GameList;
  * These structs are passed around to create the complete network topography.
  * On change, bump GAME_PROTOCOL_VERSION
  */
-struct PeerAddressPacket {
+struct PeerAddressPacket
+{
 	uint8_t packet_type;
 	net::Address address;
 
-	PeerAddressPacket(net::Address addr = net::Address()): packet_type(PEER_ADDRESS), address(addr) {}
+	PeerAddressPacket(net::Address addr = net::Address())
+		:packet_type(PEER_ADDRESS), address(addr)
+	{	}
 
-	bool operator==(const PeerAddressPacket& other) { return address == other.address; }
-	bool operator!=(const PeerAddressPacket& other) { return !(*this == other); }
+	bool operator==(const PeerAddressPacket& other) {  return address == other.address;  }
+	bool operator!=(const PeerAddressPacket& other) {  return !(*this == other);  }
 };
 
 
@@ -136,7 +153,8 @@ struct PeerAddressPacket {
  * These structs are passed around to update player information.
  * On change, bump GAME_PROTOCOL_VERSION
  */
-struct PlayerInfoPacket {
+struct PlayerInfoPacket
+{
 	uint8_t packet_type;
 	int32_t random_id;
 	char name[16];
@@ -147,7 +165,9 @@ struct PlayerInfoPacket {
 	//TODO:  car colors (also change nick colors in game tab)
 	//float car_hue, car_sat, car_val, car_gloss, car_refl;  // car color
 
-	PlayerInfoPacket(): packet_type(PLAYER_INFO), random_id(-1), ready(), peers() {
+	PlayerInfoPacket()
+		:packet_type(PLAYER_INFO), random_id(-1), ready(), peers()
+	{
 		memset(name, 0, sizeof(name));
 		memset(car, 0, sizeof(car));
 		memset(password, 0, sizeof(password));
@@ -160,7 +180,8 @@ struct PlayerInfoPacket {
  * These structs are passed around to update car position etc.
  * On change, bump GAME_PROTOCOL_VERSION
  */
-struct CarStatePackage {
+struct CarStatePackage
+{
 	uint8_t packet_type;
 	MATHVECTOR<float,3> pos;
 	QUATERNION<float> rot;
@@ -173,8 +194,12 @@ struct CarStatePackage {
 	uint8_t brake;
 	// boostFuel,gear, vel,rpm for replays ?..
 
-	CarStatePackage(): packet_type(CAR_UPDATE) {}
-	operator bool() { return packet_type == CAR_UPDATE; }
+	CarStatePackage()
+		:packet_type(CAR_UPDATE)
+		,steer(0.f),trackPercent(0),boost(0),brake(0)
+	{	}
+	operator bool()
+	{	return packet_type == CAR_UPDATE;  }
 };
 
 typedef std::map<int8_t, CarStatePackage> CarStates;
@@ -184,12 +209,15 @@ typedef std::map<int8_t, CarStatePackage> CarStates;
  * @brief Contains lap / race timing info.
  * On change, bump GAME_PROTOCOL_VERSION
  */
-struct TimeInfoPackage {
+struct TimeInfoPackage
+{
 	uint8_t packet_type;
 	uint8_t lap; // 0 for total time
 	double time;
+
 	TimeInfoPackage(uint8_t initLap, double initTime):
-		packet_type(TIME_INFO), lap(initLap), time(initTime) {}
+		packet_type(TIME_INFO), lap(initLap), time(initTime)
+	{	}
 };
 
 

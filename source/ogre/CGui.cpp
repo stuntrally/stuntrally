@@ -8,6 +8,7 @@
 
 CGui::CGui(App* app1)
 	: app(app1), bGI(0)
+	,mGui(0), gcom(0), popup(0)
 	//  gui
 	,carList(0), btRplPl(0)
 	,btNewGameCar(0)

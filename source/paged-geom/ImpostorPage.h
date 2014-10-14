@@ -89,7 +89,7 @@ public:
 
 	///T fake, just render impostors, dont use
 	ImpostorPage(Ogre::SceneManager* s, PagedGeometry* p)
-		: m_pSceneMgr(s), m_pPagedGeom(p)
+		: m_pSceneMgr(s), m_pPagedGeom(p), m_blendMode(ALPHA_REJECT_IMPOSTOR)
 	{	}
 
 	void init(PagedGeometry *geom, const Ogre::Any &data);

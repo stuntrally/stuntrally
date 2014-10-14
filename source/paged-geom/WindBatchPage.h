@@ -50,7 +50,7 @@ namespace Forests
    class WindBatchPage: public BatchPage
    {
    public:
-      WindBatchPage() : m_pPagedGeom(NULL) { /* empty */ }
+      WindBatchPage() /*: m_pPagedGeom(NULL)*/ {   }
 
       ///
       void init(PagedGeometry *geom, const Ogre::Any &data);
@@ -60,7 +60,7 @@ namespace Forests
 
    private:
       Ogre::String            m_strEntityName;     ///<
-      const PagedGeometry*    m_pPagedGeom;        ///<
+      //const PagedGeometry*    m_pPagedGeom;        ///<
    };
 
 }

@@ -139,8 +139,8 @@ bool PreviewTex::LoadTer(String sRgb, String sAa, float defA)
 		Image imR; 	imR.load(dataR, exR);
 	
 		PixelBox pbR = imR.getPixelBox();
-		uchar* pR = static_cast<uchar*>(pbR.data);
-		int aR = pbR.getRowSkip() * PixelUtil::getNumElemBytes(pbR.format);
+		//uchar* pR = static_cast<uchar*>(pbR.data);
+		//int aR = pbR.getRowSkip() * PixelUtil::getNumElemBytes(pbR.format);
 
 		xSize = imR.getWidth();  ySize = imR.getHeight();
 		prvTex = TextureManager::getSingleton().createManual(
@@ -186,10 +186,10 @@ bool PreviewTex::LoadTer(String sRgb, String sAa, float defA)
 	
 		PixelBox pbR = imR.getPixelBox();
 		PixelBox pbA = imA.getPixelBox();
-		uchar* pR = static_cast<uchar*>(pbR.data);
-		uchar* pA = static_cast<uchar*>(pbA.data);
-		int aR = pbR.getRowSkip() * PixelUtil::getNumElemBytes(pbR.format);
-		int aA = pbA.getRowSkip() * PixelUtil::getNumElemBytes(pbA.format);
+		//uchar* pR = static_cast<uchar*>(pbR.data);
+		//uchar* pA = static_cast<uchar*>(pbA.data);
+		//int aR = pbR.getRowSkip() * PixelUtil::getNumElemBytes(pbR.format);
+		//int aA = pbA.getRowSkip() * PixelUtil::getNumElemBytes(pbA.format);
 
 		xSize = imR.getWidth();  ySize = imR.getHeight();
 		prvTex = TextureManager::getSingleton().createManual(

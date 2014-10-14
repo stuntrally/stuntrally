@@ -232,7 +232,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,all_effects(false), godrays(false), filmgrain(false)
 	,bloom(false), bloom_int(0.13), bloom_orig(0.9), hdr(false)
 	,blur(false), blur_int(0.1)
-	,dof_focus(100), dof_far(1000)
+	,dof_focus(100), dof_far(1000), dof(false)
 	,ssao(false), softparticles(false)
 	//  hdr
 	,hdrParam1(0.62), hdrParam2(0.10), hdrParam3(0.79)
