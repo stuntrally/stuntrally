@@ -35,6 +35,7 @@
 	<Camera on="0" name="Follow slow"       type="0"  bounce="1" pitch="13"  dist="7"   offset="0 1.6 0" speed="5" />
 	<Camera on="0" name="Follow far"        type="0"  bounce="1" pitch="18"  dist="14"  offset="0 3 0"   speed="20" />
 	<Camera on="1" name="Follow far slow"   type="0"  bounce="1" pitch="20"  dist="18"  offset="0 4 0"   speed="3" />
+	<Camera on="1" name="Follow far dist"   type="0"  bounce="0" pitch="32"  dist="25"  offset="0 7 0"   speed="10" />
 
 
 	<Camera on="2" name="Free near"         type="1"  bounce="0.7" yaw="0"  pitch="18"  dist="12"  offset="0 -0.0 0"     speed="10" default="0" />

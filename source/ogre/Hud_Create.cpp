@@ -439,7 +439,7 @@ void CHud::Create()
 
 		//  camera name
 		h.txCam = h.parent->createWidget<TextBox>("TextBox",
-			0,0, 200,30, Align::Left, "CamT"+s);
+			0,0, 300,30, Align::Left, "CamT"+s);
 		h.txCam->setFontName("hud.text");  h.txCam->setTextShadow(true);
 		h.txCam->setTextColour(Colour(0.65,0.85,0.85));
 	}
