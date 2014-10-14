@@ -26,6 +26,9 @@ BEZIER::BEZIER()
 	dist_from_start = 0.0;
 	length = 0.0;
 	have_racingline = false;
+	radius = 1;
+	track_radius = 100;
+	track_curvature = 1;
 }
 
 BEZIER::~BEZIER()

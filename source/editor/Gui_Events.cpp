@@ -566,7 +566,7 @@ void CGui::listPickTex(Mli2 li, size_t pos)
 	l.texFile = s;
 	
 	//  auto norm
-	{	String sNorm = StringUtil::replaceAll(s,"_d.","_n.");  //_T
+	{	String sNorm; //old = StringUtil::replaceAll(s,"_d.","_n.");  //_T
 		sNorm = p->texNorm+".jpg";
 
 		//  preset

@@ -49,6 +49,7 @@ void SplineRoad::Defaults()
 
 //  ctor stats
 SplineRoad::Stats::Stats()
+	:iVis(0), iTris(0)
 {
 	Reset();
 }

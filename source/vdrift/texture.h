@@ -18,14 +18,14 @@ private:
 	bool repeatu, repeatv;
 	bool allow_non_power_of_two;
 	bool nearest;
-	bool pre_multiply_alpha;
 
 public:
 	TEXTUREINFO() : mipmap(true), cube(false), verticalcross(false), normalmap(false),
-		anisotropy(0), repeatu(true), repeatv(true), allow_non_power_of_two(true),nearest(false) {}
+		anisotropy(0), repeatu(true), repeatv(true), allow_non_power_of_two(true),nearest(false)
+	{	}
 	TEXTUREINFO(const std::string & newname) : name(newname), mipmap(true), cube(false), verticalcross(false), normalmap(false),
-		anisotropy(0), repeatu(true), repeatv(true), allow_non_power_of_two(true),nearest(false),
-		pre_multiply_alpha(true) {}
+		anisotropy(0), repeatu(true), repeatv(true), allow_non_power_of_two(true),nearest(false)
+	{	}
 	const std::string GetName() const {return name;}
 	bool GetMipMap() const {return mipmap;}
 	bool GetCube() const {return cube;}
@@ -77,7 +77,6 @@ class TEXTURE_GL
 {
 private:
 	TEXTUREINFO texture_info;
-	int tex_id;
 	bool loaded;
 	unsigned int w, h; ///< w and h are post-texture-size transform
 	unsigned int origw, origh; ///< w and h are pre-texture-size transform

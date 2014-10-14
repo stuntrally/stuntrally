@@ -674,8 +674,7 @@ void CHud::Update(int carId, float time)
 	//  wheels ter mtr, surface info  ---------
 	if (pSet->car_dbgsurf && pCar)
 	{
-		String ss = "";
-		ss = pCarM->txtDbgSurf;
+		String ss = pCarM->txtDbgSurf;
 
 		//  surfaces  info
 		/*ss += "\n";

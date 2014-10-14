@@ -48,7 +48,7 @@ public:
 	btRigidBody* rb;  // out
 	
 	BulletWorldOffset(btDynamicsWorld* world=0)
-		: btBulletWorldImporter(world), ms(0)
+		: btBulletWorldImporter(world), ms(0), rb(0)
 	{
 		mTrOfs.setIdentity();
 	}

@@ -24,7 +24,7 @@ TRACK::TRACK(ostream & info, ostream & error)
 	:pGame(0),
 	info_output(info), error_output(error),
 	texture_size("large"),
-	loaded(false),
+	loaded(false), asphalt(false),
 	sDefaultTire("gravel")
 {
 }
@@ -230,22 +230,22 @@ optional <const BEZIER *> ROADSTRIP::FindBezierAtOffset(const BEZIER * bezier, i
 				list <ROADPATCH>::const_reverse_iterator rit(it);
 				if (rit == patches.rend())
 					rit = patches.rbegin();
-				rit++;
+				++rit;
 				if (rit == patches.rend())
 					rit = patches.rbegin();
 				it = rit.base();
 				if (it == patches.end())
 					it = patches.begin();
 
-				curoffset++;
+				++curoffset;
 			}
 			else if (curoffset > 0)
 			{
-				it++;
+				++it;
 				if (it == patches.end())
 					it = patches.begin();
 
-				curoffset--;
+				--curoffset;
 			}
 		}
 

@@ -48,9 +48,9 @@ protected:
 public:
 	VERTEXARRAY mesh;
 
-	MODEL() : generatedlistid(false),generatedmetrics(false),radius(0),radiusxz(0) {}
+	MODEL() : generatedlistid(false),generatedmetrics(false),radius(0),radiusxz(0), listid(0) {}
 	MODEL(const std::string & filepath, std::ostream & error_output) :
-		generatedlistid(false),generatedmetrics(false),radius(0),radiusxz(0) 
+		generatedlistid(false),generatedmetrics(false),radius(0),radiusxz(0), listid(0)
 	{
 		if (filepath.size() > 4 && filepath.substr(filepath.size()-4) == ".ova")
 			ReadFromFile(filepath, error_output, false);

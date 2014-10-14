@@ -439,8 +439,7 @@ void App::LoadCar()  // 4
 		{
 			c->fCam->setCamera(carsCamNum[i] -1);
 			
-			int visMask = 255;
-			visMask = c->fCam->ca->mHideGlass ? RV_MaskAll-RV_CarGlass : RV_MaskAll;
+			int visMask = c->fCam->ca->mHideGlass ? RV_MaskAll-RV_CarGlass : RV_MaskAll;
 			for (std::list<Viewport*>::iterator it = mSplitMgr->mViewports.begin();
 				it != mSplitMgr->mViewports.end(); ++it)
 				(*it)->setVisibilityMask(visMask);
@@ -612,7 +611,7 @@ void App::LoadTrees()  // 8
 void App::LoadMisc()  // 9 last
 {
 	bool rev = pSet->game.trackreverse;	
-	if (pGame && pGame->cars.size() > 0)  //todo: move this into gui track tab chg evt, for cur game type
+	if (pGame && !pGame->cars.empty())  //todo: move this into gui track tab chg evt, for cur game type
 		gcom->UpdGuiRdStats(scn->road, scn->sc, gcom->sListTrack,
 			pGame->timer.GetBestLap(0, rev), rev, 0);  // current
 

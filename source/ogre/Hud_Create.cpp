@@ -541,7 +541,7 @@ CHud::Hud::Hud()
 	,txLapTxt(0), txLap(0), bckLap(0)
 	,bckOpp(0), lastOppH(-1), xOpp(0), yOpp(0)
 	,txWarn(0), txPlace(0),  bckWarn(0), bckPlace(0)
-	,txCountdown(0)
+	,txCountdown(0), updGauges(0)
 
 	,txGear(0), txVel(0), bckVel(0)
 	,ndNeedles(0), ndGauges(0)

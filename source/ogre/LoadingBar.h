@@ -22,7 +22,10 @@ protected:
 
 public:
 
-	LoadingBar(BaseApp* app) : pApp(app)
+	LoadingBar(BaseApp* app)
+		:pApp(app), mWindow(0), bBackgroundImage(false)
+		,mInitProportion(0.f), mNumGroupsInit(1), mNumGroupsLoad(1)
+		,mBarMaxSizeX(0.f),mBarSizeY(0.f)
 	{  }
 	virtual ~LoadingBar()
 	{  }

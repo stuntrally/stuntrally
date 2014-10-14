@@ -99,7 +99,6 @@ public:
 
 	float speed;
 	int n, year, rating;
-	int rateuser, drivenlaps;  // todo: user info ...
 	
 	//  time mul factors, for race postion, in sim modes
 	float easy, norm;
@@ -119,5 +118,7 @@ public:
 	
 	//  methods
 	bool LoadXml(std::string file);
-	CarsXml(){  }
+	CarsXml()
+		:magic(0.010f)
+	{	}
 };

@@ -130,9 +130,10 @@ namespace wraps
 			}
 		}
 
+	public:
+		Ogre::Camera* mCamera;
 	protected:
 		MyGUI::Canvas* mCanvas;
-		Ogre::Camera* mCamera;
 		Ogre::RenderTarget* mRenderTarget;
 		Ogre::ColourValue mColour;
 	};

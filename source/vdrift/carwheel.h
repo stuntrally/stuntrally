@@ -58,9 +58,8 @@ public:
 	CARWHEEL()
 		:roll_height(0.9), mass(18.1), inertia_cache(10.0)
 		,steer_angle(0.), fluidRes(0.)
-		,radius(0.3), feedback(0.)
-		,rolling_res_lin(1.3e-2)
-		,rolling_res_quad(6.5e-6)
+		,radius(0.3), feedback(0.), camber_deg(0.), angvel(0.)
+		,rolling_res_lin(1.3e-2), rolling_res_quad(6.5e-6)
 	{	SetInertia(10.0);	}
 	
 	void DebugPrint(std::ostream & out);

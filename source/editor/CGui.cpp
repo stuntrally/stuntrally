@@ -8,7 +8,7 @@
 //  ctor
 //--------------------------------------------------------------------------
 CGui::CGui(App* app1)  //  gui wigdets--
-	: app(app1)
+	: app(app1), gcom(0)
 	,bGI(0)
 	,brImg(0), wndTabs(0)  // brush
 	//  mode
@@ -62,9 +62,9 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	,btnTexDiff(0), btnGrassMtr(0), btnVeget(0)
 	,liTex(0), liGrs(0), liVeg(0), liRd(0)
 	// track
-	, trkName(0)
+	, trkName(0), bCopyTrackU(0)
 	// gui
-	, bTopView(0), noBlendUpd(0)
+	, bTopView(0), noBlendUpd(0), oldFog(0)
 	// obj
 	,objListSt(0),objListDyn(0),objListRck(0),objListBld(0), objPan(0)
 	// clr

@@ -48,11 +48,13 @@ struct InputAction
 
 	InputAction(int id, bool player, SDL_Keycode incKey, Type type = Trigger)
 		: mId(id), mKeyInc(incKey), mKeyDec(SDLK_UNKNOWN), mType(type)
+		, mICS(0), mControl(0)
 	{
 		mName = player ? csPlayerActions[id] : csActions[id];
 	}
 	InputAction(int id, bool player, SDL_Keycode decKey, SDL_Keycode incKey)
 		: mId(id), mKeyInc(incKey), mKeyDec(decKey), mType(Axis)
+		, mICS(0), mControl(0)
 	{
 		mName = player ? csPlayerActions[id] : csActions[id];
 	}

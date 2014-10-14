@@ -48,10 +48,9 @@ void CGui::CreateGUITweakMtr()
 		if (!isStr)
 		{
 			//  get size
-			int size = -1;
 			std::vector<std::string> tokens;
 			boost::split(tokens, sVal, boost::is_any_of(" "));
-			size = tokens.size();
+			int size = tokens.size();
 
 			//LogO("PROP: " + name + "  val: " + sVal + "  type:" + toStr(type));
 			const static char ch[6] = "rgbau";

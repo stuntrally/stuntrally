@@ -180,7 +180,7 @@ BaseApp::BaseApp()
 
 	,pSet(0), bGuiFocus(0), bMoveCam(0), mDTime(0)
 	,edMode(ED_Deform), edModeOld(ED_Deform)
-	,mInputWrapper(NULL), mSDLWindow(NULL)
+	,mInputWrapper(NULL), mSDLWindow(NULL), mCursorManager(0)
 
 	,ovBrushPrv(0),ovBrushMtr(0), ovTerPrv(0),ovTerMtr(0)
 	,imgCur(0), bckFps(0), txFps(0), txCamPos(0), fStFade(0.f)

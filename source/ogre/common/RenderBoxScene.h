@@ -21,7 +21,7 @@ namespace wraps
 			mScene(nullptr),
 			mNode(nullptr),
 			mCameraNode(nullptr),
-			mCamera(nullptr),
+			//mCamera(nullptr),
 			mEntity(nullptr),
 			mAnimationState(nullptr),
 			mRotationSpeed(RENDER_BOX_AUTO_ROTATION_SPEED),
@@ -269,7 +269,7 @@ namespace wraps
 		Ogre::SceneManager* mScene;
 		Ogre::SceneNode* mNode;
 		Ogre::SceneNode* mCameraNode;
-		Ogre::Camera* mCamera;
+		//Ogre::Camera* mCamera;
 	private:
 		Ogre::Entity* mEntity;
 		Ogre::AnimationState* mAnimationState;
