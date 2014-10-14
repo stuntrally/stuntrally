@@ -349,7 +349,7 @@ void SOUND::Callback16bitstereo(void *myself, Uint8 *stream, int len)
 	Compute3DEffects(active_sourcelist);//, cam.GetPosition().ScaleR(-1), cam.GetRotation());
 
 	//increment inactive sources
-	for (std::list <SOUNDSOURCE *>::iterator s = inactive_sourcelist.begin(); s != inactive_sourcelist.end(); s++)
+	for (std::list <SOUNDSOURCE *>::iterator s = inactive_sourcelist.begin(); s != inactive_sourcelist.end(); ++s)
 	{
 		(*s)->IncrementWithPitch(len/4);
 	}
@@ -357,7 +357,7 @@ void SOUND::Callback16bitstereo(void *myself, Uint8 *stream, int len)
 	int* buffer1 = new int[len/4];
 	int* buffer2 = new int[len/4];
 	int* out = new int[len/2];
-	for (std::list <SOUNDSOURCE *>::iterator s = active_sourcelist.begin(); s != active_sourcelist.end(); s++)
+	for (std::list <SOUNDSOURCE *>::iterator s = active_sourcelist.begin(); s != active_sourcelist.end(); ++s)
 	{
 		SOUNDSOURCE * src = *s;
 		src->SampleAndAdvanceWithPitch16bit(buffer1, buffer2, len/4);
@@ -792,23 +792,6 @@ void SOUNDFILTER::Filter(int * chan1, int * chan2, const int len)
 		statey[0][0] = chan1[i];
 		statey[1][0] = chan2[i];
 	}
-}
-
-SOUNDFILTER & SOUNDSOURCE::GetFilter(int num)
-{
-	int curnum = 0;
-	for (std::list <SOUNDFILTER>::iterator i = filters.begin(); i != filters.end(); ++i)
-	{
-		if (num == curnum)
-			return *i;
-		curnum++;
-	}
-
-	//cerr << __FILE__ << "," << __LINE__ << "Asked for a non-existant filter" << endl;
-	//UNRECOVERABLE_ERROR_FUNCTION(__FILE__,__LINE__,"Asked for a non-existant filter");
-	assert(0);
-	SOUNDFILTER * nullfilt = NULL;
-	return *nullfilt;
 }
 
 void SOUNDFILTER::SetFilterOrder1(float xc0, float xc1, float yc1)

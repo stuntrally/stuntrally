@@ -142,7 +142,6 @@ private:
 			double totaltime; // total time of a race (>=1 laps)
 			int num_laps;     // current lap
 			std::string cartype;
-			double lapdistance; // total track distance driven this lap in meters
 			DRIFTSCORE driftscore;
 
 		public:
@@ -254,13 +253,6 @@ private:
 			    return num_laps;
 			}
 
-			void UpdateLapDistance(double newdistance)
-			{
-			    lapdistance = newdistance;
-			}
-
-			double GetLapDistance() const {return lapdistance;}
-
 			const DRIFTSCORE & GetDriftScore() const
 			{
 				return driftscore;
@@ -299,11 +291,6 @@ public:
 	bool Lap(const int carId, const bool countit, bool bTrackReverse);
 	bool LapNetworkTime(const int carId, const double curtime);  ///+
 
-	void UpdateDistance(const int carId, const double newdistance)
-	{
-	    assert(carId < car.size());
-	    car[carId].UpdateLapDistance(newdistance);
-	}
 	void DebugPrint(std::ostream & out)
 	{
 		for (unsigned int i = 0; i < car.size(); i++)

@@ -169,7 +169,7 @@ private:
 
 	MATHVECTOR<float,3> position, velocity;
 	const SOUNDBUFFER * buffer;
-	std::list <SOUNDFILTER> filters;
+	std::vector <SOUNDFILTER> filters;
 
 public:
 	SOUNDSOURCE() :
@@ -252,8 +252,8 @@ public:
 	{	if (buffer == NULL)  return "NULL";  else  return buffer->GetName();  }
 	
 	const SOUNDBUFFER & GetSoundBuffer() const	{  return *buffer;  }
-	SOUNDFILTER & AddFilter()	{	SOUNDFILTER newfilt;  filters.push_back(newfilt);  return filters.back();  }
-	SOUNDFILTER & GetFilter(int num);
+	//SOUNDFILTER& AddFilter()	{	SOUNDFILTER newfilt;  filters.push_back(newfilt);  return filters.back();  }
+	SOUNDFILTER& GetFilter(int num) {  return filters[num];   }
 	int NumFilters() const	{  return filters.size();  }
 	void ClearFilters()		{  filters.clear();  }
 };
