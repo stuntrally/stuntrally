@@ -41,8 +41,21 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 {
 	setlocale(LC_NUMERIC, "C");
 
-	std::stringstream dummy;
-	PATHMANAGER::Init(dummy, dummy);
+	PATHMANAGER::Init(std::cout, std::cerr);
+
+
+	#if 0
+    std::string po = PATHMANAGER::UserConfigDir() + "/ogre.out";
+    std::ofstream out(po.c_str());
+    std::cout.rdbuf(out.rdbuf());  // redirect std::cout to out.txt
+    #endif
+
+	#if 1
+    std::string pa = PATHMANAGER::UserConfigDir() + "/ogre.err";
+    std::ofstream oute(pa.c_str());
+    std::cerr.rdbuf(oute.rdbuf());  // redirect std::cerr to oute.txt
+    #endif
+
 
 	// Open the log file
 	std::string logfilename = PATHMANAGER::UserConfigDir() + "/log.txt";
