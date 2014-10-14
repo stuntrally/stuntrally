@@ -709,7 +709,7 @@
 	<Tag name="CarDesc_FR4">Dość stare, ciężkie, szerokie i wolne. Dobre na teren, ale nie z najlepszym zawieszeniem. Nie nadaje się do szybszych ani wyczynowych tras.</Tag>
 	<Tag name="SunDir">Kierunek słońca</Tag>
 	<Tag name="InputRoadPick">Space - wybierz/żaden</Tag>
-	<Tag name="InputRoadAngSnap">5   - angles snap decrease (shift - increase)</Tag>
+	<Tag name="InputRoadAngSnap">5 - zmniejsz skok kąta (shift - zwiększ)</Tag>
 	<Tag name="SC_Canyon">Kanion</Tag>
 	<Tag name="TipTrkViewShort">Krótki widok listy.</Tag>
 	<Tag name="TipSmokeInt">Intensywność cząstek dymu</Tag>
@@ -943,7 +943,7 @@
 	<Tag name="Copy">Kopiuj</Tag>
 	<Tag name="Channel">Kanał</Tag>
 	<Tag name="TipFind">Wpisz część nazwy by znaleźć (filtruje listę).</Tag>
-	<Tag name="InputRoadOnPipe">8   - toggle on pipe (ctrl - mark only)</Tag>
+	<Tag name="InputRoadOnPipe">8 - przełącz na rurze (ctrl - tylko zaznacz)</Tag>
 	<Tag name="scale">Skala</Tag>
 	<Tag name="UnitMph">mph</Tag>
 	<Tag name="InputSaveTrack">F4 - zapisz trasę</Tag>
