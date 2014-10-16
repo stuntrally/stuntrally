@@ -133,17 +133,26 @@ void CScene::UpdBlendmap()
 
 	//  rtt
 	if (angleRTT.rnd && blendRTT.rnd)
-	{	
+	{
 		UpdLayerPars();
 		
 		angleRTT.rnd->update();
 		blendRTT.rnd->update();
 
 		//  copy from rtt to normal texture
-		//HardwarePixelBufferSharedPtr b = blMap->getBuffer();
+		//HardwarePixelBufferSharedPtr b = blendRTT.rnd->getBuffer();
 		//b->blit(pt);
-		//bl.rnd->writeContentsToFile(/*PATHMANAGER::DataUser()+*/ "blend.png");
+
+		//  test  save
+		//Image im;
+		//heightTex->convertToImage(im);
+		//im.save(PATHMANAGER::DataUser()+ "/../hmap.png");
+
+		//angleRTT.rnd->writeContentsToFile(PATHMANAGER::DataUser()+ "/../angle.png");
+		//blendRTT.rnd->writeContentsToFile(PATHMANAGER::DataUser()+ "/../blend.jpg");
 	}
+	else
+		LogO("Error: Didn't update blendmap !");
 
 	//LogO(String("::: Time Upd blendmap: ") + fToStr(ti.getMilliseconds(),0,1) + " ms");  // 1ms on 512, 4ms on 1k
 }
