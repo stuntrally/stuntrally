@@ -45,7 +45,7 @@ void CScene::RenderToTex::Setup(Ogre::Root* rt, String sName, TexturePtr pTex, S
 	vp->setClearEveryFrame(true);   vp->setBackgroundColour(ColourValue(0,0,0,0));
 	vp->setOverlaysEnabled(false);  vp->setSkiesEnabled(false);
 	vp->setShadowsEnabled(false);   //vp->setVisibilityMask();
-	//vp->setMaterialScheme("reflection");
+	vp->setMaterialScheme("reflection");
 
 	rect = new Rectangle2D(true);   rect->setCorners(-1,1,1,-1);
 	AxisAlignedBox aab;  aab.setInfinite();
@@ -74,15 +74,20 @@ void CScene::CreateBlendTex()
 	//  Hmap tex
 	heightTex = texMgr.createManual( sHmap, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_FLOAT32_R, TU_DYNAMIC_WRITE_ONLY); //TU_STATIC_WRITE_ONLY?
+	if (heightTex.isNull())
+		LogO("Error: Can't create Float32 (HMap) texture!");
 	
 	//  Angles rtt
 	angleRTex = texMgr.createManual( sAng, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_FLOAT32_R, TU_RENDERTARGET);
-	if (angleRTex.isNull())  LogO("Can't create Float32 Render Target!");
+	if (angleRTex.isNull())
+		LogO("Error: Can't create Float32 (Angles) RenderTarget!");
 	
 	//  Blendmap rtt
 	blendRTex = texMgr.createManual( sBlend, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
+	if (blendRTex.isNull())
+		LogO("Error: Can't create RGBA (Blendmap) RenderTarget!");
 
 	//  rtt copy  (not needed)
 	//blMap = texMgr.createManual("blendmapT", rgDef, TEX_TYPE_2D,
@@ -91,7 +96,8 @@ void CScene::CreateBlendTex()
 	//  Grass Density rtt
 	grassDensRTex = texMgr.createManual( sGrassDens, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
-
+	if (grassDensRTex.isNull())
+		LogO("Error: Can't create RGBA (GrassDens) RenderTarget!");
 	
 	blendRTT.Setup(app->mRoot, "bl", blendRTex, sBlendMat);
 	angleRTT.Setup(app->mRoot, "ang", angleRTex, sAngMat);
