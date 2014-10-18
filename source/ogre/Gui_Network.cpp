@@ -134,9 +134,10 @@ void CGui::updateGameInfoGUI()
 	s += TR("#6098A0  #{Flip}:  ") + "#7098A0"+ cmbs(cmbFlip, g.flip_type) +"\n";
 	s += "\n";
 	s += TR("#A090E0  #{Damage}:  ") + "#B090FF"+ cmbs(cmbDamage, g.damage_type) +"\n";
+	s += TR("#A090C0  #{DamageDecLap}:  ") + "#B0A0F0"+ fToStr(g.damage_lap_dec,0,3) +" %\n\n";
 	s += TR("#B080C0  #{InputMapRewind}:  ") + "#C090D0"+ cmbs(cmbRewind, g.rewind_type) +"\n";
 	//float boost_power;
-	//float damage_lap_dec, boost_lap_inc, rewind_lap_inc;  //todo
+	//float boost_lap_inc, rewind_lap_inc;  //todo
 	//uint8_t tree_collis;  float tree_mult;
 
 	valNetGameInfo->setCaption(s);
