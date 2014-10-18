@@ -294,8 +294,9 @@ public:
 
 	//  [Objects]  ----
 	//  gui lists
-	Li objListDyn, objListSt, objListRck, objListBld;
+	Li objListDyn, objListSt, objListRck, objListBld, objListCat;
 	void listObjsChng(Li, size_t), listObjsNext(int rel);
+	void listObjsCatChng(Li, size_t);
 	
 
 	//  [Tools]  ----

@@ -4020,6 +4020,13 @@
 				<Widget type="ListBox" skin="ListBox" position="356 40 128 500" name="ObjListBld">
 					<Property key="Colour" value="0.9 0.9 0.7"/>
 				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="498 16 128 24">
+					<Property key="Caption" value="#{Group}"/>
+					<Property key="TextColour" value="0.95 0.7 0.7"/>
+				</Widget>
+				<Widget type="ListBox" skin="ListBox" position="498 40 88 166" name="ObjListCat">
+					<Property key="Colour" value="0.9 0.8 0.8"/>
+				</Widget>
 			</Widget>
 		</Widget>
 	</Widget>

@@ -1371,6 +1371,7 @@
 	<Tag name="ObjStatic">Static</Tag>
 	<Tag name="ObjBuildings">Buildings</Tag>
 	<Tag name="ObjRocks">Rocks</Tag>
+	<Tag name="Group">Group</Tag>
 
 	<!--  Objects  Input  -->
 	<Tag name="InputObjectsMode">X - edit Objects</Tag>

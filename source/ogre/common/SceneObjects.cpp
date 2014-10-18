@@ -36,6 +36,7 @@
 #include <MyGUI_InputManager.h>
 using namespace Ogre;
 using namespace MyGUI;
+using namespace std;
 
 
 
@@ -411,6 +412,7 @@ void App::ToggleObjSim()
 	UpdObjPick();
 }
 
+
 ///  add new object
 void App::AddNewObj(bool getName)  //App..
 {
@@ -441,6 +443,7 @@ void App::AddNewObj(bool getName)  //App..
 	o.dyn = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects/"+ o.name + ".bullet");
 	scn->sc->objects.push_back(o);
 }
+
 
 //  change obj to insert
 void CGui::listObjsChng(MyGUI::List* l, size_t t)
@@ -479,6 +482,24 @@ void CGui::listObjsNext(int rel)
 		li->setIndexSelected(i);
 		li->beginToItemAt(std::max(0, i-11));  // center
 		listObjsChng(li, li->getIndexSelected());
+	}
+}
+
+
+//  change category, fill buildings list
+void CGui::listObjsCatChng(Li li, size_t id)
+{
+	if (id == ITEM_NONE || id >= li->getItemCount())  id = 0;
+	if (li->getItemCount()==0)  return;
+	string cat = li->getItemNameAt(id).substr(7);
+	
+	objListBld->removeAllItems();
+	for (size_t i=0; i < app->vBuildings.size(); ++i)
+	{
+		const string& s = app->vBuildings[i];
+		if (//id == 0 ||/*all*/
+			s.length() > 4 && s.substr(0,4) == cat)
+			objListBld->addItem("#E0E080"+s);
 	}
 }
 

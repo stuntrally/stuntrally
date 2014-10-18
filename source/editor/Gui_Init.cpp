@@ -18,6 +18,7 @@
 #include "../ogre/common/RenderBoxScene.h"
 using namespace MyGUI;
 using namespace Ogre;
+using namespace std;
 
 
 ///  Gui Init
@@ -179,7 +180,7 @@ void CGui::InitGui()
 			int edMode = st.edMode;
 			float fB = app->brClr[edMode][0], fG = app->brClr[edMode][1], fR = app->brClr[edMode][2];
 			float m = st.Size / 160.f + 0.4f;
-			#define mul(v,m)  std::min(1.f, std::max(0.f, v * m))
+			#define mul(v,m)  min(1.f, max(0.f, v * m))
 		txt->setTextColour(Colour(mul(fB,m), mul(fG,m), mul(fR,m)) );
 		gcom->setOrigPos(txt, "EditorWnd");
 	}
@@ -514,7 +515,7 @@ void CGui::InitGui()
 	///  Fill Combo boxes  . . . . . . .
 	//------------------------------------------------------------------------------------------------------------
 
-	std::string sData = PATHMANAGER::Data();
+	string sData = PATHMANAGER::Data();
 	String sMat = sData +"/materials/scene/";  // path
 
 	
@@ -598,10 +599,11 @@ void CGui::InitGui()
 	objListSt  = fLi("ObjListSt");   Lev(objListSt,  ObjsChng);
 	objListRck = fLi("ObjListRck");  Lev(objListRck, ObjsChng);
 	objListBld = fLi("ObjListBld");  Lev(objListBld, ObjsChng);
+	objListCat = fLi("ObjListCat");  Lev(objListCat, ObjsCatChng);
 	objPan = fWP("objPan");
 
 	for (int i=0; i < app->vObjNames.size(); ++i)
-	{	const std::string& name = app->vObjNames[i];
+	{	const string& name = app->vObjNames[i];
 		if (name != "sphere")
 		{
 			if (StringUtil::startsWith(name,"rock",false)||StringUtil::startsWith(name,"cave",false))
@@ -612,19 +614,45 @@ void CGui::InitGui()
 			else
 				objListSt->addItem("#C8C8C8"+name);
 	}	}
-	//  buildings
+	
+	//  buildings  ----
+	using std::map;
+	map<string, int> cats;  // yeah cats are fun
 	lo.clear();
+	app->vBuildings.clear();
 	PATHMANAGER::DirList(sData + "/objects0", lo);
 	PATHMANAGER::DirList(sData + "/objectsC", lo);//-
 	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
 		if (StringUtil::endsWith(*i,".mesh"))
-		{	std::string name = (*i).substr(0,(*i).length()-5);
-			app->vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
-			objListBld->addItem("#E0E070"+name);
+		{
+			string name = (*i).substr(0,(*i).length()-5);  //no .ext
+			string cat = name.substr(0,4);
+			++cats[cat];
+			app->vBuildings.push_back(name);
+			app->vObjNames.push_back(name);  // in -,=
 		}
-	///TODO: select stay, up/dn keys prev/next, list with filter 4char starting with alie,..pers,ptol..
-
-	//objList->setIndexSelected(0);  //objList->findItemIndexWith(modeSel)
+	//  get cats  ----
+	objListCat->removeAllItems();
+	//objListCat->addItem("#E0A0A0"+TR("#{Other}"));  //all
+	for (map<string, int>::iterator it = cats.begin(); it != cats.end(); ++it)
+	{
+		string cat = (*it).first;  int n = (*it).second;
+		LogO(cat+" "+toStr(n));
+		if (n > 1)  // add category (> 1 Bld with this prefix)
+			objListCat->addItem("#E09090"+cat);
+	}
+	//  push Bld back to Obj list (if <= 1, rare cat)
+	for (size_t i=0; i < app->vBuildings.size(); ++i)
+	{
+		const string& name = app->vBuildings[i];
+		string cat = name.substr(0,4);
+		if (cats[cat] <= 1)
+			objListSt->addItem("#D0D0C8"+name);
+	}
+	if (cats.size() > 0)
+	{	objListCat->setIndexSelected(0);
+		listObjsCatChng(objListCat,0);  // fill buildings
+	}
 
 
 	//---------------------  Surfaces  ---------------------
