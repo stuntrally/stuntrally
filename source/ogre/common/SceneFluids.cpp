@@ -91,7 +91,7 @@ void CScene::CreateBltFluids()
 		bshp = new btBoxShape(btVector3(std::min(t, fb.size.x*0.5f), std::min(t, fb.size.z*0.5f), fb.size.y*0.5f));
 
 		//  solid surf
-		uint id = SU_Fluid;  if (fp.solid)  id += fp.surf;
+		size_t id = SU_Fluid;  if (fp.solid)  id += fp.surf;
 		bshp->setUserPointer((void*)id);
 
 		btCollisionObject* bco = new btCollisionObject();
