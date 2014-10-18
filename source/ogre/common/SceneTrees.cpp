@@ -213,6 +213,14 @@ void CScene::CreateTrees()
 			String file = pg.name, fpng = file+".png";
 			pg.cnt = 0;
 
+			bool found = resMgr.resourceExistsInAnyGroup(file);
+			if (!found)
+			{
+				LogO("WARNING: not found vegetation model: "+file);
+				continue;
+				//file = "sphere.mesh";  // if not found, use white sphere
+			}
+
 			Entity* ent = app->mSceneMgr->createEntity(file);
 			ent->setVisibilityFlags(RV_Vegetation);  ///vis+  disable in render targets
 			if (pg.windFx > 0.f)  {
@@ -231,10 +239,7 @@ void CScene::CreateTrees()
 			#endif
 
 
-			if (!resMgr.resourceExistsInAnyGroup(file))
-				file = "sphere.mesh";  // if not found, put white sphere
-			else
-			if (imp)  /// preload impostor textures
+			if (imp && found)  /// preload impostor textures
 			{
 				if (!resMgr.resourceExistsInAnyGroup(fpng))
 				{
