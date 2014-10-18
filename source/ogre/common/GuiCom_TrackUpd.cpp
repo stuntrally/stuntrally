@@ -203,16 +203,22 @@ void CGuiCom::listTrackChng(Mli2 li, size_t pos)
 #ifdef SR_EDITOR
 void CGuiCom::trkListNext(int rel)
 {
-	bool b = app->bGuiFocus && (app->mWndTabsTrack->getIndexSelected() == 1)
-		&& !pSet->isMain && pSet->inMenu == WND_Track;
+	bool b = app->bGuiFocus && !pSet->isMain;
 	if (!b)  return;
 	
-	size_t cnt = trkList->getItemCount();
-	if (cnt == 0)  return;
-	int i = std::max(0, std::min((int)cnt-1, (int)trkList->getIndexSelected()+rel ));
-	trkList->setIndexSelected(i);
-	trkList->beginToItemAt(std::max(0, i-11));  // center
-	listTrackChng(trkList,i);
+	//  tracks
+	if (pSet->inMenu == WND_Track && app->mWndTabsTrack->getIndexSelected() == 1)
+	{
+		size_t cnt = trkList->getItemCount();
+		if (cnt == 0)  return;
+		int i = std::max(0, std::min((int)cnt-1, (int)trkList->getIndexSelected()+rel ));
+		trkList->setIndexSelected(i);
+		trkList->beginToItemAt(std::max(0, i-11));  // center
+		listTrackChng(trkList,i);
+	}
+	else  // objects
+	if (pSet->inMenu == WND_Edit && app->mWndTabsEdit->getIndexSelected() == TAB_Objects)
+		app->gui->listObjsNext(rel);
 }
 #endif
 

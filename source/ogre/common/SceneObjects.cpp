@@ -35,6 +35,7 @@
 #include <MyGUI.h>
 #include <MyGUI_InputManager.h>
 using namespace Ogre;
+using namespace MyGUI;
 
 
 
@@ -444,6 +445,15 @@ void App::AddNewObj(bool getName)  //App..
 //  change obj to insert
 void CGui::listObjsChng(MyGUI::List* l, size_t t)
 {
+	//  unselect other
+	if (l != objListDyn)  objListDyn->setIndexSelected(ITEM_NONE);
+	if (l != objListSt)	  objListSt->setIndexSelected(ITEM_NONE);
+	if (l != objListRck)  objListRck->setIndexSelected(ITEM_NONE);
+	if (l != objListBld)  objListBld->setIndexSelected(ITEM_NONE);
+
+	if (t == ITEM_NONE)  //  sel default
+	{	/*l = objListDyn;*/  t = 0;  l->setIndexSelected(t);  }
+	
 	std::string s = l->getItemNameAt(t).substr(7);
 	for (int i=0; i < app->vObjNames.size(); ++i)
 		if (s == app->vObjNames[i])
@@ -453,6 +463,25 @@ void CGui::listObjsChng(MyGUI::List* l, size_t t)
 			return;
 		}
 }
+
+void CGui::listObjsNext(int rel)
+{
+	Li li = 0;
+	if (objListDyn->getIndexSelected()!= ITEM_NONE)  li = objListDyn; //else
+	if (objListSt->getIndexSelected() != ITEM_NONE)  li = objListSt;
+	if (objListRck->getIndexSelected()!= ITEM_NONE)  li = objListRck;
+	if (objListBld->getIndexSelected()!= ITEM_NONE)  li = objListBld;
+	if (li)
+	{
+		size_t cnt = li->getItemCount();
+		if (cnt == 0)  return;
+		int i = std::max(0, std::min((int)cnt-1, (int)li->getIndexSelected()+rel ));
+		li->setIndexSelected(i);
+		li->beginToItemAt(std::max(0, i-11));  // center
+		listObjsChng(li, li->getIndexSelected());
+	}
+}
+
 
 //  preview model for insert
 void App::SetObjNewType(int tnew)
@@ -468,12 +497,6 @@ void App::SetObjNewType(int tnew)
 	objNew.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("-oN");
 	objNew.nd->attachObject(objNew.ent);  objNew.ent->setVisibilityFlags(RV_Vegetation);
 	UpdObjNewNode();
-
-	if (!gui->objListSt)  return;
-	gui->objListDyn->setIndexSelected(-1);
-	gui->objListSt->setIndexSelected(-1);  // unselect
-	gui->objListRck->setIndexSelected(-1);
-	gui->objListBld->setIndexSelected(-1);
 }
 
 void App::UpdObjNewNode()
