@@ -354,7 +354,8 @@ void App::newPoses(float time)  // time only for camera update
 							
 							//\  loop camera change
 							if (pSet->cam_loop_chng && carM->fCam &&
-								cs.loop && (carM->iLoopChk == -1 || carM->iLoopChk != i))
+								cs.loop && (carM->iLoopChk == -1 || carM->iLoopChk != i) &&
+								pCar->dynamics.vtype != V_Sphere)
 							{
 								carM->iLoopChk = i;
 								if (carM->iLoopLastCam == -1)
