@@ -68,6 +68,7 @@
 	<Tag name="CarDesc_3S">Bonne voiture, adaptée à tous les circuits, mais accélère lentement, notamment à des vitesses élevées.</Tag>
 	<Tag name="InputObjectsIns">Insér. - insérer nouveau, au curseur</Tag>
 	<Tag name="GraphicsAll_Low">Bas</Tag>
+	<Tag name="Group">Group</Tag>
 	<Tag name="ChampEndFinished">Vous avez fini ce championnat.</Tag>
 	<Tag name="Negative">Négatif (assombrir)</Tag>
 	<Tag name="PickSetParam">Set parameters, marked with</Tag>

@@ -68,6 +68,7 @@
 	<Tag name="CarDesc_3S">Buona macchina adatta per tutte le piste, con accelerazione molto lenta, soprattutto ad alta velocità.</Tag>
 	<Tag name="InputObjectsIns">Ins - inserisci nuovo, in corrispondenza del cursore</Tag>
 	<Tag name="GraphicsAll_Low">Basso</Tag>
+	<Tag name="Group">Group</Tag>
 	<Tag name="ChampEndFinished">Hai completato il campionato.</Tag>
 	<Tag name="Negative">Negativo (scuro)</Tag>
 	<Tag name="PickSetParam">Imposta i parametri, contrassegnati con</Tag>

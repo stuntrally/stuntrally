@@ -68,6 +68,7 @@
 	<Tag name="CarDesc_3S">Хорошее авто, подходит для всех треков, но медленнее ускорение, особенно на высоких скоростях.</Tag>
 	<Tag name="InputObjectsIns">Ins - вставить, где курсор</Tag>
 	<Tag name="GraphicsAll_Low">Низкая</Tag>
+	<Tag name="Group">Group</Tag>
 	<Tag name="ChampEndFinished">Вы закончили этот чемпионат.</Tag>
 	<Tag name="Negative">Отриц. (темнить)</Tag>
 	<Tag name="PickSetParam">Уст. параметры, по умол.</Tag>

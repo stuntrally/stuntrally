@@ -68,6 +68,7 @@
 	<Tag name="CarDesc_3S">Dobre auto, na wszystkie trasy, ale ma mniejsze przyśpieszenie, zwłaszcza dla wyższej prędkości.</Tag>
 	<Tag name="InputObjectsIns">Ins - wstaw nowy, pod kursorem</Tag>
 	<Tag name="GraphicsAll_Low">Niskie</Tag>
+	<Tag name="Group">Group</Tag>
 	<Tag name="ChampEndFinished">Ukończyłeś to mistrzostwo.</Tag>
 	<Tag name="Negative">Ujemne (pociemnia)</Tag>
 	<Tag name="PickSetParam">Ustaw parametry, oznaczone</Tag>

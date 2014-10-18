@@ -68,6 +68,7 @@
 	<Tag name="CarDesc_3S">Good car, suited for all tracks, but has slower acceleration, especially at high speeds.</Tag>
 	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
 	<Tag name="GraphicsAll_Low">Alhainen</Tag>
+	<Tag name="Group">Group</Tag>
 	<Tag name="ChampEndFinished">Olet suorittanut tämän mestaruuden loppuun.</Tag>
 	<Tag name="Negative">Negative (darken)</Tag>
 	<Tag name="PickSetParam">Set parameters, marked with</Tag>
