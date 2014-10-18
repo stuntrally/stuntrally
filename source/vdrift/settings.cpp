@@ -140,7 +140,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "sim.game_freq", game_fq);			Param(c,w, "sim.multi_thr", multi_thr);
 	Param(c,w, "sim.bullet_freq", blt_fq);			Param(c,w, "sim.bullet_iter", blt_iter);
 	Param(c,w, "sim.dynamics_iter", dyn_iter);		Param(c,w, "sim.thread_sleep", thread_sleep);
-	Param(c,w, "sim.perf_speed", perf_speed);
+	Param(c,w, "sim.perf_speed", perf_speed);		Param(c,w, "sim.gui_sleep", gui_sleep);
 
 	
 	//  sound
@@ -218,7 +218,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,ghoHideDist(5.f), ghoHideDistTrk(5.f)
 	//  sim
 	,game_fq(82.f), blt_fq(160.f), blt_iter(24), dyn_iter(30)
-	,multi_thr(0), thread_sleep(5), perf_speed(100000)
+	,multi_thr(0), thread_sleep(5), gui_sleep(1), perf_speed(100000)
 	//  graphs
 	,tc_r(6000.f), tc_xr(1.f)
 	,te_yf(8000.f), te_xf_pow(1.f), te_xfy(160.f), te_xfx(12.f)

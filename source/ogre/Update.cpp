@@ -466,5 +466,10 @@ bool App::frameStart(Real time)
 
 bool App::frameEnd(Real time)
 {
+	//  sleep when in Gui
+	if (isFocGui && pSet->gui_sleep >= 0)  // && gui && gui->bGI)
+		//!pSet->isMain && pSet->inMenu == MNU_Single && mWndTabsGame->getIndexSelected() == TAB_Multi)
+		boost::this_thread::sleep(boost::posix_time::milliseconds(pSet->gui_sleep));
+
 	return true;
 }

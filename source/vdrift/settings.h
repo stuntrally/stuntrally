@@ -128,7 +128,7 @@ public:
 	
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq,  perf_speed;
-	int blt_iter, dyn_iter,  multi_thr, thread_sleep;
+	int blt_iter, dyn_iter,  multi_thr, thread_sleep, gui_sleep;
 	
 	//  graphs vis
 	float tc_r, tc_xr;  // tire circles max
