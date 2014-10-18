@@ -543,7 +543,7 @@ void ImpostorTexture::renderTextures(bool force)
 	renderViewport->setOverlaysEnabled(false);
 	renderViewport->setClearEveryFrame(true);
 	renderViewport->setShadowsEnabled(false);
-	renderViewport->setBackgroundColour(ImpostorPage::getImpostorBackgroundColor());
+	renderViewport->setBackgroundColour(ColourValue(0,0,0,0));  //ImpostorPage::getImpostorBackgroundColor());
 	renderViewport->setMaterialScheme ("impostor_rtt");
 
 	//Set up scene node

@@ -622,6 +622,7 @@ void CGui::InitGui()
 			app->vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
 			objListBld->addItem("#E0E070"+name);
 		}
+	///TODO: select stay, up/dn keys prev/next, list with filter 4char starting with alie,..pers,ptol..
 
 	//objList->setIndexSelected(0);  //objList->findItemIndexWith(modeSel)
 
