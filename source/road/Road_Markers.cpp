@@ -131,6 +131,15 @@ void SplineMarkEd::DestroyMarkers()
 //-------------------------------------------------------------------------------------
 void SplineRoad::SelectMarker(bool bHide)  // Mr Melect Sarker
 {
+	if (vMarks.empty())
+	{
+		ndChosen->setVisible(false);
+		ndRot->setVisible(false);
+		ndChk->setVisible(false);
+		ndSel->setVisible(false);
+		return;
+	}
+
 	if (lastNdSel >= 0)
 		vMarks[lastNdSel].setVis(true);
 	if (lastNdChosen >= 0)

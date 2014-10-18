@@ -11,6 +11,7 @@ material ImposterBase
 	{
 		vertex_program imposter_vertex
 		fragment_program imposter_fragment
+		
 		scene_blend $scene_blend
 		alpha_rejection $alpha_rejection
 		depth_write $depth_write

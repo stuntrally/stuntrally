@@ -432,6 +432,8 @@ ImpostorTexture::ImpostorTexture(ImpostorPage *group, Entity *entity, bool onlyT
 
 		m->setProperty("scroll", sh::makeProperty(Ogre::StringConverter::toString(uscroll) + " " + Ogre::StringConverter::toString(vscroll)));
 
+		//m->setProperty("scene_blend", sh::makeProperty<sh::StringValue>(new sh::StringValue("add")));
+		//todo:^?
 		if (group->getBlendMode() == ALPHA_REJECT_IMPOSTOR) {
 			m->setProperty("alpha_rejection", sh::makeProperty ("greater_equal " + Ogre::StringConverter::toString(128)));
 			//p->setAlphaRejectSettings(CMPF_GREATER_EQUAL, 64);
