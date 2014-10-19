@@ -637,7 +637,7 @@ void CGui::InitGui()
 	for (map<string, int>::iterator it = cats.begin(); it != cats.end(); ++it)
 	{
 		string cat = (*it).first;  int n = (*it).second;
-		LogO(cat+" "+toStr(n));
+		//LogO(cat+" "+toStr(n));
 		if (n > 1)  // add category (> 1 Bld with this prefix)
 			objListCat->addItem("#E09090"+cat);
 	}

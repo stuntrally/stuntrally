@@ -39,21 +39,7 @@ using namespace std;
 
 
 ///  * * * *  CONST  * * * *
-//  add track item to gui list
 //-----------------------------------------------------------------------------------------------------------
-String CGuiCom::GetSceneryColor(String name)
-{
-	if (name.empty())  return "#707070";
-
-	int id = app->scn->data->tracks->trkmap[name];
-	const TrackInfo* pTrk = id==0 ? 0 : &app->scn->data->tracks->trks[id-1];
-
-	char ch = name.c_str()[0];  // vdr
-	if (ch == 'T' && name.c_str()[1] == 'e')  // Test,TestC
-		return (name.length() > 5 && name.c_str()[4] == 'C') ? "#A0C0D0" : "#A0A0A0";
-	else
-		return pTrk ? scnClr[pTrk->scenery] : scnClr[scnN[name.substr(0,1)]];  // norm, user*
-}
 
 //  track difficulties colors from value
 const String CGuiCom::clrsDiff[9] =  // difficulty
@@ -75,6 +61,34 @@ const int CGui::colChL[16] = {36, 180, 90, 100, 50, 60, 60, 60, 50};  // challs
 const int CGui::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
 #endif
 
+//  get scenery color string from track name
+String CGuiCom::GetSceneryColor(String name)
+{
+	if (name.length() < 3)  return "#707070";
+
+	int id = app->scn->data->tracks->trkmap[name];
+	const TrackInfo* pTrk = id==0 ? 0 : &app->scn->data->tracks->trks[id-1];
+
+	char ch = name.c_str()[0];  // vdr
+	if (ch == 'T' && name.c_str()[1] == 'e')  // Test,TestC
+		return (name.length() > 5 && name.c_str()[4] == 'C') ? "#A0C0D0" : "#A0A0A0";
+	else
+	if (pTrk)
+		return scnClr[pTrk->scenery];
+	else  // user *
+	{
+		if (name.c_str()[0]=='*')
+			name = name.substr(1);
+		String ss;
+		size_t p = name.find_first_of("-0123456789");
+		if (p != string::npos)
+		{	ss = name.substr(0, p);  //LogO(ss);
+			return scnClr[scnN[ss]];
+		}else
+		{	ss += name.c_str()[0];
+			return scnClr[scnN[ss]];
+	}	}
+}
 //-----------------------------------------------------------------------------------------------------------
 
 
