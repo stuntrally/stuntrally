@@ -162,21 +162,24 @@ material roadAsphalt
 {
 	parent road
 	diffuseMap roadAsphalt.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
 	ambient 1.2 1.2 1.2
-	diffuse 0.66 0.65 0.6
-	specular 0.36 0.34 0.3 38
+	diffuse 0.75 0.75 0.75
+	specular 0.8 0.8 0.8 6
 }
 
 material roadAsphalt_ter
 {
 	parent road
 	diffuseMap roadAsphalt.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
 	ambient 1.2 1.2 1.2
-	diffuse 0.66 0.65 0.6
-	specular 0.36 0.34 0.3 38
+	diffuse 0.75 0.75 0.75
+	specular 0.8 0.8 0.8 6
 	normalMap normal_1.png
 }
-
 
 // Greece
 
@@ -421,9 +424,11 @@ material roadMud
 {
 	parent road
 	diffuseMap roadMud.jpg
+	specMap roadAsphalt_spec2.jpg
+	specMap_rgb true
 	ambient 1.0 1.0 1.0
 	diffuse 0.7 0.7 0.7
-	specular 0.2 0.2 0.15 32
+	specular 0.3 0.3 0.2 16
 }
 
 material roadMud_ter
@@ -451,6 +456,8 @@ material roadIce
 	bump_scale 0.15
 	normalMap normal_1.png
 	diffuseMap roadSnow.jpg
+	specMap roadAsphalt_spec2.jpg
+	specMap_rgb true
 }
 
 material roadIce_ter
@@ -465,6 +472,8 @@ material roadIce_ter
 	bump_scale 0.3
 	normalMap normal_1.png
 	diffuseMap roadSnow.jpg
+	specMap roadAsphalt_spec2.jpg
+	specMap_rgb true
 }
 
 
@@ -496,6 +505,8 @@ material roadSnowGrn
 	diffuse 0.8 0.8 0.8
 	specular 0.6 0.62 0.62 18
 	diffuseMap roadSnowGrn.jpg
+	specMap roadSnowGrn.jpg
+	specMap_rgb true
 }
 
 material roadSnowGrn_ter
@@ -506,6 +517,8 @@ material roadSnowGrn_ter
 	specular 0.6 0.62 0.62 18
 	diffuseMap roadSnowGrn.jpg
 	normalMap normal_1.png
+	specMap roadSnowGrn.jpg
+	specMap_rgb true
 }
 
 
@@ -536,8 +549,10 @@ material roadDesert
 {
 	parent road
 	diffuseMap roadDesertD.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
 	ambient 1.0 1.0 0.8
-	diffuse 1.0 1.0 1.0
+	diffuse 0.9 0.9 0.9
 	specular 0.36 0.34 0.3 18
 }
 
@@ -582,6 +597,8 @@ material roadDesertBlack
 {
 	parent road
 	diffuseMap roadAsphalt.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
 	ambient 0.9 0.9 0.9
 	diffuse 0.9 0.9 0.9
 	specular 0.12 0.12 0.12 32
@@ -806,15 +823,21 @@ material roadNgravel_ter
 	normalMap rdGravel_norm.jpg
 	ambient 0.6 0.6 0.6
 	diffuse 0.6 0.6 0.6
-	specular 0.2 0.2 0.2 24
+	specular 0.5 0.5 0.5 24
+	specMap rdGravel.jpg
+	specMap_rgb true
 }
 material roadNgravel
 {
 	parent road
 	diffuseMap roadAsphalt.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
 	ambient 1.2 1.2 1.2
 	diffuse 0.8 0.8 0.8
-	specular 0.2 0.2 0.2 32
+	specular 0.6 0.6 0.6 12
+	specMap rdGravel.jpg
+	specMap_rgb true
 }
 
 material roadNmud_ter
