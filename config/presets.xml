@@ -54,7 +54,7 @@
 <!-- common:  sc - scenery (for name and color)  z - appears on sceneries (not used, for filters)  -->
 
 <!-- terrain -->
-<!-- t - diff tex  n - norm tex  (t,n filename no ext)  s - scale  su - surface  tp - triplanar  du - dust  ds - dust size  md - mud  tr - trail color  aa,ab - min,max ter angle  -->
+<!-- t - diff tex  n - norm tex  (t,n filename no ext)  s - scale  su - surface  tp - triplanar  du - dust  ds - dust size  md - mud  tr - trail color  aa,ab - min,max ter angle  d - damage -->
 																					   
 <t sc="A"  t="adesert_cracks_d"   n="desert_cracks_n"    s="10.50" su="DesertFast"     tp="0" du="0.6" ds="1.0" md="0.5" tr="0.48 0.30 0.20 0.8"  aa="13" ab="27" z="AV" />
 <t sc="A"  t="adesert_mntn2_d"    n="desert_mntn2_n"     s="34.04" su="Rocks"          tp="1" du="0.7" ds="1.0" md="0.4" tr="0.46 0.26 0.08 0.7"  aa="28" ab="90" z="AIR" />
