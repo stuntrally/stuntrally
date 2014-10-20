@@ -15,14 +15,13 @@ material checkpoint
 	twoside_diffuse true
 }
 
-// normal checkpoint, not finish
+//  normal checkpoint, not finish
 material checkpoint_normal
 {
 	parent checkpoint
 	specular 0.2 0.4 0.2  32 //x4
 	emissive 0.1 11.0 0.1
 }
-
 //  finish, does not end race
 material checkpoint_lap
 {
@@ -30,7 +29,6 @@ material checkpoint_lap
 	specular 0.3 0.4 0.4  32
 	emissive 0.6 11.0 11.0
 }
-
 //  finish, last lap begins after passing it
 material checkpoint_lastlap
 {
@@ -38,7 +36,6 @@ material checkpoint_lastlap
 	specular 0.4 0.4 0.2  32
 	emissive 11.0 11.0 0.1
 }
-
 //  the very last checkpoint, ends race after passing
 material checkpoint_finish
 {
@@ -47,19 +44,6 @@ material checkpoint_finish
 	emissive 11.0 0.7 0.1
 }
 
-
-
-material road_terrain
-{
-	parent base
-	depth_write off
-	scene_blend alpha_blend
-	alphaMap roadAlpha.png
-	//alphaMap noise.jpg
-	depth_bias 3
-	terrain_light_map true
-	road_blend true
-}
 
 //  bridges
 material road
@@ -70,10 +54,28 @@ material road
 	depth_bias 3
 	road_blend true
 }
+//  on terrain
+material road_terrain
+{
+	parent base
+	depth_write off
+	scene_blend alpha_blend
+	alphaMap roadAlpha.png
+	depth_bias 3
+	terrain_light_map true
+	road_blend true
+}
 
 
-// Jungle
-
+//  Jungle  ----
+material roadJungle
+{
+	parent road
+	diffuseMap roadJungle.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.3 0.3 0.25 48
+}
 material roadJungle_ter
 {
 	parent road_terrain
@@ -84,28 +86,8 @@ material roadJungle_ter
 	normalMap normal_2.png
 }
 
-material roadJungle
-{
-	parent road
-	diffuseMap roadJungle.jpg
-	ambient 1.0 1.0 1.0
-	diffuse 0.7 0.7 0.7
-	specular 0.3 0.3 0.25 48
-}
 
-
-// Jungle dark new
-
-material roadJDark_ter
-{
-	parent road_terrain
-	diffuseMap roadJDark.jpg
-	ambient 0.7 0.7 0.8
-	diffuse 0.70 0.60 0.80
-	specular 0.43 0.43 0.40 48
-	normalMap normal_2.png
-}
-
+//  Jungle dark
 material roadJDark
 {
 	parent road
@@ -114,15 +96,13 @@ material roadJDark
 	diffuse 0.7 0.7 0.7
 	specular 0.3 0.3 0.25 48
 }
-
-
-material roadJDarkD_ter
+material roadJDark_ter
 {
 	parent road_terrain
-	diffuseMap roadJDarkD.jpg
-	ambient 0.7 0.7 0.7
-	diffuse 0.70 0.70 0.70
-	specular 0.43 0.43 0.40 40
+	diffuseMap roadJDark.jpg
+	ambient 0.7 0.7 0.8
+	diffuse 0.70 0.60 0.80
+	specular 0.43 0.43 0.40 48
 	normalMap normal_2.png
 }
 
@@ -134,8 +114,25 @@ material roadJDarkD
 	diffuse 0.7 0.7 0.7
 	specular 0.3 0.3 0.3 40
 }
+material roadJDarkD_ter
+{
+	parent road_terrain
+	diffuseMap roadJDarkD.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.70 0.70 0.70
+	specular 0.43 0.43 0.40 40
+	normalMap normal_2.png
+}
 
 //  dark no spec
+material roadJDarkDs
+{
+	parent road
+	diffuseMap roadJDarkD.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.03 0.03 0.03 64
+}
 material roadJDarkDs_ter
 {
 	parent road_terrain
@@ -146,18 +143,8 @@ material roadJDarkDs_ter
 	normalMap normal_2.png
 }
 
-material roadJDarkDs
-{
-	parent road
-	diffuseMap roadJDarkD.jpg
-	ambient 1.0 1.0 1.0
-	diffuse 0.7 0.7 0.7
-	specular 0.03 0.03 0.03 64
-}
 
-
-// Asphalt
-
+//  Asphalt
 material roadAsphalt
 {
 	parent road
@@ -168,21 +155,20 @@ material roadAsphalt
 	diffuse 0.75 0.75 0.75
 	specular 0.8 0.8 0.8 6
 }
-
 material roadAsphalt_ter
 {
 	parent road
 	diffuseMap roadAsphalt.jpg
+	normalMap normal_1.png
 	specMap roadAsphalt_spec.jpg
 	specMap_rgb true
 	ambient 1.2 1.2 1.2
 	diffuse 0.75 0.75 0.75
 	specular 0.8 0.8 0.8 6
-	normalMap normal_1.png
 }
 
-// Greece
 
+//  Greece
 material roadGDesert
 {
 	parent road
@@ -191,20 +177,18 @@ material roadGDesert
 	diffuse 0.63 0.65 0.62
 	specular 0.23 0.23 0.22 32
 }
-
 material roadGDesert_ter
 {
 	parent road_terrain
 	diffuseMap roadDesert.jpg
+	normalMap roadDesert_n.jpg
 	ambient 0.79 0.77 0.47
 	diffuse 0.66 0.65 0.52
 	specular 0.23 0.23 0.22 32
-	normalMap roadDesert_n.jpg
 }
 
 
-// Sand island
-
+//  Sand island  ------
 material roadSand
 {
 	parent road
@@ -213,7 +197,6 @@ material roadSand
 	diffuse 0.82 0.82 0.82
 	specular 0.23 0.23 0.22 32
 }
-
 material roadSand_ter
 {
 	parent road_terrain
@@ -224,9 +207,7 @@ material roadSand_ter
 	normalMap normal_1.png
 }
 
-
-// Sand2 island
-
+//  Sand2 island
 material roadSand2
 {
 	parent road
@@ -235,7 +216,6 @@ material roadSand2
 	specular 0.23 0.23 0.22 32
 	diffuseMap roadSand2.jpg
 }
-
 material roadSand2_ter
 {
 	parent road_terrain
@@ -246,8 +226,7 @@ material roadSand2_ter
 	normalMap normal_1.png
 }	
 
-// Sand white island
-
+//  Sand white island
 material roadSandWhite
 {
 	parent road
@@ -256,7 +235,6 @@ material roadSandWhite
 	specular 0.23 0.23 0.23 32
 	diffuseMap roadSandW.jpg
 }
-
 material roadSandWhite_ter
 {
 	parent road_terrain
@@ -267,9 +245,7 @@ material roadSandWhite_ter
 	normalMap normal_1.png
 }	
 
-
-// Sand shore
-
+//  Sand shore
 material roadSandShore
 {
 	parent road
@@ -289,9 +265,7 @@ material roadSandShore_ter
 	normalMap normal_1.png
 }
 
-
-// Sand sunset
-
+//  Sand sunset
 material roadSandSet
 {
 	parent road
@@ -300,7 +274,6 @@ material roadSandSet
 	diffuse 0.82 0.82 0.82
 	specular 0.23 0.23 0.22 32
 }
-
 material roadSandSet_ter
 {
 	parent road_terrain
@@ -311,9 +284,7 @@ material roadSandSet_ter
 	normalMap normal_2.png
 }
 
-
-// Sand dark
-
+//  Sand dark
 material roadSandDark
 {
 	parent road
@@ -322,7 +293,6 @@ material roadSandDark
 	diffuse 0.52 0.62 0.42
 	specular 0.3 0.3 0.2 24
 }
-
 material roadSandDark_ter
 {
 	parent road_terrain
@@ -334,7 +304,7 @@ material roadSandDark_ter
 }
 
 
-// stone gray
+//  Stone gray
 material roadStone
 {
 	parent road
@@ -343,7 +313,6 @@ material roadStone
 	diffuse 0.537 0.486 0.389
 	specular 0.3 0.3 0.3 14
 }
-
 material roadStone_ter
 {
 	parent road_terrain
@@ -352,12 +321,10 @@ material roadStone_ter
 	diffuse 0.537 0.486 0.389
 	specular 0.3 0.3 0.3 14
 	normalMap normal_2.png
-	bump_scale 1
 }
 
 
-// Magic
-
+//  Magic  ----
 material roadSandMagic
 {
 	parent road
@@ -370,7 +337,6 @@ material roadSandMagic
 	refl_amount 0.15
 	bump_scale 0.3
 }
-
 material roadSandMagic_ter
 {
 	parent road_terrain
@@ -385,9 +351,7 @@ material roadSandMagic_ter
 	normalMap normal_2.png
 }
 
-
 //  Crystals
-
 material roadCrystal
 {
 	parent road
@@ -401,7 +365,6 @@ material roadCrystal
 	refl_amount 0.5
 	bump_scale 0.2
 }
-
 material roadCrystal_ter
 {
 	parent road_terrain
@@ -418,8 +381,7 @@ material roadCrystal_ter
 }
 
 
-// Mud
-
+//  Mud
 material roadMud
 {
 	parent road
@@ -430,7 +392,6 @@ material roadMud
 	diffuse 0.7 0.7 0.7
 	specular 0.3 0.3 0.2 16
 }
-
 material roadMud_ter
 {
 	parent road_terrain
@@ -442,8 +403,7 @@ material roadMud_ter
 }
 
 
-// Ice winter
-
+//  Ice winter  ----
 material roadIce
 {
 	parent road
@@ -459,7 +419,6 @@ material roadIce
 	specMap roadAsphalt_spec2.jpg
 	specMap_rgb true
 }
-
 material roadIce_ter
 {
 	parent road_terrain
@@ -476,9 +435,7 @@ material roadIce_ter
 	specMap_rgb true
 }
 
-
-// Snow Winter
-
+//  Snow Winter
 material roadSnow
 {
 	parent road
@@ -487,7 +444,6 @@ material roadSnow
 	specular 0.6 0.62 0.62 18
 	diffuseMap roadSnow.jpg
 }
-
 material roadSnow_ter
 {
 	parent road_terrain
@@ -508,7 +464,6 @@ material roadSnowGrn
 	specMap roadSnowGrn.jpg
 	specMap_rgb true
 }
-
 material roadSnowGrn_ter
 {
 	parent road_terrain
@@ -522,8 +477,7 @@ material roadSnowGrn_ter
 }
 
 
-// Desert old
-
+//  Desert old  --
 material roadDesertD
 {
 	parent road
@@ -532,7 +486,6 @@ material roadDesertD
 	diffuse 0.81 0.8 0.75
 	specular 0.36 0.34 0.3 18
 }
-
 material roadDesertD_ter
 {
 	parent road_terrain
@@ -543,8 +496,7 @@ material roadDesertD_ter
 	normalMap normal_1.png
 }
 
-// Desert
-
+//  Desert
 material roadDesert
 {
 	parent road
@@ -555,7 +507,6 @@ material roadDesert
 	diffuse 0.9 0.9 0.9
 	specular 0.36 0.34 0.3 18
 }
-
 material roadDesert_ter
 {
 	parent road_terrain
@@ -567,7 +518,6 @@ material roadDesert_ter
 	bump_scale 0.7
 }
 
-
 material roadDesertOrn
 {
 	parent road
@@ -576,23 +526,19 @@ material roadDesertOrn
 	diffuse 0.81 0.7 0.55
 	specular 0.36 0.34 0.3 18
 }
-
 material roadDesertOrn_ter
 {
 	parent road_terrain
-	//ambient 1.00 0.80 0.65
 	ambient 0.95 0.75 0.63
 	diffuse 0.90 0.8 0.6
 	specular 0.16 0.14 0.12 12
-	//alphaMap roadAlphaE.png
 	diffuseMap roadDesert.jpg
 	normalMap roadDesert_n.jpg
 	bump_scale 0.5
 }
 
 
-// Black Desert
-
+//  Black Desert
 material roadDesertBlack
 {
 	parent road
@@ -603,7 +549,6 @@ material roadDesertBlack
 	diffuse 0.9 0.9 0.9
 	specular 0.12 0.12 0.12 32
 }
-
 material roadDesertBlack_ter
 {
 	parent road_terrain
@@ -616,8 +561,7 @@ material roadDesertBlack_ter
 }
 
 
-// Savannah
-
+//  Savannah
 material roadSavannah
 {
 	parent road
@@ -626,8 +570,7 @@ material roadSavannah
 	specular 0.1 0.1 0.08 24
 	diffuseMap roadSavannah.jpg
 }
-
-material roadSavannah_ter
+material roadSavannah _ter
 {
 	parent road_terrain
    	ambient 0.88 0.88 0.88
@@ -638,8 +581,7 @@ material roadSavannah_ter
 }
 	
 
-// Australia
-
+//  Australia
 material roadAdesert
 {
 	parent road
@@ -648,14 +590,11 @@ material roadAdesert
 	specular 0.36 0.32 0.3 32
 	diffuseMap roadAdesertD.jpg
 }
-
 material roadAdesert_ter
 {
 	parent road_terrain
 	ambient 0.97 0.80 0.77
 	diffuse 0.80 0.80 0.74
-	//ambient 0.99 0.89 0.81
-	//diffuse 0.93 0.9 0.88
 	specular 0.32 0.32 0.32 32
 	diffuseMap roadAdesert.jpg
 	normalMap roadDesert_n.jpg
@@ -670,12 +609,9 @@ material roadAdesertDark
 	specular 0.36 0.32 0.3 32
 	diffuseMap roadAdesertD.jpg
 }
-
 material roadAdesertDark_ter
 {
 	parent road_terrain
-	//ambient 0.85 0.59 0.52
-	//diffuse 0.80 0.80 0.74
 	ambient 0.64 0.59 0.45
 	diffuse 0.77 0.67 0.71
 	specular 0.32 0.32 0.32 32
@@ -685,19 +621,15 @@ material roadAdesertDark_ter
 }
 
 
-// Canyon
-
+//  Canyon  ----
 material roadCdesert
 {
 	parent road
-	//ambient 0.73 0.73 0.54
-	//diffuse 0.86 0.81 0.63
 	ambient 1.0 1.0 0.72
 	diffuse 0.9 0.82 0.63
 	specular 0.36 0.24 0.16 32
 	diffuseMap roadAdesertD.jpg
 }
-
 material roadCdesert_ter
 {
 	parent road_terrain
@@ -706,12 +638,55 @@ material roadCdesert_ter
 	specular 0.36 0.24 0.16 32
 	diffuseMap roadAdesert.jpg
 	normalMap roadDesert_n.jpg
-	bump_scale 1.0
+}
+
+material roadCanyon1
+{
+	parent road
+	diffuseMap canyonroad1.jpg
+	ambient 1.3 1 0.8
+	diffuse 0.8 0.6 0.5
+	specular 0.35 0.3 0.25 18
+
+}
+material roadCanyon1_ter
+{
+	parent road_terrain
+	diffuseMap canyonroad1.jpg
+	ambient 1.3 1 0.8
+	diffuse 0.8 0.6 0.5
+	specular 0.35 0.3 0.25 18
+	normalMap normal_1.png
+}
+
+material roadCanyon2
+{
+	parent road
+	diffuseMap canyonroad2.jpg
+	ambient 1.25 0.75 0.5
+	diffuse 0.75 0.55 0.3
+	specular 0.35 0.3 0.25 16
+}
+material roadCanyon2_ter
+{
+	parent road_terrain
+	diffuseMap canyonroad2.jpg
+	ambient 1.25 0.75 0.5
+	diffuse 0.75 0.55 0.3
+	specular 0.35 0.3 0.25 16
+	normalMap normal_2.png
 }
 
 
-// Moss
-
+//  Moss
+material roadMoss
+{
+	parent road
+	diffuseMap roadMoss.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.5 0.5 0.5
+	specular 0.15 0.24 0.25 48
+}
 material roadMoss_ter
 {
 	parent road_terrain
@@ -722,18 +697,8 @@ material roadMoss_ter
 	normalMap normal_1.png
 }
 
-material roadMoss
-{
-	parent road
-	diffuseMap roadMoss.jpg
-	ambient 0.7 0.7 0.7
-	diffuse 0.5 0.5 0.5
-	specular 0.15 0.24 0.25 48
-}
 
-
-// Alien1
-
+//  Alien  ----
 material roadAlienD
 {
 	parent road
@@ -742,7 +707,6 @@ material roadAlienD
 	diffuse 0.81 0.8 0.75
 	specular 0.36 0.34 0.3 18
 }
-
 material roadAlienD_ter
 {
 	parent road_terrain
@@ -750,17 +714,6 @@ material roadAlienD_ter
 	diffuse 0.87 0.95 0.88
 	specular 0.36 0.34 0.32 18
 	diffuseMap roadAlienD.jpg
-	normalMap normal_1.png
-}
-
-// Alien2
-material roadAlien_ter
-{
-	parent road_terrain
-	diffuseMap roadAlien.jpg
-	ambient 0.85 0.95 0.85
-	diffuse 0.8 0.9 0.75
-	specular 0.3 0.6 0.5 64
 	normalMap normal_1.png
 }
 
@@ -772,8 +725,16 @@ material roadAlien
 	diffuse 0.6 0.7 0.6
 	specular 0.3 0.5 0.6 32
 }
+material roadAlien_ter
+{
+	parent road_terrain
+	diffuseMap roadAlien.jpg
+	ambient 0.85 0.95 0.85
+	diffuse 0.8 0.9 0.75
+	specular 0.3 0.6 0.5 64
+	normalMap normal_1.png
+}
 
-// alien stone
 material roadAlienStone
 {
 	parent road
@@ -782,7 +743,6 @@ material roadAlienStone
 	diffuse 0.537 0.586 0.489
 	specular 0.3 0.3 0.3 14
 }
-
 material roadAlienStone_ter
 {
 	parent road_terrain
@@ -795,9 +755,15 @@ material roadAlienStone_ter
 }
 
 
-
-///  test new gravel
-
+///  Gravel new
+material roadNdirt
+{
+	parent road
+	diffuseMap rdDirt.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.2 48
+}
 material roadNdirt_ter
 {
 	parent road_terrain
@@ -807,26 +773,7 @@ material roadNdirt_ter
 	diffuse 0.7 0.7 0.7
 	specular 0.2 0.2 0.2 48
 }
-material roadNdirt
-{
-	parent road
-	diffuseMap rdDirt.jpg
-	ambient 0.7 0.7 0.7
-	diffuse 0.7 0.7 0.7
-	specular 0.2 0.2 0.2 48
-}
 
-material roadNgravel_ter
-{
-	parent road_terrain
-	diffuseMap rdGravel.jpg
-	normalMap rdGravel_norm.jpg
-	ambient 0.6 0.6 0.6
-	diffuse 0.6 0.6 0.6
-	specular 0.5 0.5 0.5 24
-	specMap rdGravel.jpg
-	specMap_rgb true
-}
 material roadNgravel
 {
 	parent road
@@ -836,18 +783,19 @@ material roadNgravel
 	ambient 1.2 1.2 1.2
 	diffuse 0.8 0.8 0.8
 	specular 0.6 0.6 0.6 12
-	specMap rdGravel.jpg
-	specMap_rgb true
 }
-
-material roadNmud_ter
+material roadNgravel_ter
 {
 	parent road_terrain
-	diffuseMap rdMud.jpg
-	ambient 0.7 0.7 0.7
-	diffuse 0.7 0.7 0.7
-	specular 0.2 0.2 0.2 48
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	specMap rdGravel.jpg
+	specMap_rgb true
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.5 0.5 0.5 24
 }
+
 material roadNmud
 {
 	parent road
@@ -856,18 +804,26 @@ material roadNmud
 	diffuse 0.7 0.7 0.7
 	specular 0.2 0.2 0.2 48
 }
-
-material roadNpacked_ter
+material roadNmud_ter
 {
 	parent road_terrain
+	diffuseMap rdMud.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.2 48
+}
+
+material roadNpacked
+{
+	parent road
 	diffuseMap rdPacked.jpg
 	ambient 0.7 0.7 0.7
 	diffuse 0.7 0.7 0.7
 	specular 0.2 0.2 0.2 48
 }
-material roadNpacked
+material roadNpacked_ter
 {
-	parent road
+	parent road_terrain
 	diffuseMap rdPacked.jpg
 	ambient 0.7 0.7 0.7
 	diffuse 0.7 0.7 0.7
