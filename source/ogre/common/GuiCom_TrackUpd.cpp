@@ -219,6 +219,9 @@ void CGuiCom::trkListNext(int rel)
 	else  // objects
 	if (pSet->inMenu == WND_Edit && app->mWndTabsEdit->getIndexSelected() == TAB_Objects)
 		app->gui->listObjsNext(rel);
+	else
+	if (app->mWndPick->getVisible())
+		app->gui->keyPickNext(rel);
 }
 #endif
 

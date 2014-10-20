@@ -461,6 +461,7 @@ void CGui::UpdSurfList()
 }
 
 
+//-----------------------------------------------------------------------------------------------------------
 ///  [Pick window]
 //-----------------------------------------------------------------------------------------------------------
 int CGui::liNext(Mli2 li, int rel)
@@ -473,6 +474,15 @@ int CGui::liNext(Mli2 li, int rel)
 	li->setIndexSelected(i);
 	li->beginToItemAt(std::min(cnt, std::max(0, i-20)));
 	return i;
+}
+
+void CGui::keyPickNext(int r)
+{
+	if (liSky->getVisible())  listPickSky(liSky, liNext(liSky, r));  else
+	if (liTex->getVisible())  listPickTex(liTex, liNext(liTex, r));	 else
+	if (liGrs->getVisible())  listPickGrs(liGrs, liNext(liGrs, r));  else
+	if (liVeg->getVisible())  listPickVeg(liVeg, liNext(liVeg, r));  else
+	if (liRd->getVisible())   listPickRd(liRd, liNext(liRd, r));
 }
 
 void CGui::wheelSky(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickSky(liSky, liNext(liSky, r));  }
