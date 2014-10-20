@@ -44,6 +44,8 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	PATHMANAGER::Init(std::cout, std::cerr);
 
 
+	std::streambuf* oldCout = std::cout.rdbuf();
+	std::streambuf* oldCerr = std::cerr.rdbuf();
 	#if 0
     std::string po = PATHMANAGER::UserConfigDir() + "/ogre.out";
     std::ofstream out(po.c_str());
@@ -154,5 +156,9 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	delete pApp;
 	delete pGame;
 	delete settings;
+
+	std::cout.rdbuf(oldCout);
+	std::cerr.rdbuf(oldCerr);
+
 	return 0;
 }
