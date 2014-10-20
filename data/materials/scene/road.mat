@@ -570,7 +570,7 @@ material roadSavannah
 	specular 0.1 0.1 0.08 24
 	diffuseMap roadSavannah.jpg
 }
-material roadSavannah _ter
+material roadSavannah_ter
 {
 	parent road_terrain
    	ambient 0.88 0.88 0.88
