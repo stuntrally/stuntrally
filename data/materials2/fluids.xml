@@ -75,6 +75,6 @@
 		bumpFqX="22.2" bumpFqY="23.2" bumpAmp="0.8" bumpAngle="20" whSteerMul="1.1" idParticles="2" fDamage="5" />
 													
 	<fluid name="lava solid"	material="LavaBlk"	density="500" angDamp="0.2" linDamp="0.4" heightDamp="1"
-		solid="1" surf="DesertFast" idParticles="-1" fDamage="0.5" />
+		solid="1" surf="DesertFast" idParticles="-1" fDamage="2" />
 
 </fluids>
