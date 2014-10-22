@@ -266,8 +266,16 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 {
 	BaseApp::frameStarted(evt);
 
+	static Real time1 = 0.;
 	mDTime = evt.timeSinceLastFrame;
+	
+	//  inc edit time
+	time1 += mDTime;
+	if (time1 > 1.)
+	{	time1 -= 1.;  ++scn->sc->secEdited;  }
+	
 	if (mDTime > 0.1f)  mDTime = 0.1f;  //min 5fps
+
 
 	//  update input
 	mRotX = 0; mRotY = 0;  mRotKX = 0; mRotKY = 0;  mTrans = Vector3::ZERO;

@@ -159,6 +159,7 @@ bool Scene::LoadXml(String file, bool bTer)
 	if (e)
 	{	a = e->Attribute("num");		if (a)  ver = s2i(a);
 		a = e->Attribute("baseTrk");	if (a)  baseTrk = string(a);
+		a = e->Attribute("secEd");		if (a)  secEdited = s2i(a);
 	}
 	
  	///  car setup
@@ -470,6 +471,7 @@ bool Scene::SaveXml(String file)
 		int v = SET_VER;
 		ver.SetAttribute("num",		toStrC( v ));
 		ver.SetAttribute("baseTrk",	baseTrk.c_str());
+		ver.SetAttribute("secEd",	toStrC( secEdited ));
 	root.InsertEndChild(ver);
 
 

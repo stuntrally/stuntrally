@@ -338,10 +338,12 @@ public:
 	
 	//  base track (new from) for info
 	std::string baseTrk;
+	int secEdited;  // time in seconds of track editing for info
 
 	
 	//  methods
-	Scene();  void Default(), UpdateFluidsId(), UpdateSurfId();
+	Scene();  void Default();
+	void UpdateFluidsId(), UpdateSurfId();
 
 	class GAME* pGame;  // for all surfaces by name
 	bool LoadStartPos(Ogre::String file);
