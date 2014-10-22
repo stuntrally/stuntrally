@@ -70,7 +70,9 @@ bool FluidsXml::LoadXml(std::string file, std::map <std::string, int>* surf_map)
 			int id = surf_map ? (*surf_map)[s]-1 : -1;
 			if (id == -1)
 			{	id = 4;  // default if not found
+				#ifndef SR_EDITOR
 				LogO("! Warning: Surface not found: "+s+" for (solid) fluid: "+fp.name);
+				#endif
 			}
 			fp.surf = id;
 		}

@@ -392,6 +392,41 @@ material Ice_cyan   // solid
     speed 0.0
 }
 
+material LavaOrn   // lava dense fluid
+{
+    parent Water
+    choppyness_scale 0.1 33
+    smallWaves_midWaves 0.15 0.1 0.22 0.12
+    bigWaves 0.553 0.435
+    bump 2.5 0.145 0.073
+    fresnelMultiplier 0.67
+
+    colour 0.247 0.214 0.195  1.0
+	reflectColour 0.45 0.46 0.48  0.44
+	refractColour 0.0 0.0 0.0  0.6
+	specColourAndPower 1.0 0.70 0.44  256
+
+    bump2SpecPowerMul 12.86 1.0 1.03
+    speed 0.478
+}
+material LavaBlk   // lava solid
+{
+    parent Water
+    choppyness_scale 0.34 33
+    smallWaves_midWaves 0.035 0.15 0.24 0.12
+    bigWaves 0.374 0.153
+    bump 3.0 0.237 0.136
+    fresnelMultiplier 0.61
+
+    colour 0.077 0.08 0.085  1.0
+	reflectColour 0.45 0.46 0.49  0.44
+	refractColour 0.0 0.0 0.0  0.6
+	specColourAndPower 1.5 0.75 0.30  256
+
+    bump2SpecPowerMul 72.0 2.0 1.0
+    speed 0.15
+}
+
 
 //  Mud
 //--------------------------------------------------------
