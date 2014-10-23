@@ -53,6 +53,9 @@ material road
 	alphaMap white.png
 	depth_bias 3
 	road_blend true
+
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
 }
 //  on terrain
 material road_terrain
@@ -175,7 +178,8 @@ material roadGDesert
 	diffuseMap roadDesert.jpg
 	ambient 0.84 0.94 0.74
 	diffuse 0.63 0.65 0.62
-	specular 0.23 0.23 0.22 32
+	specular 0.23 0.23 0.22 22
+	specMap roadAsphalt_spec2.jpg
 }
 material roadGDesert_ter
 {
@@ -196,6 +200,7 @@ material roadSand
 	ambient 0.94 0.94 0.94
 	diffuse 0.82 0.82 0.82
 	specular 0.23 0.23 0.22 32
+	specMap roadAsphalt_spec2.jpg
 }
 material roadSand_ter
 {
@@ -215,6 +220,7 @@ material roadSand2
 	diffuse 0.82 0.82 0.82
 	specular 0.23 0.23 0.22 32
 	diffuseMap roadSand2.jpg
+	specMap roadAsphalt_spec2.jpg
 }
 material roadSand2_ter
 {
@@ -234,6 +240,7 @@ material roadSandWhite
 	diffuse 0.9 0.9 0.9
 	specular 0.23 0.23 0.23 32
 	diffuseMap roadSandW.jpg
+	specMap roadAsphalt_spec2.jpg
 }
 material roadSandWhite_ter
 {
@@ -253,6 +260,7 @@ material roadSandShore
 	ambient 0.85 0.75 0.6
 	diffuse 0.85 0.75 0.6
 	specular 0.31 0.32 0.33 32
+	specMap roadAsphalt_spec2.jpg
 }
 
 material roadSandShore_ter
@@ -312,6 +320,7 @@ material roadStone
 	ambient 0.727 0.684 0.467
 	diffuse 0.537 0.486 0.389
 	specular 0.3 0.3 0.3 14
+	specMap roadAsphalt_spec2.jpg
 }
 material roadStone_ter
 {
@@ -336,6 +345,7 @@ material roadSandMagic
 	env_map true
 	refl_amount 0.15
 	bump_scale 0.3
+	//specMap roadAsphalt_spec2.jpg
 }
 material roadSandMagic_ter
 {
@@ -441,8 +451,9 @@ material roadSnow
 	parent road
 	ambient 1.1 1.05 1.05
 	diffuse 0.9 0.85 0.85
-	specular 0.6 0.62 0.62 18
+	specular 0.7 0.72 0.72 12
 	diffuseMap roadSnow.jpg
+	specMap roadAsphalt_spec2.jpg
 }
 material roadSnow_ter
 {
@@ -567,17 +578,20 @@ material roadSavannah
 	parent road
    	ambient 0.88 0.88 0.88
 	diffuse 0.8 0.8 0.8
-	specular 0.1 0.1 0.08 24
+	specular 0.3 0.3 0.28 24
 	diffuseMap roadSavannah.jpg
+	specMap roadAsphalt_spec2.jpg
 }
 material roadSavannah_ter
 {
 	parent road_terrain
    	ambient 0.88 0.88 0.88
 	diffuse 0.8 0.8 0.8
-	specular 0.1 0.1 0.08 24
+	specular 0.3 0.3 0.28 24
 	diffuseMap roadSavannah.jpg
 	normalMap normal_1.png
+	specMap roadAsphalt_spec2.jpg
+	specMap_rgb true
 }
 	
 
@@ -589,6 +603,7 @@ material roadAdesert
 	diffuse 0.75 0.65 0.75
 	specular 0.36 0.32 0.3 32
 	diffuseMap roadAdesertD.jpg
+	specMap roadAsphalt_spec2.jpg
 }
 material roadAdesert_ter
 {
