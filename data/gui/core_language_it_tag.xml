@@ -1131,6 +1131,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - prec.,pross. scheda (alt - sottoschede)</Tag>
 	<Tag name="Hint-3">Ghiaia</Tag>
 	<Tag name="RplAll">Tutto</Tag>
+	<Tag name="LANG_ES">Español</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

@@ -1131,6 +1131,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
 	<Tag name="Hint-3">Gravel</Tag>
 	<Tag name="RplAll">Všetko</Tag>
+	<Tag name="LANG_ES">Español</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>

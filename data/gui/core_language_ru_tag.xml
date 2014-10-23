@@ -68,7 +68,7 @@
 	<Tag name="CarDesc_3S">Хорошее авто, подходит для всех треков, но медленнее ускорение, особенно на высоких скоростях.</Tag>
 	<Tag name="InputObjectsIns">Ins - вставить, где курсор</Tag>
 	<Tag name="GraphicsAll_Low">Низкая</Tag>
-	<Tag name="Group">Group</Tag>
+	<Tag name="Group">Группа</Tag>
 	<Tag name="ChampEndFinished">Вы закончили этот чемпионат.</Tag>
 	<Tag name="Negative">Отриц. (темнить)</Tag>
 	<Tag name="PickSetParam">Уст. параметры, по умол.</Tag>
@@ -1131,6 +1131,7 @@
 	<Tag name="InputNextOptTab">F2,F3 - пред.,след. вкладка (alt - ниже)</Tag>
 	<Tag name="Hint-3">Гравий</Tag>
 	<Tag name="RplAll">Все</Tag>
+	<Tag name="LANG_ES">Español</Tag>
 	<Tag name="GameVersion">2.4</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
