@@ -118,7 +118,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		switch (skey)
 		{
 			case key(1): t = "Test1-Flat";  break;
-			case key(2): t = "Test11-Jumps";  break;
+			case key(2): t = "TestC9-jumps";  break;
 			case key(3): t = "TestC4-ow";  break;
 			case key(4): t = "Test7-FluidsSmall";  break;
 			case key(5): t = "TestC6-temp";  break;
