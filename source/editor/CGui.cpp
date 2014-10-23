@@ -68,6 +68,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	// obj
 	,objListSt(0),objListDyn(0),objListRck(0)
 	,objListBld(0),objListCat(0), objPan(0)
+	,txtEdInfo(0)
 	// clr
 	,wndColor(0), wpClrSet(0)
 {	

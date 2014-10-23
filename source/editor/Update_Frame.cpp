@@ -272,7 +272,11 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	//  inc edit time
 	time1 += mDTime;
 	if (time1 > 1.)
-	{	time1 -= 1.;  ++scn->sc->secEdited;  }
+	{	time1 -= 1.;  ++scn->sc->secEdited;
+
+		if (bGuiFocus)	//  upd ed info txt
+			gui->UpdEdInfo();
+	}
 	
 	if (mDTime > 0.1f)  mDTime = 0.1f;  //min 5fps
 

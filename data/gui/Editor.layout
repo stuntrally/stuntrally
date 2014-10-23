@@ -1454,6 +1454,9 @@
 					<Property key="Caption" value="#{NoWrongChks}"/>
 					<Property key="TextColour" value="0.8 0.7 0.7"/>
 				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 444 264 64" name="EdInfo">
+					<Property key="TextColour" value="0.9 0.7 0.8"/>
+				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#E0A0A0#{Warnings}"/>
@@ -4476,6 +4479,11 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#60A0FF#{Settings}"/>
+				<Widget type="TextBox" skin="TextBox" position="16 524 304 20">
+					<Property key="Caption" value="#{SREditorVersion} #{GameVersion}"/>
+					<Property key="TextColour" value="0.6 0.7 0.8"/>
+					<Property key="Alpha" value="0.5"/>
+				</Widget>
 				<Widget type="TabControl" skin="TabControl" position="16 15 744 460" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
@@ -4598,10 +4606,6 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
 						<Property key="Caption" value="#60A0FF#{Settings}"/>
-						<Widget type="TextBox" skin="TextBox" position="32 504 304 20">
-							<Property key="Caption" value="#{SREditorVersion} #{GameVersion}"/>
-							<Property key="TextColour" value="0.8 0.9 0.7"/>
-						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 32 252 24">
 							<Property key="TextColour" value="0.68 0.74 0.8"/>
 							<Property key="Caption" value="#{Startup}"/>

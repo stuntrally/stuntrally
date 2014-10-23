@@ -97,6 +97,7 @@ void CGui::SetGuiFromXmls()
 	ckTerrainEmissive.Upd(&sc->td.emissive);
 	ckNoWrongChks.Upd(&sc->noWrongChks);
 	SldUpd_Game();
+	UpdEdInfo();
 	
 	//  [Surface]
 	//-----------------------------------------------

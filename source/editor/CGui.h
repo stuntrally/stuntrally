@@ -290,6 +290,7 @@ public:
 	CK(DenyReversed);  CK(TiresAsphalt);  CK(TerrainEmissive);
 	CK(NoWrongChks);
 	void SldUpd_Game();
+	Txt txtEdInfo;  void UpdEdInfo();
 
 
 	//  [Objects]  ----
