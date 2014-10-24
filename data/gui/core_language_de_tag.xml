@@ -63,6 +63,7 @@
 	<Tag name="DevKeys">Entwicklertasten. Strg-F: global; Alt-Umschalt-1 bis 6: Teststrecken laden.</Tag>
 	<Tag name="Chall_Special">Speziell</Tag>
 	<Tag name="Hint-15text">Für weitere Informationen, siehe [Hilfe] im Menü.</Tag>
+	<Tag name="InputMapBrake">Bremsen</Tag>
 	<Tag name="MinimapUpdSkip">Karten-Update überspr.</Tag>
 	<Tag name="SC_ForestMntn">WaldBerge</Tag>
 	<Tag name="CarDesc_3S">Gutes Auto, geeignet für alle Strecken, aber es hat eine langsamere Beschleunigung, besonders bei hoher Geschwindigkeit.</Tag>
@@ -201,7 +202,7 @@
 	<Tag name="Brush_Size">Größe</Tag>
 	<Tag name="HDRParam2">Helligkeit</Tag>
 	<Tag name="HDRParam3">Körnung</Tag>
-	<Tag name="InputMapBrake">Bremsen</Tag>
+	<Tag name="SC_Toxic">Toxic</Tag>
 	<Tag name="HDRParam1">Belichtung</Tag>
 	<Tag name="TipRoadDist2">Zusätzlicher Abstand zur Strecke.</Tag>
 	<Tag name="InputBrushFilter">1,2 - Filterfrequenz (Kernumfang)</Tag>
@@ -406,6 +407,7 @@
 	<Tag name="Delete">Entfernen</Tag>
 	<Tag name="Rename">Umbenennen</Tag>
 	<Tag name="CarDesc_V3">Ein großes und schweres Raumschiff. Sehr gute Anfangsbeschleunigung und starke Bremsung. Es erreicht jedoch keine hohen Geschwindigkeiten.</Tag>
+	<Tag name="InputDetailPreset">Voreinstellung</Tag>
 	<Tag name="Asphalt">Asphalt</Tag>
 	<Tag name="InputRoadChkFirst">0 - Wegpunkt als Ersten markieren (1)</Tag>
 	<Tag name="TipModelPageLength">Models Page length (niedrig wird häufiges Nachladen verursachen und viele Batches erzeugen, hoch wird sichtbares Switching und zu viele gezeichnete Dreiecke verursachen)</Tag>
@@ -1028,7 +1030,7 @@
 	<Tag name="EnterSave">Eingabe - speichern</Tag>
 	<Tag name="ColGloss">Glanz</Tag>
 	<Tag name="TipTerrainGenerate">Generiert ein neues Gelände mit Rauschfunktionen</Tag>
-	<Tag name="InputDetailPreset">Voreinstellung</Tag>
+	<Tag name="SC_Surreal">Surreal</Tag>
 	<Tag name="TipRainSnowInt">Regen-/Schneeintensität (z.B. 1000)</Tag>
 	<Tag name="TrackLength">Länge</Tag>
 	<Tag name="BumpWavelen">Bump: WaveLen</Tag>
@@ -1132,7 +1134,7 @@
 	<Tag name="Hint-3">Schotter</Tag>
 	<Tag name="RplAll">Alle</Tag>
 	<Tag name="LANG_ES">Español</Tag>
-	<Tag name="GameVersion">2.4</Tag>
+	<Tag name="GameVersion">2.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>

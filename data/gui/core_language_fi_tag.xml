@@ -63,6 +63,7 @@
 	<Tag name="DevKeys">Developer keys. Ctrl-F global, Alt-shift-1..6 load test tracks.</Tag>
 	<Tag name="Chall_Special">Special</Tag>
 	<Tag name="Hint-15text">For more info, check [Help] in the menu.</Tag>
+	<Tag name="InputMapBrake">Jarru</Tag>
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
 	<Tag name="SC_ForestMntn">ForestMntn</Tag>
 	<Tag name="CarDesc_3S">Good car, suited for all tracks, but has slower acceleration, especially at high speeds.</Tag>
@@ -201,7 +202,7 @@
 	<Tag name="Brush_Size">Koko</Tag>
 	<Tag name="HDRParam2">Kirkkaus</Tag>
 	<Tag name="HDRParam3">Grain</Tag>
-	<Tag name="InputMapBrake">Jarru</Tag>
+	<Tag name="SC_Toxic">Toxic</Tag>
 	<Tag name="HDRParam1">Exposure</Tag>
 	<Tag name="TipRoadDist2">Additional distance to road.</Tag>
 	<Tag name="InputBrushFilter">1,2  -  Filter frequency (kernel size)</Tag>
@@ -406,6 +407,7 @@
 	<Tag name="Delete">Poista</Tag>
 	<Tag name="Rename">Nimeä uudelleen</Tag>
 	<Tag name="CarDesc_V3">A big and heavy spaceship. Very good acceleration at start and strong braking. But doesn't reach high speeds.</Tag>
+	<Tag name="InputDetailPreset">Set from preset</Tag>
 	<Tag name="Asphalt">Asfaltti</Tag>
 	<Tag name="InputRoadChkFirst">0   - set checkpoint as first  (1)</Tag>
 	<Tag name="TipModelPageLength">Models Page length (low will reload often and make too many batches, high will cause visible switching and make too many drawn triangles).</Tag>
@@ -1028,7 +1030,7 @@
 	<Tag name="EnterSave">Enter - tallenna</Tag>
 	<Tag name="ColGloss">Glossiness</Tag>
 	<Tag name="TipTerrainGenerate">Generates new terrain from noise functions using all parameters below.</Tag>
-	<Tag name="InputDetailPreset">Set from preset</Tag>
+	<Tag name="SC_Surreal">Surreal</Tag>
 	<Tag name="TipRainSnowInt">Vesi/lumisateen voimakkuus (esim. 1000)</Tag>
 	<Tag name="TrackLength">Pituus</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
@@ -1132,7 +1134,7 @@
 	<Tag name="Hint-3">Gravel</Tag>
 	<Tag name="RplAll">Kaikki</Tag>
 	<Tag name="LANG_ES">Español</Tag>
-	<Tag name="GameVersion">2.4</Tag>
+	<Tag name="GameVersion">2.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>

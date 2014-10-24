@@ -63,6 +63,7 @@
 	<Tag name="DevKeys">Tasti per sviluppo. Ctrl-F globale, Alt-shift-1..6 carica i test su piste.</Tag>
 	<Tag name="Chall_Special">Speciale</Tag>
 	<Tag name="Hint-15text">Per maggiori informazioni, consulta [Aiuto] dal menu.</Tag>
+	<Tag name="InputMapBrake">Frena</Tag>
 	<Tag name="MinimapUpdSkip">Salta aggiornamento minimap</Tag>
 	<Tag name="SC_ForestMntn">ForestaMntgn</Tag>
 	<Tag name="CarDesc_3S">Buona macchina adatta per tutte le piste, con accelerazione molto lenta, soprattutto ad alta velocità.</Tag>
@@ -201,7 +202,7 @@
 	<Tag name="Brush_Size">Grandezza</Tag>
 	<Tag name="HDRParam2">Luminosità</Tag>
 	<Tag name="HDRParam3">Grana</Tag>
-	<Tag name="InputMapBrake">Frena</Tag>
+	<Tag name="SC_Toxic">Toxic</Tag>
 	<Tag name="HDRParam1">Esposizione</Tag>
 	<Tag name="TipRoadDist2">Distanza dalla strada aggiuntiva.</Tag>
 	<Tag name="InputBrushFilter">1,2 - Frequenza filtro (dimensione kernel)</Tag>
@@ -406,6 +407,7 @@
 	<Tag name="Delete">Cancella</Tag>
 	<Tag name="Rename">Rinonima</Tag>
 	<Tag name="CarDesc_V3">A big and heavy spaceship. Very good acceleration at start and strong braking. But doesn't reach high speeds.</Tag>
+	<Tag name="InputDetailPreset">Preimposta</Tag>
 	<Tag name="Asphalt">Asfalto</Tag>
 	<Tag name="InputRoadChkFirst">0   - imposta il checkpoint come prima  (1)</Tag>
 	<Tag name="TipModelPageLength">Lunghezza pagina modelli (se bassa si ricarica spesso e crea molti batch, alta causa commutazione visibile e crea troppi triangoli disegnati).</Tag>
@@ -1028,7 +1030,7 @@
 	<Tag name="EnterSave">Enter - salva</Tag>
 	<Tag name="ColGloss">Lucentezza</Tag>
 	<Tag name="TipTerrainGenerate">Genera nuovo terreno dalle funzioni di disturbo usando tutti i parametri in basso.</Tag>
-	<Tag name="InputDetailPreset">Preimposta</Tag>
+	<Tag name="SC_Surreal">Surreal</Tag>
 	<Tag name="TipRainSnowInt">Intensità pioggia/neve (es. 1000)</Tag>
 	<Tag name="TrackLength">Lunghezza</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
@@ -1132,7 +1134,7 @@
 	<Tag name="Hint-3">Ghiaia</Tag>
 	<Tag name="RplAll">Tutto</Tag>
 	<Tag name="LANG_ES">Español</Tag>
-	<Tag name="GameVersion">2.4</Tag>
+	<Tag name="GameVersion">2.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>

@@ -63,6 +63,7 @@
 	<Tag name="DevKeys">Разработчику. Ctrl-F всё, Alt-shift-1..6 загр. тест треки.</Tag>
 	<Tag name="Chall_Special">Специальные</Tag>
 	<Tag name="Hint-15text">Для большей информации, посмотри [Помощь] в меню.</Tag>
+	<Tag name="InputMapBrake">Тормоз</Tag>
 	<Tag name="MinimapUpdSkip">Пропуск обновления мини-карты</Tag>
 	<Tag name="SC_ForestMntn">Гор.Лес</Tag>
 	<Tag name="CarDesc_3S">Хорошее авто, подходит для всех треков, но медленнее ускорение, особенно на высоких скоростях.</Tag>
@@ -201,7 +202,7 @@
 	<Tag name="Brush_Size">Размер</Tag>
 	<Tag name="HDRParam2">Яркость</Tag>
 	<Tag name="HDRParam3">Зерно</Tag>
-	<Tag name="InputMapBrake">Тормоз</Tag>
+	<Tag name="SC_Toxic">Toxic</Tag>
 	<Tag name="HDRParam1">Выдержка</Tag>
 	<Tag name="TipRoadDist2">Дополнительное расстояние до дороги.</Tag>
 	<Tag name="InputBrushFilter">1,2 - фильтр частоты (размер ядра)</Tag>
@@ -406,6 +407,7 @@
 	<Tag name="Delete">Удалить</Tag>
 	<Tag name="Rename">Переименовать</Tag>
 	<Tag name="CarDesc_V3">Большой и тяжелый космический корабль. Очень хорошее ускорение на старте и сильное торможение. Но не достигает высоких скоростей.</Tag>
+	<Tag name="InputDetailPreset">Уст. по умол.</Tag>
 	<Tag name="Asphalt">Асфальт</Tag>
 	<Tag name="InputRoadChkFirst">0   - устан. контр. точку 1-ой</Tag>
 	<Tag name="TipModelPageLength">Длина страницы памяти моделей (ниже будет перезагружаться часто и будет много пакетов данных, выше будут визуальные переключения и много искаженных треугольников или групп из трех частей).</Tag>
@@ -1028,7 +1030,7 @@
 	<Tag name="EnterSave">Enter - сохр.</Tag>
 	<Tag name="ColGloss">Блеск</Tag>
 	<Tag name="TipTerrainGenerate">Генерирует новый ландшафт из функций шума, используя все параметры ниже.</Tag>
-	<Tag name="InputDetailPreset">Уст. по умол.</Tag>
+	<Tag name="SC_Surreal">Surreal</Tag>
 	<Tag name="TipRainSnowInt">Интенсивность дождь/снег (напр. 1000)</Tag>
 	<Tag name="TrackLength">Длина</Tag>
 	<Tag name="BumpWavelen">Ухаб: длина волны</Tag>
@@ -1132,7 +1134,7 @@
 	<Tag name="Hint-3">Гравий</Tag>
 	<Tag name="RplAll">Все</Tag>
 	<Tag name="LANG_ES">Español</Tag>
-	<Tag name="GameVersion">2.4</Tag>
+	<Tag name="GameVersion">2.5</Tag>
 	<Tag name="PageURL">http://code.google.com/p/vdrift-ogre/</Tag>
 	<Tag name="LANG_EN">English</Tag>
 	<Tag name="LANG_DE">Deutsch</Tag>
