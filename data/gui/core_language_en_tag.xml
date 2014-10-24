@@ -258,6 +258,8 @@
 	<Tag name="SC_Mars">Mars</Tag>
 	<Tag name="SC_Crystals">Crystals</Tag>
 	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
+	<Tag name="SC_Toxic">Toxic</Tag>
+	<Tag name="SC_Surreal">Surreal</Tag>
 	<Tag name="SC_Alien">Alien</Tag>
 	<Tag name="SC_Other">Other</Tag>
 	<Tag name="SC_Stone">Stone</Tag>
