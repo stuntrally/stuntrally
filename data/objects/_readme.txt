@@ -183,3 +183,8 @@ Windmill
 Author: ahedov
 License: CC-BY-SA
 http://www.blendswap.com/blends/view/69174
+
+
+---- structure* and ring*
+Author: rubberduck
+License: CC0
