@@ -60,9 +60,13 @@ void App::createScene()
 
 	Ogre::Timer ti;
 
-	//  data xml
+
+	//  data xmls
 	pGame->ReloadSimData();  // need surfaces
-	scn->data->Load(&pGame->surf_map);
+	
+	///  _Tool_ check champs and challs  ............
+	bool check = 0;
+	scn->data->Load(&pGame->surf_map, check);
 	scn->sc->pFluidsXml = scn->data->fluids;
 
 	//  championships.xml, progress.xml

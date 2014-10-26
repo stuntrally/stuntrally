@@ -736,7 +736,7 @@
 	</challenge>-->
 
    <challenge name="Acid Lakes Survival" ver="1" difficulty="4" type="5"
-         descr="Drive 4 laps around the acid lakes and finish it in one piece. There is no time limit, but beware: The acid will damage your car.">
+         descr="Drive 4 laps around Acid Lakes and finish it without taking too much damage from acid. No time limit.">
       <sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
       <car names="S8" />
       <hud trkGhost="0" chkBeam="1" chkArrow="1" minimap="1" />
@@ -746,25 +746,36 @@
       </tracks>
    </challenge>
 
-   <challenge name="Lava Pools Survival" ver="1" difficulty="5" type="5"
-         descr="Drive 4 laps on the challenging lava pools track and finish it in one piece. There is no time limit, but beware: The lava will damage your car.">
-      <sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
-      <car names="SZ" />
-      <hud trkGhost="0" chkBeam="1" chkArrow="1" minimap="1" />
-      <pass avgPos="30" prizes="2" />
-      <tracks>
-         <t name="Vlc12-LavaPools" laps="4"/>
-      </tracks>
-   </challenge>
-
-   <challenge name="Craters Survival" ver="1" difficulty="6" type="5"
-         descr="Drive 3 laps on the challenging crater track and finish it in one piece. There is no time limit, but beware: The extreme heat will damage your car.">
+   <challenge name="Craters Survival" ver="1" difficulty="5" type="5"
+         descr="Drive 2 laps around Craters, without damaging the car too much from the heat (orange). No time limit. Stay on road.">
       <sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
       <car names="FN" />
       <hud trkGhost="0" chkBeam="1" chkArrow="1" minimap="1" />
       <pass avgPos="30" prizes="2" />
       <tracks>
-         <t name="Vlc9-Craters" laps="3"/>
+         <t name="Vlc9-Craters" laps="2"/>
+      </tracks>
+   </challenge>
+
+   <challenge name="Lava Pools Survival" ver="1" difficulty="6" type="5"
+         descr="Drive 3 laps near Lava Pools and finish it in one piece. Need to jump quite well without much damage. No time limit.">
+      <sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
+      <car names="SZ" />
+      <hud trkGhost="0" chkBeam="1" chkArrow="1" minimap="1" />
+      <pass avgPos="30" prizes="2" />
+      <tracks>
+         <t name="Vlc12-LavaPools" laps="3"/>
+      </tracks>
+   </challenge>
+
+   <challenge name="Crystal Moon Survival" ver="1" difficulty="6" type="5"
+         descr="Drive 2 laps on the challenging Crystal Moon track. Stay on road, avoid crystals and damage. No time limit.">
+      <sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
+      <car names="XZ" />
+      <hud trkGhost="0" chkBeam="1" chkArrow="1" minimap="1" />
+      <pass avgPos="30" prizes="2" />
+      <tracks>
+         <t name="Cry1-CrystalMoon" laps="2"/>
       </tracks>
    </challenge>
 
