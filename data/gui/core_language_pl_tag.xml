@@ -202,7 +202,7 @@
 	<Tag name="Brush_Size">Rozmiar</Tag>
 	<Tag name="HDRParam2">Jasność</Tag>
 	<Tag name="HDRParam3">Ziarnistość</Tag>
-	<Tag name="SC_Toxic">Toxic</Tag>
+	<Tag name="SC_Toxic">Toksyczna</Tag>
 	<Tag name="HDRParam1">Ekspozycja</Tag>
 	<Tag name="TipRoadDist2">Dodatkowa odległość od drogi.</Tag>
 	<Tag name="InputBrushFilter">1,2 - częstotliwość Filtra (rozmiar kernel)</Tag>
@@ -1030,7 +1030,7 @@
 	<Tag name="EnterSave">Enter - zapisz</Tag>
 	<Tag name="ColGloss">Połysk</Tag>
 	<Tag name="TipTerrainGenerate">Generuje nowy teren z funkcji szumu, używając wszystkich parametrów poniżej.</Tag>
-	<Tag name="SC_Surreal">Surreal</Tag>
+	<Tag name="SC_Surreal">Surrealna</Tag>
 	<Tag name="TipRainSnowInt">Intensywność deszczu/śniegu (np. 1000)</Tag>
 	<Tag name="TrackLength">Długość</Tag>
 	<Tag name="BumpWavelen">Wyboje: Częstość</Tag>
