@@ -442,13 +442,14 @@ material rock_n5_alien
 }
 
 
-//  alien contructions
+//  alien contructions  -----------------------------
 material metal_01
 {
     parent base
 	diffuseMap metal_01.jpg
 	normalMap metal_01_norm.jpg
 	specMap metal_01_spec.jpg
+    reflMap metal_01_spec.jpg
 	specMap_rgb true
 	ambient 1.0 1.0 1.0
 	diffuse 0.7 0.7 0.7
@@ -456,7 +457,6 @@ material metal_01
 	env_map true
     fresnel false
     refl_amount 0.05
-    reflMap metal_01_spec.jpg
 }
 
 material metal_02
@@ -465,6 +465,7 @@ material metal_02
 	diffuseMap metal_02.jpg
 	normalMap metal_02_norm.jpg
 	specMap metal_02_spec.jpg
+    reflMap metal_02_spec.jpg
 	specMap_rgb true
 	ambient 1.0 1.0 1.0
 	diffuse 0.7 0.7 0.7
@@ -472,7 +473,6 @@ material metal_02
 	env_map true
     fresnel false
     refl_amount 0.05
-    reflMap metal_02_spec.jpg
 }
 
 material metal_02_dark
@@ -544,6 +544,7 @@ material metal_06
 	diffuseMap metal_06.jpg
 	normalMap metal_06_norm.jpg
 	specMap metal_06_spec.jpg
+    reflMap metal_06.jpg
 	specMap_rgb true
 	ambient 1.0 1.0 1.0
 	diffuse 0.7 0.7 0.7
@@ -551,7 +552,6 @@ material metal_06
 	env_map true
     fresnel false
     refl_amount 0.05
-    reflMap metal_06.jpg
 }
 
 material metal_07
@@ -580,7 +580,7 @@ material metal_08
 
 material metal_details
 {
-    parent base
+	parent base
 	diffuseMap metal_details.png
 	normalMap metal_details_norm.jpg
 	specMap metal_details_spec.jpg
@@ -588,4 +588,126 @@ material metal_details
 	ambient 1.0 1.0 1.0
 	diffuse 0.7 0.7 0.7
 	specular 1 1 1 16
+}
+
+
+//  signs  ------------------------------------------
+material sign
+{
+	parent base
+	diffuseMap signs.jpg
+	normalMap metal_01_norm.jpg
+	specMap metal_01_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.4 0.4 0.4 20
+	env_map true
+	fresnel false
+	refl_amount 0.05
+}
+
+material sign_post
+{
+	parent base
+	diffuseMap sign_back.png
+	normalMap metal_01_norm.jpg
+	specMap metal_01_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.4 0.4 0.4 20
+	env_map true
+	fresnel false
+	refl_amount 0.05
+}
+
+//  structure*
+material structure
+{
+	parent base
+	diffuseMap metal_01.jpg
+	normalMap metal_01_norm.jpg
+	specMap metal_01_spec.jpg
+	reflMap metal_01_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.1
+	diffuse 0.7 0.7 0.8
+	specular 0.5 0.5 0.7 12
+	env_map true
+	fresnel false
+	refl_amount 0.05
+}
+
+//  ring*
+material ring_blue
+{
+	parent base
+	diffuseMap metal_01_light.jpg
+	normalMap metal_01_norm.jpg
+	specMap metal_01_spec.jpg
+	reflMap metal_01_spec.jpg
+	specMap_rgb true
+	ambient 0.5 1.0 1.6
+	diffuse 0.4 0.7 0.9
+	specular 0.3 0.3 0.4 6
+	env_map true
+	fresnel false
+	refl_amount 0.05
+}
+material ring_blue_stick
+{
+	parent ring_blue
+	diffuseMap metal_02_light.jpg
+	normalMap metal_02_norm.jpg
+	specMap metal_02_spec.jpg
+	reflMap metal_02_spec.jpg
+}
+
+material ring_red
+{
+	parent base
+	diffuseMap metal_01.jpg
+	normalMap metal_01_norm.jpg
+	specMap metal_01_spec.jpg
+	reflMap metal_01_spec.jpg
+	specMap_rgb true
+	ambient 2 1.0 0.8
+	diffuse 1.4 0.6 0.5
+	specular 0.5 0.3 0.3 6
+	env_map true
+	fresnel false
+	refl_amount 0.05
+}
+material ring_red_stick
+{
+	parent ring_red
+	diffuseMap metal_02.jpg
+	normalMap metal_02_norm.jpg
+	specMap metal_02_spec.jpg
+	reflMap metal_02_spec.jpg
+}
+
+material ring_lime
+{
+	parent base
+	diffuseMap metal_01.jpg
+	normalMap metal_01_norm.jpg
+	specMap metal_01_spec.jpg
+	reflMap metal_01_spec.jpg
+	specMap_rgb true
+	ambient 0.9 1.5 0.2
+	diffuse 0.9 1 0.1
+	specular 0.27 0.5 0.1 6
+	env_map true
+	fresnel false
+	refl_amount 0.05
+}
+material ring_lime_stick
+{
+	parent ring_lime
+	diffuseMap metal_02.jpg
+	normalMap metal_02_norm.jpg
+	specMap metal_02_spec.jpg
+	reflMap metal_02_spec.jpg
 }
