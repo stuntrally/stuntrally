@@ -5,6 +5,7 @@
 #include "tinyxml.h"
 #include "tinyxml2.h"
 using namespace tinyxml2;
+using namespace std;
 
 
 ChampTrack::ChampTrack() :
@@ -67,22 +68,38 @@ bool ChampsXml::LoadXml(std::string file, TracksXml* trks, bool check)
 	
 	///  get champs total time (sum tracks times)
 	if (trks)
-	for (int c=0; c < all.size(); ++c)
-	{
-		Champ& ch = all[c];
-		float allTime = 0.f;
-		for (int i=0; i < ch.trks.size(); ++i)
+	{	std::map<string, int> trkUse;
+	
+		for (int c=0; c < all.size(); ++c)
 		{
-			const ChampTrack& trk = ch.trks[i];
-			//if (check)
+			Champ& ch = all[c];
+			float allTime = 0.f;
+			for (int i=0; i < ch.trks.size(); ++i)
+			{
+				const ChampTrack& trk = ch.trks[i];
+				//if (check)
 				if (!trks->trkmap[trk.name])
-					LogO("!! Champ: "+ch.name+" not found track: "+trk.name);
+					LogO("!!  Champ: "+ch.name+" not found track: "+trk.name);
+				++trkUse[trk.name];
 
-			float time = trks->times[trk.name] * trk.laps;
-			allTime += time;  // sum trk time, total champ time
+				float time = trks->times[trk.name] * trk.laps;
+				allTime += time;  // sum trk time, total champ time
+			}
+			ch.time = allTime;
 		}
-		ch.time = allTime;
-	}
+		if (check)
+		{
+			std::stringstream ss;  int n=0,i;
+			for (i=0; i < trks->trks.size(); ++i)
+			{
+				const TrackInfo& ti = trks->trks[i];
+				const string& s = ti.name;
+				if (!ti.test && !ti.testC && !trkUse[s])
+				{	ss << s << "\n";  ++n;  }
+			}
+			if (n>0)
+				LogO("))) !! Tracks not in any championship:\n"+ss.str());
+	}	}
 	return true;
 }
 

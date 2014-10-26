@@ -209,9 +209,10 @@ bool TracksXml::LoadIni(string file, bool check)
 					--n;
 			}
 			
+			int d = nn-n;
 			ss << right << setw(2) << i << "  " << setw(13) << left << *it << "  "
-			   << setw(2) << c << (c==1 ? "!!" : c==2 ? "! " : "  ")
-			   << " " << setw(3) << nn-n << endl;
+			   << setw(3) << c << (c==1 ? "!!" : c==2 ? "! " : "  ") << " "
+			   << setw(4) << d << (d>35?"!":"") << (d>50?"!":"") << (d>90?"!":"") << endl;
 			
 		}
 		LogO(ss.str());
