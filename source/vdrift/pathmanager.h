@@ -5,6 +5,7 @@
 #include <string>
 #include <list>
 
+typedef std::list <std::string> strlist;
 
 class PATHMANAGER
 {
@@ -46,7 +47,7 @@ public:
 	static std::string Screenshots() {     return user_data + "/screenshots";  }
 
 	//  list files
-	static bool DirList(std::string dirpath, std::list <std::string> & dirlist, std::string extension="");
+	static bool DirList(std::string dirpath, strlist& dirlist, std::string extension="");
 
 	static bool FileExists(const std::string & filename);
 

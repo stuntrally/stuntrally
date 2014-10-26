@@ -236,7 +236,7 @@ bool PATHMANAGER::CreateDir(const std::string& path, std::ostream & error_output
 
 
 // TODO: implement with boost::filesystem
-bool PATHMANAGER::DirList(std::string dirpath, std::list <std::string> & dirlist, std::string extension)
+bool PATHMANAGER::DirList(std::string dirpath, strlist& dirlist, std::string extension)
 {
 //------Folder listing code for POSIX
 #ifndef _WIN32

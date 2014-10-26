@@ -18,6 +18,7 @@ Chall::Chall()  //  defaults
 	,name("none"), descr("none")
 	,sim_mode("normal")
 	,damage_type(2), boost_type(1), flip_type(2), rewind_type(1)
+	,dmg_lap(40)
 	,minimap(1), chk_arr(0), chk_beam(0), trk_ghost(1)
 	,abs(0),tcs(0)
 	,avgPoints(-1.f), totalTime(-1.f), avgPos(-1.f)  // pass
@@ -30,7 +31,7 @@ ChallXml::ChallXml()
 
 //  Load challenges
 //-------------------------------------------------------------------------------------------------------------
-bool ChallXml::LoadXml(std::string file, TracksXml* trks)
+bool ChallXml::LoadXml(std::string file, TracksXml* trks, bool check)
 {
 	XMLDocument doc;
 	XMLError e = doc.LoadFile(file.c_str());
@@ -62,6 +63,8 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks)
 			a = eSim->Attribute("tcs");		if (a)  c.tcs = s2i(a) > 0;
 
 			a = eSim->Attribute("damage");	if (a)  c.damage_type = s2i(a);  // range chk..
+			a = eSim->Attribute("dmg_lap");	if (a)  c.dmg_lap = s2i(a);
+			
 			a = eSim->Attribute("boost");	if (a)  c.boost_type = s2i(a);
 			a = eSim->Attribute("flip");	if (a)  c.flip_type = s2i(a);
 			a = eSim->Attribute("rewind");	if (a)  c.rewind_type = s2i(a);

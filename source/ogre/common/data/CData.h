@@ -22,7 +22,7 @@ public:
 	CData();
 	~CData();
 	
-	void Load(std::map <std::string, int>* surf_map=0);  //
+	void Load(std::map <std::string, int>* surf_map=0, bool check=false);  //
 
 	FluidsXml* fluids;	//  fluids params for car sim
 	BltObjects* objs;	//  collisions.xml, for vegetation models

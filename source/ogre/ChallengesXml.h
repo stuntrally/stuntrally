@@ -42,6 +42,7 @@ public:
 	//  if empty or -1 then allows any
 	std::string sim_mode;
 	int damage_type, boost_type, flip_type, rewind_type;
+	int dmg_lap;  // dmg repair on lap
 
 	//  hud
 	bool minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if false
@@ -66,7 +67,7 @@ class ChallXml
 public:
 	std::vector<Chall> all;
 	
-	bool LoadXml(std::string file, class TracksXml* times);
+	bool LoadXml(std::string file, class TracksXml* times, bool check);
 	ChallXml();
 };
 

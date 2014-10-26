@@ -21,7 +21,7 @@ ChampsXml::ChampsXml()
 
 //  Load champs
 //--------------------------------------------------------------------------------------------------------------------------------------
-bool ChampsXml::LoadXml(std::string file, TracksXml* trks)
+bool ChampsXml::LoadXml(std::string file, TracksXml* trks, bool check)
 {
 	XMLDocument doc;
 	XMLError e = doc.LoadFile(file.c_str());
@@ -50,7 +50,7 @@ bool ChampsXml::LoadXml(std::string file, TracksXml* trks)
 		XMLElement* eTr = eCh->FirstChildElement("t");
 		while (eTr)
 		{
-			ChampTrack t;	//name="S4-Hills" laps="1" factor="0.1"
+			ChampTrack t;	//name="Sav4-Hills" laps="1" factor="0.1"
 			a = eTr->Attribute("name");		if (a)  t.name = std::string(a);
 			a = eTr->Attribute("laps");		if (a)  t.laps = s2i(a);
 			//a = eTr->Attribute("factor");	if (a)  t.factor = s2r(a);
@@ -74,6 +74,9 @@ bool ChampsXml::LoadXml(std::string file, TracksXml* trks)
 		for (int i=0; i < ch.trks.size(); ++i)
 		{
 			const ChampTrack& trk = ch.trks[i];
+			//if (check)
+				if (!trks->trkmap[trk.name])
+					LogO("!! Champ: "+ch.name+" not found track: "+trk.name);
 
 			float time = trks->times[trk.name] * trk.laps;
 			allTime += time;  // sum trk time, total champ time

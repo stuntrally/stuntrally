@@ -18,7 +18,8 @@
 			//  damage:  "0" None   "1" Reduced           "2" Normal (default)
 			//  boost:   "0" Never  "1" FuelLap (default) "2" FuelTime  "3" Always
 			//  flip:    "0" Never  "1" FuelBoost         "2" Always (default)
-			//  rewind:  "0" None   "1" Always (default)  "2" FuelLap   "3" FuelTime  todo..
+			//  rewind:  "0" None   "1" Always (default)  todo: "2" FuelLap   "3" FuelTime
+			//  dmg_lap:  0..100  damage repair on lap, default 40
 			//  car change:  "1" allow  "0" deny (default) picked once at start
 			//  abs,tcs:  "1" allow  "0" deny (default)  todo: autogbox
 
@@ -438,7 +439,7 @@
 			<t name="For13-Castle"   passPoints="10" />
 		</tracks>
 	</challenge>
-
+   
 
 <!--  Chase  (fast)  -->
 <!--========================================================================================================================-->
@@ -734,6 +735,39 @@
 		</tracks>
 	</challenge>-->
 
+   <challenge name="Acid Lakes Survival" ver="1" difficulty="4" type="5"
+         descr="Drive 4 laps around the acid lakes and finish it in one piece. There is no time limit, but beware: The acid will damage your car.">
+      <sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
+      <car names="S8" />
+      <hud trkGhost="0" chkBeam="1" chkArrow="1" minimap="1" />
+      <pass avgPos="30" prizes="2" />
+      <tracks>
+         <t name="Tox2-AcidLakes" laps="4"/>
+      </tracks>
+   </challenge>
+
+   <challenge name="Lava Pools Survival" ver="1" difficulty="5" type="5"
+         descr="Drive 4 laps on the challenging lava pools track and finish it in one piece. There is no time limit, but beware: The lava will damage your car.">
+      <sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
+      <car names="SZ" />
+      <hud trkGhost="0" chkBeam="1" chkArrow="1" minimap="1" />
+      <pass avgPos="30" prizes="2" />
+      <tracks>
+         <t name="Vlc12-LavaPools" laps="4"/>
+      </tracks>
+   </challenge>
+
+   <challenge name="Craters Survival" ver="1" difficulty="6" type="5"
+         descr="Drive 3 laps on the challenging crater track and finish it in one piece. There is no time limit, but beware: The extreme heat will damage your car.">
+      <sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
+      <car names="FN" />
+      <hud trkGhost="0" chkBeam="1" chkArrow="1" minimap="1" />
+      <pass avgPos="30" prizes="2" />
+      <tracks>
+         <t name="Vlc9-Craters" laps="3"/>
+      </tracks>
+   </challenge>
+
 
 <!--  Special  spaceships, sphere, etc  -->
 <!--========================================================================================================================-->
@@ -877,8 +911,8 @@
 	</challenge>
 	
 	<challenge name="Test 3 all" ver="1" difficulty="1" type="7" 
-			descr="Test Challenge 3, all pass conditions.">
-		<sim mode="normal" damage="2" boost="0" flip="2" rewind="1" />
+			descr="Test Challenge 3, all pass conditions. No rewind.">
+		<sim mode="normal" damage="2" boost="0" flip="2" rewind="0" />
 		<cartype names="Gravel" />
 		<pass totalTime="25" avgPoints="10" avgPos="4" />
 		<tracks>
@@ -890,10 +924,10 @@
 
 	<challenge name="Test 4 laps, hud" ver="1" difficulty="2" type="7" 
 			descr="Test Challenge 4, 4 laps.
-			Allow checkpoint arrow,beam and abs,tcs. Deny track's ghost.">
+			Allow checkpoint arrow,beam and abs,tcs. Deny track's ghost. No damage repair.">
 		<cartype names="Extreme" />
-			<sim abs="1" tcs="1" />
-			<hud chkArrow="1" chkBeam="1" trkGhost="0" />
+		<sim abs="1" tcs="1" dmg_lap="0" />
+		<hud chkArrow="1" chkBeam="1" trkGhost="0" />
 		<pass avgPos="5" />
 		<tracks>
 			<t name="TestC4-ow"  laps="4" passPoints="5.0" />

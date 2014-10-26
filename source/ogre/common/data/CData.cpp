@@ -15,7 +15,7 @@ using Ogre::String;
 #endif
 
 
-void CData::Load(std::map <std::string, int>* surf_map)
+void CData::Load(std::map <std::string, int>* surf_map, bool check)
 {
 	fluids->LoadXml(PATHMANAGER::Data() + "/materials2/fluids.xml", /**/surf_map);
 	LogO(String("**** Loaded Fluids: ") + toStr(fluids->fls.size()));
@@ -24,7 +24,7 @@ void CData::Load(std::map <std::string, int>* surf_map)
 	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs->colsMap.size()));
 	
 	std::string path = PATHMANAGER::GameConfigDir();
-	tracks->LoadIni(path + "/tracks.ini");
+	tracks->LoadIni(path + "/tracks.ini", check);
 	cars->LoadXml(path + "/cars.xml");
 
 	#ifdef SR_EDITOR
@@ -35,10 +35,10 @@ void CData::Load(std::map <std::string, int>* surf_map)
 			"  grass: " + toStr(pre->gr.size()) +
 			"  veget: " + toStr(pre->veg.size()) );
 	#else
-		champs->LoadXml(path + "/championships.xml", tracks);
+		champs->LoadXml(path + "/championships.xml", tracks, check);
 		LogO(String("**** Loaded Championships: ") + toStr(champs->all.size()));
 
-		chall->LoadXml(path + "/challenges.xml", tracks);
+		chall->LoadXml(path + "/challenges.xml", tracks, check);
 		LogO(String("**** Loaded Challenges: ") + toStr(chall->all.size()));
 	#endif
 }

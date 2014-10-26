@@ -4,12 +4,11 @@
 #include "tinyxml.h"
 #include "tinyxml2.h"
 #include <set>
+#include "../vdrift/pathmanager.h"
 
 using namespace std;
 using namespace tinyxml2;
 using Ogre::uchar;
-
-//#define LOG_SCN  // log and count all sceneries
 
 
 Date s2dt(const char* a)
@@ -106,7 +105,7 @@ bool UserXml::SaveXml(string file)
 //--------------------------------------------------------------------------------------------------------------------------------------
 //  Load Ini
 //--------------------------------------------------------------------------------------------------------------------------------------
-bool TracksXml::LoadIni(string file)
+bool TracksXml::LoadIni(string file, bool check)
 {
 	//  clear
 	trks.clear();  trkmap.clear();  times.clear();
@@ -116,13 +115,12 @@ bool TracksXml::LoadIni(string file)
 	float time=0.f;
 	TrackInfo t;
 
-	#ifdef LOG_SCN
-	set<string> scns;
+	set<string> scns;  //stats
 	map<string, int> scn_trks;
-	#endif
 
 	ifstream fs(file.c_str());
 	if (fs.fail())  return false;
+	
 	while (fs.good())
 	{
 		fs.getline(s,254);
@@ -146,10 +144,11 @@ bool TracksXml::LoadIni(string file)
 			t.scenery = scenery;
 			t.author = author;
 			t.ver = int(t.crtver*10.f);
-			#ifdef LOG_SCN
-			scns.insert(scenery);
-			++scn_trks[scenery];
-			#endif
+			
+			if (check)
+			{	scns.insert(scenery);
+				++scn_trks[scenery];
+			}
 
 			string shrt;  //-  name short  (without prefix)
 			size_t p = t.name.find("-");
@@ -185,36 +184,62 @@ bool TracksXml::LoadIni(string file)
 		}
 	}
 	
-	///  *  Log sceneries with stats  *
-	#ifdef LOG_SCN
-	i=1;  int c,n, nn = trks.size()-1;
-
-	stringstream ss;  ss << fixed;
-	ss << "Sceneries:\n""Num - Name - tracks count - last track in it (num trks back)""\n";
-
-	for (set<string>::iterator it = scns.begin(); it != scns.end(); ++it,++i)
+	///  *  checks and  Log sceneries with stats  *
+	//--------------------------------------------------------------
+	if (check)
 	{
-		c = scn_trks[*it];
-		
-		//  find last trk in this scn
-		n = nn;
-		bool srch = true;
-		while (srch && n >= 0)
+		LogO("))) Checking: tracks.ini");
+		i=1;  int c,n, nn = trks.size()-1;
+
+		stringstream ss;  ss << fixed;
+		ss << "))) Sceneries stats:\n""Num - Name - tracks count - last track in it (num trks back)""\n";
+
+		for (set<string>::iterator it = scns.begin(); it != scns.end(); ++it,++i)
 		{
-			if (trks[n].scenery == *it)
-				srch = false;
-			else
-				--n;
+			c = scn_trks[*it];
+			
+			//  find last trk in this scn
+			n = nn;
+			bool srch = true;
+			while (srch && n >= 0)
+			{
+				if (trks[n].scenery == *it)
+					srch = false;
+				else
+					--n;
+			}
+			
+			ss << right << setw(2) << i << "  " << setw(13) << left << *it << "  "
+			   << setw(2) << c << (c==1 ? "!!" : c==2 ? "! " : "  ")
+			   << " " << setw(3) << nn-n << endl;
+			
 		}
+		LogO(ss.str());
 		
-		ss << right << setw(2) << i << "  " << setw(13) << left << *it << "  "
-		   << setw(2) << c << (c==1 ? "!!" : c==2 ? "! " : "  ")
-		   << " " << setw(3) << nn-n << endl;
+		LogO("))) Checking for all tracks ghosts");
+		nn = trks.size();
+		for (i=0; i < nn; ++i)
+		{
+			const TrackInfo& ti = trks[i];
+			const string& s = ti.name;
+			if (!ti.test && !ti.testC)
+			if (!PATHMANAGER::FileExists(PATHMANAGER::TrkGhosts()+"/"+ s + ".gho"))
+				LogO("! Missing trk gho for: " + s);
+		}
+		LogO("");
 		
+		//  not in tracks.ini
+		strlist li;
+		PATHMANAGER::DirList(PATHMANAGER::Tracks(), li);
+		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
+		{
+			string s = *i;
+			if (trkmap[s]==0)
+				LogO("!! Track not in ini: " + s);
+		}
+		LogO("");
 	}
-	LogO(ss.str());
-	#endif
-	
+		
 	return true;
 }
 
