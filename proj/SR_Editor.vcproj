@@ -434,6 +434,10 @@
 				RelativePath="..\data\materials\water.shaderset"
 				>
 			</File>
+			<File
+				RelativePath="..\data\particles\weather.particle"
+				>
+			</File>
 			<Filter
 				Name="scene"
 				>

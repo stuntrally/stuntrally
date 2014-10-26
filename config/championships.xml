@@ -258,7 +258,7 @@
 		<t name="Vlc5-Sad"/>
 		<t name="Mrs1-Mars"/>
 		<t name="Vlc9-Craters"/>
-		<t name="Vlc7-Radioactive"/>
+		<t name="Tox1-Radioactive"/>
 		<t name="Cry1-CrystalMoon"/>
 	</champ>
 
@@ -475,6 +475,7 @@
 		<t name="Aus4-Snake"/>
 		<t name="Aus5-TopTwist"/>
 		<t name="Aus6-Cannon"/>
+		<t name="Aus7-MiningCity"/>
 	</champ>
 	<champ name="Greece" ver="1" difficulty="3" type="6" 
 			descr="Greece championship.">
@@ -515,7 +516,6 @@
 		<t name="Vlc4-Spikeland"/>
 		<t name="Vlc5-Sad"/>
 		<t name="Vlc6-Crematoria"/>
-		<t name="Vlc7-Radioactive"/>
 		<t name="Vlc8-Uncertain"/>
 		<t name="Vlc9-Craters"/>
 		<t name="Vlc10-MtSulphur"/>

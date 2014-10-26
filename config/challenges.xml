@@ -580,7 +580,7 @@
 
 	<challenge name="Stunt Sway" ver="2" difficulty="4" type="4" 
 			descr="Smooth, very banked roads.">
-		<car names="S8|TC6|FM" />
+		<car names="S8|TC6|FN" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Wnt9-IceFrenzy"   passPoints="9" />
@@ -718,7 +718,7 @@
 		<car names="ES|S1|S8|N1" />
 		<pass avgPoints="14" />
 		<tracks>
-			<t name="Vlc7-Radioactive"  passPoints="9" />
+			<t name="Tox1-Radioactive"  passPoints="9" />
 			<t name="Can5-Obstacles"    passPoints="9" />
 			<t name="Wnt14-DangerRoad"  passPoints="9" />
 		</tracks>
