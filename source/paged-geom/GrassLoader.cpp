@@ -117,13 +117,12 @@ namespace Forests {
 			layer->waveCount += ellapsed * (layer->animSpeed * Math::PI);
 			if (layer->waveCount > Math::PI*2) layer->waveCount -= Math::PI*2;
 
-			sh::Factory::getInstance ().setSharedParameter ("grassTimer", sh::makeProperty<sh::FloatValue> (new sh::FloatValue(layer->waveCount)));
-			sh::Factory::getInstance ().setSharedParameter ("grassFrequency", sh::makeProperty<sh::FloatValue> (new sh::FloatValue(layer->animFreq)));
+			sh::Factory::getInstance ().setSharedParameter("grassTimer", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(layer->waveCount)));
+			sh::Factory::getInstance ().setSharedParameter("grassFrequency", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(layer->animFreq)));
 
 			Vector3 direction = windDir * layer->animMag;
-			sh::Vector4* dir = new sh::Vector4(
-				direction.x, direction.y, direction.z, 0);
-			sh::Factory::getInstance ().setSharedParameter ("grassDirection", sh::makeProperty<sh::Vector4> (dir));
+			sh::Vector4* dir = new sh::Vector4(direction.x, direction.y, direction.z, 0);
+			sh::Factory::getInstance ().setSharedParameter("grassDirection", sh::makeProperty<sh::Vector4>(dir));
 		}
 	}
 
@@ -1118,7 +1117,7 @@ namespace Forests {
 				float farViewDist = (float)geom->getDetailLevels().front()->getFarRange();
 				float fadeRange = farViewDist / 1.2247449f;
 
-				sh::Factory::getInstance ().setSharedParameter ("grassFadeRange", sh::makeProperty<sh::FloatValue> (new sh::FloatValue(fadeRange)));
+				sh::Factory::getInstance().setSharedParameter("grassFadeRange", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(fadeRange)));
 
 
 				//Note: 1.2247449 ~= sqrt(1.5), which is necessary since the far view distance is measured from the centers

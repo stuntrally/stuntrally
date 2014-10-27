@@ -435,7 +435,7 @@ ImpostorTexture::ImpostorTexture(ImpostorPage *group, Entity *entity, bool onlyT
 		//m->setProperty("scene_blend", sh::makeProperty<sh::StringValue>(new sh::StringValue("add")));
 		//todo:^?
 		if (group->getBlendMode() == ALPHA_REJECT_IMPOSTOR) {
-			m->setProperty("alpha_rejection", sh::makeProperty ("greater_equal " + Ogre::StringConverter::toString(128)));
+			m->setProperty("alpha_rejection", sh::makeProperty("greater_equal " + Ogre::StringConverter::toString(128)));
 			//p->setAlphaRejectSettings(CMPF_GREATER_EQUAL, 64);
 		} else if (group->getBlendMode() == ALPHA_BLEND_IMPOSTOR) {
 			m->setProperty("scene_blend", sh::makeProperty<sh::StringValue>(new sh::StringValue("src_alpha one_minus_src_alpha")));
