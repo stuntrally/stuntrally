@@ -247,7 +247,11 @@ void SplineRoad::BuildSeg(
 			//  ---~~~====~~~---
 			Real brdg = min(1.f, std::abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
 			Real h = max(0.f, 1.f - std::abs(vP.y - yTer) / 30.f);  // for grass dens tex
-			Vector4 c(brdg,fPipe, 1.f, h);
+			
+			bool onP = mP[seg].onPipe > 0;
+			float pp = fPipe * 0.5f + (onP ? 0.5f : 0.f);  // put onP in pipe
+			
+			Vector4 c(brdg, pp, 1.f, h);
 			Vector2 vtc(tcw * 1.f /**2p..*/, tcL);
 
 
