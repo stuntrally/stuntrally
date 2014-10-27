@@ -4,7 +4,7 @@
 			//  here you put display name, description text
 			//  increase ver if you changed challenge (no need if track count changed)
 
-			//  type is for putting it into gui diffuculty tabs
+			//  type is for putting it into gui tabs
 			//    0 Rally  1 Scenery  2 Endurance  3 Chase  4 Stunts  5 Extreme  6 Special  7 Test
 
 			//  difficulty is for text displayed in list
@@ -93,34 +93,23 @@
 	</challenge>
 	
 	See the Test challenges at end, to get known with various options and test in game.
+	Don't repeat default values. E.g. chkBeam="0" no need to put it, put only if you need "1".
 -->
-
-
-	<!--	unused tracks
-			<t name="Sav2-Frenzy"    
-			<t name="For3-Snail"     
-			<t name="Isl2-Sandy"        
-
-			<t name="Sav9-Short"      
-			<t name="Jng19-ShortFun"    
-			<t name="Des3-Passage"         
-			<t name="For14-Maze"     
-
-			<t name="Sav10-PipeCurl"   
-			<t name="Aus2-PipeCoil"  
-			<t name="Des13-Winding"  
-	
-			<t name="Fin2-Serpent"
-			<t name="Vlc8-Uncertain"
-			<t name="Wnt15-SkiJump"
-			<t name="Vlc10-MtSulphur"
-
-			<t name="Cry1-CrystalMoon"
-	-->
 
 
 <!--  Rally  short,easy  -->
 <!--========================================================================================================================-->
+
+	<challenge name="Easy rounds" ver="1" difficulty="2" type="0" 
+			descr="Very simple round tracks.">
+		<cartype names="Gravel|Terrain" />
+		<pass avgPoints="11" />
+		<tracks>
+			<t name="For3-Snail"   passPoints="9" />
+			<t name="Isl2-Sandy"   passPoints="9" />
+			<t name="Fin2-Serpent" passPoints="9" />
+		</tracks>
+	</challenge>
 
 	<challenge name="Slippery Shorts" ver="1" difficulty="2" type="0" 
 			descr="Short tracks on wet, very slippery road.">
@@ -166,6 +155,39 @@
 			<t name="For11-Dawn"     passPoints="9" />
 			<t name="Mos2-Mouse"     passPoints="9" />
 			<t name="Jng10-Spiral"   passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Short pipes" ver="1" difficulty="2" type="0" 
+			descr="Short easy tracks with some pipe fragments.">
+		<cartype names="Racing|Terrain" />
+		<pass avgPoints="11" />
+		<tracks>
+			<t name="Wnt8-PipeCross"  passPoints="9" />
+			<t name="Sav9-Short"      passPoints="10" />
+			<t name="Jng19-ShortFun"  passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Winding pipes" ver="1" difficulty="3" type="0" 
+			descr="Tracks fully in pipes, winding but quite easy. Don't drive too fast in small pipes.">
+		<cartype names="Gravel|Terrain" />
+		<pass avgPoints="11" />
+		<tracks>
+			<t name="Sav10-PipeCurl"  passPoints="9" />
+			<t name="Des13-Winding"   passPoints="9" />
+			<t name="Aus2-PipeCoil"   passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Lonely jumps" ver="1" difficulty="3" type="0" 
+			descr="Tracks with single or strange jumps.">
+		<cartype names="Gravel|Terrain" />
+		<pass avgPoints="11" />
+		<tracks>
+			<t name="Des3-Passage"       passPoints="9" />
+			<t name="Des16-AsphaltJumps" passPoints="9" />
+			<t name="Wnt15-SkiJump"      passPoints="9" />
 		</tracks>
 	</challenge>
 
@@ -357,6 +379,7 @@
 			<t name="Can3-Vast"      passPoints="8" />
 			<t name="Aus6-Cannon"    passPoints="8" />
 			<t name="Wnt6-SnowyEights"  passPoints="8" />
+			<t name="Mud4-Taiga"     passPoints="8" />
 		</tracks>
 	</challenge>
 
@@ -402,6 +425,46 @@
 		</tracks>
 	</challenge>
 
+	<challenge name="Winter Chill" ver="1" difficulty="4" type="2" 
+			descr="Icy winter tracks with solid ice surfaces, snowy road, wet asphalt, later with snowstorm and very winding, banked parts.">
+		<cartype names="Gravel|Terrain" />
+		<pass avgPoints="12" />
+		<tracks>
+			<t name="Wnt16-IcyRiver"     passPoints="10" />
+			<t name="Wnt17-FrozenGarden" passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Frenzy Maze" ver="1" difficulty="4" type="2" 
+			descr="Frenzy (curly) tracks, mosly flat but with many direction changes. Require a lot of steering.">
+		<cartype names="Gravel|Racing" />
+		<pass avgPoints="12" />
+		<tracks>
+			<t name="Sav2-Frenzy"  passPoints="10" />
+			<t name="For14-Maze"   passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Sway Roads" ver="4" difficulty="3" type="4" 
+			descr="Very banked, winding roads. Changing tilt (roll) frequently.">
+		<cartype names="Gravel|Terrain" />
+		<pass avgPoints="12" />
+		<tracks>
+			<t name="Wnt9-IceFrenzy"   passPoints="9" />
+			<t name="Can7-RedWavy"     passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Asphalt Cities" ver="4" difficulty="3" type="4" 
+			descr="City tracks with mostly asphalt road.">
+		<cartype names="Gravel|Racing" />
+		<pass avgPoints="12" />
+		<tracks>
+			<t name="Aus7-MiningCity"  passPoints="9" />
+			<t name="Oth1-FogCity"     passPoints="9" />
+		</tracks>
+	</challenge>
+
 	<challenge name="Turtle Slow" ver="1" difficulty="2" type="2" 
 			descr="Few tracks driven with the slowest truck. Patience needed.">
 		<sim boost="0" />
@@ -418,15 +481,15 @@
 	<challenge name="Slowest trip" ver="1" difficulty="2" type="2"
 			descr="The slowest car drive on some easy tracks." >
 		<car names="OT" />
-		<hud minimap="1" chkArrow="1" chkBeam="1" trkGhost="1" />
+		<hud chkArrow="1" chkBeam="1" />
 		<sim boost="0" flip="0" />
 		<pass avgPoints="14" />
 		<tracks>
-			<t name="Atm1-Autumn" laps="1" passPoints="12.0" />
-			<t name="Mud2-Bumps"  laps="1" passPoints="14.0" />
-			<t name="Isl4-Sunset" laps="1" passPoints="11.5" />
-			<t name="Jng1-Curly"  laps="1" passPoints="9.0" />
-			<t name="Jng12-Fog"   laps="1" passPoints="15.0" />
+			<t name="Atm1-Autumn" passPoints="12.0" />
+			<t name="Mud2-Bumps"  passPoints="14.0" />
+			<t name="Isl4-Sunset" passPoints="11.5" />
+			<t name="Jng1-Curly"  passPoints="9.0" />
+			<t name="Jng12-Fog"   passPoints="15.0" />
 		</tracks>
 	</challenge>
 
@@ -511,8 +574,7 @@
 
 	<challenge name="Twisted Bridges" ver="1" difficulty="4" type="3" 
 			descr="Banked and twisted bridged roads. You get fast cars, but the key is to drive not too fast.">
-		<!--<cartype names="Asphalt" />-->
-		<car names="XZ|SZ" />
+		<car names="XZ|SZ|360" />
 		<pass avgPos="2" />
 		<tracks>
 			<t name="Isl6-Flooded"  laps="2" passPos="2" />
@@ -570,7 +632,6 @@
 
 	<challenge name="Stunt Long" ver="1" difficulty="4" type="4" 
 			descr="Long stunt filled tracks.">
-		<!--<cartype names="Gravel" />-->
 		<car names="XZ|SZ" />
 		<pass avgPoints="11" />
 		<tracks>
@@ -579,13 +640,11 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Stunt Sway" ver="2" difficulty="4" type="4" 
-			descr="Smooth, very banked roads.">
+	<challenge name="Banked Drive" ver="1" difficulty="3" type="4" 
+			descr="Smooth but very banked roads.">
 		<car names="S8|TC6|FN" />
 		<pass avgPoints="11" />
 		<tracks>
-			<t name="Wnt9-IceFrenzy"   passPoints="9" />
-			<t name="Can4-Sway"        passPoints="9" />
 			<t name="Sav13-Hole"       passPoints="9" />
 			<t name="For17-BadCamber"  passPoints="9" />
 		</tracks>
@@ -593,12 +652,23 @@
 
 	<challenge name="Half Pipes" ver="1" difficulty="4" type="4" 
 			descr="Curly tracks with a lot of half pipe roads.">
-		<car names="ES|S1|S8|N1" />
+		<car names="ES|S1|S8|N1|FN" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Aus4-Snake"       passPoints="9" />
 			<t name="Jng22-Knotted"    passPoints="9" />
 			<t name="Grc6-Halfpipes"   passPoints="8" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Stunt Mix" ver="1" difficulty="4" type="4" 
+			descr="Fun filled stunt tracks.">
+		<cartype names="Gravel" />
+		<car names="XZ|SZ" />
+		<pass avgPoints="12" />
+		<tracks>
+			<t name="Des18-Shuttle"   passPoints="9" />
+			<t name="Isl14-Ocean"     passPoints="9" />
 		</tracks>
 	</challenge>
 
@@ -614,7 +684,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Loop Mania" ver="1" difficulty="6" type="4" 
+	<challenge name="Loop Mania" ver="1" difficulty="5" type="4" 
 			descr="The most looped tracks, few loops in each, difficult. Pay attention to car damage. Don't drive too fast in loops.">
 		<car names="ES|S1|N1|FN" />
 		<pass avgPoints="14" factor="2" />
@@ -626,7 +696,7 @@
 	</challenge>
 
 
-	<challenge name="Pipe Master" ver="1" difficulty="6" type="4" 
+	<challenge name="Pipe Master" ver="1" difficulty="5" type="4" 
 			descr="Most difficult all-pipe tracks. Long and winding.">
 		<sim boost="2" />
 		<car names="ES|S8|UV" />
@@ -637,7 +707,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Stunt Master" ver="1" difficulty="7" type="4" 
+	<challenge name="Stunt Master" ver="1" difficulty="6" type="4" 
 			descr="The most difficult, long and twisted stunt tracks. Pay attention to car damage. Avoid hitting walls.">
 		<car names="ES|S1|S8" />
 		<pass avgPoints="11" />
@@ -649,11 +719,21 @@
 
 	<challenge name="Stunt Madness" ver="1" difficulty="7" type="4"
 			descr="Ultra difficult stunt tracks. Long, extremely curly and twisted. Filled with all stunt elements and obstacles. Caution: be sure you already finished Stunt Master before even trying this one. Knowing these tracks is also key.">
-		<car names="ES|S8|S1|FN" />
+		<car names="ES|S1|S8|FN" />
 		<pass avgPoints="13" />
 		<tracks>
 			<t name="Grc7-Spider"	passPoints="10.5" />
 			<t name="Mos5-Factory"	passPoints="10.5" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Exhausting stunts" ver="1" difficulty="7" type="4"
+			descr="Very long and exhausting stunt tracks. Twisted bridges first and lots of on pipe driving later.">
+		<car names="ES|S1|S8|FN" />
+		<pass avgPoints="12" />
+		<tracks>
+			<t name="Atm8-Ultima"      passPoints="10" />
+			<t name="Atm7-Industrial"  passPoints="9" />
 		</tracks>
 	</challenge>
 
@@ -673,15 +753,24 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Dark Chase" ver="1" difficulty="3" type="5" 
-			descr="The darkest tracks.">
+	<challenge name="Dark Chase" ver="1" difficulty="2" type="5" 
+			descr="Short dark tracks with 2 laps.">
 		<cartype names="Gravel|Racing" />
 		<pass avgPoints="12" />
 		<tracks>
 			<t name="Vlc1-Dark"     laps="2" passPoints="9.5" />
 			<t name="Uni1-Magic"    laps="2" passPoints="9.5" />
-			<t name="Atm4-Scary"    passPoints="9.5" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Dark Habit" ver="1" difficulty="3" type="5" 
+			descr="The darkest tracks, slightly depressing but not difficult.">
+		<cartype names="Gravel|Racing" />
+		<pass avgPoints="12" />
+		<tracks>
+			<t name="Blk1-Darkness" passPoints="9.5" />
 			<t name="Vlc5-Sad"      passPoints="9.5" />
+			<t name="Atm4-Scary"    passPoints="9.5" />
 		</tracks>
 	</challenge>
 
@@ -712,7 +801,50 @@
 			<t name="Vlc6-Crematoria" passPoints="11" />
 		</tracks>
 	</challenge>
+
+	<challenge name="Space Trip" ver="1" difficulty="6" type="5" 
+			descr="Extreme cars in interesting places outside earth.">
+		<car names="TU|UV|TW|ES" />
+		<pass avgPoints="12" />
+		<tracks>
+			<t name="Spc1-Minerals"   passPoints="9" />
+			<t name="Aln1-AlienBase"  passPoints="9" />
+			<t name="Cry2-MagicFog"   passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Alien Stunts" ver="1" difficulty="5" type="5" 
+			descr=".">
+		<car names="ES|S1|S8|FN|XZ|SZ" />
+		<pass avgPoints="12" />
+		<tracks>
+			<t name="Mrs4-Platforms"  passPoints="9" />
+			<t name="Aln2-Freefall"   passPoints="9" />
+		</tracks>
+	</challenge>
 	
+	<challenge name="Unusual Places" ver="1" difficulty="5" type="5" 
+			descr="Quite unusual places for racing: on active volcano ground and near volcanic acid. Stay on road to not damage car.">
+		<sim boost="2" />
+		<car names="ES|S8|S1|FN|SZ" />
+		<pass avgPoints="12" />
+		<tracks>
+			<t name="Tox2-AcidLakes"  passPoints="9" />
+			<t name="Vlc12-LavaPools" passPoints="9" />
+		</tracks>
+	</challenge>
+
+	<challenge name="Surreal Worlds" ver="1" difficulty="5" type="5" 
+			descr="Very unrealistic, pretty and sometimes shocking environments.">
+		<sim boost="2" />
+		<car names="ES|S8|S1|FN|SZ" />
+		<pass avgPoints="12" />
+		<tracks>
+			<t name="Sur1-Surreal"    passPoints="9" />
+			<t name="Sur2-GreenStar"  passPoints="9" />
+		</tracks>
+	</challenge>
+
 	<challenge name="Really Dangerous" ver="1" difficulty="7" type="5" 
 			descr="The very dangerous tracks. Driving on pipe, or with obstacles. When on pipe, drive slowly and stay on top, go lower only in turns.">
 		<sim boost="2" />
@@ -725,62 +857,55 @@
 		</tracks>
 	</challenge>
 
-	<!--<challenge name="Extreme cars" ver="1" difficulty="5" type="5" 
-			descr="Ice, sandstorm and heavy rain, this is definitely a challenge. Remember, on ice, push throttle only occasionally.">
-		<cartype names="Extreme" />
-		<pass avgPoints="14" factor="2" />
+
+	
+	<!--  Survival  -->
+	<challenge name="Acid Lakes Survival" ver="1" difficulty="4" type="5"
+			descr="Drive 4 laps around Acid Lakes and finish it without taking too much damage from acid. No time limit.">
+		<sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
+		<car names="S8" />
+		<hud trkGhost="0" chkBeam="1" chkArrow="1" />
+		<pass avgPos="30" prizes="2" />
 		<tracks>
-			<t name="Vlc4-Spikeland"  passPoints="10" />
-			<t name="Vlc9-Craters"    passPoints="9" />
+			<t name="Tox2-AcidLakes" laps="4"/>
 		</tracks>
-	</challenge>-->
+	</challenge>
 
-   <challenge name="Acid Lakes Survival" ver="1" difficulty="4" type="5"
-         descr="Drive 4 laps around Acid Lakes and finish it without taking too much damage from acid. No time limit.">
-      <sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
-      <car names="S8" />
-      <hud trkGhost="0" chkBeam="1" chkArrow="1" minimap="1" />
-      <pass avgPos="30" prizes="2" />
-      <tracks>
-         <t name="Tox2-AcidLakes" laps="4"/>
-      </tracks>
-   </challenge>
+	<challenge name="Craters Survival" ver="1" difficulty="5" type="5"
+			descr="Drive 2 laps around Craters, without damaging the car too much from the heat (orange). No time limit. Stay on road.">
+		<sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
+		<car names="FN" />
+		<hud trkGhost="0" chkBeam="1" chkArrow="1" />
+		<pass avgPos="30" prizes="2" />
+		<tracks>
+			<t name="Vlc9-Craters" laps="2"/>
+		</tracks>
+	</challenge>
 
-   <challenge name="Craters Survival" ver="1" difficulty="5" type="5"
-         descr="Drive 2 laps around Craters, without damaging the car too much from the heat (orange). No time limit. Stay on road.">
-      <sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
-      <car names="FN" />
-      <hud trkGhost="0" chkBeam="1" chkArrow="1" minimap="1" />
-      <pass avgPos="30" prizes="2" />
-      <tracks>
-         <t name="Vlc9-Craters" laps="2"/>
-      </tracks>
-   </challenge>
+	<challenge name="Lava Pools Survival" ver="1" difficulty="6" type="5"
+			descr="Drive 3 laps near Lava Pools and finish it in one piece. Need to jump quite well without much damage. No time limit.">
+		<sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
+		<car names="SZ" />
+		<hud trkGhost="0" chkBeam="1" chkArrow="1" />
+		<pass avgPos="30" prizes="2" />
+		<tracks>
+			<t name="Vlc12-LavaPools" laps="3"/>
+		</tracks>
+	</challenge>
 
-   <challenge name="Lava Pools Survival" ver="1" difficulty="6" type="5"
-         descr="Drive 3 laps near Lava Pools and finish it in one piece. Need to jump quite well without much damage. No time limit.">
-      <sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
-      <car names="SZ" />
-      <hud trkGhost="0" chkBeam="1" chkArrow="1" minimap="1" />
-      <pass avgPos="30" prizes="2" />
-      <tracks>
-         <t name="Vlc12-LavaPools" laps="3"/>
-      </tracks>
-   </challenge>
-
-   <challenge name="Crystal Moon Survival" ver="1" difficulty="6" type="5"
-         descr="Drive 2 laps on the challenging Crystal Moon track. Stay on road, avoid crystals and damage. No time limit.">
-      <sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
-      <car names="XZ" />
-      <hud trkGhost="0" chkBeam="1" chkArrow="1" minimap="1" />
-      <pass avgPos="30" prizes="2" />
-      <tracks>
-         <t name="Cry1-CrystalMoon" laps="2"/>
-      </tracks>
-   </challenge>
+	<challenge name="Crystal Moon Survival" ver="1" difficulty="6" type="5"
+			descr="Drive 2 laps on the challenging Crystal Moon track. Stay on road, avoid crystals and damage. No time limit.">
+		<sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
+		<car names="XZ" />
+		<hud trkGhost="0" chkBeam="1" chkArrow="1" />
+		<pass avgPos="30" prizes="2" />
+		<tracks>
+			<t name="Cry1-CrystalMoon" laps="2"/>
+		</tracks>
+	</challenge>
 
 
-<!--  Special  spaceships, sphere, etc  -->
+	<!--  Special  spaceships, sphere, etc  -->
 <!--========================================================================================================================-->
 
 	<challenge name="Easy spacious chase" ver="1" difficulty="2" type="6" 
@@ -819,6 +944,17 @@
 		</tracks>
 	</challenge>
 
+	<challenge name="Gray day" ver="1" difficulty="3" type="6" 
+			descr="Flight through.">
+		<cartype names="Spaceship" />
+		<pass avgPoints="21" />
+		<tracks>
+			<t name="Stn1-StoneQuarry" passPoints="12" />
+			<t name="Vlc8-Uncertain"   passPoints="12" />
+			<t name="Vlc10-MtSulphur"  passPoints="12" />
+		</tracks>
+	</challenge>
+
 	<challenge name="Narrow space" ver="1" difficulty="3" type="6" 
 			descr="Spaceships in flat, but narrow tracks.">
 		<cartype names="Spaceship" />
@@ -834,7 +970,7 @@
 	</challenge>
 
 	<challenge name="Tight call" ver="1" difficulty="4" type="6" 
-			descr="Mom I don't want a spaceship, I want a car ! This is a disaster waiting to happen. Spaceships in very narrow tracks. Fly extra careful and slow or you'll crash on each turn. V2 is recommended since it's the slowest one.">
+			descr="Mom I don't want a spaceship, I want a car! This is a disaster waiting to happen. Spaceships in very narrow tracks. Fly extra careful and slow or you'll crash on each turn. V2 is recommended since it's the slowest one.">
 		<cartype names="Spaceship" />
 		<pass avgPoints="18" />
 		<tracks>
@@ -872,9 +1008,6 @@
 			<t name="Vlc9-Craters"		passPoints="20" />
 		</tracks>
 	</challenge>
-
-		<!--<t name="Isl9-Web"		passPoints="10" />
-			<t name="Grc7-Spider"	passPoints="10" />-->
 
 	<challenge name="Oh, that's so odd" ver="1" difficulty="4" type="6" 
 			descr="Control the sphere through half pipes. Not easy. Weird.">

@@ -5,11 +5,38 @@
 	5 scenery  6 scenery2  7 test  -->
 <!-- by default:  laps="1"/>-->
 
-	<!--  unused tracks
+<!-- ))) !! Tracks not in any championship excluding scenery:
+		<t name="For3-Snail"/>
+		<t name="Jng7-Hilly"/>
+		<t name="Uni3-Cloud"/>
+		<t name="Mos3-Air"/>
 		<t name="Des13-Winding"/>
 		<t name="Mrs3-Hot"/>
+		<t name="Des16-AsphaltJumps"/>
 		<t name="Wnt15-SkiJump"/>
-	-->
+		<t name="Aus7-MiningCity"/>
+		<t name="Oth1-FogCity"/>
+		<t name="Sur1-Surreal"/>
+		<t name="Tox2-AcidLakes"/>
+		<t name="Cry2-MagicFog"/>
+		<t name="Atm7-Industrial"/>
+		<t name="Des18-Shuttle"/>
+		<t name="Atm8-Ultima"/>
+		<t name="Stn1-StoneQuarry"/>
+		<t name="Spc1-Minerals"/>
+		<t name="Mud4-Taiga"/>
+		<t name="Aln1-AlienBase"/>
+		<t name="Wnt16-IcyRiver"/>
+		<t name="Blk1-Darkness"/>
+		<t name="Aln2-Freefall"/>
+		<t name="Can7-RedWavy"/>
+		<t name="Vlc12-LavaPools"/>
+		<t name="Mrs4-Platforms"/>
+		<t name="Isl14-Ocean"/>
+		<t name="Wnt17-FrozenGarden"/>
+		<t name="Sur2-GreenStar"/>
+-->
+
 
 <!--  Tutorials  -->
 <!--========================================================================================================================-->
@@ -346,6 +373,7 @@
 		<t name="Des15-CityWall"/>
 		<t name="Des16-AsphaltJumps"/>
 		<t name="Des17-NileCity"/>
+		<t name="Des18-Shuttle"/>
 	</champ>
 	<champ name="Jungle" ver="3" difficulty="3" type="5" 
 			descr="Jungle championship. Part 1.">
@@ -410,6 +438,8 @@
 		<t name="Wnt13-MtFog"/>
 		<t name="Wnt14-DangerRoad"/>
 		<t name="Wnt15-SkiJump"/>
+		<t name="Wnt16-IcyRiver"/>
+		<t name="Wnt17-FrozenGarden"/>
 	</champ>
 	<champ name="Forest" ver="1" difficulty="4" type="5" 
 			descr="Forest championship. Part 1.">
@@ -449,6 +479,7 @@
 		<t name="Isl11-StuntIslands"/>
 		<t name="Isl12-Beach"/>
 		<t name="Isl13-Beauty"/>
+		<t name="Isl14-Ocean"/>
 	</champ>
 	
 	
@@ -457,6 +488,7 @@
 			descr="Mud championship.">
 		<t name="Mud2-Bumps"/>
 		<t name="Mud3-Mudlake"/>
+		<t name="Mud4-Taiga"/>
 	</champ>
 	<champ name="Canyon" ver="1" difficulty="2" type="6" 
 			descr="Canyon championship.">
@@ -466,6 +498,7 @@
 		<t name="Can4-Sway"/>
 		<t name="Can5-Obstacles"/>
 		<t name="Can6-Abyss"/>
+		<t name="Can7-RedWavy"/>
 	</champ>
 	<champ name="Australia" ver="1" difficulty="4" type="6" 
 			descr="Australia championship.">
@@ -501,6 +534,8 @@
 		<t name="Atm4-Scary"/>
 		<t name="Atm5-Twister"/>
 		<t name="Atm6-Sunset"/>
+		<t name="Atm7-Industrial"/>
+		<t name="Atm8-Ultima"/>
 	</champ>
 	<champ name="Moss" ver="2" difficulty="2" type="6" 
 			descr="Moss championship.">
@@ -519,6 +554,7 @@
 		<t name="Vlc8-Uncertain"/>
 		<t name="Vlc9-Craters"/>
 		<t name="Vlc10-MtSulphur"/>
+		<t name="Vlc12-LavaPools"/>
 	</champ>
 	<champ name="Unidentified" ver="1" difficulty="4" type="6" 
 			descr="Unidentified championship.">
@@ -534,11 +570,36 @@
 		<t name="Mrs1-Mars"/>
 		<t name="Mrs2-Red"/>
 		<t name="Mrs3-Hot"/>
+		<t name="Mrs4-Platforms"/>
 	</champ>
-	<champ name="Crystals" ver="1" difficulty="3" type="6" 
+	<champ name="Toxic" ver="1" difficulty="3" type="6" 
+			descr="Toxic championship.">
+		<t name="Tox1-Radioactive"/>
+		<t name="Tox2-AcidLakes"/>
+	</champ>
+	<champ name="Crystals" ver="1" difficulty="4" type="6" 
 			descr="Crystals championship.">
 		<t name="Cry1-CrystalMoon"/>
+		<t name="Cry2-MagicFog"/>
 	</champ>
+	<champ name="Surreal" ver="1" difficulty="2" type="6" 
+			descr="Surreal championship.">
+		<t name="Sur1-Surreal"/>
+		<t name="Sur2-GreenStar"/>
+	</champ>
+	<champ name="Alien" ver="1" difficulty="4" type="6" 
+			descr="Alien championship.">
+		<t name="Aln1-AlienBase"/>
+		<t name="Aln2-Freefall"/>
+	</champ>
+	<champ name="Other" ver="1" difficulty="3" type="6" 
+			descr="Single sceneries, championship.">
+		<t name="Oth1-FogCity"/>
+		<t name="Stn1-StoneQuarry"/>
+		<t name="Spc1-Minerals"/>
+		<t name="Blk1-Darkness"/>
+	</champ>
+	
 	
 
 <!--  Test  -->
