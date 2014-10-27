@@ -163,6 +163,13 @@ void CGui::ToolSceneXml()
 		int l = 17-trk.length();  // align
 		for (n=0; n < l; ++n)  trk += " ";
 
+		///  sky clrs
+		string s;
+		s += sc.lAmb.Check("amb");  s += sc.lDiff.Check("dif");  s += sc.lSpec.Check("spc");
+		s += sc.fogClr.Check("fog");  s += sc.fogClr2.Check("fog2");  s += sc.fogClrH.Check("foh");
+		if (!s.empty())
+			LogO("CLR CHK! "+trk+"  "+s);
+		
 		///  terrain
 		#if 0  // used
 		for (n=0; n < sc.td.layers.size(); ++n)
@@ -450,7 +457,59 @@ void CGui::ToolGhostsConv()
 		
 		string fsave = PATHMANAGER::TrkGhosts()+"/"+ track + sRev + ".gho";
 		if (!PATHMANAGER::FileExists(fsave))
-			LogO("MISSING for track: "+track);
+			LogO("!!  Missing for track: "+track);
+	}
+}
+
+///............................................................................................................................
+void CGui::ToolTestTrkGhosts()
+{
+	LogO("ALL tracks ghosts Test ---------");
+	TrackGhost gho;
+	
+	//  foreach track
+	for (int i=0; i < data->tracks->trks.size(); ++i)
+	{	string track = data->tracks->trks[i].name;
+		//if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
+		
+		//  load
+		gho.Clear();
+		string file = PATHMANAGER::TrkGhosts()+"/"+ track + ".gho";
+		if (!PATHMANAGER::FileExists(file))
+		{	LogO("NOT found: "+file);  }
+		else
+		{	LogO("---------  "+track+"  ---------");
+			gho.LoadFile(file);
+			
+			//  test
+			MATHVECTOR<float,3> oldPos;  float oldTime = 0.f;
+			int num = gho.getNumFrames(), jmp = 0;
+			for (int i=0; i < num; ++i)
+			{
+				const TrackFrame& fr = gho.getFrame0(i);
+
+				//  check for sudden pos jumps  (rewind used but not with _Tool_ go back time !)
+				if (i > 10 && i < num-1)  // ignore jumps at start or end
+				{	float dist = (fr.pos - oldPos).MagnitudeSquared();
+					if (dist > 16.f)  //1.f small
+					{	
+						LogO("!Jump at "+CHud::StrTime2(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
+						++jmp;
+				}	}
+				//  check vel at start
+				if (i==50/3)
+				{
+					float dist = (fr.pos - oldPos).Magnitude();
+					float vel = 3.6f * dist / (fr.time - oldTime);
+					bool bad = vel > 30;
+					if (bad)
+						LogO("!Vel at "+CHud::StrTime(fr.time)+" kmh "+fToStr(vel,0) + (bad ? "  BAD":""));
+				}
+				oldPos = fr.pos;  oldTime = fr.time;
+			}
+			if (jmp > 0)
+				LogO("!Jumps: "+toStr(jmp));
+		}
 	}
 }
 

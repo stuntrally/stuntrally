@@ -452,7 +452,7 @@ public:
 	bool isChallGui();  void BackFromChs();
 
 	//  _Tools_
-	void ToolGhosts(),ToolGhostsConv();
+	void ToolGhosts(),ToolGhostsConv(), ToolTestTrkGhosts();
 
 
 	///  multiplayer game

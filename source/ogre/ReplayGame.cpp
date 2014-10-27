@@ -454,6 +454,17 @@ void TrackGhost::Clear()
 	idLast = 0;
 }
 
+//  test
+int TrackGhost::getNumFrames()
+{
+	return (int)frames.size();
+}
+const TrackFrame& TrackGhost::getFrame0(int id)
+{
+	return frames[id];
+}
+
+
 ///  Load
 //-------------------------------------------------------------------------------------------------------------------------
 bool TrackGhost::LoadFile(std::string file)

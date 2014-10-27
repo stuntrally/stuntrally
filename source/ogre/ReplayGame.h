@@ -213,4 +213,8 @@ public:
 //private:
 	std::vector<TrackFrame> frames;
 	int idLast;  // last index from GetFrame
+	
+	//  test only
+	int getNumFrames();
+	const TrackFrame& getFrame0(int id);
 };

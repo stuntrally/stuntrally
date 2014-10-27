@@ -143,8 +143,7 @@ bool TracksXml::LoadIni(string file, bool check)
 			t.name = name;
 			t.scenery = scenery;
 			t.author = author;
-			t.ver = ceil(t.crtver*10.f);
-			LogO(toStr(t.crtver)+" "+toStr(t.ver));
+			t.ver = std::ceil(t.crtver*10.f);
 			
 			if (check)
 			{	scns.insert(scenery);

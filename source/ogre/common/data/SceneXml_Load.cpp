@@ -47,6 +47,19 @@ SColor::SColor(float h1, float s1, float v1, float a1, float n1)
 	:h(h1), s(s1), v(v1), a(a1), n(n1)
 {	}
 
+//  tool check err
+string SColor::Check(string t)
+{
+	string e;
+	if (h > 1.f)  e += " h>1";  if (h < 0.f)  e += " h<0";
+	if (s > 1.f)  e += " s>1";  if (s < 0.f)  e += " s<0";
+	if (v > 3.f)  e += " v>3";  if (v < 0.f)  e += " v<0";
+	if (a > 2.f)  e += " a>2";  if (a < 0.f)  e += " a<0";
+	if (n > 1.f)  e += " n>1";  if (n < 0.f)  e += " n<0";
+	if (!e.empty())  e += "  " + t + "  " + Save();
+	return e;
+}
+
 //  load from old rgb
 void SColor::LoadRGB(Ogre::Vector3 rgb)
 {
@@ -98,7 +111,7 @@ Vector4 SColor::GetRGBA() const
 //  string
 void SColor::Load(const char* ss)
 {
-	a = 1.f;  n = 0.f;
+	h=0.f; s=1.f; v=1.f; a=1.f; n=0.f;
 	int i = sscanf(ss, "%f %f %f %f %f", &h,&s,&v,&a,&n);
 	if (i == 5)
 		return;  // new

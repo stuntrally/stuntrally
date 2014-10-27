@@ -34,6 +34,7 @@ public:
 	//  from string, old  r g b,  r g b a,  or  h s v a n
 	void Load(const char* s);
 	std::string Save() const;
+	std::string Check(std::string t);
 
 	SColor();
 	SColor(float h, float s, float v, float a=1.f, float n=0.f);

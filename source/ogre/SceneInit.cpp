@@ -107,6 +107,12 @@ void App::createScene()
 	exit(0);
 	#endif
 
+	///  _Tool_ test track's ghosts ..............
+	#if 0
+	gui->ToolTestTrkGhosts();
+	exit(0);
+	#endif
+
 	///  _Tool_ presets ..............
 	#if 0
 	gui->ToolPresets();
