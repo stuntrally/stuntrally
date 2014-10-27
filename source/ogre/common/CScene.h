@@ -24,7 +24,7 @@ public:
 
 
 	//  Shadows
-	void changeShadows(), UpdPSSMMaterials();
+	void changeShadows(), UpdShaderParams(), UpdPSSMMaterials();
 	Ogre::Vector4 splitPoints;
 	Ogre::ShadowCameraSetupPtr mPSSMSetup;
 	

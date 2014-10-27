@@ -160,6 +160,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 {
 	Ogre::Timer tm;
 	terrain = 0;
+
 	
 	///  sky
 	Vector3 scl = app->pSet->view_distance*Vector3::UNIT_SCALE;
@@ -171,41 +172,43 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 	sun = app->mSceneMgr->createLight("Sun");
 	sun->setType(Light::LT_DIRECTIONAL);  UpdSun();
 
-	changeShadows();
+
+if (bTer)
+{
+	///.
+	UpdShaderParams();
+	UpdLayerPars();
+	
 
 	///  --------  fill HeightField data --------
-	if (bTer)
+	//Ogre::Timer ti;
+	if (terLoad || bNewHmap)
 	{
-		//Ogre::Timer ti;
-		if (terLoad || bNewHmap)
+		int wx = sc->td.iVertsX, wy = sc->td.iVertsY, wxy = wx * wy;  //wy=wx
+		delete[] sc->td.hfHeight;  sc->td.hfHeight = new float[wxy];
+		const int size = wxy * sizeof(float);
+
+		String name = app->gcom->TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
+
+		//  load from f32 HMap +
 		{
-			int wx = sc->td.iVertsX, wy = sc->td.iVertsY, wxy = wx * wy;  //wy=wx
-			delete[] sc->td.hfHeight;  sc->td.hfHeight = new float[wxy];
-			const int size = wxy * sizeof(float);
-
-			String name = app->gcom->TrkDir() + (bNewHmap ? "heightmap-new.f32" : "heightmap.f32");
-
-			//  load from f32 HMap +
-			{
-				std::ifstream fi;
-				fi.open(name.c_str(), std::ios_base::binary);
-				fi.read((char*)&sc->td.hfHeight[0], size);
-				fi.close();
-			}
+			std::ifstream fi;
+			fi.open(name.c_str(), std::ios_base::binary);
+			fi.read((char*)&sc->td.hfHeight[0], size);
+			fi.close();
 		}
-		CreateBlendTex();  //+
+	}
 
-		//LogO(String("::: Time Hmap: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();  // 4MB ~13ms
-	}
-	///
-	if (bTer)
-	{
-		UpdLayerPars();
-		UpdBlendmap();  //
-	}
+	CreateBlendTex();  //+
+
+	//LogO(String("::: Time Hmap: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();  // 4MB ~13ms
+
+
+	///.
+	UpdBlendmap();
+	
 
 	//  Terrain
-	if (bTer)
 	{
 		if (!mTerrainGlobals)
 			mTerrainGlobals = OGRE_NEW TerrainGlobalOptions();
@@ -233,7 +236,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 			terrain->setVisibilityFlags(RV_Terrain);
 		}
 		mTerrainGroup->freeTemporaryResources();
-
+	}
 
 	//  Horizon  ----------
 	if (app->pSet->horizon)
@@ -255,7 +258,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 
 		mHorizonGroup->loadAllTerrains(true);
 
-		ti = mHorizonGroup->getTerrainIterator();
+		TerrainGroup::TerrainIterator ti = mHorizonGroup->getTerrainIterator();
 		while (ti.hasMoreElements())
 		{
 			Terrain* t = ti.getNext()->instance;
@@ -265,11 +268,13 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 		}
 		mHorizonGroup->freeTemporaryResources();
 	}
-	}
+}//bTer
+
 	
+	///.
 	changeShadows();
 
-	//UpdBlendmap();  //
+	//UpdBlendmap();  //-
 
 	LogO(String("::: Time Terrain: ") + fToStr(tm.getMilliseconds(),0,3) + " ms");
 }

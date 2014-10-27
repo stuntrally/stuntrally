@@ -34,6 +34,58 @@ using namespace Ogre;
 using namespace Forests;
 
 
+
+///  Update shader params
+//---------------------------------------------------------------------------------------------------
+void CScene::UpdShaderParams()
+{
+	//  get settings
+	const SETTINGS* pSet = app->pSet;
+	sh::Factory* mFactory = app->mFactory;
+	
+	sh::Vector4* fade = new sh::Vector4(
+		pSet->shadow_dist,
+		pSet->shadow_dist * 0.6, // fade start
+		0, 0);
+
+	mFactory->setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(fade));
+
+	mFactory->setGlobalSetting("shadows", b2s(pSet->shadow_type > Sh_None));
+	mFactory->setGlobalSetting("shadows_pssm", b2s(pSet->shadow_type > Sh_None /*&& pSet->shadow_count > 1*/));
+	mFactory->setGlobalSetting("shadows_depth", b2s(pSet->shadow_type >= Sh_Depth));
+
+
+	mFactory->setSharedParameter("terrainWorldSize", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(sc->td.fTerWorldSize/*terrain->getWorldSize()*/)));
+
+	mFactory->setSharedParameter("ter_scaleNormal", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(1.f / sc->td.normScale)));
+	mFactory->setSharedParameter("ter_specular_pow", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(sc->td.specularPow)));
+	mFactory->setSharedParameter("ter_specular_pow_em", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(sc->td.specularPowEm)));
+	
+	mFactory->setGlobalSetting("terrain_specular", b2s(pSet->ter_mtr >= 1));
+	mFactory->setGlobalSetting("terrain_normal",   b2s(pSet->ter_mtr >= 2));
+	mFactory->setGlobalSetting("terrain_parallax", b2s(pSet->ter_mtr >= 3));
+
+	mFactory->setGlobalSetting("terrain_triplanarType", toStr(pSet->ter_tripl));
+	mFactory->setGlobalSetting("terrain_triplanarLayer", toStr(sc->td.triplanarLayer1));
+	mFactory->setGlobalSetting("terrain_triplanarLayer2", toStr(sc->td.triplanarLayer2));
+	mFactory->setGlobalSetting("terrain_emissive_specular", b2s(sc->td.emissive));
+
+
+	mFactory->setGlobalSetting("water_reflect", b2s(pSet->water_reflect));
+	mFactory->setGlobalSetting("water_refract", b2s(pSet->water_refract));
+
+
+#if !SR_EDITOR
+	mFactory->setGlobalSetting("soft_particles", b2s(pSet->all_effects && pSet->softparticles));
+	mFactory->setGlobalSetting("mrt_output", b2s(app->NeedMRTBuffer()));
+	mFactory->setGlobalSetting("debug_blend", b2s(false));
+#else
+	mFactory->setGlobalSetting("debug_blend", b2s(app->gui->bDebugBlend));
+#endif
+
+}
+
+
 ///  Shadows config
 //---------------------------------------------------------------------------------------------------
 void CScene::changeShadows()
@@ -57,26 +109,17 @@ void CScene::changeShadows()
 
 	sh::Factory* mFactory = app->mFactory;
 	SceneManager* mSceneMgr = app->mSceneMgr;
-	
-	mFactory->setSharedParameter("shadowFar_fadeStart", sh::makeProperty<sh::Vector4>(fade));
 
 	if (terrain)
-	{
-		mFactory->setSharedParameter("terrainWorldSize", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(terrain->getWorldSize())));
 		mFactory->setTextureAlias("TerrainLightMap", terrain->getLightmap()->getName());
-	}
-	mFactory->setSharedParameter("ter_scaleNormal", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(1.f / sc->td.normScale)));
-	mFactory->setSharedParameter("ter_specular_pow", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(sc->td.specularPow)));
-	mFactory->setSharedParameter("ter_specular_pow_em", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(sc->td.specularPowEm)));
 
 		
 	// disable 4 shadow textures (does not work because no texcoord's left in shader)
 	if (num == 4)  num = 3;
 
 
-	if (!enabled)  {
-		mSceneMgr->setShadowTechnique(SHADOWTYPE_NONE);  /*return;*/ //
-	}
+	if (!enabled)
+		mSceneMgr->setShadowTechnique(SHADOWTYPE_NONE);
 	else
 	{
 		// General scene setup
@@ -131,32 +174,7 @@ void CScene::changeShadows()
 	mSceneMgr->setShadowColour(Ogre::ColourValue(0,0,0,1));
 
 
-	mFactory->setGlobalSetting("shadows", b2s(pSet->shadow_type > Sh_None));
-	mFactory->setGlobalSetting("shadows_pssm", b2s(pSet->shadow_type > Sh_None /*&& pSet->shadow_count > 1*/));
-	mFactory->setGlobalSetting("shadows_depth", b2s(pSet->shadow_type >= Sh_Depth));
-	
-	mFactory->setGlobalSetting("terrain_specular", b2s(pSet->ter_mtr >= 1));
-	mFactory->setGlobalSetting("terrain_normal",   b2s(pSet->ter_mtr >= 2));
-	mFactory->setGlobalSetting("terrain_parallax", b2s(pSet->ter_mtr >= 3));
-
-	mFactory->setGlobalSetting("terrain_triplanarType", toStr(pSet->ter_tripl));
-	mFactory->setGlobalSetting("terrain_triplanarLayer", toStr(sc->td.triplanarLayer1));
-	mFactory->setGlobalSetting("terrain_triplanarLayer2", toStr(sc->td.triplanarLayer2));
-	mFactory->setGlobalSetting("terrain_emissive_specular", b2s(sc->td.emissive));
-
-	mFactory->setGlobalSetting("water_reflect", b2s(pSet->water_reflect));
-	mFactory->setGlobalSetting("water_refract", b2s(pSet->water_refract));
-
-
-#if !SR_EDITOR
-	mFactory->setGlobalSetting("soft_particles", b2s(pSet->all_effects && pSet->softparticles));
-	mFactory->setGlobalSetting("mrt_output", b2s(app->NeedMRTBuffer()));
-	mFactory->setGlobalSetting("debug_blend", b2s(false));
-#else
-	mFactory->setGlobalSetting("debug_blend", b2s(app->gui->bDebugBlend));
-#endif
-
-	#if 0  /// TEST overlays
+#if 0  /// TEST overlays
 	//  add overlay elements to show shadow or terrain maps
 	OverlayManager& mgr = OverlayManager::getSingleton();
 	Overlay* overlay = mgr.getByName("DebugOverlay");
@@ -204,7 +222,7 @@ void CScene::changeShadows()
 		overlay->add2D(debugPanel);
 		overlay->show();
 	}
-	#endif
+#endif
 	
 	UpdPSSMMaterials();
 
