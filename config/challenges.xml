@@ -169,7 +169,7 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Winding pipes" ver="1" difficulty="3" type="0" 
+	<challenge name="Winding pipes" ver="1" difficulty="2" type="0" 
 			descr="Tracks fully in pipes, winding but quite easy. Don't drive too fast in small pipes.">
 		<cartype names="Gravel|Terrain" />
 		<pass avgPoints="11" />
@@ -457,7 +457,7 @@
 
 	<challenge name="Asphalt Cities" ver="4" difficulty="3" type="4" 
 			descr="City tracks with mostly asphalt road.">
-		<cartype names="Gravel|Racing" />
+		<cartype names="Asphalt|Racing" />
 		<pass avgPoints="12" />
 		<tracks>
 			<t name="Aus7-MiningCity"  passPoints="9" />
@@ -788,6 +788,18 @@
 		</tracks>
 	</challenge>
 
+	<challenge name="Space Trip" ver="1" difficulty="4" type="5" 
+			descr="Extreme cars in interesting places outside earth.">
+		<car names="UV|TU|TW|ES" />
+		<hud chkBeam="1" chkArrow="1" />
+		<pass avgPoints="10" />
+		<tracks>
+			<t name="Spc1-Minerals"   passPoints="9" />
+			<t name="Aln1-AlienBase"  passPoints="9" />
+			<t name="Cry2-MagicFog"   passPoints="7" />
+		</tracks>
+	</challenge>
+
 
 	<challenge name="Outer Stunts" ver="1" difficulty="6" type="5" 
 			descr="Great, very fast stunts on other planets. Need to use the rechargable boost to be faster.">
@@ -802,48 +814,39 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Space Trip" ver="1" difficulty="6" type="5" 
-			descr="Extreme cars in interesting places outside earth.">
-		<car names="TU|UV|TW|ES" />
-		<pass avgPoints="12" />
-		<tracks>
-			<t name="Spc1-Minerals"   passPoints="9" />
-			<t name="Aln1-AlienBase"  passPoints="9" />
-			<t name="Cry2-MagicFog"   passPoints="9" />
-		</tracks>
-	</challenge>
-
 	<challenge name="Alien Stunts" ver="1" difficulty="5" type="5" 
-			descr=".">
-		<car names="ES|S1|S8|FN|XZ|SZ" />
+			descr="The new outside earth stunt tracks. Continuation of Outer Stunts.">
+		<car names="ES|S1|S8|XZ|SZ" />
 		<pass avgPoints="12" />
 		<tracks>
 			<t name="Mrs4-Platforms"  passPoints="9" />
 			<t name="Aln2-Freefall"   passPoints="9" />
 		</tracks>
 	</challenge>
+
 	
-	<challenge name="Unusual Places" ver="1" difficulty="5" type="5" 
-			descr="Quite unusual places for racing: on active volcano ground and near volcanic acid. Stay on road to not damage car.">
+	<challenge name="Unusual Places" ver="1" difficulty="3" type="5" 
+			descr="Quite unusual places for racing: on active volcano ground and near volcanic acid. Stay on road to not damage car. Use boost to be faster on straights.">
 		<sim boost="2" />
 		<car names="ES|S8|S1|FN|SZ" />
-		<pass avgPoints="12" />
+		<pass avgPoints="11" />
 		<tracks>
-			<t name="Tox2-AcidLakes"  passPoints="9" />
-			<t name="Vlc12-LavaPools" passPoints="9" />
+			<t name="Tox2-AcidLakes"  laps="2" passPoints="8" />
+			<t name="Vlc12-LavaPools" laps="2" passPoints="8" />
 		</tracks>
 	</challenge>
 
-	<challenge name="Surreal Worlds" ver="1" difficulty="5" type="5" 
+	<challenge name="Surreal Worlds" ver="1" difficulty="4" type="5" 
 			descr="Very unrealistic, pretty and sometimes shocking environments.">
 		<sim boost="2" />
 		<car names="ES|S8|S1|FN|SZ" />
-		<pass avgPoints="12" />
+		<pass avgPoints="11" />
 		<tracks>
 			<t name="Sur1-Surreal"    passPoints="9" />
-			<t name="Sur2-GreenStar"  passPoints="9" />
+			<t name="Sur2-GreenStar"  passPoints="7" />
 		</tracks>
 	</challenge>
+
 
 	<challenge name="Really Dangerous" ver="1" difficulty="7" type="5" 
 			descr="The very dangerous tracks. Driving on pipe, or with obstacles. When on pipe, drive slowly and stay on top, go lower only in turns.">
@@ -945,13 +948,14 @@
 	</challenge>
 
 	<challenge name="Gray day" ver="1" difficulty="3" type="6" 
-			descr="Flight through.">
+			descr="Fly fast through few gray, sad looking tracks.">
 		<cartype names="Spaceship" />
-		<pass avgPoints="21" />
+		<hud chkArrow="1" chkBeam="1" />
+		<pass avgPoints="25" factor="2" />
 		<tracks>
-			<t name="Stn1-StoneQuarry" passPoints="12" />
-			<t name="Vlc8-Uncertain"   passPoints="12" />
-			<t name="Vlc10-MtSulphur"  passPoints="12" />
+			<t name="Stn1-StoneQuarry" passPoints="13" />
+			<t name="Vlc8-Uncertain"   passPoints="22" />
+			<t name="Vlc10-MtSulphur"  passPoints="26" />
 		</tracks>
 	</challenge>
 

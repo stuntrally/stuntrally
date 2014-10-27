@@ -107,7 +107,6 @@ void App::Ch_NewGame()
 float App::GetCarTimeMul(const string& car, const string& sim_mode)
 {
 	//  car factor (time mul, for less power)
-	//  times.xml has ES or S1 best lap time from normal sim
 	float carMul = 1.f;
 	int id = data->cars->carmap[car];
 	if (id > 0)

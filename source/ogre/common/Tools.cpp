@@ -288,7 +288,7 @@ void CGui::ToolSceneXml()
 //--------  Game Tools  --------
 
 ///............................................................................................................................
-///  _Tool_ ghosts times
+///  _Tool_ ghosts times (user, to check times and final place)
 ///............................................................................................................................
 void CGui::ToolGhosts()
 {
@@ -326,7 +326,7 @@ void CGui::ToolGhosts()
 		}
 		if (timeES==tMax)  timeES=0.f;
 		if (timeBest==tMax)  timeBest=0.f;
-		//  times.xml
+		//  T= from tracks.ini
 		float timeTrk = data->tracks->times[trk];// + 2;
 
 		//float timeB = timeTrk * 1.1f;  // champs factor mostly 0.1
@@ -336,7 +336,7 @@ void CGui::ToolGhosts()
 
 		///  write
 	#if 0
-		//  format directly like times.xml
+		//  format trk times (old)
 		ostringstream s;
 		s << "\t<track name=\""+trk+"\"";
 		for (int i=0; i < 18-trk.length(); ++i)
@@ -461,6 +461,7 @@ void CGui::ToolGhostsConv()
 	}
 }
 
+///  _Tool_ check tracks ghosts
 ///............................................................................................................................
 void CGui::ToolTestTrkGhosts()
 {

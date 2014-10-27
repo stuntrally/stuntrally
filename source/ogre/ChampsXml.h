@@ -24,7 +24,7 @@ public:
 	int ver;  // ver, if changed reset progress..
 	float length;  // stats to display
 	int type;  // tutorial, champ easy, normal etc
-	float time;  // total computed (sum all tracks from times.xml)
+	float time;  // total, computed (sum of all tracks)
 
 	std::vector<ChampTrack> trks;
 	Champ();
