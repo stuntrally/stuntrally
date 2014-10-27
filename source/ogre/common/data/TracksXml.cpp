@@ -30,7 +30,7 @@ TrackInfo::TrackInfo()
 	,objects(0), fluids(0), bumps(0)
 	,jumps(0), loops(0), pipes(0)
 	,banked(0), frenzy(0), longn(0)
-	,diff(0), rating(0), obstacles(0)
+	,diff(0), rating(0), obstacles(0), sum(0)
 	,nn(0), test(0), testC(0), vdrift(0)
 {	}
 
@@ -149,6 +149,9 @@ bool TracksXml::LoadIni(string file, bool check)
 			{	scns.insert(scenery);
 				++scn_trks[scenery];
 			}
+			//  sigma rating
+			t.sum = t.objects+ t.obstacles+  t.fluids+ t.bumps+
+				 t.jumps+ t.loops+ t.pipes+  t.banked+ t.frenzy+  t.longn/3;
 
 			string shrt;  //-  name short  (without prefix)
 			size_t p = t.name.find("-");
@@ -196,24 +199,18 @@ bool TracksXml::LoadIni(string file, bool check)
 
 		for (set<string>::iterator it = scns.begin(); it != scns.end(); ++it,++i)
 		{
-			c = scn_trks[*it];
-			
 			//  find last trk in this scn
-			n = nn;
-			bool srch = true;
+			n = nn;  bool srch = true;
 			while (srch && n >= 0)
 			{
 				if (trks[n].scenery == *it)
 					srch = false;
-				else
-					--n;
+				else  --n;
 			}
-			
-			int d = nn-n;
+			int d = nn-n;  c = scn_trks[*it];
 			ss << right << setw(2) << i << "  " << setw(13) << left << *it << "  "
 			   << setw(3) << c << (c==1 ? "!!" : c==2 ? "! " : "  ") << " "
 			   << setw(4) << d << (d>35?"!":"") << (d>50?"!":"") << (d>90?"!":"") << endl;
-			
 		}
 		LogO(ss.str());
 		

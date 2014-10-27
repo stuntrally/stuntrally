@@ -61,6 +61,7 @@ bool TrkSort(const TrkL& t1, const TrkL& t2)
 			else if (TrkL::idSort==15){  if (t1.ti->banked   != t2.ti->banked)    return t1.ti->banked   < t2.ti->banked;    }
 			else if (TrkL::idSort==16){  if (t1.ti->frenzy   != t2.ti->frenzy)    return t1.ti->frenzy   < t2.ti->frenzy;    }
 			else if (TrkL::idSort==17){  if (t1.ti->longn    != t2.ti->longn)     return t1.ti->longn    < t2.ti->longn;     }
+			//else if (TrkL::idSort==18){  if (t1.ti->sum      != t2.ti->sum)       return t1.ti->sum      < t2.ti->sum;       }
 		}else
 		if (TrkL::idSort == 3)  // n
 			if (t1.ti->n != t2.ti->n)  return t1.ti->n < t2.ti->n;

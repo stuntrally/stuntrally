@@ -123,6 +123,7 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	#define toS(clr,v)  (v > 0) ? (String(clr)+"  "+toStr(v)) : " "
 	li->setSubItemNameAt(6,l, toS(clrsDiff[ti->diff], ti->diff));
 	li->setSubItemNameAt(7,l, toS(clrsRating[ti->rating], ti->rating));
+	
 	//todo: rateuser drivenlaps
 	li->setSubItemNameAt(8,l, toS("#D070A0",ti->objects));
 	li->setSubItemNameAt(9,l, toS("#C09060",ti->obstacles));
@@ -134,6 +135,7 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	li->setSubItemNameAt(15,l,toS("#C0C0C0",ti->banked));
 	li->setSubItemNameAt(16,l,toS("#C080FF",ti->frenzy));
 	li->setSubItemNameAt(17,l,toS(clrsLong[ti->longn], ti->longn));
+	//li->setSubItemNameAt(18,l,clrsDiff[std::min(8, 5*ti->sum/10)]+" "+toStr(ti->sum));
 }
 
 
@@ -206,6 +208,7 @@ void CGuiCom::GuiInitTrack()
 	li->addColumn("#C0C0C0""b", colTrk[c++]);   //  banked
 	li->addColumn("#C080FF""f", colTrk[c++]);   //  frenzy
 	li->addColumn("#FFA0A0""l", colTrk[c++]);	// longn
+	//li->addColumn("#9060FF""E", colTrk[c++]);	// sigma
 	li->addColumn(" ", colTrk[c++]);
 	
 	//  columns, filters  ---

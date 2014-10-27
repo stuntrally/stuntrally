@@ -31,7 +31,7 @@ public:
 	//  track characteristics  (char)
 	int fluids,bumps, jumps,loops,pipes;
 	int	banked,frenzy,longn, objects,obstacles;
-	int diff, rating;
+	int diff, rating, sum;
 
 	int nn;  // number got from name eg. for D15-.. it is 15
 	bool test,testC;  // starts with Test.. or TestC..
