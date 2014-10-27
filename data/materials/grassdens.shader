@@ -31,6 +31,12 @@ SH_BEGIN_PROGRAM
 
 	shInput(float2, uv)
 
+	shSampler2D(samHMap)
+	shSampler2D(samAng)
+	shSampler2D(samRoad)
+
+	shUniform(float, terrainWorldSize)  @shSharedParameter(terrainWorldSize)
+
 	//  blendmap params for 4 layers
 	shUniform(float4, Hmin)   @shUniformProperty4f(Hmin, Hmin)
 	shUniform(float4, Hmax)   @shUniformProperty4f(Hmax, Hmax)
@@ -49,11 +55,6 @@ SH_BEGIN_PROGRAM
 	//  road fit
 	shUniform(float2, Rofs)   @shUniformProperty2f(Rofs, Rofs)
 	shUniform(float4, Rpow)   @shUniformProperty4f(Rpow, Rpow)
-	shUniform(float, terrainWorldSize)  @shSharedParameter(terrainWorldSize)
-
-	shSampler2D(samHMap)
-	shSampler2D(samAng)
-	shSampler2D(samRoad)
 
 SH_START_PROGRAM
 {

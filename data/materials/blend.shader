@@ -31,6 +31,11 @@ SH_BEGIN_PROGRAM
 
 	shInput(float2, uv)
 
+	shSampler2D(samHMap)
+	shSampler2D(samAng)
+
+	shUniform(float, terrainWorldSize)  @shSharedParameter(terrainWorldSize)
+
 	//  blendmap params for 4 layers
 	shUniform(float4, Hmin)   @shUniformProperty4f(Hmin, Hmin)
 	shUniform(float4, Hmax)   @shUniformProperty4f(Hmax, Hmax)
@@ -55,11 +60,6 @@ SH_BEGIN_PROGRAM
 	shUniform(float2, Noct2)   @shUniformProperty2f(Noct2,  Noct2)
 	shUniform(float2, Npers2)  @shUniformProperty2f(Npers2, Npers2)
 	shUniform(float2, Npow2)   @shUniformProperty2f(Npow2,  Npow2)
-
-	shUniform(float, terrainWorldSize)  @shSharedParameter(terrainWorldSize)
-
-	shSampler2D(samHMap)
-	shSampler2D(samAng)
 
 SH_START_PROGRAM
 {

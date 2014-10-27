@@ -350,8 +350,8 @@
 
 
 #if TERRAIN_LIGHT_MAP
-		shSampler2D(terrainLightMap)
 		shUniform(float, terrainWorldSize)   @shSharedParameter(terrainWorldSize)
+		shSampler2D(terrainLightMap)
 	#if TERRAIN_LIGHT_MAP_TOGGLEABLE
 		shUniform(float, enableTerrainLightMap)
 	#endif
