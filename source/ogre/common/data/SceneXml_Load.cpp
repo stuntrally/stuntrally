@@ -120,7 +120,7 @@ void SColor::Load(const char* ss)
 
 string SColor::Save() const
 {
-	string ss = fToStr(h,3,5)+" "+fToStr(s,3,5)+" "+fToStr(v,3,5)+" "+fToStr(std::min(1.f,a),3,5)+" "+fToStr(n,3,5);
+	string ss = fToStr(h,3,5)+" "+fToStr(s,3,5)+" "+fToStr(v,3,5)+" "+fToStr(std::min(3.f,a),3,5)+" "+fToStr(n,3,5);
 	return ss;
 }
 

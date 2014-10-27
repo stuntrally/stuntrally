@@ -311,7 +311,7 @@
         // 	but I don't see how the *7 is supposed to change anything, 
         //	since there is a division by itself just after (see "Force weights to sum to 1.0").
         blend_weights = (blend_weights - 0.5);
-        blend_weights = max(blend_weights, 0);
+        blend_weights = max(blend_weights, 0.0001);
 
         // Force weights to sum to 1.0
         blend_weights /= blend_weights.x + blend_weights.y + blend_weights.z;
