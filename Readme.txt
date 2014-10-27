@@ -46,7 +46,7 @@ Videos:  (gameplay and editor)
 
     Description
 
-The game features 147 tracks in 26 sceneries and 19 cars + 4 vehicles.
+The game features 167 tracks in 34 sceneries and 19 cars + 4 vehicles.
 Game modes include: Single Race, Tutorials, Championships, Challenges,
 Multiplayer and Split Screen. Also Replays and Ghost drive are present.
 
@@ -127,22 +127,22 @@ project's Wiki page [Compiling].
 There is 1 active developer/programmer.
 I'm looking for skilled and motivated people.
 
-Translators
-    If you want to help translating a language,
-    check Wiki page [Localization].
-
-Track creators
-    If you manage to create an interesting track,
-    it could be released in future versions.
+Programmers
+    If you know C++, OGRE or shaders, and could
+    handle some of the [Roadmap] tasks or [Issues].
 
 Testers
     If you are able to build from sources,
     you can test and report bugs or suggestions.
 
-Programmers
-    If you know C++, OGRE or shaders, and could
-    handle some of the [Roadmap] tasks or [Issues].
-
 Artists
     Editing meshes for game, uv unwrap, texturing etc.
     If you can record/edit sounds for games.
+
+Track creators
+    If you manage to create an interesting track,
+    it could be released in future versions.
+
+Translators
+    If you want to help translating a language,
+    check Wiki page [Localization].
