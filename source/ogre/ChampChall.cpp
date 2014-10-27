@@ -369,7 +369,7 @@ void CGui::listStageChng(MyGUI::MultiList2* li, size_t pos)
 	string trk;  bool rev=false;  int all=1;
 	if (isChallGui())
 	{	if (liChalls->getIndexSelected()==ITEM_NONE)  return;
-		int nch = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
+		int nch = *liChalls->getItemDataAt<int>(liChalls->getIndexSelected())-1;
 		if (nch >= data->chall->all.size())  {  LogO("Error chall sel > size.");  return;  }
 
 		const Chall& ch = data->chall->all[nch];
@@ -379,7 +379,7 @@ void CGui::listStageChng(MyGUI::MultiList2* li, size_t pos)
 		UpdChallDetail(nch);  // stage pass upd txt
 	}else
 	{	if (liChamps->getIndexSelected()==ITEM_NONE)  return;
-		int nch = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
+		int nch = *liChamps->getItemDataAt<int>(liChamps->getIndexSelected())-1;
 		if (nch >= data->champs->all.size())  {  LogO("Error champ sel > size.");  return;  }
 
 		const Champ& ch = data->champs->all[nch];
@@ -439,14 +439,14 @@ void CGui::btnChRestart(WP)
 	if (pSet->inMenu == MNU_Tutorial || pSet->inMenu == MNU_Champ)
 	{
 		if (liChamps->getIndexSelected()==ITEM_NONE)  return;
-		int chId = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
+		int chId = *liChamps->getItemDataAt<int>(liChamps->getIndexSelected())-1;
 		ProgressChamp& pc = progress[p].chs[chId];
 		pc.curTrack = 0;  ChampsListUpdate();
 	}
 	else if (pSet->inMenu == MNU_Challenge)
 	{
 		if (liChalls->getIndexSelected()==ITEM_NONE)  return;
-		int chId = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
+		int chId = *liChalls->getItemDataAt<int>(liChalls->getIndexSelected())-1;
 		ProgressChall& pc = progressL[p].chs[chId];
 		pc.curTrack = 0;  ChallsListUpdate();
 	}

@@ -164,8 +164,9 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks, bool check)
 			{
 				const TrackInfo& ti = trks->trks[i];
 				const string& s = ti.name;
-				if (!ti.test && !ti.testC && !trkUse[s])
-				{	ss << s << "\n";  ++n;  }
+				if (!ti.test && !ti.testC && s.substr(0,3)!="Vdr")
+				if (!trkUse[s])
+				{	ss << "\t\t\t<t name=\"" << s << "\"/>\n";  ++n;  }
 			}
 			if (n>0)
 				LogO("))) !! Tracks not in any challenge:\n"+ss.str());

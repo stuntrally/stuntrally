@@ -1633,7 +1633,7 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562" name="TabChamps">
 				<Property key="Caption" value="#80C0FF#{Championship}"/>
-				<Widget type="TabControl" skin="TabControl" position="32 26 538 36" name="TutType">
+				<Widget type="TabControl" skin="TabControl" position="24 26 567 36" name="TutType">
 					<Property key="Colour" value="1.0 0.9 0.8"/>
 					<Widget type="TabItem" skin="" position="2 24 532 8">
 						<Property key="Caption" value="#FFFFA0#{Diff2}"/>
@@ -1642,7 +1642,7 @@
 						<Property key="Caption" value="#E0E000#{Diff3}"/>
 					</Widget>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="32 26 538 36" name="SubTabChampType">
+				<Widget type="TabControl" skin="TabControl" position="24 26 567 36" name="ChampType">
 					<Property key="Colour" value="0.8 0.9 1.0"/>
 					<Widget type="TabItem" skin="" position="2 24 532 8">
 						<Property key="Caption" value="#A0F0FF#{Diff3}"/>
@@ -1663,68 +1663,68 @@
 						<Property key="Caption" value="#909090#{Test}"/>
 					</Widget>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="32 26 566 36" name="ChallType">
+                <Widget type="TabControl" skin="TabControl" position="25 26 603 36" name="SubTabChallType">
 					<Property key="Colour" value="0.9 0.8 1.0"/>
-					<Widget type="TabItem" skin="" position="2 24 560 8">
-						<Property key="Caption" value="#A0D0FF#{Chall_Rally}"/>
+					<Widget type="TabItem" skin="" position="2 24 578 8">
+						<Property key="Caption" value="#A0D0FF#{Diff2}"/><!--#{Chall_Rally}-->
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 560 8">
+                    <Widget type="TabItem" skin="" position="2 24 578 8">
 						<Property key="Caption" value="#80FF80#{Scenery}"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 560 8">
+                    <Widget type="TabItem" skin="" position="2 24 578 8">
 						<Property key="Caption" value="#C0FF80#{Chall_Endurance}"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 560 8">
+                    <Widget type="TabItem" skin="" position="2 24 578 8">
 						<Property key="Caption" value="#FFC060#{Chall_Chase}"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 560 8">
+                    <Widget type="TabItem" skin="" position="2 24 578 8">
 						<Property key="Caption" value="#FF8080#{Chall_Stunts}"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 560 8">
+                    <Widget type="TabItem" skin="" position="2 24 578 8">
 						<Property key="Caption" value="#D0C0F0#{Chall_Extreme}"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 560 8">
+                    <Widget type="TabItem" skin="" position="2 24 578 8">
 						<Property key="Caption" value="#60B0FF#{Chall_Special}"/>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 560 8">
+                    <Widget type="TabItem" skin="" position="2 24 578 8">
 						<Property key="Caption" value="#909090#{Test}"/>
 					</Widget>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="622 88 128 128" name="imgTut">
+				<Widget type="ImageBox" skin="ImageBox" position="642 88 128 128" name="imgTut">
 					<Property key="ImageCoord" value="0 128 128 128"/>
 					<Property key="Alpha" value="1.0"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="622 88 128 128" name="imgChamp">
+				<Widget type="ImageBox" skin="ImageBox" position="642 88 128 128" name="imgChamp">
 					<Property key="ImageCoord" value="0 256 128 128"/>
 					<Property key="Alpha" value="1.0"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="622 88 128 128" name="imgChall">
+				<Widget type="ImageBox" skin="ImageBox" position="642 88 128 128" name="imgChall">
 					<Property key="ImageCoord" value="0 384 128 128"/>
 					<Property key="Alpha" value="1.0"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
 
-				<Widget type="Button" skin="CheckBox" position="630 372 120 24" name="ChampRev">
+                <Widget type="Button" skin="CheckBox" position="630 411 120 24" name="ChampRev">
 					<Property key="Caption" value="#{Reverse}"/>
 					<Property key="Colour" value="0.8 1 0.6"/>
 					<Property key="TextColour" value="0.8 1 0.5"/>
 					<UserString key="tip" value="#{TipReverse}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="38 288 694 50" name="ChampDescr">
-					<Property key="TextColour" value="0.7 0.9 1.0"/>
+				<Widget type="EditBox" skin="EditBoxEmpty" position="32 322 694 60" name="ChampDescr">
+					<Property key="TextColour" value="0.75 0.9 1.0"/>
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
 				</Widget>
-				<Widget type="Widget" skin="PanelSkin" position="30 280 710 66">
+                <Widget type="Widget" skin="PanelSkin" position="24 316 708 68">
 					<Property key="Colour" value="0.6 0.75 0.9"/>
-					<Property key="Alpha" value="0.8"/>
+					<Property key="Alpha" value="0.7"/>
 					<Property key="InheritsAlpha" value="false"/>
 				</Widget>
 
-				<Widget type="Button" skin="Button" position="320 360 144 40" name="btnTutStart">
+				<Widget type="Button" skin="Button" position="320 400 144 40" name="btnTutStart">
 					<Property key="Caption" value="#{Start}"/>
 					<Property key="Colour" value="1.0 0.8 0.4"/>
 					<Property key="TextColour" value="1.0 0.8 0.4"/>
@@ -1735,7 +1735,7 @@
 						<Property key="NeedMouse" value="false"/>
 					</Widget>
 				</Widget>
-				<Widget type="Button" skin="Button" position="320 360 144 40" name="btnChampStart">
+                <Widget type="Button" skin="Button" position="320 400 144 40" name="btnChampStart">
 					<Property key="Caption" value="#{Start}"/>
 					<Property key="Colour" value="0.6 1 0.6"/>
 					<Property key="TextColour" value="0.6 1 0.6"/>
@@ -1746,7 +1746,7 @@
 						<Property key="NeedMouse" value="false"/>
 					</Widget>
 				</Widget>
-				<Widget type="Button" skin="Button" position="320 360 144 40" name="btnChallStart">
+                <Widget type="Button" skin="Button" position="320 400 144 40" name="btnChallStart">
 					<Property key="Caption" value="#{Start}"/>
 					<Property key="Colour" value="0.4 1 0.8"/>
 					<Property key="TextColour" value="0.4 1 0.8"/>
@@ -1757,7 +1757,7 @@
 						<Property key="NeedMouse" value="false"/>
 					</Widget>
 				</Widget>
-				<Widget type="Button" skin="Button" position="100 365 144 30" name="btnChRestart">
+                <Widget type="Button" skin="Button" position="100 405 144 30" name="btnChRestart">
 					<Property key="Caption" value="#{Restart}"/>
 					<Property key="Colour" value="0.75 0.6 0.6"/>
 					<Property key="TextColour" value="0.75 0.6 0.6"/>
@@ -1769,12 +1769,12 @@
 						<Property key="NeedMouse" value="false"/>
 					</Widget>
 				</Widget>
-				<Widget type="Button" skin="Button" position="28 460 48 40" name="btnChampInfo">
+                <Widget type="Button" skin="Button" position="28 484 48 40" name="btnChampInfo">
 					<Property key="Colour" value="0.6 0.8 1.0"/>
 					<Property key="TextColour" value="0.6 0.8 1.0"/>
 					<Property key="Caption" value="?"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="100 448 624 80" name="ChampInfo">
+                <Widget type="EditBox" skin="EditBoxEmpty" position="100 472 624 60" name="ChampInfo">
 					<Property key="Caption" value="#{ChampInfo}"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<Property key="ReadOnly" value="true"/>

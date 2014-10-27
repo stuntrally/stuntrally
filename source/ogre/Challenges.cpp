@@ -59,7 +59,7 @@ void CGui::ChallsListUpdate()
 			const String& clr = clrCh[chl.type];
 			//String cars = data->carsXml.colormap[chl.ci->type];  if (cars.length() != 7)  clr = "#C0D0E0";
 			
-			liChalls->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liChalls->getItemCount()-1;
+			liChalls->addItem(""/*clr+ toStr(n/10)+toStr(n%10)*/, n);  int l = liChalls->getItemCount()-1;
 			liChalls->setSubItemNameAt(1,l, clr+ chl.name.c_str());
 			liChalls->setSubItemNameAt(2,l, gcom->clrsDiff[chl.diff]+ TR("#{Diff"+toStr(chl.diff)+"}"));
 			liChalls->setSubItemNameAt(3,l, StrChallCars(chl));
@@ -83,7 +83,7 @@ void CGui::listChallChng(MyGUI::MultiList2* chlist, size_t id)
 {
 	if (id==ITEM_NONE || liChalls->getItemCount() == 0)  return;
 
-	int nch = s2i(liChalls->getItemNameAt(id).substr(7))-1;
+	int nch = *liChalls->getItemDataAt<int>(id)-1;
 	if (nch < 0 || nch >= data->chall->all.size())  {  LogO("Error chall sel > size.");  return;  }
 
 	CarListUpd();  // filter car list
@@ -142,7 +142,7 @@ bool CGui::IsChallCar(String name)
 {
 	if (!liChalls || liChalls->getIndexSelected()==ITEM_NONE)  return true;
 
-	int chId = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
+	int chId = *liChalls->getItemDataAt<int>(liChalls->getIndexSelected())-1;
 	const Chall& ch = data->chall->all[chId];
 
 	int i,s;
@@ -173,7 +173,7 @@ void CGui::btnChallStart(WP)
 {
 	if (liChalls->getIndexSelected()==ITEM_NONE)  return;
 	pSet->gui.champ_num = -1;
-	pSet->gui.chall_num = s2i(liChalls->getItemNameAt(liChalls->getIndexSelected()).substr(7))-1;
+	pSet->gui.chall_num = *liChalls->getItemDataAt<int>(liChalls->getIndexSelected())-1;
 
 	//  if already finished, restart - will loose progress and scores ..
 	int chId = pSet->gui.chall_num, p = pSet->game.champ_rev ? 1 : 0;

@@ -736,7 +736,7 @@ void CGui::InitGui()
 	Lev(li, ChampChng);  li->setVisible(false);
 
 	li->removeAllColumns();  c=0;
-	li->addColumn("#80A080N", colCh[c++]);
+	li->addColumn("#80A080", colCh[c++]);
 	li->addColumn(TR("#40F040#{Name}"), colCh[c++]);		li->addColumn(TR("#F0F040#{Difficulty}"), colCh[c++]);
 	li->addColumn(TR("#80F0C0#{Stages}"), colCh[c++]);		li->addColumn(TR("#80E0FF#{Time} #{TimeMS}"), colCh[c++]);
 	li->addColumn(TR("#D0C0FF#{Progress}"), colCh[c++]);	li->addColumn(TR("#F0E0F0#{Score}"), colCh[c++]);
@@ -748,7 +748,7 @@ void CGui::InitGui()
 	Lev(li, ChallChng);  li->setVisible(false);
 
 	li->removeAllColumns();  c=0;
-	li->addColumn("#80A080N", colChL[c++]);
+	li->addColumn("#80A080", colChL[c++]);
 	li->addColumn(TR("#60F060#{Name}"), colChL[c++]);		li->addColumn(TR("#F0D040#{Difficulty}"), colChL[c++]);
 	li->addColumn(TR("#F09090#{Cars}"), colChL[c++]);
 	li->addColumn(TR("#80F0C0#{Stages}"), colChL[c++]);		li->addColumn(TR("#80E0FF#{Time} m"), colChL[c++]);
@@ -778,8 +778,8 @@ void CGui::InitGui()
 
 	//  tabs
 	tabTut   = fTab("TutType");    Tev(tabTut,   TutType);    tabTut->setIndexSelected(pSet->tut_type);
-	tabChamp = fTab("SubTabChampType");  Tev(tabChamp, ChampType);  tabChamp->setIndexSelected(pSet->champ_type);
-	tabChall = fTab("ChallType");  Tev(tabChall, ChallType);  tabChall->setIndexSelected(pSet->chall_type);
+	tabChamp = fTab("ChampType");  Tev(tabChamp, ChampType);  tabChamp->setIndexSelected(pSet->champ_type);
+	tabChall = fTab("SubTabChallType");  Tev(tabChall, ChallType);  tabChall->setIndexSelected(pSet->chall_type);
 	imgTut   = fImg("imgTut");
 	imgChamp = fImg("imgChamp");
 	imgChall = fImg("imgChall");

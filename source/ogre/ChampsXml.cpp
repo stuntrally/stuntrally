@@ -68,7 +68,7 @@ bool ChampsXml::LoadXml(std::string file, TracksXml* trks, bool check)
 	
 	///  get champs total time (sum tracks times)
 	if (trks)
-	{	std::map<string, int> trkUse;
+	{	std::map<string, int> trkUse,trkU;
 	
 		for (int c=0; c < all.size(); ++c)
 		{
@@ -81,6 +81,8 @@ bool ChampsXml::LoadXml(std::string file, TracksXml* trks, bool check)
 				if (!trks->trkmap[trk.name])
 					LogO("!!  Champ: "+ch.name+" not found track: "+trk.name);
 				++trkUse[trk.name];
+				if (ch.type !=5 && ch.type !=6)  // not scenery champs
+					++trkU[trk.name];
 
 				float time = trks->times[trk.name] * trk.laps;
 				allTime += time;  // sum trk time, total champ time
@@ -89,16 +91,21 @@ bool ChampsXml::LoadXml(std::string file, TracksXml* trks, bool check)
 		}
 		if (check)
 		{
-			std::stringstream ss;  int n=0,i;
+			std::stringstream ss,su;  int i,n=0,u=0;
 			for (i=0; i < trks->trks.size(); ++i)
 			{
 				const TrackInfo& ti = trks->trks[i];
 				const string& s = ti.name;
-				if (!ti.test && !ti.testC && !trkUse[s])
-				{	ss << s << "\n";  ++n;  }
-			}
+				if (!ti.test && !ti.testC && s.substr(0,3)!="Vdr")
+				{	if (!trkUse[s])
+					{	ss << "\t\t<t name=\"" << s << "\"/>\n";  ++n;  }
+					if (!trkU[s])
+					{	su << "\t\t<t name=\"" << s << "\"/>\n";  ++u;  }
+			}	}
 			if (n>0)
 				LogO("))) !! Tracks not in any championship:\n"+ss.str());
+			if (u>0)
+				LogO("))) !! Tracks not in any championship excluding scenery:\n"+su.str());
 	}	}
 	return true;
 }

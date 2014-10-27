@@ -56,7 +56,7 @@ void CGui::ChampsListUpdate()
 			int ntrks = pc.trks.size(), ct = pc.curTrack;
 			const String& clr = clrCh[ch.type];
 
-			liChamps->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liChamps->getItemCount()-1;
+			liChamps->addItem(""/*clr+ toStr(n/10)+toStr(n%10)*/, n);  int l = liChamps->getItemCount()-1;
 			liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
 			liChamps->setSubItemNameAt(2,l, gcom->clrsDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
 
@@ -84,11 +84,11 @@ void CGui::updChampListDim()
 	for (c=0; c < cnt; ++c)  sum += colCh[c];
 	for (c=0; c < cnt; ++c)
 	{
-		w = c==cnt-1 ? 18 : float(colCh[c]) / sum * 0.72/*width*/ * wi.width * 0.97/*frame*/;
+		w = c==cnt-1 ? 18 : float(colCh[c]) / sum * 0.76/*width*/ * wi.width * 0.97/*frame*/;
 		liChamps->setColumnWidthAt(c, w);  sw += w;
 	}
-	int xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
-	liChamps->setCoord(xt, yt, sw + 8/*frame*/, 0.34/*height*/*wi.height);
+	int xt = 0.03*wi.width, yt = 0.10*wi.height;  // pos
+	liChamps->setCoord(xt, yt, sw + 8/*frame*/, 0.40/*height*/*wi.height);
 	liChamps->setVisible(!isChallGui());
 
 	//  Stages  -----
@@ -111,11 +111,11 @@ void CGui::updChampListDim()
 	for (c=0; c < cnt; ++c)  sum += colChL[c];
 	for (c=0; c < cnt; ++c)
 	{
-		w = c==cnt-1 ? 18 : float(colChL[c]) / sum * 0.71/*width*/ * wi.width * 0.97/**/;
+		w = c==cnt-1 ? 18 : float(colChL[c]) / sum * 0.76/*width*/ * wi.width * 0.97/**/;
 		liChalls->setColumnWidthAt(c, w);  sw += w;
 	}
-	xt = 0.038*wi.width, yt = 0.10*wi.height;  // pos
-	liChalls->setCoord(xt, yt, sw + 8/**/, 0.36/*height*/*wi.height);
+	xt = 0.03*wi.width, yt = 0.10*wi.height;  // pos
+	liChalls->setCoord(xt, yt, sw + 8/**/, 0.40/*height*/*wi.height);
 	liChalls->setVisible(isChallGui());
 }
 
@@ -129,7 +129,7 @@ void CGui::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	//  fill stages
 	liStages->removeAllItems();
 
-	int pos = s2i(liChamps->getItemNameAt(id).substr(7))-1;
+	int pos = *liChamps->getItemDataAt<int>(id)-1;
 	if (pos < 0 || pos >= data->champs->all.size())  {  LogO("Error champ sel > size.");  return;  }
 
 	int n = 1, p = pSet->gui.champ_rev ? 1 : 0;
@@ -183,7 +183,7 @@ void CGui::btnChampStart(WP)
 {
 	if (liChamps->getIndexSelected()==ITEM_NONE)  return;
 	pSet->gui.chall_num = -1;
-	pSet->gui.champ_num = s2i(liChamps->getItemNameAt(liChamps->getIndexSelected()).substr(7))-1;
+	pSet->gui.champ_num = *liChamps->getItemDataAt<int>(liChamps->getIndexSelected())-1;
 
 	//  if already finished, restart - will loose progress and scores ..
 	int chId = pSet->gui.champ_num, p = pSet->game.champ_rev ? 1 : 0;
