@@ -117,6 +117,7 @@ void CScene::UpdBlendmap()
 
 	size_t size = sc->td.iTerSize-1;  //!^ same as in create
 	float* fHmap = terrain ? terrain->getHeightData() : sc->td.hfHeight;
+	if (!fHmap)  return;
 
 	//  fill hmap  (copy to tex, full is fast)
 	HardwarePixelBufferSharedPtr pt = heightTex->getBuffer();
