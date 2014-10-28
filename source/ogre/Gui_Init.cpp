@@ -542,7 +542,7 @@ void CGui::InitGui()
 		ml->addColumn("#80C0FF"+TR("#{Player}"), 140);
 		ml->addColumn("#F08080"+TR("#{Car}"), 60);
 		ml->addColumn("#C0C060"+TR("#{Peers}"), 60);
-		ml->addColumn("#60F0F0"+TR("#{Ping}"), 60);
+		ml->addColumn("#60F0F0"+TR("#{Ping}"), 80);
 		ml->addColumn("#40F040"+TR("#{NetReady}"), 60);
 
 	Btn("btnNetReady", evBtnNetReady);  btnNetReady = btn;
