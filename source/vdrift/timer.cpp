@@ -29,6 +29,8 @@ void TIMER::Unload()
 	}
 	trackrecords.Clear();
 	loaded = false;
+	
+	netw_lap = 1;  // reset, expect 1st lap
 }
 
 void TIMER::Tick(float dt)
