@@ -106,7 +106,7 @@ void App::createScene()  // once, init
 	#endif
 
 	///  _Tool_	warnings  ...........................
-	//  takes some time
+	///  takes some time
 	#if 0
 	gui->ToolTracksWarnings();
 	exit(0);

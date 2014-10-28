@@ -105,6 +105,10 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 		{
 			String name = (*i).name, nlow = name;  StringUtil::toLowerCase(nlow);
 			const TrackInfo* ti = (*i).ti;
+			
+			if (!pSet->gui.track_user && name == pSet->gui.track)
+			{	bFound = true;  bListTrackU = 0;  }
+			
 			if (sTrkFind == "" || strstr(nlow.c_str(), sTrkFind.c_str()) != 0)
 			if (!ti || !pSet->tracks_filter ||  //  filtering
 				ti->ver      >= pSet->col_fil[0][0]  && ti->ver      <= pSet->col_fil[1][0]  &&
@@ -124,10 +128,10 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 			{
 				AddTrkL(name, 0, (*i).ti);
 				if (!pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
-					trkList->setIndexSelected(si);
-					bFound = true;  bListTrackU = 0;  }
+					trkList->setIndexSelected(si);  }
 				ii++;
-		}	}
+			}
+		}
 		//  user
 		for (strlist::iterator i = liTracksUser.begin(); i != liTracksUser.end(); ++i)
 		{

@@ -230,7 +230,7 @@ void CGuiCom::GuiInitTrack()
 	li->mSortUp = pSet->tracks_sortup;
 
     TrackListUpd(true);  //upd
-	listTrackChng(trkList,0);
+	//listTrackChng(trkList,0);  //-
 
 	ChangeTrackView();
 }
