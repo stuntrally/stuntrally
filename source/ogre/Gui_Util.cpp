@@ -554,10 +554,13 @@ void CGui::toggleGui(bool toggle)
 //.......................................................................................
 void CGui::GuiShortcut(MNU_Btns mnu, int tab, int subtab)
 {
-	if (subtab == -1 && (!app->isFocGui || pSet->inMenu != mnu))  subtab = -2;  // cancel subtab cycling
+	if (subtab == -1 && (!app->isFocGui || pSet->inMenu != mnu))
+		subtab = -2;  // cancel subtab cycling
 
 	app->isFocGui = true;
-	pSet->isMain = false;  pSet->inMenu = mnu;
+	pSet->isMain = false;
+	if (tab != TAB_Car)  //
+		pSet->inMenu = mnu;
 	
 	TabPtr mWndTabs = 0;
 	std::vector<TabControl*>* subt = 0;

@@ -89,6 +89,8 @@ struct ReplayFrame
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
 	float whMudSpin, fHitForce, fCarScrap, fCarScreech;
 	float hov_roll;  //=sph_yaw for O
+	
+	//uchar damage;  //TODO!..
 
 	ReplayFrame();
 	void FromCar(const CAR* pCar);

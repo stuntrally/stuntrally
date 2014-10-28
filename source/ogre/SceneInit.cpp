@@ -94,7 +94,7 @@ void App::createScene()
 	LogO(String("::: Time load xmls: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 
-	///  _Tool_ ghosts times ...........................
+	///  _Tool_ ghosts times .......
 	#if 0
 	gui->ToolGhosts();
 	//mShutDown = true;  return;
@@ -113,7 +113,7 @@ void App::createScene()
 	exit(0);
 	#endif
 
-	///  _Tool_ presets ..............
+	///  _Tool_ presets .......
 	#if 0
 	gui->ToolPresets();
 	exit(0);

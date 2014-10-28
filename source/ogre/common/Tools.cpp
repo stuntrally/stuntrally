@@ -469,6 +469,7 @@ void CGui::ToolTestTrkGhosts()
 	TrackGhost gho;
 	
 	//  foreach track
+	String ss;
 	for (int i=0; i < data->tracks->trks.size(); ++i)
 	{	string track = data->tracks->trks[i].name;
 		//if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
@@ -492,7 +493,7 @@ void CGui::ToolTestTrkGhosts()
 				//  check for sudden pos jumps  (rewind used but not with _Tool_ go back time !)
 				if (i > 10 && i < num-1)  // ignore jumps at start or end
 				{	float dist = (fr.pos - oldPos).MagnitudeSquared();
-					if (dist > 16.f)  //1.f small
+					if (dist > 6.f*6.f)  //par
 					{	
 						LogO("!Jump at "+CHud::StrTime2(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
 						++jmp;
@@ -509,9 +510,11 @@ void CGui::ToolTestTrkGhosts()
 				oldPos = fr.pos;  oldTime = fr.time;
 			}
 			if (jmp > 0)
-				LogO("!Jumps: "+toStr(jmp));
-		}
+			{	LogO("!Jumps: "+toStr(jmp));
+				ss += "\n" + track;
+		}	}
 	}
+	LogO("!! Jumps on tracks:"+ss);
 }
 
 #endif
