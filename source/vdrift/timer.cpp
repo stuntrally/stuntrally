@@ -86,7 +86,7 @@ bool TIMER::Lap(const int carId, const bool countit, bool bTrackReverse)
 
 bool TIMER::LapNetworkTime(const int carId, int lap, const double curtime)
 {
-	//if (lap == netw_lap)
+	if (lap == netw_lap)
 	{
 		car[carId].LapWithTime(true, curtime);
 		
