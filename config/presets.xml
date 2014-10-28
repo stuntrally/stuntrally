@@ -430,15 +430,16 @@
 
 
 <v sc="F"  p="shroom1_2"            sa="0.15" sb="0.25"  wx="0.00" wy="0.000"  ab="21.14" rd="1" fd="0.0" z="F" />
+<v sc="F"  p="shroom1_3"            sa="0.16" sb="0.26"  wx="0.00" wy="0.000"  ab="21.14" rd="1" fd="0.0" z="F" />
 <v sc="F"  p="shroom2_2"            sa="0.32" sb="0.49"  wx="0.00" wy="0.000"  ab="32.73" rd="1" fd="0.0" z="F" />
 <v sc="F"  p="shroom2_3"            sa="0.20" sb="0.30"  wx="0.00" wy="0.000"  ab="21.33" rd="1" fd="0.0" z="F" />
 
-<v sc="X"  p="shroom1_1"            sa="2.06" sb="4.00"  wx="0.00" wy="0.060"  ab="48.86" rd="6" fd="0.0" z="X" />
-<v sc="X"  p="shroom1_2"            sa="1.90" sb="3.18"  wx="0.00" wy="0.000"  ab="21.69" rd="6" fd="0.0" z="X" />
-<v sc="X"  p="shroom1_3"            sa="2.06" sb="4.00"  wx="0.00" wy="0.000"  ab="44.13" rd="6" fd="0.0" z="X" />
-<v sc="X"  p="shroom2_1"            sa="1.43" sb="4.00"  wx="0.00" wy="0.000"  ab="39.74" rd="6" fd="0.0" z="X" />
-<v sc="X"  p="shroom2_2"            sa="3.23" sb="4.00"  wx="0.00" wy="0.000"  ab="29.03" rd="6" fd="0.0" z="X" />
-<v sc="X"  p="shroom2_3"            sa="1.43" sb="4.00"  wx="0.00" wy="0.000"  ab="25.56" rd="6" fd="0.0" z="X" />
+<v sc="X"  p="shroom1_1_unid"       sa="2.06" sb="4.00"  wx="0.00" wy="0.060"  ab="48.86" rd="6" fd="0.0" z="X" />
+<v sc="X"  p="shroom1_2_unid"       sa="1.90" sb="3.18"  wx="0.00" wy="0.000"  ab="21.69" rd="6" fd="0.0" z="X" />
+<v sc="X"  p="shroom1_3_unid"       sa="2.06" sb="4.00"  wx="0.00" wy="0.000"  ab="44.13" rd="6" fd="0.0" z="X" />
+<v sc="X"  p="shroom2_1_unid"       sa="1.43" sb="4.00"  wx="0.00" wy="0.000"  ab="39.74" rd="6" fd="0.0" z="X" />
+<v sc="X"  p="shroom2_2_unid"       sa="3.23" sb="4.00"  wx="0.00" wy="0.000"  ab="29.03" rd="6" fd="0.0" z="X" />
+<v sc="X"  p="shroom2_3_unid"       sa="1.43" sb="4.00"  wx="0.00" wy="0.000"  ab="25.56" rd="6" fd="0.0" z="X" />
 
 
 <v sc="J"  p="tree.07"              sa="0.85" sb="1.15"  wx="0.70" wy="0.010"  ab="38.53" rd="2" fd="0.0" z="ADIJSV" />

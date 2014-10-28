@@ -8,6 +8,13 @@
 	<!--<object mesh= "farn1.mesh" />
 		<object mesh= "farn2.mesh" />-->
 
+		<object mesh= "shroom1_1.mesh" />
+		<object mesh= "shroom1_2.mesh" />
+		<object mesh= "shroom1_3.mesh" />
+		<object mesh= "shroom2_1.mesh" />
+		<object mesh= "shroom2_2.mesh" />
+		<object mesh= "shroom2_3.mesh" />
+
 		<object mesh= "fern.mesh" />
 		<object mesh= "fern2.mesh" />
 		<object mesh= "fern2_black.mesh" />
