@@ -118,7 +118,7 @@ struct GameInfo
 		,damage_type(0), rewind_type(0)
 		,damage_lap_dec(0), boost_lap_inc(0), rewind_lap_inc(0)
 	{
-		name[0] = '\0';  track[0] = '\0';  sim_mode[0] = '\0';
+		name[0] = '\0';  track[0] = '\0';  track[31] = '\0';  sim_mode[0] = '\0';
 	}
 
 	bool operator==(const GameInfo& other) {  return id == other.id;  }
@@ -192,6 +192,7 @@ struct CarStatePackage
 	uint8_t trackPercent;
 	uint8_t boost;
 	uint8_t brake;
+	//uint8_t damage;  //todo:..
 	// boostFuel,gear, vel,rpm for replays ?..
 
 	CarStatePackage()
