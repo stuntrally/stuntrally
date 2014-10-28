@@ -279,16 +279,23 @@ void CGui::peerMessage(PeerInfo peer, string msg)
 	boost::mutex::scoped_lock lock(netGuiMutex);
 
 	int len = peer.name.length();
-	if (len == 0)
-		return;
+	if (len == 0)  return;
 
-	int hc = 0;  // color from name
+	int hc = 16;  // color from name
 	hc += len;  hc += peer.name[0];
-	const static int num = 16;
+	if (len > 3)  hc += peer.name[2];
+	
+	const static int num = 24;
 	const static char sclr[num][8] = {
-		"#80FFC0","#B0FF40","#FF80C0","#C0FF80","#40FFFF","#FF4080","#8080FF","#FF80FF",
-		"#3050FF","#80C0FF","#E0F0FF","#FFFFFF","#C080FF","#FFFF40","#FFC040","#FF8080"};
-
+		"#80FFC0","#C0FFC0","#B0FF40","#80C060",
+		"#90E0E0","#40FFFF","#F0F0C0","#E0E040",
+		"#FFC0FF","#FF80C0","#FFC040","#FF8080",
+		"#FF4080","#FFA050","#FF8020","#C0C0C0",
+		"#50B0E0","#C080FF","#C0C0FF","#8080FF",
+		"#4080FF","#80C0FF","#E0F0FF","#F0F0F0"};
+	/*for (int i=0; i<num; ++i)  //test clrs
+		AddChatMsg(sclr[i], UString(peer.name) + ": " + msg);/**/
+		
 	AddChatMsg(sclr[hc % num], UString(peer.name) + ": " + msg);
 	bRebuildPlayerList = true; // For ping updates in the list
 }
@@ -432,6 +439,7 @@ void CGui::evBtnNetCreate(WP)
 		}
 		uploadGameInfo();
 		updateGameInfoGUI();
+		
 		rebuildPlayerList();
 		setNetGuiHosting(true);
 

@@ -420,11 +420,24 @@ void CGuiCom::btnMainMenu(WP wp)
 
 void CGuiCom::tabMainMenu(Tab tab, size_t id)
 {
-	#ifndef SR_EDITOR
-	if (tab == app->mWndTabsGame && id == TAB_Car)
-		app->gui->CarListUpd();  // off filtering
-	//if (tab == app->mWndTabsGame && id == TAB_Multi)
-	//	app->gui->evBtnNetRefresh(0);  // upd games list (don't, breaks game start)
+	#ifndef SR_EDITOR  ///_  game tab change
+	if (tab == app->mWndTabsGame)
+	{
+		if (id == TAB_Car)
+			app->gui->CarListUpd();  //  off filtering by chall
+	
+		app->mWndTrkFilt->setVisible(false);  //
+
+		if (id == TAB_Multi)
+		{	//  back to mplr tab, upload game info
+									//_ only for host..
+			if (app->mMasterClient && app->gui->valNetPassword->getVisible())
+			{	app->gui->uploadGameInfo();
+				app->gui->updateGameInfoGUI();
+			}
+			//- app->gui->evBtnNetRefresh(0);  // upd games list (don't, breaks game start)
+		}
+	}
 	#endif
 
 	if (id != 0)  return;  // <back
