@@ -62,7 +62,7 @@ const int CGui::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
 #endif
 
 //  get scenery color string from track name
-String CGuiCom::GetSceneryColor(String name)
+String CGuiCom::GetSceneryColor(String name, String* sc)
 {
 	if (name.length() < 3)  return "#707070";
 
@@ -74,7 +74,9 @@ String CGuiCom::GetSceneryColor(String name)
 		return (name.length() > 5 && name.c_str()[4] == 'C') ? "#A0C0D0" : "#A0A0A0";
 	else
 	if (pTrk)
+	{	//if (sc)  *sc = pTrk->scenery;
 		return scnClr[pTrk->scenery];
+	}
 	else  // user *
 	{
 		if (name.c_str()[0]=='*')
@@ -83,10 +85,12 @@ String CGuiCom::GetSceneryColor(String name)
 		size_t p = name.find_first_of("-0123456789");
 		if (p != string::npos)
 		{	ss = name.substr(0, p);  //LogO(ss);
-			return scnClr[scnN[ss]];
+			String s1 = scnN[ss];  if (sc)  *sc = s1;
+			return scnClr[s1];
 		}else
 		{	ss += name.c_str()[0];
-			return scnClr[scnN[ss]];
+			String s1 = scnN[ss];  if (sc)  *sc = s1;
+			return scnClr[s1];
 	}	}
 }
 //-----------------------------------------------------------------------------------------------------------
@@ -95,7 +99,7 @@ String CGuiCom::GetSceneryColor(String name)
 //  Add tracks list item
 void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 {
-	String c = GetSceneryColor(name);
+	String sc, c = GetSceneryColor(name, &sc);
 	Mli2 li = trkList;
 
 	//  split -
@@ -114,7 +118,12 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	li->setSubItemNameAt(1,l, c+ name);
 	li->setSubItemNameAt(2,l, c+ shrt);
 
-	if (!ti)  return;  //  details
+	if (!ti)  //  user (or new) trks
+	{	if (!sc.empty())
+			li->setSubItemNameAt(4,l, c+ TR("#{SC_"+sc+"}"));
+		return;
+	}
+	//  details
 	li->setSubItemNameAt(3,l, c+ toStr(ti->n/10)+toStr(ti->n%10));
 	li->setSubItemNameAt(4,l, c+ TR("#{SC_"+ti->scenery+"}"));
 	li->setSubItemNameAt(5,l, c+ fToStr(ti->crtver,1,3));

@@ -98,7 +98,7 @@ public:
 	Ogre::String PathListTrkPrv(int user/*=-1*/, Ogre::String track);
 
 	bool TrackExists(Ogre::String name);
-	Ogre::String GetSceneryColor(Ogre::String name);
+	Ogre::String GetSceneryColor(Ogre::String name, Ogre::String* scenery=0);
 	std::map<Ogre::String, Ogre::String> scnClr, scnN;
 
 

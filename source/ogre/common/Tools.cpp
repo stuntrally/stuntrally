@@ -478,7 +478,7 @@ void CGui::ToolTestTrkGhosts()
 		gho.Clear();
 		string file = PATHMANAGER::TrkGhosts()+"/"+ track + ".gho";
 		if (!PATHMANAGER::FileExists(file))
-		{	LogO("NOT found: "+file);  }
+		{	/*LogO("NOT found: "+file);/**/  }
 		else
 		{	LogO("---------  "+track+"  ---------");
 			gho.LoadFile(file);
