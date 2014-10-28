@@ -105,6 +105,7 @@ void CGui::updateGameInfo()
 	if (netGameInfo.track)
 	{	string track(netGameInfo.track);
 		gcom->sListTrack = track;
+		gcom->bListTrackU = netGameInfo.track[31]==1;  //user
 		gcom->ReadTrkStats();
 	}
 	updateGameSet();
@@ -183,7 +184,7 @@ void CGui::uploadGameInfo()
 	memset(game.track, 0, sizeof(game.track));
 	memset(game.sim_mode, 0, sizeof(game.sim_mode));
 	strcpy(game.name, sGame.c_str());
-	strcpy(game.track, sTrack.c_str());
+	strcpy(game.track, sTrack.c_str());  game.track[31] = gcom->bListTrackU ? 1:0;  //user
 	strcpy(game.sim_mode, sSim.c_str());
 	game.players = app->mClient->getPeerCount()+1;
 
@@ -337,14 +338,16 @@ void CGui::timeInfo(ClientID id, uint8_t lap, double time)
 {
 	//if (!ap->mClient)  return;
 	if (id == 0)  id = app->mClient->getId();
+	int n = pGame->timer.netw_lap;
 
-	LogO("== Netw Lap " +toStr(lap) +" finished by " +toStr(id)+ " time:"+ toStr(float(time)));
+	LogO("== Netw Lap " +toStr(lap) + "==" + toStr(n) + (lap == n ? "Good":"BAD!") +
+		" finished by " +toStr(id) + " time:"+ toStr(float(time)));
 	if (id >= app->carModels.size() || id < 0)
 	{	LogO("== Netw Lap id wrong !" );  return;  }
 	
 	//pGame->timer.Lap(id, 0,0, true, pSet->game.trackreverse/*<, pSet->boost_type*/);
 	if (pGame->timer.LapNetworkTime(id, lap, time))  // is the same as above but sets client's time
-		LogO("== Netw Lap OK");
+	{}//LogO("== Netw Lap OK");
 		
 	//carModels[id]->trackPercent = 0.f;
 	//carPoses[id].percent = 0.f;
