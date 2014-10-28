@@ -343,7 +343,9 @@ void CGui::timeInfo(ClientID id, uint8_t lap, double time)
 	{	LogO("== Netw Lap id wrong !" );  return;  }
 	
 	//pGame->timer.Lap(id, 0,0, true, pSet->game.trackreverse/*<, pSet->boost_type*/);
-	pGame->timer.LapNetworkTime(id, time);  // is the same as above but sets client's time
+	if (pGame->timer.LapNetworkTime(id, lap, time))  // is the same as above but sets client's time
+		LogO("== Netw Lap OK");
+		
 	//carModels[id]->trackPercent = 0.f;
 	//carPoses[id].percent = 0.f;
 }

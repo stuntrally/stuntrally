@@ -35,7 +35,8 @@ void TIMER::Tick(float dt)
 {
 	if (pretime > 0.f && !waiting)
 	{	pretime -= dt;
-		dt = 0.f;  }
+		dt = 0.f;
+	}
 	if (waiting)
 		dt = 0.f;
 
@@ -81,8 +82,14 @@ bool TIMER::Lap(const int carId, const bool countit, bool bTrackReverse)
 }
 
 
-bool TIMER::LapNetworkTime(const int carId, const double curtime)
+bool TIMER::LapNetworkTime(const int carId, int lap, const double curtime)
 {
-	car[carId].LapWithTime(true, curtime);
+	if (lap == netw_lap)
+	{
+		car[carId].LapWithTime(true, curtime);
+		
+		++netw_lap;  // allow only once per lap
+		return true;
+	}
 	return false;
 }

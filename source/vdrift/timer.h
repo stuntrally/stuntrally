@@ -14,15 +14,18 @@ private:
 			double time;
 
 		public:
-			LAPTIME() {Reset();}
+			LAPTIME()
+			{	Reset();  }
 			void Reset()
 			{
 				havetime = false;
 				time = 0;
 			}
-			bool HaveTime() const {return havetime;}
-			double GetTimeInSeconds() const {return time;}
-			///convert time in seconds into output min and secs
+
+			bool HaveTime() const {  return havetime;  }
+			double GetTimeInSeconds() const {  return time;  }
+
+			//  convert time in seconds into output min and secs
 			void GetTimeInMinutesSeconds(float & secs, int & min) const
 			{
 				min = (int) time / 60;
@@ -33,7 +36,7 @@ private:
 				time = newtime;
 				havetime = true;
 			}
-			///only set the time if we don't have a time or if the new time is faster than the current time
+			//  only set the time if we don't have a time or if the new time is faster than the current time
 			void SetIfFaster(double newtime)
 			{
 				if (!havetime || newtime < time)
@@ -45,31 +48,23 @@ private:
 	class DRIFTSCORE
 	{
 		private:
-			float score;
-			float thisdriftscore;
+			float score, thisdriftscore;
 			bool drifting;
-			float max_angle;
-			float max_speed;
+			float max_angle, max_speed;
 			
 		public:
-			DRIFTSCORE() {Reset();}
+			DRIFTSCORE()
+			{	Reset();  }
 			void Reset()
 			{
 				score = 0;
 				SetDrifting(false, false);
 			}
 
-			void SetScore ( float value )
-			{
-				score = value;
-			}
-			
-			float GetScore() const
-			{
-				return score;
-			}
+			void SetScore(float value)	{	score = value;	}
+			float GetScore() const		{	return score;	}
 
-			void SetDrifting ( bool value, bool countit )
+			void SetDrifting(bool value, bool countit)
 			{
 				if (!value && drifting && countit && thisdriftscore + GetBonusScore() > 5.0)
 				{
@@ -81,51 +76,23 @@ private:
 				if (!value)
 				{
 					thisdriftscore = 0;
-					max_angle = 0;
-					max_speed = 0;
+					max_angle = 0;  max_speed = 0;
 				}
-				
 				drifting = value;
 			}
 		
-			bool GetDrifting() const
-			{
-				return drifting;
-			}
+			bool GetDrifting() const			{	return drifting;	}
+			void SetThisDriftScore (float value){	thisdriftscore = value;  }
+			float GetThisDriftScore() const		{	return thisdriftscore;  }
 
-			void SetThisDriftScore ( float value )
-			{
-				thisdriftscore = value;
-			}
-			
-			float GetThisDriftScore() const
-			{
-				return thisdriftscore;
-			}
-
-			void SetMaxAngle ( float value )
-			{
-				max_angle = value;
-			}
-		
-			void SetMaxSpeed ( float value )
-			{
-				max_speed = value;
-			}
-
-			float GetMaxAngle() const
-			{
-				return max_angle;
-			}
-		
-			float GetMaxSpeed() const
-			{
-				return max_speed;
-			}
+			void SetMaxAngle(float value){	max_angle = value;	}
+			void SetMaxSpeed(float value){	max_speed = value;	}
+			float GetMaxAngle() const	{	return max_angle;	}
+			float GetMaxSpeed() const	{	return max_speed;	}
 			
 			float GetBonusScore() const
 			{
-				return max_speed / 2.0 + max_angle * 40.0 / PI_d + thisdriftscore; //including thisdriftscore here is redundant on purpose to give more points to long drifts
+				return max_speed / 2.0 + max_angle * 40.0 / PI_d + thisdriftscore;
 			}
 	};
 
@@ -218,50 +185,17 @@ private:
 				time = time_rpl = time_rewGh = t;
 			}	
 			
-			double GetTimeReplay() const  // for replay
-			{
-				return time_rpl;
-			}
+			double GetTimeReplay() const{	return time_rpl;  }
+			double GetTime() const		{	return time;  }
 			
-			double GetTime() const
-			{
-				return time;
-			}
-			
-			double GetTimeTotal() const
-			{
-				return totaltime;
-			}
+			double GetTimeTotal() const	{	return totaltime;	}
+			double GetLastLap() const	{	return lastlap.GetTimeInSeconds();	}
+			double GetBestLap() const	{	return bestlap.GetTimeInSeconds();	}
+			double GetBestLapRace() const{	return bestlapRace.GetTimeInSeconds();	}
+			int GetCurrentLap() const	{	return num_laps;	}
 
-			double GetLastLap() const
-			{
-				return lastlap.GetTimeInSeconds();
-			}
-
-			double GetBestLap() const
-			{
-				return bestlap.GetTimeInSeconds();
-			}
-
-			double GetBestLapRace() const
-			{
-				return bestlapRace.GetTimeInSeconds();
-			}
-
-			int GetCurrentLap() const
-			{
-			    return num_laps;
-			}
-
-			const DRIFTSCORE & GetDriftScore() const
-			{
-				return driftscore;
-			}
-			
-			DRIFTSCORE & GetDriftScore()
-			{
-				return driftscore;
-			}
+			const DRIFTSCORE & GetDriftScore() const{	return driftscore;	}
+			DRIFTSCORE& GetDriftScore()				{	return driftscore;	}
 	};
 
 	std::vector <LAPINFO> car;
@@ -274,8 +208,13 @@ private:
 	//unsigned int carId; //the index for the player's car; defaults to zero
 
 public:
-	TIMER() : loaded(false),pretime(0.0)/*,carId(0)*/,waiting(false),end_sim(false) {	}
-	~TIMER() {	Unload();	}
+	TIMER()
+		:loaded(false), pretime(0.0)/*,carId(0)*/
+		,waiting(false), end_sim(false)
+		,netw_lap(1)
+	{	}
+	~TIMER()
+	{	Unload();  }
 
 	float pretime; // amount of time left in staging
 	bool waiting;  // for other players in multi or in champs to close info wnd
@@ -289,11 +228,13 @@ public:
 
 	void Tick(float dt);
 	bool Lap(const int carId, const bool countit, bool bTrackReverse);
-	bool LapNetworkTime(const int carId, const double curtime);  ///+
+	
+	int netw_lap;
+	bool LapNetworkTime(const int carId, int lap, const double curtime);  ///+
 
 	void DebugPrint(std::ostream & out)
 	{
-		for (unsigned int i = 0; i < car.size(); i++)
+		for (size_t i = 0; i < car.size(); i++)
 		{
 			out << i << ". ";
 			car[i].DebugPrint(out);
@@ -322,13 +263,14 @@ public:
 		}
 	}
 	
-	float GetLastLap(const int carId) {		assert(carId<car.size());		return car[carId].GetLastLap();  }
-	float GetBestLapRace(const int carId)	{	assert(carId<car.size());	return car[carId].GetBestLapRace();		}
+	float GetLastLap(const int carId)	{		assert(carId<car.size());	return car[carId].GetLastLap();  }
+	float GetBestLapRace(const int carId)	{	assert(carId<car.size());	return car[carId].GetBestLapRace();  }
 	float GetBestLap(const int carId, bool bTrackReverse)
 	{
 		assert(carId<car.size());
 		float curbestlap = car[carId].GetBestLap();
 		float prevbest(0);
+
 		bool haveprevbest = trackrecords.GetParam(
 			car[carId].GetCarType() + (bTrackReverse ? "_rev" : "") + ".sector 0", prevbest);
 		if (haveprevbest)
@@ -340,12 +282,11 @@ public:
 					return prevbest;
 				else
 					return curbestlap;
-		}
-		else
+		}else
 			return curbestlap;
 	}
-	int GetPlayerCurrentLap(const int carId) {		return GetCurrentLap(carId);	}
-	int GetCurrentLap(unsigned int index) {assert(index<car.size());return car[index].GetCurrentLap();}
+	int GetPlayerCurrentLap(const int carId) {  return GetCurrentLap(carId);  }
+	int GetCurrentLap(unsigned int index)    {  assert(index<car.size());  return car[index].GetCurrentLap();  }
 
 
 	float GetDriftScore(unsigned int index) const
