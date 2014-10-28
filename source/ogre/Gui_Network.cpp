@@ -87,7 +87,10 @@ void CGui::rebuildPlayerList()
 		li->addItem("#C0E0FF"+ it->second.name);  int l = li->getItemCount()-1;
 		li->setSubItemNameAt(1,l, "#80FFFF"+ it->second.car);
 		li->setSubItemNameAt(2,l, "#F0F060"+ toStr(it->second.peers));
-		li->setSubItemNameAt(3,l, "#C0F0F0"+ toStr(it->second.ping));  bool rd = it->second.ready;
+		//static int pp=0;  pp+=50;  int p = (pp)%600;  //test clr
+		int p = it->second.ping;
+		li->setSubItemNameAt(3,l, CGuiCom::clrsDiff[std::min(7,1+p/100)]+ toStr(p));
+		bool rd = it->second.ready;
 		li->setSubItemNameAt(4,l, (rd?"#60FF60":"#FF8080")+ YesNo(rd));
 	}
 	//  Allow host to start the game
