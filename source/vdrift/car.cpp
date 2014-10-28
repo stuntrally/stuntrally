@@ -279,6 +279,10 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 		ResetPos(false);  // goto last checkpoint
 		//ResetPos(false, shift);  // for 2nd ... press twice?
 	
+	///  rewind, cooldown
+	bool bRew = inputs[CARINPUT::REWIND] > 0.5f;
+	//if (!bRew > timeRew > 0.f)
+	//	timeRew += dt;
 	bRewind = inputs[CARINPUT::REWIND];
 }
 
