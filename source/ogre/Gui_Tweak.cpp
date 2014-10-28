@@ -167,7 +167,19 @@ void CGui::listTwkTiresOrig(Li li, size_t id)
 
 void CGui::btnTweakTireLoad(WP)
 {
-	// load as current ? rename ?
+	//  load as current..
+	size_t id = liTwkTiresUser->getIndexSelected();
+	if (id != ITEM_NONE)
+	{
+		
+		return;
+	}
+	id = liTwkTiresOrig->getIndexSelected();
+	if (id != ITEM_NONE)
+	{
+		
+		return;
+	}
 }
 
 void CGui::chkTEupd(Ck*)
@@ -503,4 +515,6 @@ void CGui::TweakTireSave()
 	if (txtTweakTire)
 	{	txtTweakTire->setCaption(TR("#{Saved}."));
 		txtTweakTire->setTextColour(Colour(0.2,1,0.2));  }
+
+	//Fill lists, reload sim tires..
 }

@@ -617,7 +617,6 @@ void CGui::InitGui()
 
 	///  tweak surfaces  ----
 	liTwkSurfaces = fLi("TweakSurfaces");  Lev(liTwkSurfaces, TwkSurfaces);
-	//<Widget type="ComboBox" name="TweakSurface">
 	Btn("TweakSurfPickWh", btnTwkSurfPick);
 	sv= &svSuFrict;		sv->Init("SuFrict",     &f, 0.f, 1.5f,  1.0f, 2,4);	sv->DefaultF(0.65f);
 	sv= &svSuFrictX;	sv->Init("SuFrictX",    &f, 0.f, 1.5f,  1.0f, 2,4);	sv->DefaultF(1.f);
@@ -628,7 +627,7 @@ void CGui::InitGui()
 	sv= &svSuBumpAmp2;	sv->Init("SuBumpAmp2",	&f, 0.f, 0.4f,  1.0f, 2,4);	sv->DefaultF(0.15f);
 	sv= &svSuRollDrag;	sv->Init("SuRollDrag",	&f, 0.f, 200.f,  2.f, 0,3);	sv->DefaultF(60.f);
 	sv= &svSuRollRes;	sv->Init("SuRollRes",	&f, 0.f, 200.f,  2.f, 0,3);	sv->DefaultF(1.f);
-	//TODO: <Widget type="Button" name="TweakSurfSave">
+	//Btn("TweakSurfSave"
 
 	Cmb(cmb, "CmbSuTire", comboSurfTire);  cmbSurfTire = cmb;
 	Cmb(cmb, "CmbSuType", comboSurfType);  cmbSurfType = cmb;
