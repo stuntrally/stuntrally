@@ -559,7 +559,7 @@ void CGui::GuiShortcut(MNU_Btns mnu, int tab, int subtab)
 
 	app->isFocGui = true;
 	pSet->isMain = false;
-	if (tab != TAB_Car)  //
+	if (!(tab == TAB_Car && pSet->inMenu >= MNU_Tutorial && pSet->inMenu <= MNU_Challenge))  //
 		pSet->inMenu = mnu;
 	
 	TabPtr mWndTabs = 0;
