@@ -787,6 +787,8 @@ void CARDYNAMICS::Init(
 	info.m_friction = coll_friction;  /// 0.4~ 0.7
 	///  chasis^
 	chassis = world.AddRigidBody(info, true, pSet->game.collis_cars);
+	//TODO: update this when car rewinds..
+	//chassis->getBroadphaseProxy()->m_collisionFilterMask = 0; //setCollisionFilterMask();
 	chassis->setActivationState(DISABLE_DEACTIVATION);
 	chassis->setUserPointer(new ShapeData(ST_Car, this, 0));  ///~~
 	
