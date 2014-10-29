@@ -40,6 +40,9 @@ void IntTickCallback(btDynamicsWorld *world, btScalar timeStep)
 			if (sdA) {  if (sdA->type == ST_Car)  sdCar = sdA;  else if (sdA->type == ST_Fluid)  sdFluid = sdA;  else if (sdA->type == ST_Wheel)  sdWheel = sdA;  }
 			if (sdB) {  if (sdB->type == ST_Car)  sdCar = sdB;  else if (sdB->type == ST_Fluid)  sdFluid = sdB;  else if (sdB->type == ST_Wheel)  sdWheel = sdB;  }
 	
+			if (sdFluid && sdFluid->pFluid)  // solid fluid hit
+				if (sdFluid->pFluid->solid)  sdFluid = 0;
+				
 			if (sdCar &&/**/ !sdFluid && !sdWheel)
 			{
 				bool dyn = (sdCar == sdA && !bB->isStaticObject()) || (sdCar == sdB && !bA->isStaticObject());
