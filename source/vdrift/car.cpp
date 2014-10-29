@@ -19,15 +19,16 @@
 #include "game.h"  //sound
 
 
-CAR::CAR() :
-	pSet(0), pApp(0), id(0), pCarM(0),
-	last_steer(0),
-	sector(-1),
-	iCamNext(0), bLastChk(0),bLastChkOld(0), bRewind(0),
-	fluidHitOld(0),
-	trackPercentCopy(0), bRemoteCar(0),
-	bResetPos(0),
-	dmgLastCheck(0.f), sphYawAtStart(0.f)
+CAR::CAR()
+	:pSet(0), pApp(0), id(0), pCarM(0)
+	,last_steer(0)
+	,sector(-1)
+	,iCamNext(0), bLastChk(0),bLastChkOld(0)
+	,bRewind(0),bRewindOld(0),timeRew(0.f)
+	,fluidHitOld(0)
+	,trackPercentCopy(0), bRemoteCar(0)
+	,bResetPos(0)
+	,dmgLastCheck(0.f), sphYawAtStart(0.f)
 {
 	//dynamics.pCar = this;
 	
@@ -208,7 +209,7 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	int cur_gear = dynamics.GetTransmission().GetGear();
 	bool rear = pSet->rear_inv ? cur_gear == -1 : false;  //if (disable_auto_rear)  rear = false;
 
-	//  set brakes
+	//  Brakes
 	if (!bRemoteCar)
 	{
 		float brake = !rear ? inputs[CARINPUT::BRAKE] : inputs[CARINPUT::THROTTLE];
@@ -225,7 +226,7 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 		dynamics.doBoost = inputs[CARINPUT::BOOST];
 	dynamics.doFlip = inputs[CARINPUT::FLIP];
 
-	//  steering
+	//  Steering
 	if (!bRemoteCar)
 	{
 		float steer_value = inputs[CARINPUT::STEER_RIGHT];
@@ -253,7 +254,7 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	/*if (inputs[CARINPUT::REVERSE])	new_gear = -1;
 	if (inputs[CARINPUT::FIRST_GEAR])	new_gear = 1;*/
 
-	//  throttle
+	//  Throttle
 	float throttle = !rear ? inputs[CARINPUT::THROTTLE] : inputs[CARINPUT::BRAKE];
 	float clutch = 1 - inputs[CARINPUT::CLUTCH]; // 
 
@@ -265,8 +266,9 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	///TODO: car setup separated for all (4) players: (auto shift, auto rear, rear inv, abs, tcs)  ...
 	//if (inputs[CARINPUT::ABS_TOGGLE])	dynamics.SetABS(!dynamics.GetABSEnabled());
 	//if (inputs[CARINPUT::TCS_TOGGLE])	dynamics.SetTCS(!dynamics.GetTCSEnabled());
+
 	
-	//  cam
+	//  Camera
 	iCamNext = -inputs[CARINPUT::PREV_CAM] + inputs[CARINPUT::NEXT_CAM];
 	
 	bLastChkOld = bLastChk;
@@ -279,11 +281,16 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 		ResetPos(false);  // goto last checkpoint
 		//ResetPos(false, shift);  // for 2nd ... press twice?
 	
-	///  rewind, cooldown
-	bool bRew = inputs[CARINPUT::REWIND] > 0.5f;
-	//if (!bRew > timeRew > 0.f)
-	//	timeRew += dt;
-	bRewind = inputs[CARINPUT::REWIND];
+
+	///  Rewind  with cooldown
+	bool bRew = inputs[CARINPUT::REWIND] > 0.2f;
+	if (timeRew > 0.f)
+		timeRew -= dt;
+	if (!bRew && bRewindOld)
+		timeRew = gPar.rewindCooldown;
+
+	bRewind = timeRew <= 0.f && bRew;  // car input
+	bRewindOld = bRewind;
 }
 
 

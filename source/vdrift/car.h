@@ -346,5 +346,6 @@ public:
 
 	//  car inputs (new)
 	int iCamNext;
-	bool bLastChk,bLastChkOld, bRewind;
+	bool bLastChk,bLastChkOld, bRewind,bRewindOld;
+	float timeRew;
 };

@@ -11,6 +11,7 @@ struct SParams
 	 raylen
 //  GAME
 	,rewindSpeed
+	,rewindCooldown  // time in sec
 
 //  damage factors
 	,dmgFromHit, dmgFromScrap    // reduced

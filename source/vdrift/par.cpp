@@ -11,6 +11,7 @@ SParams::SParams()
 	raylen = 1.5f;  // wheel ray cast length
 //  GAME
 	rewindSpeed = 5.f;  // 5 secs in 1 sec
+	rewindCooldown = 1.f;  // 1 sec
 
 /// <><> Damage factors <><>
 	dmgFromHit  = 0.5f;  dmgFromScrap  = 1.0f;   // reduced
