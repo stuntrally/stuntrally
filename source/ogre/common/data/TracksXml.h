@@ -50,8 +50,11 @@ public:
 	std::map<std::string, int> trkmap;  // 0 if not found
 	std::map<std::string, float> times;  // track times
 	
+	int cntAll;
 	bool LoadIni(std::string file, bool check);
-	TracksXml() {  }
+	TracksXml()
+		:cntAll(0)
+	{	}
 };
 
 

@@ -36,6 +36,7 @@ CGuiCom::CGuiCom(App* app1)
 	,trkList(0), imgTrkIco1(0),imgTrkIco2(0)
 	, bListTrackU(0)
 	,edTrkFind(0), resList(0)
+	,txtTracksFAll(0), txtTracksFCur(0)
 {
 	pSet = app1->pSet;
 	sc = app1->scn->sc;

@@ -208,6 +208,17 @@
 			<Property key="Caption" value="#A0E0E0#{max}"/>
 		</Widget>
 
+		<Widget type="TextBox" skin="TextBox" position="400 10 150 24" name="TracksFCur">
+			<Property key="Caption" value="#A0E0E0#{Road_Cur}"/>
+			<Property key="TextColour" value="0.65 0.8 0.95"/>
+			<Property key="Alpha" value="0.7"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="600 10 150 24" name="TracksFAll">
+			<Property key="Caption" value="#A0E0E0#{RplAll}"/>
+			<Property key="TextColour" value="0.6 0.75 0.9"/>
+			<Property key="Alpha" value="0.7"/>
+		</Widget>
+
 		<Widget type="Slider" skin="Slider" position="264 162 190 20" name="min0"/>
 		<Widget type="Slider" skin="Slider" position="264 202 190 20" name="min1"/>
 		<Widget type="Slider" skin="Slider" position="264 232 190 20" name="min2"/>
@@ -688,7 +699,6 @@
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<UserString key="tip" value="#{TipFind}"/>
 				</Widget>
-				<!--<Widget type="Button" skin="Button" position="116 472 40 24" name="TrkFilter">-->
 				<Widget type="Button" skin="Button" position="116 7 40 24" name="TrkFilter">
 					<Property key="Caption" value="Y"/>
 					<Property key="Alpha" value="0.7"/>

@@ -108,7 +108,7 @@ bool UserXml::SaveXml(string file)
 bool TracksXml::LoadIni(string file, bool check)
 {
 	//  clear
-	trks.clear();  trkmap.clear();  times.clear();
+	trks.clear();  trkmap.clear();  times.clear();  cntAll = 0;
 
 	int i=1;  // 0 = not found
 	char s[256], name[32],scenery[24],author[32];
@@ -180,6 +180,8 @@ bool TracksXml::LoadIni(string file, bool check)
 			if (t.testC)  t.test = false;  else
 				t.test  = t.name.length() > 4 ? t.name.substr(0,4)=="Test"  : false;
 			t.vdrift = author == "VDrift";
+			if (!t.testC && !t.test)
+				++cntAll;
 
 			trks.push_back(t);
 			trkmap[name] = i++;

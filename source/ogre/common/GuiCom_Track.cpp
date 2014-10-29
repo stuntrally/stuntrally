@@ -193,6 +193,8 @@ void CGuiCom::GuiInitTrack()
 	BtnC("TrkFilter", btnTrkFilter);
 	SV* sv;  Ck* ck;
 	ck= &ckTrkFilter;  ck->Init("TracksFilter", &pSet->tracks_filter);  CevC(TrkFilter);
+	txtTracksFAll = fTxt("TracksFAll");
+	txtTracksFCur = fTxt("TracksFCur");
 	
 	//  columns  ----
 	li->removeAllColumns();  int c=0;

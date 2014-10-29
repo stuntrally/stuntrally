@@ -6,6 +6,7 @@
 #include "../common/data/SceneXml.h"
 #include "../common/data/TracksXml.h"
 #include "../common/data/CData.h"
+#include "../common/CScene.h"
 #ifndef SR_EDITOR
 	#include "../../vdrift/game.h"
 	#include "../CGame.h"
@@ -129,9 +130,12 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 				AddTrkL(name, 0, (*i).ti);
 				if (!pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
 					trkList->setIndexSelected(si);  }
-				ii++;
+				++ii;
 			}
 		}
+		txtTracksFCur->setCaption(TR("#{Road_Cur}: "+toStr(ii)));
+		txtTracksFAll->setCaption(TR("#{RplAll}: "+toStr(app->scn->data->tracks->cntAll)));
+		
 		//  user
 		for (strlist::iterator i = liTracksUser.begin(); i != liTracksUser.end(); ++i)
 		{
@@ -142,7 +146,7 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 				if (pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
 					trkList->setIndexSelected(si);
 					bFound = true;  bListTrackU = 1;  }
-				ii++;
+				++ii;
 		}	}
 
 		//  not found last track, set 1st  .. only 
