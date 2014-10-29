@@ -37,7 +37,8 @@ GAME::GAME(ostream & info_out, ostream & err_out, SETTINGS* pSettings) :
 	track(info_out, err_out), /*tracknode(NULL),*/
 	framerate(1.0 / pSettings->game_fq),
 	app(NULL),
-	tire_ref_id(0)
+	tire_ref_id(0),
+	reloadSimNeed(0),reloadSimDone(0)
 {
 	track.pGame = this;
 	carcontrols_local.first = NULL;
@@ -403,6 +404,13 @@ void GAME::Test()
 //----------------------------------------------------------------------------------------------------------------------------
 bool GAME::OneLoop(double dt)
 {
+	if (reloadSimNeed)
+	{	// 	upd tweak tire save
+		reloadSimNeed = false;
+		ReloadSimData();
+		reloadSimDone = true;
+	}	
+
 	PROFILER.beginBlock(" oneLoop");
 
 	clocktime += dt;  //only for stats

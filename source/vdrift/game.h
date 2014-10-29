@@ -33,6 +33,7 @@ public:
 	bool OneLoop(double dt);
 
 	std::string strProfInfo;
+	bool reloadSimNeed,reloadSimDone;  //for tweak tire save
 	
 	bool ParseArguments(std::list <std::string> & args);
 	bool InitializeSound();

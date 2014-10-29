@@ -3,6 +3,7 @@
 #include "common/Gui_Def.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
+#include "../vdrift/game.h"
 #include "CGame.h"
 #include "CGui.h"
 #include "common/data/CData.h"
@@ -686,4 +687,9 @@ void CGui::GuiUpdate()
 		CarListUpd(false);
 	}
 
+	//  upd tweak tire save
+	if (app->pGame->reloadSimDone)
+	{	app->pGame->reloadSimDone = false;
+		FillTweakLists();
+	}
 }

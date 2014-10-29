@@ -165,19 +165,33 @@ void CGui::listTwkTiresOrig(Li li, size_t id)
 	liTwkTiresUser->setIndexSelected(ITEM_NONE);
 }
 
+//  Load Tire
 void CGui::btnTweakTireLoad(WP)
 {
-	//  load as current..
+	if (app->carModels.size() < 1)  return;
+	CAR* pCar = app->carModels[0]->pCar;
+	if (!pCar)  return;
+
+	//  load as current, from wheel
+	CARTIRE* tire = pCar->dynamics.GetTire(FRONT_LEFT);
+	if (!tire)  return;
+
+	string s, st = tire->name;
 	size_t id = liTwkTiresUser->getIndexSelected();
-	if (id != ITEM_NONE)
-	{
-		
-		return;
+	if (id != ITEM_NONE)  // user
+		s = liTwkTiresUser->getItemNameAt(id).substr(7);
+	else
+	{	id = liTwkTiresOrig->getIndexSelected();
+		if (id != ITEM_NONE)
+			s = liTwkTiresOrig->getItemNameAt(id).substr(7);
 	}
-	id = liTwkTiresOrig->getIndexSelected();
-	if (id != ITEM_NONE)
+	if (!s.empty())
 	{
+		int ti = pGame->tires_map[s]-1;  if (ti == -1)  return;
+		*tire = pGame->tires[ti];  // set pars
+		tire->CalculateSigmaHatAlphaHat();
 		
+		txtTweakTire->setCaption(TR("#FFFF30#{Loaded}: "+s+" into "+st));
 		return;
 	}
 }
@@ -214,7 +228,7 @@ void CGui::FillTweakLists()
 	}
 }
 
-//  surfaces
+//  Surfaces
 //-----------------------------------------------------------------------------------------------------------
 void CGui::listTwkSurfaces(Li, size_t id)
 {
@@ -269,7 +283,7 @@ void CGui::comboSurfType(Cmb cmb, size_t val)
 }
 
 
-//  Tweak collisions
+//  collisions
 //-----------------------------------------------------------------------------------------------------------
 
 void CGui::TweakColSave()
@@ -340,6 +354,7 @@ void CGui::TweakToggle()
 	static string lastPath = "";
 	if (lastPath != path || app->ctrl)  // force reload  ctrl-alt-Z
 	{	lastPath = path;
+	
 		TweakCarLoad();
 		TweakColLoad();
 		FillTweakLists();
@@ -436,17 +451,21 @@ const String CGui::csAlign[18][2] = {
 const String CGui::sCommon = "#C8C8F0Pacejka's Magic Formula coeffs\n";
 
 
-//  tweak save car and reload game
+//  Save Tire
 void CGui::TweakTireSave()
 {
-	//TODO: game reload tires, user
-	// ed car setup, name, load
-	// jump to section,  help on current line
+	//Nope todos: sliders for vals=
+	// jump to section-, help on current line=
 	// ed find text? syntax clr?=
-	
-	const CARTIRE* tire = app->carModels[0]->pCar->dynamics.GetTire(FRONT_LEFT);  //!
+
+	txtTweakTire->setCaption("");
+	if (app->carModels.size() < 1)  return;
+	CAR* pCar = app->carModels[0]->pCar;
+	if (!pCar)  return;
+
+	const CARTIRE* tire = app->carModels[0]->pCar->dynamics.GetTire(FRONT_LEFT);
+	if (!tire)  return;
 	const std::vector <Dbl>& a = tire->lateral, b = tire->longitudinal, c = tire->aligning;
-	//#define f2s(f)  fToStr(f, 4,6);
 	
 	string file = edTweakTireSet->getCaption();
 	string pathUserT = PATHMANAGER::CarSimU() + "/" + pSet->game.sim_mode + "/tires/";
@@ -454,9 +473,7 @@ void CGui::TweakTireSave()
 	file = pathUserT+"/"+file+".tire";
 	if (PATHMANAGER::FileExists(file))
 	{
-		if (txtTweakTire)
-		{	txtTweakTire->setCaption(TR("#{AlreadyExists}."));
-			txtTweakTire->setTextColour(Colour(1,0.2,0.2));  }
+		txtTweakTire->setCaption(TR("#FF3030#{AlreadyExists}."));
 		return;
 	}
 
@@ -512,9 +529,18 @@ void CGui::TweakTireSave()
 	fo << "c17="<<c[i++] << "	# Vertical shift at load = 0 (Nm)   C17\n";
 	fo << "#---------\n";
 
-	if (txtTweakTire)
-	{	txtTweakTire->setCaption(TR("#{Saved}."));
-		txtTweakTire->setTextColour(Colour(0.2,1,0.2));  }
 
-	//Fill lists, reload sim tires..
+	txtTweakTire->setCaption(TR("#30FF30#{Saved}."));
+
+	//  LoadTires in game thread, FillTweakLists after, in render
+	pGame->reloadSimNeed = true;
+	//todo: this resets current, load it back..
+}
+
+
+//  reset all
+void CGui::btnTweakTireReset(WP)
+{
+	pGame->reloadSimNeed = true;
+	txtTweakTire->setCaption(TR("#FF9030#{Reset}."));
 }

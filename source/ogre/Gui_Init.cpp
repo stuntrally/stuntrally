@@ -613,6 +613,7 @@ void CGui::InitGui()
 	liTwkTiresUser = fLi("TweakTiresUser");  Lev(liTwkTiresUser, TwkTiresUser);
 	liTwkTiresOrig = fLi("TweakTiresOrig");  Lev(liTwkTiresOrig, TwkTiresOrig);
 	Btn("TweakTireLoad",  btnTweakTireLoad);
+	Btn("TweakTireReset", btnTweakTireReset);
 
 
 	///  tweak surfaces  ----
