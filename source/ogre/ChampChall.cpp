@@ -147,7 +147,7 @@ int App::GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldSta
 //-----------------------------------------------------------------------------------------------
 void CGui::Ch_XmlLoad()
 {
-	#if 1  /* stats */
+	/* stats */
 	float time = 0.f;  int trks = 0;
 	for (std::map<std::string, float>::const_iterator it = data->tracks->times.begin();
 		it != data->tracks->times.end(); ++it)
@@ -159,7 +159,7 @@ void CGui::Ch_XmlLoad()
 			++trks;
 	}	}
 	LogO("Total tracks: "+ toStr(trks) + ", total time: "+ CHud::StrTime2(time/60.f)+" h:m");
-	#endif
+
 	
 	#if 0  /* test race pos,points */
 	float trk = 100.f;

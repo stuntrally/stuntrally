@@ -837,7 +837,7 @@
 	</challenge>
 
 	<challenge name="Surreal Worlds" ver="1" difficulty="4" type="5" 
-			descr="Very unrealistic, pretty and sometimes shocking environments.">
+			descr="Very unrealistic, yet pretty and sometimes shocking environments.">
 		<sim boost="2" />
 		<car names="ES|S8|S1|FN|SZ" />
 		<pass avgPoints="11" />

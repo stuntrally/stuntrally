@@ -191,7 +191,10 @@ void CGui::btnTweakTireLoad(WP)
 		*tire = pGame->tires[ti];  // set pars
 		tire->CalculateSigmaHatAlphaHat();
 		
-		txtTweakTire->setCaption(TR("#FFFF30#{Loaded}: "+s+" into "+st));
+		if (!sTireLoad.empty())
+			sTireLoad = "";
+		else
+			txtTweakTire->setCaption(TR("#FFFF30#{Loaded}: "+s+" into "+st));
 		return;
 	}
 }
@@ -215,9 +218,12 @@ void CGui::FillTweakLists()
 	{
 		const CARTIRE& ct = pGame->tires[i];
 		if (ct.user)
-			liTwkTiresUser->addItem("#C0F0F0"+ct.name);
-		else
-			liTwkTiresOrig->addItem("#A0D0F0"+ct.name);
+		{	liTwkTiresUser->addItem("#C0F0F0"+ct.name);
+			if (ct.name == sTireLoad)  liTwkTiresUser->setIndexSelected(liTwkTiresUser->getItemCount()-1);
+		}else
+		{	liTwkTiresOrig->addItem("#A0D0F0"+ct.name);
+			if (ct.name == sTireLoad)  liTwkTiresOrig->setIndexSelected(liTwkTiresUser->getItemCount()-1);
+		}
 		cmbSurfTire->addItem(ct.name);
 	}
 	//  surf
@@ -467,10 +473,10 @@ void CGui::TweakTireSave()
 	if (!tire)  return;
 	const std::vector <Dbl>& a = tire->lateral, b = tire->longitudinal, c = tire->aligning;
 	
-	string file = edTweakTireSet->getCaption();
+	string name = edTweakTireSet->getCaption();
 	string pathUserT = PATHMANAGER::CarSimU() + "/" + pSet->game.sim_mode + "/tires/";
 	PATHMANAGER::CreateDir(pathUserT, pGame->error_output);
-	file = pathUserT+"/"+file+".tire";
+	string file = pathUserT+"/"+name+".tire";
 	if (PATHMANAGER::FileExists(file))
 	{
 		txtTweakTire->setCaption(TR("#FF3030#{AlreadyExists}."));
@@ -533,8 +539,8 @@ void CGui::TweakTireSave()
 	txtTweakTire->setCaption(TR("#30FF30#{Saved}."));
 
 	//  LoadTires in game thread, FillTweakLists after, in render
+	sTireLoad = name;
 	pGame->reloadSimNeed = true;
-	//todo: this resets current, load it back..
 }
 
 

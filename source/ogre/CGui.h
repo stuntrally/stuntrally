@@ -146,7 +146,7 @@ public:
 	Li liTwkTiresUser, liTwkTiresOrig;
 	void listTwkTiresUser(Li, size_t), listTwkTiresOrig(Li, size_t);
 	void btnTweakTireLoad(WP), btnTweakTireReset(WP);
-	void FillTweakLists();
+	void FillTweakLists();  Ogre::String sTireLoad;
 	
 	///  surface
 	Li liTwkSurfaces;  void listTwkSurfaces(Li, size_t);

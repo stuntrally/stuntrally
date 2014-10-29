@@ -11,29 +11,38 @@
 		<t name="Uni3-Cloud"/>
 		<t name="Mos3-Air"/>
 		<t name="Des13-Winding"/>
-		<t name="Mrs3-Hot"/>
+
 		<t name="Des16-AsphaltJumps"/>
 		<t name="Wnt15-SkiJump"/>
 		<t name="Aus7-MiningCity"/>
 		<t name="Oth1-FogCity"/>
+
+		<t name="Mrs3-Hot"/>
 		<t name="Sur1-Surreal"/>
 		<t name="Tox2-AcidLakes"/>
 		<t name="Cry2-MagicFog"/>
+
 		<t name="Atm7-Industrial"/>
 		<t name="Des18-Shuttle"/>
 		<t name="Atm8-Ultima"/>
+
 		<t name="Stn1-StoneQuarry"/>
 		<t name="Spc1-Minerals"/>
+
 		<t name="Mud4-Taiga"/>
+
 		<t name="Aln1-AlienBase"/>
-		<t name="Wnt16-IcyRiver"/>
-		<t name="Blk1-Darkness"/>
-		<t name="Aln2-Freefall"/>
-		<t name="Can7-RedWavy"/>
-		<t name="Vlc12-LavaPools"/>
 		<t name="Mrs4-Platforms"/>
-		<t name="Isl14-Ocean"/>
+		<t name="Aln2-Freefall"/>
+
+		<t name="Wnt16-IcyRiver"/>
 		<t name="Wnt17-FrozenGarden"/>
+		<t name="Can7-RedWavy"/>
+
+		<t name="Blk1-Darkness"/>
+		<t name="Vlc12-LavaPools"/>
+
+		<t name="Isl14-Ocean"/>
 		<t name="Sur2-GreenStar"/>
 -->
 

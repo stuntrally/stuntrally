@@ -690,6 +690,8 @@ void CGui::GuiUpdate()
 	//  upd tweak tire save
 	if (app->pGame->reloadSimDone)
 	{	app->pGame->reloadSimDone = false;
+
 		FillTweakLists();
+		btnTweakTireLoad(0);  // load back
 	}
 }
