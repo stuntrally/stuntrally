@@ -202,7 +202,7 @@
 	<Tag name="Brush_Size">Размер</Tag>
 	<Tag name="HDRParam2">Яркость</Tag>
 	<Tag name="HDRParam3">Зерно</Tag>
-	<Tag name="SC_Toxic">Toxic</Tag>
+	<Tag name="SC_Toxic">Ядовитый</Tag>
 	<Tag name="HDRParam1">Выдержка</Tag>
 	<Tag name="TipRoadDist2">Дополнительное расстояние до дороги.</Tag>
 	<Tag name="InputBrushFilter">1,2 - фильтр частоты (размер ядра)</Tag>
@@ -491,7 +491,7 @@
 	<Tag name="ChampEndCongrats">Поздравляем !</Tag>
 	<Tag name="TiresEdit2">1,2 или Num /,* - изм. знач.</Tag>
 	<Tag name="CamInfoStrings">Тип,Откл.,Накл.,Дист.,Высота,Скорость,Смещ.,Влево,Вправо,Середина,Колесо,сдвиг,Вращ.,сброс,движ.,H,Поз.</Tag>
-	<Tag name="TipGrassColorMap">Отображение цвета травы для ландшафта, обычно такой же как у материала травы. Дополнительная окраска травы.</Tag>
+	<Tag name="TipGrassColorMap">Отображение цвета травы для пейзажа, обычно такой же как у материала травы. Дополнительная окраска травы.</Tag>
 	<Tag name="Multiplayer">По сети</Tag>
 	<Tag name="ListeningOnPort">Ожидание порта</Tag>
 	<Tag name="TiresEdit4">End - знач. параметров в ряд</Tag>
@@ -754,7 +754,7 @@
 	<Tag name="FogStart">начало</Tag>
 	<Tag name="InputToggleGUIMode">F1 или ` - режим GUI</Tag>
 	<Tag name="InpSet_AxisFullInv">1 ось инверсия</Tag>
-	<Tag name="TipGrassMaterial">Материал травы (тип) для этого слоя, выбран чтобы подобрать окружение трека.</Tag>
+	<Tag name="TipGrassMaterial">Материал травы (тип) для этого слоя, выбран чтобы подобрать пейзаж трека.</Tag>
 	<Tag name="TipRearThrottleInverse">Инверсия функции газа с тормозом задней передачи.</Tag>
 	<Tag name="LS_ROAD">Загрузка дороги</Tag>
 	<Tag name="CarDesc_V2">Ещё один парящий космический корабль. Немного тяжелее и медление, но не так легко уходит в сторону.</Tag>
@@ -1030,7 +1030,7 @@
 	<Tag name="EnterSave">Enter - сохр.</Tag>
 	<Tag name="ColGloss">Блеск</Tag>
 	<Tag name="TipTerrainGenerate">Генерирует новый ландшафт из функций шума, используя все параметры ниже.</Tag>
-	<Tag name="SC_Surreal">Surreal</Tag>
+	<Tag name="SC_Surreal">Как сон</Tag>
 	<Tag name="TipRainSnowInt">Интенсивность дождь/снег (напр. 1000)</Tag>
 	<Tag name="TrackLength">Длина</Tag>
 	<Tag name="BumpWavelen">Ухаб: длина волны</Tag>
@@ -1081,7 +1081,7 @@
 	<Tag name="TipSunSpecular">Отражающий цвет солнечного света. R G B значения от 0 до 1 (напр. 0.6 0.6 0.6)</Tag>
 	<Tag name="ColSat">Насыщен.</Tag>
 	<Tag name="Collis.">Столк.</Tag>
-	<Tag name="Scenery">Окружение</Tag>
+	<Tag name="Scenery">Пейзаж</Tag>
 	<Tag name="RenameAllOld">Переименовать</Tag>
 	<Tag name="SC_Autumn">Осень</Tag>
 	<Tag name="Track">Трек</Tag>

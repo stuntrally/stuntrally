@@ -202,7 +202,7 @@
 	<Tag name="Brush_Size">Taille</Tag>
 	<Tag name="HDRParam2">Luminosité</Tag>
 	<Tag name="HDRParam3">Grain</Tag>
-	<Tag name="SC_Toxic">Toxic</Tag>
+	<Tag name="SC_Toxic">Toxique</Tag>
 	<Tag name="HDRParam1">Exposition</Tag>
 	<Tag name="TipRoadDist2">Distance additionnelle à la route</Tag>
 	<Tag name="InputBrushFilter">1,2 - fréquence du filtre (taille du noyau)</Tag>
@@ -250,7 +250,7 @@
 	<Tag name="UserDir">Chemin utilisateur (journaux, fichiers de configuration, etc.)</Tag>
 	<Tag name="InputMinVal">Valeur Minimum</Tag>
 	<Tag name="NetServer">Serveur</Tag>
-	<Tag name="DoesntExist">Doesn't exist</Tag>
+	<Tag name="DoesntExist">N'existe pas</Tag>
 	<Tag name="Brush_Offset">Décalage</Tag>
 	<Tag name="NetworkError">Erreur réseau</Tag>
 	<Tag name="InputMain">Principal</Tag>
@@ -377,7 +377,7 @@
 	<Tag name="Development">Développement</Tag>
 	<Tag name="SetCamTo">Caméra définie :</Tag>
 	<Tag name="RplMaxNumViewports">Nombre de vues maximum</Tag>
-	<Tag name="SingleRace">Simple course</Tag>
+	<Tag name="SingleRace">Course simple</Tag>
 	<Tag name="TipNewGameCar">Redémarrer la partie</Tag>
 	<Tag name="Road_Loop">Boucle</Tag>
 	<Tag name="Road_AngleManual">Manuel</Tag>
@@ -425,7 +425,7 @@
 	<Tag name="ColumnNSides">Côtés d'une colonne</Tag>
 	<Tag name="RplAutoRec">Enregistrer un replay automatiquement</Tag>
 	<Tag name="TipCarsList">Liste des voitures. Appuyez sur Entrée ou [Nouvelle partie] pour les conduire.</Tag>
-	<Tag name="NoWrongChks">Don't show wrong checkpoint messages</Tag>
+	<Tag name="NoWrongChks">Pas de msg. de mauvais point de contrôle</Tag>
 	<Tag name="HDROrigImage">Intensité de l'ébouissement</Tag>
 	<Tag name="Brushes">Pinceaux</Tag>
 	<Tag name="InputFluidsPrevNext">Pg.préc,Pg.suiv. (ou molette) - liquide précédent/suivant</Tag>
@@ -1030,7 +1030,7 @@
 	<Tag name="EnterSave">Entrer - sauvegarder</Tag>
 	<Tag name="ColGloss">Brillance</Tag>
 	<Tag name="TipTerrainGenerate">Génère du nouveau terrain avec des fonctions de bruit en utilisant les réglages ci-dessous.</Tag>
-	<Tag name="SC_Surreal">Surreal</Tag>
+	<Tag name="SC_Surreal">Surréaliste</Tag>
 	<Tag name="TipRainSnowInt">Intensité de la pluie/neige (par exemple 1000)</Tag>
 	<Tag name="TrackLength">Longueur</Tag>
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
@@ -1082,7 +1082,7 @@
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="Collis.">Collision</Tag>
 	<Tag name="Scenery">Scène</Tag>
-	<Tag name="RenameAllOld">Rename All Old</Tag>
+	<Tag name="RenameAllOld">Renommer tous les anciens</Tag>
 	<Tag name="SC_Autumn">Automne</Tag>
 	<Tag name="Track">Circuit</Tag>
 	<Tag name="ScaleMul">Multiplicateur d'échelle</Tag>

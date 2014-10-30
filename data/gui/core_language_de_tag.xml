@@ -44,7 +44,7 @@
 	<Tag name="TBPosition">Position</Tag>
 	<Tag name="Pipe">Rohre</Tag>
 	<Tag name="Graphs">Graphen</Tag>
-	<Tag name="Diff5">Sehr schwierig</Tag>
+	<Tag name="Diff5">Sehr schwer</Tag>
 	<Tag name="TerNormal">Normal</Tag>
 	<Tag name="CarType_Spaceship">Raumschiff</Tag>
 	<Tag name="NeedNewGame">* neues Spiel nötig</Tag>
@@ -57,7 +57,7 @@
 	<Tag name="Chall_Rally">Rallye</Tag>
 	<Tag name="TipChangeGloss">Auto-Farbenglanz ändern (matt bis glänzend).</Tag>
 	<Tag name="Surface">Oberfläche</Tag>
-	<Tag name="ChallEndFinished">Du hast die Herausforderung gewonnen.</Tag>
+	<Tag name="ChallEndFinished">Sie haben die Herausforderung gewonnen.</Tag>
 	<Tag name="Allowed">Erlaubt</Tag>
 	<Tag name="CarDesc_V1">Ein Raumschiff, dass zum Luftkissenfahrzeug umfunktioniert wurde. Sehr schnell und leicht zu lenken. Kümmert sich nicht um Bodenwellen. Aber aufgrund der kleinen Größe rutscht es zur Seite.</Tag>
 	<Tag name="DevKeys">Entwicklertasten. Strg-F: global; Alt-Umschalt-1 bis 6: Teststrecken laden.</Tag>
@@ -388,7 +388,7 @@
 	<Tag name="InputObjectsMove">1 - Bewegen LMT - Ebene XZ RMT - Y Höhe</Tag>
 	<Tag name="TweakOriginal">Original</Tag>
 	<Tag name="Stage">Abschnitt</Tag>
-	<Tag name="NetRefreshList">Liste herunterladen/aktualisieren</Tag>
+	<Tag name="NetRefreshList">Liste holen/aktualisieren</Tag>
 	<Tag name="TerGenPow">Potenz (Form)</Tag>
 	<Tag name="None">Keine</Tag>
 	<Tag name="MessageBox_Abort">Abbrechen</Tag>
@@ -510,7 +510,7 @@
 	<Tag name="InputRoadIns">Einfg - Punkt danach einfügen, mit Alt - davor</Tag>
 	<Tag name="TweakEdit1">Alt-Z - Feineinstellungsfenster umschalten (Auto bearbeiten)</Tag>
 	<Tag name="InputBrushParams">Pinseleigenschaften</Tag>
-	<Tag name="min">min.</Tag>
+	<Tag name="min">Min.</Tag>
 	<Tag name="Hint-11text">Fahren Sie nicht zu schnell in Rohren und Loopings. Sie würden den Fahrzeugboden aufgrund hoher Beschleunigung beschädigen.</Tag>
 	<Tag name="Boost">Boost</Tag>
 	<Tag name="InputStartAltMMB">Alt-MMB - Rotation zurücks.</Tag>
@@ -655,7 +655,7 @@
 	<Tag name="Hint-12">Fahrzeuge</Tag>
 	<Tag name="Hint-13">Simulation</Tag>
 	<Tag name="Hint-14">Bildwiederholrate</Tag>
-	<Tag name="UnitMi">mi</Tag>
+	<Tag name="UnitMi">mil</Tag>
 	<Tag name="UnitM">m</Tag>
 	<Tag name="EditTerrainMode">Geländebearbeitungs-Modus</Tag>
 	<Tag name="TipTireParType3">Reifenpartikel Typ 3.</Tag>
@@ -703,7 +703,7 @@
 	<Tag name="RplTime">Zeit</Tag>
 	<Tag name="SC_IslandDark">InselDunkel</Tag>
 	<Tag name="MessageBox_Retry">Nochmal versuchen</Tag>
-	<Tag name="RplGhostOther">Anderer Autogeist (wenn aktueller nicht verfügbar)</Tag>
+	<Tag name="RplGhostOther">Anderer Autogeist (wenn Aktueller nicht verfügbar)</Tag>
 	<Tag name="TipTerLHMin">Beginnende Geländehöhe der Ebene.</Tag>
 	<Tag name="Yes">Ja</Tag>
 	<Tag name="ApplyShadows">Schatten anwenden</Tag>
@@ -764,7 +764,7 @@
 	<Tag name="ObjRocks">Steine</Tag>
 	<Tag name="ShortcutsInfo">Mit Alt drücken für schnellen Zugriff auf Tab (oder Untertab). Nochmal drücken wird durchrotieren.</Tag>
 	<Tag name="AlignWidthMul">Breite multiplizieren</Tag>
-	<Tag name="LoadingDesc">Laden, bitte warten...</Tag>
+	<Tag name="LoadingDesc">Laden, bitte warten ...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximale Höhe eines Grasbüschels.</Tag>
 	<Tag name="Needed">Erforderlich</Tag>
 	<Tag name="Road_Pipe">Rohre</Tag>
@@ -827,7 +827,7 @@
 	<Tag name="TipModelVisDist">Sichtbarkeitsdistanz für 3D-Modelle, nach der werden sie zu 2D-Betrügern.</Tag>
 	<Tag name="NetAddress">Adresse</Tag>
 	<Tag name="TireEdCommonY">Gemeinsame Y-Reichweite</Tag>
-	<Tag name="Road_sel">sel</Tag>
+	<Tag name="Road_sel">Ausw</Tag>
 	<Tag name="AutoLoad">Strecke autom. laden</Tag>
 	<Tag name="Car_MaxTorque">Max. Drehmoment</Tag>
 	<Tag name="RplGhost">Geist anzeigen - beste Runde</Tag>
@@ -846,7 +846,7 @@
 	<Tag name="VegetCol">Vegetations-Kollision</Tag>
 	<Tag name="AntiAliasing">Kantenglättung</Tag>
 	<Tag name="RoadStats">Straßen-Statist.</Tag>
-	<Tag name="FinishedCommaPlace">Beendet, Platz</Tag>
+	<Tag name="FinishedCommaPlace">Beendet auf Platz</Tag>
 	<Tag name="HeightMax">Max. Höhe</Tag>
 	<Tag name="PipeMaterials">Rohrmaterialien</Tag>
 	<Tag name="ChallInfo">Im Herausforderungsmodus wurde das Spiel fertig aufgesetzt, die meisten Einstellungen sind unveränderlich. Zeit oder Position ist benötigt. Wenn Sie bestehen, gewinnen sie einen Bronze-, Silber- oder Gold-Preis.</Tag>
@@ -948,7 +948,7 @@
 	<Tag name="TipFind">Geben Sie hier einen Teil des Namens der Strecke, nach der Sie suchen, ein (filtert die Liste).</Tag>
 	<Tag name="InputRoadOnPipe">8 - umschalten auf Rohr (Strg - nur markieren)</Tag>
 	<Tag name="scale">Skalierung</Tag>
-	<Tag name="UnitMph">mi/h</Tag>
+	<Tag name="UnitMph">mil/h</Tag>
 	<Tag name="InputSaveTrack">F4 - Strecke speichern</Tag>
 	<Tag name="InputObjectsType">-,= - Objekttyp wechseln</Tag>
 	<Tag name="ColHue">Farbton</Tag>
@@ -1069,7 +1069,7 @@
 	<Tag name="Diff7">Ultra</Tag>
 	<Tag name="Diff4">Schwer</Tag>
 	<Tag name="ColBright">Helligkeit</Tag>
-	<Tag name="DeleteTrack">Strecke löschen ?</Tag>
+	<Tag name="DeleteTrack">Strecke löschen?</Tag>
 	<Tag name="CarDesc_S1">Zweitbestes Rallyeauto im Spiel, fahrbar auf allen Strecken mit der besten Erfahrung, ähnlich zur ES.</Tag>
 	<Tag name="TipTrkScreenEditor">Bildschirmfoto der ausgewählten Strecke.</Tag>
 	<Tag name="InputObjectsRot">2 - Drehen lokal (Alt- global) LMT: Z RMT: Y MMT: X</Tag>
@@ -1098,7 +1098,7 @@
 	<Tag name="InputSubTabSpace">Leer - durch Untertabs blättern (Umschalt: zurück)</Tag>
 	<Tag name="TipSurfType">Typ der Oberfläche, bestimmt das Geräusch.</Tag>
 	<Tag name="NextStage">Nächste Etappe</Tag>
-	<Tag name="NetWaiting">Wartend...</Tag>
+	<Tag name="NetWaiting">Warten ...</Tag>
 	<Tag name="Peers">Peers</Tag>
 	<Tag name="CarDesc_S8">Gutes Rallyeauto, fahrbar auf allen Strecken. Ähnlich zur S1, aber kürzer und lenkbarer.</Tag>
 	<Tag name="Reverse">Rückwärts</Tag>
@@ -1109,7 +1109,7 @@
 	<Tag name="NetNew">Neues Spiel</Tag>
 	<Tag name="Gravity">Schwerkraft</Tag>
 	<Tag name="InputObjectsScaleReset">Umschalt-3 - Skalierung auf 1 (Mit Umschalt auf 0,5)</Tag>
-	<Tag name="CarStart">Auto Start</Tag>
+	<Tag name="CarStart">Auto-Start</Tag>
 	<Tag name="ProfilerTxt">Profiler-Text </Tag>
 	<Tag name="FPS">FPS, Dreiecke, Batches</Tag>
 	<Tag name="NetJoinGame">Spiel beitreten</Tag>
