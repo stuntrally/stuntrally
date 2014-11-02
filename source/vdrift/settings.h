@@ -3,7 +3,7 @@
 #include "../ogre/common/settings_com.h"
 
 
-#define SET_VER  2440  // 2.5
+#define SET_VER  2500  // 2.5
 
 
 enum eGraphType  {
