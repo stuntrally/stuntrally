@@ -610,7 +610,7 @@ material sign
 material sign_post
 {
 	parent base
-	diffuseMap sign_back.png
+	diffuseMap sign_back.jpg
 	normalMap metal_01_norm.jpg
 	specMap metal_01_spec.jpg
 	specMap_rgb true
