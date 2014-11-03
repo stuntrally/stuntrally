@@ -220,7 +220,7 @@
 	<Tag name="InputKeyAllPreset">Voreinstellung</Tag>
 	<Tag name="Chall_Endurance">Ausdauer</Tag>
 	<Tag name="InpSet_Slow">Langsam</Tag>
-	<Tag name="TimeMS">m:s</Tag>
+	<Tag name="TimeMS">min:s</Tag>
 	<Tag name="InputAssignKey">&lt;Zuweisen&gt;</Tag>
 	<Tag name="Wireframe">Drahtgitter</Tag>
 	<Tag name="Brush_Force">Kraft</Tag>
@@ -388,7 +388,7 @@
 	<Tag name="InputObjectsMove">1 - Bewegen LMT - Ebene XZ RMT - Y Höhe</Tag>
 	<Tag name="TweakOriginal">Original</Tag>
 	<Tag name="Stage">Abschnitt</Tag>
-	<Tag name="NetRefreshList">Liste holen/aktualisieren</Tag>
+	<Tag name="NetRefreshList">Liste aktualisieren</Tag>
 	<Tag name="TerGenPow">Potenz (Form)</Tag>
 	<Tag name="None">Keine</Tag>
 	<Tag name="MessageBox_Abort">Abbrechen</Tag>

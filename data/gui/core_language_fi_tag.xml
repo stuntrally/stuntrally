@@ -46,7 +46,7 @@
 	<Tag name="Graphs">Käyrät</Tag>
 	<Tag name="Diff5">Erittäin vaikea</Tag>
 	<Tag name="TerNormal">Normaali</Tag>
-	<Tag name="CarType_Spaceship">Spaceship</Tag>
+	<Tag name="CarType_Spaceship">Avaruusalus</Tag>
 	<Tag name="NeedNewGame">* peli tarvitsee aloittaa alusta</Tag>
 	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
 	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
@@ -245,7 +245,7 @@
 	<Tag name="AutoRear">Automaattinen peruutusvaihde</Tag>
 	<Tag name="NumLaps">Kierrosten lukumäärä</Tag>
 	<Tag name="Road_OnTerrain">On Terrain</Tag>
-	<Tag name="Updating">Updating</Tag>
+	<Tag name="Updating">Päivitetään</Tag>
 	<Tag name="Ghost">Haamu</Tag>
 	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
 	<Tag name="InputMinVal">Minimiarvo</Tag>
@@ -335,7 +335,7 @@
 	<Tag name="InputBrushSize">-,=  (or Wheel)  -  Size</Tag>
 	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
 	<Tag name="SC_JungleDark">JungleDark</Tag>
-	<Tag name="Saving">Saving</Tag>
+	<Tag name="Saving">Tallennetaan</Tag>
 	<Tag name="EscQuit">Esc lopettaa</Tag>
 	<Tag name="Gauges">Mittarit (moottorin kierrosmäärä, nopeus)</Tag>
 	<Tag name="LengthDim">Length dim.</Tag>
@@ -348,11 +348,11 @@
 	<Tag name="GrColorMap">Color map</Tag>
 	<Tag name="TipBumpAmp">Amplitude of additional bumps on surface (how high).</Tag>
 	<Tag name="InputFluidsMove">LMB - move   RMB - height</Tag>
-	<Tag name="Loaded">Loaded</Tag>
+	<Tag name="Loaded">Ladattu</Tag>
 	<Tag name="CountdownTime">Kilpailun lähtölaskenta</Tag>
 	<Tag name="ReflMode_single">Yksittäinen</Tag>
 	<Tag name="InputRoadSelectMany">Valitse (useita)</Tag>
-	<Tag name="Car_TopSpeed">Top Speed</Tag>
+	<Tag name="Car_TopSpeed">Huippunopeus</Tag>
 	<Tag name="HDR">HDR+Bloom</Tag>
 	<Tag name="Hint-4text">Watch your car's damage, especially in stunt tracks. It will stop working if it is fully damaged and its performance decreases when over 50 %.</Tag>
 	<Tag name="TipABS">Estää jarrujen lukkiutumisen (oletus: pois)</Tag>
@@ -461,7 +461,7 @@
 	<Tag name="TireTrails">Rengasjäljet</Tag>
 	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
 	<Tag name="TipFogClrRGBA">R G B A components 0 to 1 (eg. 0.7 0.8 0.9 1). Last can be used to lower maximum density (1 is full).</Tag>
-	<Tag name="Language">Language</Tag>
+	<Tag name="Language">Kieli</Tag>
 	<Tag name="Hint-0text">If you crashed or you're stuck, hold [Backspace] to move back in time.</Tag>
 	<Tag name="ReflMode_static">Staattinen</Tag>
 	<Tag name="InputCameraMode">Kameramoodi</Tag>
@@ -535,7 +535,7 @@
 	<Tag name="TipMudInt">Mutahiukkasten voimakkuus</Tag>
 	<Tag name="InputObjectsDel">Del - delete current</Tag>
 	<Tag name="Obj_Rot">Rot.</Tag>
-	<Tag name="Transparency">Transparency</Tag>
+	<Tag name="Transparency">Läpinäkyvyys</Tag>
 	<Tag name="NetWrongPassword">Väärä salasana.</Tag>
 	<Tag name="RplRewindGhost">Rewind Ghost</Tag>
 	<Tag name="ScaleAll">Skaalaa kaikkia</Tag>
@@ -569,7 +569,7 @@
 	<Tag name="SimModeEasy">Helppo (aloittelija)</Tag>
 	<Tag name="SC_WinterWet">WinterWet</Tag>
 	<Tag name="Sky">Taivas</Tag>
-	<Tag name="Car_Mass">Mass</Tag>
+	<Tag name="Car_Mass">Massa</Tag>
 	<Tag name="TCS">TCS (luistonesto)</Tag>
 	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
 	<Tag name="DisableEdit">Disable for edit</Tag>
@@ -605,7 +605,7 @@
 	<Tag name="TrackAvgSpeed">Keskimääräinen nopeus</Tag>
 	<Tag name="Chall_Extreme">Extreme</Tag>
 	<Tag name="PreviewCam">Esikatselukamera</Tag>
-	<Tag name="CarType_Hover">Hovercraft</Tag>
+	<Tag name="CarType_Hover">Ilmatyynyalus</Tag>
 	<Tag name="InputFluidsDel">Del - poista nykyinen</Tag>
 	<Tag name="SC_DesertMud">DesertMud</Tag>
 	<Tag name="InputRoadMove">- liikuta pistettä</Tag>
@@ -683,7 +683,7 @@
 	<Tag name="AutoUpdateBlendmap">Auto update blendmap (slow for big size brushes)</Tag>
 	<Tag name="Anisotropy">Anisotropia</Tag>
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
-	<Tag name="Car_MassFront">Mass on front</Tag>
+	<Tag name="Car_MassFront">Massa edessä</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate (shift - global)   alt-RMB - pitch (shift - roll)</Tag>
 	<Tag name="SC_Alien">Alien</Tag>
 	<Tag name="Brush_ShapeTriangle">Triang</Tag>
@@ -726,14 +726,14 @@
 	<Tag name="InputRoadMMB">MMB (or Num /,*)</Tag>
 	<Tag name="Textures">Tekstuurit</Tag>
 	<Tag name="TipTerVertCount">Terrain vertex count on one side (squares). Apply with buttons [New Flat] or [Resize].</Tag>
-	<Tag name="Updated">Updated</Tag>
+	<Tag name="Updated">Päivitetty</Tag>
 	<Tag name="RplCurrent">Nykyinen</Tag>
 	<Tag name="InputBrushFreq">O,P  -  noise Frequency (scale)</Tag>
 	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy.</Tag>
 	<Tag name="CantSaveOrgTrack">Can't save original track. Duplicate it first.</Tag>
 	<Tag name="Cars">Autot</Tag>
 	<Tag name="CarType_Slow">Hidas</Tag>
-	<Tag name="Hint">Hint</Tag>
+	<Tag name="Hint">Vihje</Tag>
 	<Tag name="TipTestBlendmap">Use to test blendmap clarity. The color box shows this layer's color on blendmap (is black when layer is off). Usually, a good blendmap needs to have pure layer colors with little blending (dull, mixed colors). To achieve that narrow/separate angle and height ranges and use high or low noise power.</Tag>
 	<Tag name="LS_CLEANUP">Siistitään</Tag>
 	<Tag name="Difficulty">Vaikeusaste</Tag>
@@ -766,7 +766,7 @@
 	<Tag name="AlignWidthMul">Width multiply</Tag>
 	<Tag name="LoadingDesc">Ladataan, ole hyvä ja odota...</Tag>
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
-	<Tag name="Needed">Needed</Tag>
+	<Tag name="Needed">Tarvittu</Tag>
 	<Tag name="Road_Pipe">Putki</Tag>
 	<Tag name="SC_VolcanicDark">VolcanicDark</Tag>
 	<Tag name="Adjust">Adjust</Tag>
@@ -829,7 +829,7 @@
 	<Tag name="TireEdCommonY">Common y range</Tag>
 	<Tag name="Road_sel">sel</Tag>
 	<Tag name="AutoLoad">Lataa rata automaattisesti</Tag>
-	<Tag name="Car_MaxTorque">Max Torque</Tag>
+	<Tag name="Car_MaxTorque">Suurin vääntö</Tag>
 	<Tag name="RplGhost">Show ghost drive - best lap</Tag>
 	<Tag name="SplitVertically">Jaa pystysuunnassa</Tag>
 	<Tag name="Reflections">Heijastukset</Tag>
@@ -850,13 +850,13 @@
 	<Tag name="HeightMax">Height Max</Tag>
 	<Tag name="PipeMaterials">Putkimateriaalit</Tag>
 	<Tag name="ChallInfo">In challenge mode the game has setup, most settings can't be changed. Time or position is needed. If you pass you receive bronze, silver or gold prize.</Tag>
-	<Tag name="Saved">Saved</Tag>
+	<Tag name="Saved">Tallennettu</Tag>
 	<Tag name="InputObjectsScale">3 - Scale   LMB - uniform XYZ  RMB: Y  MMB: Z</Tag>
 	<Tag name="NetCreateGame">Luo peli</Tag>
 	<Tag name="Road_OnPipe">On Pipe</Tag>
 	<Tag name="TipChangeSat">Muokkaa auton värin saturaatiota.</Tag>
 	<Tag name="MaterialProperties">Materiaalin ominaisuudet</Tag>
-	<Tag name="Loading">Loading</Tag>
+	<Tag name="Loading">Ladataan</Tag>
 	<Tag name="HeightmapSize">Korkeuskartan koko</Tag>
 	<Tag name="TipToggleLayer">Kytke valittu tekstuurikerros päälle/pois.</Tag>
 	<Tag name="TipGrassLayerDens">Grass density for layer (how often it will appear).</Tag>
@@ -896,7 +896,7 @@
 	<Tag name="Length">Pituus</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Height offset</Tag>
-	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
+	<Tag name="TutorEndFinished">Olet suorittanut tämän oppitunnin.</Tag>
 	<Tag name="Amplitude">Amplitudi</Tag>
 	<Tag name="InputControllers">Ohjaimet</Tag>
 	<Tag name="InputRoadModify">Muokkaa</Tag>
@@ -1057,8 +1057,8 @@
 	<Tag name="Startup">Käynnistys</Tag>
 	<Tag name="Properties">Ominaisuudet</Tag>
 	<Tag name="Color">Color</Tag>
-	<Tag name="Car_MaxPower">Max Power</Tag>
-	<Tag name="Close">Close</Tag>
+	<Tag name="Car_MaxPower">Suurin teho</Tag>
+	<Tag name="Close">Sulje</Tag>
 	<Tag name="distribution">distribution</Tag>
 	<Tag name="SC_ForestYellow">ForestYellow</Tag>
 	<Tag name="Diff2">Helppo</Tag>
@@ -1076,7 +1076,7 @@
 	<Tag name="loops">silmukat</Tag>
 	<Tag name="at">at</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
-	<Tag name="Initializing">Initializing</Tag>
+	<Tag name="Initializing">Alustetaan</Tag>
 	<Tag name="InputTerSmooth">S - Tasoita</Tag>
 	<Tag name="TipSunSpecular">Sun light specular (shiny) color. R G B components 0 to 1 (eg. 0.6 0.6 0.6)</Tag>
 	<Tag name="ColSat">Kylläisyys</Tag>
