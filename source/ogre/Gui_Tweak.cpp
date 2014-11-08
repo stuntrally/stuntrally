@@ -16,9 +16,11 @@
 #include <MyGUI_EditBox.h>
 #include <MyGUI_TextBox.h>
 #include <MyGUI_ComboBox.h>
+#include <boost/filesystem.hpp>
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
+namespace fs = boost::filesystem;
 
 
 ///  Tweak Car
@@ -163,6 +165,22 @@ void CGui::listTwkTiresOrig(Li li, size_t id)
 	if (id==ITEM_NONE || li->getItemCount() == 0)  return;
 	pGame->PickTireRef(li->getItemNameAt(id).substr(7));
 	liTwkTiresUser->setIndexSelected(ITEM_NONE);
+}
+
+void CGui::btnTweakTireDelete(WP)
+{
+	if (liTwkTiresUser->getItemCount() == 0)  return;
+	size_t id = liTwkTiresUser->getIndexSelected();
+	if (id==ITEM_NONE)  return;
+
+	string name = liTwkTiresUser->getItemNameAt(id).substr(7);
+	string path = PATHMANAGER::CarSimU() + "/" + pSet->game.sim_mode + "/tires/" + name + ".tire";
+
+	if (PATHMANAGER::FileExists(path))
+	{	fs::remove(path);
+		txtTweakTire->setCaption(TR("#FF8080#{RplDelete}: "+name));
+		pGame->reloadSimNeed = true;  // to remove from list
+	}
 }
 
 //  Load Tire
@@ -374,9 +392,13 @@ void CGui::TweakToggle()
 		TweakColSave();
 }
 
-void CGui::tabCarEdChng(MyGUI::TabPtr, size_t id)
+void CGui::tabCarEdChng(Tab, size_t id)
 {
 	pSet->car_ed_tab = id;
+}
+void CGui::tabTweakChng(Tab, size_t id)
+{
+	pSet->tweak_tab = id;
 }
 
 

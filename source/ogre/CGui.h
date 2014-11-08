@@ -139,13 +139,13 @@ public:
 	Txt txtTweakPath, txtTweakTire, txtTweakPathCol;
 
 	Tab tabTweak, tabEdCar;
-	void tabCarEdChng(Tab, size_t);
+	void tabCarEdChng(Tab, size_t), tabTweakChng(Tab, size_t);
 
 	///  tire
 	Ed edTweakTireSet;  void editTweakTireSet(Ed);
 	Li liTwkTiresUser, liTwkTiresOrig;
 	void listTwkTiresUser(Li, size_t), listTwkTiresOrig(Li, size_t);
-	void btnTweakTireLoad(WP), btnTweakTireReset(WP);
+	void btnTweakTireLoad(WP), btnTweakTireReset(WP), btnTweakTireDelete(WP);
 	void FillTweakLists();  Ogre::String sTireLoad;
 	
 	///  surface

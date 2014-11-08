@@ -4316,51 +4316,43 @@
 					<Property key="TextColour" value="0.7 0.85 0.7"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="184 180 144 464" name="TweakTiresUser">
+                <Widget type="ListBox" skin="ListBox" position="188 180 224 464" name="TweakTiresUser">
 					<Property key="Colour" value="0.7 1 1"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="20 180 144 460" name="TweakTiresOrig">
+                <Widget type="ListBox" skin="ListBox" position="20 180 152 464" name="TweakTiresOrig">
 					<Property key="Colour" value="0.6 0.8 1"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="348 180 160 40" name="TweakTireLoad">
+                <Widget type="Button" skin="Button" position="356 124 160 40" name="TweakTireLoad">
 					<Property key="InheritsAlpha" value="false"/>
 					<Property key="Caption" value="#{RplLoad}.."/>
 					<Property key="FontName" value="font.small"/>
 					<Property key="TextColour" value="1.0 0.9 0.2"/>
 					<Property key="Colour" value="1.0 0.9 0.1"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="348 366 160 48" name="TweakTireReset">
+                <Widget type="Button" skin="Button" position="432 452 76 76" name="TweakTireReset">
 					<Property key="InheritsAlpha" value="false"/>
-					<Property key="Caption" value="#{Reset} #{RplAll}"/>
+                    <Property key="Caption" value="#{Reset}\n#{RplAll}"/>
 					<Property key="FontName" value="font.small"/>
 					<Property key="TextColour" value="1.0 0.7 0.2"/>
 					<Property key="Colour" value="1.0 0.7 0.2"/>
 				</Widget>
+                <Widget type="Button" skin="Button" position="20 656 132 28" name="TweakTireDelete">
+                    <Property key="Colour" value="1 0.6 0.6"/>
+                    <Property key="TextColour" value="1 0.6 0.6"/>
+                    <Property key="Caption" value="#{RplDelete}"/>
+                </Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 522 692">
 				<Property key="Caption" value="#A090FF#{Surface}"/>
 				<Property key="Colour" value="0.7 0.6 1"/>
-				<Widget type="ComboBox" skin="ComboBox" position="132 548 132 28" name="CmbSuTire">
-					<Property key="Colour" value="0.45 0.9 0.9"/>
-					<Property key="TextColour" value="0.75 1 1.0"/>
-					<Property key="Static" value="true"/>
-					<Property key="ReadOnly" value="true"/>
-				</Widget>
-				<Widget type="ComboBox" skin="ComboBox" position="132 592 132 28" name="CmbSuType">
-					<Property key="Colour" value="0.6 0.8 1"/>
-					<Property key="TextColour" value="0.8 0.9 1"/>
-					<Property key="Static" value="true"/>
-					<Property key="ReadOnly" value="true"/>
-				</Widget>
-
-				<Widget type="Button" skin="Button" position="344 80 160 36" name="TweakSurfPickWh">
+                <Widget type="Button" skin="Button" position="340 40 160 36" name="TweakSurfPickWh">
 					<Property key="InheritsAlpha" value="false"/>
 					<Property key="Caption" value="Pick from wheel"/>
 					<Property key="FontName" value="font.small"/>
 					<Property key="TextColour" value="0.4 0.6 1.0"/>
 					<Property key="Colour" value="0.3 0.6 1.0"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="340 148 164 532" name="TweakSurfaces">
+                <Widget type="ListBox" skin="ListBox" position="340 100 164 580" name="TweakSurfaces">
 					<Property key="Colour" value="0.8 0.8 1"/>
 				</Widget>
 
@@ -4489,6 +4481,18 @@
 					<Property key="Caption" value="#{Tires}"/>
 					<Property key="TextColour" value="0.5 1 1"/>
 				</Widget>
+                <Widget type="ComboBox" skin="ComboBox" position="132 548 156 28" name="CmbSuTire">
+                    <Property key="ReadOnly" value="true"/>
+                    <Property key="Static" value="true"/>
+                    <Property key="Colour" value="0.45 0.9 0.9"/>
+                    <Property key="TextColour" value="0.75 1 1.0"/>
+                </Widget>
+                <Widget type="ComboBox" skin="ComboBox" position="132 590 152 28" name="CmbSuType">
+                    <Property key="Colour" value="0.6 0.8 1"/>
+                    <Property key="TextColour" value="0.8 0.9 1"/>
+                    <Property key="ReadOnly" value="true"/>
+                    <Property key="Static" value="true"/>
+                </Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 522 692">
 				<Property key="Caption" value="#D0D0D0#{Car}#{Test}"/>

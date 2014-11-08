@@ -589,14 +589,14 @@ void CGui::InitGui()
 	ck= &ckTE_Reference;	ck->Init("TE_Reference",	&pSet->te_reference);  Cev(TEupd);
 
 
-	///  tweak car
+	///  tweak, car edit
 	//------------------------------------------------------------
 	for (i=0; i < ciEdCar; ++i)
 		edCar[i] = fEd("EdCar"+toStr(i));
 	edPerfTest = fEd("TweakPerfTest");
 	tabEdCar = fTab("TabEdCar");  Tev(tabEdCar, CarEdChng);  tabEdCar->setIndexSelected(pSet->car_ed_tab);
-
-	tabTweak = fTab("TabTweak");  //tabTweak->setIndexSelected(1);
+	
+	tabTweak = fTab("TabTweak");  Tev(tabTweak, TweakChng);  tabTweak->setIndexSelected(pSet->tweak_tab);
 	txtTweakPath = fTxt("TweakPath");
 	Btn("TweakCarSave", btnTweakCarSave);
 
@@ -612,7 +612,7 @@ void CGui::InitGui()
 
 	liTwkTiresUser = fLi("TweakTiresUser");  Lev(liTwkTiresUser, TwkTiresUser);
 	liTwkTiresOrig = fLi("TweakTiresOrig");  Lev(liTwkTiresOrig, TwkTiresOrig);
-	Btn("TweakTireLoad",  btnTweakTireLoad);
+	Btn("TweakTireLoad",  btnTweakTireLoad);  Btn("TweakTireDelete", btnTweakTireDelete);
 	Btn("TweakTireReset", btnTweakTireReset);
 
 
