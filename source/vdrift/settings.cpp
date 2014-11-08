@@ -90,7 +90,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_show.graphs", show_graphs);			Param(c,w, "hud_show.graphs_type", (int&)graphs_type);
 	//  gui
 	Param(c,w, "gui.cars_view", cars_view);			Param(c,w, "gui.cars_sort", cars_sort);
-	Param(c,w, "gui.car_ed_tab", car_ed_tab);
+	Param(c,w, "gui.car_ed_tab", car_ed_tab);		Param(c,w, "gui.tweak_tab", tweak_tab);
 	Param(c,w, "gui.champ_tab", champ_type);		Param(c,w, "gui.tut_tab", tut_type);
 	Param(c,w, "gui.chall_tab", chall_type);		Param(c,w, "gui.champ_info", champ_info);
 	//  hud size
@@ -191,7 +191,8 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,cam_bounce(1), cam_bnc_mul(1.f)
 	//  gui
 	,cars_view(0), cars_sort(1), cars_sortup(1)
-	,champ_type(0),tut_type(0),chall_type(0), car_ed_tab(0), champ_info(1)
+	,champ_type(0),tut_type(0),chall_type(0), champ_info(1)
+	,car_ed_tab(0),tweak_tab(0)
 	//  graphics
 	, bFog(0)
 	,refl_skip(200), refl_faces(1), refl_size(0), refl_dist(500.f), refl_mode(1)

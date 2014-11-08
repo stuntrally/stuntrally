@@ -175,8 +175,8 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 		Dbl sc = maxforce / combforce;
 		Fx *= sc;
 		Fy *= sc;
-		//max_Fx *= sc;  //vis only
-		//max_Fy *= sc;
+		max_Fx *= sc;  //vis only
+		max_Fy *= sc;
 		assert(!isnan(Fx));
 		assert(!isnan(Fy));
 		//std::cout << "Limiting " << combforce << " to " << maxforce << std::endl;

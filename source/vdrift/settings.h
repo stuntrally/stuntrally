@@ -55,8 +55,9 @@ public:
 	int car_dbgtxtclr, car_dbgtxtcnt;
 	//  gui
 	bool cars_sortup;  int cars_view, cars_sort;
-	int tut_type, champ_type, chall_type, car_ed_tab;
+	int tut_type, champ_type, chall_type;
 	bool champ_info;
+	int car_ed_tab, tweak_tab;
 
 
 	//  graphics

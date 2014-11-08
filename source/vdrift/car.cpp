@@ -302,33 +302,35 @@ float CAR::GetFeedback()
 
 float CAR::GetTireSquealAmount(WHEEL_POSITION i, float* slide, float* s1, float* s2) const
 {
-	const TRACKSURFACE* surface = dynamics.GetWheelContact(WHEEL_POSITION(i)).GetSurfacePtr();
+	const TRACKSURFACE* surface = dynamics.GetWheelContact(i).GetSurfacePtr();
 	if (!surface)  return 0;
 	if (surface->type == TRACKSURFACE::NONE)
 		return 0;
 		
-	float d = dynamics.GetWheelContact(WHEEL_POSITION(i)).GetDepth() - 2*GetTireRadius(WHEEL_POSITION(i));
+	float d = dynamics.GetWheelContact(i).GetDepth() - 2*GetTireRadius(i);
 	bool inAir = d > 0.f;  //d > 0.9f || d < 0.f;  //*!
 	if (inAir)  // not on ground 
 		return 0;
 
 	MATHVECTOR<float,3> groundvel;
-	groundvel = dynamics.GetWheelVelocity(WHEEL_POSITION(i));
+	groundvel = dynamics.GetWheelVelocity(i);
 	QUATERNION<float> wheelspace;
-	wheelspace = dynamics.GetUprightOrientation(WHEEL_POSITION(i));
+	wheelspace = dynamics.GetUprightOrientation(i);
 	(-wheelspace).RotateVector(groundvel);
 
-	float wheelspeed = dynamics.GetWheel(WHEEL_POSITION(i)).GetAngularVelocity()*dynamics.GetWheel(WHEEL_POSITION(i)).GetRadius();
+	float wheelspeed = dynamics.GetWheel(i).GetAngularVelocity() * dynamics.GetWheel(i).GetRadius();
 	groundvel[0] -= wheelspeed;
 	groundvel[1] *= 2.0;
 	groundvel[2] = 0;
 
 	float squeal = (groundvel.Magnitude() - 3.0) * 0.2;
+	//LogO(fToStr(groundvel[0],2,3)+" "+fToStr(groundvel[1],2,3));
 	if (slide)  *slide = squeal + 0.6;
 	/// TODO: spin, slide, stop ...
 
 	Dbl slideratio = dynamics.GetWheel(i).slips.slideratio;
 	Dbl slipratio = dynamics.GetWheel(i).slips.slipratio;
+	//LogO(fToStr(slipratio,2,3)+" "+fToStr(slideratio,2,3));
 	if (s1)  *s1 = slideratio;
 	if (s2)  *s2 = slipratio;
 
