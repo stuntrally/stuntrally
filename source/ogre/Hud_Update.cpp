@@ -713,14 +713,14 @@ void CHud::Update(int carId, float time)
 			m->position(0, 1,0);  m->colour(cb);
 			
 			//  tire, before combine
-			Real lx = off ? 0.f : t.preFy/z*zy,  ly = off ? 0.f : t.preFx/z;
+			Real lx = off ? 0.f : -t.preFy/z*zy,  ly = off ? 0.f : t.preFx/z;
 			for (int y=-1; y<=1; ++y)
 			for (int x=-1; x<=1; ++x)  {
 				m->position(0  +x*u, 0  +y*u, 0);  m->colour(cr);
 				m->position(lx +x*u, ly +y*u, 0);  m->colour(cr);  }
 
 			//  tire line /
-			lx = off ? 0.f : t.Fy/z*zy;  ly = off ? 0.f : t.Fx/z;
+			lx = off ? 0.f : -t.Fy/z*zy;  ly = off ? 0.f : t.Fx/z;
 			for (int y=-2; y<=2; ++y)
 			for (int x=-2; x<=2; ++x)  {
 				m->position(0  +x*u, 0  +y*u, 0);  m->colour(cl);
