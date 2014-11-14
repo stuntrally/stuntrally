@@ -844,3 +844,133 @@ material roadNpacked_ter
 	diffuse 0.7 0.7 0.7
 	specular 0.2 0.2 0.2 48
 }
+
+
+//  Metal_1
+material roadMetal1
+{
+	parent road
+	diffuseMap roadMetal1.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
+	ambient 0.8 0.8 0.8
+	diffuse 0.5 0.5 0.5
+	specular 1 1 1 12
+	normalMap roadMetal1_norm.jpg
+	bump_scale 0.1
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.15
+}
+material roadMetal1_ter
+{
+	parent road
+	diffuseMap roadMetal1.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
+	ambient 0.8 0.8 0.8
+	diffuse 0.5 0.5 0.5
+	specular 1 1 1 12
+	normalMap roadMetal1_norm.jpg
+	bump_scale 0.17
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.15
+}
+
+
+//  Metal_2
+material roadMetal2
+{
+	parent road
+	diffuseMap roadMetal2.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
+	ambient 0.95 0.95 0.95
+	diffuse 0.7 0.7 0.7
+	specular 0.8 0.8 0.8 6
+	normalMap roadMetal2_norm.jpg
+	bump_scale 0.04
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.14
+}
+material roadMetal2_ter
+{
+	parent road
+	diffuseMap roadMetal2.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
+	ambient 0.95 0.95 0.95
+	diffuse 0.7 0.7 0.7
+	specular 0.8 0.8 0.8 6
+	normalMap roadMetal2_norm.jpg
+	bump_scale 0.18
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.2
+}
+
+//  Asphalt_Space
+material roadAsphaltSpace
+{
+	parent road
+	diffuseMap roadAsphaltSpace1.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
+	ambient 0.95 0.95 0.95
+	diffuse 0.7 0.7 0.7
+	specular 0.5 0.5 0.5 6
+	normalMap roadAsphaltSpace_norm.jpg
+	bump_scale 0.04
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.04
+}
+material roadAsphaltSpace_ter
+{
+	parent road
+	diffuseMap roadAsphaltSpace1.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
+	ambient 0.95 0.95 0.95
+	diffuse 0.7 0.7 0.7
+	specular 0.5 0.5 0.5 6
+	normalMap roadAsphaltSpace_norm.jpg
+	bump_scale 0.14
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.1
+}
+
+//  Asphalt_Space
+material roadAsphaltSpaceBlue
+{
+	parent road
+	diffuseMap roadAsphaltSpace1.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
+	ambient 0.95 0.95 1.1
+	diffuse 0.7 0.7 0.85
+	specular 0.5 0.5 0.65 6
+	normalMap roadAsphaltSpace_norm.jpg
+	bump_scale 0.04
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.08
+}
+material roadAsphaltSpaceBlue_ter
+{
+	parent road
+	diffuseMap roadAsphaltSpace1.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
+	ambient 0.95 0.95 1.1
+	diffuse 0.7 0.7 0.85
+	specular 0.5 0.5 0.65 6
+	normalMap roadAsphaltSpace_norm.jpg
+	bump_scale 0.14
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.15
+}

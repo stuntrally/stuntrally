@@ -283,8 +283,8 @@ material Building
 	diffuse 0.9 0.9 0.9
 	specular 0.4 0.4 0.4 32
 	env_map true
-    fresnel false
-    refl_amount 0.3
+	fresnel false
+	refl_amount 0.3
 }
 
 
@@ -394,8 +394,8 @@ material container_big
 	diffuse 1.0 1.0 1.0
 	specular 0.7 0.7 0.7 20
 	env_map true
-    fresnel false
-    refl_amount 0.05
+	fresnel false
+	refl_amount 0.05
 }
 
 material windmill
@@ -421,7 +421,7 @@ material windmill_fan
 
 material rock_n2_alien
 {
-    parent base
+	parent base
 	diffuseMap rock_L2.jpg
 	normalMap rock_n2_norm.png
 	terrain_light_map true
@@ -432,7 +432,7 @@ material rock_n2_alien
 
 material rock_n5_alien
 {
-    parent base
+	parent base
 	diffuseMap rock_n5_alien.jpg
 	normalMap rock_n5_norm.png
 	terrain_light_map true
@@ -445,39 +445,39 @@ material rock_n5_alien
 //  alien contructions  -----------------------------
 material metal_01
 {
-    parent base
+	parent base
 	diffuseMap metal_01.jpg
 	normalMap metal_01_norm.jpg
 	specMap metal_01_spec.jpg
-    reflMap metal_01_spec.jpg
+	reflMap metal_01_spec.jpg
 	specMap_rgb true
 	ambient 1.0 1.0 1.0
 	diffuse 0.7 0.7 0.7
 	specular 0.6 0.6 0.6 20
 	env_map true
-    fresnel false
-    refl_amount 0.05
+	fresnel false
+	refl_amount 0.05
 }
 
 material metal_02
 {
-    parent base
+	parent base
 	diffuseMap metal_02.jpg
 	normalMap metal_02_norm.jpg
 	specMap metal_02_spec.jpg
-    reflMap metal_02_spec.jpg
+	reflMap metal_02_spec.jpg
 	specMap_rgb true
 	ambient 1.0 1.0 1.0
 	diffuse 0.7 0.7 0.7
 	specular 0.8 0.8 0.8 16
 	env_map true
-    fresnel false
-    refl_amount 0.05
+	fresnel false
+	refl_amount 0.05
 }
 
 material metal_02_dark
 {
-    parent base
+	parent base
 	diffuseMap metal_02_dark.jpg
 	normalMap metal_02_norm.jpg
 	specMap metal_02_spec.jpg
@@ -486,13 +486,13 @@ material metal_02_dark
 	diffuse 0.7 0.7 0.7
 	specular 0.7 0.7 0.7 32
 	env_map true
-    fresnel false
-    refl_amount 0.01
+	fresnel false
+	refl_amount 0.01
 }
 
 material metal_03_green
 {
-    parent base
+	parent base
 	diffuseMap metal_03_green.jpg
 	normalMap metal_03_norm.jpg
 	specMap metal_03_green_spec.jpg
@@ -504,7 +504,7 @@ material metal_03_green
 
 material metal_03_red
 {
-    parent base
+	parent base
 	diffuseMap metal_03_red.jpg
 	normalMap metal_03_norm.jpg
 	specMap metal_03_red_spec.jpg
@@ -516,7 +516,7 @@ material metal_03_red
 
 material metal_04
 {
-    parent base
+	parent base
 	diffuseMap metal_04.jpg
 	normalMap metal_04_norm.jpg
 	specMap metal_04_spec.jpg
@@ -528,7 +528,7 @@ material metal_04
 
 material metal_05
 {
-    parent base
+	parent base
 	diffuseMap metal_05.jpg
 	normalMap metal_05_norm.jpg
 	specMap metal_05_spec.jpg
@@ -540,23 +540,23 @@ material metal_05
 
 material metal_06
 {
-    parent base
+	parent base
 	diffuseMap metal_06.jpg
 	normalMap metal_06_norm.jpg
 	specMap metal_06_spec.jpg
-    reflMap metal_06.jpg
+	reflMap metal_06.jpg
 	specMap_rgb true
 	ambient 1.0 1.0 1.0
 	diffuse 0.7 0.7 0.7
 	specular 1 1 1 12
 	env_map true
-    fresnel false
-    refl_amount 0.05
+	fresnel false
+	refl_amount 0.05
 }
 
 material metal_07
 {
-    parent base
+	parent base
 	diffuseMap metal_07.jpg
 	normalMap metal_07_norm.jpg
 	specMap metal_07_spec.jpg
@@ -568,7 +568,7 @@ material metal_07
 
 material metal_08
 {
-    parent base
+	parent base
 	diffuseMap metal_08.jpg
 	normalMap metal_08_norm.png
 	specMap metal_08_spec.jpg
@@ -710,4 +710,78 @@ material ring_lime_stick
 	normalMap metal_02_norm.jpg
 	specMap metal_02_spec.jpg
 	reflMap metal_02_spec.jpg
+}
+
+
+//  metal
+material metal_12
+{
+	parent base
+	diffuseMap metal_12.jpg
+	normalMap metal_12_norm.jpg
+	specMap metal_12_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 20
+}
+
+material metal_mixed_01
+{
+	parent base
+	diffuseMap metal_mixed_01.jpg
+	normalMap metal_mixed_01_norm.jpg
+	specMap metal_mixed_01_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 16
+}
+
+material metal_mixed_02
+{
+	parent base
+	diffuseMap metal_mixed_02.jpg
+	normalMap metal_mixed_02_norm.jpg
+	specMap metal_mixed_02_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 16
+}
+
+material metal_mixed_03
+{
+	parent base
+	diffuseMap metal_mixed_03.jpg
+	normalMap metal_mixed_03_norm.jpg
+	specMap metal_mixed_03_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 16
+}
+
+material metal_mixed_04
+{
+	parent base
+	diffuseMap metal_mixed_04.jpg
+	normalMap metal_mixed_04_norm.jpg
+	specMap metal_mixed_04_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 16
+}
+
+material metal_mixed_05
+{
+	parent base
+	diffuseMap metal_mixed_05.jpg
+	normalMap metal_mixed_05_norm.jpg
+	specMap metal_mixed_05_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 16
 }
