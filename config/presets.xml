@@ -174,6 +174,8 @@
 <t sc="H"  t="space_diam_d"       n="space_diam_n"       s="12.0"  su="Metal"          tp="0" du="0.0" ds="1.0" md="0.0" tr="0.46 0.46 0.46 0.7"  aa="0"  ab="22" z="H" />
 <t sc="H"  t="space_gray_d"       n="space_gray_n"       s="12.0"  su="Metal"          tp="0" du="0.0" ds="1.0" md="0.0" tr="0.46 0.46 0.46 0.7"  aa="0"  ab="22" z="H" />
 <t sc="H"  t="space_metal_d"      n="space_metal_n"      s="12.0"  su="Metal"          tp="0" du="0.0" ds="1.0" md="0.0" tr="0.46 0.46 0.46 0.7"  aa="0"  ab="22" z="H" />
+<t sc="H"  t="space_dots_d"       n="space_dots_n"       s="12.0"  su="Metal"          tp="0" du="0.0" ds="1.0" md="0.0" tr="0.46 0.46 0.46 0.7"  aa="0"  ab="22" z="H" />
+<t sc="H"  t="space_octagons_d"   n="space_octagons_n"   s="12.0"  su="Metal"          tp="0" du="0.0" ds="1.0" md="0.0" tr="0.46 0.46 0.46 0.7"  aa="0"  ab="22" z="H" />
 
 <t sc="Y"  t="ycrystals_fine_d"   n="ycrystals_fine_n"   s="17.15" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="0"  ab="10" z="Y" d="" />
 <t sc="Y"  t="ycrystals_med_d"    n="ycrystals_med_n"    s="12.59" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.16 0.16 0.16 0.7"  aa="14" ab="31" z="Y" d="" />
@@ -239,6 +241,11 @@
 <r sc="W"  m="roadSnowGrn"     su="roadSnow"     du="0.4" ds="0.5" md="0.2" tr="0.30 0.40 0.30 0.8" z="W" />
 <r sc="W"  m="roadIce"         su="roadSnow"     du="0.3" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
 <r sc="W"  m="roadCrystal"     su="roadDesert"   du="0.0" ds="0.0" md="0.0" tr="0.00 0.10 0.20 0.5" z="Y" />
+
+<r sc="H"  m="roadMetal1"           su="roadForest"   du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="H" />
+<r sc="H"  m="roadMetal2"           su="roadAsphalt"  du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="H" />
+<r sc="H"  m="roadAsphaltSpace"     su="roadAsphalt"  du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="H" />
+<r sc="H"  m="roadAsphaltSpaceBlue" su="roadAsphalt"  du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="H" />
 
 <r sc="L"  m="roadAlienD"      su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="L" />
 <r sc="L"  m="roadAlien"       su="roadJungle"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" z="L" />
