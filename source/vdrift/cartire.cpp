@@ -107,14 +107,11 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 	Dbl alpha = 0.0;
 
 	Dbl V = hub_velocity[0];
+	Dbl denom = std::max(std::abs(V), 0.01);
 
-	Dbl denom = std::max ( std::abs ( V ), 0.01 );
-
-	sigma = ( patch_speed - V ) / denom;
-
+	sigma = (patch_speed - V) / denom;
 	tan_alpha = hub_velocity[1] / denom;
-
-	alpha = - ( atan2 ( hub_velocity[1],denom ) ) * 180.0/PI_d;
+	alpha = -atan2(hub_velocity[1], denom) * 180.0/PI_d;
 
 	/*crash dyn obj--*/
 	if (isnan(alpha) || isnan(1.f/sigma_hat))
@@ -122,47 +119,35 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 		MATHVECTOR<Dbl,3> outvec(0, 0, 0);
 		return outvec;
 	}
-	
 	assert(!isnan(alpha));
 
-	Dbl gamma = ( current_camber ) * 180.0/PI_d;
+	Dbl gamma = current_camber * 180.0/PI_d;
 
-	//beckman method for pre-combining longitudinal and lateral forces
-	Dbl s = sigma / sigma_hat;
-	assert(!isnan(s));
+	//  beckman method for pre-combining longitudinal and lateral forces
+	Dbl s = sigma / sigma_hat;  assert(!isnan(s));
+	Dbl a = alpha / alpha_hat;  assert(!isnan(a));
 
-	Dbl a = alpha / alpha_hat;
-	assert(!isnan(a));
-
-	Dbl rho = std::max( sqrt( s*s+a*a ), 0.0001); //avoid divide by zero
+	Dbl rho = std::max( sqrt( s*s+a*a ), 0.0001);  //avoid divide by zero
 	assert(!isnan(rho));
 
-	Dbl max_Fx(0);
-	Dbl Fx = (s / rho) * Pacejka_Fx( rho*sigma_hat, Fz, friction_coeff, max_Fx );
-	assert(!isnan(Fx));
-
-	Dbl max_Fy(0);
-	Dbl Fy = (a / rho) * Pacejka_Fy( rho*alpha_hat, Fz, gamma, friction_coeff, max_Fy );
-	assert(!isnan(Fy));
-
-	Dbl max_Mz(0);
+	Dbl max_Fx(0), max_Fy(0), max_Mz(0);
+	Dbl Fx = (s / rho) * Pacejka_Fx( rho*sigma_hat, Fz,        friction_coeff, max_Fx );  assert(!isnan(Fx));
+	Dbl Fy = (a / rho) * Pacejka_Fy( rho*alpha_hat, Fz, gamma, friction_coeff, max_Fy );  assert(!isnan(Fy));
 	Dbl Mz = Pacejka_Mz( sigma, alpha, Fz, gamma, friction_coeff, max_Mz );
 
 	if (slips)  // out vis
-	{
-		slips->preFx = Fx;
+	{	slips->preFx = Fx;
 		slips->preFy = Fy;
 	}
 	//Dbl slip_x = -sigma / ( 1.0 + generic_abs ( sigma ) );
 	//Dbl slip_y = tan_alpha / ( 1.0+generic_abs ( sigma-1.0 ) );
 	//Dbl total_slip = std::sqrt ( slip_x * slip_x + slip_y * slip_y );
-
 	//Dbl maxforce = longitudinal_parameters[2] * 7.0;
 
-	//combining method 0: no combining
+	//  combining method 0: no combining
 
-	//combining method 1: traction circle
-	//determine to what extent the tires are long (x) gripping vs lat (y) gripping
+	//  combining method 1: traction circle
+	//  determine to what extent the tires are long (x) gripping vs lat (y) gripping
 	float longfactor = 1.0;
 	float combforce = std::abs(Fx)+std::abs(Fy);
 	if (combforce > 1)  // avoid divide by zero (assume longfactor = 1 for this case)
@@ -173,35 +158,28 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 	{
 		//scale down forces to fit into the maximum
 		Dbl sc = maxforce / combforce;
-		Fx *= sc;
-		Fy *= sc;
-		max_Fx *= sc;  //vis only
-		max_Fy *= sc;
-		assert(!isnan(Fx));
-		assert(!isnan(Fy));
+		Fx *= sc;  assert(!isnan(Fx));  max_Fx *= sc;  //vis only
+		Fy *= sc;  assert(!isnan(Fy));	max_Fy *= sc;
 		//std::cout << "Limiting " << combforce << " to " << maxforce << std::endl;
 	}/**/
 
-	//combining method 2: traction ellipse (prioritize Fx)
+	//  combining method 2: traction ellipse (prioritize Fx)
 	//std::cout << "Fy0=" << Fy << ", ";
 	/*if (Fx >= max_Fx)
 	{
 		Fx = max_Fx;
 		Fy = 0;
-	}
-	else
+	}else
 		Fy = Fy*sqrt(1.0-(Fx/max_Fx)*(Fx/max_Fx));/**/
 	//std::cout << "Fy=" << Fy << ", Fx=Fx0=" << Fx << ", Fxmax=" << max_Fx << ", Fymax=" << max_Fy << std::endl;
 
-	//combining method 3: traction ellipse (prioritize Fy)
+	//  combining method 3: traction ellipse (prioritize Fy)
 	/*if (Fy >= max_Fy)
 	{
 		Fy = max_Fy;
 		Fx = 0;
-	}
-	else
-	{
-		Dbl scale = sqrt(1.0-(Fy/max_Fy)*(Fy/max_Fy));
+	}else
+	{	Dbl scale = sqrt(1.0-(Fy/max_Fy)*(Fy/max_Fy));
 		if (isnan(scale))
 			Fx = 0;
 		else
@@ -222,10 +200,8 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 
 	if (slips)  // out vis
 	{
-		slips->slide = sigma;
-		slips->slip  = alpha;
-		slips->slideratio = s;
-		slips->slipratio  = a;
+		slips->slide = sigma;  slips->slideratio = s;
+		slips->slip  = alpha;  slips->slipratio  = a;
 		slips->fx_sr = s / rho;  slips->fx_rsr = rho*sigma_hat;
 		slips->fy_ar = a / rho;  slips->fy_rar = rho*alpha_hat;
 		slips->frict = friction_coeff;
@@ -258,7 +234,7 @@ void CARTIRE::CalculateSigmaHatAlphaHat(int tablesize)
 //-------------------------------------------------------------------------------------------------------------------------------
 
 
-///  load is the normal force in newtons.
+///  load is the normal force in newtons
 Dbl CARTIRE::GetMaximumFx(Dbl load) const
 {
 	const std::vector <Dbl>& b = longitudinal;
