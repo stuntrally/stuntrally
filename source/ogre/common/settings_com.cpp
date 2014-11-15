@@ -152,4 +152,5 @@ const bool SETcom::colVis[2][COL_VIS] =
 	
 const char SETcom::colFil[2][COL_FIL] =
 	{{01, 0,0, 0,0,0,0,0,0,0,0,0,0},
-	 {25, 6,5, 4,3,5,5,4,5,4,5,5,9}};
+	 {26, 6,5, 4,3,5,5,4,5,4,5,5,9}};
+	///^ up in next ver, also in *default.cfg
