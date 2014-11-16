@@ -317,6 +317,7 @@ float CAR::GetTireSquealAmount(WHEEL_POSITION i, float* slide, float* s1, float*
 	QUATERNION<float> wheelspace;
 	wheelspace = dynamics.GetUprightOrientation(i);
 	(-wheelspace).RotateVector(groundvel);
+	float carv = groundvel[0];
 
 	float wheelspeed = dynamics.GetWheel(i).GetAngularVelocity() * dynamics.GetWheel(i).GetRadius();
 	groundvel[0] -= wheelspeed;
@@ -324,19 +325,24 @@ float CAR::GetTireSquealAmount(WHEEL_POSITION i, float* slide, float* s1, float*
 	groundvel[2] = 0;
 
 	float squeal = (groundvel.Magnitude() - 3.0) * 0.2;
-	//LogO(fToStr(groundvel[0],2,3)+" "+fToStr(groundvel[1],2,3));
 	if (slide)  *slide = squeal + 0.6;
-	/// TODO: spin, slide, stop ...
 
 	Dbl slideratio = dynamics.GetWheel(i).slips.slideratio;
 	Dbl slipratio = dynamics.GetWheel(i).slips.slipratio;
-	//LogO(fToStr(slipratio,2,3)+" "+fToStr(slideratio,2,3));
 	if (s1)  *s1 = slideratio;
 	if (s2)  *s2 = slipratio;
+
+	//if (i==0)  LogO(iToStr(i)+"  s "+fToStr(carv,2,3)+"  x "+fToStr(wheelspeed,2,3));//+"  y "+fToStr(groundvel[1],2,3));
+	//LogO(fToStr(slipratio,2,3)+" "+fToStr(slideratio,2,3));
 
 	double maxratio = std::max(std::abs(slideratio), std::abs(slipratio));
 	float squealfactor = std::max(0.0, maxratio - 1.0);
 	squeal *= squealfactor;
+
+	//  locked braking slide
+	float brk = (1.f * std::abs(carv - wheelspeed)) * (1.f - 0.1f * std::abs(wheelspeed));
+	//if (s2)  *s2 = std::max(-10.f, brk*1.f);  //test
+	squeal += std::max(0.f, brk);
 
 	if (squeal < 0)  squeal = 0;
 	if (squeal > 1)  squeal = 1;  // 0..1
