@@ -14,6 +14,7 @@ void main(void)
 	uv = uv0;
 	// calculate the correct ray (modify XY parameters based on screen-space quad XY)	
 	ray = farCorner * vec3(uv0*2.0-1.0 , 1);
+	// account for render target flipping done by Ogre in GL mode, this line would be removed for a D3D port
 	ray.y *= -1;
 	gl_Position = (wvp * vertex);
 }

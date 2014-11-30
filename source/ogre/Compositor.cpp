@@ -97,8 +97,6 @@ void MotionBlurListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 			params->setNamedConstant("invViewMat", cam->getViewMatrix(true).inverse());
 		if (params->_findNamedConstantDefinition("prevViewProjMat"))
 			params->setNamedConstant("prevViewProjMat", mPreviousViewProjMatrix);
-		if (params->_findNamedConstantDefinition("textureFlipping"))
-			params->setNamedConstant("textureFlipping", -1.f); // FIXME: auto param source doesn't seem to be working, this would need to be changed when running in D3D
 
 		mPreviousViewProjMatrix = cam->getProjectionMatrix() * cam->getViewMatrix();
 	}
@@ -366,10 +364,6 @@ void SSAOListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 		params->setNamedConstant("ptMat", CLIP_SPACE_TO_IMAGE_SPACE * cam->getProjectionMatrixWithRSDepth());
 	if (params->_findNamedConstantDefinition("far"))
 		params->setNamedConstant("far", cam->getFarClipDistance());
-	if (params->_findNamedConstantDefinition("invViewMat"))
-	{
-		params->setNamedConstant("invViewMat", cam->getViewMatrix(true).inverse());
-	}
 }
 
 

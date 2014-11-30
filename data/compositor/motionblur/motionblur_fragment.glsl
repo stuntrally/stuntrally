@@ -11,8 +11,6 @@ uniform float far;
 uniform mat4 invViewMat;
 uniform mat4 prevViewProjMat;
 
-uniform float textureFlipping;
-
 uniform float fps;
 
 const float nSamples = 32;
@@ -32,8 +30,8 @@ void main(void)
     previous.xyz /= previous.w;
     previous.xy = previous.xy * 0.5 + 0.5;
 
-    // account for render target flipping done by Ogre through the projection matrix
-    previous.y = (1-clamp(textureFlipping, 0.0, 1.0))+textureFlipping*previous.y;
+    // account for render target flipping done by Ogre in GL mode, this line would be removed for a D3D port
+    previous.y = 1-previous.y;
 
     vec2 blurVec = previous.xy - uv;
 
@@ -53,5 +51,4 @@ void main(void)
 
 
     gl_FragColor = result;
-    //gl_FragColor = vec4(previous.xy, 0.0, 1.0
 }
