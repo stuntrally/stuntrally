@@ -16,6 +16,7 @@
 #include <OgreGpuProgramParams.h>
 #include <OgreRenderTarget.h>
 #include <OgreRenderWindow.h>
+#include <OgreRoot.h>
 using namespace Ogre;
 
 
@@ -29,6 +30,9 @@ public:
 
 	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
 	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
+
+private:
+	Ogre::Matrix4 mPreviousViewProjMatrix;
 };
 
 MotionBlurLogic::MotionBlurLogic(BaseApp* app)
@@ -44,6 +48,7 @@ CompositorInstance::Listener* MotionBlurLogic::createListener(CompositorInstance
 
 MotionBlurListener::MotionBlurListener(BaseApp* app) : pApp(0)
 {
+	mPreviousViewProjMatrix = Ogre::Matrix4::IDENTITY;
 	pApp = app;
 }
 
@@ -57,13 +62,45 @@ void MotionBlurListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 
 void MotionBlurListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
-	if (pass_id != 120)  return;
-	//LogO("notifyMaterialRender");
+	if (pass_id != 999)  return;
 	try
-	{	mat->load();
-		GpuProgramParametersSharedPtr fparams =
-			mat->getBestTechnique()->getPass(0)->getFragmentProgramParameters();
-		fparams->setNamedConstant("blur", pApp->motionBlurIntensity);
+	{
+		// this is the camera you're using
+		#ifndef SR_EDITOR
+		Camera *cam = pApp->mSplitMgr->mCameras.front();
+		#else
+		Camera *cam = pApp->mCamera;
+		#endif
+
+		if (mPreviousViewProjMatrix == Ogre::Matrix4::IDENTITY)
+		{
+			mPreviousViewProjMatrix = cam->getProjectionMatrix() * cam->getViewMatrix();
+		}
+
+		// calculate the far-top-right corner in view-space
+		Vector3 farCorner = cam->getViewMatrix(true) * cam->getWorldSpaceCorners()[4];
+
+		// get the pass
+		Pass *pass = mat->getBestTechnique()->getPass(0);
+
+		// get the vertex shader parameters
+		GpuProgramParametersSharedPtr params = pass->getVertexProgramParameters();
+		// set the camera's far-top-right corner
+		if (params->_findNamedConstantDefinition("farCorner"))
+			params->setNamedConstant("farCorner", farCorner);
+
+		// get the fragment shader parameters
+		params = pass->getFragmentProgramParameters();
+		if (params->_findNamedConstantDefinition("far"))
+			params->setNamedConstant("far", cam->getFarClipDistance());
+		if (params->_findNamedConstantDefinition("invViewMat"))
+			params->setNamedConstant("invViewMat", cam->getViewMatrix(true).inverse());
+		if (params->_findNamedConstantDefinition("prevViewProjMat"))
+			params->setNamedConstant("prevViewProjMat", mPreviousViewProjMatrix);
+		if (params->_findNamedConstantDefinition("textureFlipping"))
+			params->setNamedConstant("textureFlipping", -1.f); // FIXME: auto param source doesn't seem to be working, this would need to be changed when running in D3D
+
+		mPreviousViewProjMatrix = cam->getProjectionMatrix() * cam->getViewMatrix();
 	}
 	catch (Exception& e)
 	{
@@ -329,6 +366,10 @@ void SSAOListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 		params->setNamedConstant("ptMat", CLIP_SPACE_TO_IMAGE_SPACE * cam->getProjectionMatrixWithRSDepth());
 	if (params->_findNamedConstantDefinition("far"))
 		params->setNamedConstant("far", cam->getFarClipDistance());
+	if (params->_findNamedConstantDefinition("invViewMat"))
+	{
+		params->setNamedConstant("invViewMat", cam->getViewMatrix(true).inverse());
+	}
 }
 
 
