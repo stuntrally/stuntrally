@@ -202,7 +202,7 @@
 	<Tag name="Brush_Size">Tamanho</Tag>
 	<Tag name="HDRParam2">Brilho</Tag>
 	<Tag name="HDRParam3">Grain</Tag>
-	<Tag name="SC_Toxic">Toxic</Tag>
+	<Tag name="SC_Toxic">Tóxico</Tag>
 	<Tag name="HDRParam1">Exposição</Tag>
 	<Tag name="TipRoadDist2">Distância adicional da pista.</Tag>
 	<Tag name="InputBrushFilter">1,2  -  Filter frequency (kernel size)</Tag>
@@ -250,7 +250,7 @@
 	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
 	<Tag name="InputMinVal">Valor Mín.</Tag>
 	<Tag name="NetServer">Servidor</Tag>
-	<Tag name="DoesntExist">Doesn't exist</Tag>
+	<Tag name="DoesntExist">Não existe</Tag>
 	<Tag name="Brush_Offset">Deslocamento</Tag>
 	<Tag name="NetworkError">Erro de rede</Tag>
 	<Tag name="InputMain">Principal</Tag>
@@ -685,7 +685,7 @@
 	<Tag name="InputToggleCam">Tab - camera / edit mode toggle</Tag>
 	<Tag name="Car_MassFront">Peso na frente</Tag>
 	<Tag name="InputStartAltLMB">alt-LMB - rotate (shift - global)   alt-RMB - pitch (shift - roll)</Tag>
-	<Tag name="SC_Alien">Alien</Tag>
+	<Tag name="SC_Alien">Alienígena</Tag>
 	<Tag name="Brush_ShapeTriangle">Triang</Tag>
 	<Tag name="TerGenOfsX">Offset X</Tag>
 	<Tag name="Brush_Freq">Freq</Tag>
@@ -803,7 +803,7 @@
 	<Tag name="Road_Yaw">Yaw</Tag>
 	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
 	<Tag name="RoadPointSize">Road points size</Tag>
-	<Tag name="SC_Space">Space</Tag>
+	<Tag name="SC_Space">Espaço</Tag>
 	<Tag name="TipTCS">Previne que as rodas patinem ao acelerar (padrão: desligado).</Tag>
 	<Tag name="InputRoadColumn">End - on/off column</Tag>
 	<Tag name="Substract">Substract</Tag>
@@ -877,7 +877,7 @@
 	<Tag name="CarType">Tipo</Tag>
 	<Tag name="Tile">Tile</Tag>
 	<Tag name="SC_Crystals">Cristais</Tag>
-	<Tag name="SC_Stone">Stone</Tag>
+	<Tag name="SC_Stone">Pedra</Tag>
 	<Tag name="RplBestOnly">Salvar apenas o fantasma do melhor tempo</Tag>
 	<Tag name="InputFluidsMode">W - edit fluids</Tag>
 	<Tag name="Front">Front</Tag>
@@ -1105,7 +1105,7 @@
 	<Tag name="HeightMin">Height Min</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
 	<Tag name="TrackDifficulties">Pistas de vários níveis de dificuldade</Tag>
-	<Tag name="SC_Other">Other</Tag>
+	<Tag name="SC_Other">Outro</Tag>
 	<Tag name="NetNew">Novo jogo</Tag>
 	<Tag name="Gravity">Gravity</Tag>
 	<Tag name="InputObjectsScaleReset">shift-3 - reset scale to 1 (with shift to 0.5)</Tag>
