@@ -94,7 +94,7 @@
 	<Tag name="LS_MISC">Завершение</Tag>
 	<Tag name="DepthOfField">Прорисовка</Tag>
 	<Tag name="Game">Игра</Tag>
-	<Tag name="ViewFront">Вид спереди</Tag>
+	<Tag name="ViewFront">Вид спер.</Tag>
 	<Tag name="Grasses">Трава</Tag>
 	<Tag name="CarDesc_HR">Очень тяжёлое и медленное авто, лучший для земной местности и ухабов, лёгкий в управлении. Но бесполезный на быстрых треках и с трюками.</Tag>
 	<Tag name="SC_Finland">Финляндия</Tag>
@@ -167,7 +167,7 @@
 	<Tag name="TipSteerSim">Множитель диапазона управляемости, для режима симуляции (Легко, Нормально).</Tag>
 	<Tag name="CarType_Gravel">Гравий</Tag>
 	<Tag name="LS_OBJS">Загрузка объектов</Tag>
-	<Tag name="InputRoadMirror">alt-Home - выбор отображ.</Tag>
+	<Tag name="InputRoadMirror">alt-Home - выб. точки зеркально</Tag>
 	<Tag name="TreeRoadDist">Расстояние деревьев от дороги.</Tag>
 	<Tag name="GraphicsAll_Medium">Средняя</Tag>
 	<Tag name="NeedReload">* нужна перезагрузка</Tag>
@@ -209,7 +209,7 @@
 	<Tag name="Video">Видео</Tag>
 	<Tag name="TipBrushPick">shift-LMB - на кистях, выбрать только форму (не изменяет режим).</Tag>
 	<Tag name="Hint-13text">По умолчанию, режим симуляции - легко, для начинающих. Не забудь выбрать норма, если играть легко.</Tag>
-	<Tag name="ViewStart">Показать старт</Tag>
+	<Tag name="ViewStart">У старта</Tag>
 	<Tag name="TipToggleGrass">Включить или отлючить этот травяной слой.</Tag>
 	<Tag name="SSS_SpeedFactor">Коэф. скорости</Tag>
 	<Tag name="CarDesc_TC6">Хорошее авто для ралли. Низкий по высоте. Немного старее и менее мощный.</Tag>
@@ -364,7 +364,7 @@
 	<Tag name="TipFogClr2">Конец цвета тумана, когда отводишь взгляд от солнца.</Tag>
 	<Tag name="MinimapAndSize">Мини-карта, размер</Tag>
 	<Tag name="Checkpoint">КТ</Tag>
-	<Tag name="Road_Snap">Снимок</Tag>
+	<Tag name="Road_Snap">Захват</Tag>
 	<Tag name="Complex">Сложно</Tag>
 	<Tag name="TipSunDirPitch">Направление солнца - угол наклона.</Tag>
 	<Tag name="Passed">Пройдено</Tag>
@@ -375,7 +375,7 @@
 	<Tag name="Type">Тип</Tag>
 	<Tag name="CarType_Extreme">Экстрим</Tag>
 	<Tag name="Development">Разработка</Tag>
-	<Tag name="SetCamTo">Камера у</Tag>
+	<Tag name="SetCamTo">Уст. камеру</Tag>
 	<Tag name="RplMaxNumViewports">Макимальное количество окон экрана</Tag>
 	<Tag name="SingleRace">Одна гонка</Tag>
 	<Tag name="TipNewGameCar">Перезапустите игру.</Tag>
@@ -614,7 +614,7 @@
 	<Tag name="Engine">Двигатель</Tag>
 	<Tag name="TerGenPers">Инерция шума</Tag>
 	<Tag name="TipGrassLayers">Слои травы. Рекомендуем использовать 1-4.</Tag>
-	<Tag name="Right">Вправо</Tag>
+	<Tag name="Right">Право</Tag>
 	<Tag name="Help">Помощь</Tag>
 	<Tag name="CarDesc_N1">Хорошее авто для всех треков. Немного меньше управляемость, но довольно устойчивый из-за длины.</Tag>
 	<Tag name="LODPointsDist">LOD точки дист.</Tag>
@@ -659,7 +659,7 @@
 	<Tag name="UnitM">м</Tag>
 	<Tag name="EditTerrainMode">Ред. ландшафт</Tag>
 	<Tag name="TipTireParType3">Частица шины тип 3.</Tag>
-	<Tag name="InputRoadLMB">LMB (или стрелки)</Tag>
+	<Tag name="InputRoadLMB">LMB (Стрелки)</Tag>
 	<Tag name="WrongChk">Пропущена КТ</Tag>
 	<Tag name="NeedRestart">* необходим рестарт</Tag>
 	<Tag name="Water">Вода</Tag>
@@ -667,7 +667,7 @@
 	<Tag name="NetMasterConnectionError">Главный сервер не доступен.</Tag>
 	<Tag name="ChampInfo">В обучение/чемпионат режиме вы участвуете в серии из треков. Минимальный счет (зависит от времени) необходим чтобы получить доступ к следующему этапу. Возможна замена автомобиля.</Tag>
 	<Tag name="TipTerrainDouble">Делает двойной размер ландшафта, оставляя часть текущей высоты карты в центре.</Tag>
-	<Tag name="InputRoadRMB">RMB (или Num +,-)</Tag>
+	<Tag name="InputRoadRMB">RMB (Num +,-)</Tag>
 	<Tag name="UnitS">с</Tag>
 	<Tag name="TrackNotFound">Трек не найден !</Tag>
 	<Tag name="InputMapThrottle">Газ</Tag>
@@ -723,7 +723,7 @@
 	<Tag name="Layout">План</Tag>
 	<Tag name="InputReturnDelay">Скор. возврата</Tag>
 	<Tag name="TrackBestTime">Луч. время</Tag>
-	<Tag name="InputRoadMMB">MMB (или Num /,*)</Tag>
+	<Tag name="InputRoadMMB">MMB (Num /,*)</Tag>
 	<Tag name="Textures">Текстуры</Tag>
 	<Tag name="TipTerVertCount">Количество вершин ландшафта на одной стороне (квадраты). Применяется с кнопками [Новый] или [Изм. разм.].</Tag>
 	<Tag name="Updated">Обновил</Tag>
@@ -789,7 +789,7 @@
 	<Tag name="GrassMult">Коэф. травы</Tag>
 	<Tag name="UnitNm">Нм</Tag>
 	<Tag name="ABS">АБС</Tag>
-	<Tag name="Back">Назад</Tag>
+	<Tag name="Back">Сзади</Tag>
 	<Tag name="InputFluidsIns">Ins -вставить жидкость где курсор</Tag>
 	<Tag name="TipGrassSwaySpd">Скор. качания травы.</Tag>
 	<Tag name="RplRecTime">Время записи</Tag>
@@ -1047,7 +1047,7 @@
 	<Tag name="Error">Ошибка</Tag>
 	<Tag name="Small">Мелкий</Tag>
 	<Tag name="Resolution">Разрешение</Tag>
-	<Tag name="Left">Налево</Tag>
+	<Tag name="Left">Лево</Tag>
 	<Tag name="CarSpeed">Скорость</Tag>
 	<Tag name="Hint-8text">Если ты чувствуешь неудобство управления с клавиатуры, попробуй другие настройки в [Настройка], вкладка [Управление], т.е. диапазон чувствит. управления и кнопак в [Ввод].</Tag>
 	<Tag name="Gold">Золото</Tag>
