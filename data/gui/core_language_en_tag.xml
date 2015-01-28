@@ -12,6 +12,7 @@
 	<Tag name="LANG_IT">Italiano</Tag>
 	<Tag name="LANG_SK">Slovenský</Tag>
 	<Tag name="LANG_ES">Español</Tag>
+	<Tag name="LANG_CS">Čeština</Tag>
 
 	<!--  General  -->
 	<Tag name="Language">Language</Tag>
