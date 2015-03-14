@@ -69,7 +69,7 @@
 	<Tag name="CarDesc_3S">Bonne voiture, adaptée à tous les circuits, mais accélère lentement, notamment à des vitesses élevées.</Tag>
 	<Tag name="InputObjectsIns">Insér. - insérer nouveau, au curseur</Tag>
 	<Tag name="GraphicsAll_Low">Bas</Tag>
-	<Tag name="Group">Group</Tag>
+	<Tag name="Group">Groupe</Tag>
 	<Tag name="ChampEndFinished">Vous avez fini ce championnat.</Tag>
 	<Tag name="Negative">Négatif (assombrir)</Tag>
 	<Tag name="PickSetParam">Set parameters, marked with</Tag>
@@ -491,7 +491,7 @@
 	<Tag name="ChampEndCongrats">Félicitations !</Tag>
 	<Tag name="TiresEdit2">1,2 ou pavé num. /,* - changer la valeur</Tag>
 	<Tag name="CamInfoStrings">Type,Angle vertical,Angle horizontal,Distance,Hauteur,Vitesse,Décalage,GAUCHE,DROITE,Milieu,Molette,maj.,Tourner,réinit.,déplacer,H,Pos</Tag>
-	<Tag name="TipGrassColorMap">Carte de couleur pour le paysage, généralement le même choix que pour le matériau d'herbe. Permet de changer la couleur de l'herbe.</Tag>
+	<Tag name="TipGrassColorMap">Carte de couleur de l'herbe pour le paysage, généralement le même choix que pour le matériau d'herbe. Permet de changer la couleur de l'herbe.</Tag>
 	<Tag name="Multiplayer">Multijoueur</Tag>
 	<Tag name="ListeningOnPort">Écoute sur le port</Tag>
 	<Tag name="TiresEdit4">End - toggle align moment parameters</Tag>
@@ -988,7 +988,7 @@
 	<Tag name="ObjBuildings">Bâtiments</Tag>
 	<Tag name="AngleMin">Angle minimum</Tag>
 	<Tag name="FogEnd">fin</Tag>
-	<Tag name="Replay">Rejouer</Tag>
+	<Tag name="Replay">Replays</Tag>
 	<Tag name="InputDetailsFor">Détails pour</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 	<Tag name="ApplyShaders">Appliquer</Tag>
@@ -1081,7 +1081,7 @@
 	<Tag name="TipSunSpecular">Couleur des reflets de la lumière du soleil. Composants R V B de 0 à 1 (exemple : 0.6 0.6 0.6)</Tag>
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="Collis.">Collision</Tag>
-	<Tag name="Scenery">Scène</Tag>
+	<Tag name="Scenery">Paysage</Tag>
 	<Tag name="RenameAllOld">Renommer tous les anciens</Tag>
 	<Tag name="SC_Autumn">Automne</Tag>
 	<Tag name="Track">Circuit</Tag>

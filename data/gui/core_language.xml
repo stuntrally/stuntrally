@@ -33,6 +33,12 @@
 		<Info name="sk">
 			<Source>core_language_sk_tag.xml</Source>
 		</Info>
+		<Info name="es">
+			<Source>core_language_es_tag.xml</Source>
+		</Info>
+		<Info name="cs">
+			<Source>core_language_cs_tag.xml</Source>
+		</Info>
 	</Language>
 
 </MyGUI>

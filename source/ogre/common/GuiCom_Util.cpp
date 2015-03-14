@@ -133,7 +133,7 @@ void CGuiCom::GuiCenterMouse()
 	int xm = app->mWindow->getWidth()/2, ym = app->mWindow->getHeight()/2;
 
 	app->mInputWrapper->warpMouse(xm, ym);
-	MyGUI::InputManager::getInstance().injectMouseMove(xm, ym, 0);
+	InputManager::getInstance().injectMouseMove(xm, ym, 0);
 }
 
 void CGuiCom::btnQuit(WP)
@@ -144,7 +144,7 @@ void CGuiCom::btnQuit(WP)
 //  unfocus lists (would have double up/dn key input)
 void CGuiCom::UnfocusLists()
 {
-	WP w = MyGUI::InputManager::getInstance().getKeyFocusWidget();
+	WP w = InputManager::getInstance().getKeyFocusWidget();
 	while (w)
 	{
 		//LogO(wg->getTypeName() +" "+ wg->getName());
@@ -158,7 +158,7 @@ void CGuiCom::UnfocusLists()
 			w == (WP)app->gui->liChamps || w == (WP)app->gui->liStages || w == (WP)app->gui->rplList)) )
 		#endif
 		{
-			MyGUI::InputManager::getInstance().resetKeyFocusWidget();
+			InputManager::getInstance().resetKeyFocusWidget();
 			return;
 	}	}
 }
@@ -347,7 +347,7 @@ void CGuiCom::GuiInitLang()
 		languages["ru"] = TR("#{LANG_RU}");  languages["fi"] = TR("#{LANG_FI}");
 		languages["pt"] = TR("#{LANG_PT}");  languages["ro"] = TR("#{LANG_RO}");
 		languages["it"] = TR("#{LANG_IT}");  languages["sk"] = TR("#{LANG_SK}");
-		languages["es"] = TR("#{LANG_ES}");
+		languages["es"] = TR("#{LANG_ES}");  languages["cs"] = TR("#{LANG_CS}");
 	}
 	ComboBoxPtr combo = fCmb("Lang");
 	if (!combo)  return;
@@ -361,18 +361,18 @@ void CGuiCom::GuiInitLang()
 	}
 }
 
-void CGuiCom::comboLanguage(MyGUI::ComboBox* wp, size_t val)
+void CGuiCom::comboLanguage(ComboBox* wp, size_t val)
 {
-	if (val == MyGUI::ITEM_NONE)  return;
-	MyGUI::UString sel = wp->getItemNameAt(val);
+	if (val == ITEM_NONE)  return;
+	UString sel = wp->getItemNameAt(val);
 	
-	for (std::map<string, MyGUI::UString>::const_iterator it = languages.begin();
+	for (std::map<string, UString>::const_iterator it = languages.begin();
 		it != languages.end(); ++it)
 	{
 		if (it->second == sel)
 			pSet->language = it->first;
 	}
-	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
+	LanguageManager::getInstance().setCurrentLanguage(pSet->language);
 
 	//  reinit gui
 	#ifndef SR_EDITOR  //todo: fix in ed
@@ -453,8 +453,8 @@ void CGuiCom::tabMainMenu(Tab tab, size_t id)
 void CGuiCom::CreateFonts()
 {
 	MyGUI::ResourceManager& mgr = MyGUI::ResourceManager::getInstance();
-	MyGUI::IResource* resource = mgr.findByName("hud.text");  // based on this font
-	MyGUI::ResourceTrueTypeFont* bfont = resource != nullptr ? resource->castType<MyGUI::ResourceTrueTypeFont>(false) : 0;
+	IResource* resource = mgr.findByName("hud.text");  // based on this font
+	ResourceTrueTypeFont* bfont = resource != nullptr ? resource->castType<ResourceTrueTypeFont>(false) : 0;
 	if (!bfont)  LogO("Error !! Can't find font: hud.text");
 
 	const int cnt = 3;
