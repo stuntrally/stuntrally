@@ -3,6 +3,8 @@ material car_base
 	parent base
 	terrain_light_map true
 	terrain_light_map_toggleable true
+	// no motion blur
+	motionblur_mask false
 }
 
 material car_body

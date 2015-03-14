@@ -32,7 +32,7 @@ bool BaseApp::AnyEffectEnabled()
 
 bool BaseApp::NeedMRTBuffer()
 {
-	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays);
+	return pSet->all_effects && (pSet->ssao || pSet->softparticles || pSet->dof || pSet->godrays || pSet->blur);
 }
 
 
@@ -59,7 +59,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 			cmp.setCompositorEnabled((*it), "gbufferFinalizer", false);
 			//cmp.setCompositorEnabled((*it), "CamBlur", false);
 
-		cmp.setCompositorEnabled((*it), "Motion Blur", false);
+		cmp.setCompositorEnabled((*it), "motionblur", false);
 		cmp.setCompositorEnabled((*it), "FilmGrain", false);
 		cmp.setCompositorEnabled((*it), "gbufferUIRender", false);
 	}
@@ -107,7 +107,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled((*it), "Bloom", pSet->bloom);
 		cmp.setCompositorEnabled((*it), "HDR", pSet->hdr && NeedMRTBuffer());
 		cmp.setCompositorEnabled((*it), "HDRNoMRT", pSet->hdr && !NeedMRTBuffer());
-		cmp.setCompositorEnabled((*it), "Motion Blur", pSet->blur);
+		cmp.setCompositorEnabled((*it), "motionblur", pSet->blur);
 		//cmp.setCompositorEnabled((*it), "CamBlur", pSet->camblur);
 		cmp.setCompositorEnabled((*it), "FilmGrain", pSet->hdr);
 
@@ -200,94 +200,11 @@ void BaseApp::recreateCompositor()
 		mGBufferLogic->setApp(this);
 		cmp.registerCompositorLogic("GBuffer", mGBufferLogic);
 	}
-
-	if (cmp.getByName("Motion Blur").isNull())
-	{
-		// Motion blur has to be created in code
-		CompositorPtr comp3 = cmp.create(
-			"Motion Blur", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-
-		CompositionTechnique *t = comp3->createTechnique();
-		t->setCompositorLogicName("Motion Blur");
-		{
-			CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("scene");
-			def->width = 0;
-			def->height = 0;
-			def->formatList.push_back(PF_R8G8B8);
-		}
-		{
-			CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("sum");
-			def->width = 0;
-			def->height = 0;
-			def->formatList.push_back(PF_R8G8B8);
-		}
-		{
-			CompositionTechnique::TextureDefinition *def = t->createTextureDefinition("temp");
-			def->width = 0;
-			def->height = 0;
-			def->formatList.push_back(PF_R8G8B8);
-		}
-		/// Render scene
-		{
-			CompositionTargetPass *tp = t->createTargetPass();
-			tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
-			tp->setOutputName("scene");
-		}
-		/// Initialisation pass for sum texture
-		{
-			CompositionTargetPass *tp = t->createTargetPass();
-			tp->setInputMode(CompositionTargetPass::IM_PREVIOUS);
-			tp->setOutputName("sum");
-			tp->setOnlyInitial(true);
-		}
-		/// Do the motion blur
-		{
-			CompositionTargetPass *tp = t->createTargetPass();
-			tp->setInputMode(CompositionTargetPass::IM_NONE);
-			tp->setOutputName("temp");
-			{ CompositionPass *pass = tp->createPass();
-			pass->setType(CompositionPass::PT_RENDERQUAD);
-			pass->setMaterialName("Ogre/Compositor/Combine");
-			pass->setIdentifier(120);
-			pass->setInput(0, "scene");
-			pass->setInput(1, "sum");
-			}
-		}
-		/// Copy back sum texture
-		{
-			CompositionTargetPass *tp = t->createTargetPass();
-			tp->setInputMode(CompositionTargetPass::IM_NONE);
-			tp->setOutputName("sum");
-			{ CompositionPass *pass = tp->createPass();
-			pass->setType(CompositionPass::PT_RENDERQUAD);
-			pass->setMaterialName("Ogre/Compositor/Copyback");
-			pass->setInput(0, "temp");
-			}
-		}
-		/// Display result
-		{
-			CompositionTargetPass *tp = t->getOutputTargetPass();
-			tp->setInputMode(CompositionTargetPass::IM_NONE);
-			{ CompositionPass *pass = tp->createPass();
-			pass->setType(CompositionPass::PT_RENDERQUAD);
-			pass->setMaterialName("Ogre/Compositor/MotionBlur");
-			pass->setInput(0, "sum");
-			}
-		}
-	}
-
-
 	if (!mMotionBlurLogic)
 	{
 		mMotionBlurLogic = new MotionBlurLogic(this);
-		cmp.registerCompositorLogic("Motion Blur", mMotionBlurLogic);
+		cmp.registerCompositorLogic("motionblur", mMotionBlurLogic);
 	}
-	/*if (!mCameraBlurLogic)
-	{
-		mCameraBlurLogic = new CameraBlurLogic(this);
-		cmp.registerCompositorLogic("CamBlur", mCameraBlurLogic);
-	}*/
-
 
 	for (std::list<Viewport*>::iterator it=mSplitMgr->mViewports.begin(); it!=mSplitMgr->mViewports.end(); ++it)
 	{
@@ -314,7 +231,7 @@ void BaseApp::recreateCompositor()
 		cmp.addCompositor((*it), "GodRays");
 		cmp.addCompositor((*it), "Bloom");
 		//cmp.addCompositor((*it), "CamBlur");
-		cmp.addCompositor((*it), "Motion Blur");
+		cmp.addCompositor((*it), "motionblur");
 		//cmp.addCompositor((*it), "FXAA");
 		cmp.addCompositor((*it), "FilmGrain");
 		cmp.addCompositor((*it), "gbufferUIRender");
