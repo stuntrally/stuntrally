@@ -20,14 +20,35 @@ fragment_program motionblur_fragment_glsl glsl
 	}
 }
 
+vertex_program motionblur_vertex_hlsl hlsl
+{
+	source motionblur.hlsl
+	target vs_3_0
+	entry_point motionblur_vs
+}
+
+fragment_program motionblur_fragment_hlsl hlsl
+{
+	source motionblur.hlsl
+	target ps_3_0
+	entry_point motionblur_ps
+	default_params
+	{
+		param_named_auto far far_clip_distance
+		param_named_auto fps fps
+	}
+}
+
 fragment_program motionblur_fragment unified
 {
 	delegate motionblur_fragment_glsl
+	delegate motionblur_fragment_hlsl
 }
 
 vertex_program motionblur_vertex unified
 {
 	delegate motionblur_vertex_glsl
+	delegate motionblur_vertex_hlsl
 }
 
 material motionblur
