@@ -22,6 +22,7 @@ compositor motionblur
             
                 input 0 previousscene
                 input 1 scene 1
+                input 2 scene 2
                
 				// ID this pass in order to find it
 				// in compositor listeners

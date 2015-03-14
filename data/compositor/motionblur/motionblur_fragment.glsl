@@ -5,6 +5,7 @@ varying vec3 ray;
 
 uniform sampler2D scene;
 uniform sampler2D depthTex;
+uniform sampler2D mask;
 
 uniform float far;
 
@@ -38,13 +39,19 @@ void main(void)
     blurVec *= fps / targetFps;
 
     // perform blur
-    vec4 result = texture2D(scene, uv);
+    vec4 orig = texture2D(scene, uv);
+    vec4 result = orig;
+    vec4 centerMask = texture2D(mask, uv);
     for (int i = 1; i < nSamples; ++i) {
-	// get offset in range [-0.5, 0.5]
-	vec2 offset = blurVec * (float(i) / float(nSamples - 1) - 0.5);
 
-	// sample & add to result
-	result += texture2D(scene, uv + offset);
+        // get offset in range [-0.5, 0.5]
+        vec2 offset = blurVec * (float(i) / float(nSamples - 1) - 0.5) * centerMask.w;
+
+        vec4 mask = texture2D(mask, uv + offset);
+
+        // sample & add to result
+        // to prevent ghosting
+        result += mix(orig, texture2D(scene, uv + offset), mask.w);
     }
 
     result /= float(nSamples);

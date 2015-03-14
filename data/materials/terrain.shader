@@ -547,7 +547,7 @@
         float3 viewPosition = @shPassthroughReceive(viewPosition);
         float3 viewNormal = normalize(shMatrixMult(wvMat, float4(normal, 0)).xyz);
         shOutputColour(1) = float4(length(viewPosition) / far, normalize(viewNormal));
-        shOutputColour(2) = float4(depth / far, 0, depth / objSpacePosition.w, 0);
+        shOutputColour(2) = float4(depth / far, 0, depth / objSpacePosition.w, 1.0); // .w motionblur mask
 #endif
 
 
@@ -672,7 +672,7 @@
         float3 viewPosition = @shPassthroughReceive(viewPosition);
         float3 viewNormal = normalize(shMatrixMult(wvMat, float4(normal, 0)).xyz);
         shOutputColour(1) = float4(length(viewPosition) / far, normalize(viewNormal));
-        shOutputColour(2) = float4(depth / far, 0, depth / objSpacePosition.w, 0);
+        shOutputColour(2) = float4(depth / far, 0, depth / objSpacePosition.w, 1.0); // .w motionblur mask
 #endif
 
 		//shOutputColour(0).xy = UV;

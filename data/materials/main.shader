@@ -27,6 +27,7 @@
 
 #define TERRAIN_LIGHT_MAP  @shPropertyBool(terrain_light_map)
 #define TERRAIN_LIGHT_MAP_TOGGLEABLE  @shPropertyBool(terrain_light_map_toggleable)
+#define MOTIONBLUR_MASK @shPropertyBool(motionblur_mask)
 
 #define INSTANCING  @shPropertyBool(instancing)
 #define SOFT_PARTICLES  (@shPropertyBool(soft_particles) &&  @shGlobalSettingBool(soft_particles))
@@ -630,7 +631,7 @@
 
 #if MRT
 		shOutputColour(1) = float4(UV.w, normalize(viewNormal.xyz));
-		shOutputColour(2) = float4(UV.z / far, 0, UV.z / objSpacePositionPassthrough.w, 0);
+		shOutputColour(2) = float4(UV.z / far, 0, UV.z / objSpacePositionPassthrough.w, MOTIONBLUR_MASK);
 #endif
 
 	}
