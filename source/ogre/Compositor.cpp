@@ -97,6 +97,8 @@ void MotionBlurListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 			params->setNamedConstant("invViewMat", cam->getViewMatrix(true).inverse());
 		if (params->_findNamedConstantDefinition("prevViewProjMat"))
 			params->setNamedConstant("prevViewProjMat", mPreviousViewProjMatrix);
+		if (params->_findNamedConstantDefinition("intensity"))
+			params->setNamedConstant("intensity", pApp->pSet->blur_int);
 
 		mPreviousViewProjMatrix = cam->getProjectionMatrix() * cam->getViewMatrix();
 	}

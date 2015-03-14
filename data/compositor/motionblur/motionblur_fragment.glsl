@@ -5,7 +5,7 @@ varying vec3 ray;
 
 uniform sampler2D scene;
 uniform sampler2D depthTex;
-uniform sampler2D mask;
+uniform sampler2D maskTex;
 
 uniform float far;
 
@@ -13,9 +13,10 @@ uniform mat4 invViewMat;
 uniform mat4 prevViewProjMat;
 
 uniform float fps;
+uniform float intensity;
 
-const float nSamples = 32;
-const float targetFps = 60;
+const float nSamples = 32.0;
+const float targetFps = 24.0; // 60 * default intensity(0.4)
 
 void main(void)
 {
@@ -36,18 +37,18 @@ void main(void)
 
     vec2 blurVec = previous.xy - uv;
 
-    blurVec *= fps / targetFps;
+    blurVec *= intensity * fps / targetFps;
 
     // perform blur
     vec4 orig = texture2D(scene, uv);
     vec4 result = orig;
-    vec4 centerMask = texture2D(mask, uv);
+    vec4 centerMask = texture2D(maskTex, uv);
     for (int i = 1; i < nSamples; ++i) {
 
         // get offset in range [-0.5, 0.5]
         vec2 offset = blurVec * (float(i) / float(nSamples - 1) - 0.5) * centerMask.w;
 
-        vec4 mask = texture2D(mask, uv + offset);
+        vec4 mask = texture2D(maskTex, uv + offset);
 
         // sample & add to result
         // to prevent ghosting

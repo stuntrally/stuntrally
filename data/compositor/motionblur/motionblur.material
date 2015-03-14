@@ -16,7 +16,7 @@ fragment_program motionblur_fragment_glsl glsl
 		param_named_auto fps fps
 		param_named scene int 0
 		param_named depthTex int 1
-		param_named mask int 2
+		param_named maskTex int 2
 	}
 }
 
