@@ -57,7 +57,6 @@ void BaseApp::refreshCompositor(bool disableAll)
 			cmp.setCompositorEnabled((*it), "DepthOfField", false);
 			cmp.setCompositorEnabled((*it), "GodRays", false);
 			cmp.setCompositorEnabled((*it), "gbufferFinalizer", false);
-			//cmp.setCompositorEnabled((*it), "CamBlur", false);
 
 		cmp.setCompositorEnabled((*it), "motionblur", false);
 		cmp.setCompositorEnabled((*it), "FilmGrain", false);
@@ -108,7 +107,6 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled((*it), "HDR", pSet->hdr && NeedMRTBuffer());
 		cmp.setCompositorEnabled((*it), "HDRNoMRT", pSet->hdr && !NeedMRTBuffer());
 		cmp.setCompositorEnabled((*it), "motionblur", pSet->blur);
-		//cmp.setCompositorEnabled((*it), "CamBlur", pSet->camblur);
 		cmp.setCompositorEnabled((*it), "FilmGrain", pSet->hdr);
 
 		//if(MaterialGenerator::MRTSupported())
@@ -142,7 +140,6 @@ void BaseApp::recreateCompositor()
 		mRoot->addResourceLocation(sPath + "/bloom", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/hdr", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
-		//mRoot->addResourceLocation(sPath + "/camblur", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/ssao", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/softparticles", "FileSystem", "Effects");
 		mRoot->addResourceLocation(sPath + "/dof", "FileSystem", "Effects");
@@ -230,7 +227,6 @@ void BaseApp::recreateCompositor()
 
 		cmp.addCompositor((*it), "GodRays");
 		cmp.addCompositor((*it), "Bloom");
-		//cmp.addCompositor((*it), "CamBlur");
 		cmp.addCompositor((*it), "motionblur");
 		//cmp.addCompositor((*it), "FXAA");
 		cmp.addCompositor((*it), "FilmGrain");
