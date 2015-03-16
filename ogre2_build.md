@@ -1,22 +1,16 @@
-1. Build Ogre 2.0
+* Build Ogre 2.0
 
-mkdir build
-cd build
-cmake ..
-make
-
-2. Build MyGUI
+* Build MyGUI
 
 To find Ogre without installing it:
  
 cmake .. -DOGRE_HOME=/home/scrawl/Dev/ogre  -DOGRE_BUILD=/home/scrawl/Dev/ogre/build -DOGRE_SOURCE_DIR=/home/scrawl/Dev/ogre/ -DOGRE_SOURCE=/home/scrawl/Dev/ogre 
-```
 
-3. Install MyGUI to a local prefix
+* Install MyGUI to a local prefix
 
 cmake .. -DCMAKE_INSTALL_PREFIX=/opt/mygui-ogre2
 
-3. Build SR
+* Build SR
 
 To find OGRE and MyGUI:
 
