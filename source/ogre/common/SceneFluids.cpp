@@ -51,7 +51,7 @@ void CScene::CreateFluids()
 		MeshPtr mesh = MeshManager::getSingleton().createPlane( smesh, rgDef,
 			p, fb.size.x,fb.size.z, 6,6, true, 1, fb.tile.x*fb.size.x,fb.tile.y*fb.size.z, Vector3::UNIT_Z);
 
-		Entity* efl = app->mSceneMgr->createEntity("WaterPlane"+toStr(i), "WaterMesh"+toStr(i));
+		Entity* efl = app->mSceneMgr->createEntity("WaterMesh"+toStr(i));
 		unsigned short src,dest;
 		if (!mesh->suggestTangentVectorBuildParams(VES_TANGENT, src,dest))
 			mesh->buildTangentVectors(VES_TANGENT, src,dest);

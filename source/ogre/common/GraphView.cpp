@@ -57,8 +57,7 @@ void GraphView::moSetup(ManualObject* mo, bool dynamic, Ogre::uint8 RQG)
 	mo->setUseIdentityView(true);
 	mo->setCastShadows(false);
 
-	AxisAlignedBox aabInf;	aabInf.setInfinite();
-	//mo->setBoundingBox(aabInf);  // always visible
+	mo->setLocalAabb(Ogre::Aabb::BOX_INFINITE);  // always visible
 	mo->setRenderQueueGroup(RQG);  // on hud
 	mo->setVisibilityFlags(RV_Hud);
 }

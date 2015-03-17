@@ -96,7 +96,7 @@ void SplineRoad::AddMesh(MeshPtr mesh, String sMesh, const AxisAlignedBox& aabox
 	if (!mesh->suggestTangentVectorBuildParams(VES_TANGENT, src, dest))
 		mesh->buildTangentVectors(VES_TANGENT, src, dest);
 
-	*pEnt = mSceneMgr->createEntity("rd.ent"+sEnd, sMesh);
+	*pEnt = mSceneMgr->createEntity(sMesh);
 	*pNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::SCENE_DYNAMIC);
 	(*pNode)->attachObject(*pEnt);
 	(*pEnt)->setVisible(false);  (*pEnt)->setCastShadows(false);

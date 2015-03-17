@@ -22,13 +22,26 @@
 #include <OgreParticleSystem.h>
 #include <OgreParticleEmitter.h>
 #include <OgreSceneNode.h>
+#include <OgreFrameStats.h>
+
+#include <MyGUI_OgrePlatform.h>
+
+#include <Compositor/OgreCompositorManager2.h>
+#include <Compositor/OgreCompositorNodeDef.h>
+#include <Compositor/Pass/OgreCompositorPass.h>
+#include <Compositor/Pass/OgreCompositorPassDef.h>
+#include <Compositor/Pass/PassScene/OgreCompositorPassSceneDef.h>
+#include <Compositor/Pass/PassClear/OgreCompositorPassClearDef.h>
+#include <Compositor/OgreCompositorWorkspaceDef.h>
+
 #include "MyGUI_PointerManager.h"
 using namespace Ogre;
 
 
 SplitScr::SplitScr(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :
 	pApp(0),
-	mWindow(window), mSceneMgr(sceneMgr), pSet(set)
+	mWindow(window), mSceneMgr(sceneMgr), pSet(set),
+	mWorkspace(NULL)
 {
 	// Add window listener
 	mWindow->addListener(this);
@@ -55,6 +68,11 @@ void SplitScr::UpdateCamDist()
 //  CleanUp
 void SplitScr::CleanUp()
 {
+	if (mWorkspace)
+	{
+		Ogre::Root::getSingleton().getCompositorManager2()->removeWorkspace(mWorkspace);
+	}
+
 	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
 	{
 		//mWindow->removeViewport( (*vpIt)->getZOrder() );
@@ -71,9 +89,52 @@ void SplitScr::CleanUp()
 //------------------------------------------------------------------------------------------------------------------
 void SplitScr::Align()
 {
+	CleanUp();
+
+	// Create camera
+	mCameras.push_back(mSceneMgr->createCamera("PlayerCamera" + toStr(0)));
+	mCameras.back()->setPosition(Vector3(0,-100,0));
+	mCameras.back()->lookAt(Vector3(0,-100,10));
+	mCameras.back()->setFarClipDistance(pSet->view_distance*1.1f);
+	mCameras.back()->setNearClipDistance(0.2f);
+
+
+	const Ogre::String workspaceName = "scene workspace";
+	const Ogre::IdString workspaceNameHash = workspaceName;
+
+	Ogre::CompositorManager2* pCompositorManager = Ogre::Root::getSingleton().getCompositorManager2();
+	static bool defCreated = false;
+	if (!defCreated)
+	{
+		Ogre::CompositorNodeDef *nodeDef = pCompositorManager->addNodeDefinition( "myworkspace" );
+		//Input texture
+		nodeDef->addTextureSourceName( "WindowRT", 0, Ogre::TextureDefinitionBase::TEXTURE_INPUT );
+		nodeDef->setNumTargetPass( 1 );
+		{
+			Ogre::CompositorTargetDef *targetDef = nodeDef->addTargetPass( "WindowRT" );
+			targetDef->setNumPasses( 3 );
+			{
+				{
+					targetDef->addPass( Ogre::PASS_CLEAR );
+
+					Ogre::CompositorPassSceneDef *passScene = static_cast<Ogre::CompositorPassSceneDef*>
+																( targetDef->addPass( Ogre::PASS_SCENE ) );
+					passScene->mShadowNode = Ogre::IdString();
+
+					// For the MyGUI pass
+					targetDef->addPass( Ogre::PASS_CUSTOM, MyGUI::OgreCompositorPassProvider::mPassId  );
+				}
+			}
+		}
+		Ogre::CompositorWorkspaceDef *workDef = pCompositorManager->addWorkspaceDefinition( workspaceName );
+		workDef->connectOutput( nodeDef->getName(), 0 );
+		defCreated = true;
+	}
+
+	pCompositorManager->addWorkspace(mSceneMgr, mWindow, mCameras.back(), workspaceNameHash, true);
+
 
 #if 0
-	CleanUp();
 	LogO("-- Screen Align");
 	
 	for (int i=0; i < 4; ++i)
@@ -193,7 +254,7 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 
 		//  Update HUD for this car
 		pApp->hud->ShowVp(true);
-		pApp->hud->Update(carId, 0.f /*1.f / mWindow->getLastFPS()*/);
+		pApp->hud->Update(carId, 1.f/Ogre::Root::getSingleton().getFrameStats()->getFps());
 
 		///  Set sky pos to camera  - TODO: fix, sky is center only for last player ...
 		//  idea: with compositor this needs separate sky nodes (own sky for each player) and showing 1 sky for 1 player
@@ -243,7 +304,7 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 	else
 	{
 		//  Gui viewport - hide stuff we don't want
-		pApp->hud->Update(-1, 0.f /*1.f / mWindow->getLastFPS()*/);
+		pApp->hud->Update(-1, 1.f / Ogre::Root::getSingleton().getFrameStats()->getFps());
 		pApp->hud->ShowVp(false);
 		
 		// no mouse in key capture mode

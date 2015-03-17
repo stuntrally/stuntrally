@@ -168,7 +168,10 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 
 	//  light
 	app->mSceneMgr->destroyAllLights();
+	if (!sunNode)
+		sunNode = app->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	sun = app->mSceneMgr->createLight();
+	sunNode->attachObject(sun);
 	sun->setType(Light::LT_DIRECTIONAL);  UpdSun();
 
 

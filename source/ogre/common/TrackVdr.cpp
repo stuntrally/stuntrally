@@ -252,7 +252,7 @@ ManualObject* CHud::CreateVdrMinimap()
 	m->end();
 	m->setUseIdentityProjection(true);  m->setUseIdentityView(true);  // on hud
 	m->setCastShadows(false);
-	AxisAlignedBox aab;  aab.setInfinite();  //m->setBoundingBox(aab);  // draw always
+	m->setLocalAabb(Ogre::Aabb::BOX_INFINITE);  // draw always
 	m->setRenderingDistance(100000.f);
 	m->setRenderQueueGroup(RQG_Hud2);  m->setVisibilityFlags(RV_Hud);
 	return m;
@@ -330,8 +330,7 @@ void App::CreateRoadBezier()
 		#endif
 	}
 	m->end();
-	AxisAlignedBox aabInf;	aabInf.setInfinite();
-	//m->setBoundingBox(aabInf);  // always visible
+	m->setLocalAabb(Ogre::Aabb::BOX_INFINITE);  // always visible
 	mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(m);
 }
 #endif

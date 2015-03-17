@@ -131,8 +131,7 @@ ManualObject* App::Create2D(const String& mat, Real s, bool dyn)
 	m->position( s, s*asp, 0);  m->textureCoord(1, 0);
 	m->end();
  
-	AxisAlignedBox aabInf;	aabInf.setInfinite();
-	m->setBoundingBox(aabInf);  // always visible
+	m->setLocalAabb(Ogre::Aabb::BOX_INFINITE);  // always visible
 	m->setRenderQueueGroup(RQG_Hud2);
 	return m;
 }

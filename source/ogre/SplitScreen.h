@@ -62,6 +62,8 @@ public:
 private:
 	SETTINGS* pSet;
 
+	Ogre::CompositorWorkspace* mWorkspace;
+
 	// Scene manager to use
 	Ogre::SceneManager* mSceneMgr;
 	

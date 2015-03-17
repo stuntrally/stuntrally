@@ -22,7 +22,7 @@ void SplineRoad::Setup(String sMarkerMeshFile, Real scale,
 	if (sMarkerMesh == "")  return;
 
 	#define createSphere(mat, ent, nd)  \
-		ent = mSceneMgr->createEntity(name, sMarkerMeshFile);  \
+		ent = mSceneMgr->createEntity(sMarkerMeshFile);  \
 		ent->setMaterialName(mat);  ent->setCastShadows(false);  ent->setVisibilityFlags(RV_Hud);  \
 		nd = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::SCENE_DYNAMIC);  \
 		nd->attachObject(ent);  nd->setVisible(false);

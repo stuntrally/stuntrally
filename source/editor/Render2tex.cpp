@@ -85,7 +85,7 @@ void App::Rnd2TexSetup()
 		if (i == RTs)  r.mini->setCorners(-1/asp, 1, 1/asp, -1);  // fullscr,square
 		else  r.mini->setCorners(xm1, ym1, xm2, ym2);  //+i*sz*all
 
-		r.mini->setBoundingBox(aab);
+		r.mini->setLocalAabb(Ogre::Aabb::BOX_INFINITE);
 		r.ndMini = mSceneMgr->getRootSceneNode()->createChildSceneNode("Minimap"+si);
 		r.ndMini->attachObject(r.mini);	r.mini->setCastShadows(false);
 		r.mini->setMaterial(i == RTs+1 ? "BrushPrvMtr" : sMtr);

@@ -38,6 +38,7 @@ public:
 	
 	//  Sun
 	Ogre::Light* sun;
+	Ogre::SceneNode* sunNode;
 	void UpdFog(bool bForce=false), UpdSun(), UpdSky();
 	void CreateSkyDome(Ogre::String sMater, Ogre::Vector3 scale, float yaw);
 

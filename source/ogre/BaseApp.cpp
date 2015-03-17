@@ -8,6 +8,8 @@
 #include "MyGUI_Prerequest.h"
 #include "MyGUI_PointerManager.h"
 
+#include <OgreFrameStats.h>
+
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
 using namespace Ogre;
@@ -96,9 +98,11 @@ void BaseApp::updateStats()
 			batch = stats.batchCount;
 		}
 
+		float fps = Ogre::Root::getSingleton().getFrameStats()->getFps();
 		//  update
 		txFps->setCaption(
-			//"#E0F0FF"+(stats.lastFPS >= 200.f ? fToStr(stats.lastFPS,0,4)+"." : fToStr(stats.lastFPS,1,5))+
+
+			"#E0F0FF"+(fps >= 200.f ? fToStr(fps,0,4)+"." : fToStr(fps,1,5))+
 			"#B0C0D0"+iToStr(int(tris/1000.f),4)+"k"+
 			" #C8E0FF"+iToStr(batch,3)+
 			" #A0B0C8"+iToStr(mem/1024/1024,3)+"M" );

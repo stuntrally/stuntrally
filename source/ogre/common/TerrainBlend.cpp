@@ -49,8 +49,7 @@ void CScene::RenderToTex::Setup(Ogre::Root* rt, String sName, TexturePtr pTex, S
 	//vp->setMaterialScheme("reflection");
 
 	rect = new Rectangle2D(true);   rect->setCorners(-1,1,1,-1);
-	AxisAlignedBox aab;  aab.setInfinite();
-	rect->setBoundingBox(aab);  rect->setCastShadows(false);
+	rect->setLocalAabb(Ogre::Aabb::BOX_INFINITE);  rect->setCastShadows(false);
 	rect->setMaterial( sMtr );
 
 	nd = scm->getRootSceneNode()->createChildSceneNode(sName+"N");
@@ -68,7 +67,6 @@ const String CScene::sHmap = "HmapTex",
 
 void CScene::CreateBlendTex()
 {
-#if 0
 	uint size = sc->td.iTerSize-1;
 	TextureManager& texMgr = TextureManager::getSingleton();
 	texMgr.remove(sHmap);  texMgr.remove(sAng);
@@ -101,7 +99,6 @@ void CScene::CreateBlendTex()
 	grassDensRTT.Setup(app->mRoot, "grd", grassDensRTex, sGrassDensMat);
 	
 	//UpdBlendmap();  //
-#endif
 }
 
 

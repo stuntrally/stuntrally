@@ -11,7 +11,7 @@
 
 CScene::CScene(App* app1)
 	:app(app1)
-	,sun(0), pr(0),pr2(0)
+	,sun(0), sunNode(0), pr(0),pr2(0)
 	,grass(0), trees(0)
 	,terrain(0), mTerrainGroup(0), mTerrainGlobals(0)
 	,horizon(0), mHorizonGroup(0), mHorizonGlobals(0)

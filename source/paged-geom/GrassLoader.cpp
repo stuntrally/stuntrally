@@ -181,7 +181,7 @@ namespace Forests {
 				assert(mesh);
 
 				//Add the mesh to PagedGeometry
-				Entity *entity = geom->getCamera()->getSceneManager()->createEntity(getUniqueID(), mesh->getName());
+				Entity *entity = geom->getCamera()->getSceneManager()->createEntity(mesh->getName());
 				entity->setRenderQueueGroup(renderQueue);
 				entity->setVisibilityFlags(RV_VegetGrass);  ///T  disable in render targets
 				entity->setCastShadows(false);

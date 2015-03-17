@@ -493,8 +493,7 @@ void CHud::Create()
 			m->position( 1,0, 0);  m->colour(1,1,1);
 			m->end();
 		 
-			AxisAlignedBox aabInf;	aabInf.setInfinite();
-			//m->setBoundingBox(aabInf);  // always visible
+			m->setLocalAabb(Ogre::Aabb::BOX_INFINITE);  // always visible
 			m->setVisibilityFlags(RV_Hud);
 			m->setRenderQueueGroup(RQG_Hud1);
 
@@ -696,7 +695,7 @@ void CHud::ShowVp(bool vp)	// todo: use vis mask ..
 void CHud::CreateArrow()
 {
 	if (!arrow.node)  arrow.node = app->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre::Entity* ent = app->mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
+	Ogre::Entity* ent = app->mSceneMgr->createEntity("arrow.mesh");
 	ent->setRenderQueueGroup(RQG_Hud3);
 	ent->setCastShadows(false);
 	arrow.nodeRot = arrow.node->createChildSceneNode();

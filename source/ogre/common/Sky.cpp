@@ -20,6 +20,7 @@
 #include <OgreParticleSystem.h>
 #include <OgreParticleEmitter.h>
 #include <OgreRenderWindow.h>
+#include <OgreFrameStats.h>
 using namespace Ogre;
 
 
@@ -60,8 +61,7 @@ void CScene::CreateSkyDome(String sMater, Vector3 sc, float yaw)
 		}
 	}
 	m->end();
-	AxisAlignedBox aab;  aab.setInfinite();
-	//m->setBoundingBox(aab);  // always visible
+	m->setLocalAabb(Ogre::Aabb::BOX_INFINITE);  // always visible
 	m->setRenderQueueGroup(RQG_Sky);
 	m->setCastShadows(false);
 	#ifdef SR_EDITOR
@@ -147,7 +147,7 @@ void CScene::UpdateWeather(Camera* cam, float mul)
 	const Vector3& pos = cam->getPosition(), dir = cam->getDirection();
 	static Vector3 oldPos = Vector3::ZERO;
 
-	Vector3 vel = (pos-oldPos) /* * app->mWindow->getLastFPS()*/;  oldPos = pos;
+	Vector3 vel = (pos-oldPos) * Ogre::Root::getSingleton().getFrameStats()->getFps();  oldPos = pos;
 	Vector3 par = pos + dir * 12.f + vel * 0.6f;
 
 	if (pr && sc->rainEmit > 0)

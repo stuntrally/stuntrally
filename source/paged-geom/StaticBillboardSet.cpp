@@ -348,7 +348,7 @@ void StaticBillboardSet::build()
       }
 
       // Create an entity for the mesh
-      mpEntity = mpSceneMgr->createEntity(mEntityName, mPtrMesh->getName(), mPtrMesh->getGroup());
+	  mpEntity = mpSceneMgr->createEntity(mPtrMesh->getName(), mPtrMesh->getGroup());
       mpEntity->setCastShadows(false);
       mpEntity->setMaterial(mFadeEnabled ? mPtrFadeMaterial : mPtrMaterial);
 

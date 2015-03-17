@@ -24,7 +24,6 @@
 
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
-#include "common/MyGUI_D3D11.h"
 
 #include <OgreTimer.h>
 #include <OgreOverlayManager.h>
@@ -416,17 +415,18 @@ bool BaseApp::setup()
 
 	mSplitMgr = new SplitScr(mSceneMgr, mWindow, pSet);
 
+
+	//  Gui
+	baseInitGui();
+
+	LogO(Ogre::String(":::: Time setup gui: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
+
 	createViewports();  // calls mSplitMgr->Align();
 
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
 		LogO(Ogre::String(":::: Time setup vp: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
-
-	//  Gui
-	baseInitGui();
-
-		LogO(Ogre::String(":::: Time setup gui: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	createResourceListener();
 	loadResources();
@@ -708,11 +708,7 @@ void BaseApp::windowClosed()
 void BaseApp::baseInitGui()
 {
 	using namespace MyGUI;
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	mPlatform = new MyGUI::OgreD3D11Platform();
-	#else
 	mPlatform = new MyGUI::OgrePlatform();
-	#endif
 	
 	mPlatform->initialise(mWindow, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
 	mGui = new MyGUI::Gui();

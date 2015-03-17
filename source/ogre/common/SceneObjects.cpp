@@ -139,7 +139,7 @@ void App::CreateObjects()
 
 		//  add to ogre
 		bool no = !objExists[o.name];
-		o.ent = mSceneMgr->createEntity("oE"+s, (no ? "sphere" : o.name) + ".mesh");
+		o.ent = mSceneMgr->createEntity((no ? "sphere" : o.name) + ".mesh");
 		o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::SCENE_DYNAMIC);
 		o.SetFromBlt();
 		o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Objects);
@@ -431,7 +431,7 @@ void App::AddNewObj(bool getName)  //App..
 	}
 
 	//  create object
-	o.ent = mSceneMgr->createEntity("oE"+s, o.name + ".mesh");
+	o.ent = mSceneMgr->createEntity(o.name + ".mesh");
 	o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
 	o.SetFromBlt();
 	o.nd->setScale(o.scale);
@@ -464,7 +464,7 @@ void App::SetObjNewType(int tnew)
 	String name = vObjNames[iObjTNew];
 	objNew.dyn = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects/"+ name + ".bullet");
 	if (objNew.dyn)  objNew.scale = Vector3::UNIT_SCALE;  // dyn no scale
-	objNew.ent = mSceneMgr->createEntity("-oE", name + ".mesh");
+	objNew.ent = mSceneMgr->createEntity(name + ".mesh");
 	objNew.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("-oN");
 	objNew.nd->attachObject(objNew.ent);  objNew.ent->setVisibilityFlags(RV_Vegetation);
 	UpdObjNewNode();

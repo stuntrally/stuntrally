@@ -420,7 +420,7 @@ void App::TerCircleInit()
 	moTerC->end();
  
 	AxisAlignedBox aab;  aab.setInfinite();
-	moTerC->setBoundingBox(aab);  // always visible
+	moTerC->setLocalAabb(Ogre::Aabb::BOX_INFINITE);  // always visible
 	moTerC->setRenderQueueGroup(RQG_Hud2);
 	moTerC->setVisibilityFlags(RV_Hud);
 	ndTerC = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(0,0,0));
