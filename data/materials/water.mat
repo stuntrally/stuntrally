@@ -339,6 +339,25 @@ material Grease_jelly   // X1-Magic
     speed 0.1
 }
 
+material Blue_jelly
+{
+	parent Water
+	WaterNormalMap water_nh.png
+	choppyness_scale 0.06 10
+	smallWaves_midWaves 0.25 0.3 0.5 0.15
+	bigWaves 0.5 0.5
+	bump 2 0.6 0.8
+	fresnelMultiplier 1.0
+
+	colour 0.1 0.18 0.46 0.8
+	reflectColour 0.2 0.3 0.9 1
+	refractColour 0.1 0.4 0.9 1.0
+	specColourAndPower 1.0 1.0 1.0 64
+
+	bump2SpecPowerMul 12.0 12 0.4
+	speed 0.05
+}
+
 material Acid_green   // green acid
 {
     parent Water

@@ -64,6 +64,10 @@
 		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
 		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" />
 
+	<fluid name="blue jelly"	material="Blue_jelly" density="700" angDamp="1.4" linDamp="0.5" heightDamp="4"
+		bWhForce="1" whMaxAngVel="60" whSpinDamp="25" whForceLong="80" whForceUp="20"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.6" bumpAngle="10" whSteerMul="2" idParticles="-1" /> 
+		
 	<fluid name="acid green"	material="Acid_green" density="500" angDamp="0.9" linDamp="0.4" heightDamp="1"
 		fDamage="5" />
 

@@ -693,6 +693,49 @@ material roadCanyon2_ter
 }
 
 
+//  Mars  ----
+material roadMars
+{
+	parent road
+	diffuseMap roadMars.jpg
+	ambient 1.2 1.1 0.8
+	diffuse 0.75 0.65 0.75
+	specular 0.36 0.32 0.3 32
+	normalMap roadMars_norm.jpg
+	bump_scale 0.6
+}
+material roadMars_ter
+{
+	parent road_terrain
+	ambient 0.97 0.80 0.77
+	diffuse 0.80 0.80 0.74
+	specular 0.32 0.32 0.32 32
+	diffuseMap roadMars.jpg
+	normalMap roadMars_norm.jpg
+	bump_scale 0.6
+}
+
+// RoadFunny
+material roadFunny
+{
+	parent road
+	diffuseMap roadFunny.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.2 48
+	normalMap roadJDarkD_norm.jpg
+}
+material roadFunny_ter
+{
+	parent road_terrain
+	diffuseMap roadFunny.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.2 0.2 0.2 48
+	normalMap roadJDarkD_norm.jpg
+} 
+
+
 //  Moss
 material roadMoss
 {
