@@ -49,6 +49,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			pSet->inMenu = (pSet->inMenu+1) % ciMainBtns;
 			gui->toggleGui(false);  return true;
 
+		case key(KP_ENTER):
 		case key(RETURN):
 			pSet->isMain = false;
 			gui->toggleGui(false);  return true;
@@ -242,6 +243,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				return false;
 
 
+			case key(KP_ENTER):
 			case key(RETURN):		///  close champ wnds
 				if (mWndChampStage->getVisible())
 					gui->btnChampStageStart(0);

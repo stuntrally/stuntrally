@@ -43,6 +43,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(ESCAPE):  // exit
 			case key(F7):  togPrvCam();  break;
 
+			case key(KP_ENTER):
 			case key(RETURN):  // save screen
 			{	int u = pSet->allow_save ? pSet->gui.track_user : 1;
 				rt[RTs-1].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/view.jpg");
@@ -73,6 +74,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			pSet->inMenu = (pSet->inMenu+1)%WND_ALL;
 			gui->toggleGui(false);  return true;
 
+		case key(KP_ENTER):
 		case key(RETURN):
 			pSet->isMain = false;
 			gui->toggleGui(false);  return true;
@@ -220,6 +222,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					sub->setIndexSelected( (sub->getIndexSelected() + (shift ? -1 : 1) + num) % num );  }
 			break;
    			
+		case key(KP_ENTER):
 		case key(RETURN):  // load track
 			if (bGuiFocus)
 			if (mWndTabsTrack->getIndexSelected() == 1 && !pSet->isMain && pSet->inMenu == WND_Track)
@@ -355,6 +358,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(N): case key(COMMA):   mBrOct[curBr] = std::max(1, mBrOct[curBr]-1);  updBrush();  break;
 		case key(M): case key(PERIOD):  mBrOct[curBr] = std::min(7, mBrOct[curBr]+1);  updBrush();  break;
 
+		case key(KP_ENTER):
 		case key(RETURN):  brLockPos = !brLockPos;  break;
 		case key(SPACE):  //  set brush height from terrain
 			if (edMode == ED_Height)
