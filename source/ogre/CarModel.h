@@ -171,7 +171,10 @@ public:
 	//  Wheels, Nodes
 	Ogre::SceneNode *ndWh[4], *ndWhE[4], *ndBrake[4], *ndNextChk;
 	Ogre::Entity* entNextChk;
-	
+
+	std::map<std::string, Ogre::Entity*> mEntities;
+	std::map<std::string, Ogre::ManualObject*> mManualObjects;
+
 		
 	//  brake state
 	bool bBraking;

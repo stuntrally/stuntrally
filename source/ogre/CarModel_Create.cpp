@@ -352,19 +352,21 @@ void CarModel::CreatePart(SceneNode* ndCar, Vector3 vPofs,
 	if (FileExists(sCar2 + sMesh))
 	{
 		Entity* ent = mSceneMgr->createEntity(sDirname + sMesh, sCarI);
-		//if (bbox)  *bbox = ent->getBoundingBox();
+		if (bbox)  *bbox = Ogre::AxisAlignedBox(ent->getLocalAabb().getMinimum(), ent->getLocalAabb().getMaximum());
 		if (ghost)  {  ent->setRenderQueueGroup(RQG_CarGhost);  ent->setCastShadows(false);  }
 		else  if (visFlags == RV_CarGlass)  ent->setRenderQueueGroup(RQG_CarGlass);
 		ndCar->attachObject(ent);  ent->setVisibilityFlags(visFlags);
 		if (bLogInfo)  LogMeshInfo(ent, sDirname + sMesh);
+		mEntities[sCarI + sEnt] = ent;
 	}
 	else
 	{	ManualObject* mo = pApp->CreateModel(mSceneMgr, stMtr, var, vPofs, false, false, sCarI+sEnt);
 		if (!mo)  return;
-		//if (bbox)  *bbox = mo->getBoundingBox();
+		if (bbox)  *bbox = Ogre::AxisAlignedBox(mo->getLocalAabb().getMinimum(), mo->getLocalAabb().getMaximum());
 		if (ghost)  {  mo->setRenderQueueGroup(RQG_CarGhost);  mo->setCastShadows(false);  }
 		else  if (visFlags == RV_CarGlass)  mo->setRenderQueueGroup(RQG_CarGlass);
 		ndCar->attachObject(mo);  mo->setVisibilityFlags(visFlags);
+		mManualObjects[sCarI + sEnt] = mo;
 	
 		/** ///  save .mesh
 		MeshPtr mpCar = mInter->convertToMesh("Mesh" + sEnt);
@@ -708,13 +710,10 @@ void CarModel::RecreateMaterials()
 
 void CarModel::setMtrName(const String& entName, const String& mtrName)
 {
-	/*
-	if (mSceneMgr->hasEntity(entName))
-		mSceneMgr->getEntity(entName)->setMaterialName(mtrName);
-	else
-	if (mSceneMgr->hasManualObject(entName))
-		mSceneMgr->getManualObject(entName)->setMaterialName(0, mtrName);
-		*/
+	if (mEntities.find(entName) != mEntities.end())
+		mEntities[entName]->setMaterialName(mtrName);
+	else if (mManualObjects.find(entName) != mManualObjects.end())
+		mManualObjects[entName]->setMaterialName(0, mtrName);
 }
 
 void CarModel::setMtrNames()
