@@ -151,7 +151,8 @@ void CGuiCom::UnfocusLists()
 		w = w->getParent();
 
 		#ifdef SR_EDITOR
-		if (w == (WP)trkList)
+		if (w == (WP)trkList  || w == (WP)app->gui->liSky || w == (WP)app->gui->liTex ||
+			w == (WP)app->gui->liGrs || w == (WP)app->gui->liVeg || w == (WP)app->gui->liRd)
 		#else
 		if (w == (WP)trkList  || (app && app->gui && (
 			w == (WP)app->gui->carList  || w == (WP)app->gui->liChalls ||
