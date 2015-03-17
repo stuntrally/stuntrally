@@ -70,9 +70,11 @@ void TerrainMaterial::Profile::createMaterial(const String& matName, const Terra
 	{
 		MaterialPtr ogreMat = static_cast<sh::OgreMaterial*>(mMaterial->getMaterial())->getOgreMaterial();
 
+		/*
 		Material::LodValueList list;
 		list.push_back(TerrainGlobalOptions::getSingleton().getCompositeMapDistance());
 		ogreMat->setLodLevels(list);
+		*/
 	}
 
 	mMaterial->setProperty("allow_fixed_function", sh::makeProperty<sh::BooleanValue>(new sh::BooleanValue(false)));

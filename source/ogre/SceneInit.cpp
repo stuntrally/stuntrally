@@ -249,7 +249,6 @@ void App::LoadCleanUp()  // 1 first
 	scn->vdrTrack = 0;
 	//mSceneMgr->destroyAllParticleSystems();
 	mSceneMgr->destroyAllRibbonTrails();
-	mSplitMgr->mGuiSceneMgr->destroyAllManualObjects(); // !?..
 
 	// remove junk from previous tracks
 	MeshManager::getSingleton().unloadUnreferencedResources();
@@ -264,7 +263,6 @@ void App::LoadGame()  // 2
 	int numRplViews = std::max(1, std::min( replay.header.numPlayers, pSet->rpl_numViews ));
 	mSplitMgr->mNumViewports = bRplPlay ? numRplViews : pSet->game.local_players;  // set num players
 	mSplitMgr->Align();
-	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
 	pGame->NewGameDoCleanup();
 
@@ -442,9 +440,11 @@ void App::LoadCar()  // 4
 			
 			int visMask = 255;
 			visMask = c->fCam->ca->mHideGlass ? RV_MaskAll-RV_CarGlass : RV_MaskAll;
+			/*
 			for (std::list<Viewport*>::iterator it = mSplitMgr->mViewports.begin();
 				it != mSplitMgr->mViewports.end(); ++it)
 				(*it)->setVisibilityMask(visMask);
+				*/
 		}
 		iCurPoses[i] = 0;
 	}

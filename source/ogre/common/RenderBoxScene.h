@@ -48,6 +48,7 @@ namespace wraps
 		*/
 		Ogre::Vector3 injectObject(const Ogre::String& _meshName, const Ogre::Vector3& _position = Ogre::Vector3::ZERO, const Ogre::Quaternion& _orientation = Ogre::Quaternion::IDENTITY, const Ogre::Vector3& _scale = Ogre::Vector3::UNIT_SCALE)
 		{
+			/*
 			clearScene();
 
 			static size_t num = 0;
@@ -57,6 +58,8 @@ namespace wraps
 
 			updateViewport();
 			return mEntity->getBoundingBox().getSize();  ///
+			*/
+			return Ogre::Vector3();
 		}
 
 		/** Run mesh animation if animation with such name exist (else print warning in log).

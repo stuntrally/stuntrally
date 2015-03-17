@@ -168,7 +168,7 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 
 	//  light
 	app->mSceneMgr->destroyAllLights();
-	sun = app->mSceneMgr->createLight("Sun");
+	sun = app->mSceneMgr->createLight();
 	sun->setType(Light::LT_DIRECTIONAL);  UpdSun();
 
 

@@ -405,8 +405,8 @@ bool BaseApp::setup()
 		return false;
 
 	const size_t numThreads = std::max<int>(1, Ogre::PlatformInformation::getNumLogicalCores());
-	Ogre::InstancingTheadedCullingMethod threadedCullingMethod = Ogre::INSTANCING_CULLING_SINGLETHREAD;
-	if(numThreads > 1) Ogre::InstancingTheadedCullingMethod threadedCullingMethod = Ogre::INSTANCING_CULLING_THREADED;
+	Ogre::InstancingThreadedCullingMethod threadedCullingMethod = Ogre::INSTANCING_CULLING_SINGLETHREAD;
+	if(numThreads > 1) threadedCullingMethod = Ogre::INSTANCING_CULLING_THREADED;
 	mSceneMgr = Ogre::Root::getSingleton().createSceneManager(Ogre::ST_GENERIC, numThreads, threadedCullingMethod);
 
 	#if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0) 
@@ -695,7 +695,6 @@ void BaseApp::windowResized(int x, int y)
 	bWindowResized = true;
 	// Adjust viewports
 	mSplitMgr->Align();
-	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 }
 
 void BaseApp::windowClosed()
@@ -715,7 +714,7 @@ void BaseApp::baseInitGui()
 	mPlatform = new MyGUI::OgrePlatform();
 	#endif
 	
-	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
+	mPlatform->initialise(mWindow, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
 	mGui = new MyGUI::Gui();
 
 	mGui->initialise("");
@@ -737,11 +736,6 @@ void BaseApp::baseInitGui()
 		
 	MyGUI::LanguageManager::getInstance().setCurrentLanguage(pSet->language);
 	//------------------------
-
-		
-	mPlatform->getRenderManagerPtr()->setSceneManager(mSplitMgr->mGuiSceneMgr);
-	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
-
 
 	///  create widgets
 	//------------------------------------------------

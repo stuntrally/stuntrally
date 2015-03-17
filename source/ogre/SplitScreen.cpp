@@ -27,7 +27,7 @@ using namespace Ogre;
 
 
 SplitScr::SplitScr(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :
-	pApp(0), mGuiViewport(0), mGuiSceneMgr(0),
+	pApp(0),
 	mWindow(window), mSceneMgr(sceneMgr), pSet(set)
 {
 	// Add window listener
@@ -57,7 +57,7 @@ void SplitScr::CleanUp()
 {
 	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
 	{
-		mWindow->removeViewport( (*vpIt)->getZOrder() );
+		//mWindow->removeViewport( (*vpIt)->getZOrder() );
 	}
 	mViewports.clear();
 	
@@ -71,6 +71,8 @@ void SplitScr::CleanUp()
 //------------------------------------------------------------------------------------------------------------------
 void SplitScr::Align()
 {
+
+#if 0
 	CleanUp();
 	LogO("-- Screen Align");
 	
@@ -154,16 +156,9 @@ void SplitScr::Align()
 		mCameras.back()->setNearClipDistance(0.2f);
 	}
 		
-	// Create gui viewport if not already existing
-	if (!mGuiViewport)
-	{
-		mGuiSceneMgr = Ogre::Root::getSingleton().createSceneManager(ST_GENERIC);
-		Ogre::Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");
-		mGuiViewport = mWindow->addViewport(guiCam, 100);
-		mGuiViewport->setVisibilityMask(RV_Hud);
-	}
 	
 	AdjustRatio();
+#endif
 }
 
 
@@ -186,38 +181,38 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 	if (!pApp || pApp->bLoading || pApp->iLoad1stFrames > -1)  return;
 
 	//  What kind of viewport is being updated?
-	const String& vpName = evt.source->getCamera()->getName();
+	//const String& vpName = evt.source->getCamera()->getName();
 	//*H*/LogO(vpName);  //GuiCam1  PlayerCamera0,1..
 	
-	if (evt.source != mGuiViewport)
+	if (1)//evt.source != mGuiViewport)
 	{
 		//  scene viewport
 		//  get car for this viewport
 		int carId = 0;
-		sscanf(vpName.c_str(), "PlayerCamera%d", &carId);
+		//sscanf(vpName.c_str(), "PlayerCamera%d", &carId);
 
 		//  Update HUD for this car
 		pApp->hud->ShowVp(true);
-		pApp->hud->Update(carId, 1.f / mWindow->getLastFPS());
+		pApp->hud->Update(carId, 0.f /*1.f / mWindow->getLastFPS()*/);
 
 		///  Set sky pos to camera  - TODO: fix, sky is center only for last player ...
 		//  idea: with compositor this needs separate sky nodes (own sky for each player) and showing 1 sky for 1 player
-		if (pApp->ndSky)
-			pApp->ndSky->setPosition(evt.source->getCamera()->getPosition());
+		//if (pApp->ndSky)
+			//pApp->ndSky->setPosition(evt.source->getCamera()->getPosition());
 			
 
 		//  road lod for each viewport
 		if (mNumViewports > 1)
 		if (pApp->scn->road)
 		{
-			pApp->scn->road->mCamera = evt.source->getCamera();
+			//pApp->scn->road->mCamera = evt.source->getCamera();
 			pApp->scn->road->UpdLodVis(pSet->road_dist);
 		}
 		
 		//  Update rain/snow - depends on camera
 		//  todo: every player/viewport needs own weather particles  pr[carId]
 		if (pSet->particles)
-			pApp->scn->UpdateWeather(evt.source->getCamera());
+			//pApp->scn->UpdateWeather(evt.source->getCamera());
 
 		// Change FOV when boosting
 		if (pApp->pSet->boost_fov && carId < pApp->carModels.size())
@@ -226,10 +221,10 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 			if (pCar)
 			{
 				float fov = pSet->fov_min + (pSet->fov_max - pSet->fov_min) * pCar->dynamics.fBoostFov;
-				evt.source->getCamera()->setFOVy(Degree(0.5f*fov));
+				//evt.source->getCamera()->setFOVy(Degree(0.5f*fov));
 			}
-		}else
-			evt.source->getCamera()->setFOVy(Degree(0.5f*pSet->fov_min));
+		}//else
+			//evt.source->getCamera()->setFOVy(Degree(0.5f*pSet->fov_min));
 
 		//update soft particle Depth Target
 		/*
@@ -248,7 +243,7 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 	else
 	{
 		//  Gui viewport - hide stuff we don't want
-		pApp->hud->Update(-1, 1.f / mWindow->getLastFPS());
+		pApp->hud->Update(-1, 0.f /*1.f / mWindow->getLastFPS()*/);
 		pApp->hud->ShowVp(false);
 		
 		// no mouse in key capture mode
@@ -261,3 +256,4 @@ void SplitScr::postViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 {
 
 }
+

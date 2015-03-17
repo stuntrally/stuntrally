@@ -121,12 +121,14 @@ namespace wraps
 				mRenderTarget = target;
 
 				mRenderTarget->removeAllViewports();
+				/*
 				Ogre::Viewport* viewport = mRenderTarget->addViewport(mCamera);
 				viewport->setBackgroundColour(mColour);
 				viewport->setClearEveryFrame(true);
 				viewport->setOverlaysEnabled(false);
 
 				viewport->setMaterialScheme("reflection");  ///+ no shadows
+				*/
 			}
 		}
 

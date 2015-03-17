@@ -161,7 +161,7 @@ void CHud::Create()
 
 	Ogre::Timer ti;
 
-	SceneManager* scm = app->mSplitMgr->mGuiSceneMgr;
+	SceneManager* scm = app->mSceneMgr;// app->mSplitMgr->mGuiSceneMgr;
 	if (hud[0].moMap || hud[0].txVel || hud[0].txTimes)
 		LogO("Create Hud: exists !");
 
@@ -494,7 +494,7 @@ void CHud::Create()
 			m->end();
 		 
 			AxisAlignedBox aabInf;	aabInf.setInfinite();
-			m->setBoundingBox(aabInf);  // always visible
+			//m->setBoundingBox(aabInf);  // always visible
 			m->setVisibilityFlags(RV_Hud);
 			m->setRenderQueueGroup(RQG_Hud1);
 
@@ -559,7 +559,7 @@ CHud::Hud::Hud()
 
 void CHud::Destroy()
 {
-	SceneManager* scm = app->mSplitMgr->mGuiSceneMgr;
+	SceneManager* scm = app->mSceneMgr; //app->mSplitMgr->mGuiSceneMgr;
 	int i,c;
 	for (c=0; c < hud.size(); ++c)
 	{	Hud& h = hud[c];

@@ -27,6 +27,7 @@ WaterRTT::WaterRTT() :
 
 void WaterRTT::create()
 {
+#if 0
 	if (!mSceneMgr)  return;
 	mCamera = mSceneMgr->createCamera("PlaneReflectionRefraction");
 	if (mViewerCamera)
@@ -60,10 +61,12 @@ void WaterRTT::create()
 
 	sh::Factory::getInstance().setTextureAlias("WaterReflection", "PlaneReflection");
 	sh::Factory::getInstance().setTextureAlias("WaterRefraction", "PlaneRefraction");
+#endif
 }
 
 void WaterRTT::setViewerCamera(Ogre::Camera* cam)
 {
+#if 0
 	mViewerCamera = cam;
 	if (mCamera)
 	{
@@ -71,16 +74,20 @@ void WaterRTT::setViewerCamera(Ogre::Camera* cam)
 		mCamera->setNearClipDistance(mViewerCamera->getNearClipDistance());
 		mCamera->setAspectRatio(mViewerCamera->getAspectRatio());
 	}
+#endif
 }
 
 void WaterRTT::setActive(const bool active)
 {
+#if 0
 	if (mReflectionTarget) mReflectionTarget->setActive(active);
 	if (mRefractionTarget) mRefractionTarget->setActive(active);
+#endif
 }
 
 void WaterRTT::destroy()
 {
+#if 0
 	if (mReflectionTarget)
 	{
 		mReflectionTarget->removeAllListeners();
@@ -100,14 +107,17 @@ void WaterRTT::destroy()
 		mSceneMgr->destroyCamera(mCamera);
 		mCamera = 0;
 	}
+#endif
 }
 
 void WaterRTT::recreate()
 {
+#if 0
 	if (!mChangedSettings)  return;
 	mChangedSettings = false;
 	destroy();
 	create();
+#endif
 }
 
 WaterRTT::~WaterRTT()
@@ -117,6 +127,7 @@ WaterRTT::~WaterRTT()
 
 void WaterRTT::preRenderTargetUpdate(const RenderTargetEvent& evt)
 {
+#if 0
 	mCamera->setOrientation(mViewerCamera->getRealOrientation());
 	mCamera->setPosition(mViewerCamera->getRealPosition());
 	
@@ -128,10 +139,12 @@ void WaterRTT::preRenderTargetUpdate(const RenderTargetEvent& evt)
 			mCamera->enableCustomNearClipPlane(mWaterPlane);
 		mCamera->enableReflection(mWaterPlane);
 	}
+#endif
 }
 
 void WaterRTT::postRenderTargetUpdate(const RenderTargetEvent& evt)
 {
+#if 0
 	if (mNdFluidsRoot)  mNdFluidsRoot->setVisible(true);
 	
 	if (evt.source == mReflectionTarget)
@@ -139,4 +152,5 @@ void WaterRTT::postRenderTargetUpdate(const RenderTargetEvent& evt)
 		mCamera->disableReflection();
 		mCamera->disableCustomNearClipPlane();
 	}
+#endif
 }

@@ -27,6 +27,7 @@ using namespace Ogre;
 //  common rtt setup
 void CScene::RenderToTex::Setup(Ogre::Root* rt, String sName, TexturePtr pTex, String sMtr)
 {
+#if 0
 	if (!scm)  scm = rt->createSceneManager(ST_GENERIC);  // once-
 	//  destroy old
 	if (cam)  scm->destroyCamera(cam);
@@ -54,6 +55,7 @@ void CScene::RenderToTex::Setup(Ogre::Root* rt, String sName, TexturePtr pTex, S
 
 	nd = scm->getRootSceneNode()->createChildSceneNode(sName+"N");
 	nd->attachObject(rect);
+#endif
 }
 
 ///  blendmap setup
@@ -66,6 +68,7 @@ const String CScene::sHmap = "HmapTex",
 
 void CScene::CreateBlendTex()
 {
+#if 0
 	uint size = sc->td.iTerSize-1;
 	TextureManager& texMgr = TextureManager::getSingleton();
 	texMgr.remove(sHmap);  texMgr.remove(sAng);
@@ -98,6 +101,7 @@ void CScene::CreateBlendTex()
 	grassDensRTT.Setup(app->mRoot, "grd", grassDensRTex, sGrassDensMat);
 	
 	//UpdBlendmap();  //
+#endif
 }
 
 
@@ -106,6 +110,7 @@ void CScene::CreateBlendTex()
 //--------------------------------------------------------------------------
 void CScene::UpdBlendmap()
 {
+#if 0
 	if (!terrain)  return;
 	Ogre::Timer ti;
 
@@ -146,6 +151,7 @@ void CScene::UpdBlendmap()
 	}
 
 	//LogO(String("::: Time Upd blendmap: ") + fToStr(ti.getMilliseconds(),0,1) + " ms");  // 1ms on 512, 4ms on 1k
+#endif
 }
 
 
@@ -261,7 +267,7 @@ void CScene::UpdGrassDens()
 
 	UpdGrassPars();
 	
-	grassDensRTT.rnd->update();
+	//grassDensRTT.rnd->update();
 
 	//grassDensRTT.rnd->writeContentsToFile(PATHMANAGER::DataUser()+"/grassRD.png");
 

@@ -10,6 +10,7 @@ namespace wraps
 	
 	void RenderBoxScene::createScene()
 	{
+#if 0
 		mScene = Root::getSingleton().createSceneManager(ST_GENERIC, MyGUI::utility::toString(this, "_SceneManagerRenderBox"));
 
 		mNode = mScene->getRootSceneNode()->createChildSceneNode();
@@ -40,6 +41,7 @@ namespace wraps
 			mCamera->setAspectRatio( float(mCanvas->getWidth()) / float(mCanvas->getHeight()) );
 
 		setViewport(mCamera);
+#endif
 	}
 
 
@@ -54,8 +56,8 @@ namespace wraps
 
 			AxisAlignedBox box;
 			const Vector3& dpos = mEntity->getParentSceneNode()->_getDerivedPosition();
-			box.merge(mEntity->getBoundingBox().getMinimum() + dpos);
-			box.merge(mEntity->getBoundingBox().getMaximum() + dpos);
+			//box.merge(mEntity->getBoundingBox().getMinimum() + dpos);
+			//box.merge(mEntity->getBoundingBox().getMaximum() + dpos);
 			if (box.isNull()) return;
 
 			Vector3 vec = box.getSize();

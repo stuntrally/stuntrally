@@ -81,7 +81,7 @@ ManualObject* CHud::Create2D(const String& mat, SceneManager* sceneMgr,
 	m->end();
  
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
-	m->setBoundingBox(aabInf);  // always visible
+	//m->setBoundingBox(aabInf);  // always visible
 	m->setVisibilityFlags(vis);
 	m->setRenderQueueGroup(rndQue);  //RQG_Hud2
 	return m;

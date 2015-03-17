@@ -24,7 +24,7 @@ void SplineRoad::Setup(String sMarkerMeshFile, Real scale,
 	#define createSphere(mat, ent, nd)  \
 		ent = mSceneMgr->createEntity(name, sMarkerMeshFile);  \
 		ent->setMaterialName(mat);  ent->setCastShadows(false);  ent->setVisibilityFlags(RV_Hud);  \
-		nd = mSceneMgr->getRootSceneNode()->createChildSceneNode(name);  \
+		nd = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::SCENE_DYNAMIC);  \
 		nd->attachObject(ent);  nd->setVisible(false);
 	
 	String name;
@@ -48,7 +48,7 @@ void SplineRoad::AddMarker(Vector3 pos)
 	String name = "sphere"+StringConverter::toString(getNumPoints());
 	ent = mSceneMgr->createEntity(sMarkerMesh/*,name*/);
 	ent->setMaterialName("sphere_norm");  ent->setCastShadows(false);  ent->setVisibilityFlags(RV_Hud);
-	nod = mSceneMgr->getRootSceneNode()->createChildSceneNode(/*name,*/pos);
+	nod = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::SCENE_DYNAMIC, /*name,*/pos);
 	nod->attachObject(ent);  nod->scale(fMarkerScale * Vector3::UNIT_SCALE);
 	vMarkNodes.push_back(nod);
 }
@@ -63,7 +63,7 @@ void SplineRoad::DelLastMarker()
 	if (lastNdSel == last)
 		lastNdSel = 0;
 	String name = "sphere"+StringConverter::toString(getNumPoints()-1);
-	mSceneMgr->destroyEntity(name);
+	//mSceneMgr->destroyEntity(name);
 	mSceneMgr->destroySceneNode(vMarkNodes[getNumPoints()-1]);
 	vMarkNodes.pop_back();
 }
@@ -75,7 +75,7 @@ void SplineRoad::DestroyMarkers()
 	for (size_t i=0; i < vMarkNodes.size(); ++i)
 	{
 		String name = "sphere"+StringConverter::toString(i);
-		mSceneMgr->destroyEntity(name);
+		//mSceneMgr->destroyEntity(name);
 		mSceneMgr->destroySceneNode(vMarkNodes[i]);
 	}
 	vMarkNodes.clear();

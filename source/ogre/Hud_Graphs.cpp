@@ -49,7 +49,7 @@ const static String TireVar[2] = {"variable Load", "variable camber"};
 void App::CreateGraphs()
 {
 	if (!graphs.empty())  return;
-	SceneManager* scm = mSplitMgr->mGuiSceneMgr;
+	SceneManager* scm = mSceneMgr; //mSplitMgr->mGuiSceneMgr;
 	bool tireEdit = false;
 
 	switch (pSet->graphs_type)
@@ -376,7 +376,7 @@ void App::GraphsNewVals()				// Game
 	if (gsi >= 1)
 	{
 		const RenderTarget::FrameStats& stats = mWindow->getStatistics();
-		graphs[0]->AddVal(stats.lastFPS /60.f*0.5f);  // 60 fps in middle
+		//graphs[0]->AddVal(stats.lastFPS /60.f*0.5f);  // 60 fps in middle
 		//graphs[1]->AddVal(1000.f/PROFILER.getAvgDuration(" frameSt",quickprof::MILLISECONDS) /60.f*0.2f);
 		graphs[1]->AddVal(fLastFrameDT==0.f ? 1.f : (1.f/fLastFrameDT/60.f*0.5f));
 	}	break;

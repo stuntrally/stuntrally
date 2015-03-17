@@ -40,7 +40,7 @@ void CScene::CreateFluids()
 	app->UpdFluidBox();
 	#endif
 	if (!mWaterRTT->mNdFluidsRoot)
-		mWaterRTT->mNdFluidsRoot = app->mSceneMgr->getRootSceneNode()->createChildSceneNode("FluidsRootNode");
+		mWaterRTT->mNdFluidsRoot = app->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::SCENE_DYNAMIC);
 			
 	for (int i=0; i < sc->fluids.size(); i++)
 	{
@@ -62,7 +62,7 @@ void CScene::CreateFluids()
 		efl->setMaterial(mtr);  efl->setCastShadows(false);
 		efl->setRenderQueueGroup(RQG_Fluid);  efl->setVisibilityFlags(RV_Terrain);
 
-		SceneNode* nfl = mWaterRTT->mNdFluidsRoot->createChildSceneNode(
+		SceneNode* nfl = mWaterRTT->mNdFluidsRoot->createChildSceneNode(Ogre::SCENE_DYNAMIC,
 			fb.pos/*, Quaternion(Degree(fb.rot.x),Vector3::UNIT_Y)*/);
 		nfl->attachObject(efl);
 

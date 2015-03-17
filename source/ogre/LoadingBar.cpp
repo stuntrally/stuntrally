@@ -72,7 +72,7 @@ void LoadingBar::resourceGroupScriptingStarted(const String& groupName, size_t s
 	assert( mNumGroupsInit > 0 && "You were not going to init ");
 	mBarInc = mBarMaxSizeX * mInitProportion / (Real)scriptCount;
 	mBarInc /= mNumGroupsInit;
-	mWindow->update();
+	//mWindow->update();
 }
 
 void LoadingBar::resourceGroupScriptingEnded(const String& groupName)
@@ -90,7 +90,7 @@ void LoadingBar::scriptParseEnded(const String& scriptName, bool skipped)
 {
 	IntSize s = pApp->barLoad->getSize();
 	pApp->barLoad->setSize(s.width + mBarInc, mBarSizeY);
-	mWindow->update();
+	//mWindow->update();
 }
 
 //  resourceGroup
@@ -99,7 +99,7 @@ void LoadingBar::resourceGroupLoadStarted(const String& groupName, size_t resour
 	assert( mNumGroupsLoad > 0 && "You were not going to load ");
 	mBarInc = mBarMaxSizeX * (1-mInitProportion) / (Real)resourceCount;
 	mBarInc /= mNumGroupsLoad;
-	mWindow->update();
+	//mWindow->update();
 }
 
 void LoadingBar::resourceGroupLoadEnded(const String& groupName)
@@ -110,7 +110,7 @@ void LoadingBar::resourceGroupLoadEnded(const String& groupName)
 void LoadingBar::resourceLoadStarted(const ResourcePtr& resource)
 {
 	//mComment->setCaption(resource->getName());
-	mWindow->update();
+	//mWindow->update();
 }
 
 void LoadingBar::resourceLoadEnded()
@@ -121,14 +121,14 @@ void LoadingBar::resourceLoadEnded()
 void LoadingBar::worldGeometryStageStarted(const String& description)
 {
 	pApp->txLoad->setCaption(description);
-	mWindow->update();
+	//mWindow->update();
 }
 
 void LoadingBar::worldGeometryStageEnded()
 {
 	IntSize s = pApp->barLoad->getSize();
 	pApp->barLoad->setSize(s.width + mBarInc, mBarSizeY);
-	mWindow->update();
+	//mWindow->update();
 }
 
 

@@ -6,6 +6,8 @@
 #include "../vdrift/game.h"
 #include "common/CScene.h"
 
+#if 0
+
 #include <OgreCompositorInstance.h>
 #include <OgreCompositorChain.h>
 #include <OgreCompositionTechnique.h>
@@ -785,3 +787,5 @@ void CameraBlurListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 		}
 	}
 }
+
+#endif

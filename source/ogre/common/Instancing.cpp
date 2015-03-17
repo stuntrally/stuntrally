@@ -14,6 +14,7 @@ using namespace Ogre;
 
 void Instanced::Create(SceneManager* mSceneMgr, String sMesh)
 {
+#if 0
 	Entity* ent = mSceneMgr->createEntity(sMesh);
 	//ent->setCastShadows(false);
 	int numSubs = ent->getMesh()->getNumSubMeshes();
@@ -54,6 +55,7 @@ void Instanced::Create(SceneManager* mSceneMgr, String sMesh)
 		//isub.instMgr->setBatchesAsStaticAndUpdate(true);  //does lower fps
 	}
 	inst.push_back(imsh);
+#endif
 }
 
 

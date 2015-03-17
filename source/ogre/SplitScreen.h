@@ -29,11 +29,7 @@ public:
 	// Lists for player viewports & cameras
 	std::list<Ogre::Viewport*> mViewports;
 	std::list<Ogre::Camera*> mCameras;
-	
-	// Gui viewport & scene manager
-	Ogre::SceneManager* mGuiSceneMgr;
-	Ogre::Viewport* mGuiViewport;
-	
+		
 	// This method should always be called after mNumPlayers is changed.
 	// It will create new viewports and cameras and arrange them.
 	void Align();

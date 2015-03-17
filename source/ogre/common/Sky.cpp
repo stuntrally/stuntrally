@@ -61,7 +61,7 @@ void CScene::CreateSkyDome(String sMater, Vector3 sc, float yaw)
 	}
 	m->end();
 	AxisAlignedBox aab;  aab.setInfinite();
-	m->setBoundingBox(aab);  // always visible
+	//m->setBoundingBox(aab);  // always visible
 	m->setRenderQueueGroup(RQG_Sky);
 	m->setCastShadows(false);
 	#ifdef SR_EDITOR
@@ -122,14 +122,14 @@ void CScene::UpdFog(bool bForce)
 void CScene::CreateWeather()
 {
 	if (!pr && !sc->rainName.empty())
-	{	pr = app->mSceneMgr->createParticleSystem("Rain", sc->rainName);
+	{	pr = app->mSceneMgr->createParticleSystem(sc->rainName);
 		pr->setVisibilityFlags(RV_Particles);
 		app->mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
 		pr->setRenderQueueGroup(RQG_Weather);
 		pr->getEmitter(0)->setEmissionRate(0);
 	}
 	if (!pr2 && !sc->rain2Name.empty())
-	{	pr2 = app->mSceneMgr->createParticleSystem("Rain2", sc->rain2Name);
+	{	pr2 = app->mSceneMgr->createParticleSystem(sc->rain2Name);
 		pr2->setVisibilityFlags(RV_Particles);
 		app->mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
 		pr2->setRenderQueueGroup(RQG_Weather);
@@ -147,7 +147,7 @@ void CScene::UpdateWeather(Camera* cam, float mul)
 	const Vector3& pos = cam->getPosition(), dir = cam->getDirection();
 	static Vector3 oldPos = Vector3::ZERO;
 
-	Vector3 vel = (pos-oldPos) * app->mWindow->getLastFPS();  oldPos = pos;
+	Vector3 vel = (pos-oldPos) /* * app->mWindow->getLastFPS()*/;  oldPos = pos;
 	Vector3 par = pos + dir * 12.f + vel * 0.6f;
 
 	if (pr && sc->rainEmit > 0)

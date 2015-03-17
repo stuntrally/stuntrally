@@ -19,7 +19,7 @@
 
 #include <OgreTimer.h>
 #include <OgreTerrain.h>
-#include <OgreShadowCameraSetupLiSPSM.h>
+//#include <OgreShadowCameraSetupLiSPSM.h>
 #include <OgreShadowCameraSetupPSSM.h>
 #include <OgreMaterialManager.h>
 #include <OgreOverlay.h>
@@ -75,42 +75,42 @@ void CScene::changeShadows()
 
 
 	if (!enabled)  {
-		mSceneMgr->setShadowTechnique(SHADOWTYPE_NONE);  /*return;*/ //
+		//mSceneMgr->setShadowTechnique(SHADOWTYPE_NONE);  /*return;*/ //
 	}
 	else
 	{
 		// General scene setup
 		//mSceneMgr->setShadowTechnique(SHADOWTYPE_TEXTURE_ADDITIVE_INTEGRATED);
-		mSceneMgr->setShadowTechnique(SHADOWTYPE_TEXTURE_MODULATIVE_INTEGRATED);
+		//mSceneMgr->setShadowTechnique(SHADOWTYPE_TEXTURE_MODULATIVE_INTEGRATED);
 		mSceneMgr->setShadowFarDistance(pSet->shadow_dist);  // 3000
-		mSceneMgr->setShadowTextureCountPerLightType(Light::LT_DIRECTIONAL, num);
+		//mSceneMgr->setShadowTextureCountPerLightType(Light::LT_DIRECTIONAL, num);
 
 		if (num == 1)  // 1 tex, fast
 		{
-			ShadowCameraSetupPtr mShadowCameraSetup = ShadowCameraSetupPtr(new LiSPSMShadowCameraSetup());
-			mSceneMgr->setShadowCameraSetup(mShadowCameraSetup);
+			//ShadowCameraSetupPtr mShadowCameraSetup = ShadowCameraSetupPtr(new LiSPSMShadowCameraSetup());
+			//mSceneMgr->setShadowCameraSetup(mShadowCameraSetup);
 		}else
 		{	if (mPSSMSetup.isNull())  // pssm
 			{
 				PSSMShadowCameraSetup* pssmSetup = new PSSMShadowCameraSetup();
 				#ifndef SR_EDITOR
-				pssmSetup->setSplitPadding(app->mSplitMgr->mCameras.front()->getNearClipDistance());
-				pssmSetup->calculateSplitPoints(num, app->mSplitMgr->mCameras.front()->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
+				//pssmSetup->setSplitPadding(app->mSplitMgr->mCameras.front()->getNearClipDistance());
+				//pssmSetup->calculateSplitPoints(num, app->mSplitMgr->mCameras.front()->getNearClipDistance(), mSceneMgr->getShadowFarDistance());
 				#else
-				pssmSetup->setSplitPadding(app->mCamera->getNearClipDistance());
-				pssmSetup->calculateSplitPoints(num, app->mCamera->getNearClipDistance(), app->mSceneMgr->getShadowFarDistance());
+				//pssmSetup->setSplitPadding(app->mCamera->getNearClipDistance());
+				//pssmSetup->calculateSplitPoints(num, app->mCamera->getNearClipDistance(), app->mSceneMgr->getShadowFarDistance());
 				#endif
 				for (int i=0; i < num; ++i)
 				{	//int size = i==0 ? fTex : fTex2;
 					const Real cAdjfA[5] = {2, 1, 0.5, 0.25, 0.125};
-					pssmSetup->setOptimalAdjustFactor(i, cAdjfA[std::min(i, 4)]);
+					//pssmSetup->setOptimalAdjustFactor(i, cAdjfA[std::min(i, 4)]);
 				}
 				mPSSMSetup.bind(pssmSetup);
 			}
-			mSceneMgr->setShadowCameraSetup(mPSSMSetup);
+			//mSceneMgr->setShadowCameraSetup(mPSSMSetup);
 		}
 
-		mSceneMgr->setShadowTextureCount(num);
+		//mSceneMgr->setShadowTextureCount(num);
 		for (int i=0; i < num; ++i)
 		{	int size = i==0 ? fTex : fTex2;
 		
@@ -119,10 +119,10 @@ void CScene::changeShadows()
 			else if (bSoft) pf = PF_FLOAT16_RGB;
 			else pf = PF_X8B8G8R8;
 			
-			mSceneMgr->setShadowTextureConfig(i, size, size, pf);
+			//mSceneMgr->setShadowTextureConfig(i, size, size, pf);
 		}
 		
-		mSceneMgr->setShadowTextureSelfShadow(bDepth ? true : false);  //-?
+		//mSceneMgr->setShadowTextureSelfShadow(bDepth ? true : false);  //-?
 		mSceneMgr->setShadowCasterRenderBackFaces((bDepth && !bSoft) ? true : false);
 
 		mSceneMgr->setShadowTextureCasterMaterial(bDepth ? "shadowcaster_default" : "");

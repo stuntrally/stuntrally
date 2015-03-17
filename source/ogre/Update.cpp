@@ -25,6 +25,7 @@
 #include <OgreSceneNode.h>
 #include <OgreViewport.h>
 #include <OgreTimer.h>
+#include <OgreCamera.h>
 #include "common/MultiList2.h"
 #include "common/Slider.h"
 #include <MyGUI.h>
@@ -232,8 +233,8 @@ bool App::frameStart(Real time)
 		{
 			Camera* cam1 = *mSplitMgr->mCameras.begin();
 			scn->mWaterRTT->setViewerCamera(cam1);
-			if (scn->grass)  scn->grass->setCamera(cam1);
-			if (scn->trees)  scn->trees->setCamera(cam1);
+			//if (scn->grass)  scn->grass->setCamera(cam1);
+			//if (scn->trees)  scn->trees->setCamera(cam1);
 		}
 
 		///gui->InitCarPrv();
@@ -267,7 +268,7 @@ bool App::frameStart(Real time)
 			if (iLoad1stFrames == iFr)
 			{
 				LoadingOff();  // hide loading overlay
-				mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
+				//mSplitMgr->mGuiViewport->setClearEveryFrame(true, FBT_DEPTH);
 				gui->Ch_LoadEnd();
 				bLoadingEnd = true;
 				iLoad1stFrames = -1;  // for refl
@@ -388,8 +389,9 @@ bool App::frameStart(Real time)
 		//  trees
 		PROFILER.beginBlock("g.veget");
 		if (scn->road) {
-			if (scn->grass)  scn->grass->update();
-			if (scn->trees)  scn->trees->update();  }
+			//if (scn->grass)  scn->grass->update();
+			//if (scn->trees)  scn->trees->update();
+		}
 		PROFILER.endBlock("g.veget");
 
 

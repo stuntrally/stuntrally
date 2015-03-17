@@ -252,7 +252,7 @@ ManualObject* CHud::CreateVdrMinimap()
 	m->end();
 	m->setUseIdentityProjection(true);  m->setUseIdentityView(true);  // on hud
 	m->setCastShadows(false);
-	AxisAlignedBox aab;  aab.setInfinite();  m->setBoundingBox(aab);  // draw always
+	AxisAlignedBox aab;  aab.setInfinite();  //m->setBoundingBox(aab);  // draw always
 	m->setRenderingDistance(100000.f);
 	m->setRenderQueueGroup(RQG_Hud2);  m->setVisibilityFlags(RV_Hud);
 	return m;
@@ -331,7 +331,7 @@ void App::CreateRoadBezier()
 	}
 	m->end();
 	AxisAlignedBox aabInf;	aabInf.setInfinite();
-	m->setBoundingBox(aabInf);  // always visible
+	//m->setBoundingBox(aabInf);  // always visible
 	mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(m);
 }
 #endif
@@ -350,10 +350,10 @@ ManualObject* App::CreateModel(SceneManager* sceneMgr, const String& mat,
 	// norms = verts, verts % 3 == 0
 
 	ManualObject* m;
-	if (name == "")
+	//if (name == "")
 		m = sceneMgr->createManualObject();
-	else
-		m = sceneMgr->createManualObject(name);
+	//else
+	//	m = sceneMgr->createManualObject(name);
 	m->begin(mat, RenderOperation::OT_TRIANGLE_LIST);
 
 	int t = 0;

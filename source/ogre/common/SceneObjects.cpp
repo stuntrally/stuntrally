@@ -140,7 +140,7 @@ void App::CreateObjects()
 		//  add to ogre
 		bool no = !objExists[o.name];
 		o.ent = mSceneMgr->createEntity("oE"+s, (no ? "sphere" : o.name) + ".mesh");
-		o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode("oN"+s);
+		o.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::SCENE_DYNAMIC);
 		o.SetFromBlt();
 		o.nd->attachObject(o.ent);  o.ent->setVisibilityFlags(RV_Objects);
 		o.nd->setScale(o.scale);
