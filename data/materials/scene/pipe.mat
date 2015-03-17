@@ -15,6 +15,7 @@ material pipe_glass
     lighting true
 	terrain_light_map false
 	terrain_light_map_toggleable false
+	motionblur_mask true
     receives_shadows true
 			
 	bump_scale 1
@@ -89,6 +90,8 @@ material pipe_glass
 			terrain_light_map $terrain_light_map
 			terrain_light_map_toggleable $terrain_light_map_toggleable
 			receives_shadows $receives_shadows
+		    motionblur_mask $motionblur_mask
+
 			refl_amount $refl_amount
 			lighting $lighting
 			mrt_output $mrt_output
@@ -216,6 +219,8 @@ material pipe_glass
 			terrain_light_map $terrain_light_map
 			terrain_light_map_toggleable $terrain_light_map_toggleable
 			receives_shadows $receives_shadows
+		    motionblur_mask $motionblur_mask
+
 			refl_amount $refl_amount
 			lighting $lighting
 			mrt_output $mrt_output

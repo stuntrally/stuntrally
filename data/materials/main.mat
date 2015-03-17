@@ -87,8 +87,9 @@ material base
 		    env_map $env_map
 		    terrain_light_map $terrain_light_map
 		    terrain_light_map_toggleable $terrain_light_map_toggleable
-		    motionblur_mask $motionblur_mask
 		    receives_shadows $receives_shadows
+		    motionblur_mask $motionblur_mask
+
 		    refl_amount $refl_amount
 		    lighting $lighting
 		    mrt_output $mrt_output
