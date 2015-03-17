@@ -18,21 +18,68 @@
 #include <OgreViewport.h>
 #include <OgreSceneNode.h>
 #include <OgreTextureManager.h>
+#include <OgreManualObject.h>
 #include <OgreRenderTexture.h>
+#include <Compositor/OgreCompositorManager2.h>
+#include <Compositor/OgreCompositorWorkspace.h>
 #include "../../shiny/Main/Factory.hpp"
 //#include "../../paged-geom/GrassLoader.h"
 using namespace Ogre;
 
 
+// Create a 2D quad
+Ogre::ManualObject* makeQuad(Ogre::SceneManager* sceneMgr, float left, float top, float right, float bottom, String material)
+{
+	Ogre::ManualObject* manual = sceneMgr->createManualObject();
+
+	// Use identity view/projection matrices to get a 2d quad
+	manual->setUseIdentityProjection(true);
+	manual->setUseIdentityView(true);
+
+	manual->begin(material);
+
+	float normLeft = left*2-1;
+	float normTop = top*2-1;
+	float normRight = right*2-1;
+	float normBottom = bottom*2-1;
+
+	manual->position(normLeft, normTop, 0.0);
+	manual->textureCoord(0, 1);
+	manual->position(normRight, normTop, 0.0);
+	manual->textureCoord(1, 1);
+	manual->position(normRight, normBottom, 0.0);
+	manual->textureCoord(1, 0);
+	manual->position(normLeft, normBottom, 0.0);
+	manual->textureCoord(0, 0);
+
+	manual->quad(0,1,2,3);
+
+	manual->end();
+
+	Ogre::AxisAlignedBox aabInf;
+	aabInf.setInfinite();
+	manual->setLocalAabb(Ogre::Aabb::BOX_INFINITE);
+	return manual;
+}
+
 //  common rtt setup
 void CScene::RenderToTex::Setup(Ogre::Root* rt, String sName, TexturePtr pTex, String sMtr)
 {
-#if 0
-	if (!scm)  scm = rt->createSceneManager(ST_GENERIC);  // once-
+	 // once-
+	if (!scm)
+	{
+		const size_t numThreads = std::max<int>(1, Ogre::PlatformInformation::getNumLogicalCores());
+		Ogre::InstancingThreadedCullingMethod threadedCullingMethod = Ogre::INSTANCING_CULLING_SINGLETHREAD;
+		if(numThreads > 1) threadedCullingMethod = Ogre::INSTANCING_CULLING_THREADED;
+		scm = rt->createSceneManager(Ogre::ST_GENERIC, numThreads, threadedCullingMethod);
+	}
+
 	//  destroy old
 	if (cam)  scm->destroyCamera(cam);
 	if (nd)  scm->destroySceneNode(nd);
-	delete rect;
+	if (quad)  scm->destroyManualObject(quad);
+	if (workspace)
+		rt->getCompositorManager2()->removeWorkspace(workspace);
 	
 	cam = scm->createCamera(sName+"C");
 	cam->setPosition(Vector3(0,10,0));  cam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
@@ -41,20 +88,21 @@ void CScene::RenderToTex::Setup(Ogre::Root* rt, String sName, TexturePtr pTex, S
 	cam->setOrthoWindow(1.f,1.f);
 
 	rnd = pTex->getBuffer()->getRenderTarget();
-	rnd->setAutoUpdated(false);  //rnd->addListener(this);
-	vp = rnd->addViewport(cam);
-	vp->setClearEveryFrame(true);   vp->setBackgroundColour(ColourValue(0,0,0,0));
-	vp->setOverlaysEnabled(false);  vp->setSkiesEnabled(false);
-	vp->setShadowsEnabled(false);   //vp->setVisibilityMask();
-	//vp->setMaterialScheme("reflection");
+	//rnd->addListener(this);
 
-	rect = new Rectangle2D(true);   rect->setCorners(-1,1,1,-1);
-	rect->setLocalAabb(Ogre::Aabb::BOX_INFINITE);  rect->setCastShadows(false);
-	rect->setMaterial( sMtr );
+	quad = makeQuad(scm, 0, 0, 1, 1, sMtr);
 
-	nd = scm->getRootSceneNode()->createChildSceneNode(sName+"N");
-	nd->attachObject(rect);
-#endif
+	nd = scm->getRootSceneNode()->createChildSceneNode();
+	nd->attachObject(quad);
+
+	static bool createdDef = false;
+	if (!createdDef)
+	{
+		rt->getCompositorManager2()->createBasicWorkspaceDef(IdString("rttworkspace"), (ColourValue(0,0,0,1)));
+		createdDef = true;
+	}
+	// FIXME: updated every frame, code in UpdBlendmap doesn't work...
+	workspace = rt->getCompositorManager2()->addWorkspace(scm, rnd, cam, IdString("rttworkspace"), true);
 }
 
 ///  blendmap setup
@@ -107,7 +155,6 @@ void CScene::CreateBlendTex()
 //--------------------------------------------------------------------------
 void CScene::UpdBlendmap()
 {
-#if 0
 	if (!terrain)  return;
 	Ogre::Timer ti;
 
@@ -138,9 +185,19 @@ void CScene::UpdBlendmap()
 	{	
 		UpdLayerPars();
 		
-		angleRTT.rnd->update();
-		blendRTT.rnd->update();
+#if 0
+		//angleRTT.workspace->setEnabled(true);
+		angleRTT.workspace->_beginUpdate(true);
+		angleRTT.workspace->_update();
+		angleRTT.workspace->_endUpdate(true);
+		//angleRTT.workspace->setEnabled(false);
 
+		//blendRTT.workspace->setEnabled(true);
+		blendRTT.workspace->_beginUpdate(true);
+		blendRTT.workspace->_update();
+		blendRTT.workspace->_endUpdate(true);
+		//blendRTT.workspace->setEnabled(false);
+#endif
 		//  copy from rtt to normal texture
 		//HardwarePixelBufferSharedPtr b = blMap->getBuffer();
 		//b->blit(pt);
@@ -148,7 +205,6 @@ void CScene::UpdBlendmap()
 	}
 
 	//LogO(String("::: Time Upd blendmap: ") + fToStr(ti.getMilliseconds(),0,1) + " ms");  // 1ms on 512, 4ms on 1k
-#endif
 }
 
 

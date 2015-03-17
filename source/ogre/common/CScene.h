@@ -9,7 +9,9 @@
 namespace Forests {  class PagedGeometry;  }
 namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class StaticGeometry;
 	class Light;  class SceneNode;  class Camera;  class Texture;  class SceneManager;  class Entity;
-	class Rectangle2D;  class RenderTexture;  class Viewport;  class Root;  class ParticleSystem; }
+	class Rectangle2D;  class RenderTexture;  class Viewport;  class Root;  class ParticleSystem;
+	class CompositorWorkspace;
+				}
 class App;  class Scene;  class WaterRTT;  class CData;  class SplineRoad;
 
 
@@ -104,11 +106,13 @@ public:
 	struct RenderToTex  // rtt common
 	{
 		Ogre::RenderTexture* rnd;  Ogre::Texture* tex;
-		Ogre::SceneManager* scm;  Ogre::Camera* cam;  Ogre::Viewport* vp;
-		Ogre::Rectangle2D* rect;  Ogre::SceneNode* nd;
+		Ogre::SceneManager* scm;  Ogre::Camera* cam;
+		Ogre::ManualObject* quad;  Ogre::SceneNode* nd;
+
+		Ogre::CompositorWorkspace* workspace;
 
 		void Null()
-		{	rnd = 0;  tex = 0;  scm = 0;  cam = 0;  vp = 0;  rect = 0;  nd = 0;   }
+		{	rnd = 0;  tex = 0;  scm = 0;  cam = 0;  nd = 0;  quad = 0;  workspace = 0; }
 		RenderToTex()
 		{	Null();   }
 
