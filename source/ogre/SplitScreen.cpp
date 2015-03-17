@@ -131,8 +131,7 @@ void SplitScr::Align()
 		defCreated = true;
 	}
 
-	pCompositorManager->addWorkspace(mSceneMgr, mWindow, mCameras.back(), workspaceNameHash, true);
-
+	mWorkspace = pCompositorManager->addWorkspace(mSceneMgr, mWindow, mCameras.back(), workspaceNameHash, true);
 
 #if 0
 	LogO("-- Screen Align");
