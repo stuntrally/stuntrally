@@ -1,0 +1,85 @@
+vertex_program motionblur_vertex_glsl glsl
+{
+	source motionblur_vertex.glsl
+	default_params
+	{
+		param_named_auto wvp worldviewproj_matrix
+	}
+}
+
+fragment_program motionblur_fragment_glsl glsl
+{
+	source motionblur_fragment.glsl
+	default_params
+	{
+		param_named_auto far far_clip_distance
+		param_named_auto fps fps
+		param_named scene int 0
+		param_named depthTex int 1
+		param_named maskTex int 2
+	}
+}
+
+vertex_program motionblur_vertex_hlsl hlsl
+{
+	source motionblur.hlsl
+	target vs_3_0
+	entry_point motionblur_vs
+}
+
+fragment_program motionblur_fragment_hlsl hlsl
+{
+	source motionblur.hlsl
+	target ps_3_0
+	entry_point motionblur_ps
+	default_params
+	{
+		param_named_auto far far_clip_distance
+		param_named_auto fps fps
+	}
+}
+
+fragment_program motionblur_fragment unified
+{
+	delegate motionblur_fragment_glsl
+	delegate motionblur_fragment_hlsl
+}
+
+vertex_program motionblur_vertex unified
+{
+	delegate motionblur_vertex_glsl
+	delegate motionblur_vertex_hlsl
+}
+
+material motionblur
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+
+			vertex_program_ref motionblur_vertex
+			{
+			}
+			
+			fragment_program_ref motionblur_fragment
+            {
+            }
+
+			texture_unit scene
+			{
+				tex_address_mode clamp
+			}
+			texture_unit depth
+			{
+				tex_address_mode clamp
+			}
+			texture_unit mask
+			{
+				tex_address_mode clamp
+			}
+		}
+	}
+}
