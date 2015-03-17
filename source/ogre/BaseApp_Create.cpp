@@ -406,7 +406,7 @@ bool BaseApp::setup()
 	const size_t numThreads = std::max<int>(1, Ogre::PlatformInformation::getNumLogicalCores());
 	Ogre::InstancingThreadedCullingMethod threadedCullingMethod = Ogre::INSTANCING_CULLING_SINGLETHREAD;
 	if(numThreads > 1) threadedCullingMethod = Ogre::INSTANCING_CULLING_THREADED;
-	mSceneMgr = Ogre::Root::getSingleton().createSceneManager(Ogre::ST_GENERIC, numThreads, threadedCullingMethod);
+	mSceneMgr = Ogre::Root::getSingleton().createSceneManager(Ogre::ST_GENERIC, numThreads-1, threadedCullingMethod);
 
 	#if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0) 
 	Ogre::OverlaySystem* pOverlaySystem = new Ogre::OverlaySystem();

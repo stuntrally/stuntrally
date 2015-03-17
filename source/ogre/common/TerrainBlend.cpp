@@ -68,10 +68,8 @@ void CScene::RenderToTex::Setup(Ogre::Root* rt, String sName, TexturePtr pTex, S
 	 // once-
 	if (!scm)
 	{
-		const size_t numThreads = std::max<int>(1, Ogre::PlatformInformation::getNumLogicalCores());
 		Ogre::InstancingThreadedCullingMethod threadedCullingMethod = Ogre::INSTANCING_CULLING_SINGLETHREAD;
-		if(numThreads > 1) threadedCullingMethod = Ogre::INSTANCING_CULLING_THREADED;
-		scm = rt->createSceneManager(Ogre::ST_GENERIC, numThreads, threadedCullingMethod);
+		scm = rt->createSceneManager(Ogre::ST_GENERIC, 1, threadedCullingMethod);
 	}
 
 	//  destroy old
