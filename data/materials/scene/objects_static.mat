@@ -794,7 +794,7 @@ material DishHoleCrystal
 	normalMap dish_crystal_norm.jpg
 	ambient 1 1 1 
 	diffuse 0.8 0.8 0.8
-	specular 0.4 0.4 0.4 16
+	specular 0.6 0.6 0.6 24a
 	bump_scale 0.6
 }
 
@@ -802,9 +802,10 @@ material ObeliskCrystal
 {
 	parent base
 	diffuseMap obelisk_crystal.png
-	normalMap obelisk_crystal_norm.png
+	normalMap 
+	obelisk_crystal_norm.jpg
 	ambient 1 1 1
 	diffuse 0.8 0.8 0.8
-	specular 0.4 0.4 0.4 16
+	specular 0.6 0.6 0.6 24
 	bump_scale 0.6
 }
