@@ -1,6 +1,6 @@
 [ params ]
 #--------	Lateral force
-a0=1.67644	# Shape factor  A0
+a0=1.4844	# Shape factor  A0
 a1=-0	# Load infl. on lat. friction coeff (*1000)  (1/kN)  A1
 a2=1600.18	# Lateral friction coefficient at load = 0 (*1000)  2
 a3=667	# Maximum stiffness   (N/deg)  A3
