@@ -31,7 +31,7 @@ void CARDIFFERENTIAL::ComputeWheelTorques(Dbl driveshaft_torque)
 		cas *= -anti_slip_torque_decel_factor;
 
 	cas = std::max(0.0,cas);
-	Dbl drag = clamp(cas * (side1_speed - side2_speed),-anti_slip,anti_slip);
+	Dbl drag = clamp(cas * (side1_speed - side2_speed), -anti_slip, anti_slip);
 	
 	Dbl torque = driveshaft_torque * final_drive;
 	side1_torque = torque*(1.0-torque_split) - drag;
