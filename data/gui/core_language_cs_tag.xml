@@ -46,7 +46,7 @@
 	<Tag name="Graphs">Grafy</Tag>
 	<Tag name="Diff5">Velmi těžká</Tag>
 	<Tag name="TerNormal">Normální</Tag>
-	<Tag name="CarType_Spaceship">Spaceship</Tag>
+	<Tag name="CarType_Spaceship">Vesmírná loď</Tag>
 	<Tag name="NeedNewGame">* need New Game</Tag>
 	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
 	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
@@ -65,9 +65,9 @@
 	<Tag name="Hint-15text">For more info, check [Help] in the menu.</Tag>
 	<Tag name="InputMapBrake">Brzda</Tag>
 	<Tag name="MinimapUpdSkip">Minimap update skip</Tag>
-	<Tag name="SC_ForestMntn">ForestMntn</Tag>
+	<Tag name="SC_ForestMntn">Horský les</Tag>
 	<Tag name="CarDesc_3S">Good car, suited for all tracks, but has slower acceleration, especially at high speeds.</Tag>
-	<Tag name="InputObjectsIns">Ins - insert new, at cursor</Tag>
+	<Tag name="InputObjectsIns">Ins - vložit nový, v poloze ukazovátka</Tag>
 	<Tag name="GraphicsAll_Low">Nízké</Tag>
 	<Tag name="Group">Skupina</Tag>
 	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
@@ -90,7 +90,7 @@
 	<Tag name="TipAutoGearbox">Zrušte zaškrtnutie pre ručné radenie.</Tag>
 	<Tag name="pipes">roury</Tag>
 	<Tag name="CarTireVisCircles">Tire force circles visualisation</Tag>
-	<Tag name="InputFluidsUpdate">F10  - update depth map, after terrain deform near shore</Tag>
+	<Tag name="InputFluidsUpdate">F10  - aktualizovat hlobkovou mapu, po změně tvaru krajiny poblíž břehu</Tag>
 	<Tag name="LS_MISC">Dokončuje se</Tag>
 	<Tag name="DepthOfField">Depth of Field</Tag>
 	<Tag name="Game">Hra</Tag>
@@ -179,7 +179,7 @@
 	<Tag name="trailColor">Barva stopy</Tag>
 	<Tag name="UnitKm">km</Tag>
 	<Tag name="InputUndo">(one time undo)</Tag>
-	<Tag name="SC_SavannaDry">SavannaDry</Tag>
+	<Tag name="SC_SavannaDry">Suchá savana</Tag>
 	<Tag name="InputRoadHeight">- change height</Tag>
 	<Tag name="InputObjectsSimulate">C - simulation toggle for dynamic objects</Tag>
 	<Tag name="OpponentsList">Opponents List</Tag>
@@ -290,7 +290,7 @@
 	<Tag name="LS_CAR">Nahrává se auto</Tag>
 	<Tag name="Author">Autor(ři)</Tag>
 	<Tag name="MaxScale">Největší rozměr</Tag>
-	<Tag name="Fluids">Fluids</Tag>
+	<Tag name="Fluids">Kapaliny</Tag>
 	<Tag name="TipGrDensSmooth">Grass density map - smooth size. Higher will make a smoother transition from road to grass.</Tag>
 	<Tag name="NetNickname">Přezdívka</Tag>
 	<Tag name="NetPassword">Heslo</Tag>
@@ -333,8 +333,8 @@
 	<Tag name="TipCopySource">Pick selected track for copy source, used in [Tools] tab.</Tag>
 	<Tag name="InputMapNextTab">Další karta</Tag>
 	<Tag name="InputBrushSize">-,=  (or Wheel)  -  Size</Tag>
-	<Tag name="Car_StopTimeFrom">Stop time from</Tag>
-	<Tag name="SC_JungleDark">JungleDark</Tag>
+	<Tag name="Car_StopTimeFrom">Zastavit čas od</Tag>
+	<Tag name="SC_JungleDark">Tmavá džungle</Tag>
 	<Tag name="Saving">Ukládá se</Tag>
 	<Tag name="EscQuit">Esc quits</Tag>
 	<Tag name="Gauges">Gauges (rpm, speed)</Tag>
@@ -418,7 +418,7 @@
 	<Tag name="RoadQual">Road far quality</Tag>
 	<Tag name="TipFogHSmooth">Height fog smooth distance [meters].</Tag>
 	<Tag name="Brush_Shape">Tvar</Tag>
-	<Tag name="SC_AutumnDark">AutumnDark</Tag>
+	<Tag name="SC_AutumnDark">Tmavý podzim</Tag>
 	<Tag name="DynamicObjects">Dynamic Objects</Tag>
 	<Tag name="TipFogClrH">Fog color for height fog.</Tag>
 	<Tag name="InputMapSteering">Zatáčení</Tag>
@@ -428,7 +428,7 @@
 	<Tag name="NoWrongChks">Don't show wrong checkpoint messages</Tag>
 	<Tag name="HDROrigImage">Bloom Darken</Tag>
 	<Tag name="Brushes">Štětce</Tag>
-	<Tag name="InputFluidsPrevNext">PgUp,PgDn (or Wheel) - previous/next fluid</Tag>
+	<Tag name="InputFluidsPrevNext">PgUp,PgDn (nebo kolečko) - předchozí/další tekutina</Tag>
 	<Tag name="CarType_Asphalt">Asfalt</Tag>
 	<Tag name="Yaw">yaw</Tag>
 	<Tag name="TipGrassPageLength">Grass Page length (low will reload often, high will cause visible switching).</Tag>
@@ -443,7 +443,7 @@
 	<Tag name="NetStart">Spustit</Tag>
 	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@http://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.@</Tag>
 	<Tag name="Road_Dir">Směr</Tag>
-	<Tag name="InputObjectsPrevNext">PgUp,PgDn (or Wheel) - previous/next object</Tag>
+	<Tag name="InputObjectsPrevNext">PgUp,PgDn (nebo kolečko) - předchozí/další předmět</Tag>
 	<Tag name="AllowSaveOrigTrk">Allow saving original tracks</Tag>
 	<Tag name="TimesBar">Times bar</Tag>
 	<Tag name="Screenshot">snímek obrazovky</Tag>
@@ -459,7 +459,7 @@
 	<Tag name="Hint-14text">Press F11 to show the bar with frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
 	<Tag name="TipModelRoadDist">Distance from road to models (global, added to each model's own value).</Tag>
 	<Tag name="TireTrails">Tire Trails</Tag>
-	<Tag name="Car_BhpPerTon">Bhp per tonne</Tag>
+	<Tag name="Car_BhpPerTon">Výkon na brzdě na tunu</Tag>
 	<Tag name="TipFogClrRGBA">R G B A components 0 to 1 (eg. 0.7 0.8 0.9 1). Last can be used to lower maximum density (1 is full).</Tag>
 	<Tag name="Language">Jazyk</Tag>
 	<Tag name="Hint-0text">If you crashed or you're stuck, hold [Backspace] to move back in time.</Tag>
@@ -468,7 +468,7 @@
 	<Tag name="Enabled">Povoleno</Tag>
 	<Tag name="Rivers">Rieky</Tag>
 	<Tag name="SC_Desert">Poušť</Tag>
-	<Tag name="InputFluidsTile">[,]  - change texture tiling</Tag>
+	<Tag name="InputFluidsTile">[,]  - změnit dláždění textur</Tag>
 	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
 	<Tag name="RollingDrag">Rolling Drag</Tag>
 	<Tag name="DidntPass">Neprošel</Tag>
@@ -533,7 +533,7 @@
 	<Tag name="TipGrassPrev">Preview image of this grass layer (changed with material).</Tag>
 	<Tag name="InputRoadShiftReverse">shift-Ins - paste   shift-ctrl-Ins - reversed</Tag>
 	<Tag name="TipMudInt">Mud particles intensity.</Tag>
-	<Tag name="InputObjectsDel">Del - delete current</Tag>
+	<Tag name="InputObjectsDel">Del - smazat nynější</Tag>
 	<Tag name="Obj_Rot">Otoč.</Tag>
 	<Tag name="Transparency">Průhlednost</Tag>
 	<Tag name="NetWrongPassword">Nesprávne heslo.</Tag>
@@ -567,7 +567,7 @@
 	<Tag name="TipTerLAngMax">Ending terrain angle for layer.</Tag>
 	<Tag name="TBPoints">Body</Tag>
 	<Tag name="SimModeEasy">Easy (beginner)</Tag>
-	<Tag name="SC_WinterWet">WinterWet</Tag>
+	<Tag name="SC_WinterWet">Mokrá zima</Tag>
 	<Tag name="Sky">Obloha</Tag>
 	<Tag name="Car_Mass">Hmotnost</Tag>
 	<Tag name="TCS">TCS (traction control)</Tag>
@@ -605,9 +605,9 @@
 	<Tag name="TrackAvgSpeed">Průměrná rychlost</Tag>
 	<Tag name="Chall_Extreme">Extrémní</Tag>
 	<Tag name="PreviewCam">Preview Camera</Tag>
-	<Tag name="CarType_Hover">Hovercraft</Tag>
-	<Tag name="InputFluidsDel">Del - delete current</Tag>
-	<Tag name="SC_DesertMud">DesertMud</Tag>
+	<Tag name="CarType_Hover">Vznášedlo</Tag>
+	<Tag name="InputFluidsDel">Del - smazat nynější</Tag>
+	<Tag name="SC_DesertMud">Blátivá pustina</Tag>
 	<Tag name="InputRoadMove">- move point</Tag>
 	<Tag name="EdInputBar">Input bar  Ctrl-I</Tag>
 	<Tag name="CarDesc_FN">Another good rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
@@ -674,7 +674,7 @@
 	<Tag name="TBLap">Kolo</Tag>
 	<Tag name="Road_AngleBoth">Obě</Tag>
 	<Tag name="Advanced">Pokročilé</Tag>
-	<Tag name="InputObjectsMode">X - edit Objects</Tag>
+	<Tag name="InputObjectsMode">X - upravit předměty</Tag>
 	<Tag name="TipGrassVisDist">Visibility distance for grass pages.</Tag>
 	<Tag name="TracksGhost">Track's ghost (ES car best drive for track)</Tag>
 	<Tag name="TipNewDup">Create a new track by duplicating the selected track and using new name (change name first).</Tag>
@@ -701,7 +701,7 @@
 	<Tag name="ViewLeft">View Left</Tag>
 	<Tag name="UnitMB">MB</Tag>
 	<Tag name="RplTime">Čas</Tag>
-	<Tag name="SC_IslandDark">IslandDark</Tag>
+	<Tag name="SC_IslandDark">Tmavý ostrov</Tag>
 	<Tag name="MessageBox_Retry">Zkusit znovu</Tag>
 	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
 	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
@@ -747,7 +747,7 @@
 	<Tag name="InputRoadDel">Del - delete picked</Tag>
 	<Tag name="InputFluidsTileY">; &apos;  - change texture tiling, one coord. only</Tag>
 	<Tag name="Generator">Generátor</Tag>
-	<Tag name="InputObjectsPaste">shift-Ins - paste copied</Tag>
+	<Tag name="InputObjectsPaste">shift-Ins - vložit zkopírované</Tag>
 	<Tag name="ConnectingTo">Připojuje se k %1</Tag>
 	<Tag name="InputTopView">Alt-Z - toggle top view</Tag>
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
@@ -768,7 +768,7 @@
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
 	<Tag name="Needed">Potřeba</Tag>
 	<Tag name="Road_Pipe">Roura</Tag>
-	<Tag name="SC_VolcanicDark">VolcanicDark</Tag>
+	<Tag name="SC_VolcanicDark">Tmavá sopka</Tag>
 	<Tag name="Adjust">Upravit</Tag>
 	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="Tires">Pneumatiky</Tag>
@@ -790,7 +790,7 @@
 	<Tag name="UnitNm">Nm</Tag>
 	<Tag name="ABS">ABS (antilock brakes)</Tag>
 	<Tag name="Back">Vzadu</Tag>
-	<Tag name="InputFluidsIns">Ins - insert new, default fluid at cursor</Tag>
+	<Tag name="InputFluidsIns">Ins - vložit novou, výchozí tekutina v poloze ukazovátka</Tag>
 	<Tag name="TipGrassSwaySpd">Grass sway effect speed.</Tag>
 	<Tag name="RplRecTime">Recorded   time</Tag>
 	<Tag name="WelcomeTo">Vítejte v</Tag>
@@ -819,7 +819,7 @@
 	<Tag name="Silver">Stříbro</Tag>
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
 	<Tag name="CamInertia">Camera inertia</Tag>
-	<Tag name="InputFluidsType">-,=  - change fluid type (water,mud,etc.)</Tag>
+	<Tag name="InputFluidsType">-,=  - změnit typ tekutiny (voda, bláto atd.)</Tag>
 	<Tag name="Distance">Vzdálenost</Tag>
 	<Tag name="About">O programu</Tag>
 	<Tag name="TipTerTripl">When using graphics option triplanar max 2, this layer will have triplanar mapping (good textured slopes). Affects Fps.</Tag>
@@ -879,13 +879,13 @@
 	<Tag name="SC_Crystals">Krystaly</Tag>
 	<Tag name="SC_Stone">Kámen</Tag>
 	<Tag name="RplBestOnly">Save ghost only for best time</Tag>
-	<Tag name="InputFluidsMode">W - edit fluids</Tag>
+	<Tag name="InputFluidsMode">W - upravit tekuté látky</Tag>
 	<Tag name="Front">Vpředu</Tag>
 	<Tag name="InputInverse">Převrácení</Tag>
 	<Tag name="NetMasterIp">Master Server IP</Tag>
 	<Tag name="Change">Změnit</Tag>
 	<Tag name="AutoGearbox">Auto gearbox</Tag>
-	<Tag name="InputObjectsCopySel">ctrl-Ins - copy selection</Tag>
+	<Tag name="InputObjectsCopySel">ctrl-Ins - kopírovat výběr</Tag>
 	<Tag name="InputMapRestartGame">Nová hra</Tag>
 	<Tag name="TipDeleteTrk">Permanently delete selected track.</Tag>
 	<Tag name="Setup">Nastavení</Tag>
@@ -912,7 +912,7 @@
 	<Tag name="Hint-1text">Don't accelerate all the time. Also don't forget to brake before turns, especially sharp ones. If you don't know the road yet, it's better to drive slowly.</Tag>
 	<Tag name="TipTrackDesc">Track description text.</Tag>
 	<Tag name="RplFileSize">Velikost souboru</Tag>
-	<Tag name="SC_GreeceWhite">GreeceWhite</Tag>
+	<Tag name="SC_GreeceWhite">Bílé Řecko</Tag>
 	<Tag name="SourceTrack">Zdrojová dráha</Tag>
 	<Tag name="NetHost">Hostitel</Tag>
 	<Tag name="Road_AngleAuto">Automaticky</Tag>
@@ -950,7 +950,7 @@
 	<Tag name="scale">Měřítko</Tag>
 	<Tag name="UnitMph">mil/h</Tag>
 	<Tag name="InputSaveTrack">F4 - save track</Tag>
-	<Tag name="InputObjectsType">-,=  - change object type</Tag>
+	<Tag name="InputObjectsType">-,=  - změnit typ předmětu</Tag>
 	<Tag name="ColHue">Barva - odstín</Tag>
 	<Tag name="Brush_ShapeNoise2">Šum 2</Tag>
 	<Tag name="fluids">fluids (water or mud)</Tag>
@@ -1060,7 +1060,7 @@
 	<Tag name="Car_MaxPower">Max Power</Tag>
 	<Tag name="Close">Zavřít</Tag>
 	<Tag name="distribution">Rozdělování</Tag>
-	<Tag name="SC_ForestYellow">ForestYellow</Tag>
+	<Tag name="SC_ForestYellow">Žlutý les</Tag>
 	<Tag name="Diff2">Lehká</Tag>
 	<Tag name="Diff3">Střední</Tag>
 	<Tag name="Diff0">Test Easy</Tag>

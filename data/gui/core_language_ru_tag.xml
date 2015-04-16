@@ -353,7 +353,7 @@
 	<Tag name="ReflMode_single">Одно</Tag>
 	<Tag name="InputRoadSelectMany">Выбрать (много)</Tag>
 	<Tag name="Car_TopSpeed">Макс. скор.</Tag>
-	<Tag name="HDR">HDR+разм.</Tag>
+	<Tag name="HDR">HDR+свеч.</Tag>
 	<Tag name="Hint-4text">Смотри за повреждениями авто, особенно на треках с трюками. Авто перестанет ехать, если полностью повредишь или упадут тех. характеристики при более 50 %.</Tag>
 	<Tag name="TipABS">Предотвращает блокировку колес при торможении (по умолчанию выключено).</Tag>
 	<Tag name="TipGrassPatchHeightMin">Минимальная высота травы</Tag>
@@ -504,7 +504,7 @@
 	<Tag name="InputTrackScrn">(снимок для трека)</Tag>
 	<Tag name="InputRoadNext">PgUp,PgDn (или Wheel) - пред./след. точка</Tag>
 	<Tag name="TipTerTriSize">Размер треугольника ландшафта в [метры] (рекомендуем 1 - 2, используйте больше для больших треков по площади). Изменяется после обновления (F8).</Tag>
-	<Tag name="HDRIntensity">Интен. разм.</Tag>
+	<Tag name="HDRIntensity">Интен. свеч.</Tag>
 	<Tag name="ColReflect">Отраж.</Tag>
 	<Tag name="TrackWidthAvg">Ср. ширина</Tag>
 	<Tag name="InputRoadIns">Ins - вставить (после., alt - до)</Tag>
@@ -618,7 +618,7 @@
 	<Tag name="Help">Помощь</Tag>
 	<Tag name="CarDesc_N1">Хорошее авто для всех треков. Немного меньше управляемость, но довольно устойчивый из-за длины.</Tag>
 	<Tag name="LODPointsDist">LOD точки дист.</Tag>
-	<Tag name="MotionBlur">Движ. очертаний</Tag>
+	<Tag name="MotionBlur">Размытость</Tag>
 	<Tag name="TerLNoise">Шум</Tag>
 	<Tag name="TipChangeHue">Изменяет цвет авто (оттенок).</Tag>
 	<Tag name="Channels">Каналы</Tag>
@@ -815,7 +815,7 @@
 	<Tag name="auto">Авто</Tag>
 	<Tag name="TipWindInflH">Влияние ветра на модель, шкала высоты.</Tag>
 	<Tag name="NetLocalPort">Локальный порт</Tag>
-	<Tag name="Bloom">Разм.</Tag>
+	<Tag name="Bloom">Свечение</Tag>
 	<Tag name="Silver">Серебро</Tag>
 	<Tag name="TipWindInflL">Влияние ветра на модель, шкала длины.</Tag>
 	<Tag name="CamInertia">Инерц. камера</Tag>
