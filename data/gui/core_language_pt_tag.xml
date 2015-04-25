@@ -17,7 +17,7 @@
 	<Tag name="TBTime">Tempo</Tag>
 	<Tag name="FuelBoost">Combustível do Turbo</Tag>
 	<Tag name="TBLapResults">Resultados da Volta</Tag>
-	<Tag name="InputHeaderTxt2">Binding</Tag>
+	<Tag name="InputHeaderTxt2">Atribuição</Tag>
 	<Tag name="InputHeaderTxt3">Valor</Tag>
 	<Tag name="AndUsing">e usando</Tag>
 	<Tag name="Championship">Campeonato</Tag>
@@ -159,7 +159,7 @@
 	<Tag name="InputNoJS">Sem joystick</Tag>
 	<Tag name="InputRoadAngType">alt-1,2   - angles type</Tag>
 	<Tag name="NetMasterPort">Porta do Servidor Mestre</Tag>
-	<Tag name="InpSet_KeyHalf">Key Half</Tag>
+	<Tag name="InpSet_KeyHalf">Tecla Parcial</Tag>
 	<Tag name="TerLHSm">Height smooth</Tag>
 	<Tag name="CarDesc_SZ">Carro mais rápido destinado ao cascalho. Leve e com um motor potente. Tem ótima aerodinâmica e direção.</Tag>
 	<Tag name="CopySource">Set as copy source</Tag>
@@ -299,7 +299,7 @@
 	<Tag name="NetSettings">Configurações</Tag>
 	<Tag name="TipModelMaxScale">Escala máxima do modelo.</Tag>
 	<Tag name="TerrainError">Terrain error</Tag>
-	<Tag name="InputGraphsType">change graphs type in game</Tag>
+	<Tag name="InputGraphsType">mudar tipo de gráfico no jogo</Tag>
 	<Tag name="NetMasterProtocolError">Versão de protocolo incompatível - atualize o Stunt Rally ou contate o administrador do servidor.</Tag>
 	<Tag name="TipParType1">Tire Particle type 1 (global for track).</Tag>
 	<Tag name="InputStartMeet">car will meet (next+ / prev-) point numbers</Tag>
@@ -334,7 +334,7 @@
 	<Tag name="InputMapNextTab">Próxima Aba</Tag>
 	<Tag name="InputBrushSize">-,=  (or Wheel)  -  Size</Tag>
 	<Tag name="Car_StopTimeFrom">Tempo para parada a</Tag>
-	<Tag name="SC_JungleDark">SelvaDark</Tag>
+	<Tag name="SC_JungleDark">SelvaEscura</Tag>
 	<Tag name="Saving">Salvando</Tag>
 	<Tag name="EscQuit">Esc sai</Tag>
 	<Tag name="Gauges">Medidores (rpm, velocidade)</Tag>
@@ -400,7 +400,7 @@
 	<Tag name="difficulty">Dificuldade</Tag>
 	<Tag name="TrackInAir">No ar</Tag>
 	<Tag name="TipReverse">Inverter direção da pista.</Tag>
-	<Tag name="SC_BlackDesert">BlackDesert</Tag>
+	<Tag name="SC_BlackDesert">DesertoNoite</Tag>
 	<Tag name="RplVersion">Versão</Tag>
 	<Tag name="Stages">Etapas</Tag>
 	<Tag name="Options">Opções</Tag>
@@ -418,7 +418,7 @@
 	<Tag name="RoadQual">Road far quality</Tag>
 	<Tag name="TipFogHSmooth">Height fog smooth distance [meters].</Tag>
 	<Tag name="Brush_Shape">Shape</Tag>
-	<Tag name="SC_AutumnDark">OutonoDark</Tag>
+	<Tag name="SC_AutumnDark">OutonoEscuro</Tag>
 	<Tag name="DynamicObjects">Objetos Dinâmicos</Tag>
 	<Tag name="TipFogClrH">Fog color for height fog.</Tag>
 	<Tag name="InputMapSteering">Direção</Tag>
@@ -489,7 +489,7 @@
 	<Tag name="SkirtLength">Skirt Length</Tag>
 	<Tag name="InputRoadNotOnTer">when not on terrain</Tag>
 	<Tag name="ChampEndCongrats">Parabéns !</Tag>
-	<Tag name="TiresEdit2">1,2 or Num /,* - change value</Tag>
+	<Tag name="TiresEdit2">1,2 ou Num /,* - muda valor</Tag>
 	<Tag name="CamInfoStrings">Type,Yaw,Pitch,Dist,Height,Speed,Offset,LEFT,RIGHT,Middle,Wheel,shift,Rotate,reset,move,H,Pos</Tag>
 	<Tag name="TipGrassColorMap">Grass colormap for scenery, usually same choice as for grass material. Additional grass coloring.</Tag>
 	<Tag name="Multiplayer">Multiplayer</Tag>
@@ -508,7 +508,7 @@
 	<Tag name="ColReflect">Reflexos</Tag>
 	<Tag name="TrackWidthAvg">Largura média.</Tag>
 	<Tag name="InputRoadIns">Ins - insert new (after picked, alt - before)</Tag>
-	<Tag name="TweakEdit1">Alt-Z - toggle tweak window (car edit)</Tag>
+	<Tag name="TweakEdit1">Alt-Z - alterna janela de ajustes (edição do carro)</Tag>
 	<Tag name="InputBrushParams">Brush parameters</Tag>
 	<Tag name="min">min</Tag>
 	<Tag name="Hint-11text">Não dirija muito rápido nos tubos e loops. Você iria danificar a parte de baixo do carro devido à alta aceleração.</Tag>
@@ -539,10 +539,10 @@
 	<Tag name="NetWrongPassword">Senha errada.</Tag>
 	<Tag name="RplRewindGhost">Retroceder Fantasma</Tag>
 	<Tag name="ScaleAll">Scale all</Tag>
-	<Tag name="InpSet_KeyFull">Key Full</Tag>
+	<Tag name="InpSet_KeyFull">Tecla Total</Tag>
 	<Tag name="InputMapPrevTab">Aba anterior</Tag>
 	<Tag name="InputTogglePreview">F7 - enter/leave preview camera</Tag>
-	<Tag name="GameBy">A game by</Tag>
+	<Tag name="GameBy">Um jogo de</Tag>
 	<Tag name="CarDesc_TW">Este carro grande e extremo é ótimo para pistas longas e planas. Mas completamente inútil em pistas estreitas ou na lama (p. ex. em selvas). Também não é fácil de dirigir.</Tag>
 	<Tag name="CarDesc_TU">Veículo muito rápido e futurista. Não é adequado para estradas estreitas, saltos ou lama.</Tag>
 	<Tag name="Hint-10">Loops</Tag>
@@ -554,7 +554,7 @@
 	<Tag name="RplDelete">Deletar</Tag>
 	<Tag name="TipAutoRear">Desmarque para passagem manual da ré.</Tag>
 	<Tag name="TipToggleModel">Enable or disable this model.</Tag>
-	<Tag name="TireEdReference">Show reference graph</Tag>
+	<Tag name="TireEdReference">Mostra gráfico de referência</Tag>
 	<Tag name="TipTrailClr">Tire trails color. R G B A components 0 to 1 (eg. 0.4 0.4 0.2 0.6)</Tag>
 	<Tag name="MinimapTerrain">Terreno</Tag>
 	<Tag name="MinimapRotate">Rotacionar</Tag>
@@ -632,12 +632,12 @@
 	<Tag name="ChngTrkTab">changed in [Track] tab</Tag>
 	<Tag name="TipTexNormAuto">When checked, Normal texture is automatically set from Diffuse texture (+ _nh in filename).</Tag>
 	<Tag name="TipParType2">Tire Particle type 2 (global for track).</Tag>
-	<Tag name="InputRplCtrl2">P - pause/unpause replay</Tag>
-	<Tag name="InputRplCtrl3">[ , ] - wind backwards/forwards (shift - slow, ctrl,alt - fast)</Tag>
+	<Tag name="InputRplCtrl2">P - pausa/continua replay</Tag>
+	<Tag name="InputRplCtrl3">[ , ] - retroceder/avançar (shift - lento, ctrl,alt - rápido)</Tag>
 	<Tag name="Laps">Voltas</Tag>
 	<Tag name="UseImposters">Usar impostores</Tag>
 	<Tag name="FOV">Ângulo de visão</Tag>
-	<Tag name="InputRplCtrl4">K, L - change camera view to other player</Tag>
+	<Tag name="InputRplCtrl4">K, L - muda visão da câmera para outro jogador</Tag>
 	<Tag name="TipGrassPatchLengthMin">Minimal grass patch length.</Tag>
 	<Tag name="WaterReflection">Reflexão</Tag>
 	<Tag name="intensity">intensity</Tag>
@@ -645,8 +645,8 @@
 	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
 	<Tag name="InpSet_Fast">Rápido</Tag>
 	<Tag name="FrameSkip">Frames skip</Tag>
-	<Tag name="TweakEdit2">Alt-Shift-Z - save file and reload game</Tag>
-	<Tag name="TweakEdit3">Ctrl-F5 - start car performance test</Tag>
+	<Tag name="TweakEdit2">Alt-Shift-Z - salva arquivo e recarrega o jogo</Tag>
+	<Tag name="TweakEdit3">Ctrl-F5 - Inicia teste de performance do carro</Tag>
 	<Tag name="Gravel">Cascalho</Tag>
 	<Tag name="SC_Asphalt">Asfalto</Tag>
 	<Tag name="page">page</Tag>
@@ -701,7 +701,7 @@
 	<Tag name="ViewLeft">View Left</Tag>
 	<Tag name="UnitMB">mb</Tag>
 	<Tag name="RplTime">Tempo</Tag>
-	<Tag name="SC_IslandDark">IlhaDark</Tag>
+	<Tag name="SC_IslandDark">IlhaEscura</Tag>
 	<Tag name="MessageBox_Retry">Tentar novamente</Tag>
 	<Tag name="RplGhostOther">Outro carro fantasma (quando o atual não estiver disponível)</Tag>
 	<Tag name="TipTerLHMin">Altura inicial do terreno para a camada.</Tag>
@@ -739,7 +739,7 @@
 	<Tag name="Difficulty">Dificuldade</Tag>
 	<Tag name="GraphicsAll_Higher">Mais Alto</Tag>
 	<Tag name="RplRename">Renomear</Tag>
-	<Tag name="TiresEdit">Tire Edit - (Graphs in mode 4)</Tag>
+	<Tag name="TiresEdit">Edição de pneus - (Gráfico em modo 4)</Tag>
 	<Tag name="InputMapLastChk">Ir ao checkp. anterior.</Tag>
 	<Tag name="NetJoinLocked">Jogo protegido</Tag>
 	<Tag name="NewTerrainGenerate">Generate new</Tag>
@@ -753,7 +753,7 @@
 	<Tag name="TipTerSize">Resulting area in meters (side length). Equals vertex count multipled by triangle size.</Tag>
 	<Tag name="FogStart">start</Tag>
 	<Tag name="InputToggleGUIMode">F1 or ` - GUI mode (toggle Options)</Tag>
-	<Tag name="InpSet_AxisFullInv">Axis Full Inversed</Tag>
+	<Tag name="InpSet_AxisFullInv">Eixo Completo Invertido</Tag>
 	<Tag name="TipGrassMaterial">Grass material (type) for this layer, chosen to match track's scenery.</Tag>
 	<Tag name="TipRearThrottleInverse">Inverte a função do acelerador e do freio na marcha ré.</Tag>
 	<Tag name="LS_ROAD">Carregando Pista</Tag>
@@ -768,7 +768,7 @@
 	<Tag name="TipGrassPatchHeightMax">Maximal grass patch height.</Tag>
 	<Tag name="Needed">Necessário</Tag>
 	<Tag name="Road_Pipe">Pipe</Tag>
-	<Tag name="SC_VolcanicDark">VulcânicoDark</Tag>
+	<Tag name="SC_VolcanicDark">VulcânicoEscuro</Tag>
 	<Tag name="Adjust">Ajustar</Tag>
 	<Tag name="Diffuse">Diffuse</Tag>
 	<Tag name="Tires">Pneus</Tag>
@@ -796,10 +796,10 @@
 	<Tag name="WelcomeTo">Bem Vindo ao</Tag>
 	<Tag name="CameraAutoTilt">Camera auto tilt on slopes</Tag>
 	<Tag name="AlreadyExists">Já existe</Tag>
-	<Tag name="InputFocusFind">Ctrl-F  go to find box</Tag>
-	<Tag name="InputOther1">Up,Down - navigate in lists   Enter - start</Tag>
-	<Tag name="InputOther3">Enter - show lap results</Tag>
-	<Tag name="InputOther2">Enter - show/hide players window in multiplayer</Tag>
+	<Tag name="InputFocusFind">Ctrl-F ir para caixa de busca</Tag>
+	<Tag name="InputOther1">Cima,Baixo - navegar em listas. Enter - iniciar</Tag>
+	<Tag name="InputOther3">Enter - mostra resultados da volta</Tag>
+	<Tag name="InputOther2">Enter - mostrar/esconder janela de jogadores no multiplayer</Tag>
 	<Tag name="Road_Yaw">Yaw</Tag>
 	<Tag name="CarDesc_UV">Este veículo utilitário de rodas grandes é alimentado por 4 motores elétricos. Adequado a quase todas as pistas, exceto as estreitas. Ótimo para explorar outros planetas. Mas tem aerodinâmica ruim e fica preso na lama.</Tag>
 	<Tag name="RoadPointSize">Road points size</Tag>
@@ -834,14 +834,14 @@
 	<Tag name="SplitVertically">Dividir Verticalmente</Tag>
 	<Tag name="Reflections">Reflexos</Tag>
 	<Tag name="FogNormal">Normal</Tag>
-	<Tag name="InputUnbind">Press RMB on button to unbind.</Tag>
+	<Tag name="InputUnbind">Pressione o botão direto do mouse no botão para desatribuir.</Tag>
 	<Tag name="TipRainSnow1">Set 1 Rain/Snow type</Tag>
 	<Tag name="TipRainSnow2">Set 2 Rain/Snow type</Tag>
 	<Tag name="TerGenScale">Scale Height</Tag>
 	<Tag name="TipTerLAngSm">Angle smooth range (transition).</Tag>
 	<Tag name="InputBrushOctaves">, .   -  noise Octaves (detail)</Tag>
-	<Tag name="TiresEdit1">PgUp/PgDn - previous, next value</Tag>
-	<Tag name="TiresEdit3">Home - toggle longitudinal / lateral parameters</Tag>
+	<Tag name="TiresEdit1">PgUp/PgDn - valor anterior/próximo valor</Tag>
+	<Tag name="TiresEdit3">Home - alterna entre parâmetros longitudinais / laterais</Tag>
 	<Tag name="obstacles">obstáculos (na pista ou em tubos)</Tag>
 	<Tag name="VegetCol">Colisão com vegetação</Tag>
 	<Tag name="AntiAliasing">Antialiasing</Tag>
@@ -898,7 +898,7 @@
 	<Tag name="HeightOffset">Height offset</Tag>
 	<Tag name="TutorEndFinished">Você concluiu este tutorial.</Tag>
 	<Tag name="Amplitude">Amplitude</Tag>
-	<Tag name="InputControllers">Controllers</Tag>
+	<Tag name="InputControllers">Controles</Tag>
 	<Tag name="InputRoadModify">Modify</Tag>
 	<Tag name="TextColor">Cor do texto</Tag>
 	<Tag name="Reduced">Reduzido</Tag>
@@ -923,7 +923,7 @@
 	<Tag name="Hint-12text">Dê uma olhada em outros veículos, nós temos também naves espaciais, e pistas em outros planetas.</Tag>
 	<Tag name="TipGrassDens">How dense/rare will the grass be on terrain.</Tag>
 	<Tag name="Find">Procurar</Tag>
-	<Tag name="InputRplCtrl1">Backspace - show/hide controls (hold ctrl to use mouse)</Tag>
+	<Tag name="InputRplCtrl1">Backspace - mostra/esconde controles (segure ctrl para usar o mouse)</Tag>
 	<Tag name="Layers">Layers</Tag>
 	<Tag name="Quit">Sair</Tag>
 	<Tag name="Minimap">Mini-mapa</Tag>
@@ -941,8 +941,8 @@
 	<Tag name="NotRecommended">Não recomendado</Tag>
 	<Tag name="TerrainBrush">Terrain brush</Tag>
 	<Tag name="TipTrkViewDetailed">Exibição de lista detalhada.</Tag>
-	<Tag name="AndContributors">and contributors.</Tag>
-	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
+	<Tag name="AndContributors">e contribuidores.</Tag>
+	<Tag name="InputCameraTxt1">com shift - apenas câmeras principais</Tag>
 	<Tag name="Copy">Copy</Tag>
 	<Tag name="Channel">Channel</Tag>
 	<Tag name="TipFind">Digite parte do nome para buscar (lista de filtros).</Tag>
@@ -989,7 +989,7 @@
 	<Tag name="AngleMin">Angle Min</Tag>
 	<Tag name="FogEnd">end</Tag>
 	<Tag name="Replay">Replay</Tag>
-	<Tag name="InputDetailsFor">Details for</Tag>
+	<Tag name="InputDetailsFor">Detalhes para</Tag>
 	<Tag name="GraphicsAll_Ultra">Ultra</Tag>
 	<Tag name="ApplyShaders">Apply shaders</Tag>
 	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>
@@ -1023,7 +1023,7 @@
 	<Tag name="RplLoad">Carregar</Tag>
 	<Tag name="UnitBhp">bhp</Tag>
 	<Tag name="CarDesc_M3">Carro muito antigo, com um motor de baixa potência. Não é adequado para saltos. Escolha-o caso queira dirigir devagar.</Tag>
-	<Tag name="InpSet_AxisHalfInv">Axis Half Inversed</Tag>
+	<Tag name="InpSet_AxisHalfInv">Meio Eixo Invertido</Tag>
 	<Tag name="ScaleTerHeight">Terrain Height</Tag>
 	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
 	<Tag name="SimModeNormal">Normal (simulação)</Tag>
@@ -1123,7 +1123,7 @@
 	<Tag name="CarYear">Ano</Tag>
 	<Tag name="TipFogEndDist">Fog end distance [meters].</Tag>
 	<Tag name="HintShow">Mostrar ao iniciar</Tag>
-	<Tag name="CarScrap">Sucata de carro</Tag>
+	<Tag name="CarScrap">Carro Quebrando</Tag>
 	<Tag name="GraphicsAll_VeryHigh">Muito Alto</Tag>
 	<Tag name="SC_Moss">Musgo</Tag>
 	<Tag name="Terrain">Terreno</Tag>
