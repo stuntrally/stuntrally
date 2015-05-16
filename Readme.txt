@@ -24,8 +24,8 @@
 
     Links
 
-Homepage:  (all links, documentation Wiki pages)
-        http://code.google.com/p/vdrift-ogre/
+Homepage:
+        http://stuntrally.tuxfamily.org/
 
 Releases:  (GNU/Linux binaries, Windows installer)
         https://sourceforge.net/projects/stuntrally/files/
@@ -33,11 +33,11 @@ Releases:  (GNU/Linux binaries, Windows installer)
 Sources:  (Git repositories)
         https://github.com/stuntrally/
 
-Forums:  (Report bugs, issues, ideas, etc):
+Forums:  (Report bugs, issues, etc):
         http://forum.freegamedev.net/viewforum.php?f=77
 
 Screenshots:  (galleries from all versions)
-        http://picasaweb.google.com/CryHam/
+        http://stuntrally.tuxfamily.org/gallery
 
 Videos:  (gameplay and editor)
         http://www.youtube.com/user/TheCrystalHammer
@@ -57,8 +57,8 @@ The game aims at a rally style of driving (like in Richard Burns Rally),
 with possible stunt elements (jumps, loops, pipes)
 and uses a 3D spline generated road.
 
-For full features list check our Wiki page:
-http://code.google.com/p/vdrift-ogre/wiki/Features
+For full features list check our Wiki:
+http://stuntrally.tuxfamily.org/wiki/doku.php?id=features
 
 ------------------------------------------------------------------------------
 
@@ -109,7 +109,7 @@ hit F5 to reload last track state, and F4 to save it (often).
 After each save, track can be tested in game.
 
 Editor Tutorial page with 14 videos (total 64 min):
-https://code.google.com/p/vdrift-ogre/wiki/TrackEditor
+http://stuntrally.tuxfamily.org/wiki/doku.php?id=editor
 
 Have fun !
 
@@ -118,14 +118,12 @@ Have fun !
     Compiling
 
 For newest sources and how to compile them check
-project's Wiki page [Compiling].
+project's Wiki page [Compiling]:
+http://stuntrally.tuxfamily.org/wiki/doku.php?id=compile
 
 ------------------------------------------------------------------------------
 
     Help is welcomed
-
-There is 1 active developer/programmer.
-I'm looking for skilled and motivated people.
 
 Programmers
     If you know C++, OGRE or shaders, and could
