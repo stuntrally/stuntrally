@@ -218,13 +218,18 @@ bool TracksXml::LoadIni(string file, bool check)
 		
 		LogO("))) Checking for all tracks ghosts");
 		nn = trks.size();
-		for (i=0; i < nn; ++i)
+		for (int r=0; r < 2; ++r)
 		{
-			const TrackInfo& ti = trks[i];
-			const string& s = ti.name;
-			if (!ti.test && !ti.testC)
-			if (!PATHMANAGER::FileExists(PATHMANAGER::TrkGhosts()+"/"+ s + ".gho"))
-				LogO("! Missing trk gho for: " + s);
+			string sRev = r==1 ? "_r" : "";
+			for (i=0; i < nn; ++i)
+			{
+				const TrackInfo& ti = trks[i];
+				const string& s = ti.name;
+				if (!ti.test && !ti.testC)
+				if (!PATHMANAGER::FileExists(PATHMANAGER::TrkGhosts()+"/"+ s + sRev + ".gho"))
+					if (r==1)	LogO("!Rev Missing trk gho for: " + s);
+					else		LogO("! Missing trk gho for: " + s);
+			}
 		}
 		LogO("");
 		

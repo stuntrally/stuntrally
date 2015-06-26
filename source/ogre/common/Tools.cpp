@@ -385,79 +385,82 @@ void CGui::ToolGhostsConv()
 {
 	LogO("ALL ghosts Convert ---------");
 	Replay ghost;  TrackGhost trg;
-	bool reverse = false;  string sRev = reverse ? "_r" : "";
-	//for both dir sRev..
-	
-	//  foreach track
-	for (int i=0; i < data->tracks->trks.size(); ++i)
-	{	string track = data->tracks->trks[i].name;
-		if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
-		
-		//  load
-		ghost.Clear();  trg.Clear();
-		string file = PATHMANAGER::TrkGhosts()+"/original/"+ track + sRev + "_ES.rpl";
-		if (!PATHMANAGER::FileExists(file))
-		{}	//LogO("NOT found: "+file);
-		else
-		{	LogO("---------  "+track+"  ---------");
-			ghost.LoadFile(file);
-			
-			//  convert
-			MATHVECTOR<float,3> oldPos;  float oldTime = 0.f;
-			int num = ghost.GetNumFrames(), jmp = 0;
-			
-			for (int i=0; i < num; ++i)
-			{
-				const ReplayFrame& fr = ghost.GetFrame0(i);
-				TrackFrame tf;
-				tf.time = fr.time;
-				tf.pos = fr.pos;
-				tf.rot = fr.rot;  //tf.rot[0] = fr.rot[0] * 32767.f;  //..
-				tf.brake = fr.braking > 0 ? 1 : 0;
-				tf.steer = fr.steer * 127.f;
-				//LogO(toStr(fr.braking)+ " st " +fToStr(fr.steer,2,5));
+	for (int r=0; r < 2; ++r)
+	{
+		string sRev = r==1 ? "_r" : "";
 
-				#define Nth 3
-				if (i % Nth == Nth-1)  /// write every n-th frame only
-					trg.AddFrame(tf);
-
-				//  check for sudden pos jumps  (rewind used but not with _Tool_ go back time !)
-				if (i > 10 && i < num-1)  // ignore jumps at start or end
-				{	float dist = (fr.pos - oldPos).MagnitudeSquared();
-					if (dist > 16.f)  //1.f small
-					{	
-						LogO("!Jump at "+CHud::StrTime2(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
-						++jmp;
-				}	}
-				//  check vel at start
-				if (i==50)
+		//  for each track
+		for (int i=0; i < data->tracks->trks.size(); ++i)
+		{	string track = data->tracks->trks[i].name;
+			if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
+			
+			//  load
+			ghost.Clear();  trg.Clear();
+			string file = PATHMANAGER::TrkGhosts()+"/original/"+ track + sRev + "_ES.rpl";
+			if (!PATHMANAGER::FileExists(file))
+			{}	//LogO("NOT found: "+file);
+			else
+			{	LogO("---------  "+track+"  ---------");
+				ghost.LoadFile(file);
+				
+				//  convert
+				MATHVECTOR<float,3> oldPos;  float oldTime = 0.f;
+				int num = ghost.GetNumFrames(), jmp = 0;
+				
+				for (int i=0; i < num; ++i)
 				{
-					float dist = (fr.pos - oldPos).Magnitude();
-					float vel = 3.6f * dist / (fr.time - oldTime);
-					bool bad = vel > 30;
-					if (bad)
-						LogO("!Vel at "+CHud::StrTime(fr.time)+" kmh "+fToStr(vel,0) + (bad ? "  BAD":""));
-				}
-				oldPos = fr.pos;  oldTime = fr.time;
-			}
-			if (jmp > 0)
-				LogO("!Jumps: "+toStr(jmp));
-		
-			//  save
-			string fsave = PATHMANAGER::TrkGhosts()+"/"+ track + sRev + ".gho";
-			trg.header.ver = 1;
-			trg.SaveFile(fsave);
-		}
-	}
+					const ReplayFrame& fr = ghost.GetFrame0(i);
+					TrackFrame tf;
+					tf.time = fr.time;
+					tf.pos = fr.pos;
+					tf.rot = fr.rot;  //tf.rot[0] = fr.rot[0] * 32767.f;  //..
+					tf.brake = fr.braking > 0 ? 1 : 0;
+					tf.steer = fr.steer * 127.f;
+					//LogO(toStr(fr.braking)+ " st " +fToStr(fr.steer,2,5));
 
-	//  check missing
-	for (int i=0; i < data->tracks->trks.size(); ++i)
-	{	string track = data->tracks->trks[i].name;
-		if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
-		
-		string fsave = PATHMANAGER::TrkGhosts()+"/"+ track + sRev + ".gho";
-		if (!PATHMANAGER::FileExists(fsave))
-			LogO("!!  Missing for track: "+track);
+					#define Nth 3
+					if (i % Nth == Nth-1)  /// write every n-th frame only
+						trg.AddFrame(tf);
+
+					//  check for sudden pos jumps  (rewind used but not with _Tool_ go back time !)
+					if (i > 10 && i < num-1)  // ignore jumps at start or end
+					{	float dist = (fr.pos - oldPos).MagnitudeSquared();
+						if (dist > 16.f)  //1.f small
+						{	
+							LogO("!Jump at "+CHud::StrTime2(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
+							++jmp;
+					}	}
+					//  check vel at start
+					if (i==50)
+					{
+						float dist = (fr.pos - oldPos).Magnitude();
+						float vel = 3.6f * dist / (fr.time - oldTime);
+						bool bad = vel > 30;
+						if (bad)
+							LogO("!Vel at "+CHud::StrTime(fr.time)+" kmh "+fToStr(vel,0) + (bad ? "  BAD":""));
+					}
+					oldPos = fr.pos;  oldTime = fr.time;
+				}
+				if (jmp > 0)
+					LogO("!Jumps: "+toStr(jmp));
+			
+				//  save
+				string fsave = PATHMANAGER::TrkGhosts()+"/"+ track + sRev + ".gho";
+				trg.header.ver = 1;
+				trg.SaveFile(fsave);
+			}
+		}
+
+		//  check missing
+		for (int i=0; i < data->tracks->trks.size(); ++i)
+		{	string track = data->tracks->trks[i].name;
+			if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
+			
+			string fsave = PATHMANAGER::TrkGhosts()+"/"+ track + sRev + ".gho";
+			if (!PATHMANAGER::FileExists(fsave))
+				if (r==1)	LogO("!Rev Missing for track: " + track);
+				else		LogO("!!   Missing for track: " + track);
+		}
 	}
 }
 
@@ -470,49 +473,53 @@ void CGui::ToolTestTrkGhosts()
 	
 	//  foreach track
 	String ss;
-	for (int i=0; i < data->tracks->trks.size(); ++i)
-	{	string track = data->tracks->trks[i].name;
-		//if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
-		
-		//  load
-		gho.Clear();
-		string file = PATHMANAGER::TrkGhosts()+"/"+ track + ".gho";
-		if (!PATHMANAGER::FileExists(file))
-		{	/*LogO("NOT found: "+file);/**/  }
-		else
-		{	LogO("---------  "+track+"  ---------");
-			gho.LoadFile(file);
+	for (int r=0; r < 2; ++r)
+	{	
+		string sRev = r==1 ? "_r" : "";
+		for (int i=0; i < data->tracks->trks.size(); ++i)
+		{	string track = data->tracks->trks[i].name;
+			//if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
 			
-			//  test
-			MATHVECTOR<float,3> oldPos;  float oldTime = 0.f;
-			int num = gho.getNumFrames(), jmp = 0;
-			for (int i=0; i < num; ++i)
-			{
-				const TrackFrame& fr = gho.getFrame0(i);
-
-				//  check for sudden pos jumps  (rewind used but not with _Tool_ go back time !)
-				if (i > 10 && i < num-1)  // ignore jumps at start or end
-				{	float dist = (fr.pos - oldPos).MagnitudeSquared();
-					if (dist > 6.f*6.f)  //par
-					{	
-						LogO("!Jump at "+CHud::StrTime2(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
-						++jmp;
-				}	}
-				//  check vel at start
-				if (i==50/3)
+			//  load
+			gho.Clear();
+			string file = PATHMANAGER::TrkGhosts()+"/"+ track + sRev + ".gho";
+			if (!PATHMANAGER::FileExists(file))
+			{	/*LogO("NOT found: "+file);/**/  }
+			else
+			{	LogO("---------  "+track+"  ---------");
+				gho.LoadFile(file);
+				
+				//  test
+				MATHVECTOR<float,3> oldPos;  float oldTime = 0.f;
+				int num = gho.getNumFrames(), jmp = 0;
+				for (int i=0; i < num; ++i)
 				{
-					float dist = (fr.pos - oldPos).Magnitude();
-					float vel = 3.6f * dist / (fr.time - oldTime);
-					bool bad = vel > 30;
-					if (bad)
-						LogO("!Vel at "+CHud::StrTime(fr.time)+" kmh "+fToStr(vel,0) + (bad ? "  BAD":""));
+					const TrackFrame& fr = gho.getFrame0(i);
+
+					//  check for sudden pos jumps  (rewind used but not with _Tool_ go back time !)
+					if (i > 10 && i < num-1)  // ignore jumps at start or end
+					{	float dist = (fr.pos - oldPos).MagnitudeSquared();
+						if (dist > 6.f*6.f)  //par
+						{	
+							LogO("!Jump at "+CHud::StrTime2(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
+							++jmp;
+					}	}
+					//  check vel at start
+					if (i==50/3)
+					{
+						float dist = (fr.pos - oldPos).Magnitude();
+						float vel = 3.6f * dist / (fr.time - oldTime);
+						bool bad = vel > 30;
+						if (bad)
+							LogO("!Vel at "+CHud::StrTime(fr.time)+" kmh "+fToStr(vel,0) + (bad ? "  BAD":""));
+					}
+					oldPos = fr.pos;  oldTime = fr.time;
 				}
-				oldPos = fr.pos;  oldTime = fr.time;
-			}
-			if (jmp > 0)
-			{	LogO("!Jumps: "+toStr(jmp));
-				ss += "\n" + track;
-		}	}
+				if (jmp > 0)
+				{	LogO("!Jumps: "+toStr(jmp));
+					ss += "\n" + track;
+			}	}
+		}
 	}
 	LogO("!! Jumps on tracks:"+ss);
 }

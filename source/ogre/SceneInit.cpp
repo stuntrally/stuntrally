@@ -379,9 +379,9 @@ void App::LoadGame()  // 2
 	ghtrk.Clear();  vTimeAtChks.clear();
 	bool deny = gui->pChall && !gui->pChall->trk_ghost;
 	if (!bRplPlay /*&& pSet->rpl_trackghost?*/ && !mClient && !pSet->game.track_user && !deny)
-	if (!pSet->game.trackreverse)  // only not rev, todo..
 	{
-		std::string file = PATHMANAGER::TrkGhosts()+"/"+pSet->game.track+".gho";
+		std::string sRev = pSet->game.trackreverse ? "_r" : "";
+		std::string file = PATHMANAGER::TrkGhosts()+"/"+ pSet->game.track + sRev + ".gho";
 		if (ghtrk.LoadFile(file))
 		{
 			CarModel* c = new CarModel(i, 5, CarModel::CT_TRACK, "ES", mSceneMgr, pSet, pGame, scn->sc, 0, this);
