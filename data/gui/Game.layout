@@ -1261,10 +1261,6 @@
 					<Property key="Caption" value="#{SimModeNormal}"/>
 					<Property key="TextColour" value="1.0 1.0 0.5"/>
 				</Widget>
-				<Widget type="Button" skin="RadioButton" position="64 154 226 28" name="SimModeHard">
-					<Property key="Caption" value="#{SimModeHard} - #{Test}"/>
-					<Property key="TextColour" value="1.0 0.6 0.3"/>
-				</Widget>
 
 				<Widget type="TabControl" skin="TabControl" position="28 220 348 300">
 					<Property key="Colour" value="0.8 0.86 1.0"/>
@@ -4067,6 +4063,11 @@
 						<Widget type="EditBox" skin="EditBox" position="180 318 60 20" name="TC_xrVal">
 							<Property key="Colour" value="0.7 0.9 0.75"/>
 							<Property key="TextColour" value="0.7 0.9 0.75"/>
+						</Widget>
+
+						<Widget type="Button" skin="RadioButton" position="16 424 426 28" name="SimModeHard">
+							<Property key="Caption" value="#{Simulation}: #{SimModeHard} - #{Test}, S1"/>
+							<Property key="TextColour" value="1.0 0.6 0.3"/>
 						</Widget>
 					</Widget>
 				</Widget>
