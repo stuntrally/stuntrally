@@ -195,6 +195,9 @@
 		shUniform(float4, fogColorAway)  @shSharedParameter(fogColorAway)
 		shUniform(float4, fogColorH)     @shSharedParameter(fogColorH)
 		shUniform(float4, fogParamsH)    @shSharedParameter(fogParamsH)
+
+		shUniform(float4, fogFluidH)     @shSharedParameter(fogFluidH)
+		shUniform(float4, fogFluidClr)   @shSharedParameter(fogFluidClr)
 #endif
     
         @shPassthroughFragmentInputs
@@ -539,8 +542,15 @@
         float4 fogClrDir = shLerp( fogColorAway, fogColorSun, fogDir);
         float4 fogClrFinal = shLerp( fogClrDir, fogColorH, fogH);
 		float fogL = shLerp( fogDepth * fogClrDir.a, fogDepthH * fogColorH.a, fogH);
+		
+        /// fluid fog
+        float flDepth = shSaturate(depth * fogFluidH.y);
+        float flH = shSaturate((fogFluidH.x/*h*/ - worldPosY) * fogFluidH.z);
+        float4 flClrFinal = shLerp( fogClrFinal, fogFluidClr, flH);
+		float flL = shLerp( fogL, flDepth /* * fogFluidClr.a*/, flH);
 
-        shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, fogClrFinal.rgb, fogL);
+        shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, flClrFinal.rgb, flL);
+        ///_
 #endif
 
 #if MRT
@@ -573,6 +583,9 @@
 		shUniform(float4, fogColorAway)  @shSharedParameter(fogColorAway)
 		shUniform(float4, fogColorH)     @shSharedParameter(fogColorH)
 		shUniform(float4, fogParamsH)    @shSharedParameter(fogParamsH)
+
+		shUniform(float4, fogFluidH)     @shSharedParameter(fogFluidH)
+		shUniform(float4, fogFluidClr)   @shSharedParameter(fogFluidClr)
 
         shUniform(float3, eyePosObjSpace)    @shAutoConstant(eyePosObjSpace, camera_position_object_space)
 		shUniform(float4, lightPosObjSpace)	 @shAutoConstant(lightPosObjSpace, light_position_object_space)
@@ -655,13 +668,19 @@
         float fogDepthH = shSaturate((depth - fogParamsH.z) * fogParamsH.w);
 
         float fogDir = dot( normalize(eyeDir.xz), normalize(lightDir.xz) ) * 0.5 + 0.5;
-        float fogH = shSaturate( (fogParamsH.x/*h*/ - worldPosY) * fogParamsH.y/*dens*/);        
+        float fogH = shSaturate( (fogParamsH.x/*h*/ - worldPosY) * fogParamsH.y/*dens*/);
 
         float4 fogClrDir = shLerp( fogColorAway, fogColorSun, fogDir);
         float4 fogClrFinal = shLerp( fogClrDir, fogColorH, fogH);
 		float fogL = shLerp( fogDepth * fogClrDir.a, fogDepthH * fogColorH.a, fogH);
+		
+        /// fluid fog
+        float flDepth = shSaturate(depth * fogFluidH.y);
+        float flH = shSaturate((fogFluidH.x/*h*/ - worldPosY) * fogFluidH.z);
+        float4 flClrFinal = shLerp( fogClrFinal, fogFluidClr, flH);
+		float flL = shLerp( fogL, flDepth /* * fogFluidClr.a*/, flH);
 
-        shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, fogClrFinal.rgb, fogL);
+        shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, flClrFinal.rgb, flL);
 #endif
 
 

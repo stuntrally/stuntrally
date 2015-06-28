@@ -114,6 +114,10 @@ void CScene::UpdFog(bool bForce)
 	app->mFactory->setSharedParameter("fogColorH",    sh::makeProperty<sh::Vector4>(new sh::Vector4(v.x, v.y, v.z, v.w)));
 	app->mFactory->setSharedParameter("fogParamsH",   sh::makeProperty<sh::Vector4>(new sh::Vector4(
 		sc->fogHeight, ok ? 1.f/sc->fogHDensity : 0.f, sc->fogHStart, 1.f/(sc->fogHEnd - sc->fogHStart) )));
+	
+	// fluid fog, default off
+	app->mFactory->setSharedParameter("fogFluidH",    sh::makeProperty<sh::Vector4>(new sh::Vector4(-900.f, 1/17.f, 1.f, 0)));
+	app->mFactory->setSharedParameter("fogFluidClr",  sh::makeProperty<sh::Vector4>(new sh::Vector4(0.5f,0.7,0.9f, 1.f)));
 }
 
 

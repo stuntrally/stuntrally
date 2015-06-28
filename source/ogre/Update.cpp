@@ -7,6 +7,8 @@
 #include "common/GuiCom.h"
 #include "common/CScene.h"
 #include "common/WaterRTT.h"
+#include "common/data/SceneXml.h"
+#include "common/data/FluidsXml.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
 #include "../vdrift/game.h"
@@ -438,7 +440,8 @@ bool App::frameStart(Real time)
 
 
 		///()  grass sphere pos
-		if (!carModels.empty())
+		bool hasCars = !carModels.empty();
+		if (hasCars)
 		{
 			Real r = 1.7;  r *= r;  //par
 			const Vector3* p = &carModels[0]->posSph[0];
@@ -449,6 +452,27 @@ bool App::frameStart(Real time)
 		{	mFactory->setSharedParameter("posSph0", sh::makeProperty <sh::Vector4>(new sh::Vector4(0,0,500,-1)));
 			mFactory->setSharedParameter("posSph1", sh::makeProperty <sh::Vector4>(new sh::Vector4(0,0,500,-1)));
 		}
+		
+		///~~  fluid fog, send params to shaders
+		if (hasCars  && pSet->game.local_players == 1)
+		{
+			int fi = carModels[0]->iCamFluid;
+			float p = carModels[0]->fCamFl;
+			//? if (fi != idFlOld)  {
+			if (fi >= 0)
+			{	const FluidBox* fb = &scn->sc->fluids[fi];
+				const FluidParams& fp = scn->sc->pFluidsXml->fls[fb->id];
+
+				mFactory->setSharedParameter("fogFluidH", sh::makeProperty <sh::Vector4>(new sh::Vector4(
+					fb->pos.y +p /*+0.5f par? ofsH..*/, 1.f / fp.fog.dens, fp.fog.densH +p*0.5f, 0)));
+
+				mFactory->setSharedParameter("fogFluidClr", sh::makeProperty <sh::Vector4>(new sh::Vector4(
+					fp.fog.r, fp.fog.g, fp.fog.b, fp.fog.a)));
+			}else
+				mFactory->setSharedParameter("fogFluidH", sh::makeProperty <sh::Vector4>(new sh::Vector4(
+					-900.f, 1.f/17.f, 0.15f, 0)));
+
+		}// no else, set in setFog default
 
 
 		//  Signal loading finished to the peers

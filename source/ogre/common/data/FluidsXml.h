@@ -25,6 +25,13 @@ public:
 	bool solid;  // if true will collide, rigid
 	int surf;  // surface id from name for solid
 	
+	//  fluid fog
+	struct FlFog
+	{
+		float r,g,b,a;  // fog color, from hsv
+		float dens, densH;
+	} fog;
+	
 	FluidParams();
 };
 

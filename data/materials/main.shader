@@ -347,6 +347,9 @@
 		shUniform(float4, fogColorAway)  @shSharedParameter(fogColorAway)
 		shUniform(float4, fogColorH)     @shSharedParameter(fogColorH)
 		shUniform(float4, fogParamsH)    @shSharedParameter(fogParamsH)
+
+		shUniform(float4, fogFluidH)     @shSharedParameter(fogFluidH)
+		shUniform(float4, fogFluidClr)   @shSharedParameter(fogFluidClr)
 #endif
 
 
@@ -398,7 +401,7 @@
 #endif
 
 #ifdef NEED_DEPTH
-		float depthPassthrough = UV.z;
+		float depth = UV.z;
 #endif
 
 		//  normal
@@ -429,13 +432,13 @@
 	
 		//  shadows
 #if SHADOWS
-		float shadow = pssmDepthShadow (lightSpacePos0, invShadowmapSize0, shadowMap0, lightSpacePos1, invShadowmapSize1, shadowMap1, lightSpacePos2, invShadowmapSize2, shadowMap2, depthPassthrough, pssmSplitPoints, shadowBias);
+		float shadow = pssmDepthShadow (lightSpacePos0, invShadowmapSize0, shadowMap0, lightSpacePos1, invShadowmapSize1, shadowMap1, lightSpacePos2, invShadowmapSize2, shadowMap2, depth, pssmSplitPoints, shadowBias);
 #endif
 
 #if SHADOWS
 		float fadeRange = shadowFar_fadeStart.x - shadowFar_fadeStart.y;
-		float fade = 1-((depthPassthrough - shadowFar_fadeStart.y) / fadeRange);
-		shadow = (depthPassthrough > shadowFar_fadeStart.x) ? 1.0 : ((depthPassthrough > shadowFar_fadeStart.y) ? 1.0-((1.0-shadow)*fade) : shadow);
+		float fade = 1-((depth - shadowFar_fadeStart.y) / fadeRange);
+		shadow = (depth > shadowFar_fadeStart.x) ? 1.0 : ((depth > shadowFar_fadeStart.y) ? 1.0-((1.0-shadow)*fade) : shadow);
 #endif
 
 #if !(SHADOWS)
@@ -564,8 +567,8 @@
         float worldPosY = shMatrixMult(worldMatrix, float4(objSpacePositionPassthrough.xyz, 1)).y;
 
 		///_ calculate fog
-        float fogDepth = shSaturate((depthPassthrough - fogParams.y) * fogParams.w);  // w = 1 / (max - min)
-        float fogDepthH = shSaturate((depthPassthrough - fogParamsH.z) * fogParamsH.w);
+        float fogDepth = shSaturate((depth - fogParams.y) * fogParams.w);  // w = 1 / (max - min)
+        float fogDepthH = shSaturate((depth - fogParamsH.z) * fogParamsH.w);
 
         float fogDir = dot( normalize(eyeDir.xz), normalize(lightDir.xz) ) * 0.5 + 0.5;
         float fogH = shSaturate( (fogParamsH.x/*h*/ - worldPosY) * fogParamsH.y/*dens*/);
@@ -574,10 +577,17 @@
         float4 fogClrFinal = shLerp( fogClrDir, fogColorH, fogH);
 		float fogL = shLerp( fogDepth * fogClrDir.a, fogDepthH * fogColorH.a, fogH);
 
-        shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, fogClrFinal.rgb, fogL);
+        /// fluid fog
+        float flDepth = shSaturate(depth * fogFluidH.y);
+        float flH = shSaturate((fogFluidH.x/*h*/ - worldPosY) * fogFluidH.z);
+        float4 flClrFinal = shLerp( fogClrFinal, fogFluidClr, flH);
+		float flL = shLerp( fogL, flDepth /* * fogFluidClr.a*/, flH);
+
+        shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, flClrFinal.rgb, flL);
+        ///_
 #endif
 		// old FOG
-		//float fogValue = shSaturate((depthPassthrough - fogParams.y) * fogParams.w);
+		//float fogValue = shSaturate((depth - fogParams.y) * fogParams.w);
 		//shOutputColour(0).xyz = shLerp (shOutputColour(0).xyz, fogColour, fogValue);
 
 

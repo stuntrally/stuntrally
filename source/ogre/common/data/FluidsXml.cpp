@@ -3,6 +3,7 @@
 #include "FluidsXml.h"
 #include "tinyxml2.h"
 using namespace tinyxml2;
+using namespace Ogre;
 
 
 FluidParams::FluidParams()
@@ -13,7 +14,10 @@ FluidParams::FluidParams()
 	,bumpFqX(20.f), bumpFqY(30.f),bumpAmp(0.2f), bumpAng(0.5f)
 	,idParticles(0), fDamage(0.f)
 	,solid(false), surf(0)
-{	}
+{
+	fog.r = 0.5f;  fog.g = 0.7f;  fog.b = 0.9f;  fog.a = 1.f;
+	fog.dens = 1.f/17.f;  fog.densH = 0.25f;
+}
 
 
 //  Load
@@ -75,6 +79,21 @@ bool FluidsXml::LoadXml(std::string file, std::map <std::string, int>* surf_map)
 				#endif
 			}
 			fp.surf = id;
+		}
+
+		//  fluid fog
+		a = eFl->Attribute("fogDens");	if (a)  fp.fog.dens = s2r(a);
+		a = eFl->Attribute("fogDensH");	if (a)  fp.fog.densH = s2r(a);
+		a = eFl->Attribute("fogRGBA");
+		if (a)
+		{	Vector4 v = s2v4(a);
+			fp.fog.r = v.x;  fp.fog.g = v.y;  fp.fog.b = v.z;  fp.fog.a = v.w;
+		}
+		a = eFl->Attribute("fogHSVA");
+		if (a)
+		{	Vector4 v = s2v4(a);
+			ColourValue c;  c.setHSB(v.x, v.y, v.z);
+			fp.fog.r = c.r;  fp.fog.g = c.g;  fp.fog.b = c.b;  fp.fog.a = v.w;
 		}
 		//
 

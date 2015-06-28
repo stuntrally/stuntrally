@@ -229,7 +229,35 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 
 	//  set camera view
 	if (fCam)
-		fCam->Apply(posInfoCam);
+	{	fCam->Apply(posInfoCam);
+		
+		///~~  camera in fluid fog, detect and compute
+		iCamFluid = -1;  fCamFl = 0.f;  // none
+		const size_t sf = sc->fluids.size();
+		if (sf > 0  && pSet->game.local_players == 1)
+		{
+			const Vector3& p = posInfo.camPos;
+			const float r = 0.2f;  //par, near cam?
+			
+			//  check if any fluid box overlaps camera pos sphere
+			bool srch = true;  size_t f = 0;
+			while (srch && f < sf)
+			{
+				const FluidBox& fb = sc->fluids[f];
+				const Vector3& fp = fb.pos;
+				Vector3 fs = fb.size;  fs.x *= 0.5f;  fs.z *= 0.5f;
+				
+				bool inFl =  //  p +r   -fs fp +fs  -r p
+					p.y +r > fp.y - fs.y && p.y -r < fp.y &&
+					p.x +r > fp.x - fs.x && p.x -r < fp.x + fs.x &&
+					p.z +r > fp.z - fs.z && p.z -r < fp.z + fs.z;
+				
+				if (inFl)  // 1st only
+				{	iCamFluid = f;  fCamFl = std::min(1.f, std::max(0.f, fp.y - p.y)) * 3.f;
+					srch = false;  }
+				++f;
+			}
+	}	}
 
 	//  upd rotY for minimap
 	if (vtype == V_Sphere)

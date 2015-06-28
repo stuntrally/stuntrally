@@ -109,6 +109,8 @@ public:
 	
 	///----  Camera, can be null
 	FollowCamera* fCam;
+	int iCamFluid;  // id to fluids[], -1 none
+	float fCamFl;  // factor, close to surface
 	
 	//  Main node
 	Ogre::SceneNode* pMainNode, *ndSph;
