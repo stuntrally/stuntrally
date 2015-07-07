@@ -902,3 +902,47 @@ material O_glass
 	parent car_glass2
 	diffuseMap O_glass.png
 }
+
+//  Y7  -------------------------------
+material Y7_glass
+{
+	parent car_glass2
+	diffuseMap Y7_glass.png
+}
+material Y7_interior
+{
+	parent car_base
+	diffuseMap Y7_interior.png
+	specMap Y7_interior_spec.png
+	reflMap Y7_interior_refl.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.9 0.9 0.9 24
+	env_map true
+	fresnel true
+	fresnelScaleBiasPower 0.6 0.15 4
+}
+material Y7_wheel
+{
+	parent car_base
+	diffuseMap Y7_Tire.png
+	normalMap Y7_Tire_norm.png
+	specMap Y7_Tire_spec.png
+	reflMap Y7_Tire_refl.png
+	ambient 0.4 0.4 0.4
+	diffuse 0.4 0.4 0.4
+	specular 0.8 0.8 0.8 16
+	env_map true
+	fresnel true
+	fresnelScaleBiasPower 0.6 0.15 4
+}
+material Y7_brake
+{
+	parent car_base
+	diffuseMap Y7_Tire.png
+	normalMap Y7_Tire_norm.png
+	ambient 0.5 0.5 0.5
+	diffuse 0.5 0.5 0.5
+	specular 0.6 0.6 0.6 4
+}
+
