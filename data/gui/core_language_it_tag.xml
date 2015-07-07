@@ -1023,6 +1023,7 @@
 	<Tag name="RplLoad">Carica</Tag>
 	<Tag name="UnitBhp">bhp</Tag>
 	<Tag name="CarDesc_M3">Auto molto vecchia con motore a bassa potenza. Non adatta per fare i salti. Da scegliere solo se si vuole guidare lentamente.</Tag>
+	<Tag name="CarDesc_Y7">Extremely fast car. Don't press throttle for too long. Drivable only on fast smooth tracks.</Tag>
 	<Tag name="InpSet_AxisHalfInv">Metà asse invertito</Tag>
 	<Tag name="ScaleTerHeight">Altezza del terreno</Tag>
 	<Tag name="TipTerLHSm">Raggio di altezza smoothing (transizione).</Tag>

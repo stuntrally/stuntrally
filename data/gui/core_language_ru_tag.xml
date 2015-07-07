@@ -1023,6 +1023,7 @@
 	<Tag name="RplLoad">Загрузить</Tag>
 	<Tag name="UnitBhp">л. с.</Tag>
 	<Tag name="CarDesc_M3">Очень старое авто с двигателем малой мощности. Не подходит для прыжков. Выбирай, если ты хочешь водить медленно.</Tag>
+	<Tag name="CarDesc_Y7">Extremely fast car. Don't press throttle for too long. Drivable only on fast smooth tracks.</Tag>
 	<Tag name="InpSet_AxisHalfInv">Пол оси инверсия</Tag>
 	<Tag name="ScaleTerHeight">Высоты ланд.</Tag>
 	<Tag name="TipTerLHSm">Диапазон ровной высоты (переход).</Tag>

@@ -1023,6 +1023,7 @@
 	<Tag name="RplLoad">Cargar</Tag>
 	<Tag name="UnitBhp">potencia de freno</Tag>
 	<Tag name="CarDesc_M3">Very old car with low power engine. Not fit for jumps. Pick if you want to drive slowly.</Tag>
+	<Tag name="CarDesc_Y7">Extremely fast car. Don't press throttle for too long. Drivable only on fast smooth tracks.</Tag>
 	<Tag name="InpSet_AxisHalfInv">Eje medio invertido</Tag>
 	<Tag name="ScaleTerHeight">Altura de terreno</Tag>
 	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>

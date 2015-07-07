@@ -1023,6 +1023,7 @@
 	<Tag name="RplLoad">Chargement</Tag>
 	<Tag name="UnitBhp">chevaux</Tag>
 	<Tag name="CarDesc_M3">Très vielle voiture avec un moteur lent. Peu adaptée aux sauts. Ne sélectionnez cette voiture que si vous voulez conduire lentement.</Tag>
+	<Tag name="CarDesc_Y7">Extremely fast car. Don't press throttle for too long. Drivable only on fast smooth tracks.</Tag>
 	<Tag name="InpSet_AxisHalfInv">Axe partiel inversé</Tag>
 	<Tag name="ScaleTerHeight">Hauteur du Terrain</Tag>
 	<Tag name="TipTerLHSm">Height smooth range (transition).</Tag>
