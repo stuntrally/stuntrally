@@ -234,7 +234,7 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 			steer_value = -inputs[CARINPUT::STEER_LEFT];
 
 		#ifdef CAR_PRV
-		if (!dynamics.hover && !dynamics.sphere)
+		//if (!dynamics.hover && !dynamics.sphere)
 			steer_value = -1.f;
 		#endif
 		dynamics.SetSteering(steer_value, pGame->GetSteerRange());
