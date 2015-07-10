@@ -30,16 +30,19 @@ CAR::CAR()
 	,bResetPos(0)
 	,dmgLastCheck(0.f), sphYawAtStart(0.f)
 {
+	SetNumWheels(4);
 	//dynamics.pCar = this;
 	
-	for (int i = 0; i < 4; i++)
-	{
-		curpatch[i] = NULL;
-		//wheelnode[i] = NULL;
-		//floatingnode[i] = NULL;
-	}
 	for (int i=0; i < Ncrashsounds; ++i)
 		crashsoundtime[i] = 0.f;
+}
+
+void CAR::SetNumWheels(int n)
+{
+	numWheels = n;
+	suspbump.resize(n);
+	tiresqueal.resize(n);  grasssound.resize(n);  gravelsound.resize(n);  tirebump.resize(n);
+	curpatch.resize(n);
 }
 
 ///unload any loaded assets
@@ -87,6 +90,12 @@ bool CAR::Load(class App* pApp1,
 	// get coordinate system version
 	int version = 1;
 	cf.GetParam("version", version);
+	
+	// wheels count
+	int nw = 0;
+	cf.GetParam("wheels", nw);
+	if (nw >= 2 && nw <= MAX_WHEELS)
+		SetNumWheels(nw);
 	
 	
 	///-  custom car collision params  (dimensions and sphere placement)
@@ -456,7 +465,7 @@ void CAR::ResetPos(bool fromStart)
 
 	//  engine, wheels
 	dynamics.engine.SetInitialConditions();
-	for (int w=0; w < 4; ++w)
+	for (int w=0; w < numWheels; ++w)
 	{
 		MATHVECTOR<Dbl,3> zero(0,0,0);
 		dynamics.wheel[w].SetAngularVelocity(0);

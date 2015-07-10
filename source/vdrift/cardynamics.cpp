@@ -294,7 +294,7 @@ void CARDYNAMICS::ApplyTorque(const MATHVECTOR<Dbl,3> & torque)
 
 void CARDYNAMICS::UpdateWheelVelocity()
 {
-	for(int i = 0; i < WHEEL_POSITION_SIZE; ++i)
+	for(int i = 0; i < numWheels; ++i)
 	{
 		wheel_velocity[i] = body.GetVelocity(wheel_position[i] - body.GetPosition());
 		//btVector3 offset = ToBulletVector(wheel_position[i]) - chassis->getCenterOfMassPosition();
@@ -304,7 +304,7 @@ void CARDYNAMICS::UpdateWheelVelocity()
 
 void CARDYNAMICS::UpdateWheelTransform()
 {
-	for(int i = 0; i < WHEEL_POSITION_SIZE; ++i)
+	for(int i = 0; i < numWheels; ++i)
 	{
 		wheel_position[i] = GetWheelPositionAtDisplacement(WHEEL_POSITION(i), suspension[i].GetDisplacementPercent());
 		wheel_orientation[i] = Orientation() * GetWheelSteeringAndSuspensionOrientation(WHEEL_POSITION(i));
@@ -340,7 +340,7 @@ char CARDYNAMICS::IsBraking() const
 {
 	//  true when any wheel is braking
 	if (fDamage < 100.f)
-	for (int w=0; w<4; ++w)
+	for (int w=0; w < numWheels; ++w)
 	{
 		WHEEL_POSITION wp = (WHEEL_POSITION)w;
 		if (GetBrake(wp).GetBrakeFactor() > 0

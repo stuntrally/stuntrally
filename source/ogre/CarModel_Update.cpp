@@ -41,7 +41,7 @@ void CarModel::setVisible(bool vis)
 	pMainNode->setVisible(vis);
 	if (brakes)
 		brakes->setVisible(bBraking && vis);
-	for (int w=0; w < 4; ++w)
+	for (int w=0; w < numWheels; ++w)
 		ndWh[w]->setVisible(vis);
 
 	UpdParsTrails(vis);
@@ -189,7 +189,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 
 	//  stop/resume par sys
 	float fa = pGame->pause ? 0.f : 1.f;
-	for (w=0; w < 4; ++w)
+	for (w=0; w < numWheels; ++w)
 	{
 		for (i=0; i < PAR_ALL; ++i)
 			if (par[i][w])  par[i][w]->setSpeedFactor(fa);
@@ -340,7 +340,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	//  wheels  ------------------------------------------------------------------------
 	const float trlH = sc->ter ? 0.90f : 0.76f;  // vdr needs up (ter bumps), no ter  ..get from wheel contact ?rpl
 
-	for (w=0; w < 4; ++w)
+	for (w=0; w < numWheels; ++w)
 	{
 		float wR = posInfo.whR[w];
 		#ifdef CAM_TILT_DBG  // cam debug test only
@@ -487,7 +487,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	UpdWhTerMtr();
 	
 	//  update brake meshes orientation
-	for (w=0; w<4; ++w)
+	for (w=0; w < numWheels; ++w)
 	{
 		if (ndBrake[w])
 		{
@@ -516,7 +516,7 @@ void CarModel::First()
 	if (fCam)  fCam->First();
 	iFirst = 0;
 
-	for (int w=0; w < 4; ++w)  // hide trails
+	for (int w=0; w < numWheels; ++w)  // hide trails
 	if (whTrail[w])
 		whTrail[w]->setInitialWidth(0, 0.f);
 }
@@ -610,7 +610,7 @@ void CarModel::UpdateBraking()
 void CarModel::UpdParsTrails(bool visible)
 {
 	bool vis = visible && pSet->particles;
-	for (int w=0; w < 4; ++w)
+	for (int w=0; w < numWheels; ++w)
 	{
 		Ogre::uint8 grp = RQG_CarTrails;  //9=road  after glass
 		if (w < 2 && parBoost[w]) {  parBoost[w]->setVisible(vis);  parBoost[w]->setRenderQueueGroup(grp);  }
@@ -634,7 +634,7 @@ void CarModel::UpdWhTerMtr()
 	//Real tws = sc->td.fTerWorldSize;
 
 	txtDbgSurf = "";
-	for (int i=0; i<4; ++i)
+	for (int i=0; i < numWheels; ++i)
 	{
 		//Vector3 w = ndWh[i]->getPosition();
 		//int mx = (w.x + 0.5*tws)/tws*t, my = (-w.z + 0.5*tws)/tws*t;

@@ -120,7 +120,7 @@ void PosInfo::FromCar(CAR* pCar)
 	vHitPos = cd->vHitPos;  vHitNorm = cd->vHitNorm;
 
 	//  wheels
-	for (int w=0; w < 4; ++w)
+	for (int w=0; w < cd->numWheels; ++w)
 	{	WHEEL_POSITION wp = WHEEL_POSITION(w);
 
 		Axes::toOgre(whPos[w], cd->GetWheelPosition(wp));
@@ -150,7 +150,7 @@ void ReplayFrame::FromCar(const CAR* pCar)
 	rot = cd.GetOrientation();
 
 	//  wheels
-	for (int w=0; w < 4; ++w)
+	for (int w=0; w < cd.numWheels; ++w)
 	{	WHEEL_POSITION wp = WHEEL_POSITION(w);
 		whPos[w] = cd.GetWheelPosition(wp);
 		whRot[w] = cd.GetWheelOrientation(wp);

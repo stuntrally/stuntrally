@@ -485,10 +485,11 @@ void GAME::AdvanceGameLogic(double dt)
 			///~~  clear fluids for each car
 			for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
 			{
-				(*i).dynamics.inFluids.clear();
-				(*i).dynamics.velPrev = (*i).dynamics.chassis->getLinearVelocity();
-				for (int w=0; w < 4; ++w)
-					(*i).dynamics.inFluidsWh[w].clear();
+				CARDYNAMICS& cd = (*i).dynamics;
+				cd.inFluids.clear();
+				cd.velPrev = cd.chassis->getLinearVelocity();
+				for (int w=0; w < cd.numWheels; ++w)
+					cd.inFluidsWh[w].clear();
 			}
 
 			if (dt > 0.0)

@@ -23,6 +23,9 @@ public:
 	class CarModel* pCarM;
 	CAR();
 	~CAR();
+
+	int numWheels;
+	void SetNumWheels(int n);
 	
 	bool Load(class App* pApp1,
 		CONFIGFILE & carconf,
@@ -155,7 +158,7 @@ public:
 
 	const BEZIER * GetCurPatch(unsigned int wheel) const
 	{
-		assert (wheel < 4);
+		//assert (wheel < 4);
 		return dynamics.GetWheelContact(WHEEL_POSITION(wheel)).GetPatch();
 	}
 
@@ -293,7 +296,7 @@ public:
 
 	MODEL_JOE03 bodymodel, interiormodel, glassmodel, drivermodel;
 	
-	SUSPENSIONBUMPDETECTION suspbump[4];
+	std::vector<SUSPENSIONBUMPDETECTION> suspbump;
 	CRASHDETECTION crashdetection,crashdetection2;
 
 	std::map <std::string, SOUNDBUFFER> soundbuffers;
@@ -303,7 +306,7 @@ public:
 	MODEL_JOE03 wheelmodelrear, floatingmodelrear;
 
 	/// sounds
-	SOUNDSOURCE tiresqueal[4], grasssound[4], gravelsound[4], tirebump[4];  // tires
+	std::vector<SOUNDSOURCE> tiresqueal, grasssound, gravelsound, tirebump;  // tires
 	SOUNDSOURCE crashsound[Ncrashsounds];  float crashsoundtime[Ncrashsounds];
 	SOUNDSOURCE roadnoise, boostsnd, crashscrap,crashscreech;  // cont.
 	SOUNDSOURCE mudsnd, watersnd[Nwatersounds], mud_cont,water_cont;  // fluids
@@ -316,7 +319,7 @@ public:
 	std::string cartype;
 	class SETTINGS* pSet;  // for sound vol
 	int sector; //the last lap timing sector that the car hit
-	const BEZIER * curpatch[4]; //the last bezier patch that each wheel hit
+	std::vector<const BEZIER*> curpatch; //the last bezier patch that each wheel hit
 	
 	float mz_nominalmax;  // the nominal maximum Mz force, used to scale force feedback
 

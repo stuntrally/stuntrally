@@ -35,28 +35,27 @@ CARDYNAMICS::CARDYNAMICS() :
 	//coll_R, coll_W, coll_H, coll_Hofs, coll_Wofs, coll_Lofs
 	//coll_posLfront, coll_posLback
 {
-	for (int i=0; i<4; ++i)
-	{	iWhOnRoad[i]=0;
-		whTerMtr[i]=0;  whRoadMtr[i]=0;
-		whH[i]=0.f;  whP[i]=-1.f;  whDmg[i]=0.f;
-	}
+	SetNumWheels(4);
+
 	boostFuel = 0.f;  // set later when road length known
 
-	for (int i=0; i<4; ++i)
-		rot_coef[i] = 0.0;
-
-	suspension.resize( WHEEL_POSITION_SIZE );
-	wheel.resize( WHEEL_POSITION_SIZE );
-	//tire.resize( WHEEL_POSITION_SIZE );
-	wheel_velocity.resize(WHEEL_POSITION_SIZE);
-	wheel_position.resize( WHEEL_POSITION_SIZE );
-	wheel_orientation.resize( WHEEL_POSITION_SIZE );
-	wheel_contact.resize( WHEEL_POSITION_SIZE );
-	brake.resize( WHEEL_POSITION_SIZE );
-	abs_active.resize( WHEEL_POSITION_SIZE, false );
-	tcs_active.resize( WHEEL_POSITION_SIZE, false );
-
 	hov.Default();
+}
+
+void CARDYNAMICS::SetNumWheels(int n)
+{
+	numWheels = n;
+	suspension.resize(n);  wheel.resize(n);  //tire.resize(n);
+	wheel_velocity.resize(n);  wheel_position.resize(n);  wheel_orientation.resize(n);
+	wheel_contact.resize(n);  brake.resize(n);
+	abs_active.resize(n,false);  tcs_active.resize(n,false);
+
+	iWhOnRoad.resize(n);  whTerMtr.resize(n);  whRoadMtr.resize(n);
+	whH.resize(n);  whP.resize(n);  whDmg.resize(n);
+	inFluidsWh.resize(n);
+
+	for (int i=0; i < n; ++i)
+		whP[i] = -1.f;
 }
 
 void CARDYNAMICS::HoverPar::Default()
@@ -108,6 +107,12 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 {
 	pGame = game;
 	Ogre::Timer ti;
+
+	//wheels count
+	int nw = 0;
+	c.GetParam("wheels", nw);
+	if (nw >= 2 && nw <= MAX_WHEELS)
+		SetNumWheels(nw);
 
 	//bTerrain = false;
 	string drive = "RWD";
@@ -288,7 +293,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 
 	//load the brake
 	{
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < numWheels/2; i++)
 		{
 			string pos = "front";
 			WHEEL_POSITION left = FRONT_LEFT;
@@ -352,7 +357,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 
 	//load the suspension
 	{
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < numWheels/2; i++)
 		{
 			string posstr = "front";
 			string posshortstr = "F";
@@ -455,7 +460,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 
 	//load the wheels
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < numWheels; i++)
 		{
 			string sPos;
 			WHEEL_POSITION wp;
@@ -494,8 +499,8 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 		wheel[FRONT_LEFT].SetInertia(front_inertia);
 		wheel[FRONT_RIGHT].SetInertia(front_inertia);
 
-		wheel[REAR_LEFT].SetInertia(rear_inertia);
-		wheel[REAR_RIGHT].SetInertia(rear_inertia);
+		if (numWheels > 2)	wheel[REAR_LEFT].SetInertia(rear_inertia);
+		if (numWheels > 3)	wheel[REAR_RIGHT].SetInertia(rear_inertia);
 	}
 
 	//load the tire parameters
@@ -506,7 +511,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 		bool both = c.GetParam("tire-both.radius", value);
 		string posstr = both ? "both" : "front";
 
-		for (int p = 0; p < 2; ++p)
+		for (int p = 0; p < numWheels/2; ++p)
 		{
 			if (p == 1)
 			{
@@ -700,7 +705,7 @@ void CARDYNAMICS::Init(
 	tr.setIdentity();
 
 	AABB <float> box = chassisModel.GetAABB();
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < numWheels; i++)
 	{
 		MATHVECTOR<float,3> wheelpos = GetLocalWheelPosition(WHEEL_POSITION(i), 0);
 
@@ -798,7 +803,7 @@ void CARDYNAMICS::Init(
 	///  join chassis and wheel triggers
 	//________________________________________________________
 	{
-		for (int w=0; w < 4; ++w)
+		for (int w=0; w < numWheels; ++w)
 		{
 			WHEEL_POSITION wp = WHEEL_POSITION(w);
 			Dbl whR = GetWheel(wp).GetRadius() * 1.2;  //par bigger
@@ -862,7 +867,7 @@ void CARDYNAMICS::Init(
 
 
 	// init wheels, suspension
-	for (int i = 0; i < WHEEL_POSITION_SIZE; i++)
+	for (int i = 0; i < numWheels; i++)
 	{
 		wheel[WHEEL_POSITION(i)].SetInitialConditions();
 		wheel_velocity[i].Set(0.0);

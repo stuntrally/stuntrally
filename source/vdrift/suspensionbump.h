@@ -34,11 +34,13 @@ private:
 		SETTLED
 	} state, laststate;
 	
-	const float displacetime; ///< how long the suspension has to be displacing a high velocity, uninterrupted
-	const float displacevelocitythreshold; ///< the threshold for high velocity
-	const float settletime; ///< how long the suspension has to be settled, uninterrupted
-	const float settlevelocitythreshold;
-	
+//const_
+	float displacetime; ///< how long the suspension has to be displacing a high velocity, uninterrupted
+	float displacevelocitythreshold; ///< the threshold for high velocity
+	float settletime; ///< how long the suspension has to be settled, uninterrupted
+	float settlevelocitythreshold;
+
+//var
 	float displacetimer;
 	float settletimer;
 	float dpstart, dpend;

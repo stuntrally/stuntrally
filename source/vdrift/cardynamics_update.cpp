@@ -101,7 +101,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 
 	///  wheel spin force (for mud)
 	//_______________________________________________________
-	for (int w=0; w < 4; ++w)
+	for (int w=0; w < numWheels; ++w)
 	{
 		if (inFluidsWh[w].size() > 0)  // 0 or 1 is there
 		{
@@ -317,7 +317,7 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 
 			//---
 			/*out << "__Tires__" << endl;
-			for (int i=0; i < 4 ; ++i)
+			for (int i=0; i < numWheels; ++i)
 			{
 				CARWHEEL::SlideSlip& sl = wheel[i].slips;
 				out << "Fx " << fToStr(sl.Fx,0,6) << "  FxM " << fToStr(sl.Fxm,0,6) << "   Fy " << fToStr(sl.Fy,0,6) << "  FyM " << fToStr(sl.Fym,0,6) << endl;
@@ -360,7 +360,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 
 		/// <><> terrain layer damage _
 		int w;
-		for (w=0; w<4; ++w)
+		for (w=0; w < numWheels; ++w)
 		if (!iWhOnRoad[w])
 		{
 			float d = 0.5f * wheel_contact[w].GetDepth() / wheel[w].GetRadius();
@@ -381,7 +381,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 		}
 
 		/// <><> fluid damage _
-		for (w=0; w<4; ++w)
+		for (w=0; w < numWheels; ++w)
 		if (whH[w] > 0.01f)
 			fDamage += whDmg[w] * whH[w] * fRed * dt;
 	}
@@ -465,10 +465,10 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	
 
 	int i;
-	Dbl normal_force[WHEEL_POSITION_SIZE];
+	Dbl normal_force[MAX_WHEELS];
 	if (car)
 	{
-		for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
+		for (i = 0; i < numWheels; ++i)
 		{
 			MATHVECTOR<Dbl,3> suspension_force = UpdateSuspension(i, dt);
 			normal_force[i] = suspension_force.dot(wheel_contact[i].GetNormal());
@@ -486,14 +486,14 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	// update wheel state
 	if (car)
 	{
-		for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
+		for (i = 0; i < numWheels; ++i)
 		{
 			wheel_position[i] = GetWheelPositionAtDisplacement(WHEEL_POSITION(i), suspension[i].GetDisplacementPercent());
 			wheel_orientation[i] = Orientation() * GetWheelSteeringAndSuspensionOrientation(WHEEL_POSITION(i));
 		}
 		InterpolateWheelContacts(dt);
 
-		for (i = 0; i < WHEEL_POSITION_SIZE; ++i)
+		for (i = 0; i < numWheels; ++i)
 		{
 			if (abs)  DoABS(i, normal_force[i]);
 			if (tcs)  DoTCS(i, normal_force[i]);
@@ -513,7 +513,7 @@ void CARDYNAMICS::Tick(Dbl dt)
 	const float internal_dt = dt / num_repeats;
 	for(int i = 0; i < num_repeats; ++i)
 	{
-		Dbl drive_torque[WHEEL_POSITION_SIZE];
+		Dbl drive_torque[MAX_WHEELS];
 
 		UpdateDriveline(internal_dt, drive_torque);
 
@@ -557,7 +557,7 @@ void CARDYNAMICS::SynchronizeChassis()
 void CARDYNAMICS::UpdateWheelContacts()
 {
 	MATHVECTOR<float,3> raydir = GetDownVector();
-	for (int i = 0; i < WHEEL_POSITION_SIZE; i++)
+	for (int i = 0; i < numWheels; i++)
 	{
 		COLLISION_CONTACT & wheelContact = wheel_contact[WHEEL_POSITION(i)];
 		MATHVECTOR<float,3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());

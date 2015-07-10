@@ -42,7 +42,7 @@ bool CAR::LoadSounds(
 	}
 
 	int i;
-	for (i = 0; i < 4; ++i)  // tires
+	for (i = 0; i < numWheels; ++i)  // tires
 	{
 		if (!tiresqueal[i]	.Setup(sndLib, "tire_squeal",	errOut,  true, true, 0.f))  return false;	tiresqueal[i].Seek4(i);
 		if (!gravelsound[i]	.Setup(sndLib, "gravel",		errOut,  true, true, 0.f))  return false;	gravelsound[i].Seek4(i);
@@ -80,10 +80,10 @@ void CAR::GetSoundList(std::list <SOUNDSOURCE *> & li)
 		li.push_back(&i->second);
 
 	int i;
-	for (i = 0; i < 4; ++i)  li.push_back(&tiresqueal[i]);
-	for (i = 0; i < 4; ++i)  li.push_back(&grasssound[i]);
-	for (i = 0; i < 4; ++i)  li.push_back(&gravelsound[i]);
-	for (i = 0; i < 4; ++i)  li.push_back(&tirebump[i]);
+	for (i = 0; i < numWheels; ++i)  li.push_back(&tiresqueal[i]);
+	for (i = 0; i < numWheels; ++i)  li.push_back(&grasssound[i]);
+	for (i = 0; i < numWheels; ++i)  li.push_back(&gravelsound[i]);
+	for (i = 0; i < numWheels; ++i)  li.push_back(&tirebump[i]);
 
 	for (i = 0; i < Ncrashsounds; ++i)
 		li.push_back(&crashsound[i]);
@@ -115,10 +115,10 @@ void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
 void CAR::UpdateSounds(float dt)
 {
 	float rpm, throttle, speed, dynVel;
-	MATHVECTOR<float,3> pos, engPos, whPos[4], hitPos;  // car, engine, wheels pos
+	MATHVECTOR<float,3> pos, engPos, whPos[MAX_WHEELS], hitPos;  // car, engine, wheels pos
 	QUATERNION<float> rot;
-	TRACKSURFACE::TYPE surfType[4];
-	float squeal[4],whVel[4], suspVel[4],suspDisp[4];
+	TRACKSURFACE::TYPE surfType[MAX_WHEELS];
+	float squeal[MAX_WHEELS],whVel[MAX_WHEELS], suspVel[MAX_WHEELS],suspDisp[MAX_WHEELS];
 	float whH_all = 0.f;  bool mud = false;
 	float fHitForce = 0.f, boostVal = 0.f, fCarScrap = 0.f, fCarScreech = 0.f;
 
@@ -145,7 +145,7 @@ void CAR::UpdateSounds(float dt)
 		boostVal = fr.fboost;
 		fCarScrap = fr.fCarScrap;  fCarScreech = fr.fCarScreech;
 
-		for (int w=0; w<4; ++w)
+		for (int w=0; w < numWheels; ++w)
 		{
 			whPos[w] = fr.whPos[w];
 			surfType[w] = (TRACKSURFACE::TYPE)fr.surfType[w];
@@ -173,7 +173,7 @@ void CAR::UpdateSounds(float dt)
 		hitPos[0] = dynamics.vHitPos.x;  hitPos[1] = -dynamics.vHitPos.z;  hitPos[2] = dynamics.vHitPos.y;
 		boostVal = dynamics.boostVal;
 		
-		for (int w=0; w<4; ++w)
+		for (int w=0; w < numWheels; ++w)
 		{
 			WHEEL_POSITION wp = WHEEL_POSITION(w);
 			whPos[w] = dynamics.GetWheelPosition(wp);
@@ -194,7 +194,7 @@ void CAR::UpdateSounds(float dt)
 
 		//  wheels in mud, spinning intensity
 		float mudSpin = 0.f;
-		for (int w=0; w < 4; ++w)
+		for (int w=0; w < numWheels; ++w)
 		{
 			float vel = std::abs(dynamics.wheel[w].GetAngularVelocity());
 			if (vel <= 30.f)  continue;
@@ -314,7 +314,7 @@ void CAR::UpdateSounds(float dt)
 
 
 	///  tire squeal
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < numWheels; i++)
 	{
 		// make sure we don't get overlap
 		gravelsound[i].SetGain(0.0);
@@ -323,16 +323,16 @@ void CAR::UpdateSounds(float dt)
 
 		float maxgain = 0.6, pitchvar = 0.4, pmul = 1.f;
 
-		SOUNDSOURCE * snd;
+		std::vector<SOUNDSOURCE>* snd = &gravelsound;
 		switch (surfType[i])
 		{
-		case TRACKSURFACE::ASPHALT:		snd = tiresqueal;	maxgain = 0.4;  pitchvar = 0.40;  pmul = 0.8f;  break;
-		case TRACKSURFACE::GRASS:		snd = grasssound;	maxgain = 0.7;	pitchvar = 0.25;  break;
-		case TRACKSURFACE::GRAVEL:		snd = gravelsound;	maxgain = 0.7;	break;
-		case TRACKSURFACE::CONCRETE:	snd = tiresqueal;	maxgain = 0.5;	pitchvar = 0.25;  pmul = 0.7f;  break;
-		case TRACKSURFACE::SAND:		snd = grasssound;	maxgain = 0.5;  pitchvar = 0.25;  break;
+		case TRACKSURFACE::ASPHALT:		snd = &tiresqueal;	maxgain = 0.4;  pitchvar = 0.40;  pmul = 0.8f;  break;
+		case TRACKSURFACE::GRASS:		snd = &grasssound;	maxgain = 0.7;	pitchvar = 0.25;  break;
+		case TRACKSURFACE::GRAVEL:		snd = &gravelsound;	maxgain = 0.7;	break;
+		case TRACKSURFACE::CONCRETE:	snd = &tiresqueal;	maxgain = 0.5;	pitchvar = 0.25;  pmul = 0.7f;  break;
+		case TRACKSURFACE::SAND:		snd = &grasssound;	maxgain = 0.5;  pitchvar = 0.25;  break;
 		case TRACKSURFACE::NONE:
-						default:		snd = tiresqueal;	maxgain = 0.0;	break;
+						default:		snd = &tiresqueal;	maxgain = 0.0;	break;
 		}	/// todo: more,sounds.. sand,snow,grass-new,mud..
 		// TODO: sum slip, spin, stop tire sounds
 
@@ -342,9 +342,9 @@ void CAR::UpdateSounds(float dt)
 		pitch = pitch + (1.f - pitchvar);
 		pitch = std::min(4.f, std::max(0.1f, pitch ));
 
-		snd[i].SetPosition(whPos[i]);
-		snd[i].SetGain(squeal[i]*maxgain * pSet->vol_tires);
-		snd[i].SetPitch(pitch * pmul);
+		(*snd)[i].SetPosition(whPos[i]);
+		(*snd)[i].SetGain(squeal[i]*maxgain * pSet->vol_tires);
+		(*snd)[i].SetPitch(pitch * pmul);
 	}
 
 	//  wind
@@ -362,7 +362,7 @@ void CAR::UpdateSounds(float dt)
 
 	//  susp bump
 	if (dynamics.vtype == V_Car)
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < numWheels; i++)
 	{
 		suspbump[i].Update(suspVel[i], suspDisp[i], dt);
 		if (suspbump[i].JustSettled())

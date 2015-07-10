@@ -39,6 +39,9 @@ public:
 	bool isGhostTrk() const {  return eType == CT_TRACK;  }
 
 	VehicleType vtype;
+
+	int numWheels;
+	void SetNumWheels(int n);
 	
 	//  ctor
 	CarModel(int index, int colorId, eCarType type, const std::string& name,
@@ -60,7 +63,7 @@ public:
 	std::string sBoostParName, sThrusterPar[4];
 
 	float whRadius[4], whWidth[4];  // for tire trails
-	MATHVECTOR<float,3> whPos[4];
+	std::vector<MATHVECTOR<float,3> > whPos;
 	QUATERNION<float> qFixWh[2];
 	float maxangle;  //steer
 
@@ -166,12 +169,14 @@ public:
 	//--------  Particle systems
 	enum EParTypes {  PAR_Smoke=0, PAR_Mud, PAR_Dust, PAR_Water, PAR_MudHard, PAR_MudSoft, PAR_ALL };
 	//  par-wheels, boost-car rear, spaceship thruster, sparks-world hit
-	Ogre::ParticleSystem* par[PAR_ALL][4], *parBoost[2], *parThrust[8], *parHit;
-	Ogre::RibbonTrail* whTrail[4];  // tire trail
-	Ogre::Real whTemp[4];  // spin time, approx tire temp.
+	Ogre::ParticleSystem* par[PAR_ALL][MAX_WHEELS];
+	Ogre::ParticleSystem* parBoost[2], *parThrust[8], *parHit;
+	std::vector<Ogre::RibbonTrail*> whTrail;  // tire trail
+	std::vector<Ogre::Real> whTemp;  // spin time, approx tire temp.
 	
 	//  Wheels, Nodes
-	Ogre::SceneNode *ndWh[4], *ndWhE[4], *ndBrake[4], *ndNextChk;
+	std::vector<Ogre::SceneNode*> ndWh, ndWhE, ndBrake;
+	Ogre::SceneNode* ndNextChk;
 	Ogre::Entity* entNextChk;
 	
 		

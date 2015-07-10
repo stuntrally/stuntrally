@@ -32,6 +32,9 @@ public:
 	class Scene* pScene;  // for fluids
 	class FluidsXml* pFluids;  // to get fluid params
 	std::vector<float> inputsCopy;  // just for dbg info txt
+
+	int numWheels;  // copy from CAR
+	void SetNumWheels(int n);
 	
 	CARDYNAMICS();
 	~CARDYNAMICS();
@@ -68,8 +71,7 @@ public:
 	COLLISION_CONTACT & GetWheelContact(WHEEL_POSITION wp)				{	return wheel_contact[wp];	}
 
 /// set from terrain blendmap
-	int iWhOnRoad[4];  //, whSU_Type[4];
-	int whTerMtr[4], whRoadMtr[4];
+	std::vector<int> iWhOnRoad, whTerMtr, whRoadMtr;
 
 // chassis
 	float GetMass() const;
@@ -146,9 +148,9 @@ public:
 	MATHVECTOR<Dbl,3> cam_force;
 
 	///  buoyancy
-	float whH[4];  // wheel submerge 0..1
-	int whP[4];  // fluid particles id
-	float whDmg[4];  // damage from fluid
+	std::vector<float> whH;  // wheel submerge 0..1
+	std::vector<int> whP;  // fluid particles id
+	std::vector<float> whDmg;  // damage from fluid
 	struct Polyhedron* poly;
 	float body_mass;  btVector3 body_inertia;
 
@@ -159,7 +161,9 @@ public:
 	// manual flip over, rocket boost
 	float doFlip, doBoost, boostFuel,boostFuelStart, boostVal, fBoostFov;
 
-	std::list<FluidBox*> inFluids,inFluidsWh[4];  /// list of fluids this car is in (if any)
+	std::list<FluidBox*> inFluids;  /// list of fluids this car is in (if any)
+	std::vector<std::list<FluidBox*>> inFluidsWh;
+	
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
 	Ogre::Vector3 vHitCarN,vHitDmgN;  float fHitDmgA;  // damage factors
 	float fHitTime, fParIntens,fParVel, fHitForce,fHitForce2,fHitForce3,fCarScrap,fCarScreech;
@@ -222,7 +226,6 @@ public:
 	std::vector <COLLISION_CONTACT> wheel_contact;
 	
 	std::vector <CARSUSPENSION> suspension;
-	//std::vector <CARTIRE*> tire;  // changed on contact, from surface
 	std::vector <CARAERO> aerodynamics;
 
 	std::list <std::pair <Dbl, MATHVECTOR<Dbl,3> > > mass_only_particles;

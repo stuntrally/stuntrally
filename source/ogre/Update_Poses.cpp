@@ -71,7 +71,7 @@ void App::newPoses(float time)  // time only for camera update
 
 				//  wheels
 				//dynamics.SetSteering(state.steer, pGame->GetSteerRange());  //peers can have other game settins..
-				for (int w=0; w < 4; ++w)
+				for (int w=0; w < carM->numWheels; ++w)
 				{
 					MATHVECTOR<float,3> whP = carM->whPos[w];
 					whP[2] += 0.05f;  // up

@@ -511,7 +511,7 @@ void App::LoadCar()  // 4
 
 	int c = 0;  // copy wheels R
 	for (std::list <CAR>::const_iterator it = pGame->cars.begin(); it != pGame->cars.end(); ++it,++c)
-		for (int w=0; w<4; ++w)
+		for (int w=0; w < (*it).numWheels; ++w)
 			replay.header.whR[c][w] = (*it).GetTireRadius(WHEEL_POSITION(w));
 }
 

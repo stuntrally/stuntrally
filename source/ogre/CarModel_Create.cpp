@@ -56,15 +56,12 @@ CarModel::CarModel(int index, int colorId, eCarType type, const string& name,
 	,distFirst(1.f), distLast(1.f), distTotal(10.f), trackPercent(0.f)
 	,updTimes(1), updLap(1), fLapAlpha(1.f)
 {
+	SetNumWheels(4);
 	int i,w;
-	for (w = 0; w < 4; ++w)
-	{
-		for (int p=0; p < PAR_ALL; ++p)
-			par[p][w] = 0;
+	for (w = 0; w < MAX_WHEELS; ++w)
+	for (int p=0; p < PAR_ALL; ++p)
+		par[p][w] = 0;
 
-		ndWh[w] = 0;  ndWhE[w] = 0;  whTrail[w] = 0;
-		ndBrake[w] = 0;  whTemp[w] = 0.f;
-	}
 	for (i=0; i < 2; ++i)  parBoost[i] = 0;
 	for (i=0; i < 8; ++i)  parThrust[i] = 0;
 	parHit = 0;
@@ -73,6 +70,14 @@ CarModel::CarModel(int index, int colorId, eCarType type, const string& name,
 	qFixWh[1].Rotate(  PI_d,0,0,1);
 
 	Defaults();
+}
+
+void CarModel::SetNumWheels(int n)
+{
+	numWheels = n;
+	whPos.resize(n);
+	whTrail.resize(n);  whTemp.resize(n);
+	ndWh.resize(n);  ndWhE.resize(n);  ndBrake.resize(n);
 }
 
 void CarModel::Defaults()
@@ -164,7 +169,7 @@ CarModel::~CarModel()
 	
 	//  hide trails
 	int w,i;
-	for (w=0; w<4; ++w)  if (whTrail[w]) {  whTemp[w] = 0.f;
+	for (w=0; w < numWheels; ++w)  if (whTrail[w]) {  whTemp[w] = 0.f;
 		whTrail[w]->setVisible(false);	whTrail[w]->setInitialColour(0, 0.5,0.5,0.5, 0);	}
 
 	//  destroy cloned materials
@@ -172,7 +177,7 @@ CarModel::~CarModel()
 		MaterialManager::getSingleton().remove(sMtr[i]);
 	
 	//  destroy par sys
-	for (w=0; w < 4; ++w)
+	for (w=0; w < numWheels; ++w)
 	{	for (i=0; i < PAR_ALL; ++i)
 			if (par[i][w]) {  mSceneMgr->destroyParticleSystem(par[i][w]);  par[i][w]=0;  }
 		if (ndBrake[w])  mSceneMgr->destroySceneNode(ndBrake[w]);
@@ -216,6 +221,13 @@ void CarModel::LoadConfig(const string & pathCar)
 		vtype = V_Spaceship;
 	else if (drive == "sphere")
 		vtype = V_Sphere;
+
+
+	//  wheel count
+	int nw = 0;
+	cf.GetParam("wheels", nw);
+	if (nw >=2 && nw <= MAX_WHEELS)
+		SetNumWheels(nw);
 
 
 	//-  custom interior model offset
@@ -304,7 +316,7 @@ void CarModel::LoadConfig(const string & pathCar)
 	//  for track's ghost or garage view
 	int version(1);
 	cf.GetParam("version", version);
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < numWheels; ++i)
 	{
 		string sPos;
 		if (i == 0)			sPos = "FL";
@@ -472,7 +484,7 @@ void CarModel::Create()
 	
 
 	//  wheels  ----------------------
-	for (int w=0; w < 4; ++w)
+	for (int w=0; w < numWheels; ++w)
 	{
 		String siw = "Wheel" + strI + "_" + toStr(w);
 		ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -600,7 +612,7 @@ void CarModel::Create()
 			const static String sPar[PAR_ALL] = {"Smoke","Mud","Dust","FlWater","FlMud","FlMudS"};  // for ogre name
 			//  particle type names
 			const String sName[PAR_ALL] = {sc->sParSmoke, sc->sParMud, sc->sParDust, "FluidWater", "FluidMud", "FluidMudSoft"};
-			for (int w=0; w < 4; ++w)
+			for (int w=0; w < numWheels; ++w)
 			{
 				String siw = strI + "_" +toStr(w);
 				//  particles
@@ -727,7 +739,7 @@ void CarModel::setMtrNames()
 	setMtrName("Car.interior"+mtrI, sMtr[Mtr_CarInterior]);
 	setMtrName("Car.glass"+mtrI, sMtr[Mtr_CarGlass]);
 
-	for (int w=0; w < 4; ++w)
+	for (int w=0; w < numWheels; ++w)
 	{
 		String sw = "Wheel"+mtrI+"_"+toStr(w), sm = w < 2 ? sMtr[Mtr_CarTireFront] : sMtr[Mtr_CarTireRear];
 		setMtrName(sw,          sm);

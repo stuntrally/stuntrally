@@ -70,7 +70,7 @@ void PERFORMANCE_TESTING::Test(const string & carpath, class App* pApp,
 	car.dynamics.body.SetInitialTorque(zero);
 	car.dynamics.engine.SetInitialConditions();
 	
-	for (int i = 0; i < WHEEL_POSITION_SIZE; i++)
+	for (int i = 0; i < car.numWheels; i++)
 	{
 		car.dynamics.wheel[WHEEL_POSITION(i)].SetInitialConditions();
 		car.dynamics.wheel_velocity[i].Set(0.0);
