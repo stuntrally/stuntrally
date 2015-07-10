@@ -162,7 +162,7 @@ public:
 	float doFlip, doBoost, boostFuel,boostFuelStart, boostVal, fBoostFov;
 
 	std::list<FluidBox*> inFluids;  /// list of fluids this car is in (if any)
-	std::vector<std::list<FluidBox*>> inFluidsWh;
+	std::vector<std::list<FluidBox*> > inFluidsWh;
 	
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
 	Ogre::Vector3 vHitCarN,vHitDmgN;  float fHitDmgA;  // damage factors
