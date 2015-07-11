@@ -127,13 +127,19 @@ void CARDYNAMICS::SetABS(const bool newabs)	{	abs = newabs;	}
 bool CARDYNAMICS::GetABSEnabled() const		{	return abs;		}
 bool CARDYNAMICS::GetABSActive() const
 {
-	return abs && ( abs_active[0]||abs_active[1]||abs_active[2]||abs_active[3] );
+	if (numWheels < 4)
+		return abs && ( abs_active[0]||abs_active[1] );
+	else
+		return abs && ( abs_active[0]||abs_active[1]||abs_active[2]||abs_active[3] );
 }
 void CARDYNAMICS::SetTCS(const bool newtcs)	{	tcs = newtcs;	}
 bool CARDYNAMICS::GetTCSEnabled() const		{	return tcs;		}
 bool CARDYNAMICS::GetTCSActive() const
 {
-	return tcs && ( tcs_active[0]||tcs_active[1]||tcs_active[2]||tcs_active[3] );
+	if (numWheels < 4)
+		return tcs && ( tcs_active[0]||tcs_active[1] );
+	else
+		return tcs && ( tcs_active[0]||tcs_active[1]||tcs_active[2]||tcs_active[3] );
 }
 
 
