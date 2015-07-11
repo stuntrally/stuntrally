@@ -136,7 +136,6 @@ public:
 	Dbl GetAerodynamicDownforceCoefficient() const;
 	Dbl GetAeordynamicDragCoefficient() const;
 
-	MATHVECTOR<Dbl,3> GetLastBodyForce() const	{	return lastbodyforce;	}
 	Dbl GetFeedback() const	{	return feedback;	}
 
 	// print debug info to the given ostream.  set p1, p2, etc if debug info part 1, and/or part 2, etc is desired
@@ -178,6 +177,7 @@ public:
 
 	void SimulateSpaceship(Dbl dt), SimulateSphere(Dbl dt);
 	std::string sHov;
+	MATHVECTOR<float,3> btq;  //dbg only-
 
 	///  -- sim params (from .car)
 	struct HoverPar
@@ -233,8 +233,6 @@ public:
 	Dbl feedback, maxangle, flip_mul;
 	Dbl ang_damp;  Dbl rot_coef[4];  /// new
 	
-	MATHVECTOR<Dbl,3> lastbodyforce;  //< held so external classes can extract it for things such as applying physics to camera mounts
-
 // chassis, cardynamics
 	MATHVECTOR<Dbl,3> GetDownVector() const;
 

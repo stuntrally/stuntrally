@@ -296,14 +296,9 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 		for (int i = 0; i < numWheels/2; i++)
 		{
 			string pos = "front";
-			WHEEL_POSITION left = FRONT_LEFT;
-			WHEEL_POSITION right = FRONT_RIGHT;
-			if (i == 1)
-			{
-				left = REAR_LEFT;
-				right = REAR_RIGHT;
-				pos = "rear";
-			}
+			WHEEL_POSITION left = FRONT_LEFT, right = FRONT_RIGHT;
+			if (i == 1)	{	left = REAR_LEFT;  right = REAR_RIGHT;  pos = "rear";  } else
+			if (i == 2)	{	left = REAR2_LEFT;  right = REAR2_RIGHT;  pos = "rear2";  }
 
 			float friction, max_pressure, area, bias, radius, handbrake(0);
 
@@ -359,17 +354,10 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 	{
 		for (int i = 0; i < numWheels/2; i++)
 		{
-			string posstr = "front";
-			string posshortstr = "F";
-			WHEEL_POSITION posl = FRONT_LEFT;
-			WHEEL_POSITION posr = FRONT_RIGHT;
-			if (i == 1)
-			{
-				posstr = "rear";
-				posshortstr = "R";
-				posl = REAR_LEFT;
-				posr = REAR_RIGHT;
-			}
+			string posstr = "front", posshortstr = "F";
+			WHEEL_POSITION posl = FRONT_LEFT, posr = FRONT_RIGHT;
+			if (i == 1){  posstr = "rear";  posshortstr = "R";  posl = REAR_LEFT;  posr = REAR_RIGHT;  } else
+			if (i == 2){  posstr = "rear2";  posshortstr = "R2";  posl = REAR2_LEFT;  posr = REAR2_RIGHT;  }
 
 			float spring_constant, bounce, rebound, travel, camber, caster, toe, anti_roll;//, maxcompvel;
 			float hinge[3];
@@ -460,14 +448,11 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 
 	//load the wheels
 	{
+		const static char sWh[MAX_WHEELS][4] = {"FL","FR","RL","RR","RL2","RR2"};
 		for (int i = 0; i < numWheels; i++)
 		{
-			string sPos;
-			WHEEL_POSITION wp;
-			if (i == 0)		{	sPos = "FL";	wp = FRONT_LEFT;	}
-			else if (i == 1){	sPos = "FR";	wp = FRONT_RIGHT;	}
-			else if (i == 2){	sPos = "RL";	wp = REAR_LEFT;	}
-			else			{	sPos = "RR";	wp = REAR_RIGHT;	}
+			string sPos = sWh[i];
+			WHEEL_POSITION wp = WHEEL_POSITION(i);
 
 			float roll_h, mass;
 			float pos[3];
@@ -505,30 +490,25 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 
 	//load the tire parameters
 	{
-		WHEEL_POSITION leftside = FRONT_LEFT;
-		WHEEL_POSITION rightside = FRONT_RIGHT;
-		float value;
-		bool both = c.GetParam("tire-both.radius", value);
+		WHEEL_POSITION left = FRONT_LEFT, right = FRONT_RIGHT;
+		float val;
+		bool both = c.GetParam("tire-both.radius", val);
 		string posstr = both ? "both" : "front";
 
 		for (int p = 0; p < numWheels/2; ++p)
 		{
-			if (p == 1)
-			{
-				leftside = REAR_LEFT;
-				rightside = REAR_RIGHT;
-				if (!both)  posstr = "rear";
-			}
+			if (p == 1)	{		left = REAR_LEFT;  right = REAR_RIGHT;  if (!both)  posstr = "rear";  }
+			else if (p == 2){	left = REAR2_LEFT;  right = REAR2_RIGHT;  if (!both)  posstr = "rear2";  }
 
 			float rolling_resistance[3];
 			if (!c.GetParam("tire-"+posstr+".rolling-resistance", rolling_resistance, error_output))  return false;
-			wheel[leftside].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
-			wheel[rightside].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
+			wheel[left].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
+			wheel[right].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
 
 			float radius;
 			if (!c.GetParam("tire-"+posstr+".radius", radius, error_output))  return false;
-			wheel[leftside].SetRadius(radius);
-			wheel[rightside].SetRadius(radius);
+			wheel[left].SetRadius(radius);
+			wheel[right].SetRadius(radius);
 		}
 	}
 

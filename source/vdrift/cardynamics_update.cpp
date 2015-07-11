@@ -163,7 +163,7 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 {
 	using namespace std;
 	out.precision(2);  out.width(6);  out << fixed;
-	int cnt = pSet->car_dbgtxtcnt;
+	int cnt = pSet->car_dbgtxtcnt, w;
 
 	if (p1)
 	{
@@ -199,7 +199,7 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 				out << " vel: " << sv << endl << "  au: " << al << endl;
 			}/**/
 			//  wheel pos, com ratio
-			Dbl whf = wheel[0].GetExtendedPosition()[0], whr = wheel[2].GetExtendedPosition()[0];
+			Dbl whf = wheel[0].GetExtendedPosition()[0], whr = (numWheels > 2) ? wheel[2].GetExtendedPosition()[0] : 0.;
 			out.precision(2);
 			out << "  wh fr " << whf << "  rr " << whr;
 			out.precision(1);
@@ -208,7 +208,12 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 			MATRIX3 <Dbl> inertia = body.GetInertiaConst();
 			
 			out << "inertia: roll " << inertia[0] << " pitch " << inertia[4] << " yaw " << inertia[8] << endl;
-			
+
+			if (numWheels == 2)
+			{
+			out.precision(3);
+			out << "bTq: " << btq[0] << " " << btq[1] << " " << btq[2]  << endl;
+			}
 			//out << "inertia: " << inertia[0] <<" "<< inertia[4] <<" "<< inertia[8] <<" < "<< inertia[1] <<" "<< inertia[2] <<" "<< inertia[3] <<" "<< inertia[5] <<" "<< inertia[6] <<" "<< inertia[7] << endl;
 			//MATHVECTOR<Dbl,3> av = GetAngularVelocity();  Orientation().RotateVector(av);
 			//out << "ang vel: " << fToStr(av[0],2,5) <<" "<< fToStr(av[1],2,5) <<" "<< fToStr(av[2],2,5) << endl;
@@ -222,9 +227,12 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 
 		//  fluids
 		if (cnt > 1)
-		{	out << "in fluids: " << inFluids.size() <<
-					" wh: " << inFluidsWh[0].size() << inFluidsWh[1].size() << inFluidsWh[2].size() << inFluidsWh[3].size() << endl;
-			out << "wh fl H: " << fToStr(whH[0],1,3) << " " << fToStr(whH[1],1,3) << " " << fToStr(whH[2],1,3) << " " << fToStr(whH[3],1,3) << " \n\n";
+		{	out << "in fluids: " << inFluids.size() << " wh:";
+			for (w=0; w < numWheels; ++w)  out << " " << inFluidsWh[w].size();
+			out << endl;
+			out << "wh fl H:";
+			for (w=0; w < numWheels; ++w)  out << " " << fToStr(whH[w],1,3);
+			out << " \n\n";
 		}
 
 		if (cnt > 3)
@@ -250,24 +258,21 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 		}
 	}
 
+	const static char sWh[MAX_WHEELS][8] = {" FL [^", " FR ^]", " RL [_", " RR _]", " RL2[_", " RR2_]"};
 	if (p2)
 	{
 		out << "\n\n\n\n";
 		if (cnt > 4)
 		{
 			out << "---Brake---\n";
-			out << " FL [^" << endl;	brake[FRONT_LEFT].DebugPrint(out);
-			out << " FR ^]" << endl;	brake[FRONT_RIGHT].DebugPrint(out);
-			out << " RL [_" << endl;	brake[REAR_LEFT].DebugPrint(out);
-			out << " RR _]" << endl;	brake[REAR_RIGHT].DebugPrint(out);
+			for (w=0; w < numWheels; ++w)
+			{	out << sWh[w] << endl;	brake[w].DebugPrint(out);  }
 		}
 		if (cnt > 7)
 		{
 			out << "\n---Suspension---\n";
-			out << " FL [^" << endl;	suspension[FRONT_LEFT].DebugPrint(out);
-			out << " FR ^]" << endl;	suspension[FRONT_RIGHT].DebugPrint(out);
-			out << " RL [_" << endl;	suspension[REAR_LEFT].DebugPrint(out);
-			out << " RR _]" << endl;	suspension[REAR_RIGHT].DebugPrint(out);
+			for (w=0; w < numWheels; ++w)
+			{	out << sWh[w] << endl;	suspension[w].DebugPrint(out);  }
 		}
 	}
 
@@ -275,10 +280,8 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 		if (cnt > 6)
 		{
 			out << "---Wheel---\n";
-			out << " FL [^" << endl;	wheel[FRONT_LEFT].DebugPrint(out);
-			out << " FR ^]" << endl;	wheel[FRONT_RIGHT].DebugPrint(out);
-			out << " RL [_" << endl;	wheel[REAR_LEFT].DebugPrint(out);
-			out << " RR _]" << endl;	wheel[REAR_RIGHT].DebugPrint(out);
+			for (w=0; w < numWheels; ++w)
+			{	out << sWh[w] << endl;	wheel[w].DebugPrint(out);  }
 		}
 
 	if (p4)
