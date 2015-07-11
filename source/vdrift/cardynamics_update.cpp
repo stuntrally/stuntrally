@@ -199,7 +199,7 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 				out << " vel: " << sv << endl << "  au: " << al << endl;
 			}/**/
 			//  wheel pos, com ratio
-			Dbl whf = wheel[0].GetExtendedPosition()[0], whr = (numWheels > 2) ? wheel[2].GetExtendedPosition()[0] : 0.;
+			Dbl whf = wheel[0].GetExtendedPosition()[0], whr = wheel[numWheels==2?1:2].GetExtendedPosition()[0];
 			out.precision(2);
 			out << "  wh fr " << whf << "  rr " << whr;
 			out.precision(1);

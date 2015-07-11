@@ -47,21 +47,22 @@ void App::newPerfTest(float time)
 	
 	static std::vector<float> tkmh,ttim;
 	static float kmhP=0.f;
+	CARDYNAMICS& cd = pCar->dynamics;
 
 	switch (iPerfTestStage)
 	{
 		case PT_StartWait:
 		{
 			//  wheels still count
-			int whStill = pCar->dynamics.vtype == V_Spaceship ? 4 : 0;
-			for (int i=0; i<4; ++i)
+			int whStill = cd.vtype == V_Spaceship ? 4 : 0;
+			for (int i=0; i < cd.numWheels; ++i)
 			{
 				WHEEL_POSITION wp = (WHEEL_POSITION)i;
 				bool inAir = pCar->GetWheelContact(wp).GetColObj() == NULL;
-				const CARSUSPENSION& susp = pCar->dynamics.GetSuspension(wp);
+				const CARSUSPENSION& susp = cd.GetSuspension(wp);
 				if (!inAir && susp.GetVelocity() < 0.001)  ++whStill;
 			}
-			if (whStill == 4 && iLoad1stFrames == -2)  //end
+			if (whStill == cd.numWheels && iLoad1stFrames == -2)  //end
 			{
 				iPerfTestStage = PT_Accel;  ti = 0.f;
 				posSt = pCar->GetPosition();  timeQM = 0.f;
@@ -84,7 +85,7 @@ void App::newPerfTest(float time)
 			{	timeQM = ti;  // will be 0 if didnt drive that far
 				velAtQM = kmh;
 			}
-			MATHVECTOR<Dbl,3> aero = pCar->dynamics.GetTotalAero();
+			MATHVECTOR<Dbl,3> aero = cd.GetTotalAero();
 			Dbl drag = -aero[0], down = -aero[2];
 
 			//  stats  ---------
@@ -130,7 +131,7 @@ void App::newPerfTest(float time)
 				//  engine stats
 				//------------------------
 				//pGame->info_output << std::string("====  CAR engine  ====\n");
-				const CARENGINE& eng = pCar->dynamics.engine;
+				const CARENGINE& eng = cd.engine;
 				float maxTrq = 0.f, maxPwr = 0.f;
 				int rpmMaxTq = 0, rpmMaxPwr = 0;
 
@@ -147,12 +148,11 @@ void App::newPerfTest(float time)
 				//------------------------------------------------
 				maxPwr *= 1.341;  // kW to bhp
 				Dbl m = eng.real_pow_tq_mul;  // factor to match real cars data
-				CARDYNAMICS& cd = pCar->dynamics;
 				const MATHVECTOR<Dbl,3>& com = cd.center_of_mass;
 				Dbl bhpPerTon = maxPwr / (pCar->GetMass() * 0.001);
 
 				//  com ratio
-				Dbl whf = cd.wheel[0].GetExtendedPosition()[0], whr = cd.wheel[2].GetExtendedPosition()[0];
+				Dbl whf = cd.wheel[0].GetExtendedPosition()[0], whr = cd.wheel[cd.numWheels==2?1:2].GetExtendedPosition()[0];
 				float comFrontPercent = (com[0]+whf) / (whf-whr)*100.f;
 				MATRIX3 <Dbl> inertia = cd.body.GetInertiaConst();
 				float inert[3];  inert[0] = inertia[0];  inert[1] = inertia[4];  inert[2] = inertia[8];  
