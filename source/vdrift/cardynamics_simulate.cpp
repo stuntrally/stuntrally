@@ -245,6 +245,25 @@ void CARDYNAMICS::ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR<D
 	//MATHVECTOR<Dbl,3> world_wheel_torque(0, -wheel_torque, 0);
 	//wheel_space.RotateVector(world_wheel_torque);
 	//ApplyTorque(world_wheel_torque);
+	
+	
+	///: bike align straight torque from wheels
+	if (numWheels == 2 && fDamage < 100.f)
+	{
+		float dmg = 1.f - 0.5f * fDamage*0.01f;
+		MATHVECTOR<float,3> dn = GetDownVector();
+		for (int w=0; w < numWheels; ++w)
+		if (wheel_contact[w].GetColObj())
+		{
+			MATHVECTOR <float,3> n = wheel_contact[w].GetNormal();
+			MATHVECTOR <float,3> t = dn.cross(n);
+			(-Orientation()).RotateVector(t);  btq = t;
+			Dbl x = t[0] * -1000. * 22 * dmg;  ///par in .car ...
+			MATHVECTOR<Dbl,3> v(x,0,0);
+			Orientation().RotateVector(v);
+			ApplyTorque(v);
+		}
+	}
 }
 
 
