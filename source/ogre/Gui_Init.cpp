@@ -540,7 +540,7 @@ void CGui::InitGui()
 	listPlayers = fMli("MListPlayers");
 	ml = listPlayers;
 		ml->addColumn("#80C0FF"+TR("#{Player}"), 140);
-		ml->addColumn("#F08080"+TR("#{Car}"), 60);
+		ml->addColumn("#F08080"+TR("#{Vehicle}"), 80);
 		ml->addColumn("#C0C060"+TR("#{Peers}"), 60);
 		ml->addColumn("#60F0F0"+TR("#{Ping}"), 80);
 		ml->addColumn("#40F040"+TR("#{NetReady}"), 60);
@@ -647,7 +647,7 @@ void CGui::InitGui()
 	Mli2 li = carTab->createWidget<MultiList2>("MultiListBox",16,48,200,110, Align::Left | Align::VStretch);
 	li->setColour(Colour(0.7,0.85,1.0));
 	li->removeAllColumns();  int n=0;
-	li->addColumn("#FF8888"+TR("#{Car}"), colCar[n++]);
+	li->addColumn("#BBA8A8"+TR("#{Name}"), colCar[n++]);
 	li->addColumn("#C0B0A0""*"/*TR("#{CarSpeed}")*/, colCar[n++]);
 	li->addColumn("#B0B8C0"+TR("#{CarYear}"), colCar[n++]);
 	li->addColumn("#C0C0E0"+TR("#{CarType}"), colCar[n++]);

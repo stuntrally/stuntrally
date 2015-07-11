@@ -66,10 +66,10 @@ void CGui::btnRplLoad(WP)  // Load
 		if (h.track_user && !fs::exists(PATHMANAGER::TracksUser()+"/"+trk))
 			er += TR("#{Track} (#{TweakUser}): ")+trk+TR(" - #{DoesntExist}.\n");
 		if (!fs::exists(PATHMANAGER::Cars()+"/"+car))
-			er += TR("#{Car}: ")+car+TR(" - #{DoesntExist}.\n");
+			er += TR("#{Vehicle}: ")+car+TR(" - #{DoesntExist}.\n");
 		for (p=1; p < h.numPlayers; ++p)
 			if (!fs::exists(PATHMANAGER::Cars()+"/"+h.cars[p-1]))
-				er += TR("#{Car}: ")+h.cars[p-1]+TR(" - #{DoesntExist}.\n");
+				er += TR("#{Vehicle}: ")+h.cars[p-1]+TR(" - #{DoesntExist}.\n");
 
 		if (!er.empty())
 		{	Message::createMessageBox(
@@ -139,7 +139,7 @@ void CGui::listRplChng(List* li, size_t pos)
 			rpl.header.track + (rpl.header.track_user ? "  *"+TR("#{TweakUser}")+"*" : "");
 		valRplName->setCaption(ss);
 
-		ss = String(TR("#{Car}: ")) + rpl.header.car + "       "+
+		ss = String(TR("#{Vehicle}: ")) + rpl.header.car + "       "+
 			(rpl.header.numPlayers == 1 ? "" : (TR("#{Players}: ") + toStr(rpl.header.numPlayers))) + "  " +
 			(rpl.header.networked == 0 ? "" : "M") +  //TR("#{Multiplayer}")
 			"\n#C0D8F0" + TR("#{RplTime}: ") + CHud::StrTime(rpl.GetTimeLength()) +
