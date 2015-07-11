@@ -40,6 +40,7 @@
 	<Tag name="Prize">Prix</Tag>
 	<Tag name="Hint-2text">Appuyez sur [Q] ou [W] pour retourner la voiture, si votre voiture est coincée ou lors d'un saut. En fonction des réglages, il vous en coûtera peut-être du carburant.</Tag>
 	<Tag name="TreeDens">Densité des arbres</Tag>
+	<Tag name="Vehicles">Vehicles</Tag>
 	<Tag name="TipVegetGroups">Groupes de modèles de végétation (4 à 6 sont recommandés), affecte la performance.</Tag>
 	<Tag name="TBPosition">Position</Tag>
 	<Tag name="Pipe">Tube</Tag>
@@ -474,6 +475,7 @@
 	<Tag name="DidntPass">Échec</Tag>
 	<Tag name="Road_Cur">Cur</Tag>
 	<Tag name="InputMinimapType">Maj.-F2,F3 - type de minicarte préc./suiv.</Tag>
+	<Tag name="CarDesc_BV">Big extreme bike with advanced electric engine. Extremely fast and light. Also great for exploring other planets. Doesn't handle bad jump landings and bumps.</Tag>
 	<Tag name="TipGrassSwayLen">Intensité du \</Tag>
 	<Tag name="Road">Route</Tag>
 	<Tag name="FluidCont">Liquides</Tag>
@@ -574,6 +576,7 @@
 	<Tag name="CopyTrackSourceSame">Le circuit source et le circuit actuel sont identiques.</Tag>
 	<Tag name="DisableEdit">Desactiver pour éditer</Tag>
 	<Tag name="LS_TER">Chargement du terrain</Tag>
+	<Tag name="Vehicle">Vehicle</Tag>
 	<Tag name="Test">Test</Tag>
 	<Tag name="Continue">Continuer</Tag>
 	<Tag name="TipDiffusePrev">Aperçu de la texture.</Tag>
@@ -590,7 +593,7 @@
 	<Tag name="Brush_ShapeN-gon">N-gone</Tag>
 	<Tag name="Brush_CurrentH">H. actuelle</Tag>
 	<Tag name="TipDiffuseTex">Texture (spéculaire en alpha).</Tag>
-	<Tag name="CarChange">Changement de voiture</Tag>
+	<Tag name="CarChange">Vehicle change</Tag>
 	<Tag name="LTrFlDepth">profondeur maximale dans le liquide</Tag>
 	<Tag name="InputToggleVeget">V - Deactiver / activer la végétation</Tag>
 	<Tag name="InputRoadMat">-,= - matériau de la route/tube (-1 caché)</Tag>

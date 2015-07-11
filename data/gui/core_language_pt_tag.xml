@@ -40,6 +40,7 @@
 	<Tag name="Prize">Prêmio</Tag>
 	<Tag name="Hint-2text">Pressione [Q] ou [W] para girar o carro quando estiver de ponta-cabeça ou num salto. Dependendo das configurações, isso pode custar combustível.</Tag>
 	<Tag name="TreeDens">Densidade das árvores</Tag>
+	<Tag name="Vehicles">Vehicles</Tag>
 	<Tag name="TipVegetGroups">Vegetation model groups (recommended use 4-6), affects performance.</Tag>
 	<Tag name="TBPosition">Posição</Tag>
 	<Tag name="Pipe">Pipe</Tag>
@@ -474,6 +475,7 @@
 	<Tag name="DidntPass">Não passou</Tag>
 	<Tag name="Road_Cur">Cur</Tag>
 	<Tag name="InputMinimapType">shift-F2,F3 - Prev,next minimap type</Tag>
+	<Tag name="CarDesc_BV">Big extreme bike with advanced electric engine. Extremely fast and light. Also great for exploring other planets. Doesn't handle bad jump landings and bumps.</Tag>
 	<Tag name="TipGrassSwayLen">Grass sway effect length (scale).</Tag>
 	<Tag name="Road">Road</Tag>
 	<Tag name="FluidCont">Fluid Cont.</Tag>
@@ -574,6 +576,7 @@
 	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
 	<Tag name="DisableEdit">Disable for edit</Tag>
 	<Tag name="LS_TER">Carregando terreno</Tag>
+	<Tag name="Vehicle">Vehicle</Tag>
 	<Tag name="Test">Test</Tag>
 	<Tag name="Continue">Continuar</Tag>
 	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
@@ -590,7 +593,7 @@
 	<Tag name="Brush_ShapeN-gon">N-gon</Tag>
 	<Tag name="Brush_CurrentH">Curr.H</Tag>
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
-	<Tag name="CarChange">Troca de carro</Tag>
+	<Tag name="CarChange">Vehicle change</Tag>
 	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>

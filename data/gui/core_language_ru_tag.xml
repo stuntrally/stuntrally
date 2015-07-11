@@ -40,6 +40,7 @@
 	<Tag name="Prize">Приз</Tag>
 	<Tag name="Hint-2text">Держи [Q] или [W], чтобы перевернуть, когда авто вверх ногами или в прыжках. Зависит от настроек, может стоить турбо.</Tag>
 	<Tag name="TreeDens">Плотность деревьев</Tag>
+	<Tag name="Vehicles">Vehicles</Tag>
 	<Tag name="TipVegetGroups">Группы растительности (рекомендуем использовать 4-6), влияет на производительность.</Tag>
 	<Tag name="TBPosition">Поз.</Tag>
 	<Tag name="Pipe">Труба</Tag>
@@ -474,6 +475,7 @@
 	<Tag name="DidntPass">Не пойдет</Tag>
 	<Tag name="Road_Cur">Тек.</Tag>
 	<Tag name="InputMinimapType">shift-F2,F3 - Пред.,след. тип миникарты</Tag>
+	<Tag name="CarDesc_BV">Big extreme bike with advanced electric engine. Extremely fast and light. Also great for exploring other planets. Doesn't handle bad jump landings and bumps.</Tag>
 	<Tag name="TipGrassSwayLen">Длина эффекта качания травы (размер).</Tag>
 	<Tag name="Road">Дор.</Tag>
 	<Tag name="FluidCont">Жидкость</Tag>
@@ -574,6 +576,7 @@
 	<Tag name="CopyTrackSourceSame">Источник трека и тек. трек одинаковы.</Tag>
 	<Tag name="DisableEdit">Откл. для ред.</Tag>
 	<Tag name="LS_TER">Загрузка ландшафта</Tag>
+	<Tag name="Vehicle">Vehicle</Tag>
 	<Tag name="Test">Тест</Tag>
 	<Tag name="Continue">Продолжить</Tag>
 	<Tag name="TipDiffusePrev">Распространяет текстуру предварительного просмотра изображения.</Tag>
@@ -590,7 +593,7 @@
 	<Tag name="Brush_ShapeN-gon">N-уг.</Tag>
 	<Tag name="Brush_CurrentH">Тек.В</Tag>
 	<Tag name="TipDiffuseTex">Текстура распространения (зеркальная в альфа).</Tag>
-	<Tag name="CarChange">Смена авто</Tag>
+	<Tag name="CarChange">Vehicle change</Tag>
 	<Tag name="LTrFlDepth">макс. глубина</Tag>
 	<Tag name="InputToggleVeget">V - откл./вкл. растительность</Tag>
 	<Tag name="InputRoadMat">-,=  - дорога/труба материал  (-1 скрыт)</Tag>
