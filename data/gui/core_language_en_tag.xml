@@ -133,12 +133,14 @@
 	<Tag name="NextStage">Continuing to next stage</Tag>
 	<Tag name="RepeatStage">Repeating stage</Tag>
 
-	<Tag name="CarChange">Car change</Tag>
+	<Tag name="CarChange">Vehicle change</Tag>
 	<Tag name="Allowed">Allowed</Tag>
 	
 
 	<!--  Car  -->
 	<Tag name="Vehicle">Vehicle</Tag>
+	<Tag name="Vehicles">Vehicles</Tag>
+	<!--  Car  old  -->
 	<Tag name="Car">Car</Tag>
 	<Tag name="Cars">Cars</Tag>
 	<!--  TIP  Car  -->

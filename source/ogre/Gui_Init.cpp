@@ -750,7 +750,7 @@ void CGui::InitGui()
 	li->removeAllColumns();  c=0;
 	li->addColumn("#80A080", colChL[c++]);
 	li->addColumn(TR("#60F060#{Name}"), colChL[c++]);		li->addColumn(TR("#F0D040#{Difficulty}"), colChL[c++]);
-	li->addColumn(TR("#F09090#{Cars}"), colChL[c++]);
+	li->addColumn(TR("#F09090#{Vehicles}"), colChL[c++]);
 	li->addColumn(TR("#80F0C0#{Stages}"), colChL[c++]);		li->addColumn(TR("#80E0FF#{Time} m"), colChL[c++]);
 	li->addColumn(TR("#D0C0FF#{Progress}"), colChL[c++]);
 	li->addColumn(TR("#F0F8FF#{Prize}"), colChL[c++]);		li->addColumn(TR("#F0D0F0#{Score}"), colChL[c++]);

@@ -581,7 +581,7 @@ void CGui::UpdChallDetail(int id)
 
 	//  cars  --------
 	s1 += "\n";  s2 += "\n";
-	s1 += TR("#F08080#{Cars}\n");        s2 += "#FFA0A0" + StrChallCars(ch)+"\n";
+	s1 += TR("#F08080#{Vehicles}\n");        s2 += "#FFA0A0" + StrChallCars(ch)+"\n";
 	if (ch.carChng)
 	{	s1 += TR("#C0B0B0#{CarChange}\n");  s2 += TR("#A0B8A0#{Allowed}")+"\n";  }
 
