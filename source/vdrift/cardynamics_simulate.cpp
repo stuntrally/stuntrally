@@ -101,8 +101,8 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::UpdateSuspension(int i, Dbl dt)
 
 	//do anti-roll
 	int otheri = i;
-	if (i == 0 || i == 2)	++otheri;
-	else					--otheri;
+	if (i%2 == 0)	++otheri;
+	else			--otheri;
 
 	Dbl antirollforce = suspension[WHEEL_POSITION(i)].GetAntiRollK() *
 	                  ( suspension[WHEEL_POSITION(i)].GetDisplacement() -
@@ -340,6 +340,8 @@ void CARDYNAMICS::CalculateDriveTorque(Dbl * wheel_drive_torque, Dbl clutch_torq
 		wheel_drive_torque[FRONT_RIGHT] = diff_front.GetSide2Torque();
 		wheel_drive_torque[REAR_LEFT] = diff_rear.GetSide1Torque();
 		wheel_drive_torque[REAR_RIGHT] = diff_rear.GetSide2Torque();
+		wheel_drive_torque[REAR2_LEFT] = diff_rear.GetSide1Torque();
+		wheel_drive_torque[REAR2_RIGHT] = diff_rear.GetSide2Torque();
 	}
 
 	for (int i = 0; i < numWheels; ++i)  assert(!isnan( wheel_drive_torque[WHEEL_POSITION(i)] ));

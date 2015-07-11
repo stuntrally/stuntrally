@@ -356,8 +356,8 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 		{
 			string posstr = "front", posshortstr = "F";
 			WHEEL_POSITION posl = FRONT_LEFT, posr = FRONT_RIGHT;
-			if (i == 1){  posstr = "rear";  posshortstr = "R";  posl = REAR_LEFT;  posr = REAR_RIGHT;  } else
-			if (i == 2){  posstr = "rear2";  posshortstr = "R2";  posl = REAR2_LEFT;  posr = REAR2_RIGHT;  }
+			if (i >= 1){  posstr = "rear";  posshortstr = "R";  posl = REAR_LEFT;  posr = REAR_RIGHT;  } /*else
+			if (i == 2){  posstr = "rear2";  posshortstr = "R2";  posl = REAR2_LEFT;  posr = REAR2_RIGHT;  }*/
 
 			float spring_constant, bounce, rebound, travel, camber, caster, toe, anti_roll;//, maxcompvel;
 			float hinge[3];

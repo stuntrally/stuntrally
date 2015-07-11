@@ -8,6 +8,7 @@
 #include "common/CScene.h"
 #include "common/GraphView.h"
 #include "SplitScreen.h"
+#include "CarModel.h"
 #include <OgreSceneManager.h>
 #include <OgreRenderWindow.h>
 using namespace Ogre;
@@ -51,6 +52,7 @@ void App::CreateGraphs()
 	if (!graphs.empty())  return;
 	SceneManager* scm = mSplitMgr->mGuiSceneMgr;
 	bool tireEdit = false;
+	int nWh = carModels[0]->numWheels;
 
 	switch (pSet->graphs_type)
 	{
@@ -157,33 +159,24 @@ void App::CreateGraphs()
 
 	case Gh_TireSlips:  /// tire
 	case Gh_Suspension:	 /// susp
-		for (int i=0; i < 8; ++i)
+		for (int i=0; i < nWh * 2; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGui);
-			int c = i%4;
+			int c = i % nWh;  bool w2 = nWh == 2, g1 = i/nWh;
 			gv->Create(256/*512*/, "graph"+toStr(c+1), c>0 ? 0.f : (i < 14 ? 0.44f : 0.62f));
 			if (c == 0)
 				gv->CreateGrid(10,1, 0.2f, 0.4f);
 
-			const static float x0 = 0.0f, x1 = 0.07f, x2 = 0.08f;
-			const static char* cgt[8][2] = {
-				// Front ^ Back/Rear v  Left L< Right R>
-				 "FL [^"				,"FL <^"
-				,"^] FR   longit |"		,"^> FR  suspension pos"
-				,"BL [_"				,"BL <v"
-				,"_] BR   Tire slip"	,"v> BR"
-				,"FL [^"				,"FL <^"
-				,"^] FR   lateral --"	,"^> FR  susp vel"
-				,"BL [_"				,"BL <v"
-				,"_] BR   Tire slide"	,"v> BR"	};
-
 			int t = pSet->graphs_type == Gh_TireSlips ? 0 : 1;
-			float x = i%2==0 ? x0 : (t ? x2 : x1);  char y = i/2%2==0 ? -2 : -3;
-			gv->CreateTitle(cgt[i][t], c, x, y, 24);
+			float x = i%2==0 /*|| w2 */? 0.f : 0.04f;
+			char y = i%nWh/2 + (4-nWh/2);
+			gv->CreateTitle(String("|") + (c!=1 ? "" : String("  ")+
+				(t==0 ? (g1 ? "Tire slide" : "Tire slip") :
+						(g1 ? "susp vel" : "suspension pos")) )
+				, c, x, -y, 24);
 
-			if (i < 4)	gv->SetSize(0.00f, 0.24f, 0.4f, 0.25f);
-			//else		gv->SetSize(0.60f, 0.24f, 0.4f, 0.25f);  // right
-			else		gv->SetSize(0.00f, 0.50f, 0.4f, 0.25f);  // top
+			if (i < nWh) gv->SetSize(0.00f, 0.24f, 0.4f, 0.25f);
+			else         gv->SetSize(0.00f, 0.50f, 0.4f, 0.25f);  // top
 			
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
@@ -191,7 +184,7 @@ void App::CreateGraphs()
 
 
 	case Gh_TireEdit:  /// tires edit pacejka
-		for (int j=0; j < 4; ++j)
+		for (int j=0; j < 4; ++j)  // lat,long x2 for ref
 		for (int i=0; i < TireNG; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGui);
@@ -217,18 +210,21 @@ void App::CreateGraphs()
 		break;
 
 	case Gh_Tires4Edit:  /// all tires pacejka vis,edit
-		for (int i=0; i < TireNG * 2; ++i)
+		for (int i=0; i < nWh * 2; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGui);
-			int c = 2;  bool b = i >= TireNG;
+			int c = 2;  bool b = i >= nWh;
 			gv->Create(TireLenG, String("graph")+(b?"B":"A")+toStr(c), b ? 0.f : 0.3f, true);
 			gv->CreateGrid(6,6, 0.2f, 0.4f);
 			if (b)	gv->CreateTitle("", 5+8+1 +2, 0.f, -2, 24);
 			else	gv->CreateTitle("", 5+1   +2, 1.f,-2, 24);
 			
 			const float sx = 0.175f, sy = 0.245f, m = 1.f; //0.97f;
-			gv->SetSize((i%2   == 0 ? 0.f : sx),
-						(i/2%2 == 1 ? 0.f : sy) + 0.41f, sx*m, sy*m);
+			if (nWh==2)
+				gv->SetSize(0.f,(i%2==1 ? 0.f : sy) + 0.41f, sx*m, sy*m);
+			else
+				gv->SetSize((i%2   == 0 ? 0.f : sx),
+							(i/2%2 == 1 ? 0.f : sy) + 0.41f, sx*m, sy*m);
 
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
@@ -399,7 +395,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	//const Dbl fMAX = 7000.0, max_y = 180.0, max_x = 12.0, pow_x = 1.0;
 	Dbl fMAX = pSet->te_yf, max_y = pSet->te_xfy, max_x = pSet->te_xfx, pow_x = pSet->te_xf_pow;
 	if (pApp->scn->sc->asphalt)  max_y *= 0.5;
-	const int TireNG = App::TireNG;
+	const int TireNG = App::TireNG, nWh = dynamics.numWheels;
 
 	switch (pApp->pSet->graphs_type)
 	{
@@ -437,20 +433,20 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		}	break;
 		
 	case Gh_TireSlips:  /// tire slide,slip
-		if (gsi >= 8)
-		for (int i=0; i < dynamics.numWheels; ++i)
+		if (gsi >= nWh*2)
+		for (int i=0; i < nWh; ++i)
 		{
 			pApp->graphs[i]->AddVal(negPow(dynamics.wheel[i].slips.slideratio, 0.2) * 0.12f +0.5f);
 			//pApp->graphs[i]->AddVal(dynamics.wheel[i].slips.slide * 0.1f +0.5f);
-			pApp->graphs[i+4]->AddVal(dynamics.wheel[i].slips.slipratio * 0.1f +0.5f);
+			pApp->graphs[i+nWh]->AddVal(dynamics.wheel[i].slips.slipratio * 0.1f +0.5f);
 		}	break;
 		
 	case Gh_Suspension:  /// suspension
-		if (gsi >= 8)
-		for (int i=0; i < dynamics.numWheels; ++i)
+		if (gsi >= nWh*2)
+		for (int i=0; i < nWh; ++i)
 		{
 			const CARSUSPENSION& susp = dynamics.GetSuspension((WHEEL_POSITION)i);
-			pApp->graphs[i+4]->AddVal( dynamics.vtype == V_Spaceship ?
+			pApp->graphs[i+nWh]->AddVal( dynamics.vtype == V_Spaceship ?
 				susp.GetVelocity() * 0.2f +0.5f : negPow(susp.GetVelocity(), 0.5) * 0.2f +0.5f);
 			pApp->graphs[i]->AddVal(susp.GetDisplacementPercent());
 		}	break;
@@ -695,9 +691,10 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 	
 	case Gh_Tires4Edit:  /// all tires pacejka vis, edit
 	//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+	if (gsi >= nWh * 2)
 	{	static int ii = 0;  ++ii;  // skip upd cntr
 		const int im = 1;  //pApp->iUpdTireGr > 0 ? 2 : 8;  // faster when editing val
-		if (ii >= im && gsi >= TireNG * 2)
+		if (ii >= im)
 		{	ii = 0;  pApp->iUpdTireGr = 0;
 
 			Dbl* ft = new Dbl[TireLenG];
@@ -706,9 +703,6 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			const bool cust = 1;
 
 			///  Fy lateral --  ........
-			int nWh = /*std::min(TireNG, */dynamics.numWheels;//);
-			int gw = nWh == 2 ? 2 : 1;
-			
 			for (int i=0; i < nWh; ++i)
 			{
 				WHEEL_POSITION wp = (WHEEL_POSITION)i;
@@ -716,7 +710,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				const CARWHEEL& wh = dynamics.GetWheel(wp);
 				const CARWHEEL::SlideSlip& t = wh.slips;
 
-				GraphView* gv = pApp->graphs[i*gw];
+				GraphView* gv = pApp->graphs[i];
 				bool comi = common || i == 0;
 				if (comi)
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
@@ -758,7 +752,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 				const CARWHEEL& wh = dynamics.GetWheel(wp);
 				const CARWHEEL::SlideSlip& t = wh.slips;
 
-				GraphView* gv = pApp->graphs[i*gw+TireNG];
+				GraphView* gv = pApp->graphs[i+nWh];
 				bool comi = common || i == 0;
 				if (comi)
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
