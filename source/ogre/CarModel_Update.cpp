@@ -634,7 +634,7 @@ void CarModel::UpdWhTerMtr()
 	//Real tws = sc->td.fTerWorldSize;
 
 	txtDbgSurf = "";
-	for (int i=0; i < numWheels; ++i)
+	for (int i=0; i < pCar->numWheels; ++i)
 	{
 		//Vector3 w = ndWh[i]->getPosition();
 		//int mx = (w.x + 0.5*tws)/tws*t, my = (-w.z + 0.5*tws)/tws*t;

@@ -438,7 +438,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		
 	case Gh_TireSlips:  /// tire slide,slip
 		if (gsi >= 8)
-		for (int i=0; i < 4; ++i)
+		for (int i=0; i < dynamics.numWheels; ++i)
 		{
 			pApp->graphs[i]->AddVal(negPow(dynamics.wheel[i].slips.slideratio, 0.2) * 0.12f +0.5f);
 			//pApp->graphs[i]->AddVal(dynamics.wheel[i].slips.slide * 0.1f +0.5f);
@@ -447,7 +447,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 		
 	case Gh_Suspension:  /// suspension
 		if (gsi >= 8)
-		for (int i=0; i < 4; ++i)
+		for (int i=0; i < dynamics.numWheels; ++i)
 		{
 			const CARSUSPENSION& susp = dynamics.GetSuspension((WHEEL_POSITION)i);
 			pApp->graphs[i+4]->AddVal( dynamics.vtype == V_Spaceship ?
@@ -466,7 +466,7 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			const Dbl r = 1.0 / (2 * PI_d * d.wheel[0].GetRadius());
 
 			String s0="  ratio\n", s1="rpmLow\n", s2="velMax\n";  // text legend
-			for (int i=0; i < 6; ++i)
+			for (int i=0; i < 6/*d.transmission.GetForwardGears()*/; ++i)
 			{
 				int g = i+1;
 				bool bValid = i < d.transmission.GetForwardGears();
@@ -706,14 +706,17 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			const bool cust = 1;
 
 			///  Fy lateral --  ........
-			for (int i=0; i < TireNG; ++i)
+			int nWh = /*std::min(TireNG, */dynamics.numWheels;//);
+			int gw = nWh == 2 ? 2 : 1;
+			
+			for (int i=0; i < nWh; ++i)
 			{
 				WHEEL_POSITION wp = (WHEEL_POSITION)i;
 				const CARTIRE* tire = dynamics.GetTire(wp);
 				const CARWHEEL& wh = dynamics.GetWheel(wp);
 				const CARWHEEL::SlideSlip& t = wh.slips;
 
-				GraphView* gv = pApp->graphs[i];
+				GraphView* gv = pApp->graphs[i*gw];
 				bool comi = common || i == 0;
 				if (comi)
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
@@ -748,14 +751,14 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			}
 
 			///  Fx long |  ........
-			for (int i=0; i < TireNG; ++i)
+			for (int i=0; i < nWh; ++i)
 			{
 				WHEEL_POSITION wp = (WHEEL_POSITION)i;
 				const CARTIRE* tire = dynamics.GetTire(wp);
 				const CARWHEEL& wh = dynamics.GetWheel(wp);
 				const CARWHEEL::SlideSlip& t = wh.slips;
 
-				GraphView* gv = pApp->graphs[i+TireNG];
+				GraphView* gv = pApp->graphs[i*gw+TireNG];
 				bool comi = common || i == 0;
 				if (comi)
 				{	fmin = FLT_MAX;  fmax = FLT_MIN;  frng = 0.0;  }
@@ -789,8 +792,9 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 						/*"max y "+fToStr((float)fmax,0,1)+"  x "+fToStr(max_x,0,1)+"\n"/**/);
 			}
 			delete[]ft;
+			tireEdit = true;
 		}
-	}	tireEdit = true;
+	}
 	break;
 	}
 

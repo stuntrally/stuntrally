@@ -226,7 +226,7 @@ void CarModel::LoadConfig(const string & pathCar)
 	//  wheel count
 	int nw = 0;
 	cf.GetParam("wheels", nw);
-	if (nw >=2 && nw <= MAX_WHEELS)
+	if (nw >= 2 && nw <= MAX_WHEELS)
 		SetNumWheels(nw);
 
 
