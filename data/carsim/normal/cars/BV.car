@@ -45,7 +45,7 @@ offsetW = -0.02
 offsetH = 0.2
 start-offsetY = 0.88
 fluidTrigH = 0.0
-friction = 0.2
+friction = 0.4
 
 
 #  engine
@@ -60,12 +60,12 @@ stall-rpm = 650
 fuel-consumption = 1e-9
 friction = 230
 torque-val-mul = 0.80
-torque-curve-00 = 1000, 283
-torque-curve-01 = 1500, 318
-torque-curve-02 = 2000, 324
-torque-curve-03 = 2500, 372
-torque-curve-04 = 3000, 443
-torque-curve-05 = 3500, 510
+torque-curve-00 = 1000, 293
+torque-curve-01 = 1500, 358
+torque-curve-02 = 2000, 394
+torque-curve-03 = 2500, 432
+torque-curve-04 = 3000, 473
+torque-curve-05 = 3500, 530
 torque-curve-06 = 4000, 594
 torque-curve-07 = 4500, 675
 torque-curve-08 = 5000, 738
@@ -77,6 +77,7 @@ torque-curve-13 = 7500, 586
 torque-curve-14 = 8000, 556
 torque-curve-15 = 8500, 476
 real-pow-tq-mul = 1.2
+sound-vol-mul = 1.8
 
 [ clutch ]
 max-torque-mul = 1.3
