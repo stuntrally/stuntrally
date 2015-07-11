@@ -46,7 +46,7 @@ posLfront = 2.05
 offsetL = 0.0
 offsetW = -0.02
 offsetH = 0.2
-start-offsetY = 0.56
+start-offsetY = 0.60
 fluidTrigH = 0.0
 friction = 0.4
 
@@ -199,7 +199,7 @@ efficiency = 0.90
 # wheels front (position and suspension mount)
 #---------------------------
 [ wheel-FR ]
-position = 0.80, 1.54, -0.53
+position = 0.80, 1.54, -0.57
 roll-height = 0.9
 mass = 19
 restitution = 0.1
@@ -209,7 +209,7 @@ position = 0.76, 1.54, -0.07
 hinge = 0,0,0
 
 [ wheel-FL ]
-position = -0.80, 1.54, -0.53
+position = -0.80, 1.54, -0.57
 roll-height = 0.9
 mass = 19
 restitution = 0.1
@@ -222,7 +222,7 @@ hinge = 0,0,0
 # wheels rear (position and suspension mount)
 #---------------------------
 [ wheel-RR ]
-position = 0.80, -1.15, -0.52
+position = 0.80, -1.15, -0.56
 roll-height = 0.9
 mass = 19
 restitution = 0.1
@@ -232,7 +232,7 @@ position = 0.76, -1.15, -0.07
 hinge = -1.1, 0,0
 
 [ wheel-RL ]
-position = -0.80, -1.15, -0.52
+position = -0.80, -1.15, -0.56
 roll-height = 0.9
 mass = 19
 restitution = 0.1
