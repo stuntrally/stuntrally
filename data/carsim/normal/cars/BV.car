@@ -37,12 +37,12 @@ com_ofs_L = 0.02
 com_ofs_H = -0.0
 radius = 0.364
 width = 0.50
-height = 0.34
+height = 0.4
 posLrear = -1.57
-posLfront = 1.54
+posLfront = 1.57
 offsetL = 0.0
 offsetW = -0.02
-offsetH = 0.2
+offsetH = 0.14
 start-offsetY = 0.88
 fluidTrigH = 0.0
 friction = 0.4
@@ -59,7 +59,7 @@ start-rpm = 1000
 stall-rpm = 650
 fuel-consumption = 1e-9
 friction = 230
-torque-val-mul = 0.80
+torque-val-mul = 0.75
 torque-curve-00 = 1000, 293
 torque-curve-01 = 1500, 358
 torque-curve-02 = 2000, 394
@@ -96,8 +96,8 @@ gear-ratio-6 = 0.79
 shift-delay = 0.08
 
 [ differential ]
-final-drive = 5.0
-anti-slip = 700.0
+final-drive = 7.0
+anti-slip = 550.0
 
 [ fuel-tank ]
 position = -0.02, -0.66, -0.26
@@ -109,10 +109,10 @@ fuel-density = 730.0
 #  suspension
 #---------------------------
 [ suspension-front ]
-spring-constant = 102000
-bounce = 14050
-rebound = 3700
-travel = 0.35
+spring-constant = 202000
+bounce = 18050
+rebound = 11700
+travel = 0.45
 camber = 0.0
 caster = 0.0
 toe = 0.0
@@ -120,10 +120,10 @@ anti-roll = 9000
 factors-file = first
 
 [ suspension-rear ]
-spring-constant = 98000
-bounce = 13000
-rebound = 3600
-travel = 0.30
+spring-constant = 198000
+bounce = 17000
+rebound = 9600
+travel = 0.40
 camber = 0.0
 caster = 0.0
 toe = 0.0
@@ -138,6 +138,7 @@ radius = 0.49
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 3.3
 tread = 0.0
+width-trail = 0.55
 
 
 #  brakes
@@ -145,7 +146,7 @@ tread = 0.0
 [ brakes-front ]
 friction = 1.03
 max-pressure = 2.5e6
-bias = 0.8
+bias = 0.75
 radius = 0.17
 area = 0.019
 
@@ -161,8 +162,8 @@ handbrake = 3.1
 [ driver ]
 position = -0.0, -0.15, -0.2
 mass = 50.0
-view-position = 0.0, -0.40, 0.30
-hood-position = -0.4, 0, 0.50
+view-position = 1.78, 0.0, 0.72
+hood-position = 0.12, 0, 0.50
 
 
 #  aerodynamics
