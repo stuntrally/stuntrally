@@ -97,9 +97,6 @@ void App::newPoses(float time)  // time only for camera update
 					pi.carY = Vector3::UNIT_Y;
 					pi.hov_roll = -pi.hov_roll;
 				}
-
-				for (int w=0; w < 4; ++w)
-					pi.whR[w] = replay.header.whR[c][w]; //
 			}
 		}
 		else  ///>>  replay
@@ -113,9 +110,6 @@ void App::newPoses(float time)  // time only for camera update
 			if (!ok)  pGame->timer.RestartReplay(0);  //at end
 
 			pi.FromRpl(&rf);
-
-			for (int w=0; w < 4; ++w)
-				pi.whR[w] = replay.header.whR[c][w]; //
 		}
 		else  ///>>  sim, game  -  get data from vdrift
 		if (pCar)
