@@ -292,14 +292,19 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 	}
 
 	//load the brake
-	{
-		for (int i = 0; i < numWheels/2; i++)
+	{	int ii = numWheels == 2 ? 2 : numWheels/2;
+		for (int i = 0; i < ii; ++i)
 		{
-			string pos = "front";
-			WHEEL_POSITION left = FRONT_LEFT, right = FRONT_RIGHT;
-			if (i == 1)	{	left = REAR_LEFT;  right = REAR_RIGHT;  pos = "rear";  } else
-			if (i == 2)	{	left = REAR2_LEFT;  right = REAR2_RIGHT;  pos = "rear2";  }
-
+			string pos;
+			WHEEL_POSITION left, right;
+			if (numWheels == 2)
+			{	left = right = FRONT_LEFT;  pos = "front";
+				if (i == 1)	{	left = right = FRONT_RIGHT;  pos = "rear";  }
+			}else
+			{	left = FRONT_LEFT;  right = FRONT_RIGHT;  pos = "front";
+				if (i == 1)	{	left = REAR_LEFT;  right = REAR_RIGHT;  pos = "rear";  } else
+				if (i == 2)	{	left = REAR2_LEFT;  right = REAR2_RIGHT;  pos = "rear2";  }
+			}
 			float friction, max_pressure, area, bias, radius, handbrake(0);
 
 			if (!c.GetParam("brakes-"+pos+".friction", friction, error_output))  return false;
