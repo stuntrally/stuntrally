@@ -448,10 +448,9 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 
 	//load the wheels
 	{
-		const static char sWh[MAX_WHEELS][4] = {"FL","FR","RL","RR","RL2","RR2"};
 		for (int i = 0; i < numWheels; i++)
 		{
-			string sPos = sWh[i];
+			string sPos = sCfgWh[i];
 			WHEEL_POSITION wp = WHEEL_POSITION(i);
 
 			float roll_h, mass;
@@ -473,19 +472,18 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 		}
 
 		//load the rotational inertia parameter from the tire section
-		float front_inertia;
-		float rear_inertia;
-		if (c.GetParam("tire-both.rotational-inertia", front_inertia, error_output))
-			rear_inertia = front_inertia;
+		float front,rear;
+		if (c.GetParam("tire-both.rotational-inertia", front, error_output))
+			rear = front;
 		else
-		{	if (!c.GetParam("tire-front.rotational-inertia", front_inertia, error_output))  return false;
-			if (!c.GetParam("tire-rear.rotational-inertia", rear_inertia, error_output))  return false;
+		{	if (!c.GetParam("tire-front.rotational-inertia", front, error_output))  return false;
+			if (!c.GetParam("tire-rear.rotational-inertia", rear, error_output))  return false;
 		}
-		wheel[FRONT_LEFT].SetInertia(front_inertia);
-		wheel[FRONT_RIGHT].SetInertia(front_inertia);
+		wheel[FRONT_LEFT].SetInertia(front);
+		wheel[FRONT_RIGHT].SetInertia(front);
 
-		if (numWheels > 2)	wheel[REAR_LEFT].SetInertia(rear_inertia);
-		if (numWheels > 3)	wheel[REAR_RIGHT].SetInertia(rear_inertia);
+		for (int i=REAR_LEFT; i <= REAR2_RIGHT; ++i)
+			if (i < numWheels)	wheel[i].SetInertia(rear);
 	}
 
 	//load the tire parameters

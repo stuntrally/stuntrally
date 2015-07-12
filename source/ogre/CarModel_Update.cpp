@@ -193,10 +193,10 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	{
 		for (i=0; i < PAR_ALL; ++i)
 			if (par[i][w])  par[i][w]->setSpeedFactor(fa);
-		if (w < 2 && parBoost[w])  parBoost[w]->setSpeedFactor(fa);
+		if (w < PAR_BOOST && parBoost[w])  parBoost[w]->setSpeedFactor(fa);
 		if (parHit)  parHit->setSpeedFactor(fa);
 	}
-	for (w=0; w < 8; ++w)
+	for (w=0; w < PAR_THRUST*2; ++w)
 		if (parThrust[w])  parThrust[w]->setSpeedFactor(fa);
 
 
@@ -305,7 +305,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	if (pSet->particles && pCar)
 	{
 		//  boost
-		for (i=0; i < 2; i++)  if (parBoost[i])
+		for (i=0; i < PAR_BOOST; i++)  if (parBoost[i])
 		{
 			/// <><> damage reduce
 			float dmg = pCar->dynamics.fDamage >= 80.f ? 0.f : std::max(0.f, 1.4f - pCar->dynamics.fDamage*0.01f);
@@ -613,7 +613,7 @@ void CarModel::UpdParsTrails(bool visible)
 	for (int w=0; w < numWheels; ++w)
 	{
 		Ogre::uint8 grp = RQG_CarTrails;  //9=road  after glass
-		if (w < 2 && parBoost[w]) {  parBoost[w]->setVisible(vis);  parBoost[w]->setRenderQueueGroup(grp);  }
+		if (w < PAR_BOOST && parBoost[w]) {  parBoost[w]->setVisible(vis);  parBoost[w]->setRenderQueueGroup(grp);  }
 		if (whTrail[w]){  whTrail[w]->setVisible(visible && pSet->trails);  whTrail[w]->setRenderQueueGroup(grp);  }
 		grp = RQG_CarParticles;
 		for (int p=0; p < PAR_ALL; ++p)

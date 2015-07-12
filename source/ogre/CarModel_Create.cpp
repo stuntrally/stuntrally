@@ -62,8 +62,8 @@ CarModel::CarModel(int index, int colorId, eCarType type, const string& name,
 	for (int p=0; p < PAR_ALL; ++p)
 		par[p][w] = 0;
 
-	for (i=0; i < 2; ++i)  parBoost[i] = 0;
-	for (i=0; i < 8; ++i)  parThrust[i] = 0;
+	for (i=0; i < PAR_BOOST; ++i)  parBoost[i] = 0;
+	for (i=0; i < PAR_THRUST*2; ++i)  parThrust[i] = 0;
 	parHit = 0;
 
 	qFixWh[0].Rotate(2*PI_d,0,0,1);
@@ -75,7 +75,7 @@ CarModel::CarModel(int index, int colorId, eCarType type, const string& name,
 void CarModel::SetNumWheels(int n)
 {
 	numWheels = n;
-	whPos.resize(n);
+	whPos.resize(n);  whRadius.resize(n);  whWidth.resize(n);
 	whTrail.resize(n);  whTemp.resize(n);
 	ndWh.resize(n);  ndWhE.resize(n);  ndBrake.resize(n);
 }
@@ -83,12 +83,12 @@ void CarModel::SetNumWheels(int n)
 void CarModel::Defaults()
 {
 	int i,w;
-	for (i=0; i<3; ++i)
+	for (i=0; i < 3; ++i)
 	{
 		driver_view[i] = 0.f;  hood_view[i] = 0.f;
 		interiorOffset[i] = 0.f;  boostOffset[i] = 0.f;  exhaustPos[i] = 0.f;
 	}
-	for (i=0; i<4; ++i)
+	for (i=0; i < PAR_THRUST; ++i)
 	{
 		for (w=0; w<3; ++w)  thrusterOfs[i][w] = 0.f;
 		thrusterSizeZ[i] = 0.f;
@@ -101,15 +101,14 @@ void CarModel::Defaults()
 	bRotFix = false;
 	sBoostParName = "Boost";  boostSizeZ = 1.f;
 
-	for (w=0; w<4; ++w)
+	for (w=0; w < numWheels; ++w)
 	{
 		whRadius[w] = 0.3f;  whWidth[w] = 0.2f;
-		//whPos[w] = MATHVECTOR<float,3>(0,0,0);
 	}
 	manualExhaustPos = false;  has2exhausts = false;
 
 	maxangle = 26.f;
-	for (w=0; w<2; ++w)
+	for (w=0; w < 2; ++w)
 		posSph[w] = Vector3::ZERO;
 
 	matStPos = Matrix4::IDENTITY;
@@ -182,8 +181,8 @@ CarModel::~CarModel()
 			if (par[i][w]) {  mSceneMgr->destroyParticleSystem(par[i][w]);  par[i][w]=0;  }
 		if (ndBrake[w])  mSceneMgr->destroySceneNode(ndBrake[w]);
 	}
-	for (i=0; i < 2; ++i)  if (parBoost[i]) {  mSceneMgr->destroyParticleSystem(parBoost[i]);  parBoost[i]=0;  }
-	for (i=0; i < 8; ++i)  if (parThrust[i]) {  mSceneMgr->destroyParticleSystem(parThrust[i]);  parThrust[i]=0;  }
+	for (i=0; i < PAR_BOOST; ++i)     if (parBoost[i]) {  mSceneMgr->destroyParticleSystem(parBoost[i]);  parBoost[i]=0;  }
+	for (i=0; i < PAR_THRUST*2; ++i)  if (parThrust[i]) {  mSceneMgr->destroyParticleSystem(parThrust[i]);  parThrust[i]=0;  }
 	if (parHit) {  mSceneMgr->destroyParticleSystem(parHit);  parHit=0;  }
 						
 	if (brakes)  mSceneMgr->destroyBillboardSet(brakes);
@@ -244,7 +243,8 @@ void CarModel::LoadConfig(const string & pathCar)
 	cf.GetParam("model_ofs.boost-name", sBoostParName);
 	
 	//  thruster  spaceship hover  max 4 pairs
-	for (int i=0; i < 4; ++i)
+	int i;
+	for (i=0; i < PAR_THRUST; ++i)
 	{
 		string s = "model_ofs.thrust";
 		if (i > 0)  s += toStr(i);
@@ -257,7 +257,7 @@ void CarModel::LoadConfig(const string & pathCar)
 	
 
 	//~  brake flares
-	float pos[3];  bool ok=true;  int i=0;
+	float pos[3];  bool ok=true;  i=0;
 	while (ok)
 	{	ok = cf.GetParam("flares.brake-pos"+toStr(i), pos);  ++i;
 		if (ok)  brakePos.push_back(bRotFix ? Vector3(-pos[0],pos[2],pos[1]) : Vector3(-pos[1],-pos[2],pos[0]));
@@ -288,41 +288,33 @@ void CarModel::LoadConfig(const string & pathCar)
 
 
 	//  tire params
-	WHEEL_POSITION leftside = FRONT_LEFT, rightside = FRONT_RIGHT;
+	WHEEL_POSITION left = FRONT_LEFT, right = FRONT_RIGHT;
 	float value;
 	bool both = cf.GetParam("tire-both.radius", value);
 	string posstr = both ? "both" : "front";
 
-	for (int p = 0; p < 2; ++p)
+	for (i=0; i < numWheels/2; ++i)
 	{
-		if (p == 1)
-		{
-			leftside = REAR_LEFT;
-			rightside = REAR_RIGHT;
-			if (!both)  posstr = "rear";
-		}
+		if (i==1){  left = REAR_LEFT;  right = REAR_RIGHT;  if (!both)  posstr = "rear";  } else
+		if (i==2){  left = REAR2_LEFT;  right = REAR2_RIGHT;  if (!both)  posstr = "rear";/*2?*/  }
 		float radius;
 		cf.GetParam("tire-"+posstr+".radius", radius, pGame->error_output);
-		whRadius[leftside] = radius;
-		whRadius[rightside] = radius;
+		whRadius[left] = radius;
+		whRadius[right] = radius;
 		
 		float width = 0.2f;
 		cf.GetParam("tire-"+posstr+".width-trail", width);
-		whWidth[leftside] = width;
-		whWidth[rightside] = width;
+		whWidth[left] = width;
+		whWidth[right] = width;
 	}
 	
 	//  wheel pos
 	//  for track's ghost or garage view
 	int version(1);
 	cf.GetParam("version", version);
-	for (int i = 0; i < numWheels; ++i)
+	for (i = 0; i < numWheels; ++i)
 	{
-		string sPos;
-		if (i == 0)			sPos = "FL";
-		else if (i == 1)	sPos = "FR";
-		else if (i == 2)	sPos = "RL";
-		else				sPos = "RR";
+		string sPos = sCfgWh[i];
 
 		float pos[3];
 		MATHVECTOR<float,3> vec;
@@ -552,7 +544,7 @@ void CarModel::Create()
 			parHit->getEmitter(0)->setEmissionRate(0);  }
 
 		///  boost emitters  ------------------------
-		for (int i=0; i < 2; i++)
+		for (int i=0; i < PAR_BOOST; i++)
 		{
 			String si = strI + "_" +toStr(i);
 			if (!parBoost[i])
@@ -589,7 +581,7 @@ void CarModel::Create()
 		}	}
 
 		///  spaceship thrusters ^  ------------------------
-		for (int w=0; w < 4; ++w)
+		for (int w=0; w < PAR_THRUST; ++w)
 		if (!sThrusterPar[w].empty())
 		{	int i2 = thrusterSizeZ[w] > 0.f ? 2 : 1;
 			for (int i=0; i < i2; ++i)

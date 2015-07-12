@@ -256,13 +256,13 @@ QUATERNION<Dbl> CARDYNAMICS::GetWheelSteeringAndSuspensionOrientation(WHEEL_POSI
 
 	QUATERNION<Dbl> camber;
 	Dbl camber_rotation = -suspension[wp].GetCamber() * PI_d/180.0;
-	if (wp == 1 || wp == 3)
+	if (wp%2 == 1)
 		camber_rotation = -camber_rotation;
 	camber.Rotate( camber_rotation, 1,0,0);
 
 	QUATERNION<Dbl> toe;
 	Dbl toe_rotation = suspension[wp].GetToe() * PI_d/180.0;
-	if (wp == 0 || wp == 2)
+	if (wp%2 == 0)
 		toe_rotation = -toe_rotation;
 	toe.Rotate( toe_rotation, 0,0,1);
 

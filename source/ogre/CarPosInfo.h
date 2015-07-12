@@ -19,7 +19,7 @@ struct PosInfo
 	//  car
 	Ogre::Vector3 pos, carY;
 	//  wheel
-	Ogre::Vector3 whPos[4];
+	Ogre::Vector3 whPos[4];  //todo: [MAX_WHEELS]
 	Ogre::Quaternion rot, whRot[4];  float whR[4];
 
 	float whVel[4], whSlide[4], whSqueal[4];
