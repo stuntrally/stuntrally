@@ -476,14 +476,15 @@ void CarModel::Create()
 	
 
 	//  wheels  ----------------------
+	int w2 = numWheels==2 ? 1 : 2;
 	for (int w=0; w < numWheels; ++w)
 	{
 		String siw = "Wheel" + strI + "_" + toStr(w);
 		ndWh[w] = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
 		String sMesh = "_wheel.mesh";  // custom
-		if (w <  2   && FileExists(sCar + "_wheel_front.mesh"))  sMesh = "_wheel_front.mesh"; else  // 2|
-		if (w >= 2   && FileExists(sCar + "_wheel_rear.mesh") )  sMesh = "_wheel_rear.mesh";  else
+		if (w <  w2  && FileExists(sCar + "_wheel_front.mesh"))  sMesh = "_wheel_front.mesh"; else  // 2|
+		if (w >= w2  && FileExists(sCar + "_wheel_rear.mesh") )  sMesh = "_wheel_rear.mesh";  else
 		if (w%2 == 0 && FileExists(sCar + "_wheel_left.mesh") )  sMesh = "_wheel_left.mesh";  else  // 2-
 		if (w%2 == 1 && FileExists(sCar + "_wheel_right.mesh"))  sMesh = "_wheel_right.mesh";
 		
