@@ -8,7 +8,6 @@
 #include <math.h>
 
 #include "numprocessors.h"
-#include "performance_testing.h"
 #include "quickprof.h"
 #include "tracksurface.h"
 #include "forcefeedback.h"
@@ -931,13 +930,6 @@ bool GAME::ParseArguments(list <string> & args)
 	//debugmode = true;
 	arghelp["-debug"] = "Display car debugging information.";
 
-	//if (!argmap["-cartest"].empty())
-	{
-		//PATHMANAGER::Init(info_output, error_output);
-		//PERFORMANCE_TESTING perftest;
-		//perftest.Test(PATHMANAGER::GetCarPath(), , info_output, error_output);
-		//continue_game = false;
-	}
 	arghelp["-cartest CAR"] = "Run car performance testing on given CAR.";
 
 	///+

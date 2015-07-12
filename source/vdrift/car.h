@@ -10,13 +10,11 @@
 #include "enginesoundinfo.h"
 
 class BEZIER;
-class PERFORMANCE_TESTING;
 namespace protocol {  struct CarStatePackage;  }
 
 
 class CAR
 {
-friend class PERFORMANCE_TESTING;
 public:
 	class GAME* pGame;
 	class App* pApp;

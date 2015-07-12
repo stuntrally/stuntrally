@@ -25,7 +25,6 @@ class MODEL;  class CONFIGFILE;  class COLLISION_WORLD;  class FluidBox;  class 
 
 class CARDYNAMICS : public btActionInterface
 {
-friend class PERFORMANCE_TESTING;
 public:
 
 	class SETTINGS* pSet;
