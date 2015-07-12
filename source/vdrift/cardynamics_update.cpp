@@ -136,7 +136,8 @@ void CARDYNAMICS::UpdateBuoyancy()
 					
 					float f = std::min(fp.whMaxAngVel, std::max(-fp.whMaxAngVel, (float)wheel[w].GetAngularVelocity() ));
 					QUATERNION<Dbl> steer;
-					float angle = -wheel[wp].GetSteerAngle() * fp.whSteerMul  + bump * fp.bumpAng;
+					float ba = numWheels==2 && w==0 ? 2.f : 1.f;  //bike
+					float angle = -wheel[wp].GetSteerAngle() * fp.whSteerMul * ba  + bump * fp.bumpAng;
 					steer.Rotate(angle * PI_d/180.f, 0, 0, 1);
 
 					//  forwards, side, up
