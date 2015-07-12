@@ -251,14 +251,17 @@ void CARDYNAMICS::ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR<D
 	if (numWheels == 2 && fDamage < 100.f)
 	{
 		float dmg = 1.f - 0.5f * fDamage*0.01f;
+		Dbl v = GetSpeedDir() * 1./50.;
+		v = 0.05 + 0.95 * std::min(1.0, v);  //par
 		MATHVECTOR<float,3> dn = GetDownVector();
+
 		for (int w=0; w < numWheels; ++w)
 		if (wheel_contact[w].GetColObj())
 		{
 			MATHVECTOR <float,3> n = wheel_contact[w].GetNormal();
 			MATHVECTOR <float,3> t = dn.cross(n);
 			(-Orientation()).RotateVector(t);  btq = t;
-			Dbl x = t[0] * -1000. * 22 * dmg;  ///par in .car ...
+			Dbl x = t[0] * -1000. * v * 22 * dmg;  ///par in .car ...
 			MATHVECTOR<Dbl,3> v(x,0,0);
 			Orientation().RotateVector(v);
 			ApplyTorque(v);
@@ -340,8 +343,8 @@ void CARDYNAMICS::CalculateDriveTorque(Dbl * wheel_drive_torque, Dbl clutch_torq
 		wheel_drive_torque[FRONT_RIGHT] = diff_front.GetSide2Torque();
 		wheel_drive_torque[REAR_LEFT] = diff_rear.GetSide1Torque();
 		wheel_drive_torque[REAR_RIGHT] = diff_rear.GetSide2Torque();
-		wheel_drive_torque[REAR2_LEFT] = diff_rear.GetSide1Torque();
-		wheel_drive_torque[REAR2_RIGHT] = diff_rear.GetSide2Torque();
+		//wheel_drive_torque[REAR2_LEFT] = diff_rear.GetSide1Torque();
+		//wheel_drive_torque[REAR2_RIGHT] = diff_rear.GetSide2Torque();
 	}
 
 	for (int i = 0; i < numWheels; ++i)  assert(!isnan( wheel_drive_torque[WHEEL_POSITION(i)] ));
