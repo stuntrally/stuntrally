@@ -314,7 +314,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 			pe->setEmissionRate(emitB);
 		}
 		//  spaceship thrusters
-		for (i=0; i < 8; i++)  if (parThrust[i])
+		for (i=0; i < PAR_THRUST*2; i++)  if (parThrust[i])
 		{
 			float dmg = 1.f - 0.5f * pCar->dynamics.fDamage*0.01f;
 			float emitT = posInfo.hov_throttle * 60.f * dmg;  // par
@@ -620,7 +620,7 @@ void CarModel::UpdParsTrails(bool visible)
 			if (par[p][w]){  par[p][w]->setVisible(vis);  par[p][w]->setRenderQueueGroup(grp);  }
 		if (parHit && w==0)	{  parHit->setVisible(vis);  parHit->setRenderQueueGroup(grp);  }
 	}
-	for (int w=0; w < 8; ++w)
+	for (int w=0; w < PAR_THRUST*2; ++w)
 		if (parThrust[w]) {  parThrust[w]->setVisible(vis);  parThrust[w]->setRenderQueueGroup(RQG_CarTrails);  }
 }
 

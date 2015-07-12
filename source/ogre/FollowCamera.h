@@ -33,7 +33,7 @@ public:
 
 
 namespace Ogre {  class TerrainGroup;  class Camera;  class OverlayElement;  class SceneNode;  }
-class PosInfo;  class SETTINGS;
+struct PosInfo;  class SETTINGS;
 
 
 //#define CAM_TILT_DBG  // show wheels in ray hit poses

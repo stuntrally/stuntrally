@@ -463,14 +463,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\vdrift\performance_testing.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\vdrift\performance_testing.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\vdrift\quickmp.h"
 					>
 				</File>
