@@ -40,7 +40,7 @@
 	<Tag name="Prize">Preis</Tag>
 	<Tag name="Hint-2text">[Q] oder [W] gedrückt halten, um das Auto umzukippen, falls es kopfüber steht, oder während eines Sprungs. Abhängig von den Einstellungen könnte es etwas Treibstoff kosten.</Tag>
 	<Tag name="TreeDens">Baumdichte</Tag>
-	<Tag name="Vehicles">Vehicles</Tag>
+	<Tag name="Vehicles">Fahrzeuge</Tag>
 	<Tag name="TipVegetGroups">Vegetationsgruppen (empfohlen: 4-6), Einfluss auf Performance.</Tag>
 	<Tag name="TBPosition">Position</Tag>
 	<Tag name="Pipe">Rohre</Tag>
@@ -475,7 +475,7 @@
 	<Tag name="DidntPass">Durchgefallen</Tag>
 	<Tag name="Road_Cur">Akt</Tag>
 	<Tag name="InputMinimapType">Umschalt-F2/F3 - Vorh./nächst. Kartentyp</Tag>
-	<Tag name="CarDesc_BV">Big extreme bike with advanced electric engine. Extremely fast and light. Also great for exploring other planets. Doesn't handle bad jump landings and bumps.</Tag>
+	<Tag name="CarDesc_BV">Großes extremes Motorrad mit fortgeschrittenem Elektromotor. Extrem schnell und leicht. Auch großartig für die Erkundung anderer Planeten. Verträgt Bodenwellen und schlechte Landungen nur schlecht.</Tag>
 	<Tag name="TipGrassSwayLen">Grasschwingungslänge (Skalierung).</Tag>
 	<Tag name="Road">Straße</Tag>
 	<Tag name="FluidCont">Gewässertyp</Tag>
@@ -576,7 +576,7 @@
 	<Tag name="CopyTrackSourceSame">Quellstrecke und aktuelle Strecke sind identisch.</Tag>
 	<Tag name="DisableEdit">Beim Bearbeiten deaktivieren</Tag>
 	<Tag name="LS_TER">Gelände wird geladen</Tag>
-	<Tag name="Vehicle">Vehicle</Tag>
+	<Tag name="Vehicle">Fahrzeug</Tag>
 	<Tag name="Test">Test</Tag>
 	<Tag name="Continue">Fortsetzen</Tag>
 	<Tag name="TipDiffusePrev">Unscharfes Vorschaubild der Textur.</Tag>
@@ -593,7 +593,7 @@
 	<Tag name="Brush_ShapeN-gon">N-eck</Tag>
 	<Tag name="Brush_CurrentH">Akt.H</Tag>
 	<Tag name="TipDiffuseTex">Unscharfe Textur (Spiegelnd im Alphakanal).</Tag>
-	<Tag name="CarChange">Vehicle change</Tag>
+	<Tag name="CarChange">Fahrzeugwechsel</Tag>
 	<Tag name="LTrFlDepth">max. Wassertiefe</Tag>
 	<Tag name="InputToggleVeget">V - Vegetation an/aus</Tag>
 	<Tag name="InputRoadMat">-,= - Weg-/Rohrmaterial (-1 versteckt)</Tag>
