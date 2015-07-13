@@ -3,14 +3,14 @@ wheels = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
-max-angle = 28
+max-angle = 27
 angular-damping = 0.0
 
 [ rot_drag ]
-roll  = 400.0
-pitch = 600.0
-yaw   = 700.0
-yaw2  = 1.5
+roll  = 650.0
+pitch = 550.0
+yaw   = 400.0
+yaw2  = 0.5
 
 [ flares ]
 brake-pos0 = 0.2,-1.85, 0.2
@@ -27,13 +27,13 @@ rot_fix = on
 boost-x = 0.2
 boost-y = -0.25
 boost-z = 0.0
-boost-size-z = 0.6
+boost-size-z = 0.5
 
 #  collision shape params
 #---------------------------
 [ collision ]
-com_ofs_L = 0.02
-com_ofs_H = -0.0
+com_ofs_L = 0.05
+com_ofs_H = 0.08
 radius = 0.364
 width = 0.50
 height = 0.4
@@ -42,23 +42,23 @@ posLfront = 1.57
 offsetL = 0.0
 offsetW = -0.02
 offsetH = 0.14
-start-offsetY = 0.88
+start-offsetY = 0.78
 fluidTrigH = 0.0
-friction = 0.4
+friction = 0.2
 
 
 #  engine
 #---------------------------
 [ engine ]
-position = 0.0, 0.52, 0.25
-mass = 230.0
+position = 0.0, 0.52, 0.05
+mass = 130.0
 rpm-limit = 8000
 inertia = 0.30
 start-rpm = 1000
 stall-rpm = 650
 fuel-consumption = 1e-9
 friction = 230
-torque-val-mul = 0.75
+torque-val-mul = 0.6
 torque-curve-00 = 1000, 293
 torque-curve-01 = 1500, 358
 torque-curve-02 = 2000, 394
@@ -96,7 +96,7 @@ shift-delay = 0.08
 
 [ differential ]
 final-drive = 7.0
-anti-slip = 550.0
+anti-slip = 350.0
 
 [ fuel-tank ]
 position = -0.02, -0.66, -0.26
@@ -137,29 +137,29 @@ radius = 0.50
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 2.1
 tread = 0.0
-width-trail = 0.4
+width-trail = 0.6
 
 [ tire-rear ]
 radius = 0.52
 rolling-resistance = 1.3e-2, 6.5e-6
-rotational-inertia = 3.3
+rotational-inertia = 2.3
 tread = 0.0
-width-trail = 0.75
+width-trail = 0.8
 
 
 #  brakes
 #---------------------------
 [ brakes-front ]
 friction = 1.03
-max-pressure = 2.5e6
-bias = 0.75
+max-pressure = 3.5e6
+bias = 0.7
 radius = 0.17
 area = 0.019
 
 [ brakes-rear ]
 friction = 1.03
-max-pressure = 3.1e6
-bias = 0.45
+max-pressure = 3.5e6
+bias = 0.5
 radius = 0.14
 area = 0.019
 handbrake = 3.1
@@ -188,11 +188,11 @@ lift-coefficient = -3.0
 efficiency = 0.95
 
 [ wing-rear ]
-position = 0.0, -1.32, 0.30
+position = 0.0, -1.35, 0.30
 frontal-area = 0.0
 drag-coefficient = 0.0
 surface-area = 0.6
-lift-coefficient = -2.8
+lift-coefficient = -2.9
 efficiency = 0.95
 
 
@@ -229,17 +229,17 @@ hinge = 0,0,0
 # (for car total mass and inertia) also use engine mass and position
 #---------------------------
 [ particle-00 ]  # front
-mass = 200.0
-position =  0.4, 1.0, -0.046
+mass = 210.0
+position =  0.5, 1.0, -0.04
 
 [ particle-01 ]
-mass = 200.0
-position = -0.4, 1.0, -0.046
+mass = 210.0
+position = -0.5, 1.0, -0.04
 
 [ particle-02 ]  # rear
-mass = 200.0
-position =  0.4, -1.0, -0.046
+mass = 210.0
+position =  0.5, -1.0, -0.04
 
 [ particle-03 ]
-mass = 200.0
-position = -0.4, -1.0, -0.046
+mass = 210.0
+position = -0.5, -1.0, -0.04
