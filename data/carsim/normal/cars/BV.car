@@ -1,5 +1,5 @@
 drive = FWD
-version = 2
+wheels = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
@@ -132,12 +132,19 @@ factors-file = first
 
 #  tires (more in .tire)
 #---------------------------
-[ tire-both ]
-radius = 0.49
+[ tire-front ]
+radius = 0.50
+rolling-resistance = 1.3e-2, 6.5e-6
+rotational-inertia = 2.1
+tread = 0.0
+width-trail = 0.4
+
+[ tire-rear ]
+radius = 0.52
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 3.3
 tread = 0.0
-width-trail = 0.55
+width-trail = 0.75
 
 
 #  brakes
