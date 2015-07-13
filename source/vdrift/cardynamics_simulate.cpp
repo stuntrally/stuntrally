@@ -5,7 +5,7 @@
 #include "../ogre/common/Def_Str.h"
 
 
-//  set the steering angle to "value", where 1.0 is maximum right lock and -1.0 is maximum left lock.
+//  set the steering angle,  left -1..1 right
 void CARDYNAMICS::SetSteering(const Dbl value1, const float range_mul)
 {
 	/// <><> damage reduce
@@ -18,19 +18,19 @@ void CARDYNAMICS::SetSteering(const Dbl value1, const float range_mul)
 	{	wheel[FRONT_LEFT].SetSteerAngle( steerangle );
 		return;
 	}
-	//ackermann stuff
-	//for (int i=0; i < 2; ++i)  // todo 2 steer axles
+	// ackermann stuff
+	bool ax2 = numWheels >= 6;  // 2 front steering axles // todo: par in .car
+	int ii = ax2 ? 2 : 1;
+	for (int i=0; i < ii; ++i)
 	{
 		WHEEL_POSITION wl = FRONT_LEFT, wr = FRONT_RIGHT, rear = REAR_LEFT;
-		//if (i == 1) {  wl = REAR_LEFT;  wr = REAR_RIGHT;  rear = REAR2_LEFT;  }
-		//if (i == 0 && numWheels > 6)  rear = 
+		if (i == 1) {  wl = REAR_LEFT;  wr = REAR_RIGHT;  rear = REAR2_LEFT;  }
+		//if (i == 1) {  wl = REAR2_LEFT;  wr = REAR2_RIGHT;  rear = REAR_LEFT;  }  // rear steer // par
 
 		Dbl alpha = std::abs( steerangle * PI_d/180.0 );  //outside wheel steering angle in radians
-		Dbl dB = wheel[wl].GetExtendedPosition()[1]
-			   - wheel[wr].GetExtendedPosition()[1];  //distance between front wheels
-		Dbl dL = wheel[wl].GetExtendedPosition()[0]
-			   - wheel[rear].GetExtendedPosition()[0];  //distance between front and rear wheels
-		Dbl beta = atan2(1.0, 1.0 / tan(alpha) - dB/dL );  //inside wheel steering angle in radians
+		Dbl dW = wheel[wl].GetExtendedPosition()[1] - wheel[wr].GetExtendedPosition()[1];  // distance between front wheels
+		Dbl dL = wheel[wl].GetExtendedPosition()[0] - wheel[rear].GetExtendedPosition()[0];  // distance between front and rear wheels
+		Dbl beta = atan2(1.0, 1.0 / tan(alpha) - dW / fabs(dL) );  //inside wheel steering angle in radians
 
 		Dbl left = 0, right = 0;  // wheel angle
 
@@ -38,6 +38,7 @@ void CARDYNAMICS::SetSteering(const Dbl value1, const float range_mul)
 		else			{	right = -alpha;	left = -beta;	}
 
 		left *= 180.0/PI_d;  right *= 180.0/PI_d;
+		//if (i==1)  {  left *= -1.0;  right *= -1.0;  }  // inversed rear axle steer // par
 
 		wheel[wl].SetSteerAngle( left );
 		wheel[wr].SetSteerAngle( right );
@@ -350,10 +351,10 @@ void CARDYNAMICS::CalculateDriveTorque(Dbl * wheel_drive_torque, Dbl clutch_torq
 		wheel_drive_torque[FRONT_RIGHT] = diff_front.GetSide2Torque();
 		wheel_drive_torque[REAR_LEFT] = diff_rear.GetSide1Torque();
 		wheel_drive_torque[REAR_RIGHT] = diff_rear.GetSide2Torque();
-		if (numWheels > 4) {  //todo: 6x6, 8x8 drive, diffs ..
+		/*if (numWheels > 4) {  //todo: 6x6, 8x8 drive, diffs ..
 		wheel_drive_torque[REAR2_LEFT] = diff_rear.GetSide1Torque();
 		wheel_drive_torque[REAR2_RIGHT] = diff_rear.GetSide2Torque();  }
-		if (numWheels > 6) {
+		/*if (numWheels > 6) {
 		wheel_drive_torque[REAR3_LEFT] = diff_rear.GetSide1Torque();
 		wheel_drive_torque[REAR3_RIGHT] = diff_rear.GetSide2Torque();  }/**/
 	}

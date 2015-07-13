@@ -287,25 +287,23 @@ void CarModel::LoadConfig(const string & pathCar)
 
 
 	//  tire params
-	WHEEL_POSITION left = FRONT_LEFT, right = FRONT_RIGHT;
-	float value;
-	bool both = cf.GetParam("tire-both.radius", value);
-	string posstr = both ? "both" : "front";
+	float val;
+	bool both = cf.GetParam("tire-both.radius", val);
 
-	for (i=0; i < numWheels/2; ++i)
+	int ii = std::max(2, numWheels/2);
+	for (i=0; i < ii; ++i)
 	{
-		if (i==1){  left = REAR_LEFT;  right = REAR_RIGHT;  if (!both)  posstr = "rear";  } else
-		if (i==2){  left = REAR2_LEFT;  right = REAR2_RIGHT;  if (!both)  posstr = "rear";/*2?*/  } else
-		if (i==3){  left = REAR3_LEFT;  right = REAR3_RIGHT;  if (!both)  posstr = "rear";/*3?*/  }
+		WHEEL_POSITION wl, wr;  string pos;
+		CARDYNAMICS::GetWPosStr(i, numWheels, wl, wr, pos);
+		if (both)  pos = "both";
+		
 		float radius;
-		cf.GetParam("tire-"+posstr+".radius", radius, pGame->error_output);
-		whRadius[left] = radius;
-		whRadius[right] = radius;
+		cf.GetParam("tire-"+pos+".radius", radius, pGame->error_output);
+		whRadius[wl] = radius;  whRadius[wr] = radius;
 		
 		float width = 0.2f;
-		cf.GetParam("tire-"+posstr+".width-trail", width);
-		whWidth[left] = width;
-		whWidth[right] = width;
+		cf.GetParam("tire-"+pos+".width-trail", width);
+		whWidth[wl] = width;  whWidth[wr] = width;
 	}
 	
 	//  wheel pos
@@ -315,13 +313,12 @@ void CarModel::LoadConfig(const string & pathCar)
 	for (i = 0; i < numWheels; ++i)
 	{
 		string sPos = sCfgWh[i];
-
-		float pos[3];
-		MATHVECTOR<float,3> vec;
+		float pos[3];  MATHVECTOR<float,3> vec;
 
 		cf.GetParam("wheel-"+sPos+".position", pos, pGame->error_output);
 		if (version == 2)  ConvertV2to1(pos[0],pos[1],pos[2]);
 		vec.Set(pos[0],pos[1], pos[2]);
+		
 		whPos[i] = vec;
 	}
 	//  steer angle

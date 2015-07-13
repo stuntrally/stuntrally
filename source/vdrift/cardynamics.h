@@ -139,6 +139,8 @@ public:
 
 	// print debug info to the given ostream.  set p1, p2, etc if debug info part 1, and/or part 2, etc is desired
 	void DebugPrint(std::ostream & out, bool p1, bool p2, bool p3, bool p4);
+	// common tool for reading .car tags
+	static void GetWPosStr(int axle, int numWheels, WHEEL_POSITION& wl, WHEEL_POSITION& wr, std::string& pos);
 
 public:
 	///  camera bounce
@@ -177,7 +179,7 @@ public:
 	void SimulateSpaceship(Dbl dt), SimulateSphere(Dbl dt);
 	std::string sHov;
 
-	///  -- sim params (from .car)
+	///  -- spaceship sim params (from .car)
 	struct HoverPar
 	{
 		float hAbove, hRayLen;

@@ -66,10 +66,10 @@ bool CAR::Load(class App* pApp1,
 
 	cartype = carname;
 	bRemoteCar = isRemote;  id = idCar;
-	std::stringstream nullout;
-	std::string carpath = PATHMANAGER::Cars()+"/"+carname+"/";  // orig dir for .joe
+	std::string carpath = PATHMANAGER::Cars()+"/"+carname+"/";
 
-	#if 0  // .joe meshes
+	#if 0  // .joe meshes old
+	std::stringstream nullout;
 	if (!LoadInto( carpath+"body.joe", bodymodel, error_output)) ;
 	if (!LoadInto( carpath+"interior.joe", interiormodel, nullout )) ;
 	if (!LoadInto( carpath+"glass.joe", glassmodel, nullout )) ;

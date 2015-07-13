@@ -99,6 +99,20 @@ static void ConvertV2to1(float & x, float & y, float & z)
 	x = ty;  y = -tx;  z = tz;
 }
 
+//  common
+void CARDYNAMICS::GetWPosStr(int i, int numWheels, WHEEL_POSITION& wl, WHEEL_POSITION& wr, string& pos)
+{
+	if (numWheels == 2)
+	{	if (i==0){	wl = wr = FRONT_LEFT;   pos = "front";  } else
+		if (i==1){	wl = wr = FRONT_RIGHT;  pos = "rear";   }
+	}else
+	{	if (i==0){	wl = FRONT_LEFT;  wr = FRONT_RIGHT;  pos = "front";  } else
+		if (i==1){	wl = REAR_LEFT;   wr = REAR_RIGHT;   pos = "rear";   } else
+		if (i==2){	wl = REAR2_LEFT;  wr = REAR2_RIGHT;  pos = "rear2";  } else
+		if (i==3){	wl = REAR3_LEFT;  wr = REAR3_RIGHT;  pos = "rear2";/*3*/  }
+	}
+}
+
 
 //----------------------------------------------------------------------------------------------------------------------------------
 ///  Load  (.car file)
@@ -240,23 +254,17 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 		c.GetParam("diff-center.final-drive", a))
 	{
 		c.GetParam("diff-rear.anti-slip", a, error_output);
-		c.GetParam("diff-rear.torque", a_tq);
-		c.GetParam("diff-rear.torque-dec", a_tq_dec);
-		diff_rear.SetFinalDrive(1.0);
-		diff_rear.SetAntiSlip(a, a_tq, a_tq_dec);
+		c.GetParam("diff-rear.torque", a_tq);  c.GetParam("diff-rear.torque-dec", a_tq_dec);
+		diff_rear.SetFinalDrive(1.0);  diff_rear.SetAntiSlip(a, a_tq, a_tq_dec);
 
 		c.GetParam("diff-front.anti-slip", a, error_output);
-		c.GetParam("diff-front.torque", a_tq);
-		c.GetParam("diff-front.torque-dec", a_tq_dec);
-		diff_front.SetFinalDrive(1.0);
-		diff_front.SetAntiSlip(a, a_tq, a_tq_dec);
+		c.GetParam("diff-front.torque", a_tq);  c.GetParam("diff-front.torque-dec", a_tq_dec);
+		diff_front.SetFinalDrive(1.0);  diff_front.SetAntiSlip(a, a_tq, a_tq_dec);
 
 		c.GetParam("diff-center.final-drive", final_drive, error_output);
 		c.GetParam("diff-center.anti-slip", a, error_output);
-		c.GetParam("diff-center.torque", a_tq);
-		c.GetParam("diff-center.torque-dec", a_tq_dec);
-		diff_center.SetFinalDrive(final_drive);
-		diff_center.SetAntiSlip(a, a_tq, a_tq_dec);
+		c.GetParam("diff-center.torque", a_tq);  c.GetParam("diff-center.torque-dec", a_tq_dec);
+		diff_center.SetFinalDrive(final_drive);  diff_center.SetAntiSlip(a, a_tq, a_tq_dec);
 	}
 	else  // old 1 for all
 	{
@@ -292,45 +300,31 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 	}
 
 	//load the brake
-	{	int ii = numWheels == 2 ? 2 : numWheels/2;
+	{	int ii = std::max(2, numWheels/2);
 		for (int i = 0; i < ii; ++i)
 		{
-			string pos;
-			WHEEL_POSITION left, right;
-			if (numWheels == 2)
-			{	left = right = FRONT_LEFT;  pos = "front";
-				if (i == 1)	{	left = right = FRONT_RIGHT;  pos = "rear";  }
-			}else
-			{	left = FRONT_LEFT;  right = FRONT_RIGHT;  pos = "front";
-				if (i == 1)	{	left = REAR_LEFT;  right = REAR_RIGHT;  pos = "rear";  } else
-				if (i == 2)	{	left = REAR2_LEFT;  right = REAR2_RIGHT;  pos = "rear2";  } else
-				if (i == 3)	{	left = REAR3_LEFT;  right = REAR3_RIGHT;  pos = "rear2";  }
-			}
-			float friction, max_pressure, area, bias, radius, handbrake(0);
+			WHEEL_POSITION wl, wr;  string pos;
+			GetWPosStr(i, numWheels, wl, wr, pos);
+
+			float friction, max_pressure, area, bias, radius, handbrake = 0.f;
 
 			if (!c.GetParam("brakes-"+pos+".friction", friction, error_output))  return false;
-			brake[left].SetFriction(friction);
-			brake[right].SetFriction(friction);
+			brake[wl].SetFriction(friction);  brake[wr].SetFriction(friction);
 
 			if (!c.GetParam("brakes-"+pos+".area", area, error_output))  return false;
-			brake[left].SetArea(area);
-			brake[right].SetArea(area);
+			brake[wl].SetArea(area);  brake[wr].SetArea(area);
 
 			if (!c.GetParam("brakes-"+pos+".radius", radius, error_output))  return false;
-			brake[left].SetRadius(radius);
-			brake[right].SetRadius(radius);
+			brake[wl].SetRadius(radius);  brake[wr].SetRadius(radius);
 
 			c.GetParam("brakes-"+pos+".handbrake", handbrake);
-			brake[left].SetHandbrake(handbrake);
-			brake[right].SetHandbrake(handbrake);
+			brake[wl].SetHandbrake(handbrake);  brake[wr].SetHandbrake(handbrake);
 
 			if (!c.GetParam("brakes-"+pos+".bias", bias, error_output))  return false;
-			brake[left].SetBias(bias);
-			brake[right].SetBias(bias);
+			brake[wl].SetBias(bias);  brake[wr].SetBias(bias);
 
 			if (!c.GetParam("brakes-"+pos+".max-pressure", max_pressure, error_output))  return false;
-			brake[left].SetMaxPressure(max_pressure*bias);
-			brake[right].SetMaxPressure(max_pressure*bias);
+			brake[wl].SetMaxPressure(max_pressure*bias);  brake[wr].SetMaxPressure(max_pressure*bias);
 		}
 	}
 
@@ -360,76 +354,65 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 	{
 		for (int i = 0; i < numWheels/2; i++)
 		{
-			string posstr = "front", posshortstr = "F";
-			WHEEL_POSITION posl = FRONT_LEFT, posr = FRONT_RIGHT;
-			if (i >= 1){  posstr = "rear";  posshortstr = "R";  posl = REAR_LEFT;  posr = REAR_RIGHT;  } /*else
-			if (i == 2){  posstr = "rear2";  posshortstr = "R2";  posl = REAR2_LEFT;  posr = REAR2_RIGHT;  }*/
+			string pos = "front", possh = "F";  WHEEL_POSITION wl = FRONT_LEFT, wr = FRONT_RIGHT;
+			if (i >= 1){  pos = "rear";  possh = "R";  wl = REAR_LEFT;  wr = REAR_RIGHT;  }
+			if (i == 2){  wl = REAR2_LEFT;  wr = REAR2_RIGHT;  } else
+			if (i == 3){  wl = REAR3_LEFT;  wr = REAR3_RIGHT;  }
 
 			float spring_constant, bounce, rebound, travel, camber, caster, toe, anti_roll;//, maxcompvel;
-			float hinge[3];
-			MATHVECTOR<double,3> tempvec;
 
-			if (!c.GetParam("suspension-"+posstr+".spring-constant", spring_constant, error_output))  return false;
-			suspension[posl].SetSpringConstant(spring_constant);
-			suspension[posr].SetSpringConstant(spring_constant);
+			if (!c.GetParam("suspension-"+pos+".spring-constant", spring_constant, error_output))  return false;
+			suspension[wl].SetSpringConstant(spring_constant);  suspension[wr].SetSpringConstant(spring_constant);
 
-			if (!c.GetParam("suspension-"+posstr+".bounce", bounce, error_output))  return false;
-			suspension[posl].SetBounce(bounce);
-			suspension[posr].SetBounce(bounce);
+			if (!c.GetParam("suspension-"+pos+".bounce", bounce, error_output))  return false;
+			suspension[wl].SetBounce(bounce);  suspension[wr].SetBounce(bounce);
 
-			if (!c.GetParam("suspension-"+posstr+".rebound", rebound, error_output))  return false;
-			suspension[posl].SetRebound(rebound);
-			suspension[posr].SetRebound(rebound);
+			if (!c.GetParam("suspension-"+pos+".rebound", rebound, error_output))  return false;
+			suspension[wl].SetRebound(rebound);  suspension[wr].SetRebound(rebound);
 
 			string file;
-			if (c.GetParam("suspension-"+posstr+".factors-file", file))
+			if (c.GetParam("suspension-"+pos+".factors-file", file))
 			{
 				int id = game->suspS_map[file]-1;
 				if (id == -1)  {  id = 0;
 					error_output << "Can't find suspension spring factors file: " << file << endl;  }
 
-				suspension[posl].SetSpringFactorPoints(game->suspS[id]);
-				suspension[posr].SetSpringFactorPoints(game->suspS[id]);
+				suspension[wl].SetSpringFactorPoints(game->suspS[id]);  suspension[wr].SetSpringFactorPoints(game->suspS[id]);
 
 				id = game->suspD_map[file]-1;
 				if (id == -1)  {  id = 0;
 					error_output << "Can't find suspension damper factors file: " << file << endl;  }
 				
-				suspension[posl].SetDamperFactorPoints(game->suspD[id]);
-				suspension[posr].SetDamperFactorPoints(game->suspD[id]);
+				suspension[wl].SetDamperFactorPoints(game->suspD[id]);  suspension[wr].SetDamperFactorPoints(game->suspD[id]);
 			}else
 			{	//  factor points
 				vector <pair <double, double> > damper, spring;
-				c.GetPoints("suspension-"+posstr, "damper-factor", damper);
-				suspension[posl].SetDamperFactorPoints(damper);
-				suspension[posr].SetDamperFactorPoints(damper);
+				c.GetPoints("suspension-"+pos, "damper-factor", damper);
+				suspension[wl].SetDamperFactorPoints(damper);  suspension[wr].SetDamperFactorPoints(damper);
 
-				c.GetPoints("suspension-"+posstr, "spring-factor", spring);
-				suspension[posl].SetSpringFactorPoints(spring);
-				suspension[posr].SetSpringFactorPoints(spring);
+				c.GetPoints("suspension-"+pos, "spring-factor", spring);
+				suspension[wl].SetSpringFactorPoints(spring);  suspension[wr].SetSpringFactorPoints(spring);
 			}
 
-			if (!c.GetParam("suspension-"+posstr+".travel", travel, error_output))  return false;
-			suspension[posl].SetTravel(travel);
-			suspension[posr].SetTravel(travel);
+			if (!c.GetParam("suspension-"+pos+".travel", travel, error_output))  return false;
+			suspension[wl].SetTravel(travel);  suspension[wr].SetTravel(travel);
 
-			if (!c.GetParam("suspension-"+posstr+".camber", camber, error_output))  return false;
-			suspension[posl].SetCamber(camber);
-			suspension[posr].SetCamber(camber);
+			if (!c.GetParam("suspension-"+pos+".camber", camber, error_output))  return false;
+			suspension[wl].SetCamber(camber);  suspension[wr].SetCamber(camber);
 
-			if (!c.GetParam("suspension-"+posstr+".caster", caster, error_output))  return false;
-			suspension[posl].SetCaster(caster);
-			suspension[posr].SetCaster(caster);
+			if (!c.GetParam("suspension-"+pos+".caster", caster, error_output))  return false;
+			suspension[wl].SetCaster(caster);  suspension[wr].SetCaster(caster);
 
-			if (!c.GetParam("suspension-"+posstr+".toe", toe, error_output))  return false;
-			suspension[posl].SetToe(toe);
-			suspension[posr].SetToe(toe);
+			if (!c.GetParam("suspension-"+pos+".toe", toe, error_output))  return false;
+			suspension[wl].SetToe(toe);  suspension[wr].SetToe(toe);
 
-			if (!c.GetParam("suspension-"+posstr+".anti-roll", anti_roll, error_output))  return false;
-			suspension[posl].SetAntiRollK(anti_roll);
-			suspension[posr].SetAntiRollK(anti_roll);
+			if (!c.GetParam("suspension-"+pos+".anti-roll", anti_roll, error_output))  return false;
+			suspension[wl].SetAntiRollK(anti_roll);  suspension[wr].SetAntiRollK(anti_roll);
 
-			if (!c.GetParam("suspension-"+posshortstr+"L.hinge", hinge, error_output))  return false;
+			//  hinge
+			float hinge[3];  MATHVECTOR<Dbl,3> vec;
+
+			if (!c.GetParam("suspension-"+possh+"L.hinge", hinge, error_output))  return false;
 			//cap hinge to reasonable values
 			for (int i = 0; i < 3; i++)
 			{
@@ -437,18 +420,18 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 				if (hinge[i] > 100)		hinge[i] = 100;
 			}
 			if (version == 2)  ConvertV2to1(hinge[0],hinge[1],hinge[2]);
-			tempvec.Set(hinge[0],hinge[1], hinge[2]);
-			suspension[posl].SetHinge(tempvec);
+			vec.Set(hinge[0],hinge[1], hinge[2]);
+			suspension[wl].SetHinge(vec);
 
-			if (!c.GetParam("suspension-"+posshortstr+"R.hinge", hinge, error_output))  return false;
+			if (!c.GetParam("suspension-"+possh+"R.hinge", hinge, error_output))  return false;
 			for (int i = 0; i < 3; i++)
 			{
 				if (hinge[i] < -100)	hinge[i] = -100;
 				if (hinge[i] > 100)		hinge[i] = 100;
 			}
 			if (version == 2)  ConvertV2to1(hinge[0],hinge[1],hinge[2]);
-			tempvec.Set(hinge[0],hinge[1], hinge[2]);
-			suspension[posr].SetHinge(tempvec);
+			vec.Set(hinge[0],hinge[1], hinge[2]);
+			suspension[wr].SetHinge(vec);
 		}
 	}
 
@@ -460,8 +443,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 			WHEEL_POSITION wp = WHEEL_POSITION(i);
 
 			float roll_h, mass;
-			float pos[3];
-			MATHVECTOR<double,3> vec;
+			float pos[3];  MATHVECTOR<Dbl,3> vec;
 
 			if (!c.GetParam("wheel-"+sPos+".mass", mass, error_output))  return false;
 			wheel[wp].SetMass(mass);
@@ -494,26 +476,25 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 
 	//load the tire parameters
 	{
-		WHEEL_POSITION left = FRONT_LEFT, right = FRONT_RIGHT;
 		float val;
 		bool both = c.GetParam("tire-both.radius", val);
-		string posstr = both ? "both" : "front";
 
-		for (int p = 0; p < numWheels/2; ++p)
+		int ii = std::max(2, numWheels/2);
+		for (int i = 0; i < ii; ++i)
 		{
-			if (p == 1)	{		left = REAR_LEFT;  right = REAR_RIGHT;  if (!both)  posstr = "rear";  }
-			else if (p == 2){	left = REAR2_LEFT;  right = REAR2_RIGHT;  if (!both)  posstr = "rear2";  }
-			else if (p == 3){	left = REAR3_LEFT;  right = REAR3_RIGHT;  if (!both)  posstr = "rear2";  }
+			WHEEL_POSITION wl, wr;  string pos;
+			GetWPosStr(i, numWheels, wl, wr, pos);
+			if (both)  pos = "both";
 
 			float rolling_resistance[3];
-			if (!c.GetParam("tire-"+posstr+".rolling-resistance", rolling_resistance, error_output))  return false;
-			wheel[left].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
-			wheel[right].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
+			if (!c.GetParam("tire-"+pos+".rolling-resistance", rolling_resistance, error_output))  return false;
+			wheel[wl].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
+			wheel[wr].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
 
 			float radius;
-			if (!c.GetParam("tire-"+posstr+".radius", radius, error_output))  return false;
-			wheel[left].SetRadius(radius);
-			wheel[right].SetRadius(radius);
+			if (!c.GetParam("tire-"+pos+".radius", radius, error_output))  return false;
+			wheel[wl].SetRadius(radius);
+			wheel[wr].SetRadius(radius);
 		}
 	}
 
@@ -605,9 +586,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 
 		for (int i = 0; i < 2; i++)
 		{
-			string wingpos = "front";
-			if (i == 1)
-				wingpos = "rear";
+			string wingpos = i==1 ? "rear" : "front";
 			if (!c.GetParam("wing-"+wingpos+".frontal-area", drag_area, error_output))  return false;
 			if (!c.GetParam("wing-"+wingpos+".drag-coefficient", drag_c, error_output))  return false;
 			if (!c.GetParam("wing-"+wingpos+".surface-area", lift_area, error_output))  return false;
@@ -669,12 +648,9 @@ void CARDYNAMICS::Init(
 	this->world = &world;
 
 	MATHVECTOR<Dbl,3> zero(0, 0, 0);
-	body.SetPosition(position);
-	body.SetOrientation(orientation);
-	body.SetInitialForce(zero);
-	body.SetInitialTorque(zero);
-	cam_body.SetPosition(zero);
-	cam_body.SetInitialForce(zero);
+	body.SetPosition(position);  body.SetOrientation(orientation);
+	body.SetInitialForce(zero);  body.SetInitialTorque(zero);
+	cam_body.SetPosition(zero);  cam_body.SetInitialForce(zero);
 
 	if (vtype == V_Sphere)
 	{	Ogre::Quaternion q = Axes::toOgre(orientation);
@@ -686,8 +662,7 @@ void CARDYNAMICS::Init(
 
 
 	// init chassis
-	btTransform tr;
-	tr.setIdentity();
+	btTransform tr;  tr.setIdentity();
 
 	AABB <float> box = chassisModel.GetAABB();
 	for (int i = 0; i < numWheels; i++)
