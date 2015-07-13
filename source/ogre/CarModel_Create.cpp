@@ -310,7 +310,7 @@ void CarModel::LoadConfig(const string & pathCar)
 	
 	//  wheel pos
 	//  for track's ghost or garage view
-	int version(1);
+	int version = 2;
 	cf.GetParam("version", version);
 	for (i = 0; i < numWheels; ++i)
 	{

@@ -88,7 +88,7 @@ bool CAR::Load(class App* pApp1,
 	#endif
 
 	// get coordinate system version
-	int version = 1;
+	int version = 2;
 	cf.GetParam("version", version);
 	
 	// wheels count

@@ -116,7 +116,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 
 	//bTerrain = false;
 	string drive = "RWD";
-	int version(1);
+	int version = 2;
 	c.GetParam("version", version);
 	if (version > 2)
 	{

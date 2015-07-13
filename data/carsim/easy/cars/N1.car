@@ -1,5 +1,4 @@
 drive = AWD 
-version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ] 

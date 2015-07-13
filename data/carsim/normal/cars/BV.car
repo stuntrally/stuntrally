@@ -1,5 +1,4 @@
 drive = FWD
-wheels = 2
 version = 2
 # all positions have x,y,z dir going + to: right, front, up
 
@@ -25,9 +24,9 @@ brake-color = 0.8, 0, 0
 
 [ model_ofs ]
 rot_fix = on
-boost-x = 0.1
+boost-x = 0.2
 boost-y = -0.25
-boost-z = 0.1
+boost-z = 0.0
 boost-size-z = 0.6
 
 #  collision shape params

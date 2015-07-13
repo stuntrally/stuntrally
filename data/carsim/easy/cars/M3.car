@@ -1,5 +1,5 @@
 drive = AWD
-# all positions have x,y,z dir going + to: right, front, up
+version = 1
 
 [ steering ]
 max-angle = 25
