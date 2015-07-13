@@ -948,20 +948,15 @@ material Y7_brake
 }
 
 //  BV  -------------------------------
-material BV_glass
-{
-	parent car_glass2
-	diffuseMap BV_glass.png
-}
 material BV_interior
 {
 	parent car_base
 	diffuseMap BV_interior.png
 	//specMap BV_interior_spec.png
-	//reflMap BV_interior_refl.png
-	ambient 0.6 0.6 0.6
-	diffuse 0.6 0.6 0.6
-	specular 0.9 0.9 0.9 24
+	reflMap BV_interior_refl.png
+	ambient 0.4 0.4 0.4
+	diffuse 0.4 0.4 0.4
+	specular 0.8 0.8 0.8 24
 	env_map true
 	fresnel true
 	fresnelScaleBiasPower 0.6 0.15 4
@@ -970,9 +965,14 @@ material BV_wheel
 {
 	parent car_wheel
 	diffuseMap BV_wheel.png
+	normalMap BV_wheel_norm.png
 	reflMap BV_wheel_refl.png
-	specMap BV_wheel_refl.png
-	specular 0.5 0.5 0.5 32
+	bump_scale 0.2
+	ambient 0.8 0.8 0.8
+	diffuse 0.6 0.6 0.6
+	specular 0.3 0.3 0.3 16
 	env_map true
-	refl_amount 0.3
+	//refl_amount 0.3
+	fresnel true
+	fresnelScaleBiasPower 0.6 0.15 4
 }
