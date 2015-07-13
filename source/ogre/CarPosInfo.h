@@ -3,6 +3,7 @@
 #include <OgreQuaternion.h>
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
+#include "../vdrift/cardefs.h"
 
 struct ReplayFrame;
 class CAR;
@@ -19,17 +20,18 @@ struct PosInfo
 	//  car
 	Ogre::Vector3 pos, carY;
 	//  wheel
-	Ogre::Vector3 whPos[4];  //todo: [MAX_WHEELS]
-	Ogre::Quaternion rot, whRot[4];  float whR[4];
+	const static int W = MAX_WHEELS;
+	Ogre::Vector3 whPos[W];
+	Ogre::Quaternion rot, whRot[W];  float whR[W];
 
-	float whVel[4], whSlide[4], whSqueal[4];
-	int whTerMtr[4],whRoadMtr[4];
+	float whVel[W], whSlide[W], whSqueal[W];
+	int whTerMtr[W],whRoadMtr[W];
 
 	float fboost,steer, percent;  char braking;
 	float hov_roll/*= sph_yaw for O*/, hov_throttle;
 
 	//  fluids
-	float whH[4],whAngVel[4], speed, whSteerAng[4];  int whP[4];
+	float whH[W],whAngVel[W], speed, whSteerAng[W];  int whP[W];
 	
 	//  hit sparks
 	float fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;

@@ -295,7 +295,8 @@ void CarModel::LoadConfig(const string & pathCar)
 	for (i=0; i < numWheels/2; ++i)
 	{
 		if (i==1){  left = REAR_LEFT;  right = REAR_RIGHT;  if (!both)  posstr = "rear";  } else
-		if (i==2){  left = REAR2_LEFT;  right = REAR2_RIGHT;  if (!both)  posstr = "rear";/*2?*/  }
+		if (i==2){  left = REAR2_LEFT;  right = REAR2_RIGHT;  if (!both)  posstr = "rear";/*2?*/  } else
+		if (i==3){  left = REAR3_LEFT;  right = REAR3_RIGHT;  if (!both)  posstr = "rear";/*3?*/  }
 		float radius;
 		cf.GetParam("tire-"+posstr+".radius", radius, pGame->error_output);
 		whRadius[left] = radius;

@@ -303,7 +303,8 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 			}else
 			{	left = FRONT_LEFT;  right = FRONT_RIGHT;  pos = "front";
 				if (i == 1)	{	left = REAR_LEFT;  right = REAR_RIGHT;  pos = "rear";  } else
-				if (i == 2)	{	left = REAR2_LEFT;  right = REAR2_RIGHT;  pos = "rear2";  }
+				if (i == 2)	{	left = REAR2_LEFT;  right = REAR2_RIGHT;  pos = "rear2";  } else
+				if (i == 3)	{	left = REAR3_LEFT;  right = REAR3_RIGHT;  pos = "rear2";  }
 			}
 			float friction, max_pressure, area, bias, radius, handbrake(0);
 
@@ -487,7 +488,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 		wheel[FRONT_LEFT].SetInertia(front);
 		wheel[FRONT_RIGHT].SetInertia(front);
 
-		for (int i=REAR_LEFT; i <= REAR2_RIGHT; ++i)
+		for (int i=REAR_LEFT; i <= REAR3_RIGHT; ++i)
 			if (i < numWheels)	wheel[i].SetInertia(rear);
 	}
 
@@ -502,6 +503,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c, ostream & error_output)
 		{
 			if (p == 1)	{		left = REAR_LEFT;  right = REAR_RIGHT;  if (!both)  posstr = "rear";  }
 			else if (p == 2){	left = REAR2_LEFT;  right = REAR2_RIGHT;  if (!both)  posstr = "rear2";  }
+			else if (p == 3){	left = REAR3_LEFT;  right = REAR3_RIGHT;  if (!both)  posstr = "rear2";  }
 
 			float rolling_resistance[3];
 			if (!c.GetParam("tire-"+posstr+".rolling-resistance", rolling_resistance, error_output))  return false;

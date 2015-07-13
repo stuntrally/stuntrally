@@ -19,22 +19,29 @@ void CARDYNAMICS::SetSteering(const Dbl value1, const float range_mul)
 		return;
 	}
 	//ackermann stuff
-	Dbl alpha = std::abs( steerangle * PI_d/180.0 );  //outside wheel steering angle in radians
-	Dbl B = wheel[FRONT_LEFT].GetExtendedPosition()[1]
-		  - wheel[FRONT_RIGHT].GetExtendedPosition()[1];  //distance between front wheels
-	Dbl L = wheel[FRONT_LEFT].GetExtendedPosition()[0]
-		  - wheel[REAR_LEFT].GetExtendedPosition()[0];  //distance between front and rear wheels
-	Dbl beta = atan2(1.0, 1.0 / tan(alpha) - B/L );  //inside wheel steering angle in radians
+	//for (int i=0; i < 2; ++i)  // todo 2 steer axles
+	{
+		WHEEL_POSITION wl = FRONT_LEFT, wr = FRONT_RIGHT, rear = REAR_LEFT;
+		//if (i == 1) {  wl = REAR_LEFT;  wr = REAR_RIGHT;  rear = REAR2_LEFT;  }
+		//if (i == 0 && numWheels > 6)  rear = 
 
-	Dbl left = 0, right = 0;  // wheel angle
+		Dbl alpha = std::abs( steerangle * PI_d/180.0 );  //outside wheel steering angle in radians
+		Dbl dB = wheel[wl].GetExtendedPosition()[1]
+			   - wheel[wr].GetExtendedPosition()[1];  //distance between front wheels
+		Dbl dL = wheel[wl].GetExtendedPosition()[0]
+			   - wheel[rear].GetExtendedPosition()[0];  //distance between front and rear wheels
+		Dbl beta = atan2(1.0, 1.0 / tan(alpha) - dB/dL );  //inside wheel steering angle in radians
 
-	if (value >= 0)	{	left = alpha;	right = beta;	}
-	else			{	right = -alpha;	left = -beta;	}
+		Dbl left = 0, right = 0;  // wheel angle
 
-	left *= 180.0/PI_d;  right *= 180.0/PI_d;
+		if (value >= 0)	{	left = alpha;	right = beta;	}
+		else			{	right = -alpha;	left = -beta;	}
 
-	wheel[FRONT_LEFT].SetSteerAngle( left );
-	wheel[FRONT_RIGHT].SetSteerAngle( right );
+		left *= 180.0/PI_d;  right *= 180.0/PI_d;
+
+		wheel[wl].SetSteerAngle( left );
+		wheel[wr].SetSteerAngle( right );
+	}
 }
 
 
@@ -260,7 +267,7 @@ void CARDYNAMICS::ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR<D
 		{
 			MATHVECTOR <float,3> n = wheel_contact[w].GetNormal();
 			MATHVECTOR <float,3> t = dn.cross(n);
-			(-Orientation()).RotateVector(t);  btq = t;
+			(-Orientation()).RotateVector(t);
 			Dbl x = t[0] * -1000. * v * 22 * dmg;  ///par in .car ...
 			MATHVECTOR<Dbl,3> v(x,0,0);
 			Orientation().RotateVector(v);
@@ -343,8 +350,12 @@ void CARDYNAMICS::CalculateDriveTorque(Dbl * wheel_drive_torque, Dbl clutch_torq
 		wheel_drive_torque[FRONT_RIGHT] = diff_front.GetSide2Torque();
 		wheel_drive_torque[REAR_LEFT] = diff_rear.GetSide1Torque();
 		wheel_drive_torque[REAR_RIGHT] = diff_rear.GetSide2Torque();
-		//wheel_drive_torque[REAR2_LEFT] = diff_rear.GetSide1Torque();
-		//wheel_drive_torque[REAR2_RIGHT] = diff_rear.GetSide2Torque();
+		if (numWheels > 4) {  //todo: 6x6, 8x8 drive, diffs ..
+		wheel_drive_torque[REAR2_LEFT] = diff_rear.GetSide1Torque();
+		wheel_drive_torque[REAR2_RIGHT] = diff_rear.GetSide2Torque();  }
+		if (numWheels > 6) {
+		wheel_drive_torque[REAR3_LEFT] = diff_rear.GetSide1Torque();
+		wheel_drive_torque[REAR3_RIGHT] = diff_rear.GetSide2Torque();  }/**/
 	}
 
 	for (int i = 0; i < numWheels; ++i)  assert(!isnan( wheel_drive_torque[WHEEL_POSITION(i)] ));

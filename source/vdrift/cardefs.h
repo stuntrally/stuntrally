@@ -4,9 +4,10 @@ enum WHEEL_POSITION
 {
 	FRONT_LEFT,	FRONT_RIGHT,
 	REAR_LEFT,	REAR_RIGHT,
-	REAR2_LEFT, REAR2_RIGHT
+	REAR2_LEFT, REAR2_RIGHT,
+	REAR3_LEFT, REAR3_RIGHT
 };
-const int MAX_WHEELS = 6;
+const int MAX_WHEELS = 8;
 
 enum VehicleType
 {
@@ -42,6 +43,6 @@ static bool isnan(float number)  {  return (number != number);  }
 static bool isnan(double number) {  return (number != number);  }
 #endif
 
-const static char sCfgWh[MAX_WHEELS][4] = {"FL","FR","RL","RR","RL2","RR2"};  // .car config wheel names
+const static char sCfgWh[MAX_WHEELS][4] = {"FL","FR","RL","RR","RL2","RR2","RL3","RR3"};  // .car config wheel names
 
 const int PAR_BOOST = 2, PAR_THRUST = 4;  // max particles for boost and spc thrusters

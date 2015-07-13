@@ -210,11 +210,6 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 			
 			out << "inertia: roll " << inertia[0] << " pitch " << inertia[4] << " yaw " << inertia[8] << endl;
 
-			if (numWheels == 2)
-			{
-			out.precision(3);
-			out << "bTq: " << btq[0] << " " << btq[1] << " " << btq[2]  << endl;
-			}
 			//out << "inertia: " << inertia[0] <<" "<< inertia[4] <<" "<< inertia[8] <<" < "<< inertia[1] <<" "<< inertia[2] <<" "<< inertia[3] <<" "<< inertia[5] <<" "<< inertia[6] <<" "<< inertia[7] << endl;
 			//MATHVECTOR<Dbl,3> av = GetAngularVelocity();  Orientation().RotateVector(av);
 			//out << "ang vel: " << fToStr(av[0],2,5) <<" "<< fToStr(av[1],2,5) <<" "<< fToStr(av[2],2,5) << endl;

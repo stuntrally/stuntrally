@@ -176,7 +176,6 @@ public:
 
 	void SimulateSpaceship(Dbl dt), SimulateSphere(Dbl dt);
 	std::string sHov;
-	MATHVECTOR<float,3> btq;  //dbg only-
 
 	///  -- sim params (from .car)
 	struct HoverPar
