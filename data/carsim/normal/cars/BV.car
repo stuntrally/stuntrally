@@ -3,13 +3,13 @@ wheels = 2
 # all positions have x,y,z dir going + to: right, front, up
 
 [ steering ]
-max-angle = 27
+max-angle = 25
 angular-damping = 0.0
 
 [ rot_drag ]
 roll  = 650.0
 pitch = 550.0
-yaw   = 400.0
+yaw   = 600.0
 yaw2  = 0.5
 
 [ flares ]
@@ -151,17 +151,17 @@ width-trail = 0.8
 #---------------------------
 [ brakes-front ]
 friction = 1.03
-max-pressure = 3.5e6
-bias = 0.7
-radius = 0.17
-area = 0.019
+max-pressure = 3.1e6
+bias = 0.6
+radius = 0.3
+area = 0.03
 
 [ brakes-rear ]
 friction = 1.03
-max-pressure = 3.5e6
-bias = 0.5
-radius = 0.14
-area = 0.019
+max-pressure = 3.1e6
+bias = 0.4
+radius = 0.3
+area = 0.03
 handbrake = 3.1
 
 
