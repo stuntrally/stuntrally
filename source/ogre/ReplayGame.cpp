@@ -75,7 +75,7 @@ ReplayFrame::ReplayFrame() :
 
 Replay::Replay()
 {
-	frames[0].reserve(cDefSize);  //
+	Clear();
 }
 
 //  Init  once per game
@@ -89,10 +89,11 @@ void Replay::InitHeader(const char* track, bool trk_user, const char* car, bool 
 }
 void Replay::Clear()
 {
-	for (int p=0; p < 4; ++p)
-		frames[p].clear();
+	frames.resize(header.numPlayers);
 	for (int p=0; p < header.numPlayers; ++p)
+	{	frames[p].clear();
 		frames[p].reserve(cDefSize);
+	}
 }
 
 
@@ -141,8 +142,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	#endif
 	
 	//  clear
-	for (int p=0; p < 4; ++p)
-		frames[p].clear();
+	Clear();
 	
 	//  only get last frame for time len info, ?save len in hdr..
 	if (onlyHdr)
@@ -160,11 +160,10 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	}
 	
 	//  frames
-	int i=0;
-	frames[0].reserve(cDefSize);  //?
+	int i=0,p;
 	while (!fi.eof())
 	{
-		for (int p=0; p < header.numPlayers; ++p)
+		for (p=0; p < header.numPlayers; ++p)
 		{
 			ReplayFrame fr;
 			fi.read((char*)&fr, header.frameSize/**/);
@@ -205,10 +204,10 @@ bool Replay::SaveFile(std::string file)
 	of.write(buf,ciRplHdrSize);
 
 	//  frames
-	int s = frames[0].size();
+	int s = frames[0].size(), i,p;
 
-	for (int i=0; i < s; ++i)
-	for (int p=0; p < header.numPlayers; ++p)
+	for (i=0; i < s; ++i)
+	for (p=0; p < header.numPlayers; ++p)
 		of.write((char*)&frames[p][i], sizeof(ReplayFrame));
 
     of.close();
@@ -233,6 +232,7 @@ void Replay::CopyFrom(const Replay& rpl)
 //  last frame time, sec
 const double Replay::GetTimeLength(int carNum) const
 {
+	if (carNum >= frames.size())  return 0.0;
 	int s = frames[carNum].size();
 	return s > 0 ? frames[carNum][s-1].time : 0.0;
 }

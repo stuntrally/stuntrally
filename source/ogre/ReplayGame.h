@@ -152,7 +152,7 @@ public:
 
 	//  inits only basic header data, fill the rest after
 	void InitHeader(const char* track, bool trk_user, const char* car, bool bClear);
-	void Clear();
+	void Clear();  // call this after header.numPlayers change
 	void CopyFrom(const Replay& rpl);
 	void DeleteFrames(int carNum, double fromTime);
 
@@ -160,7 +160,8 @@ public:
 
 	ReplayHeader header;
 private:
-	std::vector<ReplayFrame> frames[4];  // 4 players max
+	typedef std::vector<ReplayFrame> Frames;  // 1 player
+	std::vector<Frames> frames;  // all plrs
 };
 
 
@@ -179,7 +180,7 @@ public:
 
 	void Clear();
 private:
-	std::vector<RewindFrame> frames[4];  // 4 players max
+	std::vector<RewindFrame> frames[4];  // 4 players max (split screen)
 	int idLast[4];  // last index from GetFrame (optym)
 };
 

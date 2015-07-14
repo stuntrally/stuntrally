@@ -9,12 +9,12 @@ private:
 	std::vector <float> inputs;  // indexed by CARINPUT values
 	
 	// shift
-	bool grUpOld[6], grDnOld[6];
+	bool grUpOld[8], grDnOld[8];
 
 public:
 	CARCONTROLMAP_LOCAL()
 	{
-		for (int i=0; i < 6; ++i)
+		for (int i=0; i < 8; ++i)
 		{	grUpOld[i] = false;  grDnOld[i] = false;  }
 		Reset();
 	}

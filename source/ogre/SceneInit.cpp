@@ -319,7 +319,7 @@ void App::LoadGame()  // 2
 		// TODO: This only handles one local player
 		CarModel::eCarType et = CarModel::CT_LOCAL;
 		int startId = i;
-		std::string carName = pSet->game.car[i], nick = "";
+		std::string carName = pSet->game.car[std::min(3,i)], nick = "";
 		if (mClient)
 		{
 			// FIXME: Various places assume carModels[0] is local
@@ -464,9 +464,11 @@ void App::LoadCar()  // 4
 	{
 	replay.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, pSet->game.car[0].c_str(), !bRplPlay);
 	replay.header.numPlayers = mClient ? std::min(4, (int)mClient->getPeerCount()+1) : pSet->game.local_players;  // networked or splitscreen
+	replay.Clear();  // upd num plr
 	replay.header.hue[0] = pSet->game.car_hue[0];  replay.header.sat[0] = pSet->game.car_sat[0];  replay.header.val[0] = pSet->game.car_val[0];
 	strcpy(replay.header.nicks[0], carModels[0]->sDispName.c_str());  // player's nick
 	replay.header.trees = pSet->game.trees;
+
 	replay.header.networked = mClient ? 1 : 0;
 	replay.header.num_laps = pSet->game.num_laps;
 	strcpy(replay.header.sim_mode, pSet->game.sim_mode.c_str());
@@ -475,6 +477,7 @@ void App::LoadCar()  // 4
 
 	ghost.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, pSet->game.car[0].c_str(), !bRplPlay);
 	ghost.header.numPlayers = 1;  // ghost always 1 car
+	ghost.Clear();
 	ghost.header.hue[0] = pSet->game.car_hue[0];  ghost.header.sat[0] = pSet->game.car_sat[0];  ghost.header.val[0] = pSet->game.car_val[0];
 	ghost.header.trees = pSet->game.trees;
 

@@ -532,9 +532,10 @@ void GAME::UpdateCarInputs(CAR & car)
 	//LogO(fToStr(car.GetSpeed(),2,6)+" "+fToStr(car.GetSpeedDir(),2,6));
 
 	boost::lock_guard<boost::mutex> lock(app->input->mPlayerInputStateMutex);
+	int id = std::min(3, car.id);
 	carinputs = carcontrols_local.second.ProcessInput(
-		app->input->mPlayerInputState[car.id], car.id,
-		carspeed, sss_eff, sss_velf,  app->mInputCtrlPlayer[car.id]->mbOneAxisThrottleBrake,
+		app->input->mPlayerInputState[id], car.id,
+		carspeed, sss_eff, sss_velf,  app->mInputCtrlPlayer[id]->mbOneAxisThrottleBrake,
 		forceBrake, app->bPerfTest, app->iPerfTestStage);
 
 	car.HandleInputs(carinputs, TickPeriod());
