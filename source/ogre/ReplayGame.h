@@ -2,7 +2,117 @@
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
 #include <OgreVector3.h>
+#include "half.hpp"
 class CAR;
+using half_float::half;
+
+
+//  New replays since 2.6
+//  variable header and frame sizes
+
+struct ReplayHeader2
+{
+	char head[5];  // "SR\^ "
+	int ver;
+
+	std::string track;   // track name
+	char track_user;  // user/original
+	
+	short numPlayers;
+	std::vector<std::string> cars;  // car names eg. ES
+
+	//std::vector<float> hue,sat,val;  // cars colors
+	std::vector<std::string> nicks;  // multiplayer nicks
+
+	float trees;      // trees multipler
+	char num_laps;
+	char networked;   // if 1, was networked, so use nicks when playing
+	std::string sim_mode;  // easy, normal, etc
+
+	ReplayHeader2();
+	void Default();
+};
+
+//  car data, for each simulation frame
+//--------------------------------------------
+struct ReplayFrame2
+{
+	typedef unsigned char uchar;
+	typedef unsigned short ushort;
+
+	//  time  since game start
+	float time;  //double
+
+	//  car
+	MATHVECTOR<float,3> pos;
+	QUATERNION<float> rot;
+	//MATHVECTOR<float,3> posEngn;  //snd engine pos --
+	
+	//char numWheels;
+	struct flags  // bit fields
+	{
+		uchar numWheels :3;  //max 8
+		uchar gear :4;  //max 16
+		uchar braking :1;  //0,1 rear car lights
+
+		uchar hasScrap :1;  //0 means scrap and screech are 0.
+		uchar hasHit :1;    //1 means new hit data (colliding)
+	};
+	
+	struct RWheel2
+	{	//  wheel
+		MATHVECTOR<float,3> pos;
+		QUATERNION<half> rot;
+
+		//  wheel trails, particles, snd
+		char surfType, whTerMtr;  //TRACKSURFACE::TYPE
+		char whRoadMtr;
+		char whP;  //particle type
+
+		half squeal, slide, whVel;
+		half suspVel, suspDisp;
+
+		//  fluids
+		uchar whH;  // submerge height
+		half whAngVel;
+		half whSteerAng;
+	};
+	std::vector<RWheel2> wheels;
+
+	//  hud
+	half rpm,vel;
+	uchar damage, clutch;
+	half percent;  // track % val
+
+	//  sound, input
+	uchar throttle, steer, fboost;
+	half speed, dynVel;
+
+	//  hit continuous
+	struct RScrap2
+	{
+		half fScrap, fScreech;
+	};
+	std::vector<RScrap2> scrap;
+	
+	//  hit impact, sparks
+	struct RHit
+	{
+		float fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;
+		Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
+		float whMudSpin, fHitForce, fCarScrap, fCarScreech;
+		float hov_roll;  //=sph_yaw for O
+	};
+	std::vector<RHit> hit;
+	
+	ReplayFrame2();
+	//void FromCar(const CAR* pCar);
+	//void FromOld(const ReplayFrame& fr);  //..
+};
+
+
+//  OLD replays, const size
+//----------------------------------------------------------------------------------------
 
 const static int ciRplHdrSize = 1024;
 const static int cDefSize = 8*1024;
@@ -47,9 +157,6 @@ struct ReplayHeader
 	void Default(), SafeEnd0();
 };
 
-//  TODO: rework this, not so much data, shorts not floats, range, interpolation etc..
-
-
 //  car data, for each simulation frame
 //--------------------------------------------
 struct ReplayFrame
@@ -90,7 +197,7 @@ struct ReplayFrame
 	float whMudSpin, fHitForce, fCarScrap, fCarScreech;
 	float hov_roll;  //=sph_yaw for O
 	
-	//uchar damage;  //TODO!..
+	//uchar damage;  //todo..
 
 	ReplayFrame();
 	void FromCar(const CAR* pCar);
