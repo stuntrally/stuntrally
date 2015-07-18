@@ -6,9 +6,18 @@
 class CAR;
 using half_float::half;
 
+//  replay load log and check
+#define LOG_RPL
 
-//  New replays since 2.6
+
+//  NEW replays since 2.6
 //  variable header and frame sizes
+//----------------------------------------------------------------------------------------
+
+/// size of ReplayFrame2
+//= 280 Bytes per frame (minimal,approx)
+//  280 * 80 fps = 22.4 kB/s
+//  1 min = 1.34 MB, 10 min = 13.4 MB
 
 struct ReplayHeader2
 {
@@ -49,7 +58,7 @@ struct ReplayFrame2
 	//MATHVECTOR<float,3> posEngn;  //snd engine pos --
 	
 	//char numWheels;
-	struct flags  // bit fields
+	struct RFlags  // bit fields
 	{
 		uchar numWheels :3;  //max 8
 		uchar gear :4;  //max 16
@@ -57,14 +66,20 @@ struct ReplayFrame2
 
 		uchar hasScrap :1;  //0 means scrap and screech are 0.
 		uchar hasHit :1;    //1 means new hit data (colliding)
-	};
+	} fl;
 	
-	struct RWheel2
+	struct RWheel
 	{	//  wheel
 		MATHVECTOR<float,3> pos;
 		QUATERNION<half> rot;
 
 		//  wheel trails, particles, snd
+		/*struct RWhMtr
+		{
+			uchar surfType :3;  //3-
+			uchar whTerMtr :3;  //3-
+			uchar whRoadMtr :3;  //3-
+		};/**/
 		char surfType, whTerMtr;  //TRACKSURFACE::TYPE
 		char whRoadMtr;
 		char whP;  //particle type
@@ -77,7 +92,7 @@ struct ReplayFrame2
 		half whAngVel;
 		half whSteerAng;
 	};
-	std::vector<RWheel2> wheels;
+	std::vector<RWheel> wheels;
 
 	//  hud
 	half rpm,vel;
@@ -89,30 +104,30 @@ struct ReplayFrame2
 	half speed, dynVel;
 
 	//  hit continuous
-	struct RScrap2
+	struct RScrap
 	{
 		half fScrap, fScreech;
 	};
-	std::vector<RScrap2> scrap;
+	std::vector<RScrap> scrap;
 	
 	//  hit impact, sparks
 	struct RHit
 	{
-		float fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;
+		half fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;
 		Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
-		float whMudSpin, fHitForce, fCarScrap, fCarScreech;
+		half whMudSpin, fHitForce;
 		float hov_roll;  //=sph_yaw for O
 	};
 	std::vector<RHit> hit;
 	
 	ReplayFrame2();
 	//void FromCar(const CAR* pCar);
-	//void FromOld(const ReplayFrame& fr);  //..
+	void FromOld(const struct ReplayFrame& fr);  //..
 };
 
 
 //  OLD replays, const size
-//----------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
 
 const static int ciRplHdrSize = 1024;
 const static int cDefSize = 8*1024;
@@ -122,13 +137,13 @@ const static int ciTrkHdrSize = 32;
 // note: add new vars always at end of
 // ReplayHeader or ReplayFrame structs (backward compatibility)
 
-/// size of ReplayFrame
-//= 384 Bytes per frame
-//  384 * 160 fps = 61.4 kB/s
-//  1 min = 3.68 MB, 10 min = 36.8 MB
+/// size of ReplayFrame Old
+//= 400 Bytes per frame
+//  400 * 160 fps = 64 kB/s
+//  1 min = 3.84 MB, 10 min = 38.4 MB
 
 
-//  whole replay/ghost data - max 4 players
+//  Replay  whole replay/ghost data - max 4 players, max 4 wheels
 //--------------------------------------------
 struct ReplayHeader
 {
@@ -157,7 +172,7 @@ struct ReplayHeader
 	void Default(), SafeEnd0();
 };
 
-//  car data, for each simulation frame
+//  Replay  car data, for each simulation frame
 //--------------------------------------------
 struct ReplayFrame
 {
@@ -203,44 +218,7 @@ struct ReplayFrame
 	void FromCar(const CAR* pCar);
 };
 
-
-//  reduced data, for track's ghost
-//--------------------------------------------
-/*struct TrackFramePacked  // in file
-{
-	short rot[4];
-};/**/
-struct TrackFrame  // for game
-{
-	//  time  since game start
-	float time;
-	//  car,  no wheels
-	MATHVECTOR<float,3> pos;
-	QUATERNION<float> rot;
-
-	//  info
-	char brake, steer;
-	//short vel;  char gear;
-	
-	TrackFrame();
-};
-
-
-//  only data for car sim, to rewind back
-//--------------------------------------------
-struct RewindFrame
-{
-	//  time  since game start
-	double time;
-	//  car
-	MATHVECTOR<float,3> pos, vel, angvel;
-	QUATERNION<float> rot;
-	float fDamage, hov_roll;
-	//engine rpm?..
-};
-
-
-///  Replay
+//  Replay
 //--------------------------------------------
 class Replay
 {
@@ -266,9 +244,25 @@ public:
 	static bool fixOldTrkName(std::string& trk);  // old
 
 	ReplayHeader header;
+	//ReplayHeader2 header;
 private:
 	typedef std::vector<ReplayFrame> Frames;  // 1 player
 	std::vector<Frames> frames;  // all plrs
+};
+
+
+
+//  Rewind  only data for car sim, to rewind back
+//-----------------------------------------------------------------------------------------------------------
+struct RewindFrame
+{
+	//  time  since game start
+	double time;
+	//  car
+	MATHVECTOR<float,3> pos, vel, angvel;
+	QUATERNION<float> rot;
+	float fDamage, hov_roll;
+	//engine rpm?..
 };
 
 
@@ -291,6 +285,24 @@ private:
 	int idLast[4];  // last index from GetFrame (optym)
 };
 
+
+
+//  Track's ghost  reduced data
+//----------------------------------------------------------------------------------------
+struct TrackFrame  // for game
+{
+	//  time  since game start
+	float time;
+	//  car,  no wheels
+	MATHVECTOR<float,3> pos;
+	QUATERNION<float> rot;  //<half>?
+
+	//  info
+	char brake, steer;
+	//short vel;  char gear;
+	
+	TrackFrame();
+};
 
 //  Track's ghost header
 //--------------------------------------------

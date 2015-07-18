@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CarPosInfo.h"
-#include "ReplayGame.h"
+#include "Replay.h"
 #include "../vdrift/cardynamics.h"
 #include "../vdrift/car.h"
 #include "common/data/SceneXml.h"

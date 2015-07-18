@@ -1,7 +1,7 @@
 #pragma once
 #include "common/Gui_Def.h"
 #include "BaseApp.h"
-#include "ReplayGame.h"
+#include "Replay.h"
 #include "../vdrift/cardefs.h"
 #include "CarPosInfo.h"
 

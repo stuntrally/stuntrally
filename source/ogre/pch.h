@@ -40,6 +40,7 @@
 
 #include "tinyxml.h"
 #include "tinyxml2.h"
+#include "half.hpp"
 
 ///  SDL, Sound
 #include <SDL.h>

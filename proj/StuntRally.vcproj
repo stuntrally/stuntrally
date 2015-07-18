@@ -980,6 +980,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\ogre\half.hpp"
+				>
+			</File>
+			<File
 				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\log.txt"
 				>
 			</File>
@@ -1139,11 +1143,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\ogre\Replay.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\ReplayGame.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\ReplayGame.h"
+					RelativePath="..\source\ogre\ReplayOld.cpp"
 					>
 				</File>
 				<File
