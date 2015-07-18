@@ -4,9 +4,6 @@
 #include <OgreTimer.h>
 #include <string>
 
-//  replay load log and check
-#define LOG_RPL
-
 
 //  header
 //----------------------------------------------------------------
@@ -187,15 +184,6 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 				#endif
 			}else
 			{
-				//TODO:
-				// conv old frame to new
-				// conv tool for all
-				// load old rpl as new
-				// play new rpl game
-				// car frame as new rpl
-				// save new rpls
-				// only new rpl use
-			
 				#define m(par)  if (f.par < a.par)  a.par = f.par;  if (f.par > b.par)  b.par = f.par;
 				m(fCarScrap)  m(fCarScreech)
 				m(fHitForce)  m(fHitTime)

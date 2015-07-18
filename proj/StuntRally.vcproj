@@ -1143,6 +1143,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\ogre\Replay.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\ogre\Replay.h"
 					>
 				</File>

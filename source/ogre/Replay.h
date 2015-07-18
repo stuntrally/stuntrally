@@ -21,13 +21,14 @@ using half_float::half;
 
 struct ReplayHeader2
 {
-	char head[5];  // "SR\^ "
+	char head[5];  // "SR/^ "
 	int ver;
+	float time;
 
 	std::string track;   // track name
 	char track_user;  // user/original
 	
-	short numPlayers;
+	char numPlayers;
 	std::vector<std::string> cars;  // car names eg. ES
 
 	//std::vector<float> hue,sat,val;  // cars colors
@@ -40,6 +41,7 @@ struct ReplayHeader2
 
 	ReplayHeader2();
 	void Default();
+	void FromOld(const struct ReplayHeader& hdr);  ///
 };
 
 //  car data, for each simulation frame
@@ -122,7 +124,38 @@ struct ReplayFrame2
 	
 	ReplayFrame2();
 	//void FromCar(const CAR* pCar);
-	void FromOld(const struct ReplayFrame& fr);  //..
+	void FromOld(const struct ReplayFrame& fr);  ///
+};
+
+//  Replay
+//--------------------------------------------
+class Replay2
+{
+public:
+	Replay2();
+	
+	bool LoadFile(std::string file, bool onlyHdr=false);
+	bool SaveFile(std::string file);
+
+	void AddFrame(const ReplayFrame2& frame, int carNum);    // record
+	bool GetFrame(double time, ReplayFrame2* fr, int carNum);  // play
+	const ReplayFrame2& GetFrame0(int id){  return frames[0][id];  }
+
+	const double GetTimeLength(int carNum=0) const;  // total time in seconds
+	const int GetNumFrames() const {  return frames[0].size();  }
+
+	//  inits only basic header data, fill the rest after
+	void InitHeader(const char* track, bool trk_user, const char* car, bool bClear);
+	void Clear();  // call this after header.numPlayers change
+	void CopyFrom(const Replay2& rpl);
+	void DeleteFrames(int carNum, double fromTime);
+
+	static bool fixOldTrkName(std::string& trk);  // old
+
+	ReplayHeader2 header;
+private:
+	typedef std::vector<ReplayFrame2> Frames;  // 1 player
+	std::vector<Frames> frames;  // all plrs
 };
 
 
