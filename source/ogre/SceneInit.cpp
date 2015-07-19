@@ -89,10 +89,21 @@ void App::createScene()
 	#endif
 
 	LogO(String("**** ReplayFrame size: ") + toStr(sizeof(ReplayFrame)));	
-	LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
+	LogO(String("**** ReplayFrame2 size: ") + toStr(sizeof(ReplayFrame2))+" wh: "+toStr(sizeof(ReplayFrame2::RWheel)));
+	//LogO(String("**** ReplayHeader size: ") + toStr(sizeof(ReplayHeader)));	
 
 	LogO(String("::: Time load xmls: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
+
+	///  rpl new
+	#if 0
+	//std::string file = PATHMANAGER::Replays() + "/Wnt9-IceFrenzy_Test.rpl";
+	std::string file = PATHMANAGER::Ghosts() + "/normal/Atm8-Ultima_XZ.rpl";
+	//std::string file = PATHMANAGER::Ghosts() + "/normal/Mud3-Mudlake_ES.rpl";
+	replay.LoadFile(file);
+	exit(0);
+	#endif
+	
 
 	///  _Tool_ ghosts times .......
 	#if 0

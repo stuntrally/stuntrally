@@ -55,7 +55,7 @@ void CARDYNAMICS::SetNumWheels(int n)
 	inFluidsWh.resize(n);
 
 	for (int i=0; i < n; ++i)
-		whP[i] = -1.f;
+		whP[i] = -1;
 }
 
 void CARDYNAMICS::HoverPar::Default()

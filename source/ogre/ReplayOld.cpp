@@ -157,20 +157,28 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	}
 	
 	//  frames
-		//min,max
+	//#define RPL_ST  // log stats
+	//#define RPL2_SV  // save new rpl test
+
+	#ifdef RPL_ST  // min,max
 		float c = 10e12, d = -10e12;
 		ReplayFrame a,b;  //min,max
 		#define n(par)  a.par = c;  b.par = d;
 		n(fCarScrap)  n(fCarScreech)
 		n(fHitForce)  n(fHitTime)
 		n(fParIntens)  n(fParVel)
-		n(squeal[0])  n(slide[0])
+		n(squeal[0])  n(slide[0])  n(whVel[0])
 		n(suspVel[0])  n(suspDisp[0])
-
+	#endif
+	
+	#ifdef RPL2_SV 
+		Replay2 r2;
+		r2.header.FromOld(header);
+	#endif
+		
 	int i=0,p;
 	while (!fi.eof())
 	{
-
 		for (p=0; p < header.numPlayers; ++p)
 		{
 			ReplayFrame f;
@@ -184,48 +192,55 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 				#endif
 			}else
 			{
+				frames[p].push_back(f);
+
+				#ifdef RPL_ST  // min,max
 				#define m(par)  if (f.par < a.par)  a.par = f.par;  if (f.par > b.par)  b.par = f.par;
 				m(fCarScrap)  m(fCarScreech)
 				m(fHitForce)  m(fHitTime)
 				m(fParIntens)  m(fParVel)
-				m(squeal[0])  m(slide[0])
+				m(squeal[0])  m(slide[0])  m(whVel[0])
 				m(suspVel[0])  m(suspDisp[0])
 				
-				frames[p].push_back(f);
 				/*LogO(
 				" whP "+	iToStr(f.whP[0])+  " su "+	iToStr(f.surfType[0])+
 				" m "+	iToStr(f.whTerMtr[0])+  " r "+	iToStr(f.whRoadMtr[0])
-				);
-				/*LogO(
-				" Scrp "+	fToStr(f.fCarScrap,		2,5)+  " Scre "+	fToStr(f.fCarScreech,	2,5)+
+				);/**/
+				LogO(
+				/*" Scrp "+	fToStr(f.fCarScrap,		2,5)+  " Scre "+	fToStr(f.fCarScreech,	2,5)+
 				" HitF "+	fToStr(f.fHitForce,		2,5)+  " HitT "+	fToStr(f.fHitTime,		2,5)+
 				" PInt "+	fToStr(f.fParIntens,	2,5)+  " PVel "+	fToStr(f.fParVel,		2,5)+
-
-				" sql "+	fToStr(f.squeal[0],		2,5)+  " sli "+	fToStr(f.slide[0],		2,5)+
+				/**/
+				/*" sql "+	fToStr(f.squeal[0],		2,5)+  " sli "+	fToStr(f.slide[0],		2,5)+
 				" whV "+	fToStr(f.whVel[0],		2,5)+
 				" ssv "+	fToStr(f.suspVel[0],	2,5)+  " ssd "+	fToStr(f.suspDisp[0],	2,5)+
-				
-				//float fboost;  // input, particles
-				
-				//  fluids
-				//float whH[4], whAngVel[4];  // submerge height
-				//char whP[4];  //particle type
-				//float whSteerAng[2];
-				
-				//  hit sparks
-				//Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
-				//float whMudSpin;
-				//float hov_roll;  //=sph_yaw for O
-				"");
 				/**/
+				" whH "+	fToStr(f.whH[0],		2,5)+
+				" whAv "+	fToStr(f.whAngVel[0],	2,5)+
+				" wSt "+	fToStr(f.whSteerAng[0],	2,5)+
+				" mud "+	fToStr(f.whMudSpin,	2,5)+
+				" hov "+	fToStr(f.hov_roll,	2,5)+  //=sph_yaw for O
+				/**/
+				"");
+				#endif
+				
+				#ifdef RPL2_SV 
+				ReplayFrame2 f2;
+				f2.FromOld(f);
+				r2.AddFrame(f2,p);
+				#endif
 			}
 		}
 		++i;
 		//LogO(toStr((float)fr.time) /*+ "  p " + toStr(fr.pos)*/);
 	}
     fi.close();
+		
+	#ifdef RPL2_SV 
+		r2.SaveFile(file+"2");  // test
+	#endif
 
-	//min,max
+	#ifdef RPL_ST  // min,max
 		LogO("MIN\n"
 		" Scrp "+	fToStr(a.fCarScrap,		2,5)+  " Scre "+	fToStr(a.fCarScreech,	2,5)+
 		" HitF "+	fToStr(a.fHitForce,		2,5)+  " HitT "+	fToStr(a.fHitTime,		2,5)+
@@ -245,8 +260,9 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 		" whV "+	fToStr(b.whVel[0],		2,5)+
 		" ssv "+	fToStr(b.suspVel[0],	2,5)+  " ssd "+	fToStr(b.suspDisp[0],	2,5)+
 		"\n");
+	#endif
 
-	//half
+	// half
 	//float ff = 0.9999999;  half h = half(ff);  float fh = float(h);
 	//LogO(fToStr(ff,8,12)+" "+fToStr(h,8,12)+" "+fToStr(fh,8,12));
  

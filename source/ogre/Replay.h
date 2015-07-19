@@ -23,7 +23,7 @@ struct ReplayHeader2
 {
 	char head[5];  // "SR/^ "
 	int ver;
-	float time;
+	float time;  // total time
 
 	std::string track;   // track name
 	char track_user;  // user/original
@@ -46,10 +46,13 @@ struct ReplayHeader2
 
 //  car data, for each simulation frame
 //--------------------------------------------
+enum eFlags {  b_braking=0, b_scrap, b_hit, b_fluid, b_hov };  // max 8
+
 struct ReplayFrame2
 {
 	typedef unsigned char uchar;
 	typedef unsigned short ushort;
+	//dont use int, not portable
 
 	//  time  since game start
 	float time;  //double
@@ -57,35 +60,42 @@ struct ReplayFrame2
 	//  car
 	MATHVECTOR<float,3> pos;
 	QUATERNION<float> rot;
-	//MATHVECTOR<float,3> posEngn;  //snd engine pos --
 	
-	//char numWheels;
-	struct RFlags  // bit fields
-	{
-		uchar numWheels :3;  //max 8
-		uchar gear :4;  //max 16
-		uchar braking :1;  //0,1 rear car lights
+	// cant use bit fields, not portable
+	uchar numWh;  //wheels count, could be 4bit
+	char gear;
+	
+	uchar fl;  // flags, bool 1bit
+	void set(eFlags e, bool b) {  if (b)  fl |= 1 << e;  else  fl &= ~(1 << e); }
+	bool get(eFlags e)         {  return ((fl >> e) & 1u) > 0;  }
 
-		uchar hasScrap :1;  //0 means scrap and screech are 0.
-		uchar hasHit :1;    //1 means new hit data (colliding)
-	} fl;
 	
+	//  hud
+	half rpm,vel;
+	uchar damage, clutch;
+	uchar percent;  // track % val
+
+	//  sound, input
+	uchar throttle, steer, fboost;
+	half speed, dynVel;
+
+	//  ext
+	half hov_roll;  //=sph_yaw for O
+	half whMudSpin;  //0-
+	
+
+	//  wheel
 	struct RWheel
-	{	//  wheel
+	{
 		MATHVECTOR<float,3> pos;
 		QUATERNION<half> rot;
 
-		//  wheel trails, particles, snd
-		/*struct RWhMtr
-		{
-			uchar surfType :3;  //3-
-			uchar whTerMtr :3;  //3-
-			uchar whRoadMtr :3;  //3-
-		};/**/
+		//  trails, particles, snd
 		char surfType, whTerMtr;  //TRACKSURFACE::TYPE
 		char whRoadMtr;
 		char whP;  //particle type
 
+		//  tire
 		half squeal, slide, whVel;
 		half suspVel, suspDisp;
 
@@ -96,14 +106,6 @@ struct ReplayFrame2
 	};
 	std::vector<RWheel> wheels;
 
-	//  hud
-	half rpm,vel;
-	uchar damage, clutch;
-	half percent;  // track % val
-
-	//  sound, input
-	uchar throttle, steer, fboost;
-	half speed, dynVel;
 
 	//  hit continuous
 	struct RScrap
@@ -113,14 +115,14 @@ struct ReplayFrame2
 	std::vector<RScrap> scrap;
 	
 	//  hit impact, sparks
+	half fHitTime;
 	struct RHit
 	{
-		half fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;
-		Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
-		half whMudSpin, fHitForce;
-		float hov_roll;  //=sph_yaw for O
+		half fHitForce, fParIntens, fParVel; //, fSndForce, fNormVel;
+		Ogre::Vector3 vHitPos, vHitNorm;  // world hit data
 	};
 	std::vector<RHit> hit;
+
 	
 	ReplayFrame2();
 	//void FromCar(const CAR* pCar);
