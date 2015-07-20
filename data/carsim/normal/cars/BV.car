@@ -7,10 +7,10 @@ max-angle = 25
 angular-damping = 0.0
 
 [ rot_drag ]
-roll  = 650.0
+roll  = 850.0
 pitch = 550.0
 yaw   = 600.0
-yaw2  = 0.5
+yaw2  = 0.6
 
 [ flares ]
 brake-pos0 = 0.2,-1.85, 0.2
@@ -33,7 +33,7 @@ boost-size-z = 0.5
 #---------------------------
 [ collision ]
 com_ofs_L = 0.05
-com_ofs_H = 0.08
+com_ofs_H = 0.05
 radius = 0.364
 width = 0.50
 height = 0.4
@@ -152,16 +152,16 @@ width-trail = 0.8
 [ brakes-front ]
 friction = 1.03
 max-pressure = 3.1e6
-bias = 0.6
+bias = 0.5
 radius = 0.3
-area = 0.03
+area = 0.018
 
 [ brakes-rear ]
 friction = 1.03
 max-pressure = 3.1e6
-bias = 0.4
+bias = 0.45
 radius = 0.3
-area = 0.03
+area = 0.026
 handbrake = 3.1
 
 
