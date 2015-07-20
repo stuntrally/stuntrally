@@ -178,7 +178,7 @@ bool Replay2::LoadFile(std::string file, bool onlyHdr)
 	
 	//  header check
 	fi.read(header.head,5);
-	if (strcmp(header.head,"SR\_")==0)
+	if (strcmp(header.head,"SR\\_")==0)
 	{	LogO(">- Load replay2 --  file: "+file+"  Error, loading old!");
 		// todo: load old, convert / use old
 		return false;
@@ -258,27 +258,42 @@ bool Replay2::LoadFile(std::string file, bool onlyHdr)
 //-------------------------------------------------------------------------------------------------------------------------
 bool Replay2::SaveFile(std::string file)
 {
-	if (header.numPlayers < 1)  return false;
+	//if (header.numPlayers < 1)  return false;
 	
 	std::ofstream of(file.c_str(), std::ios::binary | std::ios::out);
 	if (!of)  return false;
 
-	//  header
-	//char buf[ciRplHdrSize];  memset(buf,0,ciRplHdrSize);
-	//memcpy(buf, &header, sizeof(ReplayHeader));
-	//of.write(buf,ciRplHdrSize);
+	uchar z;  int i,s;
+	#define ws(s)  {  z = s.length();  of.write((char*)&z, 1);  of.write(s.c_str(), z);  }
+	#define wr(a)  of.write((char*)&a, sizeof(a))
+	//todo: portability, endianness for shorts?..
 
-	//  frames
-	int s = frames[0].size(), i,p,w;
+	//  header  ------
+	const ReplayHeader2& h = header;
+	wr(h.ver);  wr(h.time);
+	ws(h.track)  wr(h.track_user);
+
+	wr(h.numPlayers);
+	s = h.cars.size();  // car names
+	for (i=0; i < s; ++i)
+		ws(h.cars[i])
+
+	wr(h.trees);  wr(h.num_laps);
+	wr(h.networked);  ws(h.sim_mode)
+
+	if (h.networked)
+	for (i=0; i < s; ++i)
+		ws(h.nicks[i])
+
+	
+	//  frames  ------
+	s = frames[0].size();  int p,w;
 	//s = 1;  p = 1;  //test
 
 	for (i=0; i < s; ++i)
 	for (p=0; p < header.numPlayers; ++p)
 	{
 		ReplayFrame2 f = frames[p][i];
-		///  write
-		#define wr(a)  of.write((char*)&a, sizeof(a))
-		//todo: portability, endianness for shorts..
 
 		wr(f.time);
 		//  car

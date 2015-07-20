@@ -3,6 +3,9 @@
 #include "../vdrift/quaternion.h"
 #include <OgreVector3.h>
 #include "half.hpp"
+#include <OgrePrerequisites.h>  //
+using Ogre::uchar;
+using Ogre::ushort;
 class CAR;
 using half_float::half;
 
@@ -50,8 +53,6 @@ enum eFlags {  b_braking=0, b_scrap, b_hit, b_fluid, b_hov };  // max 8
 
 struct ReplayFrame2
 {
-	typedef unsigned char uchar;
-	typedef unsigned short ushort;
 	//dont use int, not portable
 
 	//  time  since game start
