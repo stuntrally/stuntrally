@@ -89,11 +89,12 @@ void App::createScene()
 	#endif
 
 	//  rpl sizes
-	ReplayFrame2::ushort u(0x1020);
+	ushort u(0x1020);
 	int sr = sizeof(ReplayFrame), sr2 = sizeof(ReplayFrame2), wh2 = sizeof(ReplayFrame2::RWheel);
 	LogO(String("**** ReplayFrame size old: ") + toStr(sr) + "  new: "+toStr(sr2)+"+ wh: "+toStr(wh2)+"= "+toStr(sr2+4*wh2));
-	LogO(String("**** Replay test sizes: 12244: ") + toStr(sizeof(char))+","+toStr(sizeof(short))+","+
-		toStr(sizeof(half))+","+toStr(sizeof(float))+","+toStr(sizeof(int))+"  16,32: "+toStr(u>>8 & 0xFF)+" "+toStr(u & 0xFF));
+	LogO(String("**** Replay test sizes: 12244: ") + toStr(sizeof(char))+","+toStr(sizeof(short))+
+		","+toStr(sizeof(half))+","+toStr(sizeof(float))+","+toStr(sizeof(int))+
+		"  hi,lo 16,32: h "+toStr(*((uchar*)&u+1))+" l "+toStr(*((uchar*)&u)));
 
 	LogO(String("::: Time load xmls: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
