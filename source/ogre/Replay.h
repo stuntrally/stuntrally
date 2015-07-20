@@ -15,14 +15,14 @@ using half_float::half;
 //----------------------------------------------------------------------------------------
 
 /// size of ReplayFrame2
-//= 280 Bytes per frame (minimal,approx)
-//  280 * 80 fps = 22.4 kB/s
-//  1 min = 1.34 MB, 10 min = 13.4 MB
+//= 203 Bytes per frame (minimal,approx)
+//  203 * 80 fps = 16.2 kB/s
+//  1 min = 974 kB, 10 min = 9.7 MB
 
 struct ReplayHeader2
 {
 	char head[5];  // "SR/^ "
-	int ver;
+	short ver;
 	float time;  // total time
 
 	std::string track;   // track name
@@ -60,6 +60,7 @@ struct ReplayFrame2
 	//  car
 	MATHVECTOR<float,3> pos;
 	QUATERNION<float> rot;
+	// 32B  (size in Bytes so far)
 	
 	// cant use bit fields, not portable
 	uchar numWh;  //wheels count, could be 4bit
@@ -68,21 +69,23 @@ struct ReplayFrame2
 	uchar fl;  // flags, bool 1bit
 	void set(eFlags e, bool b) {  if (b)  fl |= 1 << e;  else  fl &= ~(1 << e); }
 	bool get(eFlags e)         {  return ((fl >> e) & 1u) > 0;  }
+	// 35B
 
-	
 	//  hud
 	half rpm,vel;
 	uchar damage, clutch;
 	uchar percent;  // track % val
+	// 42B
 
 	//  sound, input
 	uchar throttle, steer, fboost;
 	half speed, dynVel;
+	// 49B
 
 	//  ext
-	half hov_roll;  //=sph_yaw for O
-	half whMudSpin;  //0-
-	
+	half whMudSpin;  //-2 /var - may not be saved, check flags
+	half hov_roll;  //-2 /var - V1 roll_ang or sph_yaw for O
+
 
 	//  wheel
 	struct RWheel
@@ -92,25 +95,24 @@ struct ReplayFrame2
 
 		//  trails, particles, snd
 		char surfType, whTerMtr;  //TRACKSURFACE::TYPE
-		char whRoadMtr;
-		char whP;  //particle type
+		char whRoadMtr, whP;  //particle type
 
 		//  tire
 		half squeal, slide, whVel;
 		half suspVel, suspDisp;
 
 		//  fluids
-		uchar whH;  // submerge height
+		uchar whH;  // /var - submerge
 		half whAngVel;
-		half whSteerAng;
+		half whSteerAng;  // 38B
 	};
-	std::vector<RWheel> wheels;
+	std::vector<RWheel> wheels;  //-24B
 
 
 	//  hit continuous
 	struct RScrap
 	{
-		half fScrap, fScreech;
+		half fScrap, fScreech;  // 4B
 	};
 	std::vector<RScrap> scrap;
 	
@@ -120,13 +122,16 @@ struct ReplayFrame2
 	{
 		half fHitForce, fParIntens, fParVel; //, fSndForce, fNormVel;
 		Ogre::Vector3 vHitPos, vHitNorm;  // world hit data
-	};
+	};  // 30B  saved on hit only
 	std::vector<RHit> hit;
+	// 51B
 
 	
 	ReplayFrame2();
 	//void FromCar(const CAR* pCar);
 	void FromOld(const struct ReplayFrame& fr);  ///
+
+	//total: 51B + 4*38B = 203B min
 };
 
 //  Replay
@@ -143,7 +148,7 @@ public:
 	bool GetFrame(double time, ReplayFrame2* fr, int carNum);  // play
 	const ReplayFrame2& GetFrame0(int id){  return frames[0][id];  }
 
-	const double GetTimeLength(int carNum=0) const;  // total time in seconds
+	const double GetTimeLength() const;  // total time in seconds
 	const int GetNumFrames() const {  return frames[0].size();  }
 
 	//  inits only basic header data, fill the rest after

@@ -63,29 +63,9 @@ void ReplayHeader2::FromOld(const struct ReplayHeader& h)
 		nicks[i] = h.nicks[i];
 }
 
-ReplayFrame2::ReplayFrame2() //:
-	////:time(0.0)
-	////QUATERNION<float> rot, whRot[4];
-	////float rpm,vel, clutch;  int gear;
-	//throttle(0)//, steer
-	////MATHVECTOR<float,3> posEngn;
-	////float speed, dynVel;
-	////char surfType[4], whTerMtr[4];  //TRACKSURFACE::TYPE
-	////float squeal[4], slide[4], whVel[4];
-	////float suspVel[4], suspDisp[4];
-	//,fboost(0), percent(0.f), braking(0)
-	//,fHitTime(0.f), fParIntens(0.f),fParVel(0.f)
-	////Vector3 vHitPos,vHitNorm;
-	//,whMudSpin(0.f), fHitForce(0.f), fCarScrap(0.f), fCarScreech(0.f)
-	//,hov_roll(0.f)
+ReplayFrame2::ReplayFrame2()
+	:numWh(0),gear(0),fl(0)  //..
 {
-	//pos[0]=0.f;  pos[1]=0.f;  pos[2]=0.f;  //whPos[4]
-	//whSteerAng[0]=whSteerAng[1]=0.f;
-	//for (int w=0; w<4; ++w)
-	//{
-	//	whH[w] = 0.f;  whAngVel[w] = 0.f;  whP[w] = 0;
-	//	whRoadMtr[w] = 0;
-	//}	
 }
 
 ///  convert old frame to new
@@ -196,16 +176,29 @@ bool Replay2::LoadFile(std::string file, bool onlyHdr)
 
 	Ogre::Timer ti;
 	
-	//  header
-	//char buf[ciRplHdrSize];  memset(buf,0,ciRplHdrSize);
-	//fi.read(buf,ciRplHdrSize);
-	//memcpy(&header, buf, sizeof(ReplayHeader2));
+	//  header check
+	fi.read(header.head,5);
+	if (strcmp(header.head,"SR\_")==0)
+	{	LogO(">- Load replay2 --  file: "+file+"  Error, loading old!");
+		// todo: load old, convert / use old
+		return false;
+	}
+	else if (strcmp(header.head,"SR/^")==0)
+	{	// continue
+	}
+	else
+	{	LogO(">- Load replay2 --  file: "+file+"  Error: Unknown header");
+		return false;
+	}
+	
+	//#define rd()
+
+
 	//header.numPlayers = std::max(1, std::min(4, header.numPlayers));  // range 1..4
-	//header.SafeEnd0();
 
     #ifdef LOG_RPL
 		if (!onlyHdr)
-			LogO(">- Load replay --  file: "+file+"  players:"+toStr(header.numPlayers));
+			LogO(">- Load replay2 --  file: "+file+"  players:"+toStr(header.numPlayers));
 	#endif
 	
 	//  clear
@@ -277,6 +270,7 @@ bool Replay2::SaveFile(std::string file)
 
 	//  frames
 	int s = frames[0].size(), i,p,w;
+	//s = 1;  p = 1;  //test
 
 	for (i=0; i < s; ++i)
 	for (p=0; p < header.numPlayers; ++p)
@@ -340,11 +334,15 @@ bool Replay2::SaveFile(std::string file)
     return true;
 }
 
+
 //  add (Record)
 void Replay2::AddFrame(const ReplayFrame2& frame, int carNum)
 {
-	if (frame.time > GetTimeLength(carNum))  // dont add before last
+	if (frame.time > GetTimeLength())  // dont add before last
+	{
 		frames[carNum].push_back(frame);
+		header.time = frame.time;
+	}
 }
 
 //  CopyFrom
@@ -356,12 +354,11 @@ void Replay2::CopyFrom(const Replay2& rpl)
 }
 
 //  last frame time, sec
-const double Replay2::GetTimeLength(int carNum) const
+const double Replay2::GetTimeLength() const
 {
-	if (carNum >= frames.size())  return 0.0;
-	int s = frames[carNum].size();
-	return s > 0 ? frames[carNum][s-1].time : 0.0;
+	return header.time;
 }
+
 
 ///  get (Play)
 //----------------------------------------------------------------
@@ -412,7 +409,7 @@ bool Replay2::GetFrame(double time, ReplayFrame2* pFr, int carNum)
 	#endif
 
 	//  last time
-	double end = frames[carNum][s-1].time;
+	double end = header.time;  //frames[carNum][s-1].time;
 	if (time >= end)
 	{
 		pFr->fboost = 0.f;

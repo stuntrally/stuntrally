@@ -30,6 +30,7 @@ void CARDYNAMICS::SetSteering(const Dbl value1, const float range_mul)
 		Dbl alpha = std::abs( steerangle * PI_d/180.0 );  //outside wheel steering angle in radians
 		Dbl dW = wheel[wl].GetExtendedPosition()[1] - wheel[wr].GetExtendedPosition()[1];  // distance between front wheels
 		Dbl dL = wheel[wl].GetExtendedPosition()[0] - wheel[rear].GetExtendedPosition()[0];  // distance between front and rear wheels
+		if (i==1)  dL *= 2.f;  // par
 		Dbl beta = atan2(1.0, 1.0 / tan(alpha) - dW / fabs(dL) );  //inside wheel steering angle in radians
 
 		Dbl left = 0, right = 0;  // wheel angle
