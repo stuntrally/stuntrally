@@ -3,14 +3,15 @@
 #include "common/Def_Str.h"
 #include <OgreTimer.h>
 #include <string>
+#include "CHud.h" //
+using namespace std;
 
 
 /*TODO:
-	+conv old frame to new
 	 endianness
 	 conv tool for all
-	 load old rpl as new
-	 check back save+load
+	~check back save+load
+	`load old rpl as new
 	 play new rpl game
 	 car frame as new rpl
 	 save new rpls
@@ -26,18 +27,14 @@ ReplayHeader2::ReplayHeader2()
 void ReplayHeader2::Default()
 {
 	head[0] = 'S';  head[1] = 'R';  head[2] = '/';  head[3] = '^';  head[4] = 0;
-
-	ver = 21;
-	numPlayers = 1;
-	trees = 1.f;
+	track = "";  track_user = 0;
+	ver = 21;  time = 0.f;
+	
+	numPlayers = 0;  trees = 1.f;
 	num_laps = 1;  networked = 0;
+	sim_mode = "";
 
-	//for (int c=0; c<4; ++c)
-	//{
-	//	for (int w=0; w<4; ++w)
-	//		whR[c][w] = 0.3f;
-	//	hue[c] = 0.45f;  sat[c] = 0.035f;  val[c] = -0.07f;
-	//}
+	cars.clear();  numWh.clear();  nicks.clear();
 }
 
 void ReplayHeader2::FromOld(const struct ReplayHeader& h)
@@ -46,45 +43,51 @@ void ReplayHeader2::FromOld(const struct ReplayHeader& h)
 	track_user = h.track_user;
 	
 	numPlayers = h.numPlayers;
-	cars.resize(numPlayers);
+	cars.clear();  cars.resize(numPlayers);
+	numWh.clear();  numWh.resize(numPlayers);
 
 	cars[0] = h.car;
 	int i;
 	for (i=1; i < numPlayers; ++i)
 		cars[i] = h.cars[i-1];
-
+	
+	for (i=0; i < numPlayers; ++i)
+	{	string s = cars[i];  char w = 4;
+		if (s=="BV")  w = 2;  else  // old, not 4 wheeled veh
+		if (s=="O"||s=="V1"||s=="V2"||s=="V3")  w = 0;
+		numWh[i] = w;
+	}
 	trees = h.trees;
 	num_laps = h.num_laps;
 	networked = h.networked;
 	sim_mode = h.sim_mode;
 
+	nicks.clear();
 	if (networked)
-	for (i=0; i < numPlayers; ++i)
-		nicks[i] = h.nicks[i];
+	{	nicks.resize(numPlayers);
+		for (i=0; i < numPlayers; ++i)
+			nicks[i] = h.nicks[i];
+	}
 }
 
 ReplayFrame2::ReplayFrame2()
-	:numWh(0),gear(0),fl(0)  //..
+	:gear(0),fl(0)  //..
 {
 }
 
 ///  convert old frame to new
-void ReplayFrame2::FromOld(const struct ReplayFrame& f)
+//-------------------------------------------------------------------------------
+void ReplayFrame2::FromOld(const struct ReplayFrame& f, uchar numWh)
 {
 	time = f.time;  // save once..
-
-	pos = f.pos;
-	rot = f.rot;
+	pos = f.pos;  rot = f.rot;
 	
-	numWh = 4;  //todo: 0 for O,V1..
-
-	gear = f.gear;
 	fl = 0;  // zero flags
 	set(b_braking, f.braking);
 
 	//  hud
+	gear = f.gear;
 	rpm = f.rpm;  vel = f.vel;
-
 	percent = f.percent / 255.f;  // track %
 	damage = 0.f;  // wasnt saved
 
@@ -95,7 +98,7 @@ void ReplayFrame2::FromOld(const struct ReplayFrame& f)
 	hov_roll = f.hov_roll;  //=sph_yaw for O
 
 
-	//  hit continuous
+	//  hit continuous  ---
 	bool hasScr = f.fCarScrap > 0.f || f.fCarScreech > 0.f;
 	set(b_scrap, hasScr);
 	if (hasScr)
@@ -116,8 +119,7 @@ void ReplayFrame2::FromOld(const struct ReplayFrame& f)
 		hit.push_back(ht);
 	};
 
-	
-	//  wheels
+	//  wheels  ---
 	wheels.clear();
 	for (int i=0; i < numWh; ++i)
 	{	RWheel wh;
@@ -142,18 +144,16 @@ void ReplayFrame2::FromOld(const struct ReplayFrame& f)
 }
 
 
-
 Replay2::Replay2()
 {
 	Clear();
 }
 
 //  Init  once per game
-void Replay2::InitHeader(const char* track, bool trk_user, const char* car, bool bClear)
+void Replay2::InitHeader(const char* track, bool trk_user, bool bClear)
 {
 	header.Default();
 	header.track = track;  header.track_user = trk_user ? 1 : 0;
-	//header.car = car;
 	if (bClear)
 		Clear();
 }
@@ -168,10 +168,10 @@ void Replay2::Clear()
 
 
 ///  Load
-//-------------------------------------------------------------------------------------------------------------------------
-bool Replay2::LoadFile(std::string file, bool onlyHdr)
+//-------------------------------------------------------------------------------------------------------
+bool Replay2::LoadFile(string file, bool onlyHdr)
 {
-	std::ifstream fi(file.c_str(), std::ios::binary | std::ios::in);
+	ifstream fi(file.c_str(), ios::binary | ios::in);
 	if (!fi)  return false;
 
 	Ogre::Timer ti;
@@ -183,107 +183,164 @@ bool Replay2::LoadFile(std::string file, bool onlyHdr)
 		// todo: load old, convert / use old
 		return false;
 	}
-	else if (strcmp(header.head,"SR/^")==0)
-	{	// continue
-	}
-	else
+	else if (strcmp(header.head,"SR/^")!=0)
 	{	LogO(">- Load replay2 --  file: "+file+"  Error: Unknown header");
 		return false;
 	}
 	
-	//#define rd()
+	uchar l;  int i,s;  char buf[256];
+	#define rd(a)  fi.read((char*)&a, sizeof(a))
+	#define rs(s)  {  fi.read((char*)&l, 1);  fi.read(buf, l);  buf[l]=0;  s = buf;  }  //string
 
+	//  header  ------
+	ReplayHeader2& h = header;
+	rd(h.ver);  rd(h.time);
+	rs(h.track)  rd(h.track_user);
+	Ogre::String ss = ">-   ";
+	ss += h.track+"  ";
+	ss += CHud::StrTime(h.time)+"  ";
 
-	//header.numPlayers = std::max(1, std::min(4, header.numPlayers));  // range 1..4
+	rd(h.numPlayers);  s = h.numPlayers;
+	h.cars.clear();  h.cars.resize(s);
+	h.numWh.clear();  h.numWh.resize(s);
+	for (i=0; i < s; ++i)
+	{	rs(h.cars[i])  ss += h.cars[i]+" ";  }  ss+=" ";
+	for (i=0; i < s; ++i)
+	{	rd(h.numWh[i]);  ss += toStr(h.numWh[i])+" ";  }  ss+=" ";
+
+	rd(h.trees);  rd(h.num_laps);
+	rd(h.networked);  rs(h.sim_mode)
+
+	h.nicks.clear();  h.nicks.resize(s);
+	if (h.networked)
+		for (i=0; i < s; ++i)
+		{	rs(h.nicks[i])  ss += h.nicks[i]+" ";  }  ss+=" ";
 
     #ifdef LOG_RPL
+		LogO(ss);
 		if (!onlyHdr)
-			LogO(">- Load replay2 --  file: "+file+"  players:"+toStr(header.numPlayers));
+			LogO(">- Load replay2 --  file: "+file+"  players:"+toStr(h.numPlayers));
 	#endif
 	
 	//  clear
 	Clear();
-	#if 0
-	//  only get last frame for time len info, ?save len in hdr..
-	/*if (onlyHdr)
+	if (onlyHdr)
 	{
-		//fi.seekg(-header.frameSize * header.numPlayers, std::ios::end);
-
-		for (int p=0; p < header.numPlayers; ++p)
-		{
-			ReplayFrame fr;
-			fi.read((char*)&fr, header.frameSize);
-			frames[p].push_back(fr);
-		}
-	    fi.close();
-	    return true;
-	}*/
+		fi.close();  return true;
+	}
 	
-	//  frames
-	int i=0,p;
+	//  frames  ------
+	i=0;  int p,w;
 	while (!fi.eof())
 	{
-
 		for (p=0; p < header.numPlayers; ++p)
 		{
-			ReplayFrame f;
-			fi.read((char*)&f, header.frameSize/**/);
+			ReplayFrame2 f;
+			rd(f.time);
+			//  car
+			rd(f.pos);  rd(f.rot);  rd(f.fl);  //b_braking etc
+			//  hud
+			rd(f.gear);  rd(f.rpm);  rd(f.vel);
+			rd(f.damage);  rd(f.clutch);  rd(f.percent);
+			//  sound, input
+			rd(f.throttle);  rd(f.steer);  rd(f.fboost);
+			rd(f.speed);  rd(f.dynVel);
+			//  ext
+			if (f.get(b_hov))  rd(f.hov_roll);
+			bool flu = f.get(b_fluid);
+			if (flu)  rd(f.whMudSpin);
+			
+			//  wheels
+			int ww = header.numWh[p];
+			for (w=0; w < ww; ++w)
+			{
+				ReplayFrame2::RWheel wh;
+				rd(wh.pos);  rd(wh.rot);
+				//  trl, par, snd
+				rd(wh.surfType);  rd(wh.whTerMtr);
+				rd(wh.whRoadMtr);  rd(wh.whP);
+				//  tire
+				rd(wh.squeal);  rd(wh.slide);  rd(wh.whVel);
+				rd(wh.suspVel);  rd(wh.suspDisp);
+				//  fluids
+				if (flu)  rd(wh.whH);
+				rd(wh.whAngVel);  rd(wh.whSteerAng);
+				
+				f.wheels.push_back(wh);
+			}
+
+			//  hit data
+			if (f.get(b_scrap))
+			{
+				ReplayFrame2::RScrap s;
+				rd(s.fScrap);  rd(s.fScreech);
+				f.scrap.push_back(s);
+			}
+			rd(f.fHitTime);
+			if (f.get(b_hit))
+			{
+				ReplayFrame2::RHit h;
+				rd(h.fHitForce);  rd(h.fParIntens);  rd(h.fParVel);
+				rd(h.vHitPos.x);   rd(h.vHitPos.y);   rd(h.vHitPos.z);
+				rd(h.vHitNorm.x);  rd(h.vHitNorm.y);  rd(h.vHitNorm.z);
+				f.hit.push_back(h);
+			}
+			
 
 			if (i > 0 && f.time < frames[p][i-1].time)
 			{
 			    #ifdef LOG_RPL
-					LogO(">- Load replay  BAD frame time  id:"+toStr(i)+"  plr:"+toStr(p)
+					LogO(">- Load replay2  BAD frame time  id:"+toStr(i)+"  plr:"+toStr(p)
 						+"  t-1:"+fToStr(frames[p][i-1].time,5,7)+" > t:"+fToStr(f.time,5,7));
 				#endif
 			}else
-			{
+			if (!fi.eof())
 				frames[p].push_back(f);
-			}
 		}
 		++i;
 	}
+
     fi.close();
 
     #ifdef LOG_RPL
-		LogO(">- Load replay  first: "+fToStr(frames[0][0].time,5,7)
-			+"  time: "+fToStr(GetTimeLength(0),2,5)+"  frames: "+toStr(frames[0].size()));
+		LogO(">- Load replay2  first: "+fToStr(frames[0][0].time,5,7)+
+			"  time: "+fToStr(GetTimeLength(),2,5)+"  frames: "+toStr(frames[0].size()));
 	#endif
 
-	LogO(Ogre::String("::: Time ReplayLoad: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
-	#endif
+	LogO(Ogre::String("::: Time Replay2 Load: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 	return true;
 }
 
 ///  Save
-//-------------------------------------------------------------------------------------------------------------------------
-bool Replay2::SaveFile(std::string file)
+//-------------------------------------------------------------------------------------------------------
+bool Replay2::SaveFile(string file)
 {
 	//if (header.numPlayers < 1)  return false;
 	
-	std::ofstream of(file.c_str(), std::ios::binary | std::ios::out);
+	ofstream of(file.c_str(), ios::binary | ios::out);
 	if (!of)  return false;
 
-	uchar z;  int i,s;
-	#define ws(s)  {  z = s.length();  of.write((char*)&z, 1);  of.write(s.c_str(), z);  }
+	uchar l;  int i,s;
+	#define ws(s)  {  l = s.length();  of.write((char*)&l, 1);  of.write(s.c_str(), l);  }  //string
 	#define wr(a)  of.write((char*)&a, sizeof(a))
 	//todo: portability, endianness for shorts?..
 
 	//  header  ------
 	const ReplayHeader2& h = header;
+	of.write((char*)&h.head, 5);
 	wr(h.ver);  wr(h.time);
 	ws(h.track)  wr(h.track_user);
 
 	wr(h.numPlayers);
-	s = h.cars.size();  // car names
-	for (i=0; i < s; ++i)
-		ws(h.cars[i])
+	s = h.numPlayers;  // car names
+	for (i=0; i < s; ++i)  ws(h.cars[i])
+	for (i=0; i < s; ++i)  wr(h.numWh[i]);
 
 	wr(h.trees);  wr(h.num_laps);
 	wr(h.networked);  ws(h.sim_mode)
 
 	if (h.networked)
-	for (i=0; i < s; ++i)
-		ws(h.nicks[i])
+		for (i=0; i < s; ++i)  ws(h.nicks[i])
 
 	
 	//  frames  ------
@@ -294,16 +351,12 @@ bool Replay2::SaveFile(std::string file)
 	for (p=0; p < header.numPlayers; ++p)
 	{
 		ReplayFrame2 f = frames[p][i];
-
 		wr(f.time);
 		//  car
-		wr(f.pos);  wr(f.rot);
-		wr(f.numWh);  wr(f.gear);
-		wr(f.fl);  //b_braking
+		wr(f.pos);  wr(f.rot);  wr(f.fl);  //b_braking etc
 		//  hud
-		wr(f.rpm);  wr(f.vel);
-		wr(f.damage);  wr(f.clutch);
-		wr(f.percent);
+		wr(f.gear);  wr(f.rpm);  wr(f.vel);
+		wr(f.damage);  wr(f.clutch);  wr(f.percent);
 		//  sound, input
 		wr(f.throttle);  wr(f.steer);  wr(f.fboost);
 		wr(f.speed);  wr(f.dynVel);
@@ -348,12 +401,13 @@ bool Replay2::SaveFile(std::string file)
     of.close();
     return true;
 }
+//-------------------------------------------------------------------------------------------------------
 
 
 //  add (Record)
 void Replay2::AddFrame(const ReplayFrame2& frame, int carNum)
 {
-	if (frame.time > GetTimeLength())  // dont add before last
+	if (carNum > 0 || frame.time > GetTimeLength())  // dont add before last
 	{
 		frames[carNum].push_back(frame);
 		header.time = frame.time;

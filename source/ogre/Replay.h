@@ -18,9 +18,9 @@ using half_float::half;
 //----------------------------------------------------------------------------------------
 
 /// size of ReplayFrame2
-//= 203 Bytes per frame (minimal,approx)
-//  203 * 80 fps = 16.2 kB/s
-//  1 min = 974 kB, 10 min = 9.7 MB
+//= 202 Bytes per frame (minimal,approx)
+//  202 * 80 fps = 16.1 kB/s
+//  1 min = 970 kB, 10 min = 9.7 MB
 
 struct ReplayHeader2
 {
@@ -33,18 +33,19 @@ struct ReplayHeader2
 	
 	char numPlayers;
 	std::vector<std::string> cars;  // car names eg. ES
-
-	//std::vector<float> hue,sat,val;  // cars colors
-	std::vector<std::string> nicks;  // multiplayer nicks
+	std::vector<uchar> numWh;  //wheels count for all cars
 
 	float trees;      // trees multipler
 	char num_laps;
 	char networked;   // if 1, was networked, so use nicks when playing
 	std::string sim_mode;  // easy, normal, etc
 
+	std::vector<std::string> nicks;  // multiplayer nicks
+	//std::vector<float> hue,sat,val,gloss,refl;  // cars colors?
+
 	ReplayHeader2();
 	void Default();
-	void FromOld(const struct ReplayHeader& hdr);  ///
+	void FromOld(const struct ReplayHeader& hdr);
 };
 
 //  car data, for each simulation frame
@@ -64,24 +65,22 @@ struct ReplayFrame2
 	// 32B  (size in Bytes so far)
 	
 	// cant use bit fields, not portable
-	uchar numWh;  //wheels count, could be 4bit
-	char gear;
-	
 	uchar fl;  // flags, bool 1bit
 	void set(eFlags e, bool b) {  if (b)  fl |= 1 << e;  else  fl &= ~(1 << e); }
 	bool get(eFlags e)         {  return ((fl >> e) & 1u) > 0;  }
 	// 35B
 
 	//  hud
+	char gear;
 	half rpm,vel;
 	uchar damage, clutch;
 	uchar percent;  // track % val
-	// 42B
+	// 41B
 
 	//  sound, input
 	uchar throttle, steer, fboost;
 	half speed, dynVel;
-	// 49B
+	// 48B
 
 	//  ext
 	half whMudSpin;  //-2 /var - may not be saved, check flags
@@ -125,14 +124,14 @@ struct ReplayFrame2
 		Ogre::Vector3 vHitPos, vHitNorm;  // world hit data
 	};  // 30B  saved on hit only
 	std::vector<RHit> hit;
-	// 51B
+	// 50B
 
 	
 	ReplayFrame2();
 	//void FromCar(const CAR* pCar);
-	void FromOld(const struct ReplayFrame& fr);  ///
+	void FromOld(const struct ReplayFrame& fr, uchar numWh);
 
-	//total: 51B + 4*38B = 203B min
+	//total: 50B + 4*38B = 202B min
 };
 
 //  Replay
@@ -153,7 +152,7 @@ public:
 	const int GetNumFrames() const {  return frames[0].size();  }
 
 	//  inits only basic header data, fill the rest after
-	void InitHeader(const char* track, bool trk_user, const char* car, bool bClear);
+	void InitHeader(const char* track, bool trk_user, bool bClear);
 	void Clear();  // call this after header.numPlayers change
 	void CopyFrom(const Replay2& rpl);
 	void DeleteFrames(int carNum, double fromTime);
@@ -203,7 +202,7 @@ struct ReplayHeader
 	ChName cars[3];   // car names (when numPlayers > 1)
 
 	ChName nicks[4];  // multiplayer nicks
-	char descr[128];  // description - user text
+	char descr[128];  // description - user text (wasnt used)
 	float trees;      // trees multipler
 	char num_laps;
 	char networked;   // if 1, was networked, so use nicks when playing

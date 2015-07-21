@@ -174,6 +174,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	#ifdef RPL2_SV 
 		Replay2 r2;
 		r2.header.FromOld(header);
+		r2.Clear();
 	#endif
 		
 	int i=0,p;
@@ -190,7 +191,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 					LogO(">- Load replay  BAD frame time  id:"+toStr(i)+"  plr:"+toStr(p)
 						+"  t-1:"+fToStr(frames[p][i-1].time,5,7)+" > t:"+fToStr(f.time,5,7));
 				#endif
-			}else
+			}else  //if (!fi.eof())
 			{
 				frames[p].push_back(f);
 
@@ -202,19 +203,17 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 				m(squeal[0])  m(slide[0])  m(whVel[0])
 				m(suspVel[0])  m(suspDisp[0])
 				
-				/*LogO(
-				" whP "+	iToStr(f.whP[0])+  " su "+	iToStr(f.surfType[0])+
-				" m "+	iToStr(f.whTerMtr[0])+  " r "+	iToStr(f.whRoadMtr[0])
-				);/**/
 				LogO(
+				" whP "+	iToStr(f.whP[0])+  " su "+	iToStr(f.surfType[0])+
+				" m "+	iToStr(f.whTerMtr[0])+  " r "+	iToStr(f.whRoadMtr[0])+
+				/**LogO(
 				/*" Scrp "+	fToStr(f.fCarScrap,		2,5)+  " Scre "+	fToStr(f.fCarScreech,	2,5)+
 				" HitF "+	fToStr(f.fHitForce,		2,5)+  " HitT "+	fToStr(f.fHitTime,		2,5)+
 				" PInt "+	fToStr(f.fParIntens,	2,5)+  " PVel "+	fToStr(f.fParVel,		2,5)+
-				/**/
-				/*" sql "+	fToStr(f.squeal[0],		2,5)+  " sli "+	fToStr(f.slide[0],		2,5)+
+				/**" sql "+	fToStr(f.squeal[0],		2,5)+  " sli "+	fToStr(f.slide[0],		2,5)+
 				" whV "+	fToStr(f.whVel[0],		2,5)+
 				" ssv "+	fToStr(f.suspVel[0],	2,5)+  " ssd "+	fToStr(f.suspDisp[0],	2,5)+
-				/**/
+				/**
 				" whH "+	fToStr(f.whH[0],		2,5)+
 				" whAv "+	fToStr(f.whAngVel[0],	2,5)+
 				" wSt "+	fToStr(f.whSteerAng[0],	2,5)+
@@ -226,7 +225,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 				
 				#ifdef RPL2_SV 
 				ReplayFrame2 f2;
-				f2.FromOld(f);
+				f2.FromOld(f, r2.header.numWh[p]);
 				r2.AddFrame(f2,p);
 				#endif
 			}
@@ -238,6 +237,9 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 		
 	#ifdef RPL2_SV 
 		r2.SaveFile(file+"2");  // test
+		Replay2 r3;  // load back
+		r3.LoadFile(file+"2");
+		//r3.SaveFile(file+"3");
 	#endif
 
 	#ifdef RPL_ST  // min,max
@@ -298,6 +300,7 @@ bool Replay::SaveFile(std::string file)
     return true;
 }
 
+
 //  add (Record)
 void Replay::AddFrame(const ReplayFrame& frame, int carNum)
 {
@@ -320,6 +323,7 @@ const double Replay::GetTimeLength(int carNum) const
 	int s = frames[carNum].size();
 	return s > 0 ? frames[carNum][s-1].time : 0.0;
 }
+
 
 ///  get (Play)
 //----------------------------------------------------------------
@@ -386,6 +390,7 @@ bool Replay::GetFrame(double time, ReplayFrame* pFr, int carNum)
 	//  check if ended
 	return time <= end;
 }
+
 
 //  delete frames after current time (when time did go back)
 void Replay::DeleteFrames(int c, double fromTime)
