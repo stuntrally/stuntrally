@@ -209,7 +209,7 @@ namespace ICS
 					}
 					else
 					{
-						_stepsPerSeconds = FromString<float>(value.c_str());
+						_stepsPerSeconds = std::min(60.f, FromString<float>(value.c_str()) );
 					}
 				}
 				else

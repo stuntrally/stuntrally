@@ -62,7 +62,7 @@ namespace ICS
 		inline float getStepsPerSeconds(){ return mStepsPerSeconds; };
 
 		void setStepSize(float size){ mStepSize = size; };
-		void setStepsPerSeconds(float steps){ mStepsPerSeconds = steps; };
+		void setStepsPerSeconds(float steps){ mStepsPerSeconds = std::min(60.f, steps); };
 
 		inline void setIgnoreAutoReverse(bool value){ mIgnoreAutoReverse = value; }; // mouse disable autoreverse
 		inline bool isAutoReverseIgnored(){ return mIgnoreAutoReverse; };
