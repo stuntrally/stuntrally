@@ -188,6 +188,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 				#ifdef RPL2_SV
 					ReplayFrame2 f2;
 					f2.FromOld(f, r2.header.numWh[p]);
+					if (i%2==0)  // half frames
 						r2.AddFrame(f2,p);
 				#endif
 			}

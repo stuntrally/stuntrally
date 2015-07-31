@@ -128,7 +128,7 @@ struct ReplayFrame2
 
 	
 	ReplayFrame2();
-	//void FromCar(const CAR* pCar, half prevHitTime);
+	void FromCar(const CAR* pCar, half prevHitTime);
 	void FromOld(const struct ReplayFrame& fr, uchar numWh);
 
 	//total: 50B + 4*38B = 202B min
@@ -150,6 +150,9 @@ public:
 
 	const float GetTimeLength() const;  // total time in seconds
 	const int GetNumFrames() const {  return frames.empty() ? 0 : frames[0].size();  }
+
+	bool GetLastFrame(ReplayFrame2* pFr, int carNum);
+	half GetLastHitTime(int carNum);
 
 	//  inits only basic header data, fill the rest after
 	void InitHeader(const char* track, bool trk_user, bool bClear);
