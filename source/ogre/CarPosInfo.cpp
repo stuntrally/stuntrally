@@ -67,6 +67,59 @@ Quaternion Axes::toOgreW(const QUATERNION<double>& vIn)
 }
 
 	
+//  get from new replay/ghost
+//-----------------------------------------------------------------------
+void PosInfo::FromRpl2(const ReplayFrame2* rf)
+{
+	//  car
+	Axes::toOgre(pos, rf->pos);
+	rot = Axes::toOgre(rf->rot);
+	carY = rot * Vector3::UNIT_Y;
+
+	speed = rf->speed;
+	fboost = rf->fboost;  steer = rf->steer;
+	braking = rf->get(b_braking);  percent = rf->percent;
+	hov_roll = rf->hov_roll;  hov_throttle = rf->throttle;
+
+	fHitTime = rf->fHitTime;
+	if (!rf->hit.empty())
+	{	
+		const ReplayFrame2::RHit& h = rf->hit[0];
+		fHitForce = h.fHitForce;
+		fParIntens = h.fParIntens;  fParVel = h.fParVel;
+		vHitPos = h.vHitPos;  vHitNorm = h.vHitNorm;
+	}
+	/*if (rf->scrap.empty())  //!get(b_scrap)
+	{
+		fCarScrap = 0.f;  fCarSceech = 0.f;
+	}else
+	{	const ReplayFrame2::RScrap& sc = rf->scrap[0];
+		fCarScrap = sc.fScrap;  fCarSceech = sc.fScreech;
+	}
+	if (get(b_scrap)
+	b_fluid, b_hov
+	/**/
+
+	//  wheels
+	int ww = rf->wheels.size();
+	for (int w=0; w < ww; ++w)
+	{
+		const ReplayFrame2::RWheel& wh = rf->wheels[w];
+		Axes::toOgre(whPos[w], wh.pos);
+		whRot[w] = Axes::toOgreW(wh.rot);
+		//whR[w] = outside
+		
+		whVel[w] = wh.whVel;
+		whSlide[w] = wh.slide;  whSqueal[w] = wh.squeal;
+
+		whTerMtr[w] = wh.whTerMtr;  whRoadMtr[w] = wh.whRoadMtr;
+
+		whH[w] = wh.whH;  whP[w] = wh.whP;
+		whAngVel[w] = wh.whAngVel;
+		whSteerAng[w] = wh.whSteerAng;
+	}
+}
+
 //  get from replay/ghost
 //-----------------------------------------------------------------------
 void PosInfo::FromRpl(const ReplayFrame* rf)
@@ -206,4 +259,90 @@ void ReplayFrame::FromCar(const CAR* pCar)
 	fHitForce = cd.fHitForce;
 	fCarScrap = std::min(1.f, cd.fCarScrap);
 	fCarScreech = std::min(1.f, cd.fCarScreech);
+}
+
+//  set from simulation  New
+//-----------------------------------------------------------------------
+void ReplayFrame2::FromCar(const CAR* pCar, half prevHitTime)
+{
+	//  car
+	const CARDYNAMICS& cd = pCar->dynamics;
+	pos = cd.GetPosition();
+	rot = cd.GetOrientation();
+
+	//  wheels
+	//wheels.resize(cd.numWheels);
+	//wheels.clear();
+	for (int w=0; w < cd.numWheels; ++w)
+	{
+		ReplayFrame2::RWheel wh;
+		WHEEL_POSITION wp = WHEEL_POSITION(w);
+		wh.pos = cd.GetWheelPosition(wp);
+		wh.rot = cd.GetWheelOrientation(wp);
+
+		const TRACKSURFACE* surface = cd.GetWheelContact(wp).GetSurfacePtr();
+		wh.surfType = !surface ? TRACKSURFACE::NONE : surface->type;
+		//  squeal
+		float slide = -1.f;
+		wh.squeal = pCar->GetTireSquealAmount(wp, &slide);  wh.slide = slide;
+		wh.whVel = cd.GetWheelVelocity(wp).Magnitude();
+		//  susp
+		wh.suspVel = cd.GetSuspension(wp).GetVelocity();
+		wh.suspDisp = cd.GetSuspension(wp).GetDisplacementPercent();
+
+		wh.whTerMtr = cd.whTerMtr[w];  wh.whRoadMtr = cd.whRoadMtr[w];
+		//  fluids
+		wh.whH = cd.whH[w];  wh.whP = cd.whP[w];
+		wh.whAngVel = cd.wheel[w].GetAngularVelocity();
+		bool inFl = cd.inFluidsWh[w].size() > 0;
+		int idPar = -1;
+		if (inFl)
+		{	const FluidBox* fb = *cd.inFluidsWh[w].begin();
+			idPar = fb->idParticles;  }
+		wh.whP = idPar;
+		wh.whSteerAng = cd.wheel[w].GetSteerAngle();
+		wheels.push_back(wh);
+	}
+	//  hud
+	vel = pCar->GetSpeedometer();  rpm = pCar->GetEngineRPM();
+	gear = pCar->GetGear();  clutch = pCar->GetClutch();
+	throttle = cd.GetThrottle();
+	steer = pCar->GetLastSteer();
+	fboost = cd.doBoost;
+	//  eng snd
+	//posEngn = cd.GetEnginePosition();
+	speed = pCar->GetSpeed();
+	dynVel = cd.GetVelocity().Magnitude();
+	set(b_braking, cd.IsBraking());
+	
+	if (cd.vtype != V_Car)
+		hov_roll = cd.vtype == V_Sphere ? cd.sphereYaw : cd.hov_roll;
+	
+	// fluid
+	bool mud = pCar->whMudSpin < 0.01f;
+	set(b_fluid, mud);
+	whMudSpin = pCar->whMudSpin;
+
+	//  scrap
+	bool scr = cd.fCarScrap > 0.01f || cd.fCarScreech > 0.01f;
+	set(b_scrap, scr);
+	if (scr)
+	{	RScrap sc;
+		sc.fScrap = std::min(1.f, cd.fCarScrap);
+		sc.fScreech = std::min(1.f, cd.fCarScreech);
+		scrap.push_back(sc);
+	}
+
+	//  hit sparks
+	fHitTime = cd.fHitTime;
+	bool ht = fHitTime >= prevHitTime;
+	set(b_hit, ht);
+	if (ht)  // hit, new data
+	{
+		RHit h;
+		h.fHitForce = cd.fHitForce;
+		h.fParIntens = cd.fParIntens;  h.fParVel = cd.fParVel;
+		h.vHitPos = cd.vHitPos;  h.vHitNorm = cd.vHitNorm;
+		hit.push_back(h);
+	}
 }

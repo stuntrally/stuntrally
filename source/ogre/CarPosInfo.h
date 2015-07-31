@@ -4,8 +4,9 @@
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
 #include "../vdrift/cardefs.h"
+#include "half.hpp"
 
-struct ReplayFrame;
+struct ReplayFrame;  struct ReplayFrame2;
 class CAR;
 
 
@@ -34,7 +35,7 @@ struct PosInfo
 	float whH[W],whAngVel[W], speed, whSteerAng[W];  int whP[W];
 	
 	//  hit sparks
-	float fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;
+	float fHitTime, /*?fHitForce,*/fParIntens,fParVel;
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
 	
 	//  camera view
@@ -46,6 +47,7 @@ struct PosInfo
 	
 	//  copy
 	void FromRpl(const ReplayFrame* rf);
+	void FromRpl2(const ReplayFrame2* rf);
 	void FromCar(CAR* pCar);
 };
 
