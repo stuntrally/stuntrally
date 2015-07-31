@@ -85,7 +85,7 @@ void PosInfo::FromRpl2(const ReplayFrame2* rf)
 	if (!rf->hit.empty())
 	{	
 		const ReplayFrame2::RHit& h = rf->hit[0];
-		fHitForce = h.fHitForce;
+		//fHitForce = h.fHitForce;
 		fParIntens = h.fParIntens;  fParVel = h.fParVel;
 		vHitPos = h.vHitPos;  vHitNorm = h.vHitNorm;
 	}
