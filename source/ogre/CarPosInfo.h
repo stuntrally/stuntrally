@@ -22,7 +22,7 @@ struct PosInfo
 	//  wheel
 	const static int W = MAX_WHEELS;
 	Ogre::Vector3 whPos[W];
-	Ogre::Quaternion rot, whRot[W];  float whR[W];
+	Ogre::Quaternion rot, whRot[W];
 
 	float whVel[W], whSlide[W], whSqueal[W];
 	int whTerMtr[W],whRoadMtr[W];
@@ -61,6 +61,7 @@ struct Axes
 
 	static Ogre::Quaternion toOgre(const QUATERNION<float>& vIn);  // car
 	static Ogre::Quaternion toOgre(const QUATERNION<double>& vIn);
-	static Ogre::Quaternion toOgreW(const QUATERNION<float>& vIn);  // wheels
+	static Ogre::Quaternion toOgreW(const QUATERNION<half_float::half>& vIn);  // wheels
+	static Ogre::Quaternion toOgreW(const QUATERNION<float>& vIn);
 	static Ogre::Quaternion toOgreW(const QUATERNION<double>& vIn);
 };

@@ -37,6 +37,7 @@ Vector3 Axes::toOgre(const MATHVECTOR<float,3>& vIn)
 	return Vector3(vIn[0], vIn[2], -vIn[1]);
 }
 
+//  car
 Quaternion Axes::toOgre(const QUATERNION<float>& vIn)
 {
 	Quaternion q(vIn[0], -vIn[3], vIn[1], vIn[2]);
@@ -48,6 +49,12 @@ Quaternion Axes::toOgre(const QUATERNION<double>& vIn)
 	return q * qFixCar;
 }
 
+//  wheels
+Quaternion Axes::toOgreW(const QUATERNION<half>& vIn)
+{
+	Quaternion q(vIn[0], -vIn[3], vIn[1], vIn[2]);
+	return q * qFixWh;
+}
 Quaternion Axes::toOgreW(const QUATERNION<float>& vIn)
 {
 	Quaternion q(vIn[0], -vIn[3], vIn[1], vIn[2]);
@@ -125,7 +132,6 @@ void PosInfo::FromCar(CAR* pCar)
 
 		Axes::toOgre(whPos[w], cd->GetWheelPosition(wp));
 		whRot[w] = Axes::toOgreW(cd->GetWheelOrientation(wp));
-		whR[w] = pCar->GetTireRadius(wp);
 
 		whVel[w] = cd->GetWheelVelocity(wp).Magnitude();
 		whSlide[w] = -1.f;  whSqueal[w] = pCar->GetTireSquealAmount(wp, &whSlide[w]);  //!?
@@ -140,7 +146,7 @@ void PosInfo::FromCar(CAR* pCar)
 }
 
 
-//  set from simulation
+//  set from simulation  Old
 //-----------------------------------------------------------------------
 void ReplayFrame::FromCar(const CAR* pCar)
 {
