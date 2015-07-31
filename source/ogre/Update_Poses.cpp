@@ -106,10 +106,13 @@ void App::newPoses(float time)  // time only for camera update
 			assert(c < frm.size());
 			#endif
 			ReplayFrame& rf = frm[c];  // frm also used in car.cpp for sounds
-			bool ok = replay.GetFrame(rplTime, &rf, c);
-			if (!ok)  pGame->timer.RestartReplay(0);  //at end
+			if (c < replay.header.numPlayers)
+			{
+				bool ok = replay.GetFrame(rplTime, &rf, c);
+				if (!ok)  pGame->timer.RestartReplay(0);  //at end
 
-			pi.FromRpl(&rf);
+				pi.FromRpl(&rf);
+			}
 		}
 		else  ///>>  sim, game  -  get data from vdrift
 		if (pCar)

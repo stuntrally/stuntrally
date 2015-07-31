@@ -129,7 +129,7 @@ bool TrackGhost::GetFrame(float time1, TrackFrame* pFr)
 	}
 
 	//  last time
-	double end = frames[s-1].time;
+	float end = frames[s-1].time;
 	
 	//  check if ended
 	return time <= end;

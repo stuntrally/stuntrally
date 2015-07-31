@@ -342,7 +342,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 
 	for (w=0; w < numWheels; ++w)
 	{
-		float wR = posInfo.whR[w];
+		float wR = whRadius[w];
 		#ifdef CAM_TILT_DBG  // cam debug test only
 			if (fCam)
 				ndWh[w]->setPosition(fCam->posHit[w]);
