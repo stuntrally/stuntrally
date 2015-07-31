@@ -180,15 +180,12 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 			cd->fHitDmgA *= 0.4f;
 		}
 		
-		//float a = (vlen*0.1f*powf(force, 0.2f) - 0*cd->fHitForce4);
 		float a = std::min(1.f, std::min(vlen, 2.2f)*0.1f*powf(force, 0.4f) );
 		if (a > cd->fCarScrap)  cd->fCarScrap = a;
 
 		float b = std::min(1.f, 0.2f*force);
 		if (b > cd->fCarScreech)  cd->fCarScreech = b;
 			
-		//if (cd->fHitForce4 > 0.f)
-		//	cd->fHitForce4 -= 0.04f * dt;
 		//if (force > 0.5f)
 			cd->fHitTime = 1.f;
 		///LogO("upd sf " + toStr(cd->fHitForce) + " force " + toStr(hit.force) + " vel " + toStr(vlen) + " Nvel " + toStr(normvel));
@@ -197,7 +194,6 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 	{
 		cdOld->fHitForce  = 0.f;
 		cdOld->fHitForce2 = 0.f;
-		//cdOld->fHitForce4 = 0.f;
 		//cdOld->fHitForce3 = cdOld->fHitTime;
 		//cdOld = 0;
 	}

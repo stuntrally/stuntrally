@@ -471,7 +471,7 @@ void CAR::ResetPos(bool fromStart)
 		dynamics.wheel[w].SetAngularVelocity(0);
 		//dynamics.wheel_velocity[w] = zero;
 	}
-	crashdetection.Update(0.f, 0.1f);  //prevent car hit sound
+	//crashdetection.Update(0.f, 0.1f);  //prevent car hit sound
 	dynamics.fHitDmgA = 0.f;
 
 	//dynamics.SynchronizeChassis();

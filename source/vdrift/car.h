@@ -295,7 +295,7 @@ public:
 	MODEL_JOE03 bodymodel, interiormodel, glassmodel, drivermodel;
 	
 	std::vector<SUSPENSIONBUMPDETECTION> suspbump;
-	CRASHDETECTION crashdetection,crashdetection2;
+	CRASHDETECTION crashdetection2;
 
 	std::map <std::string, SOUNDBUFFER> soundbuffers;
 	std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> > enginesounds;
