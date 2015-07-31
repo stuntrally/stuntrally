@@ -520,7 +520,8 @@ void CarModel::Create()
 		SceneNode* nd = ndCar->createChildSceneNode();
 		brakes = mSceneMgr->createBillboardSet("Flr"+strI,2);
 		brakes->setDefaultDimensions(brakeSize, brakeSize);
-		brakes->setRenderQueueGroup(RQG_CarTrails);  //brakes->setVisibilityFlags();
+		brakes->setRenderQueueGroup(RQG_CarTrails);
+		brakes->setVisibilityFlags(RV_Car);
 
 		for (int i=0; i < brakePos.size(); ++i)
 			brakes->createBillboard(brakePos[i], brakeClr);
