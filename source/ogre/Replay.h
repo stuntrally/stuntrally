@@ -57,7 +57,7 @@ struct ReplayFrame2
 	//dont use int, not portable
 
 	//  time  since game start
-	float time;  //double
+	float time;
 
 	//  car
 	MATHVECTOR<float,3> pos;
@@ -67,7 +67,7 @@ struct ReplayFrame2
 	// cant use bit fields, not portable
 	uchar fl;  // flags, bool 1bit
 	void set(eFlags e, bool b) {  if (b)  fl |= 1 << e;  else  fl &= ~(1 << e); }
-	bool get(eFlags e)         {  return ((fl >> e) & 1u) > 0;  }
+	bool get(eFlags e) const   {  return ((fl >> e) & 1u) > 0;  }
 	// 35B
 
 	//  hud
@@ -120,7 +120,7 @@ struct ReplayFrame2
 	half fHitTime;
 	struct RHit
 	{
-		half fHitForce, fParIntens, fParVel; //, fSndForce, fNormVel;
+		half fHitForce, fParIntens, fParVel;
 		Ogre::Vector3 vHitPos, vHitNorm;  // world hit data
 	};  // 30B  saved on hit only
 	std::vector<RHit> hit;
@@ -128,7 +128,7 @@ struct ReplayFrame2
 
 	
 	ReplayFrame2();
-	//void FromCar(const CAR* pCar);
+	//void FromCar(const CAR* pCar, half prevHitTime);
 	void FromOld(const struct ReplayFrame& fr, uchar numWh);
 
 	//total: 50B + 4*38B = 202B min
@@ -145,17 +145,17 @@ public:
 	bool SaveFile(std::string file);
 
 	void AddFrame(const ReplayFrame2& frame, int carNum);    // record
-	bool GetFrame(double time, ReplayFrame2* fr, int carNum);  // play
+	bool GetFrame(float time, ReplayFrame2* fr, int carNum);  // play
 	const ReplayFrame2& GetFrame0(int id){  return frames[0][id];  }
 
-	const double GetTimeLength() const;  // total time in seconds
-	const int GetNumFrames() const {  return frames[0].size();  }
+	const float GetTimeLength() const;  // total time in seconds
+	const int GetNumFrames() const {  return frames.empty() ? 0 : frames[0].size();  }
 
 	//  inits only basic header data, fill the rest after
 	void InitHeader(const char* track, bool trk_user, bool bClear);
-	void Clear();  // call this after header.numPlayers change
+	void Clear(bool time=true);  // call this after header.numPlayers change
 	void CopyFrom(const Replay2& rpl);
-	void DeleteFrames(int carNum, double fromTime);
+	void DeleteFrames(int carNum, float fromTime);
 
 	static bool fixOldTrkName(std::string& trk);  // old
 
@@ -163,6 +163,7 @@ public:
 private:
 	typedef std::vector<ReplayFrame2> Frames;  // 1 player
 	std::vector<Frames> frames;  // all plrs
+	int idLast;  // last index from GetFrame
 };
 
 
@@ -247,7 +248,7 @@ struct ReplayFrame
 	char braking;  // for rear car lights (bool)
 
 	//  hit sparks
-	float fHitTime, fParIntens,fParVel;//, fSndForce, fNormVel;
+	float fHitTime, fParIntens,fParVel;
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
 	float whMudSpin, fHitForce, fCarScrap, fCarScreech;
 	float hov_roll;  //=sph_yaw for O
@@ -286,8 +287,10 @@ public:
 	ReplayHeader header;
 	//ReplayHeader2 header;
 private:
+	friend class Replay2;
 	typedef std::vector<ReplayFrame> Frames;  // 1 player
 	std::vector<Frames> frames;  // all plrs
+	int idLast;  // last index from GetFrame
 };
 
 
@@ -322,7 +325,7 @@ public:
 	void Clear();
 private:
 	std::vector<RewindFrame> frames[4];  // 4 players max (split screen)
-	int idLast[4];  // last index from GetFrame (optym)
+	int idLast[4];  // last index from GetFrame (optimisation)
 };
 
 

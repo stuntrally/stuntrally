@@ -444,13 +444,7 @@ void CAR::UpdateSounds(float dt)
 
 		if (crashdecel2 > 0)
 		{
-			//const float mingainat = 1;  // 40 260
-			//const float maxgainat = 15;
-			//const float mingain = 0.1;
-			//float gain = (crashdecel2-mingainat)/(maxgainat-mingainat);
-			//if (gain > 1)		gain = 1;
-			//if (gain < mingain)	gain = mingain;
-			/*!*/float gain = 0.9f;
+			float gain = 0.9f;
 			
 			int f = crashdecel2 / 30.f * Ncrashsounds;
 			int i = std::max(1, std::min(Ncrashsounds-1, f));

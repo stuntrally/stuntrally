@@ -71,6 +71,7 @@ ReplayFrame::ReplayFrame() :
 
 
 Replay::Replay()
+	:idLast(0)
 {
 	Clear();
 }
@@ -86,6 +87,7 @@ void Replay::InitHeader(const char* track, bool trk_user, const char* car, bool 
 }
 void Replay::Clear()
 {
+	idLast = 0;
 	frames.resize(header.numPlayers);
 	for (int p=0; p < header.numPlayers; ++p)
 	{	frames[p].clear();
@@ -157,20 +159,8 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	}
 	
 	//  frames
-	//#define RPL_ST  // log stats
 	//#define RPL2_SV  // save new rpl test
 
-	#ifdef RPL_ST  // min,max
-		float c = 10e12, d = -10e12;
-		ReplayFrame a,b;  //min,max
-		#define n(par)  a.par = c;  b.par = d;
-		n(fCarScrap)  n(fCarScreech)
-		n(fHitForce)  n(fHitTime)
-		n(fParIntens)  n(fParVel)
-		n(squeal[0])  n(slide[0])  n(whVel[0])
-		n(suspVel[0])  n(suspDisp[0])
-	#endif
-	
 	#ifdef RPL2_SV 
 		Replay2 r2;
 		r2.header.FromOld(header);
@@ -191,42 +181,14 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 					LogO(">- Load replay  BAD frame time  id:"+toStr(i)+"  plr:"+toStr(p)
 						+"  t-1:"+fToStr(frames[p][i-1].time,5,7)+" > t:"+fToStr(f.time,5,7));
 				#endif
-			}else  //if (!fi.eof())
+			}else  if (!fi.eof())
 			{
 				frames[p].push_back(f);
 
-				#ifdef RPL_ST  // min,max
-				#define m(par)  if (f.par < a.par)  a.par = f.par;  if (f.par > b.par)  b.par = f.par;
-				m(fCarScrap)  m(fCarScreech)
-				m(fHitForce)  m(fHitTime)
-				m(fParIntens)  m(fParVel)
-				m(squeal[0])  m(slide[0])  m(whVel[0])
-				m(suspVel[0])  m(suspDisp[0])
-				
-				LogO(
-				" whP "+	iToStr(f.whP[0])+  " su "+	iToStr(f.surfType[0])+
-				" m "+	iToStr(f.whTerMtr[0])+  " r "+	iToStr(f.whRoadMtr[0])+
-				/**LogO(
-				/*" Scrp "+	fToStr(f.fCarScrap,		2,5)+  " Scre "+	fToStr(f.fCarScreech,	2,5)+
-				" HitF "+	fToStr(f.fHitForce,		2,5)+  " HitT "+	fToStr(f.fHitTime,		2,5)+
-				" PInt "+	fToStr(f.fParIntens,	2,5)+  " PVel "+	fToStr(f.fParVel,		2,5)+
-				/**" sql "+	fToStr(f.squeal[0],		2,5)+  " sli "+	fToStr(f.slide[0],		2,5)+
-				" whV "+	fToStr(f.whVel[0],		2,5)+
-				" ssv "+	fToStr(f.suspVel[0],	2,5)+  " ssd "+	fToStr(f.suspDisp[0],	2,5)+
-				/**
-				" whH "+	fToStr(f.whH[0],		2,5)+
-				" whAv "+	fToStr(f.whAngVel[0],	2,5)+
-				" wSt "+	fToStr(f.whSteerAng[0],	2,5)+
-				" mud "+	fToStr(f.whMudSpin,	2,5)+
-				" hov "+	fToStr(f.hov_roll,	2,5)+  //=sph_yaw for O
-				/**/
-				"");
-				#endif
-				
-				#ifdef RPL2_SV 
-				ReplayFrame2 f2;
-				f2.FromOld(f, r2.header.numWh[p]);
-				r2.AddFrame(f2,p);
+				#ifdef RPL2_SV
+					ReplayFrame2 f2;
+					f2.FromOld(f, r2.header.numWh[p]);
+						r2.AddFrame(f2,p);
 				#endif
 			}
 		}
@@ -242,32 +204,6 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 		//r3.SaveFile(file+"3");
 	#endif
 
-	#ifdef RPL_ST  // min,max
-		LogO("MIN\n"
-		" Scrp "+	fToStr(a.fCarScrap,		2,5)+  " Scre "+	fToStr(a.fCarScreech,	2,5)+
-		" HitF "+	fToStr(a.fHitForce,		2,5)+  " HitT "+	fToStr(a.fHitTime,		2,5)+
-		" PInt "+	fToStr(a.fParIntens,	2,5)+  " PVel "+	fToStr(a.fParVel,		2,5)+
-
-		" sql "+	fToStr(a.squeal[0],		2,5)+  " sli "+	fToStr(a.slide[0],		2,5)+
-		" whV "+	fToStr(a.whVel[0],		2,5)+
-		" ssv "+	fToStr(a.suspVel[0],	2,5)+  " ssd "+	fToStr(a.suspDisp[0],	2,5)+
-		"");
-
-		LogO("MAX\n"
-		" Scrp "+	fToStr(b.fCarScrap,		2,5)+  " Scre "+	fToStr(b.fCarScreech,	2,5)+
-		" HitF "+	fToStr(b.fHitForce,		2,5)+  " HitT "+	fToStr(b.fHitTime,		2,5)+
-		" PInt "+	fToStr(b.fParIntens,	2,5)+  " PVel "+	fToStr(b.fParVel,		2,5)+
-
-		" sql "+	fToStr(b.squeal[0],		2,5)+  " sli "+	fToStr(b.slide[0],		2,5)+
-		" whV "+	fToStr(b.whVel[0],		2,5)+
-		" ssv "+	fToStr(b.suspVel[0],	2,5)+  " ssd "+	fToStr(b.suspDisp[0],	2,5)+
-		"\n");
-	#endif
-
-	// half
-	//float ff = 0.9999999;  half h = half(ff);  float fh = float(h);
-	//LogO(fToStr(ff,8,12)+" "+fToStr(h,8,12)+" "+fToStr(fh,8,12));
- 
     #ifdef LOG_RPL
 		LogO(">- Load replay  first: "+fToStr(frames[0][0].time,5,7)
 			+"  time: "+fToStr(GetTimeLength(0),2,5)+"  frames: "+toStr(frames[0].size()));
@@ -329,7 +265,7 @@ const double Replay::GetTimeLength(int carNum) const
 //----------------------------------------------------------------
 bool Replay::GetFrame(double time, ReplayFrame* pFr, int carNum)
 {
-	static int ic = 0;  // last index for current frame
+	int& ic = idLast;  // last index
 
 	int s = frames[carNum].size();
 	if (ic > s-1)  ic = s-1;  // new size

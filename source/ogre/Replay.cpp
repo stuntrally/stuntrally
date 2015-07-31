@@ -12,7 +12,7 @@ using namespace std;
 	 conv tool for all
 	~check back save+load
 	`load old rpl as new
-	 play new rpl game
+	`play new rpl game
 	 car frame as new rpl
 	 save new rpls
 	 only new rpl use
@@ -39,6 +39,7 @@ void ReplayHeader2::Default()
 
 void ReplayHeader2::FromOld(const struct ReplayHeader& h)
 {
+	time = 0.f;  //set later
 	track = h.track;
 	track_user = h.track_user;
 	
@@ -145,6 +146,7 @@ void ReplayFrame2::FromOld(const struct ReplayFrame& f, uchar numWh)
 
 
 Replay2::Replay2()
+	:idLast(0)
 {
 	Clear();
 }
@@ -157,8 +159,12 @@ void Replay2::InitHeader(const char* track, bool trk_user, bool bClear)
 	if (bClear)
 		Clear();
 }
-void Replay2::Clear()
+void Replay2::Clear(bool time)
 {
+	idLast = 0;
+	if (time)
+		header.time = 0.f;
+	
 	frames.resize(header.numPlayers);
 	for (int p=0; p < header.numPlayers; ++p)
 	{	frames[p].clear();
@@ -216,14 +222,14 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		for (i=0; i < s; ++i)
 		{	rs(h.nicks[i])  ss += h.nicks[i]+" ";  }  ss+=" ";
 
-    #ifdef LOG_RPL
+	#ifdef LOG_RPL
 		LogO(ss);
 		if (!onlyHdr)
 			LogO(">- Load replay2 --  file: "+file+"  players:"+toStr(h.numPlayers));
 	#endif
 	
 	//  clear
-	Clear();
+	Clear(false);
 	if (onlyHdr)
 	{
 		fi.close();  return true;
@@ -233,6 +239,7 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 	i=0;  int p,w;
 	while (!fi.eof())
 	{
+		//rd(f.time);  // once..?
 		for (p=0; p < header.numPlayers; ++p)
 		{
 			ReplayFrame2 f;
@@ -289,7 +296,7 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 
 			if (i > 0 && f.time < frames[p][i-1].time)
 			{
-			    #ifdef LOG_RPL
+				#ifdef LOG_RPL
 					LogO(">- Load replay2  BAD frame time  id:"+toStr(i)+"  plr:"+toStr(p)
 						+"  t-1:"+fToStr(frames[p][i-1].time,5,7)+" > t:"+fToStr(f.time,5,7));
 				#endif
@@ -300,7 +307,7 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		++i;
 	}
 
-    fi.close();
+	fi.close();
 
     #ifdef LOG_RPL
 		LogO(">- Load replay2  first: "+fToStr(frames[0][0].time,5,7)+
@@ -418,12 +425,15 @@ void Replay2::AddFrame(const ReplayFrame2& frame, int carNum)
 void Replay2::CopyFrom(const Replay2& rpl)
 {
 	Clear();
+	header.time = rpl.header.time;
+
+	//  plr 1 only, for ghost
 	for (int i=0; i < rpl.GetNumFrames(); ++i)
 		frames[0].push_back(rpl.frames[0][i]);
 }
 
 //  last frame time, sec
-const double Replay2::GetTimeLength() const
+const float Replay2::GetTimeLength() const
 {
 	return header.time;
 }
@@ -431,9 +441,9 @@ const double Replay2::GetTimeLength() const
 
 ///  get (Play)
 //----------------------------------------------------------------
-bool Replay2::GetFrame(double time, ReplayFrame2* pFr, int carNum)
+bool Replay2::GetFrame(float time, ReplayFrame2* pFr, int carNum)
 {
-	static int ic = 0;  // last index for current frame
+	int& ic = idLast;  // last index
 
 	int s = frames[carNum].size();
 	if (ic > s-1)  ic = s-1;  // new size
@@ -449,7 +459,7 @@ bool Replay2::GetFrame(double time, ReplayFrame2* pFr, int carNum)
 
 	if (ic < 0 || ic >= s)
 		return false;  //-
-	
+
 	///  simple, no interpolation
 	#if 1
 	if (pFr)
@@ -463,7 +473,7 @@ bool Replay2::GetFrame(double time, ReplayFrame2* pFr, int carNum)
 
 		float m = (time - fc.time) / (fn.time - fc.time);  // [0..1]
 		//Ogre::LogManager::getSingleton().logMessage(toStr(m));
-
+		
 		ReplayFrame fr = fc;
 		fr.pos = (fn.pos - fc.pos) * m + fc.pos;
 
@@ -478,7 +488,7 @@ bool Replay2::GetFrame(double time, ReplayFrame2* pFr, int carNum)
 	#endif
 
 	//  last time
-	double end = header.time;  //frames[carNum][s-1].time;
+	float end = header.time;  //frames[carNum][s-1].time;
 	if (time >= end)
 	{
 		pFr->fboost = 0.f;
@@ -496,7 +506,7 @@ bool Replay2::GetFrame(double time, ReplayFrame2* pFr, int carNum)
 }
 
 //  delete frames after current time (when time did go back)
-void Replay2::DeleteFrames(int c, double fromTime)
+void Replay2::DeleteFrames(int c, float fromTime)
 {
 	if (frames[c].empty())  return;
 	while (!frames[c].empty() && frames[c][ frames[c].size()-1].time >= fromTime)

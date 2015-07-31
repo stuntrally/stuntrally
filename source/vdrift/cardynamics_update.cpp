@@ -169,11 +169,8 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 	if (p1)
 	{
 		#if 0  //  bullet hit data-
-			out << "hit S : " << fSndForce << endl;
 			out << "hit P : " << fParIntens << endl;
 			//out << "hit t : " << fHitTime << endl;
-			out << "bHitS : " << (bHitSnd?1:0) << " id "<< sndHitN << endl;
-			out << "N Vel : " << fNormVel << endl;
 			out << "v Vel : " << GetSpeed() << endl;
 		#endif
 		#if 0
