@@ -158,7 +158,7 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 		(-cd->GetOrientation()).RotateVector(cN);
 		cd->vHitCarN = Ogre::Vector3(cN[0],cN[1],cN[2]);  cd->vHitCarN.normalise();
 		//----  factors
-		if (!cd->vtype != V_Sphere)
+		if (cd->vtype != V_Sphere)
 		{
 			float sx = cd->vHitCarN.x, sy = cd->vHitCarN.y, sz = cd->vHitCarN.z;
 			float nx = fabs(sx), ny = fabs(sy), nz = fabs(sz);
