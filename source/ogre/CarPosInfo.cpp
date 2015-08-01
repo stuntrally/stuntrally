@@ -78,7 +78,7 @@ void PosInfo::FromRpl2(const ReplayFrame2* rf)
 
 	speed = rf->speed;
 	fboost = rf->fboost;  steer = rf->steer;
-	braking = rf->get(b_braking);  percent = rf->percent;
+	braking = rf->get(b_braking);  percent = rf->percent /255.f*100.f;
 	hov_roll = rf->hov_roll;  hov_throttle = rf->throttle;
 
 	fHitTime = rf->fHitTime;

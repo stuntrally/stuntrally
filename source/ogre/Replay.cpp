@@ -28,7 +28,7 @@ void ReplayHeader2::Default()
 {
 	head[0] = 'S';  head[1] = 'R';  head[2] = '/';  head[3] = '^';  head[4] = 0;
 	track = "";  track_user = 0;
-	ver = 21;  time = 0.f;
+	ver = 30;  time = 0.f;
 	
 	numPlayers = 0;  trees = 1.f;
 	num_laps = 1;  networked = 0;
@@ -89,7 +89,7 @@ void ReplayFrame2::FromOld(const struct ReplayFrame& f, uchar numWh)
 	//  hud
 	gear = f.gear;
 	rpm = f.rpm;  vel = f.vel;
-	percent = f.percent / 255.f;  // track %
+	percent = f.percent /100.f*255.f;  // track %
 	damage = 0.f;  // wasnt saved
 
 	//  sound, input
@@ -159,14 +159,24 @@ void Replay2::InitHeader(const char* track, bool trk_user, bool bClear)
 	if (bClear)
 		Clear();
 }
+
+void Replay2::ClearCars()
+{
+	int pp = header.numPlayers;
+	header.cars.clear();  header.cars.resize(pp);
+	header.nicks.clear();  header.nicks.resize(pp);
+	header.numWh.clear();  header.numWh.resize(pp);
+}
+
 void Replay2::Clear(bool time)
 {
 	idLast = 0;
 	if (time)
 		header.time = 0.f;
-	
-	frames.resize(header.numPlayers);
-	for (int p=0; p < header.numPlayers; ++p)
+
+	int p,pp = header.numPlayers;
+	frames.resize(pp);
+	for (p=0; p < pp; ++p)
 	{	frames[p].clear();
 		frames[p].reserve(cDefSize);
 	}
@@ -203,6 +213,7 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		r.LoadFile(file);
 		header.FromOld(r.header);
 		header.time = r.GetTimeLength();
+		header.ver = r.header.ver + 10;
 
 		Clear(false);
 		if (onlyHdr)
@@ -222,7 +233,7 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 	{
 		uchar l;  int i,s;  char buf[256];
 		#define rd(a)  fi.read((char*)&a, sizeof(a))
-		#define rs(s)  {  fi.read((char*)&l, 1);  fi.read(buf, l);  buf[l]=0;  s = buf;  }  //string
+		#define rs(s)  {  fi.read((char*)&l, 1);  if (l>0)  fi.read(buf, l);  buf[l]=0;  s = buf;  }  //string
 
 		//  header  ------
 		ReplayHeader2& h = header;
@@ -265,11 +276,12 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		i=0;  int p,w;
 		while (!fi.eof())
 		{
-			//rd(f.time);  // once..?
+			float time;  rd(time);  // once
 			for (p=0; p < header.numPlayers; ++p)
 			{
 				ReplayFrame2 f;
-				rd(f.time);
+				//rd(f.time);
+				f.time = time;
 				//  car
 				rd(f.pos);  rd(f.rot);  rd(f.fl);  //b_braking etc
 				//  hud
@@ -337,8 +349,11 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
     }
 
     #ifdef LOG_RPL
-		LogO(">- Load replay2  first: "+fToStr(frames[0][0].time,5,7)+
-			"  time: "+fToStr(GetTimeLength(),2,5)+"  frames: "+toStr(frames[0].size()));
+		if (frames.empty() || frames[0].empty())
+			LogO(">- Load replay2  empty!!  time: "+fToStr(GetTimeLength(),2,5));
+		else
+			LogO(">- Load replay2  first: "+fToStr(frames[0][0].time,5,7)+
+				"  time: "+fToStr(GetTimeLength(),2,5)+"  frames: "+toStr(frames[0].size()));
 	#endif
 
 	LogO(Ogre::String("::: Time Replay2 Load: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
@@ -382,53 +397,57 @@ bool Replay2::SaveFile(string file)
 	//s = 1;  p = 1;  //test
 
 	for (i=0; i < s; ++i)
-	for (p=0; p < header.numPlayers; ++p)
 	{
-		ReplayFrame2 f = frames[p][i];
-		wr(f.time);
-		//  car
-		wr(f.pos);  wr(f.rot);  wr(f.fl);  //b_braking etc
-		//  hud
-		wr(f.gear);  wr(f.rpm);  wr(f.vel);
-		wr(f.damage);  wr(f.clutch);  wr(f.percent);
-		//  sound, input
-		wr(f.throttle);  wr(f.steer);  wr(f.fboost);
-		wr(f.speed);  wr(f.dynVel);
-		//  ext
-		if (f.get(b_hov))  wr(f.hov_roll);
-		bool flu = f.get(b_fluid);
-		if (flu)  wr(f.whMudSpin);
-		
-		//  wheels
-		int ww = f.wheels.size();
-		for (w=0; w < ww; ++w)
+		float time = frames[0][i].time;
+		wr(time);  // once
+		for (p=0; p < header.numPlayers; ++p)
 		{
-			const ReplayFrame2::RWheel& wh = f.wheels[w];
-			wr(wh.pos);  wr(wh.rot);
-			//  trl, par, snd
-			wr(wh.surfType);  wr(wh.whTerMtr);
-			wr(wh.whRoadMtr);  wr(wh.whP);
-			//  tire
-			wr(wh.squeal);  wr(wh.slide);  wr(wh.whVel);
-			wr(wh.suspVel);  wr(wh.suspDisp);
-			//  fluids
-			if (flu)  wr(wh.whH);
-			wr(wh.whAngVel);  wr(wh.whSteerAng);
-		}
+			ReplayFrame2 f = frames[p][i];
+			//wr(f.time);
+			//  car
+			wr(f.pos);  wr(f.rot);  wr(f.fl);  //b_braking etc
+			//  hud
+			wr(f.gear);  wr(f.rpm);  wr(f.vel);
+			wr(f.damage);  wr(f.clutch);  wr(f.percent);
+			//  sound, input
+			wr(f.throttle);  wr(f.steer);  wr(f.fboost);
+			wr(f.speed);  wr(f.dynVel);
+			//  ext
+			if (f.get(b_hov))  wr(f.hov_roll);
+			bool flu = f.get(b_fluid);
+			if (flu)  wr(f.whMudSpin);
+			
+			//  wheels
+			int ww = f.wheels.size();
+			for (w=0; w < ww; ++w)
+			{
+				const ReplayFrame2::RWheel& wh = f.wheels[w];
+				wr(wh.pos);  wr(wh.rot);
+				//  trl, par, snd
+				wr(wh.surfType);  wr(wh.whTerMtr);
+				wr(wh.whRoadMtr);  wr(wh.whP);
+				//  tire
+				wr(wh.squeal);  wr(wh.slide);  wr(wh.whVel);
+				wr(wh.suspVel);  wr(wh.suspDisp);
+				//  fluids
+				if (flu)  wr(wh.whH);
+				wr(wh.whAngVel);  wr(wh.whSteerAng);
+			}
 
-		//  hit data
-		if (f.get(b_scrap) /*&& scrap.size()==1*/)
-		{
-			const ReplayFrame2::RScrap& s = f.scrap[0];
-			wr(s.fScrap);  wr(s.fScreech);
-		}
-		wr(f.fHitTime);
-		if (f.get(b_hit) /*&& hit.size()==1*/)
-		{
-			const ReplayFrame2::RHit& h = f.hit[0];
-			wr(h.fHitForce);  wr(h.fParIntens);  wr(h.fParVel);
-			wr(h.vHitPos.x);   wr(h.vHitPos.y);   wr(h.vHitPos.z);
-			wr(h.vHitNorm.x);  wr(h.vHitNorm.y);  wr(h.vHitNorm.z);
+			//  hit data
+			if (f.get(b_scrap) /*&& scrap.size()==1*/)
+			{
+				const ReplayFrame2::RScrap& s = f.scrap[0];
+				wr(s.fScrap);  wr(s.fScreech);
+			}
+			wr(f.fHitTime);
+			if (f.get(b_hit) /*&& hit.size()==1*/)
+			{
+				const ReplayFrame2::RHit& h = f.hit[0];
+				wr(h.fHitForce);  wr(h.fParIntens);  wr(h.fParVel);
+				wr(h.vHitPos.x);   wr(h.vHitPos.y);   wr(h.vHitPos.z);
+				wr(h.vHitNorm.x);  wr(h.vHitNorm.y);  wr(h.vHitNorm.z);
+			}
 		}
 	}
 
@@ -523,8 +542,8 @@ bool Replay2::GetFrame(float time1, ReplayFrame2* pFr, int carNum)
 	}
 
 	//  last time
-	float end = header.time;  //frames[carNum][s-1].time;
-	if (time >= end)
+	float end = GetTimeLength();
+	if (time1 >= end)
 	{
 		pFr->fboost = 0.f;
 		//  clear emitters at end

@@ -157,6 +157,8 @@ public:
 	//  inits only basic header data, fill the rest after
 	void InitHeader(const char* track, bool trk_user, bool bClear);
 	void Clear(bool time=true);  // call this after header.numPlayers change
+	void ClearCars();
+
 	void CopyFrom(const Replay2& rpl);
 	void DeleteFrames(int carNum, float fromTime);
 
@@ -199,7 +201,7 @@ struct ReplayHeader
 	ChName car;       // car name  (eg. ES, .car file crc?, settings diff-)
 
 	int ver, frameSize;  // bin data format - sizeof(ReplayFrame)
-	float whR[4][4];  // cars wheels radius
+	float whR[4][4];  // cars wheels radius (not used now)
 	
 	int numPlayers;
 	float hue[4],sat[4],val[4];  // cars colors

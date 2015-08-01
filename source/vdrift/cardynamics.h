@@ -166,7 +166,9 @@ public:
 	
 	Ogre::Vector3 vHitPos,vHitNorm;  // world hit data
 	Ogre::Vector3 vHitCarN,vHitDmgN;  float fHitDmgA;  // damage factors
-	float fHitTime, fParIntens,fParVel, fHitForce,fHitForce2,fHitForce3,fCarScrap,fCarScreech;
+	float fHitTime, fParIntens,fParVel, fHitForce,
+		fHitForce2,fHitForce3, //dbg info only
+		fCarScrap,fCarScreech;
 	btVector3 velPrev;
 	Dbl time;  // for wind only
 	

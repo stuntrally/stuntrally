@@ -412,8 +412,7 @@ void CGui::ToolGhostsConv()
 					const ReplayFrame& fr = ghost.GetFrame0(i);
 					TrackFrame tf;
 					tf.time = fr.time;
-					tf.pos = fr.pos;
-					tf.rot = fr.rot;  //tf.rot[0] = fr.rot[0] * 32767.f;  //..
+					tf.pos = fr.pos;  tf.rot = fr.rot;
 					tf.brake = fr.braking > 0 ? 1 : 0;
 					tf.steer = fr.steer * 127.f;
 					//LogO(toStr(fr.braking)+ " st " +fToStr(fr.steer,2,5));
