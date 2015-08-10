@@ -147,8 +147,7 @@ void CGuiCom::UnfocusLists()
 	WP w = InputManager::getInstance().getKeyFocusWidget();
 	while (w)
 	{
-		//LogO(wg->getTypeName() +" "+ wg->getName());
-		w = w->getParent();
+		//LogO(w->getTypeName() +" "+ w->getName());
 
 		#ifdef SR_EDITOR
 		if (w == (WP)trkList  || w == (WP)app->gui->liSky || w == (WP)app->gui->liTex ||
@@ -161,7 +160,9 @@ void CGuiCom::UnfocusLists()
 		{
 			InputManager::getInstance().resetKeyFocusWidget();
 			return;
-	}	}
+		}
+		w = w->getParent();
+	}
 }
 
 TabPtr CGuiCom::FindSubTab(WP tab)

@@ -36,7 +36,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,carIdWin(-1), iRplCarOfs(0)
 	// other
 	,newGameRpl(0), curLoadState(0)
-	,bRplPlay(0),bRplPause(0), bRplRec(0), bRplWnd(0)
+	,bRplPlay(0),bRplPause(0), bRplRec(0), bRplWnd(1)
 	,iEdTire(0), iTireLoad(0), iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,fLastFrameDT(0.001f)
 	,bPerfTest(0),iPerfTestStage(PT_StartWait)
@@ -45,7 +45,7 @@ App::App(SETTINGS *settings, GAME *game)
 	pSet = settings;
 	pGame->collision.pApp = this;
 
-	frm.resize(4);
+	frm.resize(16);
 	for (int i=0; i < 8; ++i)
 		iCurPoses[i] = 0;
 

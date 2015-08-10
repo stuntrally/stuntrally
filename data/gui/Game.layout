@@ -2308,10 +2308,10 @@
 					<Property key="Colour" value="1 0.8 0.4"/>
 					<Property key="Caption" value="#{RplRename}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="224 16 184 24" name="RplName">
+				<Widget type="TextBox" skin="TextBox" position="224 16 384 24" name="RplName">
 					<Property key="TextColour" value="0.84 0.8 1"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="224 44 184 64" name="RplInfo">
+				<Widget type="TextBox" skin="TextBox" position="224 44 204 64" name="RplInfo">
 					<Property key="TextColour" value="0.9 0.9 1"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="434 44 216 64" name="RplInfo2">
