@@ -159,15 +159,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	}
 	
 	//  frames
-	//#define RPL2_SV  // save new rpl test
-
-	#ifdef RPL2_SV 
-		Replay2 r2;
-		r2.header.FromOld(header);
-		r2.Clear();
-	#endif
-		
-	int i=0,p;
+	int i=0, p;
 	while (!fi.eof())
 	{
 		for (p=0; p < header.numPlayers; ++p)
@@ -178,33 +170,18 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 			if (i > 0 && f.time < frames[p][i-1].time)
 			{
 			    #ifdef LOG_RPL
-					LogO(">- Load replay  BAD frame time  id:"+toStr(i)+"  plr:"+toStr(p)
-						+"  t-1:"+fToStr(frames[p][i-1].time,5,7)+" > t:"+fToStr(f.time,5,7));
+					//LogO(">- Load replay  BAD frame time  id:"+toStr(i)+"  plr:"+toStr(p)
+					//	+"  t-1:"+fToStr(frames[p][i-1].time,5,7)+" > t:"+fToStr(f.time,5,7));
 				#endif
 			}else  if (!fi.eof())
 			{
 				frames[p].push_back(f);
-
-				#ifdef RPL2_SV
-					ReplayFrame2 f2;
-					f2.FromOld(f, r2.header.numWh[p]);
-					if (i%2==0)  // half frames
-						r2.AddFrame(f2,p);
-				#endif
 			}
 		}
 		++i;
-		//LogO(toStr((float)fr.time) /*+ "  p " + toStr(fr.pos)*/);
 	}
     fi.close();
 		
-	#ifdef RPL2_SV 
-		r2.SaveFile(file+"2");  // test
-		Replay2 r3;  // load back
-		r3.LoadFile(file+"2");
-		//r3.SaveFile(file+"3");
-	#endif
-
     #ifdef LOG_RPL
 		LogO(">- Load replay  first: "+fToStr(frames[0][0].time,5,7)
 			+"  time: "+fToStr(GetTimeLength(0),2,5)+"  frames: "+toStr(frames[0].size()));
