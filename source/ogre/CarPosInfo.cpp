@@ -11,9 +11,23 @@ using namespace Ogre;
 PosInfo::PosInfo()
 	:bNew(false)  // not inited
 	,pos(0,-200,0), percent(0.f), braking(0)
+	,speed(0.f), fboost(0.f), steer(0.f)
 	,hov_roll(0.f), hov_throttle(0.f)
-	//,carY, camPos, camRot
-{	}
+	,fHitTime(0.f), fParIntens(0.f), fParVel(0.f)
+{
+	camPos = camOfs = Vector3::ZERO;
+	rot = camRot = Quaternion::IDENTITY;
+	carY = -Vector3::UNIT_Y;
+	for (int w=0; w < MAX_WHEELS; ++w)
+	{
+		whPos[w] = Vector3::ZERO;
+		whRot[w] = Quaternion::IDENTITY;
+		whVel[w] = whSlide[w] = whSqueal[w] = 0.f;
+		whTerMtr[w]=0;  whRoadMtr[w]=0;  whP[w]=0;
+		whH[w] = whAngVel[w] = whSteerAng[w] = 0.f;
+	}
+	vHitPos = vHitNorm = Vector3::UNIT_Y;
+}
 
 //  transform axes, vdrift to ogre  car & wheels
 //-----------------------------------------------------------------------
@@ -84,7 +98,7 @@ void PosInfo::FromRpl2(const ReplayFrame2* rf)
 	fHitTime = rf->fHitTime;
 	if (!rf->hit.empty())
 	{	
-		const ReplayFrame2::RHit& h = rf->hit[0];
+		const RHit& h = rf->hit[0];
 		//fHitForce = h.fHitForce;
 		fParIntens = h.fParIntens;  fParVel = h.fParVel;
 		vHitPos = h.vHitPos;  vHitNorm = h.vHitNorm;
@@ -93,7 +107,7 @@ void PosInfo::FromRpl2(const ReplayFrame2* rf)
 	{
 		fCarScrap = 0.f;  fCarSceech = 0.f;
 	}else
-	{	const ReplayFrame2::RScrap& sc = rf->scrap[0];
+	{	const RScrap& sc = rf->scrap[0];
 		fCarScrap = sc.fScrap;  fCarSceech = sc.fScreech;
 	}
 	if (get(b_scrap)
@@ -104,7 +118,7 @@ void PosInfo::FromRpl2(const ReplayFrame2* rf)
 	int ww = rf->wheels.size();
 	for (int w=0; w < ww; ++w)
 	{
-		const ReplayFrame2::RWheel& wh = rf->wheels[w];
+		const RWheel& wh = rf->wheels[w];
 		Axes::toOgre(whPos[w], wh.pos);
 		whRot[w] = Axes::toOgreW(wh.rot);
 		//whR[w] = outside
@@ -275,7 +289,7 @@ void ReplayFrame2::FromCar(const CAR* pCar, half prevHitTime)
 	//wheels.clear();
 	for (int w=0; w < cd.numWheels; ++w)
 	{
-		ReplayFrame2::RWheel wh;
+		RWheel wh;
 		WHEEL_POSITION wp = WHEEL_POSITION(w);
 		wh.pos = cd.GetWheelPosition(wp);
 		wh.rot = cd.GetWheelOrientation(wp);

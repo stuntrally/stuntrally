@@ -52,6 +52,37 @@ struct ReplayHeader2
 //--------------------------------------------
 enum eFlags {  b_braking=0, b_scrap, b_hit, b_fluid, b_hov };  // max 8
 
+//  wheel
+struct RWheel
+{
+	MATHVECTOR<float,3> pos;
+	QUATERNION<half> rot;
+
+	//  trails, particles, snd
+	char surfType, whTerMtr;  //TRACKSURFACE::TYPE
+	char whRoadMtr, whP;  //particle type
+
+	//  tire
+	half squeal, slide, whVel;
+	half suspVel, suspDisp;
+
+	//  fluids
+	uchar whH;  // /var - submerge
+	half whAngVel;
+	half whSteerAng;  // 38B
+};
+
+struct RScrap
+{
+	half fScrap, fScreech;  // 4B
+};
+
+struct RHit
+{
+	half fHitForce, fParIntens, fParVel;
+	Ogre::Vector3 vHitPos, vHitNorm;  // world hit data
+};  // 30B
+
 struct ReplayFrame2
 {
 	//dont use int, not portable
@@ -88,48 +119,20 @@ struct ReplayFrame2
 
 
 	//  wheel
-	struct RWheel
-	{
-		MATHVECTOR<float,3> pos;
-		QUATERNION<half> rot;
-
-		//  trails, particles, snd
-		char surfType, whTerMtr;  //TRACKSURFACE::TYPE
-		char whRoadMtr, whP;  //particle type
-
-		//  tire
-		half squeal, slide, whVel;
-		half suspVel, suspDisp;
-
-		//  fluids
-		uchar whH;  // /var - submerge
-		half whAngVel;
-		half whSteerAng;  // 38B
-	};
-	std::vector<RWheel> wheels;  //-24B
-
+	std::vector<RWheel> wheels;  // 38B  vec-24B
 
 	//  hit continuous
-	struct RScrap
-	{
-		half fScrap, fScreech;  // 4B
-	};
-	std::vector<RScrap> scrap;
+	std::vector<RScrap> scrap;  // 4B
 	
 	//  hit impact, sparks
 	half fHitTime;
-	struct RHit
-	{
-		half fHitForce, fParIntens, fParVel;
-		Ogre::Vector3 vHitPos, vHitNorm;  // world hit data
-	};  // 30B  saved on hit only
-	std::vector<RHit> hit;
+	std::vector<RHit> hit;  // 30B  saved on hit only
 	// 50B
 
 	
 	ReplayFrame2();
 	void FromCar(const CAR* pCar, half prevHitTime);
-	void FromOld(const struct ReplayFrame& fr, uchar numWh);
+	void FromOld(const struct ReplayFrame& fr, uchar numWh, half prevHitTime);
 
 	//total: 50B + 4*38B = 202B min
 };

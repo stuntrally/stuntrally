@@ -9,13 +9,13 @@ using namespace std;
 
 /*TODO:
 	 endianness
-	 conv tool for all
+	`conv tool for all
 	~check back save+load
-	`load old rpl as new
-	`play new rpl game
-	 car frame as new rpl
-	 save new rpls
-	 only new rpl use
+	+load old rpl as new
+	+play new rpl game
+	~car frame as new rpl
+	~save new rpls
+	`only new rpl use
 /**/
 			
 //  header
@@ -78,7 +78,7 @@ ReplayFrame2::ReplayFrame2()
 
 ///  convert old frame to new
 //-------------------------------------------------------------------------------
-void ReplayFrame2::FromOld(const struct ReplayFrame& f, uchar numWh)
+void ReplayFrame2::FromOld(const struct ReplayFrame& f, uchar numWh, half prevHitTime)
 {
 	time = f.time;  // save once..
 	pos = f.pos;  rot = f.rot;
@@ -110,7 +110,8 @@ void ReplayFrame2::FromOld(const struct ReplayFrame& f, uchar numWh)
 	
 	//  new hit data impact
 	fHitTime = f.fHitTime;
-	bool h = fHitTime == 1.f;  // wrong if saving every nth frame..
+	bool h = fHitTime > prevHitTime;  //== 1.f;
+	//  wrong if saving every nth frame, what with higher force in skipped frames?..
 	set(b_hit, h);
 	if (h)
 	{	RHit ht;
@@ -172,7 +173,7 @@ void Replay2::Clear(bool time)
 {
 	idLast = 0;
 	if (time)
-		header.time = 0.f;
+		header.time = -0.01f;  // so new 0.0 counts
 
 	int p,pp = header.numPlayers;
 	frames.resize(pp);
@@ -212,22 +213,32 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		Replay r;
 		r.LoadFile(file);
 		header.FromOld(r.header);
-		header.time = r.GetTimeLength();
-		header.ver = r.header.ver + 10;
+		header.ver = r.header.ver + 10;  // ver +10 after convert
+		header.time = -0.01f;
 
+		//  clear
 		Clear(false);
 		if (onlyHdr)
+		{
+			header.time = r.GetTimeLength();
 			return true;
+		}
 		
 		int p,i,ii = r.GetNumFrames();
 		for (p=0; p < header.numPlayers; ++p)
-		for (i=0; i < ii; ++i)
 		{
-			ReplayFrame2 f2;
-			f2.FromOld(r.frames[p][i], header.numWh[p]);
-			if (i%2==0)  // half frames
+			uchar wh = header.numWh[p];
+			half prevHitTime = half(0.f);
+
+			for (i=0; i < ii; ++i)
+			//if (i%2==0)  // half frames
+			{
+				ReplayFrame2 f2;
+				f2.FromOld(r.frames[p][i], wh, prevHitTime);
 				AddFrame(f2,p);
-		}
+				prevHitTime = f2.fHitTime;
+		}	}
+		header.time = r.GetTimeLength();
 	}
 	else  // load new
 	{
@@ -273,14 +284,13 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		}
 		
 		//  frames  ------
-		i=0;  int p,w;
+		i=0;  int p,w;  float prevTime = -1.f;
 		while (!fi.eof())
 		{
 			float time;  rd(time);  // once
 			for (p=0; p < header.numPlayers; ++p)
 			{
 				ReplayFrame2 f;
-				//rd(f.time);
 				f.time = time;
 				//  car
 				rd(f.pos);  rd(f.rot);  rd(f.fl);  //b_braking etc
@@ -299,7 +309,7 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 				int ww = header.numWh[p];
 				for (w=0; w < ww; ++w)
 				{
-					ReplayFrame2::RWheel wh;
+					RWheel wh;
 					rd(wh.pos);  rd(wh.rot);
 					//  trl, par, snd
 					rd(wh.surfType);  rd(wh.whTerMtr);
@@ -317,32 +327,34 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 				//  hit data
 				if (f.get(b_scrap))
 				{
-					ReplayFrame2::RScrap s;
+					RScrap s;
 					rd(s.fScrap);  rd(s.fScreech);
 					f.scrap.push_back(s);
 				}
 				rd(f.fHitTime);
 				if (f.get(b_hit))
 				{
-					ReplayFrame2::RHit h;
+					RHit h;
 					rd(h.fHitForce);  rd(h.fParIntens);  rd(h.fParVel);
 					rd(h.vHitPos.x);   rd(h.vHitPos.y);   rd(h.vHitPos.z);
 					rd(h.vHitNorm.x);  rd(h.vHitNorm.y);  rd(h.vHitNorm.z);
 					f.hit.push_back(h);
 				}
 				
+				//LogO(">- id:"+toStr(i)+" t:"+fToStr(f.time,5,8)+" p: "+fToStr(f.pos[0])+" "+fToStr(f.pos[1])+" "+fToStr(f.pos[2]));
 
-				if (i > 0 && f.time < frames[p][i-1].time)
+				if (time <= prevTime)
 				{
-					#ifdef LOG_RPL
-						LogO(">- Load replay2  BAD frame time  id:"+toStr(i)+"  plr:"+toStr(p)
-							+"  t-1:"+fToStr(frames[p][i-1].time,5,7)+" > t:"+fToStr(f.time,5,7));
-					#endif
+					//LogO(">- Load replay2  =time  "+fToStr(time,5,7));
+					//#ifdef LOG_RPL
+						//LogO(">- Load replay2  BAD frame time  id:"+toStr(i)+"  plr:"+toStr(p)
+						//	+"  t-1:"+fToStr(frames[p][i-1].time,5,7)+" > t:"+fToStr(f.time,5,7));
+					//#endif
 				}else
 				if (!fi.eof())
 					frames[p].push_back(f);
 			}
-			++i;
+			++i;  prevTime = time;
 		}
 
 		fi.close();
@@ -403,7 +415,6 @@ bool Replay2::SaveFile(string file)
 		for (p=0; p < header.numPlayers; ++p)
 		{
 			ReplayFrame2 f = frames[p][i];
-			//wr(f.time);
 			//  car
 			wr(f.pos);  wr(f.rot);  wr(f.fl);  //b_braking etc
 			//  hud
@@ -421,7 +432,7 @@ bool Replay2::SaveFile(string file)
 			int ww = f.wheels.size();
 			for (w=0; w < ww; ++w)
 			{
-				const ReplayFrame2::RWheel& wh = f.wheels[w];
+				const RWheel& wh = f.wheels[w];
 				wr(wh.pos);  wr(wh.rot);
 				//  trl, par, snd
 				wr(wh.surfType);  wr(wh.whTerMtr);
@@ -437,13 +448,13 @@ bool Replay2::SaveFile(string file)
 			//  hit data
 			if (f.get(b_scrap) /*&& scrap.size()==1*/)
 			{
-				const ReplayFrame2::RScrap& s = f.scrap[0];
+				const RScrap& s = f.scrap[0];
 				wr(s.fScrap);  wr(s.fScreech);
 			}
 			wr(f.fHitTime);
 			if (f.get(b_hit) /*&& hit.size()==1*/)
 			{
-				const ReplayFrame2::RHit& h = f.hit[0];
+				const RHit& h = f.hit[0];
 				wr(h.fHitForce);  wr(h.fParIntens);  wr(h.fParVel);
 				wr(h.vHitPos.x);   wr(h.vHitPos.y);   wr(h.vHitPos.z);
 				wr(h.vHitNorm.x);  wr(h.vHitNorm.y);  wr(h.vHitNorm.z);
@@ -460,7 +471,7 @@ bool Replay2::SaveFile(string file)
 //  add (Record)
 void Replay2::AddFrame(const ReplayFrame2& frame, int carNum)
 {
-	if (carNum > 0 || frame.time > GetTimeLength())  // dont add before last
+	if (carNum > 0 || frame.time > GetTimeLength())  // dont add before last -
 	{
 		frames[carNum].push_back(frame);
 		header.time = frame.time;
@@ -470,6 +481,7 @@ void Replay2::AddFrame(const ReplayFrame2& frame, int carNum)
 //  CopyFrom
 void Replay2::CopyFrom(const Replay2& rpl)
 {
+	header.numPlayers = rpl.header.numPlayers;
 	Clear();
 	header.time = rpl.header.time;
 
@@ -507,6 +519,7 @@ half Replay2::GetLastHitTime(int carNum)
 //----------------------------------------------------------------
 bool Replay2::GetFrame(float time1, ReplayFrame2* pFr, int carNum)
 {
+	if (frames.empty())  return false;
 	int& ic = idLast;  // last index
 
 	int s = frames[carNum].size();
@@ -529,41 +542,45 @@ bool Replay2::GetFrame(float time1, ReplayFrame2* pFr, int carNum)
 		const ReplayFrame2& t1 = frames[carNum][ic];  //cur
 		const ReplayFrame2& t0 = frames[carNum][std::max(0, ic-1)];  //prev
 		*pFr = frames[carNum][ic];  // rest, no interp
-		float f = (time - t0.time) / (t1.time - t0.time);
-		
-		(*pFr).pos = t0.pos + (t1.pos - t0.pos) * f;
-		(*pFr).rot = t0.rot.QuatSlerp(t1.rot, f);
-		int ww = t0.wheels.size();
-		for (int w=0; w < ww; ++w)
+
+		float dt = t1.time - t0.time;
+		if (dt > 0.0001f)
 		{
-			(*pFr).wheels[w].pos = t0.wheels[w].pos + (t1.wheels[w].pos - t0.wheels[w].pos) * f;
-			//(*pFr).wheels[w].rot = t0.wheels[w].rot.QuatSlerp(t1.wheels[w].rot, f);
-		}
-	}
+			float f = (time - t0.time) / dt;
+			(*pFr).pos = t0.pos + (t1.pos - t0.pos) * f;
+			(*pFr).rot = t0.rot.QuatSlerp(t1.rot, f);
+		
+			int w, ww = t0.wheels.size();
+			for (w=0; w < ww; ++w)
+			{
+				(*pFr).wheels[w].pos = t0.wheels[w].pos + (t1.wheels[w].pos - t0.wheels[w].pos) * f;
+				//(*pFr).wheels[w].rot = t0.wheels[w].rot.QuatSlerp(t1.wheels[w].rot, f);
+			}
+	}	}
 
 	//  last time
 	float end = GetTimeLength();
 	if (time1 >= end)
 	{
 		pFr->fboost = 0.f;
-		//  clear emitters at end
-		for (int w=0; w < 4; ++w)
+		//  clear emitters at end..
+		int w, ww = (*pFr).wheels.size();
+		for (w=0; w < ww; ++w)
 		{
-			//pFr->slide[w] = 0.f;
-			//pFr->squeal[w] = 0.f;
-			//pFr->whVel[w] = 0.f;
+			RWheel& wh = (*pFr).wheels[w];
+			wh.slide = wh.squeal = wh.whVel = half(0.f);
 		}
 	}
 	
 	//  check if ended
-	return time <= end;
+	return time1 <= end;
 }
 
 //  delete frames after current time (when time did go back)
 void Replay2::DeleteFrames(int c, float fromTime)
 {
 	if (frames[c].empty())  return;
-	while (!frames[c].empty() && frames[c][ frames[c].size()-1].time >= fromTime)
+	while (!frames[c].empty() && frames[c][ frames[c].size()-1 ].time >= fromTime)
 		frames[c].pop_back();
 }
 
