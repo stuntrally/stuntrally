@@ -34,13 +34,14 @@ using namespace Ogre;
 void App::createScene()
 {
 	//  prv tex
-	prvView.Create(1024,1024,"PrvView");
-	prvRoad.Create(1024,1024,"PrvRoad");
-	 prvTer.Create(1024,1024,"PrvTer");
+	int k = 1024;
+	prvView.Create(k,k,"PrvView");
+	prvRoad.Create(k,k,"PrvRoad");
+	 prvTer.Create(k,k,"PrvTer");
 	//  ch stage
-	prvStCh.Create(1024,1024,"PrvStCh");
+	prvStCh.Create(k,k,"PrvStCh");
 	
-	scn->roadDens.Create(1025,1025,"RoadDens");
+	scn->roadDens.Create(k+1,k+1,"RoadDens");
 	
 	///  ter lay tex
 	for (int i=0; i < 6; ++i)
@@ -213,7 +214,7 @@ void App::NewGame()
 		//todo: gui is stuck..
 		return;
 	}	
-	if (mWndRpl)  mWndRpl->setVisible(false);  // hide rpl ctrl
+	mWndRpl->setVisible(false);  // hide rpl ctrl
 
 	LoadingOn();
 	hud->Show(true);  // hide HUD
@@ -222,6 +223,7 @@ void App::NewGame()
 
 	curLoadState = 0;
 }
+
 
 /* *  Loading steps (in this order)  * */
 //---------------------------------------------------------------------------------------------------------------
@@ -283,10 +285,11 @@ void App::LoadCleanUp()  // 1 first
 }
 
 
+//---------------------------------------------------------------------------------------------------------------
 void App::LoadGame()  // 2
 {
 	//  viewports
-	int numRplViews = std::max(1, std::min( replay.header.numPlayers, pSet->rpl_numViews ));
+	int numRplViews = std::max(1, std::min( int(replay.header.numPlayers), pSet->rpl_numViews ));
 	mSplitMgr->mNumViewports = bRplPlay ? numRplViews : pSet->game.local_players;  // set num players
 	mSplitMgr->Align();
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
@@ -414,6 +417,7 @@ void App::LoadGame()  // 2
 	}
 	pGame->NewGameDoLoadMisc(pretime);
 }
+//---------------------------------------------------------------------------------------------------------------
 
 
 void App::LoadScene()  // 3
@@ -445,6 +449,8 @@ void App::LoadScene()  // 3
 		hud->CreateArrow();
 }
 
+
+//---------------------------------------------------------------------------------------------------------------
 void App::LoadCar()  // 4
 {
 	//  Create all cars
@@ -521,12 +527,12 @@ void App::LoadCar()  // 4
 	if (bRplPlay && replay.header.networked)
 	{
 		for (int p = 0; p < pSet->game.local_players; ++p)
-		{
-			CarModel* cm = carModels[p];
+	{
+		CarModel* cm = carModels[p];
 			cm->sDispName = String(replay.header.nicks[p]);
-			cm->pNickTxt = hud->CreateNickText(p, cm->sDispName);
-		}
+		cm->pNickTxt = hud->CreateNickText(p, cm->sDispName);
 	}
+}
 
 	int c = 0;  // copy wheels R
 	for (std::list <CAR>::const_iterator it = pGame->cars.begin(); it != pGame->cars.end(); ++it,++c)

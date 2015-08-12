@@ -18,8 +18,6 @@ namespace BtOgre  {  class DebugDrawer;  }
 class CScene;  class CData;  class CInput;  class GraphView;
 class GAME;  class CHud;  class CGui;  class CGuiCom;
 
-const int CarPosCnt = 8;  // size of poses queue
-
 
 class App : public BaseApp,
 			public sh::MaterialListener,
@@ -41,22 +39,22 @@ public:
 	
 	///  Game Cars Data
 	//  new positions info for every CarModel
-	PosInfo carPoses[CarPosCnt][8];  // max 8 cars
-	int iCurPoses[8];  // current index for carPoses queue
+	PosInfo carPoses[CarPosCnt][MAX_CARS];  // max 16cars
+	int iCurPoses[MAX_CARS];  // current index for carPoses queue
 	std::map<int,int> carsCamNum;  // picked camera number for cars
 	
 	void newPoses(float time), newPerfTest(float time);  // vdrift
 	void updatePoses(float time);  // ogre
 	void UpdThr();
 
-	//  replay - full, user saves
-	//  ghost - saved when best lap
-	//  ghplay - ghost ride replay, loaded if was on disk
+	//  replay - full, saved by user
+	//  ghost - saved on best lap
+	//  ghplay - ghost ride replay, loaded if was on disk, replaced when new
 	Replay replay, ghost, ghplay;
 	Rewind rewind;  // to take car back in time (after crash etc.)
 	TrackGhost ghtrk;  //  ghtrk - track's ghost
 
-	std::vector<ReplayFrame> frm;  //size:4  //  frm - used when playing replay for hud and sounds
+	std::vector<ReplayFrame> frm;  //size:16  //  frm - used when playing replay for hud and sounds
 
 	bool isGhost2nd;  // if present (ghost but from other car)
 	std::vector<float> vTimeAtChks;  // track ghost's times at road checkpoints

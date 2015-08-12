@@ -8,6 +8,8 @@ enum WHEEL_POSITION
 	REAR3_LEFT, REAR3_RIGHT
 };
 const int MAX_WHEELS = 8;
+const int MAX_CARS = 16;
+const int CarPosCnt = 8;  // size of poses queue
 
 enum VehicleType
 {

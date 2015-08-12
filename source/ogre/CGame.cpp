@@ -8,6 +8,7 @@
 #include "common/data/CData.h"
 #include "common/data/SceneXml.h"
 #include "common/CScene.h"
+#include "../vdrift/cardefs.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
@@ -45,8 +46,8 @@ App::App(SETTINGS *settings, GAME *game)
 	pSet = settings;
 	pGame->collision.pApp = this;
 
-	frm.resize(16);
-	for (int i=0; i < 8; ++i)
+	frm.resize(MAX_CARS);
+	for (int i=0; i < MAX_CARS; ++i)
 		iCurPoses[i] = 0;
 
 	Axes::Init();
