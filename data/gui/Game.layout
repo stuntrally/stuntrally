@@ -2339,20 +2339,6 @@
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<UserString key="tip" value="#{TipFind}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="434 400 240 24" name="RenameOldTrk">
-					<Property key="Caption" value="2.5 #{RenameAllOld}"/>
-					<Property key="TextAlign" value="Left"/>
-					<Property key="TextColour" value="1 0.8 0.8"/>
-					<Property key="Colour" value="1 0.8 0.8"/>
-					<Property key="Alpha" value="0.6"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="434 440 240 24" name="ConvertAllRpl">
-					<Property key="Caption" value="2.6 #{ConvertAllRpl}"/>
-					<Property key="TextAlign" value="Left"/>
-					<Property key="TextColour" value="0.9 0.7 0.8"/>
-					<Property key="Colour" value="0.9 0.7 0.8"/>
-					<Property key="Alpha" value="0.6"/>
-				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#FFF060#{View}"/>
@@ -2414,6 +2400,34 @@
 					<Property key="TextColour" value="0.8 1 0.8"/>
 				</Widget>
 				<Widget type="Slider" skin="Slider" position="92 480 240 18" name="GhoHideDistTrk"/>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 562">
+				<Property key="Caption" value="#C0B0A0#{Tools}"/>
+				<Widget type="ImageBox" skin="ImageBox" position="660 48 64 64">
+					<Property key="ImageCoord" value="0 768 128 128"/>
+					<Property key="Alpha" value="0.5"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+					<Property key="Colour" value="1 0.75 0.5"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="32 60 300 28" name="RenameOldTrk">
+					<Property key="Caption" value="2.5 #{RenameAllOld}"/>
+					<Property key="TextAlign" value="Left"/>
+					<Property key="TextColour" value="1 0.8 0.8"/>
+					<Property key="Colour" value="1 0.8 0.8"/>
+					<Property key="Alpha" value="0.8"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 140 400 24">
+					<Property key="Caption" value="#{ToolsTime}"/>
+					<Property key="TextColour" value="0.9 0.8 0.8"/>
+					<Property key="Alpha" value="0.9"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="32 170 300 28" name="ConvertAllRpl">
+					<Property key="Caption" value="2.6 #{ConvertAllRpl}"/>
+					<Property key="TextAlign" value="Left"/>
+					<Property key="TextColour" value="0.9 0.7 0.8"/>
+					<Property key="Colour" value="0.9 0.7 0.8"/>
+					<Property key="Alpha" value="0.8"/>
+				</Widget>
 			</Widget>
 		</Widget>
 	</Widget>
