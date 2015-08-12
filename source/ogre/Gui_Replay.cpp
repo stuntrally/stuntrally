@@ -240,14 +240,8 @@ void CGui::updReplaysList()
 		String s = *i;  s = StringUtil::replaceAll(s,".rpl","");
 		String slow = s;  StringUtil::toLowerCase(slow);
 		if (sRplFind == "" || strstr(slow.c_str(), sRplFind.c_str()) != 0)
-		if (pSet->rpl_listview != 1 || StringUtil::startsWith(s,pSet->game.track, false))
-		{
-			size_type f = s.find_first_of("_-0123456789");
-			string ss;
-			if (f != string::npos)  ss = s.substr(0,f);
-			else  ss = s.substr(0,1);  //gcom->scnClr[gcom->scnN[]];
-			rplList->addItem(gcom->GetSceneryColor(ss) + s);
-		}
+		if (pSet->rpl_listview != 1 || StringUtil::startsWith(s,pSet->gui.track, false))
+			rplList->addItem(gcom->GetSceneryColor(s) + s);
 	}
 	//LogO(String("::: Time ReplaysList: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
@@ -303,7 +297,8 @@ void CGui::btnRplRename(WP)
 
 
 
-//  rename old trk names
+//  Game replay Tools
+//--------------------------------------------------------------------------------
 bool Replay::fixOldTrkName(string& s)
 {
 	if (s.length() <= 4)  return false;
@@ -334,9 +329,10 @@ bool Replay::fixOldTrkName(string& s)
 	return false;
 }
 
+//  Rename old track names
 void CGui::btnRenameOldTrk(WP)
 {
-	LogO("--------  Renaming old files");
+	LogO("==------  Renaming old replays and ghosts");
 	std::vector<string> pp;
 	pp.push_back(PATHMANAGER::Replays());
 	pp.push_back(PATHMANAGER::Ghosts() +"/easy");
@@ -364,5 +360,38 @@ void CGui::btnRenameOldTrk(WP)
 					fs::rename(p+"/"+s, p+"/"+sn);
 			}	}
 	}	}
-	LogO("--------  End");
+	LogO("==------  Renaming End");
+}
+
+//  Convert to Replay2
+void CGui::btnConvertAllRpl(WP)
+{
+	LogO("====----  Converting old replays and ghosts");
+	Ogre::Timer ti;
+	std::vector<string> pp;
+	pp.push_back(PATHMANAGER::Ghosts() +"/easy");
+	pp.push_back(PATHMANAGER::Ghosts() +"/normal");
+	//pp.push_back(PATHMANAGER::Replays());
+	strlist li;
+	for (int ip=0; ip < pp.size(); ++ip)
+	{
+		li.clear();
+		string p = pp[ip];
+		PATHMANAGER::DirList(p, li);
+		LogO("PATH: "+p);
+		boost::uintmax_t total = 0;
+		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
+		{
+			String ss = *i, s = p+"/"+ss;
+			LogO(s);
+			boost::uintmax_t size = fs::file_size(s);  total += size;
+
+			Replay2 r;
+			r.LoadFile(s);
+			//r.SaveFile(s);
+		}
+		LogO("PATH: "+p+"  total size:  "+fToStr( float(total)/1000000.f, 2,5)+" MiB");
+	}
+	LogO(String("::: Time Convert: ") + fToStr(ti.getMilliseconds()/1000.f,1,4) + " s");
+	LogO("====----  Converting End");
 }

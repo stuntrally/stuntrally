@@ -336,7 +336,7 @@ public:
 	CK(RplGhosts);
 	void edRplFind(Ed);  Ogre::String sRplFind;
 
-	void btnRenameOldTrk(WP);
+	void btnRenameOldTrk(WP), btnConvertAllRpl(WP);
 
 	//  controls bar buttons
 	Btn btRplPl;  void UpdRplPlayBtn();

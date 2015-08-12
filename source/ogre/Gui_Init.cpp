@@ -401,7 +401,7 @@ void CGui::InitGui()
 	//  replays  ------------------------------------------------------------
 	Btn("RplLoad",   btnRplLoad);    Btn("RplSave",   btnRplSave);
 	Btn("RplDelete", btnRplDelete);  Btn("RplRename", btnRplRename);
-	Btn("RenameOldTrk", btnRenameOldTrk);
+	Btn("RenameOldTrk", btnRenameOldTrk);  Btn("ConvertAllRpl", btnConvertAllRpl);
 	//  settings
 	ck= &ckRplAutoRec;		ck->Init("RplChkAutoRec",	&app->bRplRec);
 	ck= &ckRplBestOnly;		ck->Init("RplChkBestOnly",	&pSet->rpl_bestonly);
