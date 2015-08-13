@@ -131,6 +131,7 @@
 	<Tag name="Materials">Materiály</Tag>
 	<Tag name="InputMapResetGame">Reset game</Tag>
 	<Tag name="smoke">smoke</Tag>
+	<Tag name="ConvertAllRpl">Convert All (smaller size)</Tag>
 	<Tag name="MouseCapture">Capture mouse</Tag>
 	<Tag name="TipMinimapScrnEditor">Minimap of selected track, view from top.</Tag>
 	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
@@ -817,7 +818,7 @@
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
-	<Tag name="NetLocalPort">Lokálny port</Tag>
+	<Tag name="ToolsTime">Warning: May take several minutes!</Tag>
 	<Tag name="Bloom">Bloom</Tag>
 	<Tag name="Silver">Strieborná</Tag>
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
@@ -872,6 +873,7 @@
 	<Tag name="ParAmount">Particle amounts</Tag>
 	<Tag name="TipFogClr">Fog end color when looking under sun.</Tag>
 	<Tag name="speed">rýchlosť</Tag>
+	<Tag name="NetLocalPort">Lokálny port</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 	<Tag name="WaterRefraction">Refrakcia</Tag>
 	<Tag name="SpecularPowerEm">Emissive power</Tag>

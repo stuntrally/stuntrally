@@ -131,6 +131,7 @@
 	<Tag name="Materials">Materiali</Tag>
 	<Tag name="InputMapResetGame">Riavvia il gioco</Tag>
 	<Tag name="smoke">fumo</Tag>
+	<Tag name="ConvertAllRpl">Convert All (smaller size)</Tag>
 	<Tag name="MouseCapture">Blocca il mouse</Tag>
 	<Tag name="TipMinimapScrnEditor">Minimap della pista selezionata, vista dall'alto.</Tag>
 	<Tag name="TipTerNoiseOnly">Ignorerà angolo di terreno e gamme di altezza. Il layer apparirà soltanto, se l'altro moltiplicatore di disturbo si fonde a questo.</Tag>
@@ -817,7 +818,7 @@
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="TipWindInflH">Influenza del vento sul modello, scala di altezza.</Tag>
-	<Tag name="NetLocalPort">Porta locale</Tag>
+	<Tag name="ToolsTime">Warning: May take several minutes!</Tag>
 	<Tag name="Bloom">Bloom</Tag>
 	<Tag name="Silver">Argento</Tag>
 	<Tag name="TipWindInflL">Influenza del vento sul modello, scala di lunghezza.</Tag>
@@ -872,6 +873,7 @@
 	<Tag name="ParAmount">Quantità di particelle</Tag>
 	<Tag name="TipFogClr">Colore di fine nebbia quando si guarda sotto il sole.</Tag>
 	<Tag name="speed">velocità</Tag>
+	<Tag name="NetLocalPort">Porta locale</Tag>
 	<Tag name="InputRoadYaw">- rotazione yaw</Tag>
 	<Tag name="WaterRefraction">Rifrazione</Tag>
 	<Tag name="SpecularPowerEm">Potenza emissiva</Tag>

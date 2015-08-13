@@ -131,6 +131,7 @@
 	<Tag name="Materials">Materials</Tag>
 	<Tag name="InputMapResetGame">Reset game</Tag>
 	<Tag name="smoke">fum</Tag>
+	<Tag name="ConvertAllRpl">Convert All (smaller size)</Tag>
 	<Tag name="MouseCapture">Capture mouse</Tag>
 	<Tag name="TipMinimapScrnEditor">Mini-harta traseului selectat,văzut de deasupra.</Tag>
 	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
@@ -817,7 +818,7 @@
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
-	<Tag name="NetLocalPort">Local Port</Tag>
+	<Tag name="ToolsTime">Warning: May take several minutes!</Tag>
 	<Tag name="Bloom">Încețoșare</Tag>
 	<Tag name="Silver">Silver</Tag>
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
@@ -872,6 +873,7 @@
 	<Tag name="ParAmount">Numărul de particule</Tag>
 	<Tag name="TipFogClr">Fog end color when looking under sun.</Tag>
 	<Tag name="speed">speed</Tag>
+	<Tag name="NetLocalPort">Local Port</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 	<Tag name="WaterRefraction">Refraction</Tag>
 	<Tag name="SpecularPowerEm">Emissive power</Tag>

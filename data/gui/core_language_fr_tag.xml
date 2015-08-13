@@ -131,6 +131,7 @@
 	<Tag name="Materials">Matériels</Tag>
 	<Tag name="InputMapResetGame">Recommencer le jeu</Tag>
 	<Tag name="smoke">fumée</Tag>
+	<Tag name="ConvertAllRpl">Convert All (smaller size)</Tag>
 	<Tag name="MouseCapture">Capturer la souris</Tag>
 	<Tag name="TipMinimapScrnEditor">Mini-carte de la piste sélectionnée, vue de dessus.</Tag>
 	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
@@ -817,7 +818,7 @@
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Automatique</Tag>
 	<Tag name="TipWindInflH">Influence du vent sur le modèle (dans le sens de la hauteur).</Tag>
-	<Tag name="NetLocalPort">Port local</Tag>
+	<Tag name="ToolsTime">Warning: May take several minutes!</Tag>
 	<Tag name="Bloom">Ébouissement</Tag>
 	<Tag name="Silver">Argent</Tag>
 	<Tag name="TipWindInflL">Influence du vent sur le modèle (dans le sens de la largeur).</Tag>
@@ -872,6 +873,7 @@
 	<Tag name="ParAmount">Quantité de particules</Tag>
 	<Tag name="TipFogClr">Couleur de la fin de la brume quand la caméra regarde le soleil.</Tag>
 	<Tag name="speed">vitesse</Tag>
+	<Tag name="NetLocalPort">Port local</Tag>
 	<Tag name="InputRoadYaw">- tourner horizontalement</Tag>
 	<Tag name="WaterRefraction">Réfraction</Tag>
 	<Tag name="SpecularPowerEm">Puissance des reflets</Tag>

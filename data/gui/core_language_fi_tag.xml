@@ -131,6 +131,7 @@
 	<Tag name="Materials">Materiaalit</Tag>
 	<Tag name="InputMapResetGame">Resetoi peli</Tag>
 	<Tag name="smoke">savu</Tag>
+	<Tag name="ConvertAllRpl">Convert All (smaller size)</Tag>
 	<Tag name="MouseCapture">Kaappaa hiiri</Tag>
 	<Tag name="TipMinimapScrnEditor">Minimap of selected track, view from top.</Tag>
 	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
@@ -817,7 +818,7 @@
 	<Tag name="set2">set2</Tag>
 	<Tag name="auto">Autom.</Tag>
 	<Tag name="TipWindInflH">Wind influence on model, height scale.</Tag>
-	<Tag name="NetLocalPort">Paikallinen portti</Tag>
+	<Tag name="ToolsTime">Warning: May take several minutes!</Tag>
 	<Tag name="Bloom">Bloom-tehoste</Tag>
 	<Tag name="Silver">Hopea</Tag>
 	<Tag name="TipWindInflL">Wind influence on model, length scale.</Tag>
@@ -872,6 +873,7 @@
 	<Tag name="ParAmount">Hiukkasten määrä</Tag>
 	<Tag name="TipFogClr">Fog end color when looking under sun.</Tag>
 	<Tag name="speed">nopeus</Tag>
+	<Tag name="NetLocalPort">Paikallinen portti</Tag>
 	<Tag name="InputRoadYaw">- rotate yaw</Tag>
 	<Tag name="WaterRefraction">Taittuminen</Tag>
 	<Tag name="SpecularPowerEm">Emissive power</Tag>

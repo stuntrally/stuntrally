@@ -131,6 +131,7 @@
 	<Tag name="Materials">Materiały</Tag>
 	<Tag name="InputMapResetGame">Graj od nowa</Tag>
 	<Tag name="smoke">dym</Tag>
+	<Tag name="ConvertAllRpl">Convert All (smaller size)</Tag>
 	<Tag name="MouseCapture">Przejmij mysz</Tag>
 	<Tag name="TipMinimapScrnEditor">Minimapa wybranej trasy (widok z góry).</Tag>
 	<Tag name="TipTerNoiseOnly">Powoduje ignorowanie zakresów kąta i wysokości. Wastwa będzie widoczna tylko jeśli mnożniki szumu innych spowodują przejście do tej.</Tag>
@@ -817,7 +818,7 @@
 	<Tag name="set2">ust.2</Tag>
 	<Tag name="auto">Automatycznie</Tag>
 	<Tag name="TipWindInflH">Wpływ wiatru na model, skala wysokości.</Tag>
-	<Tag name="NetLocalPort">Port lokany</Tag>
+	<Tag name="ToolsTime">Warning: May take several minutes!</Tag>
 	<Tag name="Bloom">Poświata</Tag>
 	<Tag name="Silver">Srebro</Tag>
 	<Tag name="TipWindInflL">Wpływ wiatru na model, skala długości.</Tag>
@@ -872,6 +873,7 @@
 	<Tag name="ParAmount">Ilość cząstek</Tag>
 	<Tag name="TipFogClr">Kolor mgły patrząc pod słońce.</Tag>
 	<Tag name="speed">szybkość</Tag>
+	<Tag name="NetLocalPort">Port lokany</Tag>
 	<Tag name="InputRoadYaw">- obrót</Tag>
 	<Tag name="WaterRefraction">Załamanie</Tag>
 	<Tag name="SpecularPowerEm">Potęga świecenia</Tag>
