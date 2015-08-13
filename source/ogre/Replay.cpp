@@ -7,16 +7,8 @@
 using namespace std;
 
 
-/*TODO:
-	 endianness
-	`conv tool for all
-	~check back save+load
-	+load old rpl as new
-	+play new rpl game
-	~car frame as new rpl
-	~save new rpls
-	`only new rpl use
-/**/
+//TODO: endianness..
+//	`conv tool for all
 			
 //  header
 //----------------------------------------------------------------
@@ -40,6 +32,7 @@ void ReplayHeader2::Default()
 void ReplayHeader2::FromOld(const struct ReplayHeader& h)
 {
 	time = 0.f;  //set later
+	ver = h.ver;
 	track = h.track;
 	track_user = h.track_user;
 	
@@ -96,7 +89,9 @@ void ReplayFrame2::FromOld(const ReplayFrame& f, uchar numWh, half prevHitTime)
 	throttle = f.throttle *255.f;	steer = f.steer *127.f;
 	fboost = f.fboost *255.f;		clutch = f.clutch *255.f;
 	speed = f.speed;  dynVel = f.dynVel;
+
 	hov_roll = f.hov_roll;  //=sph_yaw for O
+	if (f.hov_roll != 0.f)  set(b_hov, true);
 
 
 	//  hit continuous  ---
@@ -213,18 +208,16 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		Replay r;
 		r.LoadFile(file);
 		header.FromOld(r.header);
-		header.ver = r.header.ver + 10;  // ver +10 after convert
 
-		//  clear
-		Clear();
+		Clear();  //  clear
+
 		if (onlyHdr)
-		{
-			header.time = r.GetTimeLength();
-			return true;
-		}
+		{	header.time = r.GetTimeLength();  return true;  }
+
+		header.ver = r.header.ver + 10;  // ver +10 after convert
 		
+		//  check, rare
 		int p,i,ii = r.GetNumFrames();
-		//  check
 		for (p=0; p < header.numPlayers; ++p)
 		{	int si = r.frames[p].size()-1;
 			ii = std::min(ii, si);
@@ -281,12 +274,9 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 				LogO(">- Load replay2 --  file: "+file+"  players:"+toStr(h.numPlayers));
 		#endif
 		
-		//  clear
-		Clear(false);
-		if (onlyHdr)
-		{
-			fi.close();  return true;
-		}
+		Clear(false);  //  clear
+
+		if (onlyHdr){	fi.close();  return true;  }
 		
 		//  frames  ------
 		i=0;  int p,w;  float prevTime = -1.f;
@@ -325,7 +315,6 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 					//  fluids
 					if (flu)  rd(wh.whH);
 					rd(wh.whAngVel);  rd(wh.whSteerAng);
-					
 					f.wheels.push_back(wh);
 				}
 
@@ -350,18 +339,15 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 
 				if (time <= prevTime)
 				{
-					//LogO(">- Load replay2  =time  "+fToStr(time,5,7));
-					//#ifdef LOG_RPL
-						//LogO(">- Load replay2  BAD frame time  id:"+toStr(i)+"  plr:"+toStr(p)
-						//	+"  t-1:"+fToStr(frames[p][i-1].time,5,7)+" > t:"+fToStr(f.time,5,7));
-					//#endif
+					#ifdef LOG_RPL
+					LogO(">- Load replay2  =time  id:"+toStr(i)+"  plr:"+toStr(p)+"  t-1:"+fToStr(prevTime,5,7)+" => t:"+fToStr(time,5,7));
+					#endif
 				}else
 				if (!fi.eof())
 					frames[p].push_back(f);
 			}
 			++i;  prevTime = time;
 		}
-
 		fi.close();
     }
 

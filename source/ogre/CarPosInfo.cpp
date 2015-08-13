@@ -327,8 +327,11 @@ void ReplayFrame2::FromCar(const CAR* pCar, half prevHitTime)
 	speed = pCar->GetSpeed();  dynVel = cd.GetVelocity().Magnitude();
 	set(b_braking, cd.IsBraking());
 	
-	if (cd.vtype != V_Car)
+	bool hov = cd.vtype != V_Car;
+	set(b_hov, hov);
+	if (hov)
 		hov_roll = cd.vtype == V_Sphere ? cd.sphereYaw : cd.hov_roll;
+
 	
 	// fluid
 	bool mud = pCar->whMudSpin < 0.01f;
