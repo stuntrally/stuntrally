@@ -39,6 +39,8 @@ CGui::CGui(App* app1)
 	,edRplName(0), edRplDesc(0)
 	,rbRplCur(0), rbRplAll(0)
 	, bRplBack(0),bRplFwd(0)
+	,bConvertRpl(0),iConvCur(0),iConvAll(0),iConvFiles(0),iConvPathCur(0),iConvPathAll(0)
+	, mThrConvert(),txtConvert(0), totalConv(0),totalConvCur(0),totalConvNew(0)
 	//  gui multiplayer
 	,netGuiMutex(), netGameInfo()
 	,bUpdChat(false), iChatMove(0)
@@ -103,4 +105,11 @@ CGui::CGui(App* app1)
 
 	for (i=0; i < ciEdCar; ++i)
 		edCar[i] = 0;
+}
+
+
+CGui::~CGui()
+{
+	if (mThrConvert.joinable())
+		mThrConvert.join();
 }

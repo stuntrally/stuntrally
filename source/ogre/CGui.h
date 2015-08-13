@@ -8,6 +8,7 @@
 
 #include "../network/networkcallbacks.hpp"
 #include "../oics/ICSInputControlSystem.h"
+#include <boost/thread.hpp>
 
 #include "ChampsXml.h"  // progress..
 #include "ChallengesXml.h"
@@ -38,6 +39,7 @@ public:
 	CHud* hud;  MyGUI::Gui* mGui;  CGuiCom* gcom;
 	
 	CGui(App* ap1);
+	~CGui();
 	//friend class CarModel;
 	
 	typedef std::list <std::string> strlist;
@@ -336,8 +338,6 @@ public:
 	CK(RplGhosts);
 	void edRplFind(Ed);  Ogre::String sRplFind;
 
-	void btnRenameOldTrk(WP), btnConvertAllRpl(WP);
-
 	//  controls bar buttons
 	Btn btRplPl;  void UpdRplPlayBtn();
 	Sl slRplPos;  void slRplPosEv(SL);
@@ -346,6 +346,14 @@ public:
 	void btnRplBackDn(WP,int,int,MyGUI::MouseButton), btnRplBackUp(WP,int,int,MyGUI::MouseButton);
 	void btnRplFwdDn(WP,int,int, MyGUI::MouseButton), btnRplFwdUp(WP,int,int, MyGUI::MouseButton);
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
+
+	//  tools, convert
+	void btnRenameOldTrk(WP), btnConvertAllRpl(WP);
+	bool bConvertRpl;
+	boost::thread mThrConvert;  void ThreadConvert();
+	Txt txtConvert;
+	int iConvCur,iConvAll,iConvFiles, iConvPathCur,iConvPathAll;  // files, dirs
+	boost::uintmax_t totalConv,totalConvCur,totalConvNew;  // size
 	
 
 	//  Game

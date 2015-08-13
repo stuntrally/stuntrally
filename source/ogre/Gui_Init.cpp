@@ -402,6 +402,7 @@ void CGui::InitGui()
 	Btn("RplLoad",   btnRplLoad);    Btn("RplSave",   btnRplSave);
 	Btn("RplDelete", btnRplDelete);  Btn("RplRename", btnRplRename);
 	Btn("RenameOldTrk", btnRenameOldTrk);  Btn("ConvertAllRpl", btnConvertAllRpl);
+	txtConvert = fTxt("TxtConvert");
 	//  settings
 	ck= &ckRplAutoRec;		ck->Init("RplChkAutoRec",	&app->bRplRec);
 	ck= &ckRplBestOnly;		ck->Init("RplChkBestOnly",	&pSet->rpl_bestonly);
@@ -438,6 +439,7 @@ void CGui::InitGui()
 		valRplCur = fTxt("RplTimeCur");
 		valRplLen = fTxt("RplTimeLen");
 	}
+
 	//  text desc, stats
 	valRplName = fTxt("RplName");  valRplName2 = fTxt("RplName2");
 	valRplInfo = fTxt("RplInfo");  valRplInfo2 = fTxt("RplInfo2");

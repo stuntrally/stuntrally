@@ -694,4 +694,21 @@ void CGui::GuiUpdate()
 		FillTweakLists();
 		btnTweakTireLoad(0);  // load back
 	}
+	
+	
+	///  rpl convert tool
+	if (bConvertRpl)
+	{	boost::this_thread::sleep(boost::posix_time::milliseconds(50));
+
+		txtConvert->setCaption(
+		"#C0C0FF""Path: "+ iToStr(iConvPathCur+1,1) +" / "+ iToStr(iConvPathAll,1) +"\n"+
+		"#A0D0FF""Files: "+ iToStr(iConvCur+1,4) +" / "+ iToStr(iConvAll,4) +"  : "+ iToStr(iConvFiles,4) +"\n"+
+		(totalConv == 0 ? "" :
+		"#A0F0F0""Progress: "+ fToStr(100.f* float(totalConvCur)/float(totalConv), 2,5) +" %\n")+
+		"#A0C0E0""Sizes\n"+
+		"#F0A0A0""old:    "+ fToStr( float(totalConv)/1000000.f, 2,5) +" MiB\n"+
+		"#A0F0A0""new:  "+ fToStr( float(totalConvNew)/1000000.f, 2,5) +" MiB\n"+
+		(totalConvCur!=totalConv || totalConv==0 ? "" :
+		"#F0F0A0""ratio:  "+ fToStr(100.f* float(totalConvNew)/float(totalConv), 1,4) +" %") );
+	}
 }

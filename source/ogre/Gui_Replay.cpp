@@ -373,33 +373,106 @@ void CGui::btnRenameOldTrk(WP)
 //  Convert to Replay2
 void CGui::btnConvertAllRpl(WP)
 {
+	if (bConvertRpl)  return;
+	bConvertRpl = true;
+
+	txtConvert->setVisible(true);
+
+	iConvCur = -1;  iConvAll = 1;
+	mThrConvert = boost::thread(boost::bind(&CGui::ThreadConvert, boost::ref(*this)));
+}
+
+void CGui::ThreadConvert()
+{
 	LogO("====----  Converting old replays and ghosts");
 	Ogre::Timer ti;
-	std::vector<string> pp;
-	pp.push_back(PATHMANAGER::Ghosts() +"/easy");
-	pp.push_back(PATHMANAGER::Ghosts() +"/normal");
-	//pp.push_back(PATHMANAGER::Replays());
-	strlist li;
-	for (int ip=0; ip < pp.size(); ++ip)
-	{
+	
+	std::vector<string> paths, files[3];
+	//  paths
+	paths.push_back(PATHMANAGER::Ghosts() +"/easy");
+	paths.push_back(PATHMANAGER::Ghosts() +"/normal");
+	paths.push_back(PATHMANAGER::Replays());
+
+	iConvPathCur = 0;  iConvPathAll = paths.size();
+	iConvFiles = 0;  totalConv = 0;  totalConvNew = 0;  totalConvCur = 0;
+
+	//  List files  ------------
+	strlist li;  int p;
+	Replay2 rpl;
+	for (p=0; p < iConvPathAll; ++p)
+	{	iConvPathCur = p;
+
+		const string& path = paths[p];
 		li.clear();
-		string p = pp[ip];
-		PATHMANAGER::DirList(p, li);
-		LogO("PATH: "+p);
-		boost::uintmax_t total = 0, total_new = 0;
+		PATHMANAGER::DirList(path, li, "rpl");  //LogO("PATH: "+path);
+		iConvCur = 0;  iConvAll = li.size();
+
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
-			String ss = *i, s = p+"/"+ss;
-			boost::uintmax_t size = fs::file_size(s);  total += size;
-			LogO("FILE: "+ss+"  size: "+fToStr( float(size)/1000000.f, 2,5)+" MiB");
+			if (app->mShutDown)  return;
+			String file = *i, s = path +"/"+ file;
 
-			Replay2 r;
-			r.LoadFile(s);  // converts old
-			//r.SaveFile(s);  // same name, no backup
-			//boost::uintmax_t size_new = fs::file_size(s);  total_new += size_new;
+			//Replay2 rpl;
+			rpl.LoadFile(s, true);  // header
+			if (rpl.header.ver <= 10)  // old, not converted, 10 was last 2.5
+			{
+				++iConvFiles;
+				files[p].push_back(file);
+				boost::uintmax_t size = fs::file_size(s);
+				totalConv += size;
+				//LogO("FILE: "+file+"  size: "+fToStr( float(size)/1000000.f, 2,5)+" MiB");
+			}
+			//else LogO("FILE OK: "+file);
+
+			++iConvCur;
 		}
-		LogO("PATH: "+p+"  total size:  "+fToStr( float(total)/1000000.f, 2,5)+" MiB");
+		LogO("PATH: "+path+" total size:   "+fToStr( float(totalConv)/1000000.f, 2,5)+" MiB");
+		LogO("PATH: "+path+" total after:  "+fToStr( float(totalConvNew)/1000000.f, 2,5)+" MiB");
 	}
+	LogO(String("::: Time Convert get list: ") + fToStr(ti.getMilliseconds()/1000.f,1,4) + " s");
+	LogO("====----  Converting Start");
+
+	iConvCur = 0;  iConvAll = iConvFiles;
+
+
+	LogO(String("FILES to convert: ") + toStr(iConvFiles));
+
+	//  Convert  ------------
+	for (p=0; p < iConvPathAll; ++p)
+	{	iConvPathCur = p;
+
+		const string& path = paths[p];
+		iConvCur = 0;  iConvAll = files[p].size();
+
+		while (iConvCur < iConvAll && !app->mShutDown)
+		{
+			const string s = path +"/"+ files[p][iConvCur];
+			//Replay2 rpl;
+			rpl.LoadFile(s);  // converts old
+			boost::uintmax_t size = fs::file_size(s);  // for progress
+			totalConvCur += size;
+			std::time_t tim = fs::last_write_time(s);
+
+			string ss=s;  // same name, no backup
+			//string ss=s+"2";  // test
+			rpl.SaveFile(ss);
+			fs::last_write_time(ss, tim);  // restore original
+			boost::uintmax_t sizeNew = fs::file_size(ss);
+			totalConvNew += sizeNew;
+			++iConvCur;
+		}
+	}
+
+	//  Results  ------------
+	bConvertRpl = false;
+	//txtConvert->setVisible(false);
+	LogO("====----  Converting Results");
+	LogO("  Sizes");
+	LogO("  old:   "+ fToStr( float(totalConv)/1000000.f, 2,5) +" MiB");
+	LogO("  new:  "+ fToStr( float(totalConvNew)/1000000.f, 2,5) +" MiB");
+	if (totalConvCur!=totalConv || totalConv==0){} else
+	LogO("  ratio:  "+ fToStr(100.f* float(totalConvNew)/float(totalConv), 2,5) +" %");
+
 	LogO(String("::: Time Convert: ") + fToStr(ti.getMilliseconds()/1000.f,1,4) + " s");
 	LogO("====----  Converting End");
 }
