@@ -18,7 +18,7 @@ void ReplayHeader::Default()
 	memset(track, 0, sizeof(track));  track_user = 0;
 	memset(car, 0, sizeof(car));
 
-	ver = 10;
+	ver = 10;  //+10 old 2.5 
 	frameSize = sizeof(ReplayFrame);
 	numPlayers = 1;
 	trees = 1.f;
@@ -261,31 +261,8 @@ bool Replay::GetFrame(double time, ReplayFrame* pFr, int carNum)
 		return false;  //-
 	
 	///  simple, no interpolation
-	#if 1
 	if (pFr)
 		*pFr = frames[carNum][ic];
-	#else
-	//  linear interp ..
-	if (pFr)
-	{
-		//  cur <= time < next
-		const ReplayFrame& fc = frames[ic], fn = frames[ic+1];
-
-		float m = (time - fc.time) / (fn.time - fc.time);  // [0..1]
-		//Ogre::LogManager::getSingleton().logMessage(toStr(m));
-
-		ReplayFrame fr = fc;
-		fr.pos = (fn.pos - fc.pos) * m + fc.pos;
-
-		for (int w=0; w<4; ++w)
-		{
-			fr.whPos[w] = (fn.whPos[w] - fc.whPos[w]) * m + fc.whPos[w];
-		//Quaternion q;  q.Slerp(m, fc.rot, fn.rot);
-		}
-		//... all data
-		*pFr = fr;
-	}
-	#endif
 
 	//  last time
 	double end = frames[carNum][s-1].time;

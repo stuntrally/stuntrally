@@ -78,7 +78,7 @@ ReplayFrame2::ReplayFrame2()
 
 ///  convert old frame to new
 //-------------------------------------------------------------------------------
-void ReplayFrame2::FromOld(const struct ReplayFrame& f, uchar numWh, half prevHitTime)
+void ReplayFrame2::FromOld(const ReplayFrame& f, uchar numWh, half prevHitTime)
 {
 	time = f.time;  // save once..
 	pos = f.pos;  rot = f.rot;
@@ -87,14 +87,14 @@ void ReplayFrame2::FromOld(const struct ReplayFrame& f, uchar numWh, half prevHi
 	set(b_braking, f.braking);
 
 	//  hud
-	gear = f.gear;
-	rpm = f.rpm;  vel = f.vel;
+	gear = f.gear;  rpm = f.rpm;  vel = f.vel;
 	percent = f.percent /100.f*255.f;  // track %
 	damage = 0.f;  // wasnt saved
 
 	//  sound, input
-	throttle = f.throttle / 255.f;	steer = f.steer / 127.f;
-	fboost = f.fboost / 255.f;		clutch = f.clutch / 255.f;
+	//LogO(Ogre::String(" % ")+fToStr(f.percent)+"  th "+fToStr(f.throttle)+"  st "+fToStr(f.steer)+"  b "+fToStr(f.fboost)+"  c "+fToStr(f.clutch));
+	throttle = f.throttle *255.f;	steer = f.steer *127.f;
+	fboost = f.fboost *255.f;		clutch = f.clutch *255.f;
 	speed = f.speed;  dynVel = f.dynVel;
 	hov_roll = f.hov_roll;  //=sph_yaw for O
 
@@ -136,7 +136,7 @@ void ReplayFrame2::FromOld(const struct ReplayFrame& f, uchar numWh, half prevHi
 		wh.squeal = f.squeal[i];  wh.slide = f.slide[i];  wh.whVel = f.whVel[i];
 		wh.suspVel = f.suspVel[i];  wh.suspDisp = f.suspDisp[i];
 
-		////  fluids
+		//  fluids
 		wh.whH = f.whH[i] / 255.f;  // submerge
 		wh.whAngVel = f.whAngVel[i];
 		wh.whSteerAng = i >= 2 ? 0.f : f.whSteerAng[i];
@@ -214,10 +214,9 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		r.LoadFile(file);
 		header.FromOld(r.header);
 		header.ver = r.header.ver + 10;  // ver +10 after convert
-		header.time = -0.01f;
 
 		//  clear
-		Clear(false);
+		Clear();
 		if (onlyHdr)
 		{
 			header.time = r.GetTimeLength();
@@ -225,13 +224,19 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		}
 		
 		int p,i,ii = r.GetNumFrames();
+		//  check
+		for (p=0; p < header.numPlayers; ++p)
+		{	int si = r.frames[p].size()-1;
+			ii = std::min(ii, si);
+		}
+			
 		for (p=0; p < header.numPlayers; ++p)
 		{
 			uchar wh = header.numWh[p];
 			half prevHitTime = half(0.f);
 
 			for (i=0; i < ii; ++i)
-			//if (i%2==0)  // half frames
+			if (i%2==0)  // half frames
 			{
 				ReplayFrame2 f2;
 				f2.FromOld(r.frames[p][i], wh, prevHitTime);
@@ -471,7 +476,7 @@ bool Replay2::SaveFile(string file)
 //  add (Record)
 void Replay2::AddFrame(const ReplayFrame2& frame, int carNum)
 {
-	if (carNum > 0 || frame.time > GetTimeLength())  // dont add before last -
+	if (carNum > 0 || frame.time > GetTimeLength())  // dont add before last
 	{
 		frames[carNum].push_back(frame);
 		header.time = frame.time;
@@ -554,7 +559,7 @@ bool Replay2::GetFrame(float time1, ReplayFrame2* pFr, int carNum)
 			for (w=0; w < ww; ++w)
 			{
 				(*pFr).wheels[w].pos = t0.wheels[w].pos + (t1.wheels[w].pos - t0.wheels[w].pos) * f;
-				//(*pFr).wheels[w].rot = t0.wheels[w].rot.QuatSlerp(t1.wheels[w].rot, f);
+				//(*pFr).wheels[w].rot = t0.wheels[w].rot.QuatSlerp(t1.wheels[w].rot, f);  // no need
 			}
 	}	}
 

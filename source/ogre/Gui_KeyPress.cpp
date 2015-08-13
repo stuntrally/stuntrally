@@ -378,7 +378,7 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 	{
 		Wnd wnd = mWndNetEnd;
 		if (wnd && wnd->getVisible())  {  wnd->setVisible(false);  // hide netw end
-			return;	}
+			return;  }
 		else
 		{	wnd = mWndChampEnd;
 			if (wnd && wnd->getVisible())  wnd->setVisible(false);  // hide champs end
@@ -396,7 +396,8 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 		if (bPerfTest)
 		{	gui->BackFromChs();
 			pSet->gui.track = "Test10-FlatPerf";
-			pSet->gui.track_user = false;  }
+			pSet->gui.track_user = false;
+		}
 		iPerfTestStage = PT_StartWait;
 		NewGame();  return;
 	}
@@ -419,8 +420,9 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 		}
 		pGame->timer.Reset(-1);
 		pGame->timer.pretime = mClient ? 2.0f : pSet->game.pre_time;  // same for all multi players
+
 		carIdWin = 1;  //
-		ghost.Clear(); //
+		ghost.Clear();  replay.Clear();
 	}
 	
 	//  Screen shot

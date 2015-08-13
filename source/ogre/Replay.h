@@ -109,7 +109,7 @@ struct ReplayFrame2
 	// 41B
 
 	//  sound, input
-	uchar throttle, steer, fboost;
+	uchar throttle, fboost;  char steer;
 	half speed, dynVel;
 	// 48B
 

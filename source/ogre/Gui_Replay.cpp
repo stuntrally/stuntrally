@@ -241,8 +241,12 @@ void CGui::updReplaysList()
 		String slow = s;  StringUtil::toLowerCase(slow);
 		if (sRplFind == "" || strstr(slow.c_str(), sRplFind.c_str()) != 0)
 		if (pSet->rpl_listview != 1 || StringUtil::startsWith(s,pSet->gui.track, false))
-			rplList->addItem(gcom->GetSceneryColor(s) + s);
-	}
+		{	String t = s;
+			size_t p = t.find_first_of("_");
+			if (p != string::npos)
+				t = s.substr(0, p);
+			rplList->addItem(gcom->GetSceneryColor(t) + s);
+	}	}
 	//LogO(String("::: Time ReplaysList: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
 
@@ -379,16 +383,17 @@ void CGui::btnConvertAllRpl(WP)
 		string p = pp[ip];
 		PATHMANAGER::DirList(p, li);
 		LogO("PATH: "+p);
-		boost::uintmax_t total = 0;
+		boost::uintmax_t total = 0, total_new = 0;
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 		{
 			String ss = *i, s = p+"/"+ss;
-			LogO(s);
 			boost::uintmax_t size = fs::file_size(s);  total += size;
+			LogO("FILE: "+ss+"  size: "+fToStr( float(size)/1000000.f, 2,5)+" MiB");
 
 			Replay2 r;
-			r.LoadFile(s);
-			//r.SaveFile(s);
+			r.LoadFile(s);  // converts old
+			//r.SaveFile(s);  // same name, no backup
+			//boost::uintmax_t size_new = fs::file_size(s);  total_new += size_new;
 		}
 		LogO("PATH: "+p+"  total size:  "+fToStr( float(total)/1000000.f, 2,5)+" MiB");
 	}

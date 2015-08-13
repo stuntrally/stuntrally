@@ -91,9 +91,9 @@ void PosInfo::FromRpl2(const ReplayFrame2* rf)
 	carY = rot * Vector3::UNIT_Y;
 
 	speed = rf->speed;
-	fboost = rf->fboost;  steer = rf->steer;
+	fboost = rf->fboost /255.f;  steer = rf->steer /127.f;
 	braking = rf->get(b_braking);  percent = rf->percent /255.f*100.f;
-	hov_roll = rf->hov_roll;  hov_throttle = rf->throttle;
+	hov_roll = rf->hov_roll;	hov_throttle = rf->throttle /255.f;
 
 	fHitTime = rf->fHitTime;
 	if (!rf->hit.empty())
@@ -318,15 +318,13 @@ void ReplayFrame2::FromCar(const CAR* pCar, half prevHitTime)
 		wheels.push_back(wh);
 	}
 	//  hud
-	vel = pCar->GetSpeedometer();  rpm = pCar->GetEngineRPM();
-	gear = pCar->GetGear();  clutch = pCar->GetClutch();
-	throttle = cd.GetThrottle();
-	steer = pCar->GetLastSteer();
-	fboost = cd.doBoost;
+	vel = pCar->GetSpeedometer();  rpm = pCar->GetEngineRPM();  gear = pCar->GetGear();
+	throttle = cd.GetThrottle() *255.f;  clutch = pCar->GetClutch() *255.f;
+	steer = pCar->GetLastSteer() *127.f;  fboost = cd.doBoost *255.f;
+	damage = cd.fDamage /100.f*255.f;  //percent set before
+
 	//  eng snd
-	//posEngn = cd.GetEnginePosition();
-	speed = pCar->GetSpeed();
-	dynVel = cd.GetVelocity().Magnitude();
+	speed = pCar->GetSpeed();  dynVel = cd.GetVelocity().Magnitude();
 	set(b_braking, cd.IsBraking());
 	
 	if (cd.vtype != V_Car)

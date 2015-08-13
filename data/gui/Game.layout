@@ -2405,9 +2405,9 @@
 				<Property key="Caption" value="#C0B0A0#{Tools}"/>
 				<Widget type="ImageBox" skin="ImageBox" position="660 48 64 64">
 					<Property key="ImageCoord" value="0 768 128 128"/>
-					<Property key="Alpha" value="0.5"/>
+					<Property key="Alpha" value="0.6"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
-					<Property key="Colour" value="1 0.75 0.5"/>
+					<Property key="Colour" value="1 0.85 0.7"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="32 60 300 28" name="RenameOldTrk">
 					<Property key="Caption" value="2.5 #{RenameAllOld}"/>

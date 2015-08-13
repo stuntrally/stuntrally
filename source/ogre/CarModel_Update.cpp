@@ -533,18 +533,19 @@ void CarModel::UpdateKeys()
 
 	///  change Cameras  ---------------------------------
 	//if (!pApp->isFocGui)
-	if (pCar->iCamNext != 0 && iCamNextOld == 0)
+	int iC = pCar->iCamNext;  // iRplCarOfs..
+	if (iC != 0 && iCamNextOld == 0)
 	{
 		//  with ctrl - change current camera car index  (mouse move camera for many players)
 		if (pApp->ctrl && iIndex == 0)
-			pApp->iCurCam = (pApp->iCurCam + pCar->iCamNext + pSet->game.local_players) % pSet->game.local_players;
+			pApp->iCurCam = (pApp->iCurCam + iC + pSet->game.local_players) % pSet->game.local_players;
 		else
 		{
 			int visMask = 255;
 			pApp->roadUpdTm = 1.f;
 
 			if (fCam)
-			{	fCam->Next(pCar->iCamNext < 0, pApp->shift);
+			{	fCam->Next(iC < 0, pApp->shift);
 				pApp->carsCamNum[iIndex] = fCam->miCurrent +1;  // save for pSet
 				visMask = fCam->ca->mHideGlass ? RV_MaskAll-RV_CarGlass : RV_MaskAll;
 				for (std::list<Viewport*>::iterator it = pApp->mSplitMgr->mViewports.begin();
@@ -553,7 +554,7 @@ void CarModel::UpdateKeys()
 			}
 		}
 	}
-	iCamNextOld = pCar->iCamNext;
+	iCamNextOld = iC;
 }
 
 

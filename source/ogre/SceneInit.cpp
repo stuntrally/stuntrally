@@ -92,7 +92,8 @@ void App::createScene()
 	//  rpl sizes
 	ushort u(0x1020);
 	struct SV{  std::vector<int> v;  };
-	int sr = sizeof(ReplayFrame), sv = sizeof(SV), sr2 = sizeof(ReplayFrame2)-3*sv, wh2 = sizeof(ReplayFrame2::RWheel);
+	int sr = sizeof(ReplayFrame), sv = sizeof(SV), sr2 = sizeof(ReplayFrame2)-3*sv, wh2 = sizeof(RWheel);
+
 	LogO(String("**** ReplayFrame size old: ") + toStr(sr)+"  new: "+toStr(sr2)+"+ wh: "+toStr(wh2)+"= "+toStr(sr2+4*wh2));
 	LogO(String("**** Replay test sizes: 12244: ") + toStr(sizeof(char))+","+toStr(sizeof(short))+
 		","+toStr(sizeof(half))+","+toStr(sizeof(float))+","+toStr(sizeof(int))+"  sv: "+toStr(sv)+
@@ -101,11 +102,9 @@ void App::createScene()
 	LogO(String("::: Time load xmls: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 
-	///  rpl new
+	///  rpl test-
 	#if 0
-	//std::string file = PATHMANAGER::Replays() + "/Wnt9-IceFrenzy_Test.rpl";
-	std::string file = PATHMANAGER::Ghosts() + "/normal/Atm8-Ultima_XZ.rpl";
-	//std::string file = PATHMANAGER::Ghosts() + "/normal/Mud3-Mudlake_ES.rpl";
+	std::string file = PATHMANAGER::Ghosts() + "/normal/TestC4-ow_V2.rpl";
 	replay.LoadFile(file);
 	exit(0);
 	#endif
