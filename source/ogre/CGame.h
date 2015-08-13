@@ -50,11 +50,11 @@ public:
 	//  replay - full, saved by user
 	//  ghost - saved on best lap
 	//  ghplay - ghost ride replay, loaded if was on disk, replaced when new
-	Replay replay, ghost, ghplay;
+	Replay2 replay, ghost, ghplay;
 	Rewind rewind;  // to take car back in time (after crash etc.)
 	TrackGhost ghtrk;  //  ghtrk - track's ghost
 
-	std::vector<ReplayFrame> frm;  //size:16  //  frm - used when playing replay for hud and sounds
+	std::vector<ReplayFrame2> frm;  //size:16  //  frm - used when playing replay for hud and sounds
 
 	bool isGhost2nd;  // if present (ghost but from other car)
 	std::vector<float> vTimeAtChks;  // track ghost's times at road checkpoints
@@ -145,7 +145,7 @@ public:
 	PreviewTex prvStCh;  // champ,chall stage view
 
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
-	int carIdWin, iRplCarOfs;
+	int carIdWin, iRplCarOfs, iRplSkip;
 
 	//  race pos
 	int GetRacePos(float timeCur, float timeTrk, float carTimeMul, bool coldStart, float* pPoints=0);

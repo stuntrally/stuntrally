@@ -114,7 +114,7 @@ void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
 //--------------------------------------------------------------------------------------------------------------------------
 void CAR::UpdateSounds(float dt)
 {
-	float rpm, throttle, speed, dynVel;
+	float rpm, throttle, speed, dynVel;  bool hitp = false;
 	MATHVECTOR<float,3> pos, engPos, whPos[MAX_WHEELS], hitPos;  // car, engine, wheels pos
 	QUATERNION<float> rot;
 	TRACKSURFACE::TYPE surfType[MAX_WHEELS];
@@ -128,37 +128,49 @@ void CAR::UpdateSounds(float dt)
 	
 	///  replay play  ------------------------------------------
 	if (pApp->bRplPlay)
-	{
+	{	dmg = false;
+
 		#ifdef DEBUG
 		assert(id < pApp->frm.size());
 		#endif
-		const ReplayFrame& fr = pApp->frm[id];
-		pos = fr.pos;  rot = fr.rot;
-		rpm = fr.rpm;
-		throttle = fr.throttle;
-		engPos = fr.posEngn;  // _/could be from car pos,rot and engine offset--
-		speed = fr.speed;
-		dynVel = fr.dynVel;
-		whMudSpin = fr.whMudSpin;
-		fHitForce = fr.fHitForce;
-		hitPos[0] = fr.vHitPos.x;  hitPos[1] = -fr.vHitPos.z;  hitPos[2] = fr.vHitPos.y;
-		boostVal = fr.fboost;
-		fCarScrap = fr.fCarScrap;  fCarScreech = fr.fCarScreech;
+		const ReplayFrame2& fr = pApp->frm[id];
+		pos = fr.pos;  rot = fr.rot;   rpm = fr.rpm;
+		throttle = fr.throttle /255.f;  boostVal = fr.fboost /255.f;
+		dynamics.fDamage = fr.damage /255.f*100.f;  //dmg read
 
-		for (int w=0; w < numWheels; ++w)
+		MATHVECTOR<float,3> offset = dynamics.engine.GetPosition();
+		rot.RotateVector(offset);
+		engPos = offset + pos;
+
+		speed = fr.speed;  dynVel = fr.dynVel;
+		whMudSpin = fr.get(b_fluid) ? fr.whMudSpin : 0.f;
+
+		if (fr.get(b_scrap))
 		{
-			whPos[w] = fr.whPos[w];
-			surfType[w] = (TRACKSURFACE::TYPE)fr.surfType[w];
-			//  squeal
-			squeal[w] = fr.squeal[w];
-			whVel[w] = fr.whVel[w];
-			//  susp
-			suspVel[w] = fr.suspVel[w];
-			suspDisp[w] = fr.suspDisp[w];
+			const RScrap& sc = fr.scrap[0];
+			fCarScrap = sc.fScrap;  fCarScreech = sc.fScreech;
+		}
+
+		hitp = fr.get(b_hit);
+		if (hitp)
+		{
+			const RHit& h = fr.hit[0];
+			fHitForce = h.fHitForce;
+			hitPos[0] = h.vHitPos.x;  hitPos[1] = -h.vHitPos.z;  hitPos[2] = h.vHitPos.y;
+		}
+
+		int w, ww = fr.wheels.size();
+		for (w=0; w < ww; ++w)
+		{
+			const RWheel& wh = fr.wheels[w];
+			whPos[w] = wh.pos;
+			surfType[w] = (TRACKSURFACE::TYPE)wh.surfType;
+			squeal[w] = wh.squeal;  whVel[w] = wh.whVel;
+			suspVel[w] = wh.suspVel;  suspDisp[w] = wh.suspDisp;
 			//  fluids
-			if (fr.whP[w] >= 0)  // solid no snd
-				whH_all += fr.whH[w];
-			if (fr.whP[w] >= 1)  mud = true;
+			if (wh.whP >= 0)  // solid no snd
+				whH_all += wh.whH;
+			if (wh.whP >= 1)  mud = true;
 		}
 	}
 	else  /// game  ------------------------------------------
@@ -169,7 +181,7 @@ void CAR::UpdateSounds(float dt)
 		engPos = dynamics.GetEnginePosition();
 		speed = GetSpeed();
 		dynVel = dynamics.GetVelocity().Magnitude();
-		fHitForce = dynamics.fHitForce;
+		fHitForce = dynamics.fHitForce;  hitp = true;
 		hitPos[0] = dynamics.vHitPos.x;  hitPos[1] = -dynamics.vHitPos.z;  hitPos[2] = dynamics.vHitPos.y;
 		boostVal = dynamics.boostVal;
 		
@@ -431,8 +443,7 @@ void CAR::UpdateSounds(float dt)
 	boostsnd.SetPosition(engPos); //back?-
 	
 	//  crash
-	{	//todo: set blt car pos,rot in rpl for objs..
-
+	{
 		crashdetection2.Update(-fHitForce, dt);
 		crashdetection2.deceltrigger = 1.f;
 		float crashdecel2 = crashdetection2.GetMaxDecel();
@@ -449,6 +460,7 @@ void CAR::UpdateSounds(float dt)
 			if (/*gain > mingain &&*/ crashsoundtime[i] > /*ti*/0.4f)  //!crashsound.Audible())
 			{
 				crashsound[i].SetGain(gain * pSet->vol_car_crash);
+				if (hitp)
 				crashsound[i].SetPosition(hitPos);
 				crashsound[i].Play();
 				crashsoundtime[i] = 0.f;
@@ -475,9 +487,11 @@ void CAR::UpdateSounds(float dt)
 	//  crash scrap and screech
 	{
 		crashscrap.SetGain(fCarScrap * pSet->vol_car_scrap);
+		if (hitp)
 		crashscrap.SetPosition(hitPos);
 
 		crashscreech.SetGain(fCarScreech * pSet->vol_car_scrap * 0.6f);
+		if (hitp)
 		crashscreech.SetPosition(hitPos);
 	}
 

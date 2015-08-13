@@ -55,8 +55,8 @@ void CGui::btnRplLoad(WP)  // Load
 			MessageBoxStyle::IconWarning | MessageBoxStyle::Ok);
 	}else
 	{	//  car, track change
-		const ReplayHeader& h = app->replay.header;
-		string car = h.car, trk = h.track;
+		const ReplayHeader2& h = app->replay.header;
+		string trk = h.track;
 		bool usr = h.track_user == 1;
 
 		//  check if cars, track exist
@@ -65,11 +65,10 @@ void CGui::btnRplLoad(WP)  // Load
 			er += TR("#{Track}: ")+trk+TR(" - #{DoesntExist}.\n");
 		if (h.track_user && !fs::exists(PATHMANAGER::TracksUser()+"/"+trk))
 			er += TR("#{Track} (#{TweakUser}): ")+trk+TR(" - #{DoesntExist}.\n");
-		if (!fs::exists(PATHMANAGER::Cars()+"/"+car))
-			er += TR("#{Vehicle}: ")+car+TR(" - #{DoesntExist}.\n");
-		for (p=1; p < h.numPlayers; ++p)
-			if (!fs::exists(PATHMANAGER::Cars()+"/"+h.cars[p-1]))
-				er += TR("#{Vehicle}: ")+h.cars[p-1]+TR(" - #{DoesntExist}.\n");
+
+		for (p=0; p < h.numPlayers; ++p)
+			if (!fs::exists(PATHMANAGER::Cars()+"/"+h.cars[p]))
+				er += TR("#{Vehicle}: ")+h.cars[p]+TR(" - #{DoesntExist}.\n");
 
 		if (!er.empty())
 		{	Message::createMessageBox(
@@ -84,21 +83,19 @@ void CGui::btnRplLoad(WP)  // Load
 
 		//  set game config from replay
 		pSet->game = pSet->gui;
-		pSet->game.car[0] = car;  pSet->game.track = trk;  pSet->game.track_user = usr;
-		pSet->game.car_hue[0] = h.hue[0];  pSet->game.car_sat[0] = h.sat[0];  pSet->game.car_val[0] = h.val[0];
+		pSet->game.track = trk;  pSet->game.track_user = usr;
 
-		pSet->game.trees = h.ver < 6 ? 1.f : h.trees;  // older didnt have trees saved, so use default 1
+		pSet->game.trees = h.ver < 16 ? 1.f : h.trees;  // older didnt have trees saved, so use default 1
 		pSet->game.local_players = h.numPlayers;
 		BackFromChs();
 		LogO("RPL btn Load  players: "+toStr(h.numPlayers)+" netw: "+ toStr(h.networked));
 
-		for (p=1; p < h.numPlayers; ++p)
-		{	pSet->game.car[p] = h.cars[p-1];
-			pSet->game.car_hue[p] = h.hue[p];  pSet->game.car_sat[p] = h.sat[p];  pSet->game.car_val[p] = h.val[p];
+		for (p=0; p < h.numPlayers; ++p)
+		{	pSet->game.car[p] = h.cars[p];
 		}
 		app->newGameRpl = true;
 		btnNewGame(0);
-		app->bRplPlay = 1;
+		app->bRplPlay = 1;  app->iRplSkip = 0;
 	}
 }
 
@@ -132,22 +129,28 @@ void CGui::listRplChng(List* li, size_t pos)
 	edRplName->setCaption(name);
 	
 	//  load replay header, upd info text
-	Replay rpl;  char stm[128];
+	Replay2 rpl;  char stm[128];
 	if (rpl.LoadFile(file,true))
 	{
-		String ss = String(TR("#{Track}: ")) + gcom->GetSceneryColor(rpl.header.track) +
-			rpl.header.track + (rpl.header.track_user ? "  *"+TR("#{TweakUser}")+"*" : "");
+		const ReplayHeader2& rh = rpl.header;
+		String ss = String(TR("#{Track}: ")) + gcom->GetSceneryColor(rh.track) +
+			rh.track + (rh.track_user ? "  *"+TR("#{TweakUser}")+"*" : "");
 		valRplName->setCaption(ss);
+		char pp = rh.numPlayers, netw = rh.networked, n;
 
-		ss = String(TR("#{Vehicle}: ")) + rpl.header.car + "       "+
-			(rpl.header.numPlayers == 1 ? "" : (TR("#{Players}: ") + toStr(rpl.header.numPlayers))) + "  " +
-			(rpl.header.networked == 0 ? "" : "M") +  //TR("#{Multiplayer}")
+		ss = String(TR("#{Vehicles}: "));
+		for (n=0; n < pp; ++n)  ss += rh.cars[n] + "  ";
+		ss += //(netw == 0 ? "" : "M") +  //TR("#{Multiplayer}")
 			"\n#C0D8F0" + TR("#{RplTime}: ") + CHud::StrTime(rpl.GetTimeLength()) +
-			"\n#90A0B0" + TR("#{Simulation}: ") + rpl.header.sim_mode;
-		if (rpl.header.networked == 1)  // list nicks
-			ss += String("\n#90C0E0")+rpl.header.nicks[0]+"  "+rpl.header.nicks[1]+"  "+rpl.header.nicks[2]+"  "+rpl.header.nicks[3];
+			"\n#90A0B0" + TR("#{Simulation}: ") + rh.sim_mode;
+
+		if (netw == 1)  // list nicks
+		{	ss += String("\n#90C0E0");
+			for (n=0; n < pp; ++n)
+				ss += rh.nicks[n]+"  ";
+		}
 		//else  // other cars, car colors ..
-			//ss += String("\n#90C0E0")+rpl.header.cars[0]+"  "+rpl.header.cars[1]+"  "+rpl.header.cars[2];
+			//ss += String("\n#90C0E0")+rh.cars[0]+"  "+rh.cars[1]+"  "+rh.cars[2];
 		valRplInfo->setCaption(ss);
 
 		//  file stats
@@ -155,9 +158,9 @@ void CGui::listRplChng(List* li, size_t pos)
 		std::time_t ti = fs::last_write_time(file);
 		if (!std::strftime(stm, 126, "%d.%b'%y  %a %H:%M", std::localtime(&ti)))  stm[0]=0;
 		
-		ss =/*"Time: "+*/String(stm)+"\n#A0A0A0"+
+		ss = String(stm)+"\n#A0A0A0"+  // date
 			String(TR("#{RplFileSize}: ")) + fToStr( float(size)/1000000.f, 2,5) + TR(" #{UnitMB}") + "\n#808080" +
-			TR("#{RplVersion}: ") + toStr(rpl.header.ver) + "     " + toStr(rpl.header.frameSize) + "B";
+			TR("#{RplVersion}: ") + toStr(rh.ver)/* + "     " + toStr(rh.frameSize) + "B"*/;
 		if (valRplInfo2)  valRplInfo2->setCaption(ss);
 	}
 	//edRplDesc

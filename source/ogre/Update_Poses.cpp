@@ -87,10 +87,10 @@ void App::newPoses(float time)  // time only for camera update
 				}
 			}else  ///>>  ghost
 			{
-				ReplayFrame gf;
+				ReplayFrame2 gf;
 				bool ok = ghplay.GetFrame(rewTime, &gf, 0);
-
-				pi.FromRpl(&gf);
+				if (ok)
+					pi.FromRpl2(&gf, 0);
 
 				if (carM->vtype == V_Sphere)
 				{	//  weird fix, mini rot
@@ -105,14 +105,18 @@ void App::newPoses(float time)  // time only for camera update
 			#ifdef DEBUG
 			assert(c < frm.size());
 			#endif
-			ReplayFrame& rf = frm[c];  // frm also used in car.cpp for sounds
+			ReplayFrame2& rf = frm[c];  // frm also used in car.cpp for sounds
 			if (c < replay.header.numPlayers)
 			{
 				bool ok = replay.GetFrame(rplTime, &rf, c);
-				if (!ok)  pGame->timer.RestartReplay(0);  //at end
-
-				pi.FromRpl(&rf);
-			}
+				if (ok)
+				{	pi.FromRpl2(&rf, &pCar->dynamics);
+					pCar->SetPosition(rf.pos, rf.rot);  // for objs hit
+					carM->trackPercent = rf.percent /255.f*100.f;
+				}else
+				{	carM->fCam->First();
+					pGame->timer.RestartReplay(0);  //at end
+			}	}
 		}
 		else  ///>>  sim, game  -  get data from vdrift
 		if (pCar)
@@ -166,17 +170,16 @@ void App::newPoses(float time)  // time only for camera update
 		
 		//<<  record  save data
 		///-----------------------------------------------------------------------
-		if (pSet->rpl_rec && !pGame->pause && !bGhost && pCar && c < 4)
+		if (pSet->rpl_rec && !bRplPlay && !pGame->pause && !bGhost && pCar)
 		{
-			//static int ii = 0;
-			//if (ii++ >= 0)	// 1 half game framerate
-			//{	ii = 0;
+			if (iRplSkip++ >= 1)  // 1 half game framerate
+			{	iRplSkip = 0;
 
-				ReplayFrame fr;
+				ReplayFrame2 fr;
 				fr.time = rplTime;
-				fr.percent = carM->trackPercent;
+				fr.percent = carM->trackPercent /100.f*255.f;
 
-				fr.FromCar(pCar);
+				fr.FromCar(pCar, replay.GetLastHitTime(c));
 				
 				replay.AddFrame(fr, c);  // rec replay
 				if (c==0)  /// rec ghost lap
@@ -185,16 +188,16 @@ void App::newPoses(float time)  // time only for camera update
 					ghost.AddFrame(fr, 0);
 				}
 				
-				if (gui->valRplName2)  // recorded info ..not here, in update
+				//  recorded info ..in update
 				{
-					int size = replay.GetNumFrames() * sizeof(ReplayFrame);
+					int size = replay.GetNumFrames() * 210;  //avg?  sizeof(ReplayFrame);
 					std::string s = fToStr( float(size)/1000000.f, 2,5);
 					String ss = String( TR("#{RplRecTime}: ")) + CHud::StrTime(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
 					gui->valRplName2->setCaption(ss);
 				}
-			//}
+			}
 		}
-		if (bRplPlay && gui->valRplName2)  gui->valRplName2->setCaption("");
+		if (bRplPlay)  gui->valRplName2->setCaption("");
 		///-----------------------------------------------------------------------
 		
 

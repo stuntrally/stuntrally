@@ -184,7 +184,7 @@ void App::NewGame()
 	while (bSimulating)
 		boost::this_thread::sleep(boost::posix_time::milliseconds(pSet->thread_sleep));
 
-	bRplPlay = 0;
+	bRplPlay = 0;  iRplSkip = 0;
 	pSet->rpl_rec = bRplRec;  // changed only at new game
 	gui->pChall = 0;
 	
@@ -481,63 +481,52 @@ void App::LoadCar()  // 4
 	
 	///  Init Replay  header, once
 	///=================----------------
+	ReplayHeader2& rh = replay.header, &gh = ghost.header;
 	if (!bRplPlay)
 	{
-	replay.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, pSet->game.car[0].c_str(), !bRplPlay);
-	replay.header.numPlayers = mClient ? std::min(4, (int)mClient->getPeerCount()+1) : pSet->game.local_players;  // networked or splitscreen
-	replay.Clear();  // upd num plr
-	replay.header.hue[0] = pSet->game.car_hue[0];  replay.header.sat[0] = pSet->game.car_sat[0];  replay.header.val[0] = pSet->game.car_val[0];
-	strcpy(replay.header.nicks[0], carModels[0]->sDispName.c_str());  // player's nick
-	replay.header.trees = pSet->game.trees;
+		replay.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, !bRplPlay);
+		rh.numPlayers = mClient ? (int)mClient->getPeerCount()+1 : pSet->game.local_players;  // networked or splitscreen
+		replay.Clear();  replay.ClearCars();  // upd num plr
+		rh.trees = pSet->game.trees;
 
-	replay.header.networked = mClient ? 1 : 0;
-	replay.header.num_laps = pSet->game.num_laps;
-	strcpy(replay.header.sim_mode, pSet->game.sim_mode.c_str());
+		rh.networked = mClient ? 1 : 0;
+		rh.num_laps = pSet->game.num_laps;
+		rh.sim_mode = pSet->game.sim_mode;
 	}
 	rewind.Clear();
 
-	ghost.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, pSet->game.car[0].c_str(), !bRplPlay);
-	ghost.header.numPlayers = 1;  // ghost always 1 car
-	ghost.Clear();
-	ghost.header.hue[0] = pSet->game.car_hue[0];  ghost.header.sat[0] = pSet->game.car_sat[0];  ghost.header.val[0] = pSet->game.car_val[0];
-	ghost.header.trees = pSet->game.trees;
+	ghost.InitHeader(pSet->game.track.c_str(), pSet->game.track_user, !bRplPlay);
+	gh.numPlayers = 1;  // ghost always 1 car
+	ghost.Clear();  ghost.ClearCars();
+	gh.cars[0] = pSet->game.car[0];  gh.numWh[0] = carModels[0]->numWheels;
+	gh.networked = 0;  gh.num_laps = 1;
+	gh.sim_mode = pSet->game.sim_mode;
+	gh.trees = pSet->game.trees;
 
 	//  fill other cars (names, nicks, colors)
-	if (mClient)  // networked
-	{
-		int cars = std::min(4, (int)mClient->getPeerCount()+1);  // replay has max 4
-		for (int p = 1; p < cars; ++p)  // 0 is local car
-		{
-			CarModel* cm = carModels[p];
-			strcpy(replay.header.cars[p-1], cm->sDirname.c_str());
-			strcpy(replay.header.nicks[p], cm->sDispName.c_str());
-			replay.header.hue[p] = pSet->game.car_hue[p];  replay.header.sat[p] = pSet->game.car_sat[p];  replay.header.val[p] = pSet->game.car_val[p];
-		}
-	}
-	else  // splitscreen
+	int p, pp = pSet->game.local_players;
+	if (mClient)  // networked, 0 is local car
+		pp = (int)mClient->getPeerCount()+1;
+
 	if (!bRplPlay)
-	for (int p = 1; p < pSet->game.local_players; ++p)
+	for (p=0; p < pp; ++p)
 	{
-		strcpy(replay.header.cars[p-1], pSet->game.car[p].c_str());
-		strcpy(replay.header.nicks[p], carModels[p]->sDispName.c_str());
-		replay.header.hue[p] = pSet->game.car_hue[p];  replay.header.sat[p] = pSet->game.car_sat[p];  replay.header.val[p] = pSet->game.car_val[p];
+		const CarModel* cm = carModels[p];
+		rh.cars[p] = cm->sDirname;  rh.nicks[p] = cm->sDispName;
+		rh.numWh[p] = cm->numWheels;
 	}
+	
 	//  set carModel nicks from networked replay
-	if (bRplPlay && replay.header.networked)
-	{
-		for (int p = 0; p < pSet->game.local_players; ++p)
+	if (bRplPlay && rh.networked)
+	for (p=0; p < pp; ++p)
 	{
 		CarModel* cm = carModels[p];
-			cm->sDispName = String(replay.header.nicks[p]);
+		cm->sDispName = rh.nicks[p];
 		cm->pNickTxt = hud->CreateNickText(p, cm->sDispName);
 	}
 }
+//---------------------------------------------------------------------------------------------------------------
 
-	int c = 0;  // copy wheels R
-	for (std::list <CAR>::const_iterator it = pGame->cars.begin(); it != pGame->cars.end(); ++it,++c)
-		for (int w=0; w < (*it).numWheels; ++w)
-			replay.header.whR[c][w] = (*it).GetTireRadius(WHEEL_POSITION(w));
-}
 
 void App::LoadTerrain()  // 5
 {
