@@ -47,7 +47,7 @@ struct PosInfo
 	
 	//  copy
 	void FromRpl(const ReplayFrame* rf);
-	void FromRpl2(const ReplayFrame2* rf);
+	void FromRpl2(const ReplayFrame2* rf, class CARDYNAMICS* cd);
 	void FromCar(CAR* pCar);
 };
 

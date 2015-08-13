@@ -81,15 +81,22 @@ Quaternion Axes::toOgreW(const QUATERNION<double>& vIn)
 }
 
 	
-//  get from new replay/ghost
+///  pos from new Replay/ghost  New
 //-----------------------------------------------------------------------
-void PosInfo::FromRpl2(const ReplayFrame2* rf)
+void PosInfo::FromRpl2(const ReplayFrame2* rf, CARDYNAMICS* cd)
 {
 	//  car
 	Axes::toOgre(pos, rf->pos);
-	rot = Axes::toOgre(rf->rot);
-	carY = rot * Vector3::UNIT_Y;
-
+	if (cd && cd->vtype == V_Sphere)
+	{
+		cd->sphereYaw = rf->hov_roll;
+		rot.FromAngleAxis(Radian(-rf->hov_roll), Vector3::UNIT_Y);
+		carY = Vector3::UNIT_Y;
+	}else
+	{	rot = Axes::toOgre(rf->rot);
+		carY = rot * Vector3::UNIT_Y;
+	}
+	//  hud
 	speed = rf->speed;
 	fboost = rf->fboost /255.f;  steer = rf->steer /127.f;
 	braking = rf->get(b_braking);  percent = rf->percent /255.f*100.f;
@@ -134,7 +141,7 @@ void PosInfo::FromRpl2(const ReplayFrame2* rf)
 	}
 }
 
-//  get from replay/ghost
+//  pos from replay/ghost  Old
 //-----------------------------------------------------------------------
 void PosInfo::FromRpl(const ReplayFrame* rf)
 {
@@ -143,6 +150,7 @@ void PosInfo::FromRpl(const ReplayFrame* rf)
 	rot = Axes::toOgre(rf->rot);
 	carY = rot * Vector3::UNIT_Y;
 
+	//  hud
 	speed = rf->speed;
 	fboost = rf->fboost;  steer = rf->steer;
 	braking = rf->braking;  percent = rf->percent;
@@ -169,7 +177,7 @@ void PosInfo::FromRpl(const ReplayFrame* rf)
 	}
 }
 
-//  get from simulation
+///  pos from Simulation
 //-----------------------------------------------------------------------
 void PosInfo::FromCar(CAR* pCar)
 {
@@ -185,6 +193,7 @@ void PosInfo::FromCar(CAR* pCar)
 		carY = rot * Vector3::UNIT_Y;
 		hov_roll = cd->hov_roll;
 	}
+	//  hud
 	speed = pCar->GetSpeed();
 	fboost = cd->boostVal;	//posInfo.steer = cd->steer;
 	braking = cd->IsBraking();  //percent = outside
@@ -213,7 +222,7 @@ void PosInfo::FromCar(CAR* pCar)
 }
 
 
-//  set from simulation  Old
+//  replay from simulation  Old
 //-----------------------------------------------------------------------
 void ReplayFrame::FromCar(const CAR* pCar)
 {
@@ -275,7 +284,7 @@ void ReplayFrame::FromCar(const CAR* pCar)
 	fCarScreech = std::min(1.f, cd.fCarScreech);
 }
 
-//  set from simulation  New
+///  replay from Simulation  New
 //-----------------------------------------------------------------------
 void ReplayFrame2::FromCar(const CAR* pCar, half prevHitTime)
 {
