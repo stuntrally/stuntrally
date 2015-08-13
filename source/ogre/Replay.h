@@ -44,7 +44,7 @@ struct ReplayHeader2
 	//std::vector<float> hue,sat,val,gloss,refl;  // cars colors?
 
 	ReplayHeader2();
-	void Default();
+	void Default(), SetHead();
 	void FromOld(const struct ReplayHeader& hdr);
 };
 

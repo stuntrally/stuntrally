@@ -124,8 +124,8 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	}
 
     #ifdef LOG_RPL
-		if (!onlyHdr)
-			LogO(">- Load replay --  file: "+file+"  players:"+toStr(header.numPlayers));
+		//if (!onlyHdr)
+		//	LogO(">- Load replay --  file: "+file+"  players:"+toStr(header.numPlayers));
 		if (!onlyHdr)  
 		for (int p=0; p < header.numPlayers; ++p)
 		{
@@ -183,8 +183,8 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
     fi.close();
 		
     #ifdef LOG_RPL
-		LogO(">- Load replay  first: "+fToStr(frames[0][0].time,5,7)
-			+"  time: "+fToStr(GetTimeLength(0),2,5)+"  frames: "+toStr(frames[0].size()));
+		LogO(">- Load replay  plr: "+toStr(header.numPlayers)+"  t1st: "+fToStr(frames[0][0].time,5,7)+
+			"  time: "+fToStr(GetTimeLength(0),2,5)+"  frames: "+toStr(frames[0].size()));
 	#endif
 
 	LogO(Ogre::String("::: Time ReplayLoad: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");

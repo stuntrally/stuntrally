@@ -7,18 +7,19 @@
 using namespace std;
 
 
-//TODO: endianness..
-//	`conv tool for all
-			
 //  header
 //----------------------------------------------------------------
 ReplayHeader2::ReplayHeader2()
 {
 	Default();
 }
-void ReplayHeader2::Default()
+void ReplayHeader2::SetHead()
 {
 	head[0] = 'S';  head[1] = 'R';  head[2] = '/';  head[3] = '^';  head[4] = 0;
+}
+void ReplayHeader2::Default()
+{
+	SetHead();
 	track = "";  track_user = 0;
 	ver = 30;  time = 0.f;
 	
@@ -196,17 +197,17 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 	else
 	if (strcmp(header.head,"SR/^")!=0)
 	{
-		LogO(">- Load replay2 --  file: "+file+"  Error: Unknown header");
+		LogO(">- Load replay2: "+file+"  Error: Unknown header");
 		return false;
 	}
 	
 	if (convert)
 	{
-		LogO(">- Load replay2 convert --  file: "+file);
+		LogO(">- Load replay2 convert: "+file);
 
 		//  load old, convert
 		Replay r;
-		r.LoadFile(file);
+		r.LoadFile(file, onlyHdr);
 		header.FromOld(r.header);
 
 		Clear();  //  clear
@@ -243,6 +244,7 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		uchar l;  int i,s;  char buf[256];
 		#define rd(a)  fi.read((char*)&a, sizeof(a))
 		#define rs(s)  {  fi.read((char*)&l, 1);  if (l>0)  fi.read(buf, l);  buf[l]=0;  s = buf;  }  //string
+		//TODO: endianness, swap 2bytes..
 
 		//  header  ------
 		ReplayHeader2& h = header;
@@ -270,8 +272,8 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 
 		#ifdef LOG_RPL
 			LogO(ss);
-			if (!onlyHdr)
-				LogO(">- Load replay2 --  file: "+file+"  players:"+toStr(h.numPlayers));
+			//if (!onlyHdr)
+			//	LogO(">- Load replay2: "+file+"  players:"+toStr(h.numPlayers));
 		#endif
 		
 		Clear(false);  //  clear
@@ -355,7 +357,7 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		if (frames.empty() || frames[0].empty())
 			LogO(">- Load replay2  empty!!  time: "+fToStr(GetTimeLength(),2,5));
 		else
-			LogO(">- Load replay2  first: "+fToStr(frames[0][0].time,5,7)+
+			LogO(">- Load replay2  plr: "+toStr(header.numPlayers)+"  t1st: "+fToStr(frames[0][0].time,5,7)+
 				"  time: "+fToStr(GetTimeLength(),2,5)+"  frames: "+toStr(frames[0].size()));
 	#endif
 
@@ -379,6 +381,7 @@ bool Replay2::SaveFile(string file)
 
 	//  header  ------
 	const ReplayHeader2& h = header;
+	header.SetHead();
 	of.write((char*)&h.head, 5);
 	wr(h.ver);  wr(h.time);
 	ws(h.track)  wr(h.track_user);
