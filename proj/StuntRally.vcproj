@@ -312,26 +312,6 @@
 			Name="VDrift"
 			>
 			<Filter
-				Name="Game2"
-				>
-				<File
-					RelativePath="..\source\vdrift\forcefeedback.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\vdrift\forcefeedback.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\vdrift\k1999.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\vdrift\k1999.h"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="Models"
 				>
 				<File
@@ -423,19 +403,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\vdrift\containeralgorithm.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\vdrift\containeralgorithm.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\vdrift\dbl.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\vdrift\derived.h"
 					>
 				</File>
 				<File
@@ -444,6 +412,14 @@
 				</File>
 				<File
 					RelativePath="..\source\vdrift\endian_utility.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\vdrift\forcefeedback.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\vdrift\forcefeedback.h"
 					>
 				</File>
 				<File
@@ -766,22 +742,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\source\vdrift\random.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\vdrift\random.h"
-						>
-					</File>
-					<File
-						RelativePath="..\source\vdrift\signalprocessing.h"
-						>
-					</File>
-					<File
-						RelativePath="..\source\vdrift\simpletree.h"
-						>
-					</File>
-					<File
 						RelativePath="..\source\vdrift\spline.h"
 						>
 					</File>
@@ -985,10 +945,6 @@
 			</File>
 			<File
 				RelativePath="c:\Users\cryham\AppData\Roaming\stuntrally\log.txt"
-				>
-			</File>
-			<File
-				RelativePath="..\source\vdrift\logging.h"
 				>
 			</File>
 			<File

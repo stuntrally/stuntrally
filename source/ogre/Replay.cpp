@@ -245,7 +245,7 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		uchar l;  int i,s;  char buf[256];
 		#define rd(a)  fi.read((char*)&a, sizeof(a))
 		#define rs(s)  {  fi.read((char*)&l, 1);  if (l>0)  fi.read(buf, l);  buf[l]=0;  s = buf;  }  //string
-		//TODO: endianness, swap 2bytes..
+		//TODO: endianness, swap 2bytes..  ENDIAN_SWAP_16
 
 		//  header  ------
 		ReplayHeader2& h = header;

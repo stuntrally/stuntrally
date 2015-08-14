@@ -2,7 +2,6 @@
 //#include "Def_Str.h"
 
 #include "configfile.h"
-#include "containeralgorithm.h"
 #include "unittest.h"
 
 #include <fstream>

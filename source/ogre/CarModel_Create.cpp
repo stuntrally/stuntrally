@@ -150,7 +150,7 @@ void CarModel::Load(int startId)
 		if (pSet->game.trackreverse)
 		{	rot.Rotate(PI_d, 0,0,1);  rot[0] = -rot[0];  rot[1] = -rot[1];  }
 
-		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, eType == CT_REMOTE, iIndex);
+		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, eType == CT_REMOTE, iIndex);
 
 		if (!pCar)  LogO("Error: Creating CAR: " + sDirname + "  path: " + pathCar);
 		else  pCar->pCarM = this;

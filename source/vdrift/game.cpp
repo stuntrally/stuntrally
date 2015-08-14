@@ -501,7 +501,6 @@ void GAME::UpdateCar(CAR & car, double dt)
 {
 	car.Update(dt);
 	UpdateCarInputs(car);
-	//UpdateDriftScore(car, dt);
 }
 
 void GAME::UpdateCarInputs(CAR & car)

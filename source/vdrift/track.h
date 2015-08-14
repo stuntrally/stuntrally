@@ -11,7 +11,6 @@
 #include "bezier.h"
 #include "aabb.h"
 #include "aabb_space_partitioning.h"
-#include "k1999.h"
 #include "optional.h"
 
 #include "track_object.h"
@@ -107,8 +106,6 @@ private:
 	
 	//road information
 	std::list <ROADSTRIP> roads;
-	
-	bool CreateRacingLines();
 	
 	bool LoadObjects(
 		const std::string & trackpath,

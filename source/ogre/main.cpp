@@ -1,10 +1,9 @@
 #include "pch.h"
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+//#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 //	#include "vld.h" // mem leaks +
-#endif
+//#endif
 #include "CGame.h"
 #include "../vdrift/game.h"
-#include "../vdrift/logging.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
 #include "../network/enet-wrapper.hpp"
@@ -45,14 +44,15 @@ void LoadDefaultSet(SETTINGS* settings, string setFile)
 	//  Paths
 	PATHMANAGER::Init();
 
+
 	//  redirect cerr
 	streambuf* oldCout = cout.rdbuf(), *oldCerr = cerr.rdbuf();
 	#if 0
-    string po = PATHMANAGER::UserConfigDir() + "/ogre.out";
-    ofstream out(po.c_str());  cout.rdbuf(out.rdbuf());
-    #endif
-    string pa = PATHMANAGER::UserConfigDir() + "/ogre.err";
-    ofstream oute(pa.c_str());  cerr.rdbuf(oute.rdbuf());
+	string po = PATHMANAGER::UserConfigDir() + "/ogre.out";
+	ofstream out(po.c_str());  cout.rdbuf(out.rdbuf());
+	#endif
+	string pa = PATHMANAGER::UserConfigDir() + "/ogre.err";
+	ofstream oute(pa.c_str());  cerr.rdbuf(oute.rdbuf());
 
 
 	//  Initialize networking
@@ -95,6 +95,7 @@ void LoadDefaultSet(SETTINGS* settings, string setFile)
 		settings->local_port += num;
 		settings->nickname += Ogre::StringConverter::toString(num);
 	}
+	
 
 	//  Ogre Root for .log
 	int net = settings->net_local_plr;
@@ -102,7 +103,17 @@ void LoadDefaultSet(SETTINGS* settings, string setFile)
 		PATHMANAGER::UserConfigDir() + "/ogre" + (net >= 0 ? toStr(net) : "") + ".log");
 
 	LogO(Ogre::String("::: Time Init main: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
-	LogO(PATHMANAGER::info.str());  // paths
+
+	#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
+		LogO("System: Linux");
+	#elif OGRE_PLATFORM == OGRE_PLATFORM_WINRT
+		LogO("System: WinRT");
+	#elif OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		LogO("System: Win32");
+	#endif
+
+	//  paths
+	LogO(PATHMANAGER::info.str());
 
 
 	///  Game start

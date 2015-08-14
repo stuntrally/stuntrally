@@ -97,24 +97,6 @@ void TRACK::Clear()
 	loaded = false;
 }
 
-bool TRACK::CreateRacingLines()
-{
-	K1999 k1999data;
-	int n = 0;
-	for (list <ROADSTRIP>::iterator i = roads.begin(); i != roads.end(); ++i,++n)
-	{
-		if (k1999data.LoadData(&(*i)))
-		{
-			k1999data.CalcRaceLine();
-			k1999data.UpdateRoadStrip(&(*i));
-		}
-		//else error_output << "Couldn't create racing line for roadstrip " << n << endl;
-		
-		//i->CreateRacingLine(racingline_node, racingline_texture, error_output);
-	}
-	return true;
-}
-
 bool TRACK::BeginObjectLoad(
 	const string & trackpath,
 	int anisotropy,
