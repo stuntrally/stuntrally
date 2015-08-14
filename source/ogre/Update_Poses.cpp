@@ -190,7 +190,7 @@ void App::newPoses(float time)  // time only for camera update
 				
 				//  recorded info ..in update
 				{
-					int size = replay.GetNumFrames() * 210;  //avg?  sizeof(ReplayFrame);
+					int size = replay.GetNumFrames() * 232;  //par approx  sizeof(ReplayFrame);
 					std::string s = fToStr( float(size)/1000000.f, 2,5);
 					String ss = String( TR("#{RplRecTime}: ")) + CHud::StrTime(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
 					gui->valRplName2->setCaption(ss);
