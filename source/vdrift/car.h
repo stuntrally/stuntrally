@@ -284,7 +284,7 @@ public:
 
 	///  new
 	int id;  // index of car (same as for carModels)
-	bool bResetPos;
+	bool bResetPos, bResetObj;
 	void ResetPos(bool fromStart=true);
 	void SavePosAtCheck();
 	void SetPosRewind(const MATHVECTOR<float,3>& pos, const QUATERNION<float>& rot, const MATHVECTOR<float,3>& vel, const MATHVECTOR<float,3>& angvel);

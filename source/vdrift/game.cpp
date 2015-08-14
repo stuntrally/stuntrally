@@ -481,6 +481,7 @@ void GAME::AdvanceGameLogic(double dt)
 			//PROFILER.endBlock("ai");
 
 			PROFILER.beginBlock("-physics");
+
 			///~~  clear fluids for each car
 			for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
 			{
@@ -491,8 +492,15 @@ void GAME::AdvanceGameLogic(double dt)
 					cd.inFluidsWh[w].clear();
 			}
 
+			if (!cars.empty() && cars.begin()->bResetObj)
+			{
+				cars.begin()->bResetObj = false;
+				app->ResetObjects();
+			}
+
 			if (dt > 0.0)
 				collision.Update(dt, settings->bltProfilerTxt);
+
 			PROFILER.endBlock("-physics");
 
 			PROFILER.beginBlock("-car-sim");

@@ -92,7 +92,7 @@ public:
 	void CreateCar();
 	void CreateRoad();
 
-	void CreateObjects(),DestroyObjects(bool clear);
+	void CreateObjects(), DestroyObjects(bool clear), ResetObjects();
 
 	void NewGame();  void NewGameDoLoad();  bool IsVdrTrack();  bool newGameRpl;
 

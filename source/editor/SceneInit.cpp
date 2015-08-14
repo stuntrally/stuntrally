@@ -39,11 +39,12 @@ using namespace Ogre;
 void App::createScene()  // once, init
 {
 	//  prv tex
-	prvView.Create(1024,1024,"PrvView");
-	prvRoad.Create(1024,1024,"PrvRoad");
-	 prvTer.Create(1024,1024,"PrvTer");
+	int k=1024;
+	prvView.Create(k,k,"PrvView");
+	prvRoad.Create(k,k,"PrvRoad");
+	 prvTer.Create(k,k,"PrvTer");
 
-	scn->roadDens.Create(1025,1025,"RoadDens");
+	scn->roadDens.Create(k+1,k+1,"RoadDens");
 	
 	///  ter lay tex
 	for (int i=0; i < 6; ++i)

@@ -83,7 +83,7 @@ public:
 	bool bNewHmap, bTrGrUpd;
 	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget);
 
-	void CreateObjects(), DestroyObjects(bool clear);
+	void CreateObjects(), DestroyObjects(bool clear), ResetObjects();
 	void UpdObjPick(), PickObject(), ToggleObjSim();
 
 

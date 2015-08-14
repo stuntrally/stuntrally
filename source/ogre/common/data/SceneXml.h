@@ -257,6 +257,7 @@ public:
 	class btCollisionObject* co;
 	class btRigidBody* rb;
 	bool dyn;
+	class btTransform* tr1;  // 1st pos after load, for reset
 
 	Object();
 	void SetFromBlt();

@@ -27,7 +27,7 @@ CAR::CAR()
 	,bRewind(0),bRewindOld(0),timeRew(0.f)
 	,fluidHitOld(0)
 	,trackPercentCopy(0), bRemoteCar(0)
-	,bResetPos(0)
+	,bResetPos(0), bResetObj(0)
 	,dmgLastCheck(0.f), sphYawAtStart(0.f)
 {
 	SetNumWheels(4);
@@ -284,7 +284,7 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	bLastChk = inputs[CARINPUT::LAST_CHK];
 	
 	if (bResetPos)  // reset game
-	{	ResetPos(true);  bResetPos = false;  }
+	{	ResetPos(true);  bResetPos = false;  bResetObj = true;  }
 	else
 	if (bLastChk && !bLastChkOld)
 		ResetPos(false);  // goto last checkpoint
