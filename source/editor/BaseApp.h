@@ -77,7 +77,9 @@ protected:
 	virtual void windowClosed();
 
 	///  Ogre
+public:
 	Ogre::Root *mRoot;
+protected:	
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::Viewport* mViewport;
 	Ogre::RenderWindow* mWindow;

@@ -3,15 +3,19 @@
 #include "settings.h"
 #include "CApp.h"
 #include "../vdrift/pathmanager.h"
+#include <OgrePlatform.h>
+#include <OgreRoot.h>
 #include <locale.h>
 #include <boost/filesystem.hpp>
+using namespace std;
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
 //#include <X11/Xlib.h>
 #endif
 
+
 //  load settings from default file
-void LoadDefaultSet(SETTINGS* settings, std::string setFile)
+void LoadDefaultSet(SETTINGS* settings, string setFile)
 {
 	settings->Load(PATHMANAGER::GameConfigDir() + "/editor-default.cfg");
 	settings->Save(setFile);
@@ -31,48 +35,52 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	
 	setlocale(LC_NUMERIC, "C");
 
-	PATHMANAGER::Init(std::cout, std::cerr);
+	//  Paths
+	PATHMANAGER::Init();
 
 
-	std::streambuf* oldCout = std::cout.rdbuf();
-	std::streambuf* oldCerr = std::cerr.rdbuf();
-
+	//  redirect cerr
+	streambuf* oldCout = cout.rdbuf(), *oldCerr = cerr.rdbuf();
 	#if 0
-    std::string po = PATHMANAGER::UserConfigDir() + "/ogre_ed.out";
-    std::ofstream out(po.c_str());
-    std::cout.rdbuf(out.rdbuf());  // redirect std::cout to out.txt
+    string po = PATHMANAGER::UserConfigDir() + "/ogre_ed.out";
+    ofstream out(po.c_str());  cout.rdbuf(out.rdbuf());
     #endif
-
-	#if 1
-    std::string pa = PATHMANAGER::UserConfigDir() + "/ogre_ed.err";
-    std::ofstream oute(pa.c_str());
-    std::cerr.rdbuf(oute.rdbuf());  // redirect std::cerr to oute.txt
-    #endif
+    string pa = PATHMANAGER::UserConfigDir() + "/ogre_ed.err";
+    ofstream oute(pa.c_str());  cerr.rdbuf(oute.rdbuf());
 	
 
 	///  Load Settings
 	//----------------------------------------------------------------
 	SETTINGS* settings = new SETTINGS();
-	std::string setFile = PATHMANAGER::EditorSetFile();
+	string setFile = PATHMANAGER::EditorSetFile();
 
 	if (!PATHMANAGER::FileExists(setFile))
 	{
-		std::cout << "Settings not found - loading defaults." << std::endl;
+		cerr << "Settings not found - loading defaults." << endl;
 		LoadDefaultSet(settings,setFile);
 	}
 	settings->Load(setFile);  // LOAD
 	if (settings->version != SET_VER)  // loaded older, use default
 	{
-		std::cout << "Settings found, but older version - loading defaults." << std::endl;
+		cerr << "Settings found, but older version - loading defaults." << endl;
 		boost::filesystem::rename(setFile, PATHMANAGER::UserConfigDir() + "/editor_old.cfg");
 		LoadDefaultSet(settings,setFile);
 		settings->Load(setFile);  // LOAD
 	}
+	
+
+	//  Ogre Root for .log
+	Ogre::Root* root = OGRE_NEW Ogre::Root("", PATHMANAGER::UserConfigDir() + "/ogreset_ed.cfg",
+		PATHMANAGER::UserConfigDir() + "/ogre_ed.log");
+
+	//  paths
+	LogO(PATHMANAGER::info.str());
 
 
 	//  Start
 	//----------------------------------------------------------------
 	App* pApp = new App(settings);
+	pApp->mRoot = root;
 
 	try
 	{
@@ -87,7 +95,7 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 			MessageBoxA( NULL, e.getFullDescription().c_str(), "An exception has occured!", MB_OK | MB_ICONERROR | MB_TASKMODAL);
 		#else
-			std::cerr << "An exception has occured: " << e.getFullDescription().c_str() << std::endl;
+			cerr << "An exception has occured: " << e.getFullDescription().c_str() << endl;
 		#endif
 	}
 
@@ -97,8 +105,8 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	settings->Save(setFile);
 	delete settings;
 
-	std::cout.rdbuf(oldCout);
-	std::cerr.rdbuf(oldCerr);
+	cout.rdbuf(oldCout);
+	cerr.rdbuf(oldCerr);
 
 	return 0;
 }

@@ -915,14 +915,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\vdrift\k1999.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\vdrift\k1999.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\vdrift\model.cpp"
 				>
 			</File>

@@ -36,51 +36,26 @@ namespace
 		size_t i = 0;
 		while (i < utf8.size())
 		{
-			unsigned long uni;
-			size_t todo;
+			unsigned long uni;  size_t todo;
 			unsigned char ch = utf8[i++];
-			if (ch <= 0x7F)
-			{
-				uni = ch;
-				todo = 0;
-			}
-			else if (ch <= 0xBF)
-			{
-				throw std::logic_error("not a UTF-8 string");
-			}
-			else if (ch <= 0xDF)
-			{
-				uni = ch&0x1F;
-				todo = 1;
-			}
-			else if (ch <= 0xEF)
-			{
-				uni = ch&0x0F;
-				todo = 2;
-			}
-			else if (ch <= 0xF7)
-			{
-				uni = ch&0x07;
-				todo = 3;
-			}
-			else
-			{
-				throw std::logic_error("not a UTF-8 string");
-			}
+
+				 if (ch <= 0x7F){	uni = ch;	todo = 0;	}
+			else if (ch <= 0xBF){	throw std::logic_error("not a UTF-8 string");	}
+			else if (ch <= 0xDF){	uni = ch&0x1F;	todo = 1;	}
+			else if (ch <= 0xEF){	uni = ch&0x0F;	todo = 2;	}
+			else if (ch <= 0xF7){	uni = ch&0x07;	todo = 3;	}
+			else				{	throw std::logic_error("not a UTF-8 string");	}
+
 			for (size_t j = 0; j < todo; ++j)
 			{
-				if (i == utf8.size())
-					throw std::logic_error("not a UTF-8 string");
+				if (i == utf8.size())	throw std::logic_error("not a UTF-8 string");
 				unsigned char ch = utf8[i++];
-				if (ch < 0x80 || ch > 0xBF)
-					throw std::logic_error("not a UTF-8 string");
+				if (ch < 0x80 || ch > 0xBF)  throw std::logic_error("not a UTF-8 string");
 				uni <<= 6;
 				uni += ch & 0x3F;
 			}
-			if (uni >= 0xD800 && uni <= 0xDFFF)
-				throw std::logic_error("not a UTF-8 string");
-			if (uni > 0x10FFFF)
-				throw std::logic_error("not a UTF-8 string");
+			if (uni >= 0xD800 && uni <= 0xDFFF)  throw std::logic_error("not a UTF-8 string");
+			if (uni > 0x10FFFF)  throw std::logic_error("not a UTF-8 string");
 			unicode.push_back(uni);
 		}
 		return unicode;
@@ -88,13 +63,10 @@ namespace
 
 	MyGUI::MouseButton sdlButtonToMyGUI(Uint8 button)
 	{
-		//The right button is the second button, according to MyGUI
-		if (button == SDL_BUTTON_RIGHT)
-			button = SDL_BUTTON_MIDDLE;
-		else if (button == SDL_BUTTON_MIDDLE)
-			button = SDL_BUTTON_RIGHT;
-
-		//MyGUI's buttons are 0 indexed
+		//  The right button is the second button, according to MyGUI
+		if (button == SDL_BUTTON_RIGHT)  button = SDL_BUTTON_MIDDLE;
+		else if (button == SDL_BUTTON_MIDDLE)  button = SDL_BUTTON_RIGHT;
+		//  MyGUI's buttons are 0 indexed
 		return MyGUI::MouseButton::Enum(button - 1);
 	}
 }
@@ -278,6 +250,8 @@ bool BaseApp::configure()
 bool BaseApp::setup()
 {
 	Ogre::Timer ti;
+	LogO("*** start setup ***");
+
 	if (pSet->rendersystem == "Default")
 	{
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -286,15 +260,12 @@ bool BaseApp::setup()
 		pSet->rendersystem = "OpenGL Rendering Subsystem";
 		#endif
 	}
-	
-	//  Dynamic plugin loading
-	mRoot = OGRE_NEW Ogre::Root("", PATHMANAGER::UserConfigDir() + "/ogreset_ed.cfg", PATHMANAGER::UserConfigDir() + "/ogre_ed.log");
 	//LogManager::getSingleton().setLogDetail(LL_BOREME);  //-
 
 	#ifdef _DEBUG
-		#define D_SUFFIX "_d"
+	#define D_SUFFIX "_d"
 	#else
-		#define D_SUFFIX ""
+	#define D_SUFFIX ""
 	#endif
 
 	//  when show ogre dialog is on, load both rendersystems so user can select
@@ -303,15 +274,12 @@ bool BaseApp::setup()
 		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
-		//mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
 		#endif
 	}else{
 		if (pSet->rendersystem == "OpenGL Rendering Subsystem")
 			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
 			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
-		//else if (pSet->rendersystem == "Direct3D11 Rendering Subsystem")
-		//	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
 	}
 
 	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);

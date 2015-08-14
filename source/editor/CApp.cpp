@@ -76,7 +76,7 @@ App::App(SETTINGS* pSet1)
 	gui->scn = scn;
 	gui->data = scn->data;
 	
-	track = new TRACK(std::cout, std::cerr);  //!
+	track = new TRACK();  //!
 }
 
 const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise", "Noise2", "N-gon" };  // static
