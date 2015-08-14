@@ -32,7 +32,7 @@ public:
 	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
 
 private:
-	Ogre::Matrix4 mPreviousViewProjMatrix;
+	Matrix4 mPreviousViewProjMatrix;
 };
 
 MotionBlurLogic::MotionBlurLogic(BaseApp* app)
@@ -48,7 +48,7 @@ CompositorInstance::Listener* MotionBlurLogic::createListener(CompositorInstance
 
 MotionBlurListener::MotionBlurListener(BaseApp* app) : pApp(0)
 {
-	mPreviousViewProjMatrix = Ogre::Matrix4::IDENTITY;
+	mPreviousViewProjMatrix = Matrix4::IDENTITY;
 	pApp = app;
 }
 
@@ -72,7 +72,7 @@ void MotionBlurListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 		Camera *cam = pApp->mCamera;
 		#endif
 
-		if (mPreviousViewProjMatrix == Ogre::Matrix4::IDENTITY)
+		if (mPreviousViewProjMatrix == Matrix4::IDENTITY)
 		{
 			mPreviousViewProjMatrix = cam->getProjectionMatrix() * cam->getViewMatrix();
 		}

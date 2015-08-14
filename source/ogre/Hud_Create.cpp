@@ -696,7 +696,7 @@ void CHud::ShowVp(bool vp)	// todo: use vis mask ..
 void CHud::CreateArrow()
 {
 	if (!arrow.node)  arrow.node = app->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre::Entity* ent = app->mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
+	Entity* ent = app->mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
 	ent->setRenderQueueGroup(RQG_Hud3);
 	ent->setCastShadows(false);
 	arrow.nodeRot = arrow.node->createChildSceneNode();

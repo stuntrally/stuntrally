@@ -400,8 +400,8 @@ void CarModel::Create()
 	//  Resource locations -----------------------------------------
 	/// Add a resource group for this car
 	ResourceGroupManager::getSingleton().createResourceGroup(resGrpId);
-	Ogre::Root::getSingletonPtr()->addResourceLocation(sCars, "FileSystem", resGrpId);
-	Ogre::Root::getSingletonPtr()->addResourceLocation(sCars + "/textures", "FileSystem", resGrpId);
+	Root::getSingletonPtr()->addResourceLocation(sCars, "FileSystem", resGrpId);
+	Root::getSingletonPtr()->addResourceLocation(sCars + "/textures", "FileSystem", resGrpId);
 		
 	pMainNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	SceneNode* ndCar = pMainNode->createChildSceneNode();

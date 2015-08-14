@@ -18,7 +18,7 @@ using namespace Ogre;
 
 //  rendering
 //-------------------------------------------------------------------------------------
-bool BaseApp::frameRenderingQueued(const Ogre::FrameEvent& evt)
+bool BaseApp::frameRenderingQueued(const FrameEvent& evt)
 {
 	if (mWindow->isClosed())
 		return false;
@@ -51,7 +51,7 @@ bool BaseApp::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	return true;
 }
 
-bool BaseApp::frameEnded(const Ogre::FrameEvent& evt)
+bool BaseApp::frameEnded(const FrameEvent& evt)
 {
 	// dt-
 	Real time = evt.timeSinceLastFrame;

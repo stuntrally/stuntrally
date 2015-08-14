@@ -159,7 +159,7 @@ void App::UpdMtrWaterDepth()
 
 
 //  Water rtt, setup and recreate
-void CScene::UpdateWaterRTT(Ogre::Camera* cam)
+void CScene::UpdateWaterRTT(Camera* cam)
 {
 	mWaterRTT->setRTTSize(ciShadowSizesA[app->pSet->water_rttsize]);
 	mWaterRTT->setReflect(app->pSet->water_reflect);

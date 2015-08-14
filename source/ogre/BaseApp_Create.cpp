@@ -40,6 +40,7 @@
 
 #include "common/PointerFix.h"
 #include "../oics/ICSInputControlSystem.h"
+using namespace Ogre;
 
 
 namespace
@@ -50,51 +51,26 @@ namespace
 		size_t i = 0;
 		while (i < utf8.size())
 		{
-			unsigned long uni;
-			size_t todo;
+			unsigned long uni;  size_t todo;
 			unsigned char ch = utf8[i++];
-			if (ch <= 0x7F)
-			{
-				uni = ch;
-				todo = 0;
-			}
-			else if (ch <= 0xBF)
-			{
-				throw std::logic_error("not a UTF-8 string");
-			}
-			else if (ch <= 0xDF)
-			{
-				uni = ch&0x1F;
-				todo = 1;
-			}
-			else if (ch <= 0xEF)
-			{
-				uni = ch&0x0F;
-				todo = 2;
-			}
-			else if (ch <= 0xF7)
-			{
-				uni = ch&0x07;
-				todo = 3;
-			}
-			else
-			{
-				throw std::logic_error("not a UTF-8 string");
-			}
+
+				 if (ch <= 0x7F){	uni = ch;	todo = 0;	}
+			else if (ch <= 0xBF){	throw std::logic_error("not a UTF-8 string");	}
+			else if (ch <= 0xDF){	uni = ch&0x1F;	todo = 1;	}
+			else if (ch <= 0xEF){	uni = ch&0x0F;	todo = 2;	}
+			else if (ch <= 0xF7){	uni = ch&0x07;	todo = 3;	}
+			else				{	throw std::logic_error("not a UTF-8 string");	}
+
 			for (size_t j = 0; j < todo; ++j)
 			{
-				if (i == utf8.size())
-					throw std::logic_error("not a UTF-8 string");
+				if (i == utf8.size())	throw std::logic_error("not a UTF-8 string");
 				unsigned char ch = utf8[i++];
-				if (ch < 0x80 || ch > 0xBF)
-					throw std::logic_error("not a UTF-8 string");
+				if (ch < 0x80 || ch > 0xBF)  throw std::logic_error("not a UTF-8 string");
 				uni <<= 6;
 				uni += ch & 0x3F;
 			}
-			if (uni >= 0xD800 && uni <= 0xDFFF)
-				throw std::logic_error("not a UTF-8 string");
-			if (uni > 0x10FFFF)
-				throw std::logic_error("not a UTF-8 string");
+			if (uni >= 0xD800 && uni <= 0xDFFF)  throw std::logic_error("not a UTF-8 string");
+			if (uni > 0x10FFFF)  throw std::logic_error("not a UTF-8 string");
 			unicode.push_back(uni);
 		}
 		return unicode;
@@ -102,13 +78,10 @@ namespace
 
 	MyGUI::MouseButton sdlButtonToMyGUI(Uint8 button)
 	{
-		//The right button is the second button, according to MyGUI
-		if(button == SDL_BUTTON_RIGHT)
-			button = SDL_BUTTON_MIDDLE;
-		else if(button == SDL_BUTTON_MIDDLE)
-			button = SDL_BUTTON_RIGHT;
-
-		//MyGUI's buttons are 0 indexed
+		//  The right button is the second button, according to MyGUI
+		if (button == SDL_BUTTON_RIGHT)  button = SDL_BUTTON_MIDDLE;
+		else if (button == SDL_BUTTON_MIDDLE)  button = SDL_BUTTON_RIGHT;
+		//  MyGUI's buttons are 0 indexed
 		return MyGUI::MouseButton::Enum(button - 1);
 	}
 }
@@ -150,7 +123,7 @@ void BaseApp::createFrameListener()
 
 //  Run
 //-------------------------------------------------------------------------------------
-void BaseApp::Run( bool showDialog )
+void BaseApp::Run(bool showDialog)
 {
 	mShowDialog = showDialog;
 	if (!setup())
@@ -162,7 +135,7 @@ void BaseApp::Run( bool showDialog )
 	{	Ogre::Timer tim;
 		while (1)
 		{
-			Ogre::WindowEventUtilities::messagePump();
+			WindowEventUtilities::messagePump();
 			long min_fps = 1000000.0 / std::max(10.f, pSet->limit_fps_val);
 			if (tim.getMicroseconds() > min_fps)
 			{
@@ -230,7 +203,7 @@ BaseApp::~BaseApp()
 	//if (mSplitMgr)
 		//refreshCompositor(false);
 
-	Ogre::CompositorManager::getSingleton().removeAll();
+	CompositorManager::getSingleton().removeAll();
 	delete mLoadingBar;
 	delete mSplitMgr;
 	
@@ -268,7 +241,7 @@ BaseApp::~BaseApp()
 //-------------------------------------------------------------------------------------
 bool BaseApp::configure()
 {
-	Ogre::RenderSystem* rs;
+	RenderSystem* rs;
 	if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
 	{
 		mRoot->setRenderSystem(rs);
@@ -302,12 +275,12 @@ bool BaseApp::configure()
 			int axes = SDL_JoystickNumAxes(js);
 			int btns = SDL_JoystickNumButtons(js);
 			//SDL_JoystickNumBalls SDL_JoystickNumHats
-			LogO(Ogre::String("<Joystick> name: ")+s+"  axes: "+toStr(axes)+"  buttons: "+toStr(btns));
+			LogO(String("<Joystick> name: ")+s+"  axes: "+toStr(axes)+"  buttons: "+toStr(btns));
 		}
 	}
 	SDL_StartTextInput();
 
-	Ogre::NameValuePairList params;
+	NameValuePairList params;
 	params.insert(std::make_pair("title", "Stunt Rally"));
 	params.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
 	params.insert(std::make_pair("vsync", pSet->vsync ? "true" : "false"));
@@ -348,7 +321,7 @@ bool BaseApp::configure()
 bool BaseApp::setup()
 {
 	Ogre::Timer ti,ti2;
-
+	
 	if (pSet->rendersystem == "Default")
 	{
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -357,47 +330,37 @@ bool BaseApp::setup()
 		pSet->rendersystem = "OpenGL Rendering Subsystem";
 		#endif
 	}
-	
-	// Dynamic plugin loading
+
+	//  dynamic plugin loading
 	int net = pSet->net_local_plr;
-	mRoot = OGRE_NEW Ogre::Root("", PATHMANAGER::UserConfigDir() + "/ogreset.cfg",
+	mRoot = OGRE_NEW Root("", PATHMANAGER::UserConfigDir() + "/ogreset.cfg",
 		PATHMANAGER::UserConfigDir() + "/ogre" + (net >= 0 ? toStr(net) : "") + ".log");
 	LogO("*** start setup ***");
-
+	
 	#ifdef _DEBUG
 	#define D_SUFFIX "_d"
 	#else
 	#define D_SUFFIX ""
 	#endif
 
-	// when show ogre dialog is on, load both rendersystems so user can select
+	//  when show ogre dialog is on, load both rendersystems so user can select
 	if (pSet->ogre_dialog)
 	{
 		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
-		/*try
-		{	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
-		} catch(...) {  }/**/
 		#endif
-	}
-	else
-	{
+	}else{
 		if (pSet->rendersystem == "OpenGL Rendering Subsystem")
 			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
 		else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
 			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
-		/*else if (pSet->rendersystem == "Direct3D11 Rendering Subsystem")
-		try
-		{	mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/RenderSystem_Direct3D11" + D_SUFFIX);
-		} catch(...) {  }/**/
 	}
 
 	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
-	//mRoot->loadPlugin(PATHMANAGER::GetOgrePluginDir() + "/Plugin_OctreeSceneManager" + D_SUFFIX);  // test, bad
 
 	#ifdef _DEBUG
-	Ogre::LogManager::getSingleton().setLogDetail(Ogre::LL_BOREME);//
+	LogManager::getSingleton().setLogDetail(LL_BOREME);//
 	#endif
 
 	setupResources();
@@ -406,10 +369,10 @@ bool BaseApp::setup()
 		return false;
 
 
-	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/Ogre::ST_EXTERIOR_FAR/**/);
+	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/ST_EXTERIOR_FAR/**/);
 
 	#if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0) 
-	Ogre::OverlaySystem* pOverlaySystem = new Ogre::OverlaySystem();
+	OverlaySystem* pOverlaySystem = new OverlaySystem();
 	mSceneMgr->addRenderQueueListener(pOverlaySystem);
 	#endif
 
@@ -417,30 +380,30 @@ bool BaseApp::setup()
 
 	createViewports();  // calls mSplitMgr->Align();
 
-	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+	TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
-		LogO(Ogre::String(":::: Time setup vp: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
+		LogO(String(":::: Time setup vp: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 
 	//  Gui
 	baseInitGui();
 
-		LogO(Ogre::String(":::: Time setup gui: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
+		LogO(String(":::: Time setup gui: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	createResourceListener();
 	loadResources();
 
-		LogO(Ogre::String(":::: Time resources: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
+		LogO(String(":::: Time resources: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	LogO("*** createFrameListener ***");
 	createFrameListener();
 
-		LogO(Ogre::String(":::: Time createFrameListener: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
+		LogO(String(":::: Time createFrameListener: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	LogO("*** createScene ***");
 	createScene();
 
-		LogO(Ogre::String(":::: Time createScene: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
+		LogO(String(":::: Time createScene: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	LogO("*** recreateCompositor ***");
 	recreateCompositor();
@@ -456,9 +419,9 @@ bool BaseApp::setup()
 
 	postInit();
 
-		LogO(Ogre::String(":::: Time post, mat factory: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
+		LogO(String(":::: Time post, mat factory: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
-	LogO(Ogre::String(":::: Time setup total: ") + fToStr(ti2.getMilliseconds(),0,3) + " ms");
+	LogO(String(":::: Time setup total: ") + fToStr(ti2.getMilliseconds(),0,3) + " ms");
 	
 	return true;
 }
@@ -472,25 +435,25 @@ void BaseApp::destroyScene()
 void BaseApp::setupResources()
 {
 	// Load resource paths from config file
-	Ogre::ConfigFile cf;
+	ConfigFile cf;
 	std::string s = PATHMANAGER::GameConfigDir() +
 		(pSet->tex_size > 0 ? "/resources.cfg" : "/resources_s.cfg");
 	cf.load(s);
 
 	// Go through all sections & settings in the file
-	Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
+	ConfigFile::SectionIterator seci = cf.getSectionIterator();
 
-	Ogre::String secName, typeName, archName;
+	String secName, typeName, archName;
 	while (seci.hasMoreElements())
 	{
 		secName = seci.peekNextKey();
-		Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
-		Ogre::ConfigFile::SettingsMultiMap::iterator i;
+		ConfigFile::SettingsMultiMap *settings = seci.getNext();
+		ConfigFile::SettingsMultiMap::iterator i;
 		for (i = settings->begin(); i != settings->end(); ++i)
 		{
 			typeName = i->first;
 			archName = i->second;
-			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+			ResourceGroupManager::getSingleton().addResourceLocation(
 				PATHMANAGER::Data() + "/" + archName, typeName, secName);
 	}	}
 }
@@ -501,7 +464,7 @@ void BaseApp::createResourceListener()
 void BaseApp::loadResources()
 {
 	LoadingOn();
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	LoadingOff();
 }
 
@@ -510,23 +473,23 @@ void BaseApp::loadResources()
 //-------------------------------------------------------------------------------------
 void BaseApp::LoadingOn()
 {
-	mSplitMgr->SetBackground(Ogre::ColourValue(0.15,0.165,0.18));
-	mSplitMgr->mGuiViewport->setBackgroundColour(Ogre::ColourValue(0.15,0.165,0.18,1.0));
+	mSplitMgr->SetBackground(ColourValue(0.15,0.165,0.18));
+	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.15,0.165,0.18,1.0));
 	mSplitMgr->mGuiViewport->setClearEveryFrame(true);
 	mLoadingBar->start(mWindow, 1, 1, 1 );
 
 	// Turn off  rendering except overlays
 	mSceneMgr->clearSpecialCaseRenderQueues();
-	mSceneMgr->addSpecialCaseRenderQueue(Ogre::RENDER_QUEUE_OVERLAY);
-	mSceneMgr->setSpecialCaseRenderQueueMode(Ogre::SceneManager::SCRQM_INCLUDE);
+	mSceneMgr->addSpecialCaseRenderQueue(RENDER_QUEUE_OVERLAY);
+	mSceneMgr->setSpecialCaseRenderQueueMode(SceneManager::SCRQM_INCLUDE);
 }
 void BaseApp::LoadingOff()
 {
 	// Turn On  full rendering
-	mSplitMgr->SetBackground(Ogre::ColourValue(0.5,0.65,0.8));
-	mSplitMgr->mGuiViewport->setBackgroundColour(Ogre::ColourValue(0.5,0.65,0.8));
+	mSplitMgr->SetBackground(ColourValue(0.5,0.65,0.8));
+	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));
 	mSceneMgr->clearSpecialCaseRenderQueues();
-	mSceneMgr->setSpecialCaseRenderQueueMode(Ogre::SceneManager::SCRQM_EXCLUDE);
+	mSceneMgr->setSpecialCaseRenderQueueMode(SceneManager::SCRQM_EXCLUDE);
 	mLoadingBar->finish();
 }
 
@@ -673,7 +636,7 @@ void BaseApp::onCursorChange(const std::string &name)
 	{
 		MyGUI::ResourceImageSet* imgSet = imgSetPtr->getImageSet();
 		std::string tex_name = imgSet->getIndexInfo(0,0).texture;
-		Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().getByName(tex_name);
+		TexturePtr tex = TextureManager::getSingleton().getByName(tex_name);
 
 		//everything looks good, send it to the cursor manager
 		if(!tex.isNull())
@@ -699,7 +662,7 @@ void BaseApp::windowResized(int x, int y)
 
 void BaseApp::windowClosed()
 {
-	Ogre::Root::getSingleton().queueEndRendering();
+	Root::getSingleton().queueEndRendering();
 }
 
 

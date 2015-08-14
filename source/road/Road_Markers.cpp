@@ -20,7 +20,7 @@ SplineMarkEd::SplineMarkEd()
 	,fMarkerScale(1.f), fScRot(1.8f),fScHit(0.8f)
 {	}
 
-void SplineMarkEd::createMarker(Ogre::String name, Ogre::String mat, Ogre::Entity*& ent, Ogre::SceneNode*& nd)
+void SplineMarkEd::createMarker(String name, String mat, Entity*& ent, SceneNode*& nd)
 {
 	ent = mSceneMgr->createEntity(name, sMarkerMesh);
 	ent->setMaterialName(mat);  ent->setCastShadows(false);  ent->setVisibilityFlags(RV_Hud);
@@ -51,7 +51,7 @@ void SplineMarkEd::Setup(
 }
 
 
-void SplineEdit::Mark::setPos(Ogre::Vector3 pos)
+void SplineEdit::Mark::setPos(Vector3 pos)
 {
 	nd->setPosition(pos);
 	//ndC->setPosition(pos);

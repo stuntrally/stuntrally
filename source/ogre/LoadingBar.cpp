@@ -132,7 +132,7 @@ void LoadingBar::worldGeometryStageEnded()
 }
 
 
-void LoadingBar::SetWidth(Ogre::Real pecent)
+void LoadingBar::SetWidth(Real pecent)
 {
 	float p = pecent * 0.01f;
 	int s = p * mBarMaxSizeX, w = p * 512.f;

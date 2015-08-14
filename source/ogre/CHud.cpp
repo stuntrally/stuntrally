@@ -126,7 +126,7 @@ void CHud::UpdMiniTer()
 	Pass* pass = mm->getTechnique(0)->getPass(0);
 	if (!pass)  return;
 	try
-	{	Ogre::GpuProgramParametersSharedPtr par = pass->getFragmentProgramParameters();
+	{	GpuProgramParametersSharedPtr par = pass->getFragmentProgramParameters();
 		bool ter = app->scn->sc->ter;
 		if (par->_findNamedConstantDefinition("showTerrain",false))
 			par->setNamedConstant("showTerrain", pSet->mini_terrain && ter ? 1.f : 0.f);

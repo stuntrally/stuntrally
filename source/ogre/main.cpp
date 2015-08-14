@@ -43,19 +43,16 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 
 	PATHMANAGER::Init(std::cout, std::cerr);
 
-
-	std::streambuf* oldCout = std::cout.rdbuf();
-	std::streambuf* oldCerr = std::cerr.rdbuf();
+	std::streambuf* oldCout = std::cout.rdbuf(), *oldCerr = std::cerr.rdbuf();
 	#if 0
     std::string po = PATHMANAGER::UserConfigDir() + "/ogre.out";
     std::ofstream out(po.c_str());
-    std::cout.rdbuf(out.rdbuf());  // redirect std::cout to out.txt
+    std::cout.rdbuf(out.rdbuf());  // redirect std::cout
     #endif
-
 	#if 1
     std::string pa = PATHMANAGER::UserConfigDir() + "/ogre.err";
     std::ofstream oute(pa.c_str());
-    std::cerr.rdbuf(oute.rdbuf());  // redirect std::cerr to oute.txt
+    std::cerr.rdbuf(oute.rdbuf());  // redirect std::cerr
     #endif
 
 

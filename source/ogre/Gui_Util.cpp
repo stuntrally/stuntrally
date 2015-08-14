@@ -249,7 +249,7 @@ void CGui::listCarChng(MultiList2* li, size_t)
 
 	changeCar();
 	UpdCarStats(car);
-	//LogO(Ogre::String(":::: Time car tab upd: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	//LogO(String(":::: Time car tab upd: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }	
 void CGui::changeCar()
 {

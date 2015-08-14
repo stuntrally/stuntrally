@@ -35,7 +35,7 @@ class BaseApp : public BGui,
 public:
 	BaseApp();
 	virtual ~BaseApp();
-	virtual void Run( bool showDialog );
+	virtual void Run(bool showDialog);
 	
 	bool bLoading,bLoadingEnd,bSimulating;  int iLoad1stFrames;
 	
@@ -94,17 +94,17 @@ public:
 	virtual bool frameEnd(Ogre::Real time) = 0;
 	
 	///  input events
-	virtual bool mouseMoved( const SFO::MouseMotionEvent &arg );
-	virtual bool mousePressed( const SDL_MouseButtonEvent &arg, Uint8 id );
-	virtual bool mouseReleased( const SDL_MouseButtonEvent &arg, Uint8 id );
-	virtual void textInput (const SDL_TextInputEvent& arg);
+	virtual bool mouseMoved(const SFO::MouseMotionEvent &arg );
+	virtual bool mousePressed(const SDL_MouseButtonEvent &arg, Uint8 id );
+	virtual bool mouseReleased(const SDL_MouseButtonEvent &arg, Uint8 id );
+	virtual void textInput(const SDL_TextInputEvent& arg);
 	virtual bool keyPressed(const SDL_KeyboardEvent &arg) = 0;
 	virtual bool keyReleased(const SDL_KeyboardEvent &arg);
-	virtual bool buttonPressed( const SDL_JoyButtonEvent &evt, int button );
-	virtual bool buttonReleased( const SDL_JoyButtonEvent &evt, int button );
-	virtual bool axisMoved( const SDL_JoyAxisEvent &arg, int axis );
+	virtual bool buttonPressed(const SDL_JoyButtonEvent &evt, int button );
+	virtual bool buttonReleased(const SDL_JoyButtonEvent &evt, int button );
+	virtual bool axisMoved(const SDL_JoyAxisEvent &arg, int axis );
 
-	void onCursorChange (const std::string& name);
+	void onCursorChange(const std::string& name);
 
 	///  Ogre
 	Ogre::Root* mRoot;  Ogre::SceneManager* mSceneMgr;

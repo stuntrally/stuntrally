@@ -152,7 +152,7 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 			if (pSet->rendersystem == rs[i])
 				cmb->setIndexSelected(cmb->findItemIndexWith(rs[i]));
 		}
-		//const RenderSystemList& rsl = Ogre::Root::getSingleton().getAvailableRenderers();
+		//const RenderSystemList& rsl = Root::getSingleton().getAvailableRenderers();
 		//for (int i=0; i < rsl.size(); ++i)
 		//	combo->addItem(rsl[i]->getName());
 	}

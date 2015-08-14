@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "WaterRTT.h"
-
 #include "RenderConst.h"
 
 #include <OgreSceneManager.h>
@@ -13,8 +12,8 @@
 #include <OgreSceneNode.h>
 
 #include "../../shiny/Main/Factory.hpp"
-
 using namespace Ogre;
+
 
 WaterRTT::WaterRTT() : 
 	mCamera(0), mReflectionTarget(0), mRefractionTarget(0),
@@ -62,7 +61,7 @@ void WaterRTT::create()
 	sh::Factory::getInstance().setTextureAlias("WaterRefraction", "PlaneRefraction");
 }
 
-void WaterRTT::setViewerCamera(Ogre::Camera* cam)
+void WaterRTT::setViewerCamera(Camera* cam)
 {
 	mViewerCamera = cam;
 	if (mCamera)

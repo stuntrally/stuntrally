@@ -28,7 +28,7 @@
 using namespace Ogre;
 
 
-SplitScr::SplitScr(Ogre::SceneManager* sceneMgr, Ogre::RenderWindow* window, SETTINGS* set) :
+SplitScr::SplitScr(SceneManager* sceneMgr, RenderWindow* window, SETTINGS* set) :
 	pApp(0), mGuiViewport(0), mGuiSceneMgr(0),
 	mWindow(window), mSceneMgr(sceneMgr), pSet(set)
 {
@@ -42,29 +42,29 @@ SplitScr::~SplitScr()
 	mWindow->removeListener(this);
 }
 
-void SplitScr::SetBackground(const Ogre::ColourValue& value)
+void SplitScr::SetBackground(const ColourValue& value)
 {
-	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
+	for (std::list<Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
 		(*vpIt)->setBackgroundColour(value);
 }
 
 void SplitScr::UpdateCamDist()
 {
-	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); ++it)
+	for (std::list<Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); ++it)
 		(*it)->setFarClipDistance(pSet->view_distance*1.1f);
 }
 
 //  CleanUp
 void SplitScr::CleanUp()
 {
-	for (std::list<Ogre::Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
+	for (std::list<Viewport*>::iterator vpIt=mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
 	{
 		CompositorManager::getSingleton().removeCompositorChain(*vpIt);
 		mWindow->removeViewport( (*vpIt)->getZOrder() );
 	}
 	mViewports.clear();
 	
-	for (std::list<Ogre::Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); ++it)
+	for (std::list<Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); ++it)
 		mSceneMgr->destroyCamera(*it);
 	mCameras.clear();
 }
@@ -160,8 +160,8 @@ void SplitScr::Align()
 	// Create gui viewport if not already existing
 	if (!mGuiViewport)
 	{
-		mGuiSceneMgr = Ogre::Root::getSingleton().createSceneManager(ST_GENERIC);
-		Ogre::Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");
+		mGuiSceneMgr = Root::getSingleton().createSceneManager(ST_GENERIC);
+		Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");
 		mGuiViewport = mWindow->addViewport(guiCam, 100);
 		mGuiViewport->setVisibilityMask(RV_Hud);
 	}
@@ -176,8 +176,8 @@ void SplitScr::Align()
 void SplitScr::AdjustRatio()
 {
 	// Go through all viewports & cameras and adjust camera aspect ratio so that it fits to the viewport.
-	std::list<Ogre::Camera*>::iterator camIt = mCameras.begin();
-	for (std::list<Ogre::Viewport*>::iterator vpIt = mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
+	std::list<Camera*>::iterator camIt = mCameras.begin();
+	for (std::list<Viewport*>::iterator vpIt = mViewports.begin(); vpIt != mViewports.end(); ++vpIt)
 	{
 		(*camIt)->setAspectRatio( float((*vpIt)->getActualWidth()) / float((*vpIt)->getActualHeight()) );
 		++camIt;
@@ -187,7 +187,7 @@ void SplitScr::AdjustRatio()
 
 ///  pre viewport update
 //------------------------------------------------------------------------------------------------------------------
-void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
+void SplitScr::preViewportUpdate(const RenderTargetViewportEvent& evt)
 {
 	if (!pApp || pApp->bLoading || pApp->iLoad1stFrames > -1)  return;
 
@@ -241,10 +241,10 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 
 		if (pApp->pSet->softparticles && pApp->pSet->all_effects)
 		{
-			Ogre::CompositorInstance  *compositor = Ogre::CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer");
+			CompositorInstance  *compositor = CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer");
 			if (compositor!=NULL)
 			{
-				Ogre::TexturePtr depthTexture =	compositor->getTextureInstance("mrt_output",2);
+				TexturePtr depthTexture =	compositor->getTextureInstance("mrt_output",2);
 				if (!depthTexture.isNull())
 					sh::Factory::getInstance().setTextureAlias("SceneDepth", depthTexture->getName());
 			}
@@ -262,7 +262,7 @@ void SplitScr::preViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
 }
 
 
-void SplitScr::postViewportUpdate(const Ogre::RenderTargetViewportEvent& evt)
+void SplitScr::postViewportUpdate(const RenderTargetViewportEvent& evt)
 {
 
 }

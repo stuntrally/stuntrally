@@ -25,7 +25,7 @@ using namespace Ogre;
 
 
 //  common rtt setup
-void CScene::RenderToTex::Setup(Ogre::Root* rt, String sName, TexturePtr pTex, String sMtr)
+void CScene::RenderToTex::Setup(Root* rt, String sName, TexturePtr pTex, String sMtr)
 {
 	if (!scm)  scm = rt->createSceneManager(ST_GENERIC);  // once-
 	//  destroy old

@@ -339,7 +339,7 @@ void CGui::btnChampInfo(WP)
 
 ///  add item in stages list
 //-----------------------------------------------------------------------------------------------
-void CGui::StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress)
+void CGui::StageListAdd(int n, String name, int laps, String progress)
 {
 	String clr = gcom->GetSceneryColor(name);
 	liStages->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liStages->getItemCount()-1;

@@ -171,7 +171,7 @@ void CScene::changeShadows()
 		mSceneMgr->setShadowTextureCasterMaterial(bDepth ? "shadowcaster_default" : "");
 	}
 
-	mSceneMgr->setShadowColour(Ogre::ColourValue(0,0,0,1));
+	mSceneMgr->setShadowColour(ColourValue(0,0,0,1));
 
 
 #if 0  /// TEST overlays

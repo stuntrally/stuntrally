@@ -434,7 +434,7 @@ const String& SplineRoad::getMtrStr(int seg)
 	return !isPipe(seg) ? sMtrRoad[i] : sMtrPipe[i];
 }
 
-void SplineRoad::SetMtrPipe(int i, Ogre::String sMtr)
+void SplineRoad::SetMtrPipe(int i, String sMtr)
 {
 	sMtrPipe[i] = sMtr;  // check if glass in mtr name
 	bMtrPipeGlass[i] = strstr(sMtr.c_str(), "lass") != 0;

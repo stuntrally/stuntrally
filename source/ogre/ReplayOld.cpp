@@ -3,6 +3,7 @@
 #include "common/Def_Str.h"
 #include <OgreTimer.h>
 #include <string>
+using namespace Ogre;
 
 
 //  header
@@ -132,12 +133,12 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 		for (int p=0; p < header.numPlayers; ++p)
 		{
 			if (p==0)  {
-				//LogO(Ogre::String(">- Load replay  nick:")+header.nicks[p]+"  car:"+header.car);
+				//LogO(String(">- Load replay  nick:")+header.nicks[p]+"  car:"+header.car);
 			}else{
 				// versions below 8 had wrong nicks and cars in header for more than 1 player
 				if (strlen(header.cars[p]) < 2)
 					strcpy(header.cars[p], "3S");
-				//LogO(Ogre::String(">- Load replay  nick:")+header.nicks[p]+"  car:"+Ogre::String(&header.cars[0][p]));
+				//LogO(String(">- Load replay  nick:")+header.nicks[p]+"  car:"+String(&header.cars[0][p]));
 			}
 		}
 	#endif
@@ -189,7 +190,7 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 			"  time: "+fToStr(GetTimeLength(0),2,5)+"  frames: "+toStr(frames[0].size()));
 	#endif
 
-	LogO(Ogre::String("::: Time ReplayLoad: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	LogO(String("::: Time ReplayLoad: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 	return true;
 }
 

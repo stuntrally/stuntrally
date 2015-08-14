@@ -65,7 +65,7 @@ void CGui::ToolTexAlpha()
 			rgb[a++] = c.r * 255.f;
 			aa[b++] = c.a * 255.f;
 		}
-		Ogre::Image ic,ia;
+		Image ic,ia;
 		ic.loadDynamicImage(rgb, w,h, PF_R8G8B8);
 		ic.save(PATHMANAGER::Data()+"/"+n+"_d.png");
 		ia.loadDynamicImage(aa, w,h, PF_L8);

@@ -12,7 +12,7 @@ using namespace tinyxml2;
 
 
 //  old
-bool Scene::LoadStartPos(Ogre::String file)
+bool Scene::LoadStartPos(String file)
 {
 	CONFIGFILE param;
 	if (!param.Load(file))
@@ -61,7 +61,7 @@ string SColor::Check(string t)
 }
 
 //  load from old rgb
-void SColor::LoadRGB(Ogre::Vector3 rgb)
+void SColor::LoadRGB(Vector3 rgb)
 {
 	Vector3 u = rgb;
     float vMin = std::min(u.x, std::min(u.y, u.z));

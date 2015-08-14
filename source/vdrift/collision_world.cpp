@@ -14,6 +14,7 @@
 #include "game.h"  //
 #include "../ogre/CGame.h"  //
 #include <iostream>
+using namespace Ogre;
 
 
 ///  hit callback (accurate)
@@ -130,8 +131,8 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 		CARDYNAMICS* cd = hit.sdCar->pCarDyn;
 		cdOld = cd;
 		btVector3 vcar = hit.vel;
-		Ogre::Vector3 vel(vcar[0], vcar[2], -vcar[1]);
-		Ogre::Vector3 norm(hit.norm.getX(), hit.norm.getZ(), -hit.norm.getY());
+		Vector3 vel(vcar[0], vcar[2], -vcar[1]);
+		Vector3 norm(hit.norm.getX(), hit.norm.getZ(), -hit.norm.getY());
 		float vlen = vel.length(), normvel = abs(vel.dotProduct(norm));
 
 		if (cd->vtype == V_Sphere)  // no damage when rolling
@@ -143,7 +144,7 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 			{	vlen *= 0.02f;  normvel *= 0.02f;  force *= 0.1f;  }
 		}
 		//  Sparks emit params
-		cd->vHitPos = Ogre::Vector3(hit.pos.getX(), hit.pos.getZ(), -hit.pos.getY());
+		cd->vHitPos = Vector3(hit.pos.getX(), hit.pos.getZ(), -hit.pos.getY());
 		cd->vHitNorm = norm + vel * 0.1f;
 		cd->fParVel = 3.0f + 0.4f * vlen;
 		cd->fParIntens = 10.f + 30.f * vlen;
@@ -156,7 +157,7 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 			cd->cam_force = cd->cam_force + f;  // cam bounce hit ++
 
 		(-cd->GetOrientation()).RotateVector(cN);
-		cd->vHitCarN = Ogre::Vector3(cN[0],cN[1],cN[2]);  cd->vHitCarN.normalise();
+		cd->vHitCarN = Vector3(cN[0],cN[1],cN[2]);  cd->vHitCarN.normalise();
 		//----  factors
 		if (cd->vtype != V_Sphere)
 		{

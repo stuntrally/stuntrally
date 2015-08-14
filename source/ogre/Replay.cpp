@@ -5,6 +5,7 @@
 #include <string>
 #include "CHud.h" //
 using namespace std;
+using namespace Ogre;
 
 
 //  header
@@ -86,7 +87,7 @@ void ReplayFrame2::FromOld(const ReplayFrame& f, uchar numWh, half prevHitTime)
 	damage = 0.f;  // wasnt saved
 
 	//  sound, input
-	//LogO(Ogre::String(" % ")+fToStr(f.percent)+"  th "+fToStr(f.throttle)+"  st "+fToStr(f.steer)+"  b "+fToStr(f.fboost)+"  c "+fToStr(f.clutch));
+	//LogO(String(" % ")+fToStr(f.percent)+"  th "+fToStr(f.throttle)+"  st "+fToStr(f.steer)+"  b "+fToStr(f.fboost)+"  c "+fToStr(f.clutch));
 	throttle = f.throttle *255.f;	steer = f.steer *127.f;
 	fboost = f.fboost *255.f;		clutch = f.clutch *255.f;
 	speed = f.speed;  dynVel = f.dynVel;
@@ -250,7 +251,7 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		ReplayHeader2& h = header;
 		rd(h.ver);  rd(h.time);
 		rs(h.track)  rd(h.track_user);
-		Ogre::String ss = ">-   ";
+		String ss = ">-   ";
 		ss += h.track+"  ";
 		ss += CHud::StrTime(h.time)+"  ";
 
@@ -359,7 +360,7 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 				"  time: "+fToStr(GetTimeLength(),2,5)+"  frames: "+toStr(frames[0].size()));
 	#endif
 
-	LogO(Ogre::String("::: Time Replay2 Load: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	LogO(String("::: Time Replay2 Load: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 	return true;
 }
 

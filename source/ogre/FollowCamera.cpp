@@ -231,7 +231,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 		Vector3 zdir = camPosFinal - mLook;  zdir.normalise();
         Vector3 xVec = Vector3::UNIT_Y.crossProduct(zdir);  xVec.normalise();
         Vector3 yVec = zdir.crossProduct(xVec);  yVec.normalise();
-        Ogre::Quaternion q;  q.FromAxes(xVec, yVec, zdir);
+        Quaternion q;  q.FromAxes(xVec, yVec, zdir);
 		camRotFinal = q;
 	}
 	

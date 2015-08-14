@@ -452,7 +452,7 @@ void App::AddNewObj(bool getName)  //App..
 	//  pos, rot
 	if (getName)
 	{	// one new
-		const Ogre::Vector3& v = scn->road->posHit;
+		const Vector3& v = scn->road->posHit;
 		o.pos[0] = v.x;  o.pos[1] =-v.z;  o.pos[2] = v.y + objNew.pos[2];
 	}else  // many
 	{	// offset for cursor pos..

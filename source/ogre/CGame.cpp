@@ -141,7 +141,7 @@ void App::destroyScene()
 
 void App::materialCreated(sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex)
 {
-	Ogre::Technique* t = static_cast<sh::OgreMaterial*>(m->getMaterial())->getOgreTechniqueForConfiguration (configuration, lodIndex);
+	Technique* t = static_cast<sh::OgreMaterial*>(m->getMaterial())->getOgreTechniqueForConfiguration (configuration, lodIndex);
 
 	if (pSet->shadow_type == Sh_None)
 	{

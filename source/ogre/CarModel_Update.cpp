@@ -282,7 +282,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	bool changed = false;
 	if (terrain)
 	{
-		Ogre::Vector3 carPos = pMainNode->getPosition();
+		Vector3 carPos = pMainNode->getPosition();
 		float terrainHeight = terrain->getHeightAtWorldPosition(carPos);
 		float diff = std::abs(carPos.y - terrainHeight);
 		if (diff > MAX_TERRAIN_DIST)
@@ -494,11 +494,11 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 			ndBrake[w]->_setDerivedOrientation( pMainNode->getOrientation() );
 			
 			// this transformation code is just so the brake mesh can have the same alignment as the wheel mesh
-			ndBrake[w]->yaw(Ogre::Degree(-90), Node::TS_LOCAL);
+			ndBrake[w]->yaw(Degree(-90), Node::TS_LOCAL);
 			if (w%2 == 1)
 				ndBrake[w]->setScale(-1, 1, 1);
 				
-			ndBrake[w]->pitch(Ogre::Degree(180), Node::TS_LOCAL);
+			ndBrake[w]->pitch(Degree(180), Node::TS_LOCAL);
 			
 			if (w < 2)  // turn only front wheels
 				ndBrake[w]->yaw(-Degree(posInfo.whSteerAng[w]));
@@ -613,7 +613,7 @@ void CarModel::UpdParsTrails(bool visible)
 	bool vis = visible && pSet->particles;
 	for (int w=0; w < numWheels; ++w)
 	{
-		Ogre::uint8 grp = RQG_CarTrails;  //9=road  after glass
+		uint8 grp = RQG_CarTrails;  //9=road  after glass
 		if (w < PAR_BOOST && parBoost[w]) {  parBoost[w]->setVisible(vis);  parBoost[w]->setRenderQueueGroup(grp);  }
 		if (whTrail[w]){  whTrail[w]->setVisible(visible && pSet->trails);  whTrail[w]->setRenderQueueGroup(grp);  }
 		grp = RQG_CarParticles;
