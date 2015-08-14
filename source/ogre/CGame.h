@@ -2,6 +2,7 @@
 #include "common/Gui_Def.h"
 #include "BaseApp.h"
 #include "Replay.h"
+#include "ReplayTrk.h"
 #include "../vdrift/cardefs.h"
 #include "CarPosInfo.h"
 

@@ -291,6 +291,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\ogre\ReplayTrk.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\ogre\ReplayTrk.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\road\Road.h"
 				>
 			</File>

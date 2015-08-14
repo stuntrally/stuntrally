@@ -1107,11 +1107,15 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\ReplayGame.cpp"
+					RelativePath="..\source\ogre\ReplayOld.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\ogre\ReplayOld.cpp"
+					RelativePath="..\source\ogre\ReplayTrk.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\ogre\ReplayTrk.h"
 					>
 				</File>
 				<File
