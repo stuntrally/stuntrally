@@ -4,6 +4,7 @@
 #include "data/SceneXml.h"
 #include "WaterRTT.h"
 #include "../../road/Road.h"
+#include "../../road/PaceNotes.h"
 
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
