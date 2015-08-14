@@ -13,8 +13,6 @@ public:
 		const std::string & ntrackpath,
 		int nanisotropy,
 		bool newdynamicshadowsenabled,
-		std::ostream & ninfo_output,
-		std::ostream & nerror_output,
 		bool newcull,
 		bool doagressivecombining);
 
@@ -43,8 +41,6 @@ public:
 private:
 	const std::string & trackpath;
 	std::string objectpath;
-	std::ostream & info_output;
-	std::ostream & error_output;
 	
 	JOEPACK pack;
 	std::ifstream objectfile;

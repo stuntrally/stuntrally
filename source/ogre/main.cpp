@@ -8,25 +8,25 @@
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/settings.h"
 #include "../network/enet-wrapper.hpp"
-
 #include <string>
 #include <sstream>
 #include <list>
 #include <ostream>
-
 #include <OgrePlatform.h>
 #include <OgreStringConverter.h>
+#include <OgreRoot.h>
 #include <boost/filesystem.hpp>
 #include <locale.h>
+using namespace std;
 
 
 //  load settings from default file
-void LoadDefaultSet(SETTINGS* settings, std::string setFile)
+void LoadDefaultSet(SETTINGS* settings, string setFile)
 {
 	settings->Load(PATHMANAGER::GameConfigDir() + "/game-default.cfg");
 	settings->Save(setFile);
 	//  delete old keys.xml too
-	std::string sKeys = PATHMANAGER::UserConfigDir() + "/keys.xml";
+	string sKeys = PATHMANAGER::UserConfigDir() + "/keys.xml";
 	if (boost::filesystem::exists(sKeys))
 		boost::filesystem::rename(sKeys, PATHMANAGER::UserConfigDir() + "/keys_old.xml");
 }
@@ -39,74 +39,48 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 	int main(int argc, char* argv[])
 #endif
 {
+	Ogre::Timer ti;
 	setlocale(LC_NUMERIC, "C");
 
-	PATHMANAGER::Init(std::cout, std::cerr);
+	//  Paths
+	PATHMANAGER::Init();
 
-	std::streambuf* oldCout = std::cout.rdbuf(), *oldCerr = std::cerr.rdbuf();
+	//  redirect cerr
+	streambuf* oldCout = cout.rdbuf(), *oldCerr = cerr.rdbuf();
 	#if 0
-    std::string po = PATHMANAGER::UserConfigDir() + "/ogre.out";
-    std::ofstream out(po.c_str());
-    std::cout.rdbuf(out.rdbuf());  // redirect std::cout
+    string po = PATHMANAGER::UserConfigDir() + "/ogre.out";
+    ofstream out(po.c_str());  cout.rdbuf(out.rdbuf());
     #endif
-	#if 1
-    std::string pa = PATHMANAGER::UserConfigDir() + "/ogre.err";
-    std::ofstream oute(pa.c_str());
-    std::cerr.rdbuf(oute.rdbuf());  // redirect std::cerr
-    #endif
+    string pa = PATHMANAGER::UserConfigDir() + "/ogre.err";
+    ofstream oute(pa.c_str());  cerr.rdbuf(oute.rdbuf());
 
 
-	// Open the log file
-	std::string logfilename = PATHMANAGER::UserConfigDir() + "/log.txt";
-	std::ofstream logfile(logfilename.c_str());
-	if (!logfile)
-	{
-		std::cerr << "Couldn't open log file: " << logfilename << std::endl;
-		return EXIT_FAILURE;
-	}
-	
-	// Set up logging arrangement
-	logging::splitterstreambuf infosplitter(std::cout, logfile);	std::ostream infosplitterstream(&infosplitter);
-	logging::splitterstreambuf errorsplitter(std::cerr, logfile);	std::ostream errorsplitterstream(&errorsplitter);
-	logging::logstreambuf infolog("INFO: ", infosplitterstream);	//logstreambuf infolog("INFO: ", logfile);
-	logging::logstreambuf errorlog("ERROR: ", errorsplitterstream);
-
-	// Primary logging ostreams
-	std::ostream info_output(&infolog);
-	std::ostream error_output(&errorlog);/**/
-
-	// HACK: We initialize paths a second time now that we have the output streams
-	PATHMANAGER::Init(info_output, error_output, false);  // false - same paths, dont log
-
-	// Initialize networking
+	//  Initialize networking
 	net::ENetContainer enet;
 
 
 	///  Load Settings
 	//----------------------------------------------------------------
 	SETTINGS* settings = new SETTINGS();
-	std::string setFile = PATHMANAGER::SettingsFile();
+	string setFile = PATHMANAGER::SettingsFile();
 	
 	if (!PATHMANAGER::FileExists(setFile))
 	{
-		info_output << "Settings not found - loading defaults." << std::endl;
+		cerr << "Settings not found - loading defaults." << endl;
 		LoadDefaultSet(settings,setFile);
 	}
 	settings->Load(setFile);  // LOAD
 	if (settings->version != SET_VER)  // loaded older, use default
 	{
-		info_output << "Settings found, but older version - loading defaults." << std::endl;
+		cerr << "Settings found, but older version - loading defaults." << endl;
 		boost::filesystem::rename(setFile, PATHMANAGER::UserConfigDir() + "/game_old.cfg");
 		LoadDefaultSet(settings,setFile);
 		settings->Load(setFile);  // LOAD
 	}
 	
-	// HACK: we initialize paths a second time now that we have the output streams
-	PATHMANAGER::Init(info_output, error_output);
-
 	
-	//  helper for testing networked game on 1 computer
-	//  use number > 0 in command parameter,  uses own ogre.log and adds it to nick and port
+	//  Helper for testing networked games on 1 computer
+	//  use number > 0 in command parameter,  adds it to nick, port and own ogre.log
 	int num = -1;
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	if (lpCmdLine)
@@ -122,14 +96,23 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 		settings->nickname += Ogre::StringConverter::toString(num);
 	}
 
+	//  Ogre Root for .log
+	int net = settings->net_local_plr;
+	Ogre::Root* root = OGRE_NEW Ogre::Root("", PATHMANAGER::UserConfigDir() + "/ogreset.cfg",
+		PATHMANAGER::UserConfigDir() + "/ogre" + (net >= 0 ? toStr(net) : "") + ".log");
+
+	LogO(Ogre::String("::: Time Init main: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	LogO(PATHMANAGER::info.str());  // paths
+
 
 	///  Game start
 	//----------------------------------------------------------------
-	GAME* pGame = new GAME(info_output, error_output, settings);
-	std::list <std::string> args;//(argv, argv + argc);
-	pGame->Start(args);  //game.End();
+	GAME* pGame = new GAME(settings);
+	list <string> args;  //(argv, argv + argc);
+	pGame->Start(args);
 
 	App* pApp = new App(settings, pGame);
+	pApp->mRoot = root;
 	pGame->app = pApp;
 
 	try
@@ -145,17 +128,16 @@ void LoadDefaultSet(SETTINGS* settings, std::string setFile)
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 			MessageBoxA( NULL, e.getFullDescription().c_str(), "An exception has occured!", MB_OK | MB_ICONERROR | MB_TASKMODAL);
 		#else
-			std::cerr << "An exception has occured: " << e.getFullDescription().c_str() << std::endl;
+			cerr << "An exception has occured: " << e.getFullDescription().c_str() << endl;
 		#endif
 	}
 
-	info_output << "Exiting" << std::endl;
 	delete pApp;
 	delete pGame;
 	delete settings;
 
-	std::cout.rdbuf(oldCout);
-	std::cerr.rdbuf(oldCerr);
+	cout.rdbuf(oldCout);
+	cerr.rdbuf(oldCerr);
 
 	return 0;
 }

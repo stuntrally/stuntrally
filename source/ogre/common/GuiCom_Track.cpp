@@ -263,7 +263,7 @@ void CGuiCom::FillTrackLists()
 	PATHMANAGER::DirList(pathTrk[0], liTracks);
 	PATHMANAGER::DirList(pathTrk[1], liTracksUser);  //name duplicates
 	if (liTracks.size() == 0)
-		LogO("Error: no tracks !!! in data/tracks/ crashing.");
+		LogO("Error: NO tracks !!!  in data/tracks/  crashing.");
 
 	//  original
 	strlist::iterator i;
@@ -310,7 +310,7 @@ void CGuiCom::ReadTrkStats()
 #ifndef SR_EDITOR  // game
 	SplineRoad rd(app->pGame);  rd.LoadFile(sRd,false);  // load
 
-	TIMER tim;  tim.Load(PATHMANAGER::Records()+"/"+ pSet->gui.sim_mode+"/"+ sListTrack+".txt", 0.f, app->pGame->error_output);
+	TIMER tim;  tim.Load(PATHMANAGER::Records()+"/"+ pSet->gui.sim_mode+"/"+ sListTrack+".txt", 0.f);
 	tim.AddCar(app->gui->sListCar);
 
 	bool reverse = sc->denyReversed ? false : pSet->gui.trackreverse;
@@ -332,7 +332,7 @@ void CGui::ReadTrkStatsChamp(String track, bool reverse)
 	Scene* sc = new Scene();  sc->LoadXml(sSc);  // fails to defaults
 	SplineRoad rd(pGame);  rd.LoadFile(sRd,false);  // load
 
-	TIMER tim;  tim.Load(PATHMANAGER::Records()+"/"+ pSet->gui.sim_mode+"/"+ track+".txt", 0.f, pGame->error_output);
+	TIMER tim;  tim.Load(PATHMANAGER::Records()+"/"+ pSet->gui.sim_mode+"/"+ track+".txt", 0.f);
 	tim.AddCar(sListCar);
 
 	gcom->UpdGuiRdStats(&rd,sc, track, tim.GetBestLap(0, reverse), reverse, 1);

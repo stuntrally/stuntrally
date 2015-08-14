@@ -39,7 +39,7 @@ public:
 class TRACK
 {
 public:
-	TRACK(std::ostream & info, std::ostream & error);
+	TRACK();
 	~TRACK();
 	
 	class GAME* pGame;  // for tire map
@@ -95,8 +95,6 @@ public:
 	}
 
 private:
-	std::ostream & info_output;
-	std::ostream & error_output;
 
 	std::string texture_size;
 public:

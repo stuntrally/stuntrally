@@ -3,6 +3,7 @@
 #include <dirent.h>
 #endif
 #include <string>
+#include <sstream>
 #include <list>
 
 typedef std::list <std::string> strlist;
@@ -15,7 +16,8 @@ private:
 	static std::string user_data, game_data, cache_dir;
 
 public:
-	static void Init(std::ostream & info_output, std::ostream & error_output, bool log_paths=true);
+	static void Init(bool log_paths=true);
+	static std::stringstream info;
 
 	static std::string OgrePluginDir() {   return ogre_plugin; }
 	static std::string HomeDir() {         return home_dir; }
@@ -51,5 +53,5 @@ public:
 
 	static bool FileExists(const std::string & filename);
 
-	static bool CreateDir(const std::string& path, std::ostream & error_output);
+	static bool CreateDir(const std::string& path);
 };

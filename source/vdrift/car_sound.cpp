@@ -19,23 +19,22 @@
 #include "game.h"  //sound
 #include "../ogre/SplitScreen.h"  // num plr
 #include <OgreCamera.h>
+using namespace std;
 
 
 //--------------------------------------------------------------------------------------------------------------------------
 bool CAR::LoadSounds(
-	const std::string & carpath,
+	const string & carpath,
 	const SOUNDINFO & sound_device_info,
-	const SOUND_LIB & sndLib,
-	std::ostream & info_output,
-	std::ostream & errOut)
+	const SOUND_LIB & sndLib)
 {
 	{
-		if (!soundbuffers["engine.wav"].Load(carpath+"engine.wav", sound_device_info, errOut))
+		if (!soundbuffers["engine.wav"].Load(carpath+"engine.wav", sound_device_info))
 		{
-			errOut << "Unable to load engine sound: "+carpath+"engine.wav" << std::endl;
+			LogO("SOUND: Error: Unable to load engine sound: "+carpath+"engine.wav");
 			return false;
 		}
-		enginesounds.push_back(std::pair <ENGINESOUNDINFO, SOUNDSOURCE> ());
+		enginesounds.push_back(pair <ENGINESOUNDINFO, SOUNDSOURCE> ());
 		SOUNDSOURCE & enginesound = enginesounds.back().second;
 		enginesound.Setup(soundbuffers["engine.wav"], true, true, 0.f);
 		enginesound.Start();
@@ -44,38 +43,38 @@ bool CAR::LoadSounds(
 	int i;
 	for (i = 0; i < numWheels; ++i)  // tires
 	{
-		if (!tiresqueal[i]	.Setup(sndLib, "tire_squeal",	errOut,  true, true, 0.f))  return false;	tiresqueal[i].Seek4(i);
-		if (!gravelsound[i]	.Setup(sndLib, "gravel",		errOut,  true, true, 0.f))  return false;	gravelsound[i].Seek4(i);
-		if (!grasssound[i]	.Setup(sndLib, "grass",			errOut,  true, true, 0.f))  return false;	grasssound[i].Seek4(i);
+		if (!tiresqueal[i]	.Setup(sndLib, "tire_squeal",	true, true, 0.f))  return false;	tiresqueal[i].Seek4(i);
+		if (!gravelsound[i]	.Setup(sndLib, "gravel",		true, true, 0.f))  return false;	gravelsound[i].Seek4(i);
+		if (!grasssound[i]	.Setup(sndLib, "grass",			true, true, 0.f))  return false;	grasssound[i].Seek4(i);
 
-		if (!tirebump[i].Setup(sndLib, i >= 2 ? "bump_rear" : "bump_front", errOut,  true, false,1.f))  return false;
+		if (!tirebump[i].Setup(sndLib, i >= 2 ? "bump_rear" : "bump_front", true, false,1.f))  return false;
 	}
 
 	for (i = 1; i <= Ncrashsounds; ++i)  // crashes
-	{	std::string s = "crash/";  s += toStr(i/10)+toStr(i%10);
-		if (!crashsound[i-1].Setup(sndLib, s, errOut,  true, false,1.f))  return false;
+	{	string s = "crash/";  s += toStr(i/10)+toStr(i%10);
+		if (!crashsound[i-1].Setup(sndLib, s, true, false,1.f))  return false;
 	}
-	if (!crashscrap  .Setup(sndLib, "crash/scrap",	errOut,  true, true, 0.f))  return false;  crashscrap.Start();
-	if (!crashscreech.Setup(sndLib, "crash/screech",	errOut,  true, true, 0.f))  return false;  crashscreech.Start();
+	if (!crashscrap  .Setup(sndLib, "crash/scrap",	true, true, 0.f))  return false;  crashscrap.Start();
+	if (!crashscreech.Setup(sndLib, "crash/screech",	true, true, 0.f))  return false;  crashscreech.Start();
 
-	if (!roadnoise	.Setup(sndLib, "wind",		 errOut,  true, true, 0.f))  return false;  roadnoise.Start();
-	if (!boostsnd	.Setup(sndLib, "boost",		 errOut,  true, true, 0.f))  return false;  boostsnd.Start();
+	if (!roadnoise	.Setup(sndLib, "wind",		 true, true, 0.f))  return false;  roadnoise.Start();
+	if (!boostsnd	.Setup(sndLib, "boost",		 true, true, 0.f))  return false;  boostsnd.Start();
 
 	for (i = 0; i < Nwatersounds; ++i)  // fluids
-		if (!watersnd[i].Setup(sndLib, "water"+toStr(i+1), errOut,  true, false,0.f))  return false;
+		if (!watersnd[i].Setup(sndLib, "water"+toStr(i+1), true, false,0.f))  return false;
 
-	if (!mudsnd		.Setup(sndLib, "mud1",		 errOut,  true, false,0.f))  return false;
-	if (!mud_cont	.Setup(sndLib, "mud_cont",	 errOut,  true, true, 0.f))  return false;  mud_cont.Start();
-	if (!water_cont	.Setup(sndLib, "water_cont", errOut,  true, true, 0.f))  return false;  water_cont.Start();
+	if (!mudsnd		.Setup(sndLib, "mud1",		 true, false,0.f))  return false;
+	if (!mud_cont	.Setup(sndLib, "mud_cont",	 true, true, 0.f))  return false;  mud_cont.Start();
+	if (!water_cont	.Setup(sndLib, "water_cont", true, true, 0.f))  return false;  water_cont.Start();
 	
 	return true;
 }
 
 
 //--------------------------------------------------------------------------------------------------------------------------
-void CAR::GetSoundList(std::list <SOUNDSOURCE *> & li)
+void CAR::GetSoundList(list <SOUNDSOURCE *> & li)
 {
-	for (std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> >::iterator
+	for (list <pair <ENGINESOUNDINFO, SOUNDSOURCE> >::iterator
 		i = enginesounds.begin(); i != enginesounds.end(); ++i)
 		li.push_back(&i->second);
 
@@ -101,9 +100,9 @@ void CAR::GetSoundList(std::list <SOUNDSOURCE *> & li)
 	li.push_back(&water_cont);
 }
 
-void CAR::GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist)
+void CAR::GetEngineSoundList(list <SOUNDSOURCE *> & outputlist)
 {
-	for (std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> >::iterator i =
+	for (list <pair <ENGINESOUNDINFO, SOUNDSOURCE> >::iterator i =
 		enginesounds.begin(); i != enginesounds.end(); ++i)
 	{
 		outputlist.push_back(&i->second);
@@ -264,9 +263,9 @@ void CAR::UpdateSounds(float dt)
 
 	//  engine
 	float total_gain = 0.0, loudest = 0.0;
-	std::list <std::pair <SOUNDSOURCE *, float> > gainlist;
+	list <pair <SOUNDSOURCE *, float> > gainlist;
 
-	for (std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> >::iterator i = enginesounds.begin(); i != enginesounds.end(); ++i)
+	for (list <pair <ENGINESOUNDINFO, SOUNDSOURCE> >::iterator i = enginesounds.begin(); i != enginesounds.end(); ++i)
 	{
 		ENGINESOUNDINFO & info = i->first;
 		SOUNDSOURCE & sound = i->second;
@@ -290,7 +289,7 @@ void CAR::UpdateSounds(float dt)
 
 		total_gain += gain;
 		if (gain > loudest)  loudest = gain;
-		gainlist.push_back(std::pair <SOUNDSOURCE*, float> (&sound, gain));
+		gainlist.push_back(pair <SOUNDSOURCE*, float> (&sound, gain));
 
 		if (dynamics.vtype == V_Spaceship)
 		{
@@ -306,7 +305,7 @@ void CAR::UpdateSounds(float dt)
 
 	//normalize gains engine
 	//assert(total_gain >= 0.0);
-	for (std::list <std::pair <SOUNDSOURCE *, float> >::iterator i = gainlist.begin(); i != gainlist.end(); ++i)
+	for (list <pair <SOUNDSOURCE *, float> >::iterator i = gainlist.begin(); i != gainlist.end(); ++i)
 	{
 		if (total_gain == 0.0)
 			i->first->SetGain(0.0);
@@ -315,7 +314,7 @@ void CAR::UpdateSounds(float dt)
 		else
 			i->first->SetGain(i->second/total_gain * dynamics.engine_vol_mul * pSet->vol_engine);
 
-		//if (i->second == loudest) std::cout << i->first->GetSoundBuffer().GetName() << ": " << i->second << std::endl;
+		//if (i->second == loudest) cout << i->first->GetSoundBuffer().GetName() << ": " << i->second << endl;
 	}
 
 
@@ -329,7 +328,7 @@ void CAR::UpdateSounds(float dt)
 
 		float maxgain = 0.6, pitchvar = 0.4, pmul = 1.f;
 
-		std::vector<SOUNDSOURCE>* snd = &gravelsound;
+		vector<SOUNDSOURCE>* snd = &gravelsound;
 		switch (surfType[i])
 		{
 		case TRACKSURFACE::ASPHALT:		snd = &tiresqueal;	maxgain = 0.4;  pitchvar = 0.40;  pmul = 0.8f;  break;
@@ -363,7 +362,7 @@ void CAR::UpdateSounds(float dt)
 		if (gain > 1.f)	gain = 1.f;
 		roadnoise.SetGain(gain * pSet->vol_env);
 		roadnoise.SetPosition(engPos); //
-		//std::cout << gain << std::endl;
+		//cout << gain << endl;
 	}
 
 	//  susp bump

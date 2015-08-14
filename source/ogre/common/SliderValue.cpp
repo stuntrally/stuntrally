@@ -187,7 +187,7 @@ void SliderValue::setValI(int i)
 void SliderValue::initGui(String name)
 {
 	slider = pGUI->findWidget<Slider>(name, false);
-	if (!slider)  LogO("!! GUI slider not found: "+name);  // will crash after
+	if (!slider)  LogO("!! Error: GUI slider not found: "+name);  // will crash after
 
 	if (slider && slider->eventValueChanged.empty())
 		slider->eventValueChanged += newDelegate(this, &SliderValue::Move);
@@ -337,7 +337,7 @@ void Check::setVisible(bool vis)
 void Check::initGui(String name)
 {
 	chk = pGUI->findWidget<Button>(name, false);
-	if (!chk)  LogO("!! GUI button not found: "+name);  // will crash after
+	if (!chk)  LogO("!! Error: GUI button not found: "+name);  // will crash after
 
 	if (chk->eventMouseButtonClick.empty())
 		chk->eventMouseButtonClick += newDelegate(this, &Check::Click);

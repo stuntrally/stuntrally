@@ -20,9 +20,8 @@
 using namespace std;
 
 
-TRACK::TRACK(ostream & info, ostream & error) 
+TRACK::TRACK() 
 	:pGame(0),
-	info_output(info), error_output(error),
 	texture_size("large"),
 	loaded(false), asphalt(false),
 	sDefaultTire("gravel")
@@ -45,7 +44,7 @@ bool TRACK::DeferredLoad(
 	Clear();
 
 	texture_size = texsize;
-	info_output << "Loading track from path: " << trackpath << endl;
+	LogO("-=- Loading track from path: "+trackpath);
 
 	//load roads
 	if (!LoadRoads(trackpath, reverse))
@@ -123,7 +122,7 @@ bool TRACK::BeginObjectLoad(
 	bool doagressivecombining)
 {
 	objload.reset(new OBJECTLOADER(trackpath, anisotropy, dynamicshadowsenabled,
-		info_output, error_output, true, doagressivecombining));
+		true, doagressivecombining));
 
 	if (!objload->BeginObjectLoad())
 		return false;
@@ -166,7 +165,7 @@ bool TRACK::LoadRoads(const string & trackpath, bool reverse)
 	for (int i = 0; i < numroads && trackfile; i++)
 	{
 		roads.push_back(ROADSTRIP());
-		roads.back().ReadFrom(trackfile, error_output);
+		roads.back().ReadFrom(trackfile, cerr);
 	}
 
 	if (reverse)

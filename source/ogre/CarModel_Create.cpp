@@ -152,7 +152,7 @@ void CarModel::Load(int startId)
 
 		pCar = pGame->LoadCar(pathCar, sDirname, pos, rot, true, false, eType == CT_REMOTE, iIndex);
 
-		if (!pCar)  LogO("Error creating car " + sDirname + "  path: " + pathCar);
+		if (!pCar)  LogO("Error: Creating CAR: " + sDirname + "  path: " + pathCar);
 		else  pCar->pCarM = this;
 	}
 }
@@ -207,7 +207,7 @@ void CarModel::LoadConfig(const string & pathCar)
 	///  load  -----
 	CONFIGFILE cf;
 	if (!cf.Load(pathCar))
-	{  LogO("!! CarModel: Can't load .car "+pathCar);  return;  }
+	{  LogO("Error: CarModel Can't load .car "+pathCar);  return;  }
 
 
 	//  vehicle type
@@ -279,10 +279,10 @@ void CarModel::LoadConfig(const string & pathCar)
 
 
 	//- load cameras pos
-	cf.GetParam("driver.view-position", pos, pGame->error_output);
+	cf.GetParamE("driver.view-position", pos);
 	driver_view[0]=pos[1]; driver_view[1]=-pos[0]; driver_view[2]=pos[2];
 	
-	cf.GetParam("driver.hood-position", pos, pGame->error_output);
+	cf.GetParamE("driver.hood-position", pos);
 	hood_view[0]=pos[1]; hood_view[1]=-pos[0]; hood_view[2]=pos[2];
 
 
@@ -298,7 +298,7 @@ void CarModel::LoadConfig(const string & pathCar)
 		if (both)  pos = "both";
 		
 		float radius;
-		cf.GetParam("tire-"+pos+".radius", radius, pGame->error_output);
+		cf.GetParamE("tire-"+pos+".radius", radius);
 		whRadius[wl] = radius;  whRadius[wr] = radius;
 		
 		float width = 0.2f;
@@ -315,7 +315,7 @@ void CarModel::LoadConfig(const string & pathCar)
 		string sPos = sCfgWh[i];
 		float pos[3];  MATHVECTOR<float,3> vec;
 
-		cf.GetParam("wheel-"+sPos+".position", pos, pGame->error_output);
+		cf.GetParamE("wheel-"+sPos+".position", pos);
 		if (version == 2)  ConvertV2to1(pos[0],pos[1],pos[2]);
 		vec.Set(pos[0],pos[1], pos[2]);
 		
@@ -323,7 +323,7 @@ void CarModel::LoadConfig(const string & pathCar)
 	}
 	//  steer angle
 	maxangle = 26.f;
-	cf.GetParam("steering.max-angle", maxangle, pGame->error_output);
+	cf.GetParamE("steering.max-angle", maxangle);
 	maxangle *= pGame->GetSteerRange();
 }
 

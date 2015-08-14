@@ -39,7 +39,7 @@ public:
 	~CARDYNAMICS();
 	
 	GAME* pGame;
-	bool Load(GAME* game, CONFIGFILE & c, std::ostream & error_output);
+	bool Load(GAME* game, CONFIGFILE & c);
 
 	void Init(
 		class SETTINGS* pSet1, class Scene* pScene1, class FluidsXml* pFluids1,

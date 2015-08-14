@@ -220,7 +220,7 @@ public:
 	bool waiting;  // for other players in multi or in champs to close info wnd
 	bool end_sim;  // simulate at end of champ, no input, wnd shown
 
-	bool Load(const std::string & trackrecordspath, float stagingtime, std::ostream & error_output);
+	bool Load(const std::string & trackrecordspath, float stagingtime);
 	///add a car of the given type and return the integer identifier that the track system will use
 	int AddCar(const std::string & cartype) {  car.push_back(LAPINFO(cartype));  return car.size()-1;  }
 

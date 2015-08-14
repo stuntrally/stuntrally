@@ -12,18 +12,12 @@ using namespace std;
 
 CONFIGFILE::CONFIGFILE()
 {
-	//vars = NULL;
 	filename = "";
-	SUPPRESS_ERROR = false;
 	bFltFull = true;
 }
 
 CONFIGFILE::CONFIGFILE(string fname)
 {
-	//vars = NULL;
-	
-	SUPPRESS_ERROR = false;
-	
 	Load(fname);
 }
 
@@ -180,11 +174,11 @@ CONFIGVARIABLE::CONFIGVARIABLE()
 {
 	val_s = "";
 	val_i = 0;
-	val_f = 0;
+	val_f = 0.f;
 	val_b = false;
 	int i;
 	for (i = 0; i < 3; ++i)
-		val_v[i] = 0;
+		val_v[i] = 0.f;
 	
 	//next = NULL;
 }
@@ -216,7 +210,7 @@ void CONFIGVARIABLE::Set(string newval)
 	if (strLCase(newval) == "true")		val_b = true;
 	if (strLCase(newval) == "false")	val_b = false;
 	
-	//now process as vector information
+	// now process as vector information
 	int pos = 0;
 	int arraypos = 0;
 	string::size_type nextpos = newval.find(",", pos);
@@ -232,7 +226,7 @@ void CONFIGVARIABLE::Set(string newval)
 		nextpos = newval.find(",", pos);
 	}
 	
-	//don't forget the very last one
+	// don't forget the very last one
 	if (arraypos < 3)
 	{
 		frag = newval.substr(pos, newval.length() - pos);
@@ -250,7 +244,6 @@ void CONFIGVARIABLE::DebugPrint(ostream & out)
 	out << "float: " << val_f << endl;
 	out << "vector: (" << val_v[0] << "," << val_v[1] << "," << val_v[2] << ")" << endl;
 	out << "bool: " << val_b << endl;
-	
 	out << endl;
 }
 
@@ -276,18 +269,14 @@ bool CONFIGFILE::Load(string fname)
 {
 	filename = fname;
 	
-	//work string
-	string ws;
-	
 	ifstream f;
 	f.open(fname.c_str());
 	
-	if (!f && !SUPPRESS_ERROR)
+	if (!f)
 	{
 		//cout << "CONFIGFILE.Load: Couldn't find file:  " << fname << endl;
 		return false;
-	}
-	
+	}	
 	return Load(f);
 }
 
@@ -302,10 +291,6 @@ bool CONFIGFILE::Load(std::istream & f)
 		f.getline(trashchar, MAXIMUMCHAR, '\n');
 		ProcessLine(cursection, trashchar);
 	}
-	
-	//if (fname.find(".car") < fname.length())
-	//	DebugPrint();
-	
 	return true;
 }
 
@@ -376,23 +361,18 @@ string CONFIGFILE::Strip(string instr, char stripchar)
 	string::size_type pos = 0;
 	string outstr = "";
 	int length= instr.length();
-	while (pos < /*(int)*/ instr.length())
+	while (pos < instr.length())
 	{
-//		if (instr.c_str()[pos] != stripchar)
-//			outstr = outstr + instr.substr(pos, 1);
 		if (instr.c_str()[pos] == stripchar)
-		{
 			break;
-		}
 		//	outstr = outstr + instr.substr(pos, 1);
-		
 		++pos;
 	}
-	if(pos > 0)
+	if (pos > 0)
 	{
 		outstr = instr.substr(0, pos);
 	}
-	if(pos+1 < length )
+	if (pos+1 < length)
 	{
 		outstr = outstr + instr.substr(pos+1, (length-pos)-1);
 	}
@@ -401,32 +381,17 @@ string CONFIGFILE::Strip(string instr, char stripchar)
 
 void CONFIGFILE::DebugPrint(ostream & out)
 {
-	/*CONFIGVARIABLE * cur = vars;
-	cout << "*** " << filename << " ***" << endl << endl;
-	while (cur != NULL)
-	{
-		cur->DebugPrint();
-		
-		cur = cur->next;
-	}*/
-	
 	out << "*** " << filename << " ***" << endl << endl;
 	
 	std::list <CONFIGVARIABLE> vlist;
 	
 	for (bucketed_hashmap <std::string, CONFIGVARIABLE>::iterator i = variables.begin(); i != variables.end(); ++i)
-	{
-		//cout << incsuccess << endl;
-		// variables.IteratorGet()->DebugPrint();
 		vlist.push_back(*i);
-	}
 	
 	vlist.sort();
 	
 	for (std::list <CONFIGVARIABLE>::iterator i = vlist.begin(); i != vlist.end(); ++i)
-	{
 		i->DebugPrint(out);
-	}
 }
 
 string CONFIGVARIABLE::strLCase(string instr)
@@ -436,15 +401,14 @@ string CONFIGVARIABLE::strLCase(string instr)
 	string outstr = "";
 	
 	string::size_type pos = 0;
-	while (pos < /*(int)*/ instr.length())
+	while (pos < instr.length())
 	{
 		if (instr.c_str()[pos] <= 90 && instr.c_str()[pos] >= 65)
 		{
 			tc[0] = instr.c_str()[pos] + 32;
 			string tstr = tc;
 			outstr = outstr + tc;
-		}
-		else
+		}else
 			outstr = outstr + instr.substr(pos, 1);
 		
 		++pos;
@@ -474,7 +438,6 @@ bool CONFIGFILE::SetParam(string param, int invar)
 bool CONFIGFILE::SetParam(string param, bool invar)
 {
 	//char tc[256];
-	
 	//sprintf(tc, "%i", invar);
 	
 	string tstr = "off";  //"false";
@@ -539,48 +502,44 @@ bool CONFIGFILE::Write(bool with_brackets, string save_as)
 	ofstream f;
 	f.open(save_as.c_str());
 	
-	if (f)
+	if (!f)  return false;
+
+	std::list <CONFIGVARIABLE> vlist;
+
+	for (bucketed_hashmap <std::string, CONFIGVARIABLE>::iterator i = variables.begin(); i != variables.end(); ++i)
 	{
-		std::list <CONFIGVARIABLE> vlist;
-	
-		for (bucketed_hashmap <std::string, CONFIGVARIABLE>::iterator i = variables.begin(); i != variables.end(); ++i)
-		{
-			//cout << incsuccess << endl;
-			// variables.IteratorGet()->DebugPrint();
-			vlist.push_back(*i);
-		}
-		
-		vlist.sort();
-		
-		string cursection = "";
-		for (std::list <CONFIGVARIABLE>::iterator cur = vlist.begin(); cur != vlist.end(); ++cur)
-		{
-			if (cur->section == "")
-			{
-				f << cur->name << " = " << cur->val_s << endl;
-			}
-			else
-			{
-				if (cur->section != cursection)
-				{
-					f << endl;
-					cursection = cur->section;
-					
-					if (with_brackets)
-						f << "[ " << cur->section << " ]" << endl;
-					else
-						f << cur->section << endl;
-				}
-				
-				f << cur->name << " = " << cur->val_s << endl;
-			}
-		}
-		
-		f.close();
-		return true;
+		//cout << incsuccess << endl;
+		// variables.IteratorGet()->DebugPrint();
+		vlist.push_back(*i);
 	}
-	else
-		return false;
+	
+	vlist.sort();
+	
+	string cursection = "";
+	for (std::list <CONFIGVARIABLE>::iterator cur = vlist.begin(); cur != vlist.end(); ++cur)
+	{
+		if (cur->section == "")
+		{
+			f << cur->name << " = " << cur->val_s << endl;
+		}else
+		{
+			if (cur->section != cursection)
+			{
+				f << endl;
+				cursection = cur->section;
+				
+				if (with_brackets)
+					f << "[ " << cur->section << " ]" << endl;
+				else
+					f << cur->section << endl;
+			}
+			
+			f << cur->name << " = " << cur->val_s << endl;
+		}
+	}
+	
+	f.close();
+	return true;
 }
 
 bool CONFIGFILE::Write()
@@ -598,14 +557,10 @@ void CONFIGFILE::GetSectionList(std::list <string> & sectionlistoutput) const
 	sectionlistoutput.clear();
 	std::map <string, bool> templist;
 	for (bucketed_hashmap <std::string, CONFIGVARIABLE>::const_iterator i = variables.begin(); i != variables.end(); ++i)
-	{
 		templist[i->section] = true;
-	}
 	
 	for (std::map <string, bool>::iterator i = templist.begin(); i != templist.end(); ++i)
-	{
 		sectionlistoutput.push_back(i->first);
-	}
 }
 
 void CONFIGFILE::GetParamList(std::list <string> & paramlistoutput, string sel_section) const
@@ -614,23 +569,15 @@ void CONFIGFILE::GetParamList(std::list <string> & paramlistoutput, string sel_s
 	if (sel_section == "")
 		all = true;
 	
-	//cout << "++++++++++" << variables.GetTotalObjects() << endl;
-	
 	paramlistoutput.clear();
 	std::map <string, bool> templist;
 	for (bucketed_hashmap <std::string, CONFIGVARIABLE>::const_iterator i = variables.begin(); i != variables.end(); ++i)
 	{
 		if (all)
 			templist[i->section+"."+i->name] = true;
-		else if (i->section == sel_section)
-		{
+		else
+		if (i->section == sel_section)
 			templist[i->name] = true;
-		}
-		
-		/*if (sel_section == "engine")
-		{
-			cout << "++++++" << variables.IteratorGet()->section << endl;
-		}*/
 	}
 	
 	for (std::map <string, bool>::iterator i = templist.begin(); i != templist.end(); ++i)
@@ -641,17 +588,6 @@ void CONFIGFILE::GetParamList(std::list <string> & paramlistoutput, string sel_s
 
 CONFIGVARIABLE & CONFIGVARIABLE::CopyFrom(const CONFIGVARIABLE & other)
 {
-	/*
-	string section;
-	string name;
-
-	string val_s;
-	int val_i;
-	float val_f;
-	float val_v[3];
-	bool val_b;
-	*/
-	
 	section = other.section;
 	name = other.name;
 	val_s = other.val_s;
@@ -667,24 +603,7 @@ CONFIGVARIABLE & CONFIGVARIABLE::CopyFrom(const CONFIGVARIABLE & other)
 
 bool CONFIGVARIABLE::operator<(const CONFIGVARIABLE & other)
 {
-	//return GetFullName() < other.GetFullName();
 	return (section + "." + name < other.section + "." + other.name);
-}
-
-void CONFIGFILE::ChangeSectionName(std::string oldname, std::string newname)
-{
-	std::list <std::string> paramlist;
-	GetParamList(paramlist, oldname);
-	
-	for (std::list <std::string>::iterator i = paramlist.begin(); i != paramlist.end(); ++i)
-	{
-		std::string value;
-		bool success = GetParam(oldname+"."+*i, value);
-		assert(success);
-		SetParam(newname+"."+*i, value);
-		success = ClearParam(oldname+"."+*i);
-		assert(success);
-	}
 }
 
 QT_TEST(configfile_test)
@@ -749,7 +668,6 @@ QT_TEST(configfile_test)
 		++i;
 		QT_CHECK(i == slist.end());
 	}
-	
 	{
 		std::list <string> slist;
 		testconfig.GetParamList(slist, "test section numero UNO");

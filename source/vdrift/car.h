@@ -33,8 +33,7 @@ public:
 		bool soundenabled, const SOUNDINFO & sound_device_info, const SOUND_LIB & soundbufferlibrary,
 		bool defaultabs, bool defaulttcs,
 		bool isRemote, int idCar,
-		bool debugmode,
-		std::ostream & info_output, std::ostream & error_output);
+		bool debugmode);
 	
 	// will align car relative to track surface, returns false if the car isn't near ground
 	void SetPosition(const MATHVECTOR<float,3> & pos, const QUATERNION<float> & rot);
@@ -323,17 +322,14 @@ public:
 
 	bool LoadInto(
 		const std::string & joefile,
-		MODEL_JOE03 & output_model,
-  		std::ostream & error_output);
+		MODEL_JOE03 & output_model);
 	
 	void UpdateSounds(float dt);
 	
 	bool LoadSounds(
 		const std::string & carpath,
 		const SOUNDINFO & sound_device_info,
-		const SOUND_LIB & soundbufferlibrary,
-		std::ostream & info_output,
-		std::ostream & error_output);
+		const SOUND_LIB & soundbufferlibrary);
 		
 
 	//-------------------------------------------------------------------------------

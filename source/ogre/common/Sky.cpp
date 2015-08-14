@@ -243,7 +243,7 @@ void App::SetFactoryDefaults()
 		else if (pSet->shader_mode == "cg")	  lang = sh::Language_CG;
 		else if (pSet->shader_mode == "hlsl") lang = sh::Language_HLSL;
 		else
-		{	LogO("Error Unknown shader_mode !!");  assert(0);  }
+		{	LogO("Error: Unknown shader_mode !");  assert(0);  }
 	}
 	mFactory->setCurrentLanguage(lang);
 

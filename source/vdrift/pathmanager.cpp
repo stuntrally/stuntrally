@@ -1,7 +1,6 @@
 #include "pch.h"
 /// Big portions of this file are borrowed and adapted from Performous under GPL (http://performous.org)
 
-
 #include "pathmanager.h"
 #include <boost/filesystem.hpp>
 #include <string>
@@ -19,29 +18,28 @@
 #ifndef SHARED_DATA_DIR
 #define SHARED_DATA_DIR "data"
 #endif
+using namespace std;
 
 
-// TODO: Create a PORTABLE_INSTALL flag that allows disabling the usage of system dirs
-
-
-// Define this useful alias for the overlong namespace name
 namespace fs = boost::filesystem;
 
-namespace {
+namespace
+{
 	fs::path execname();
 }
 
 
 //  static vars
-std::string PATHMANAGER::ogre_plugin, PATHMANAGER::home_dir,
+string PATHMANAGER::ogre_plugin, PATHMANAGER::home_dir,
 	PATHMANAGER::user_config, PATHMANAGER::game_config,
 	PATHMANAGER::user_data, PATHMANAGER::game_data,
 	PATHMANAGER::cache_dir;
+stringstream PATHMANAGER::info;
 
 
-void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, bool log_paths)
+void PATHMANAGER::Init(bool log_paths)
 {
-	typedef std::vector<fs::path> Paths;
+	typedef vector<fs::path> Paths;
 
 	// Set Ogre plugins dir
 	{
@@ -71,7 +69,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 				if (homedir == NULL) {
 					homedir = getenv("USERNAME");
 					if (homedir == NULL) {
-						error_output << "Could not find user's home directory!" << std::endl;
+						cerr << "Could not find user's home directory!" << endl;
 						home_dir = "/tmp/";
 					}
 				}
@@ -93,10 +91,10 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	#else // Windows
 	{
 		// Open AppData directory
-		std::string str;
+		string str;
 		ITEMIDLIST* pidl;
 		char AppDir[MAX_PATH];
-		HRESULT hRes = SHGetSpecialFolderLocation(NULL, CSIDL_APPDATA|CSIDL_FLAG_CREATE , &pidl);
+		HRESULT hRes = SHGetSpecialFolderLocation(NULL, CSIDL_APPDATA|CSIDL_FLAG_CREATE, &pidl);
 		if (hRes == NOERROR)
 		{
 			SHGetPathFromIDList(pidl, AppDir);
@@ -110,7 +108,7 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 	}
 	#endif
 	// Create user's config dir
-	CreateDir(user_config, error_output);
+	CreateDir(user_config);
 
 	// Find user's data dir (for additional data)
 	#ifdef _WIN32
@@ -125,21 +123,21 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 
 	// Create user's data dir and its children
 	///--------------------------------------------------
-	CreateDir(user_data, error_output);
-	CreateDir(Records(), error_output);
-	CreateDir(Ghosts(), error_output);
+	CreateDir(user_data);
+	CreateDir(Records());
+	CreateDir(Ghosts());
 	
-	CreateDir(Replays(), error_output);
-	CreateDir(Screenshots(), error_output);
-	CreateDir(TracksUser(), error_output);  // user tracks
+	CreateDir(Replays());
+	CreateDir(Screenshots());
+	CreateDir(TracksUser());  // user tracks
 
-	CreateDir(DataUser(), error_output);  // user data
+	CreateDir(DataUser());  // user data
 
 
 	// Find game data dir and defaults config dir
 	char *datadir = getenv("STUNTRALLY_DATA_ROOT");
 	if (datadir)
-		game_data = std::string(datadir);
+		game_data = string(datadir);
 	else
 	{	fs::path shareDir = SHARED_DATA_DIR;
 		Paths dirs;
@@ -159,8 +157,8 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 		// Adding XDG_DATA_DIRS
 		{
 			char const* xdg_data_dirs = getenv("XDG_DATA_DIRS");
-			std::istringstream iss(xdg_data_dirs ? xdg_data_dirs : "/usr/local/share/:/usr/share/");
-			for (std::string p; std::getline(iss, p, ':'); dirs.push_back(p / stuntrally)) {}
+			istringstream iss(xdg_data_dirs ? xdg_data_dirs : "/usr/local/share/:/usr/share/");
+			for (string p; getline(iss, p, ':'); dirs.push_back(p / stuntrally)) {}
 		}
 		#endif
 		// TODO: Adding path from config file
@@ -181,12 +179,12 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 
 	//  Subdirs for each sim_mode
 	///--------------------------------------------------
-	std::list <std::string> li;
+	list <string> li;
 	PATHMANAGER::DirList(PATHMANAGER::CarSim(), li);
-	for (std::list <std::string>::iterator i = li.begin(); i != li.end(); ++i)
+	for (list <string>::iterator i = li.begin(); i != li.end(); ++i)
 	{
-		CreateDir(Records()+"/"+*i, error_output);
-		CreateDir(Ghosts()+"/"+*i, error_output);
+		CreateDir(Records()+"/"+*i);
+		CreateDir(Ghosts()+"/"+*i);
 	}
 
 	// Find cache dir
@@ -198,37 +196,37 @@ void PATHMANAGER::Init(std::ostream & info_output, std::ostream & error_output, 
 				: fs::path(home_dir) / ".cache" / stuntrally).string();
 	#endif
 	// Create cache dir
-	CreateDir(CacheDir(), error_output);
-	CreateDir(CacheDir()+"/tracks", error_output);
-	CreateDir(ShaderDir(), error_output);
+	CreateDir(CacheDir());
+	CreateDir(CacheDir()+"/tracks");
+	CreateDir(ShaderDir());
 
 	// Print diagnostic info
 	if (log_paths)
 	{
-		std::stringstream out;
-		out << "--- Directories: ---" << std::endl;
-		out << "Ogre plugin:  " << ogre_plugin << std::endl;
-		out << "Data:         " << Data() << std::endl;
-		//out << "Default cfg:  " << GetGameConfigDir() << std::endl;
-		//out << "Home:         " << home_dir << std::endl;
-		out << "User cfg,log: " << UserConfigDir() << std::endl;
-		out << "User data:    " << user_data << std::endl;
-		out << "Cache:        " << CacheDir() << std::endl;
-		info_output << out.str();
+		info << "  Paths info" << endl;
+		info << "-------------------------" << endl;
+		info << "Ogre plugin:  " << ogre_plugin << endl;
+		info << "Data:         " << Data() << endl;
+		//info << "Default cfg:  " << GetGameConfigDir() << endl;
+		info << "Home:         " << home_dir << endl;
+		info << "User cfg,log: " << UserConfigDir() << endl;
+		info << "User data:    " << user_data << endl;
+		info << "Cache:        " << CacheDir() << endl;
+		info << "-------------------------";
 	}
 }
 
-bool PATHMANAGER::FileExists(const std::string & filename)
+bool PATHMANAGER::FileExists(const string& filename)
 {
 	return fs::exists(filename);
 }
 
-bool PATHMANAGER::CreateDir(const std::string& path, std::ostream & error_output)
+bool PATHMANAGER::CreateDir(const string& path)
 {
 	try	{	fs::create_directories(path);	}
 	catch (...)
 	{
-		error_output << "Could not create directory " << path << std::endl;
+		cerr << "Could not create directory " << path << endl;
 		return false;
 	}
 	return true;
@@ -236,7 +234,7 @@ bool PATHMANAGER::CreateDir(const std::string& path, std::ostream & error_output
 
 
 // TODO: implement with boost::filesystem
-bool PATHMANAGER::DirList(std::string dirpath, strlist& dirlist, std::string extension)
+bool PATHMANAGER::DirList(string dirpath, strlist& dirlist, string extension)
 {
 //------Folder listing code for POSIX
 #ifndef _WIN32
@@ -248,7 +246,7 @@ bool PATHMANAGER::DirList(std::string dirpath, strlist& dirlist, std::string ext
 		while (ep = readdir(dp))
 		{
 			//puts (ep->d_name);
-			std::string newname = ep->d_name;
+			string newname = ep->d_name;
 			if (newname[0] != '.')
 			{
 				dirlist.push_back(newname);
@@ -297,14 +295,14 @@ bool PATHMANAGER::DirList(std::string dirpath, strlist& dirlist, std::string ext
 	//remove non-matcthing extensions
 	if (!extension.empty())
 	{
-		std::list <std::list <std::string>::iterator> todel;
-		for (std::list <std::string>::iterator i = dirlist.begin(); i != dirlist.end(); ++i)
+		list <list <string>::iterator> todel;
+		for (list <string>::iterator i = dirlist.begin(); i != dirlist.end(); ++i)
 		{
 			if (i->find(extension) != i->length()-extension.length())
 				todel.push_back(i);
 		}
 		
-		for (std::list <std::list <std::string>::iterator>::iterator i = todel.begin(); i != todel.end(); ++i)
+		for (list <list <string>::iterator>::iterator i = todel.begin(); i != todel.end(); ++i)
 			dirlist.erase(*i);
 	}
 	

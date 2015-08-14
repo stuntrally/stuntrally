@@ -122,7 +122,7 @@ void SplitScr::Align()
 		}
 		else
 		{
-			LogO("FATAL ERROR: Unsupported number of viewports: " + toStr(mNumViewports));
+			LogO("ERROR: Unsupported number of viewports: " + toStr(mNumViewports));
 			return;
 		}
 		#undef dim_

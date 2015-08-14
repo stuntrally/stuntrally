@@ -15,13 +15,12 @@ using namespace Ogre;
 //  perf log car vel
 void App::PerfLogVel(CAR* pCar, float time)
 {
-	pGame->info_output << fToStr(time,2,5) << "s, " << fToStr(pCar->GetSpeed()*3.6f, 1,5) << " kmh, gear " << pCar->GetGear() << ", rpm " << fToStr(pCar->GetEngineRPM(),0,4) \
+	LogO(fToStr(time,2,5) +"s, "+ fToStr(pCar->GetSpeed()*3.6f, 1,5) +" kmh, gear "+ toStr(pCar->GetGear()) +", rpm "+ fToStr(pCar->GetEngineRPM(),0,4));
 		//<< ", clu " << fToStr(pCar->GetClutch(), 1,4)
 		//<< ", sli " << fToStr(pCar->dynamics.tire[0].slide, 1,4)
 		//<< ", slp " << fToStr(pCar->dynamics.tire[1].slip, 1,4)
 		//<< ", f " << pCar->GetWheelContact(WHEEL_POSITION(0)).surface->friction
 		// !... downforce, drag
-		<< std::endl;
 }
 
 
@@ -130,7 +129,7 @@ void App::newPerfTest(float time)
 				
 				//  engine stats
 				//------------------------
-				//pGame->info_output << std::string("====  CAR engine  ====\n");
+				//LogO("====  CAR engine  ====");
 				const CARENGINE& eng = cd.engine;
 				float maxTrq = 0.f, maxPwr = 0.f;
 				int rpmMaxTq = 0, rpmMaxPwr = 0;
@@ -141,7 +140,7 @@ void App::newPerfTest(float time)
 					if (tq > maxTrq)  {  maxTrq = tq;  rpmMaxTq = r;  }
 					if (pwr > maxPwr)  {  maxPwr = pwr;  rpmMaxPwr = r;  }
 					//if (r % 100 == 0)
-					//	pGame->info_output << "rpm: "+fToStr(r,0,4)+" Nm:"+fToStr(tq,0,4)+" bhp:"+fToStr(pwr*1.341,0,4)+"\n";
+					//	LogO("rpm: "+fToStr(r,0,4)+" Nm:"+fToStr(tq,0,4)+" bhp:"+fToStr(pwr*1.341,0,4));
 				}
 
 				//  summary  gui txt
@@ -179,7 +178,7 @@ void App::newPerfTest(float time)
 					"Stop time 100..0 kmh:  "+fToStr(tMaxTo0-tMaxTo100,2,5)+"\n"+
 					"Stop time  60..0 kmh:  "+fToStr(tMaxTo0-tMaxTo60,2,5)+"\n";
 				
-				//pGame->info_output << std::string("====  CAR Perf test summary  ====\n") + sResult + "====\n";
+				//LogO("====  CAR Perf test summary  ====\n" + sResult + "====");
 				gui->edPerfTest->setCaption(sResult);
 				mWndTweak->setVisible(true);
 				gui->tabTweak->setIndexSelected(3);
@@ -192,7 +191,7 @@ void App::newPerfTest(float time)
 					bool user = gui->GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], scn->sc->asphalt);
 					path = pathUserDir + pCar->pCarM->sDirname + "_stats.xml";
 					
-					PATHMANAGER::CreateDir(pathUserDir, pGame->error_output);
+					PATHMANAGER::CreateDir(pathUserDir);
 
 					TiXmlDocument xml;	TiXmlElement root("perf");
 					std::string s;

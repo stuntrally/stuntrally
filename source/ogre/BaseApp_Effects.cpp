@@ -76,7 +76,7 @@ void BaseApp::refreshCompositor(bool disableAll)
 		params->setNamedConstant("BlurWeight", pSet->bloom_int);
 	}
 	}catch(...)
-	{	LogO("!!! Failed to set bloom shader params.");  }
+	{	LogO("!Warning: Failed to set bloom shader params.");  }
 
 	//  HDR params todo..
 	//try

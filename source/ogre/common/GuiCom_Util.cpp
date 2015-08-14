@@ -457,7 +457,7 @@ void CGuiCom::CreateFonts()
 	MyGUI::ResourceManager& mgr = MyGUI::ResourceManager::getInstance();
 	IResource* resource = mgr.findByName("hud.text");  // based on this font
 	ResourceTrueTypeFont* bfont = resource != nullptr ? resource->castType<ResourceTrueTypeFont>(false) : 0;
-	if (!bfont)  LogO("Error !! Can't find font: hud.text");
+	if (!bfont)  LogO("!!Error: Can't find font: hud.text");
 
 	const int cnt = 3;
 	string names[cnt] = {"font.small","font.normal","font.big"};

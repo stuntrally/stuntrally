@@ -19,7 +19,7 @@ void SplineRoad::CreateMesh(SubMesh* mesh, AxisAlignedBox& aabox,
 {
 	size_t i, si = pos.size();
 	if (si == 0)  {
-		LogO("Error!!  CreateMesh 0 verts !");
+		LogO("!!Error:  Road CreateMesh 0 verts !");
 		return;  }
 	mesh->useSharedVertices = false;
 	mesh->vertexData = new VertexData();

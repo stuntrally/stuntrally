@@ -9,28 +9,22 @@
 #include <cmath>
 
 #include <sstream>
-using std::stringstream;
-
 #include <list>
-using std::list;
-
 #include <iostream>
-using std::endl;
-
 #include <string>
-using std::string;
 
 #ifdef __APPLE__
 #include <Vorbis/vorbisfile.h>
 #else
 #include <vorbis/vorbisfile.h>
 #endif
-//#include "../ogre/common/Def_Str.h"
+#include "../ogre/common/Def_Str.h"
+using namespace std;
 
 
 //  Load sound file
 //--------------------------------------------------------------------------------------------------------------------
-bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_device_info, std::ostream & error_output)
+bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_device_info)
 {
 	if (loaded)
 		Unload();
@@ -41,7 +35,7 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 
 	fp = fopen(filename.c_str(), "rb");
 	if (!fp)
-	{	error_output << "Can't open wav sound file: "+filename << endl;  goto error;	}
+	{	LogO("SOUND: Can't open wav sound file: "+filename);  goto error;	}
 	else
 	{
 		char id[5];  //four bytes to hold 'RIFF'
@@ -49,7 +43,7 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 		id[4] = '\0';
 
 		if (strcmp(id,"RIFF"))
-		{	error_output << "Sound file doesn't have RIFF header: "+filename << endl;  goto error;	}
+		{	LogO("SOUND: Sound file doesn't have RIFF header: "+filename);  goto error;	}
 		else
 		{
 			if (fread(&size,sizeof(unsigned int),1,fp) != 1)  goto error;  //read in 32bit size value
@@ -58,13 +52,13 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 			if (fread(id,sizeof(char),4,fp)!= 4)  goto error;  //read in 4 byte string now
 
 			if (strcmp(id,"WAVE"))
-			{	error_output << "Sound file doesn't have WAVE header: "+filename << endl;  goto error;	}
+			{	LogO("SOUND: Sound file doesn't have WAVE header: "+filename);  goto error;	}
 			else
 			{
 				if (fread(id,sizeof(char),4,fp)!= 4)  goto error;  //read in 4 bytes "fmt ";
 
 				if (strcmp(id,"fmt "))
-				{	error_output << "Sound file doesn't have \"fmt\" header: "+filename << endl;  goto error;	}
+				{	LogO("SOUND: Sound file doesn't have \"fmt\" header: "+filename);  goto error;	}
 				else
 				{
 					unsigned int format_length, sample_rate, avg_bytes_sec;
@@ -117,7 +111,7 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 
 					if (chunknum >= 10)
 					{
-						error_output << "Couldn't find wave data in first 10 chunks of " << filename << endl;
+						LogO("SOUND: Couldn't find wave data in first 10 chunks of "+filename);
 						goto error;
 					}
 
@@ -139,11 +133,9 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 							//cout << preswap << "/" << postswap << endl;
 
 						}
-					}
-					//else if (bits_per_sample != 8)
-					else
+					}else
 					{
-						error_output << "Sound file with " << bits_per_sample << " bits per sample not supported" << endl;
+						LogO("SOUND: Sound file with "+toStr(bits_per_sample)+" bits per sample not supported");
 						goto error;
 					}
 					#endif
@@ -157,27 +149,23 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 
 					if (!(desired_info == original_info))
 					{
-						error_output << "SOUND FORMAT:" << endl;
-						original_info.DebugPrint(error_output);
-						error_output << "DESIRED FORMAT:" << endl;
-						desired_info.DebugPrint(error_output);
+						cerr << "SOUND FORMAT:" << endl;  original_info.DebugPrint(cerr);
+						cerr << "DESIRED FORMAT:" << endl;  desired_info.DebugPrint(cerr);
 
-						error_output << "Sound file isn't in desired format: "+filename << endl;
+						LogO("SOUND: Error! file isn't in desired format: "+filename);
 						goto error;
 					}
 				}
 			}
 		}
 	}
-
-	//cout << size << endl;
 	return true;
 error:
 	fclose(fp);
 	return false;
 }
 
-bool SOUNDBUFFER::LoadOGG(const string & filename, const SOUNDINFO & sound_device_info, std::ostream & error_output)
+bool SOUNDBUFFER::LoadOGG(const string & filename, const SOUNDINFO & sound_device_info)
 {
 	if (loaded)
 		Unload();
@@ -203,12 +191,12 @@ bool SOUNDBUFFER::LoadOGG(const string & filename, const SOUNDINFO & sound_devic
 
 		if (!(desired_info == info))
 		{
-			error_output << "SOUND FORMAT:" << endl;
-			info.DebugPrint(error_output);
-			error_output << "DESIRED FORMAT:" << endl;
-			desired_info.DebugPrint(error_output);
+			cerr << "SOUND FORMAT:" << endl;
+			info.DebugPrint(cerr);
+			cerr << "DESIRED FORMAT:" << endl;
+			desired_info.DebugPrint(cerr);
 
-			error_output << "Sound file isn't in desired format: "+filename << endl;
+			LogO("SOUND: File isn't in desired format: "+filename);
 			ov_clear(&oggFile);
 			return false;
 		}
@@ -239,7 +227,7 @@ bool SOUNDBUFFER::LoadOGG(const string & filename, const SOUNDINFO & sound_devic
 	}
 	else
 	{
-		error_output << "Can't open ogg sound file: "+filename << endl;
+		LogO("SOUND: Can't open ogg sound file: "+filename);
 		return false;
 	}
 }
@@ -251,7 +239,7 @@ void SOUND_CallbackWrapper(void *soundclass, Uint8 *stream, int len)
 
 //  Init
 //--------------------------------------------------------------------------------------------------------------------
-bool SOUND::Init(int buffersize, std::ostream & info_output, std::ostream & error_output)
+bool SOUND::Init(int buffersize)
 {
 	if (disable || initdone)
 		return false;
@@ -269,7 +257,7 @@ bool SOUND::Init(int buffersize, std::ostream & info_output, std::ostream & erro
 	if (SDL_OpenAudio(&desired, &obtained) < 0)
 	{
 		//string error = SDL_GetError();
-		error_output << "Error opening audio device, disabling sound." << endl;
+		LogO("SOUND: Error. Opening audio device, disabling sound.");
 		DisableAllSound();
 		return false;
 	}
@@ -283,26 +271,21 @@ bool SOUND::Init(int buffersize, std::ostream & info_output, std::ostream & erro
 
 	if (obtained.format != desired.format)
 	{
-		error_output << "Obtained audio format isn't the same as the desired format, disabling sound." << std::endl;
+		LogO("SOUND: Error. Obtained audio format isn't the same as the desired format, disabling sound.");
 		DisableAllSound();
 		return false;
 	}
 
-	std::stringstream dout;
-	dout << "Obtained audio device:" << std::endl;
-	dout << "Frequency: " << frequency << std::endl;
-	dout << "Format: " << obtained.format << std::endl;
-	dout << "Bits per sample: " << bytespersample * 8 << std::endl;
-	dout << "Channels: " << channels << std::endl;
-	dout << "Silence: " << (int) obtained.silence << std::endl;
-	dout << "Samples: " << samples << std::endl;
-	dout << "Size: " << (int) obtained.size << std::endl;
-	info_output << "Sound initialization information:" << std::endl << dout.str();
-	//cout << dout.str() << endl;
+	LogO("SOUND: Information");
+	LogO("-------------------------");
+	LogO("Frequency: "+toStr(frequency)+"  Bits: "+toStr(bytespersample * 8)+"  Channels: "+toStr(channels));
+	LogO("Format: "+toStr(obtained.format)+"  Silence: "+toStr((int)obtained.silence)+
+		"  Samples: "+toStr(samples)+"  Size: "+toStr((int)obtained.size));
+	LogO("-------------------------");
 
 	if (bytespersample != 2 || obtained.channels != desired.channels || obtained.freq != desired.freq)
 	{
-		error_output << "Sound interface did not create a 44.1kHz, 16 bit, stereo device as requested.  Disabling sound." << endl;
+		LogO("SOUND: Error. Did not create a 44.1 kHz, 16 bit, stereo device as requested, disabling sound.");
 		DisableAllSound();
 		return false;
 	}
@@ -317,20 +300,9 @@ bool SOUND::Init(int buffersize, std::ostream & info_output, std::ostream & erro
 
 void SOUND::Pause(const bool pause_on)
 {
-	if (paused == pause_on) //take no action if no change
-		return;
-
+	if (paused == pause_on)  return;
 	paused = pause_on;
-	if (pause_on)
-	{
-		//cout << "sound pause on" << endl;
-		SDL_PauseAudio(1);
-	}
-	else
-	{
-		//cout << "sound pause off" << endl;
-		SDL_PauseAudio(0);
-	}
+	SDL_PauseAudio(pause_on ? 1 : 0);
 }
 
 //  Sound callback

@@ -39,7 +39,7 @@ void CGui::TweakCarSave()
 	std::string path, pathUser, pathUserDir;
 	bool user = GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0]);
 	
-	PATHMANAGER::CreateDir(pathUserDir, pGame->error_output);
+	PATHMANAGER::CreateDir(pathUserDir);
 	std::ofstream fo(pathUser.c_str());
 	fo << text.c_str();
 	fo.close();
@@ -318,7 +318,7 @@ void CGui::TweakColSave()
 	//text = StringUtil::replaceAll(text, "#E5F4FF", "");  //!
 
 	std::string path = PATHMANAGER::DataUser() + "/trees";
-	PATHMANAGER::CreateDir(path, pGame->error_output);
+	PATHMANAGER::CreateDir(path);
 	path += "/collisions.xml";
 	std::ofstream fo(path.c_str());
 	fo << text.c_str();
@@ -497,7 +497,7 @@ void CGui::TweakTireSave()
 	
 	string name = edTweakTireSet->getCaption();
 	string pathUserT = PATHMANAGER::CarSimU() + "/" + pSet->game.sim_mode + "/tires/";
-	PATHMANAGER::CreateDir(pathUserT, pGame->error_output);
+	PATHMANAGER::CreateDir(pathUserT);
 	string file = pathUserT+"/"+name+".tire";
 	if (PATHMANAGER::FileExists(file))
 	{

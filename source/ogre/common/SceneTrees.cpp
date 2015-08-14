@@ -78,7 +78,7 @@ void CScene::CreateTrees()
 	try{
 		imgRoad.load(String("roadDensity.png"),"General");
 	}catch(...)
-	{	LogO("Trees can't load roadDensity !");
+	{	LogO("Warning: Trees can't load roadDensity !");
 	}
 	imgRoadSize = imgRoad.getWidth();  // square[]
 	

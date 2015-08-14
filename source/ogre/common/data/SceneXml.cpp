@@ -145,7 +145,7 @@ void Scene::UpdateFluidsId()
 		fluids[i].idParticles = id == -1 ? -1    : pFluidsXml->fls[id].idParticles;
 		fluids[i].solid       = id == -1 ? false : pFluidsXml->fls[id].solid;
 		if (id == -1)
-			LogO("! Scene fluid name: " + fluids[i].name + " not found in xml !");
+			LogO("!Warning: Scene fluid name: " + fluids[i].name + " not found in xml!");
 	}
 }
 

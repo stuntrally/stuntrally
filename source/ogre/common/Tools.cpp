@@ -311,7 +311,7 @@ void CGui::ToolGhosts()
 		if (trk.substr(0,4) == "Test" && trk.substr(0,5) != "TestC")  continue;
 
 		//  records
-		tim.Load(PATHMANAGER::Records()+"/"+ sim+"/"+ trk+".txt", 0.f, pGame->error_output);
+		tim.Load(PATHMANAGER::Records()+"/"+ sim+"/"+ trk+".txt", 0.f);
 		float timeES=tMax, timeBest=tMax;
 		for (int c=0; c < cars.size(); ++c)
 		{

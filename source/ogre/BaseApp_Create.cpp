@@ -321,6 +321,7 @@ bool BaseApp::configure()
 bool BaseApp::setup()
 {
 	Ogre::Timer ti,ti2;
+	LogO("*** start setup ***");
 	
 	if (pSet->rendersystem == "Default")
 	{
@@ -331,12 +332,6 @@ bool BaseApp::setup()
 		#endif
 	}
 
-	//  dynamic plugin loading
-	int net = pSet->net_local_plr;
-	mRoot = OGRE_NEW Root("", PATHMANAGER::UserConfigDir() + "/ogreset.cfg",
-		PATHMANAGER::UserConfigDir() + "/ogre" + (net >= 0 ? toStr(net) : "") + ".log");
-	LogO("*** start setup ***");
-	
 	#ifdef _DEBUG
 	#define D_SUFFIX "_d"
 	#else

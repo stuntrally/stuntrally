@@ -146,7 +146,7 @@ bool Scene::LoadXml(String file, bool bTer)
 	XMLDocument doc;
 	XMLError er = doc.LoadFile(file.c_str());
 	if (er != XML_SUCCESS)
-	{	LogO("!Can't load scene.xml: "+file);  return false;  }
+	{	LogO("!Error: Can't load scene.xml: "+file);  return false;  }
 		
 	XMLElement* root = doc.RootElement();
 	if (!root)  return false;
@@ -196,7 +196,7 @@ bool Scene::LoadXml(String file, bool bTer)
 	{	LogO("!Old, loading start from track.txt");
 		String s = StringUtil::replaceAll(file,"scene.xml","track.txt");
 		if (!LoadStartPos(s))
-			LogO("!! Can't load start from "+s);
+			LogO("!Error: Can't load start from "+s);
 	}
 
 	///  sky

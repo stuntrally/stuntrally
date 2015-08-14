@@ -25,19 +25,18 @@ using namespace std;
 
 
 ///  ctor
-GAME::GAME(ostream & info_out, ostream & err_out, SETTINGS* pSettings)
-	:app(NULL), settings(pSettings), info_output(info_out), error_output(err_out)
+GAME::GAME(SETTINGS* pSettings)
+	:app(NULL), settings(pSettings)
 	,frame(0), displayframe(0), clocktime(0), target_time(0)
 	//,framerate(0.01f),  ///~  0.004+  o:0.01
 	,fps_min(0), fps_max(0)
 	,pause(false), profilingmode(false), benchmode(false)
-	,track(info_out, err_out)
 	,framerate(1.0 / pSettings->game_fq)
 	,tire_ref_id(0), reloadSimNeed(0),reloadSimDone(0)
 {
 	track.pGame = this;
 	controls.first = NULL;
-	//  sim iv from settings
+	//  sim settings
 	collision.fixedTimestep = 1.0 / pSettings->blt_fq;
 	collision.maxSubsteps = pSettings->blt_iter;
 }
@@ -48,15 +47,6 @@ void GAME::Start(list <string> & args)
 {
 	if (!ParseArguments(args))
 		return;
-
-	info_output << "Starting VDrift-Ogre: 2010-05-01, O/S: ";
-	#ifdef _WIN32
-		info_output << "Windows" << endl;
-	#elif defined(__APPLE__)
-		info_output << "Apple" << endl;
-	#else
-		info_output << "Unix-like" << endl;
-	#endif
 
 	//settings->Load(PATHMANAGER::GetSettingsFile());
 
@@ -70,7 +60,7 @@ void GAME::Start(list <string> & args)
 
 	//initialize force feedback
 	#ifdef ENABLE_FORCE_FEEDBACK
-		forcefeedback.reset(new FORCEFEEDBACK(settings->ff_device, error_output, info_output));
+		forcefeedback.reset(new FORCEFEEDBACK(settings->ff_device, cerr, cout));
 		ff_update_time = 0;
 	#endif
 	
@@ -83,7 +73,7 @@ void GAME::ReloadSimData()  /// New
 	LoadAllSurfaces();
 	LoadSusp();
 
-	info_output << "Carsim: " << settings->game.sim_mode << ". Loaded: " << tires.size() << " tires, " << surfaces.size() << " surfaces, " << suspS.size() << "=" << suspD.size() << " suspensions." << endl;
+	LogO("* * * Simulation: "+settings->game.sim_mode+". Loaded: "+toStr(tires.size()) +" tires, "+ toStr(surfaces.size()) +" surfaces, "+ toStr(suspS.size()) +"="+ toStr(suspD.size()) +" suspensions.");
 }
 
 
@@ -99,12 +89,12 @@ bool GAME::LoadAllSurfaces()
 	if (!PATHMANAGER::FileExists(path))  // user or orig
 		path = PATHMANAGER::CarSim() + file;
 	else
-		info_output << "Using user surfaces" << endl;
+		LogO("Note: Using user surfaces.");
 	
 	CONFIGFILE param;
 	if (!param.Load(path))
 	{
-		error_output << "Can't find surfaces configfile: " << path << endl;
+		LogO("Error: Can't find surfaces configfile: "+path);
 		return false;
 	}
 	
@@ -122,33 +112,32 @@ bool GAME::LoadAllSurfaces()
 		surf.setType(id);
 		
 		float f = 0.f;
-		param.GetParam(*section + ".BumpWaveLength", f, error_output);	surf.bumpWaveLength = f;
-		param.GetParam(*section + ".BumpAmplitude", f, error_output);	surf.bumpAmplitude = f;
+		param.GetParamE(*section + ".BumpWaveLength", f);	surf.bumpWaveLength = f;
+		param.GetParamE(*section + ".BumpAmplitude", f);	surf.bumpAmplitude = f;
 		if (param.GetParam(*section + ".BumpWaveLength2", f))  surf.bumpWaveLength2 = f;
 		if (param.GetParam(*section + ".BumpAmplitude2", f))   surf.bumpAmplitude2 = f;
 		
-		param.GetParam(*section + ".FrictionTread", f, error_output);	surf.friction = f;
+		param.GetParamE(*section + ".FrictionTread", f);	surf.friction = f;
 		if (param.GetParam(*section + ".FrictionX", f))   surf.frictionX = f;
 		if (param.GetParam(*section + ".FrictionY", f))   surf.frictionY = f;
 		
-		if (param.GetParam(*section + ".RollResistance", f))			surf.rollingResist = f;
-		param.GetParam(*section + ".RollingDrag", f, error_output);		surf.rollingDrag = f;
+		if (param.GetParam(*section + ".RollResistance", f))	surf.rollingResist = f;
+		param.GetParamE(*section + ".RollingDrag", f);			surf.rollingDrag = f;
 
 
 		///---  Tire  ---
 		string tireFile;
-		//if (!param.GetParam(*section + "." + "Tire", tireFile, error_output))
 		if (!param.GetParam(*section + "." + "Tire", tireFile))
 		{
 			tireFile = track.sDefaultTire;  // default surface if not found
-			//error_output << "Surface: Tire file not found, using default: " << tireFile << endl;
+			LogO("Surface: Warning: Tire file not found, using default: "+tireFile);
 		}
 		id = tires_map[tireFile]-1;
 		if (id == -1)
 		{	id = 0;
-			error_output << "Surface: Tire id not found in map, using 0, " << tireFile << endl;
+			LogO("Surface: Tire id not found in map, using 0, "+tireFile);
 		}
-		//error_output << "Tires size: " << pGame->tires.size() << endl;
+		//LogO("Tires size: "+toStr(pGame->tires.size()));
 		surf.tire = &tires[id];
 		surf.tireName = tireFile;
 		///---
@@ -167,7 +156,7 @@ bool GAME::LoadTire(CARTIRE& ct, string path, string& file)
 {
 	CONFIGFILE c;
 	if (!c.Load(path+"/"+file))
-	{	error_output << "Error loading tire file " << file << "\n";
+	{	LogO("Error loading tire file "+file);
 		return false;
 	}
 	file = file.substr(0, file.length()-5);  // no ext .tire
@@ -180,19 +169,19 @@ bool GAME::LoadTire(CARTIRE& ct, string path, string& file)
 		else if (i == 12)	numinfile = 112;
 		else if (i > 12)	numinfile -= 1;
 		stringstream str;  str << "params.a" << numinfile;
-		if (!c.GetParam(str.str(), value, error_output))  return false;
+		if (!c.GetParamE(str.str(), value))  return false;
 		ct.lateral[i] = value;
 	}
 	for (int i = 0; i < 11; ++i)
 	{
 		stringstream str;  str << "params.b" << i;
-		if (!c.GetParam(str.str(), value, error_output))  return false;
+		if (!c.GetParamE(str.str(), value))  return false;
 		ct.longitudinal[i] = value;
 	}
 	for (int i = 0; i < 18; ++i)
 	{
 		stringstream str;  str << "params.c" << i;
-		if (!c.GetParam(str.str(), value, error_output))  return false;
+		if (!c.GetParamE(str.str(), value))  return false;
 		ct.aligning[i] = value;
 	}
 	ct.name = file;
@@ -239,7 +228,7 @@ void GAME::PickTireRef(std::string name)
 	tire_ref = name;
 	int id = tires_map[name]-1;
 	if (id == -1)
-	{	id = 0;  info_output << "Reference tire not found: " << name << endl;  }
+	{	id = 0;  LogO("Warning: Reference tire not found: "+ name);  }
 	tire_ref_id = id;
 	/*if (!cars.empty())
 		cars.begin()->GraphsNewVals(0.1);*/
@@ -263,7 +252,7 @@ bool GAME::LoadSusp()
 		{
 			CONFIGFILE c;
 			if (!c.Load(path+"/"+file))
-			{	error_output << "Error loading susp file " << file << "\n";
+			{	LogO("Error loading susp file "+file);
 				return false;  }
 
 			file = file.substr(0, file.length()-5);
@@ -288,14 +277,14 @@ bool GAME::InitializeSound()
 {
 	Ogre::Timer ti;
 	int i;
-	if (sound.Init(2048/*1024/*512*/, info_output, error_output))
+	if (sound.Init(2048/*1024/*512*/))
 	{
 		sound_lib.SetLibraryPath(PATHMANAGER::Sounds());
 		const SOUNDINFO & sdi = sound.GetDeviceInfo();
 
-		#define Lsnd(n)   if (!sound_lib.Load(n,1,sdi, error_output))  return false
+		#define Lsnd(n)   if (!sound_lib.Load(n,1,sdi))  return false
 		#define Lsnd2(n,snd)  Lsnd(n);  \
-			if (!snd.Setup(sound_lib, n,	 error_output,  false, false,1.f))  return false;  \
+			if (!snd.Setup(sound_lib, n, false, false,1.f))  return false;  \
 			sound.AddSource(snd);
 		
 		//  Load sounds ----
@@ -327,8 +316,8 @@ bool GAME::InitializeSound()
 		
 		for (i = 0; i < 3; ++i)
 		{	std::string s = "hud/win" + toStr(i);
-			if (!sound_lib.Load(s,0,sdi, error_output))  return false;
-			if (!snd_win[i].Setup(sound_lib, s,		error_output,  false, false,1.f))  return false;
+			if (!sound_lib.Load(s,0,sdi))  return false;
+			if (!snd_win[i].Setup(sound_lib, s,	false, false,1.f))  return false;
 			sound.AddSource(snd_win[i]);
 		}
 		Lsnd2("hud/fail", snd_fail);
@@ -338,13 +327,13 @@ bool GAME::InitializeSound()
 		sound.Pause(false);
 		UpdHudSndVol();
 
-		info_output << "Sound initialization successful" << endl;
+		LogO("SOUND initialization successful.");
 	}else
-	{	error_output << "Sound initialization failed" << endl;
+	{	LogO("ERROR: Sound initialization failed!");
 		return false;
 	}
 
-	info_output << "::: Time Sounds: " << fToStr(ti.getMilliseconds(),0,3) << " ms" << endl;
+	LogO("::: Time Sounds: "+ fToStr(ti.getMilliseconds(),0,3) +" ms");
 	return true;
 }
 
@@ -365,15 +354,15 @@ void GAME::End()
 	if (benchmode)
 	{
 		float mean_fps = displayframe / clocktime;
-		info_output << "Elapsed time: " << clocktime << " seconds\n";
-		info_output << "Average frame-rate: " << mean_fps << " frames per second\n";
-		info_output << "Min / Max frame-rate: " << fps_min << " / " << fps_max << " frames per second" << endl;
+		LogO("Elapsed time: "+ fToStr(clocktime) +" seconds");
+		LogO("Average frame-rate: "+ fToStr(mean_fps) +" frames per second");
+		LogO("Min / Max frame-rate: "+ fToStr(fps_min) +" / "+ fToStr(fps_max) +" frames per second");
 	}
 
 	if (profilingmode)
-		info_output << "Profiling summary:\n" << PROFILER.getSummary(quickprof::PERCENT) << endl;
+		LogO("Profiling summary:\n" + PROFILER.getSummary(quickprof::PERCENT));
 
-	info_output << "Shutting down..." << endl;
+	LogO("Game shutting down.");
 
 	LeaveGame();
 
@@ -391,8 +380,6 @@ void GAME::End()
 void GAME::Test()
 {
 	QT_RUN_TESTS;
-
-	info_output << endl;
 }
 
 
@@ -548,7 +535,7 @@ bool GAME::NewGameDoCleanup()
 bool GAME::NewGameDoLoadTrack()
 {
 	if (!LoadTrack(settings->game.track))
-		error_output << "Error during track loading: " << settings->game.track << endl;
+		LogO("Error during track loading: "+settings->game.track);
 
 	return true;
 }
@@ -565,7 +552,7 @@ bool GAME::NewGameDoLoadMisc(float pre_time)
 	}
 
 	//load the timer
-	if (!timer.Load(PATHMANAGER::Records()+"/"+ settings->game.sim_mode+"/"+ settings->game.track+".txt", pre_time, error_output))
+	if (!timer.Load(PATHMANAGER::Records()+"/"+ settings->game.sim_mode+"/"+ settings->game.track+".txt", pre_time))
 		return false;
 
 	//add cars to the timer system
@@ -601,9 +588,9 @@ void GAME::LeaveGame()
 }
 
 ///  add a car, optionally controlled by the local player
-CAR* GAME::LoadCar(const string & pathCar, const string & carname, const MATHVECTOR<float,3> & start_position,
-				   const QUATERNION<float> & start_orientation, bool islocal, bool isai,
-				   bool isRemote, int idCar)
+CAR* GAME::LoadCar(const string & pathCar, const string & carname,
+	const MATHVECTOR<float,3> & start_position, const QUATERNION<float> & start_orientation,
+	bool islocal, bool isRemote, int idCar)
 {
 	CONFIGFILE carconf;
 	if (!carconf.Load(pathCar))
@@ -616,18 +603,16 @@ CAR* GAME::LoadCar(const string & pathCar, const string & carname, const MATHVEC
 		start_position, start_orientation,
 		collision,
 		sound.Enabled(), sound.GetDeviceInfo(), sound_lib,
-		settings->abs || isai,
-		settings->tcs || isai,
-		isRemote, idCar,
-		false, info_output, error_output))
+		settings->abs, settings->tcs,
+		isRemote, idCar, false))
 	{
-		error_output << "Error loading car: " << carname << endl;
+		LogO("-=- Error: loading CAR: "+carname);
 		cars.pop_back();
 		return NULL;
 	}
 	else
 	{
-		info_output << "Car loaded: " << carname << endl;
+		LogO("-=- Car loaded: "+carname);
 
 		if (islocal)
 		{
@@ -652,7 +637,7 @@ bool GAME::LoadTrack(const string & trackname)
 		settings->game.trackreverse,
 		/**/0, "large", true, false))
 	{
-		error_output << "Error loading track: " << trackname << endl;
+		LogO("Error loading track: "+trackname);
 		return false;
 	}
 	bool success = true;
@@ -665,13 +650,13 @@ bool GAME::LoadTrack(const string & trackname)
 
 	if (!success)
 	{
-		error_output << "Error loading track (deferred): " << trackname << endl;
+		LogO("Error loading track (deferred): "+trackname);
 		return false;
 	}
 
 	//setup track collision
 	collision.SetTrack(&track);
-	collision.DebugPrint(info_output);
+	//collision.DebugPrint(std::cerr);
 
 	return true;
 }
@@ -751,19 +736,20 @@ void GAME::UpdateForceFeedback(float dt)
 			double force = feedback;
 
 			//cout << "ff_update_time: " << ff_update_time << " force: " << force << endl;
-			forcefeedback->update(force, &feedback, ffdt, error_output);
+			forcefeedback->update(force, &feedback, ffdt, cerr);
 		}
 	}
 
 	if (pause && dt == 0)
 	{
 		double pos=0;
-		forcefeedback->update(0, &pos, 0.02, error_output);
+		forcefeedback->update(0, &pos, 0.02, cerr);
 	}
 #endif
 }
 
 
+//-----------------------------------------------------------
 bool GAME::ParseArguments(list <string> & args)
 {
 	bool continue_game(true);
@@ -808,7 +794,7 @@ bool GAME::ParseArguments(list <string> & args)
 
 	if (argmap.find("-benchmark") != argmap.end())
 	{
-		info_output << "Entering benchmark mode." << endl;
+		LogO("Entering benchmark mode.");
 		benchmode = true;
 	}
 	arghelp["-benchmark"] = "Run in benchmark mode.";
@@ -829,7 +815,7 @@ bool GAME::ParseArguments(list <string> & args)
 				helpstr.push_back(' ');
 			helpstr.append(i->second + "\n");
 		}
-		info_output << "Command-line help:\n\n" << helpstr << endl;
+		cout << "Command-line help:\n\n" << helpstr << endl;
 		continue_game = false;
 	}
 	return continue_game;

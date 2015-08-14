@@ -59,8 +59,7 @@ bool CAR::Load(class App* pApp1,
 	bool soundenabled, const SOUNDINFO & sound_device_info, const SOUND_LIB & soundbufferlibrary,
 	bool defaultabs, bool defaulttcs,
 	bool isRemote, int idCar,
-  	bool debugmode,
-  	std::ostream & info_output, std::ostream & error_output)
+  	bool debugmode)
 {
 	pApp = pApp1;  pGame = pApp->pGame;  pSet = pApp->pSet;
 
@@ -70,20 +69,20 @@ bool CAR::Load(class App* pApp1,
 
 	#if 0  // .joe meshes old
 	std::stringstream nullout;
-	if (!LoadInto( carpath+"body.joe", bodymodel, error_output)) ;
-	if (!LoadInto( carpath+"interior.joe", interiormodel, nullout )) ;
-	if (!LoadInto( carpath+"glass.joe", glassmodel, nullout )) ;
+	LoadInto( carpath+"body.joe", bodymodel);
+	LoadInto( carpath+"interior.joe", interiormodel);
+	LoadInto( carpath+"glass.joe", glassmodel);
 	std::stringstream nullout;
 
 	for (int i = 0; i < 2; i++)
 	{
-		if (!LoadInto( carpath+"wheel_front.joe", wheelmodelfront, error_output)) ;
-		LoadInto( carpath+"floating_front.joe", floatingmodelfront, nullout);
+		LoadInto( carpath+"wheel_front.joe", wheelmodelfront);
+		LoadInto( carpath+"floating_front.joe", floatingmodelfront);
 	}
 	for (int i = 2; i < 4; i++)
 	{
-		if (!LoadInto( carpath+"wheel_rear.joe", wheelmodelrear, error_output)) ;
-		LoadInto( carpath+"floating_rear.joe", floatingmodelrear, nullout);
+		LoadInto( carpath+"wheel_rear.joe", wheelmodelrear);
+		LoadInto( carpath+"floating_rear.joe", floatingmodelrear);
 	}
 	#endif
 
@@ -138,7 +137,7 @@ bool CAR::Load(class App* pApp1,
 
 	// load cardynamics
 	{
-		if (!cd.Load(pGame, cf, error_output))  return false;
+		if (!cd.Load(pGame, cf))  return false;
 
 		MATHVECTOR<double,3> position;
 		QUATERNION<double> orientation;
@@ -165,7 +164,7 @@ bool CAR::Load(class App* pApp1,
 	// load sounds
 	if (soundenabled)
 	{
-		if (!LoadSounds(carpath, sound_device_info, soundbufferlibrary, info_output, error_output))
+		if (!LoadSounds(carpath, sound_device_info, soundbufferlibrary))
 			return false;
 	}
 
@@ -176,16 +175,16 @@ bool CAR::Load(class App* pApp1,
 
 
 //--------------------------------------------------------------------------------------------------------------------------
-bool CAR::LoadInto(const std::string & joefile, MODEL_JOE03 & output_model,	std::ostream & error_output)
+bool CAR::LoadInto(const std::string & joefile, MODEL_JOE03 & output_model)
 {
 	if (!output_model.Loaded())
 	{
 		std::stringstream nullout;
 		if (!output_model.ReadFromFile(joefile.substr(0,std::max((long unsigned int)0,(long unsigned int) joefile.size()-3))+"ova", nullout))
 		{
-			if (!output_model.Load(joefile, error_output))
+			if (!output_model.Load(joefile, std::cerr))
 			{
-				/*error_output << "Error loading model: " << joefile << std::endl;*/
+				//LogO("Error loading model: " +joefile);
 				return false;
 			}
 		}
