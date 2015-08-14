@@ -17,7 +17,7 @@ enum PaceTypes                 // 90     // 180    // 270
 	P_OnPipe, P_Slow, P_Stop, P_Danger,   // brake, warn
 	P_Bumps, P_Narrow, P_Obstacle, P_Split,
 	P_Ice, P_Mud, P_Water,  //..
-	P_ALL
+	Pace_ALL
 };
 
 struct PaceNote
