@@ -458,9 +458,9 @@ void CGui::btnNewGame(WP)
 		BackFromChs();  /// champ, back to single race
 	
 	app->NewGame();  app->isFocGui = false;  // off gui
-	if (app->mWndOpts)  app->mWndOpts->setVisible(app->isFocGui);
-	if (app->mWndRpl)  app->mWndRpl->setVisible(false);//
-	if (gcom->bnQuit)  gcom->bnQuit->setVisible(app->isFocGui);
+	app->mWndOpts->setVisible(app->isFocGui);
+	app->mWndRpl->setVisible(false);//
+	gcom->bnQuit->setVisible(app->isFocGui);
 	
 	app->updMouse();
 	
@@ -482,14 +482,14 @@ void CGui::toggleGui(bool toggle)
 		app->isFocGui = !app->isFocGui;
 
 	bool notMain = app->isFocGui && !pSet->isMain;
-	if (app->mWndMain)	app->mWndMain->setVisible(app->isFocGui && pSet->isMain);
-	if (app->mWndReplays) app->mWndReplays->setVisible(notMain && pSet->inMenu == MNU_Replays);
-	if (app->mWndHelp)	app->mWndHelp->setVisible(notMain && pSet->inMenu == MNU_Help);
-	if (app->mWndOpts)	app->mWndOpts->setVisible(notMain && pSet->inMenu == MNU_Options);
+	app->mWndMain->setVisible(app->isFocGui && pSet->isMain);
+	app->mWndReplays->setVisible(notMain && pSet->inMenu == MNU_Replays);
+	app->mWndHelp->setVisible(notMain && pSet->inMenu == MNU_Help);
+	app->mWndOpts->setVisible(notMain && pSet->inMenu == MNU_Options);
 	if (!app->isFocGui)  app->mWndTrkFilt->setVisible(false);
 	
 	//  load Readme editbox from file
-	if (app->mWndHelp && app->mWndHelp->getVisible() && loadReadme)
+	if (app->mWndHelp->getVisible() && loadReadme)
 	{
 		loadReadme = false;
 		Ed ed = fEd("Readme");
@@ -514,15 +514,13 @@ void CGui::toggleGui(bool toggle)
 
 	UpdChampTabVis();
 	
-	if (app->mWndGame)
-	{	bool vis = notMain  && gc;
-		app->mWndGame->setVisible(vis);
-		if (vis)
-		{
-			app->mWndGame->setCaption(chAny ? sCh : TR("#{SingleRace}"));
-			TabItem* t = app->mWndTabsGame->getItemAt(TAB_Champs);
-			t->setCaption(sCh);
-		}
+	bool vis = notMain  && gc;
+	app->mWndGame->setVisible(vis);
+	if (vis)
+	{
+		app->mWndGame->setCaption(chAny ? sCh : TR("#{SingleRace}"));
+		TabItem* t = app->mWndTabsGame->getItemAt(TAB_Champs);
+		t->setCaption(sCh);
 	}
 	if (notMain && gc)  // show hide champs,stages
 	{
@@ -535,7 +533,7 @@ void CGui::toggleGui(bool toggle)
 		t->setButtonWidthAt(TAB_Stage, chAny ?-1 : 1);  if (id == TAB_Stage  && !chAny)  t->setIndexSelected(TAB_Track);
 	}
 
-	if (gcom->bnQuit)  gcom->bnQuit->setVisible(app->isFocGui);
+	gcom->bnQuit->setVisible(app->isFocGui);
 	app->updMouse();
 	if (!app->isFocGui)  gcom->mToolTip->setVisible(false);
 

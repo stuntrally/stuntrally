@@ -85,7 +85,7 @@ void CGui::btnRplLoad(WP)  // Load
 		pSet->game = pSet->gui;
 		pSet->game.track = trk;  pSet->game.track_user = usr;
 
-		pSet->game.trees = h.ver < 16 ? 1.f : h.trees;  // older didnt have trees saved, so use default 1
+		pSet->game.trees = h.trees;
 		pSet->game.local_players = h.numPlayers;
 		BackFromChs();
 		LogO("RPL btn Load  players: "+toStr(h.numPlayers)+" netw: "+ toStr(h.networked));
@@ -149,8 +149,6 @@ void CGui::listRplChng(List* li, size_t pos)
 			for (n=0; n < pp; ++n)
 				ss += rh.nicks[n]+"  ";
 		}
-		//else  // other cars, car colors ..
-			//ss += String("\n#90C0E0")+rh.cars[0]+"  "+rh.cars[1]+"  "+rh.cars[2];
 		valRplInfo->setCaption(ss);
 
 		//  file stats
@@ -160,7 +158,7 @@ void CGui::listRplChng(List* li, size_t pos)
 		
 		ss = String(stm)+"\n#A0A0A0"+  // date
 			String(TR("#{RplFileSize}: ")) + fToStr( float(size)/1000000.f, 2,5) + TR(" #{UnitMB}") + "\n#808080" +
-			TR("#{RplVersion}: ") + toStr(rh.ver)/* + "     " + toStr(rh.frameSize) + "B"*/;
+			TR("#{RplVersion}: ") + toStr(rh.ver);
 		if (valRplInfo2)  valRplInfo2->setCaption(ss);
 	}
 	//edRplDesc
@@ -404,7 +402,7 @@ void CGui::ThreadConvert()
 
 		const string& path = paths[p];
 		li.clear();
-		PATHMANAGER::DirList(path, li, "rpl");  //LogO("PATH: "+path);
+		PATHMANAGER::DirList(path, li, "rpl");
 		iConvCur = 0;  iConvAll = li.size();
 
 		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
@@ -420,10 +418,7 @@ void CGui::ThreadConvert()
 				files[p].push_back(file);
 				boost::uintmax_t size = fs::file_size(s);
 				totalConv += size;
-				//LogO("FILE: "+file+"  size: "+fToStr( float(size)/1000000.f, 2,5)+" MiB");
 			}
-			//else LogO("FILE OK: "+file);
-
 			++iConvCur;
 		}
 		LogO("PATH: "+path+" total size:   "+fToStr( float(totalConv)/1000000.f, 2,5)+" MiB");
@@ -453,11 +448,9 @@ void CGui::ThreadConvert()
 			totalConvCur += size;
 			std::time_t tim = fs::last_write_time(s);
 
-			string ss=s;  // same name, no backup
-			//string ss=s+"2";  // test
-			rpl.SaveFile(ss);
-			fs::last_write_time(ss, tim);  // restore original
-			boost::uintmax_t sizeNew = fs::file_size(ss);
+			rpl.SaveFile(s);  // same name, no backup
+			fs::last_write_time(s, tim);  // restore original date
+			boost::uintmax_t sizeNew = fs::file_size(s);
 			totalConvNew += sizeNew;
 			++iConvCur;
 		}
@@ -465,7 +458,6 @@ void CGui::ThreadConvert()
 
 	//  Results  ------------
 	bConvertRpl = false;
-	//txtConvert->setVisible(false);
 	LogO("====----  Converting Results");
 	LogO("  Sizes");
 	LogO("  old:   "+ fToStr( float(totalConv)/1000000.f, 2,5) +" MiB");

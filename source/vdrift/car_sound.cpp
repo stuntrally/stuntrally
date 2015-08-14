@@ -260,12 +260,6 @@ void CAR::UpdateSounds(float dt)
 		if (pApp->pGame->sound.Enabled())
 			pApp->pGame->sound.SetListener(campos, camrot, MATHVECTOR<float,3>(),
 				pApp->mSplitMgr->mNumViewports == 1);  // 3D for 1 player
-
-		/*bool incar = false;//
-		std::list <SOUNDSOURCE *> soundlist;
-		GetEngineSoundList(soundlist);
-		for (std::list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
-			(*s)->Set3DEffects(!incar);*/
 	}
 
 	//  engine

@@ -113,6 +113,8 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	header.SafeEnd0();
 
 	//  old fixes--
+	if (header.ver < 6)
+		header.trees = 1.f;  // older didnt have trees saved, so use default 1
 	if (header.ver < 9)
 		header.sim_mode[0]=0;  // versions below 9 have no sim mode
 	if (header.ver <= 9)

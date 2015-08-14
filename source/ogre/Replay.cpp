@@ -21,7 +21,7 @@ void ReplayHeader2::Default()
 {
 	SetHead();
 	track = "";  track_user = 0;
-	ver = 30;  time = 0.f;
+	ver = 30;  time = -0.01f;
 	
 	numPlayers = 0;  trees = 1.f;
 	num_laps = 1;  networked = 0;
@@ -32,7 +32,7 @@ void ReplayHeader2::Default()
 
 void ReplayHeader2::FromOld(const struct ReplayHeader& h)
 {
-	time = 0.f;  //set later
+	time = -0.01f;  //set later
 	ver = h.ver;
 	track = h.track;
 	track_user = h.track_user;
@@ -336,8 +336,6 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 					rd(h.vHitNorm.x);  rd(h.vHitNorm.y);  rd(h.vHitNorm.z);
 					f.hit.push_back(h);
 				}
-				
-				//LogO(">- id:"+toStr(i)+" t:"+fToStr(f.time,5,8)+" p: "+fToStr(f.pos[0])+" "+fToStr(f.pos[1])+" "+fToStr(f.pos[2]));
 
 				if (time <= prevTime)
 				{
@@ -369,8 +367,6 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 //-------------------------------------------------------------------------------------------------------
 bool Replay2::SaveFile(string file)
 {
-	//if (header.numPlayers < 1)  return false;
-	
 	ofstream of(file.c_str(), ios::binary | ios::out);
 	if (!of)  return false;
 

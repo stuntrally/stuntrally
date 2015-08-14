@@ -105,21 +105,11 @@ void PosInfo::FromRpl2(const ReplayFrame2* rf, CARDYNAMICS* cd)
 	fHitTime = rf->fHitTime;
 	if (!rf->hit.empty())
 	{	
-		const RHit& h = rf->hit[0];
-		//fHitForce = h.fHitForce;
+		const RHit& h = rf->hit[0];  //fHitForce = h.fHitForce;
 		fParIntens = h.fParIntens;  fParVel = h.fParVel;
 		vHitPos = h.vHitPos;  vHitNorm = h.vHitNorm;
 	}
-	/*if (rf->scrap.empty())  //!get(b_scrap)
-	{
-		fCarScrap = 0.f;  fCarSceech = 0.f;
-	}else
-	{	const RScrap& sc = rf->scrap[0];
-		fCarScrap = sc.fScrap;  fCarSceech = sc.fScreech;
-	}
-	if (get(b_scrap)
-	b_fluid, b_hov
-	/**/
+	//get(b_scrap) in car_sound
 
 	//  wheels
 	int ww = rf->wheels.size();
@@ -246,7 +236,6 @@ void ReplayFrame::FromCar(const CAR* pCar)
 		suspVel[w] = cd.GetSuspension(wp).GetVelocity();
 		suspDisp[w] = cd.GetSuspension(wp).GetDisplacementPercent();
 
-		//replay.header.whR[w] = pCar->GetTireRadius(wp);//
 		whTerMtr[w] = cd.whTerMtr[w];  whRoadMtr[w] = cd.whRoadMtr[w];
 		//  fluids
 		whH[w] = cd.whH[w];  whP[w] = cd.whP[w];
@@ -269,7 +258,7 @@ void ReplayFrame::FromCar(const CAR* pCar)
 	posEngn = cd.GetEnginePosition();
 	speed = pCar->GetSpeed();
 	dynVel = cd.GetVelocity().Magnitude();
-	braking = cd.IsBraking();  //// from posInfo?, todo: simplify this code here ^^
+	braking = cd.IsBraking();
 	if (cd.vtype == V_Sphere)
 		hov_roll = cd.sphereYaw;
 	else
@@ -294,7 +283,6 @@ void ReplayFrame2::FromCar(const CAR* pCar, half prevHitTime)
 	rot = cd.GetOrientation();
 
 	//  wheels
-	//wheels.resize(cd.numWheels);
 	//wheels.clear();
 	for (int w=0; w < cd.numWheels; ++w)
 	{
@@ -330,7 +318,7 @@ void ReplayFrame2::FromCar(const CAR* pCar, half prevHitTime)
 	vel = pCar->GetSpeedometer();  rpm = pCar->GetEngineRPM();  gear = pCar->GetGear();
 	throttle = cd.GetThrottle() *255.f;  clutch = pCar->GetClutch() *255.f;
 	steer = pCar->GetLastSteer() *127.f;  fboost = cd.doBoost *255.f;
-	damage = cd.fDamage /100.f*255.f;  //percent set before
+	damage = cd.fDamage /100.f*255.f;  //percent set outside
 
 	//  eng snd
 	speed = pCar->GetSpeed();  dynVel = cd.GetVelocity().Magnitude();
