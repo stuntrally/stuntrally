@@ -25,22 +25,18 @@ using namespace std;
 
 
 ///  ctor
-GAME::GAME(ostream & info_out, ostream & err_out, SETTINGS* pSettings) :
-	settings(pSettings), info_output(info_out), error_output(err_out),
-	frame(0), displayframe(0), clocktime(0), target_time(0),
-	//framerate(0.01f),  ///~  0.004+  o:0.01
-	fps_track(10,0), fps_position(0), fps_min(0), fps_max(0),
-	multithreaded(false), benchmode(false), dumpfps(false),
-	pause(false), debugmode(false), profilingmode(false),
-	particle_timer(0), race_laps(0),
-	track(info_out, err_out), /*tracknode(NULL),*/
-	framerate(1.0 / pSettings->game_fq),
-	app(NULL),
-	tire_ref_id(0),
-	reloadSimNeed(0),reloadSimDone(0)
+GAME::GAME(ostream & info_out, ostream & err_out, SETTINGS* pSettings)
+	:app(NULL), settings(pSettings), info_output(info_out), error_output(err_out)
+	,frame(0), displayframe(0), clocktime(0), target_time(0)
+	//,framerate(0.01f),  ///~  0.004+  o:0.01
+	,fps_min(0), fps_max(0)
+	,pause(false), profilingmode(false), benchmode(false)
+	,track(info_out, err_out)
+	,framerate(1.0 / pSettings->game_fq)
+	,tire_ref_id(0), reloadSimNeed(0),reloadSimDone(0)
 {
 	track.pGame = this;
-	carcontrols_local.first = NULL;
+	controls.first = NULL;
 	//  sim iv from settings
 	collision.fixedTimestep = 1.0 / pSettings->blt_fq;
 	collision.maxSubsteps = pSettings->blt_iter;
@@ -64,7 +60,7 @@ void GAME::Start(list <string> & args)
 
 	//settings->Load(PATHMANAGER::GetSettingsFile());
 
-	carcontrols_local.second.Reset();
+	controls.second.Reset();
 
 	InitializeSound(); //if sound initialization fails, that's okay, it'll disable itself
 
@@ -391,6 +387,7 @@ void GAME::End()
 	track.Clear();
 }
 
+
 void GAME::Test()
 {
 	QT_RUN_TESTS;
@@ -427,9 +424,9 @@ bool GAME::OneLoop(double dt)
 ///  step game required amount of ticks
 void GAME::Tick(double deltat)
 {
-	const float minfps = 10.0f; //this is the minimum fps the game will run at before it starts slowing down time
-	const unsigned int maxticks = (int) (1.0f / (minfps * framerate));
-	const float maxtime = 1.0/minfps;
+	const float minfps = 10.f;  // this is the minimum fps the game will run at before it starts slowing down time
+	const unsigned int maxticks = (int)(1.f / (minfps * framerate));
+	const float maxtime = 1.f / minfps;
 	unsigned int curticks = 0;
 
 	//  throw away wall clock time if necessary to keep the framerate above the minimum
@@ -439,10 +436,8 @@ void GAME::Tick(double deltat)
 	//.  dont simulate before /network start
 	bool sim = app->iLoad1stFrames == -2 && (!timer.waiting || timer.end_sim);
 
-	//if (rand()%200 > 2)  sim = false;  // test start pos
-	//LogO("SIM:"+fToStr(deltat,4,6) + (!sim ? "----":""));
-
-	if (app && app->bPerfTest)  // speed up perf test
+	//  speed up perf test
+	if (app && app->bPerfTest)
 		deltat *= settings->perf_speed;
 	
 	target_time += deltat;
@@ -462,23 +457,19 @@ void GAME::Tick(double deltat)
 	}
 }
 
+
 ///  simulate game by one frame
 //----------------------------------------------------------------------------------------------------------------------------
 void GAME::AdvanceGameLogic(double dt)
 {
 	if (track.Loaded())
 	{
-		if (pause && carcontrols_local.first)
+		if (pause && controls.first)
 			sound.Pause(true);
 		else
 		{
 			if (sound.Enabled())
 				sound.Pause(false);
-
-			//PROFILER.beginBlock("ai");
-			//ai.Visualize(rootnode);
-			//ai.update(TickPeriod(), &track, cars); //-
-			//PROFILER.endBlock("ai");
 
 			PROFILER.beginBlock("-physics");
 
@@ -509,9 +500,7 @@ void GAME::AdvanceGameLogic(double dt)
 				UpdateCar(*it, TickPeriod());
 			PROFILER.endBlock("-car-sim");
 
-			//PROFILER.beginBlock("timer");
 			UpdateTimer();
-			//PROFILER.endBlock("timer");
 		}
 	}
 
@@ -541,7 +530,7 @@ void GAME::UpdateCarInputs(CAR & car)
 
 	boost::lock_guard<boost::mutex> lock(app->input->mPlayerInputStateMutex);
 	int id = std::min(3, car.id);
-	carinputs = carcontrols_local.second.ProcessInput(
+	carinputs = controls.second.ProcessInput(
 		app->input->mPlayerInputState[id], car.id,
 		carspeed, sss_eff, sss_velf,  app->mInputCtrlPlayer[id]->mbOneAxisThrottleBrake,
 		forceBrake, app->bPerfTest, app->iPerfTestStage);
@@ -566,12 +555,6 @@ bool GAME::NewGameDoLoadTrack()
 
 bool GAME::NewGameDoLoadMisc(float pre_time)
 {
-	//race_laps = num_laps;
-	///-----
-	race_laps = 0;
-
-	opponents.clear();
-
 	//send car sounds to the sound subsystem
 	for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
 	{
@@ -596,9 +579,7 @@ bool GAME::NewGameDoLoadMisc(float pre_time)
 ///  clean up all game data
 void GAME::LeaveGame()
 {
-	//ai.clear_cars();
-
-	carcontrols_local.first = NULL;
+	controls.first = NULL;
 
 	track.Unload();
 	collision.Clear();
@@ -638,7 +619,7 @@ CAR* GAME::LoadCar(const string & pathCar, const string & carname, const MATHVEC
 		settings->abs || isai,
 		settings->tcs || isai,
 		isRemote, idCar,
-		debugmode, info_output, error_output))
+		false, info_output, error_output))
 	{
 		error_output << "Error loading car: " << carname << endl;
 		cars.pop_back();
@@ -651,13 +632,13 @@ CAR* GAME::LoadCar(const string & pathCar, const string & carname, const MATHVEC
 		if (islocal)
 		{
 			//load local controls
-			carcontrols_local.first = &cars.back();
+			controls.first = &cars.back();
 
 			//setup auto clutch and auto shift
 			ProcessNewSettings();
 			// shift into first gear if autoshift enabled
-			if (carcontrols_local.first && settings->autoshift)
-				carcontrols_local.first->SetGear(1);
+			if (controls.first && settings->autoshift)
+				controls.first->SetGear(1);
 		}
 	}
 	return &cars.back();
@@ -665,8 +646,6 @@ CAR* GAME::LoadCar(const string & pathCar, const string & carname, const MATHVEC
 
 bool GAME::LoadTrack(const string & trackname)
 {
-	LoadingScreen(0.0,1.0);
-
 	//load the track
 	if (!track.DeferredLoad(
 		(settings->game.track_user ? PATHMANAGER::TracksUser() : PATHMANAGER::Tracks()) + "/" + trackname,
@@ -680,11 +659,6 @@ bool GAME::LoadTrack(const string & trackname)
 	int count = 0;
 	while (!track.Loaded() && success)
 	{
-		int displayevery = track.DeferredLoadTotalObjects() / 50;
-		if (displayevery == 0 || count % displayevery == 0)
-		{
-			LoadingScreen(count, track.DeferredLoadTotalObjects());
-		}
 		success = track.ContinueDeferredLoad();
 		count++;
 	}
@@ -741,52 +715,38 @@ void GAME::LoadSaveOptions(OPTION_ACTION action, map<string, string> & options)
 //  update the game with any new setting changes that have just been made
 void GAME::ProcessNewSettings()
 {
-	if (carcontrols_local.first)
+	if (controls.first)
 	{
 		int i = app->scn->sc->asphalt ? 1 : 0;
-		carcontrols_local.first->SetABS(settings->abs[i]);
-		carcontrols_local.first->SetTCS(settings->tcs[i]);
-		carcontrols_local.first->SetAutoShift(settings->autoshift);
-		carcontrols_local.first->SetAutoRear(settings->autorear);
-		//carcontrols_local.first->SetAutoClutch(settings->rear_inv);
+		controls.first->SetABS(settings->abs[i]);
+		controls.first->SetTCS(settings->tcs[i]);
+		controls.first->SetAutoShift(settings->autoshift);
+		controls.first->SetAutoRear(settings->autorear);
+		//controls.first->SetAutoClutch(settings->rear_inv);
 	}
 	sound.SetMasterVolume(settings->vol_master);
-}
-
-void GAME::LoadingScreen(float progress, float max)
-{
-	//assert(max > 0);
-	//loadingscreen.Update(progress/(max+0.001f));	///+-
-
-	//CollapseSceneToDrawlistmap(loadingscreen_node, graphics.GetDrawlistmap(), true);
 }
 
 void GAME::UpdateForceFeedback(float dt)
 {
 #ifdef ENABLE_FORCE_FEEDBACK
-	if (carcontrols_local.first)
+	if (controls.first)
 	{
 		//static ofstream file("ff_output.txt");
 		ff_update_time += dt;
 		const double ffdt = 0.02;
-		if (ff_update_time >= ffdt )
+		if (ff_update_time >= ffdt)
 		{
 			ff_update_time = 0.0;
-			double feedback = -carcontrols_local.first->GetFeedback();
+			double feedback = -controls.first->GetFeedback();
 
 			feedback = settings->ff_gain * feedback / 100.0;
-			if (settings->ff_invert) feedback = -feedback;
+			if (settings->ff_invert)  feedback = -feedback;
 
-			if (feedback > 1.0)
-				feedback = 1.0;
-			if (feedback < -1.0)
-				feedback = -1.0;
+			if (feedback > 1.0)  feedback = 1.0;
+			if (feedback <-1.0)  feedback =-1.0;
 			//feedback += 0.5;
-			/*
-			static double motion_frequency = 0.1;
-			static double motion_amplitude = 4.0;
-			static double spring_strength = 1.0;
-			*/
+			//const static double motion_frequency = 0.1, motion_amplitude = 4.0;
 			//double center = sin( timefactor * 2 * M_PI * motion_frequency ) * motion_amplitude;
 			double force = feedback;
 
@@ -803,100 +763,6 @@ void GAME::UpdateForceFeedback(float dt)
 #endif
 }
 
-void GAME::UpdateDriftScore(CAR & car, double dt)
-{
-	bool is_drifting = false;
-	bool spin_out = false;
-
-	//make sure the car is not off track
-	int wheel_count = 0;
-	for (int i=0; i < 4; i++)
-	{
-		if ( car.GetCurPatch ( WHEEL_POSITION(i) ) ) wheel_count++;
-	}
-
-	bool on_track = ( wheel_count > 1 );
-	int carId = 0;
-
-	//car's direction on the horizontal plane
-	MATHVECTOR<float,3> car_orientation(1,0,0);
-	car.GetOrientation().RotateVector(car_orientation);
-	car_orientation[2] = 0;
-
-	//car's velocity on the horizontal plane
-	MATHVECTOR<float,3> car_velocity = car.GetVelocity();
-	car_velocity[2] = 0;
-	float car_speed = car_velocity.Magnitude();
-
-	//angle between car's direction and velocity
-	float car_angle = 0;
-	float mag = car_orientation.Magnitude() * car_velocity.Magnitude();
-	if (mag > 0.001)
-	{
-		float dotprod = car_orientation.dot ( car_velocity )/mag;
-		if (dotprod > 1.0)
-			dotprod = 1.0;
-		if (dotprod < -1.0)
-			dotprod = -1.0;
-		car_angle = acos(dotprod);
-	}
-
-	assert(car_angle == car_angle); //assert that car_angle isn't NAN
-
-	if ( on_track )
-	{
-		//velocity must be above 10 m/s
-		if ( car_speed > 10 )
-		{
-			//drift starts when the angle > 0.2 (around 11.5 degrees)
-			//drift ends when the angle < 0.1 (aournd 5.7 degrees)
-			float angle_threshold(0.2);
-			if ( timer.GetIsDrifting(carId) ) angle_threshold = 0.1;
-
-			is_drifting = ( car_angle > angle_threshold && car_angle <= M_PI/2.0 );
-			spin_out = ( car_angle > M_PI/2.0 );
-		}
-	}
-
-	//calculate score
-	if ( is_drifting )
-	{
-		//base score is the drift distance
-		timer.IncrementThisDriftScore(carId, dt * car_speed);
-
-		//bonus score calculation is now done in TIMER
-		timer.UpdateMaxDriftAngleSpeed(carId, car_angle, car_speed);
-
-		//cout << timer.GetDriftScore(carId) << " + " << timer.GetThisDriftScore(carId) << endl;
-	}
-
-	if (settings->multi_thr != 1)
-		timer.SetIsDrifting(carId, is_drifting, on_track && !spin_out);
-
-	//cout << is_drifting << ", " << on_track << ", " << car_angle << endl;
-}
-
-
-//  break up the input into a vector of strings using the token characters given
-vector <string> Tokenize(const string & input, const string & tokens)
-{
-	vector <string> out;
-
-	unsigned int pos = 0;
-	unsigned int lastpos = 0;
-
-	while (pos != (unsigned int) string::npos)
-	{
-		pos = input.find_first_of(tokens, pos);
-		string thisstr = input.substr(lastpos,pos-lastpos);
-		if (!thisstr.empty())
-			out.push_back(thisstr);
-		pos = input.find_first_not_of(tokens, pos);
-		lastpos = pos;
-	}
-
-	return out;
-}
 
 bool GAME::ParseArguments(list <string> & args)
 {
@@ -909,21 +775,16 @@ bool GAME::ParseArguments(list <string> & args)
 	for (list <string>::iterator i = args.begin(); i != args.end(); ++i)
 	{
 		if ((*i)[0] == '-')
-		{
 			argmap[*i] = "";
-		}
 
 		list <string>::iterator n = i;
 		n++;
 		if (n != args.end())
-		{
-			if ((*n)[0] != '-')
-				argmap[*i] = *n;
-		}
+		if ((*n)[0] != '-')
+			argmap[*i] = *n;
 	}
 
 	//check for arguments
-
 	if (argmap.find("-test") != argmap.end())
 	{
 		Test();
@@ -931,32 +792,15 @@ bool GAME::ParseArguments(list <string> & args)
 	}
 	arghelp["-test"] = "Run unit tests.";
 
-	if (argmap.find("-debug") != argmap.end())
-	{
-		debugmode = true;
-	}
 	///+
 	//debugmode = true;
-	arghelp["-debug"] = "Display car debugging information.";
-
-	arghelp["-cartest CAR"] = "Run car performance testing on given CAR.";
 
 	///+
-	//if (argmap.find("-profiling") != argmap.end() || argmap.find("-benchmark") != argmap.end())
 	//if (settings->bltLines/*bltProfilerTxt*/)
 	{
 		PROFILER.init(20);
 		profilingmode = true;
 	}
-	arghelp["-profiling"] = "Display game performance data.";
-
-	if (argmap.find("-dumpfps") != argmap.end())
-	{
-		info_output << "Dumping the frame-rate to log." << endl;
-		dumpfps = true;
-	}
-	arghelp["-dumpfps"] = "Continually dump the framerate to the log.";
-
 
 	if (argmap.find("-nosound") != argmap.end())
 		sound.DisableAllSound();
@@ -988,7 +832,6 @@ bool GAME::ParseArguments(list <string> & args)
 		info_output << "Command-line help:\n\n" << helpstr << endl;
 		continue_game = false;
 	}
-
 	return continue_game;
 }
 
