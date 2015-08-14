@@ -3,8 +3,11 @@
 #include "../ogre/common/RenderConst.h"
 #include "PaceNotes.h"
 #include <OgreTimer.h>
+#include <OgreSceneManager.h>
+#include <OgreSceneNode.h>
+#include <OgreBillboardSet.h>
+//#include <OgreTerrain.h>
 using namespace Ogre;
-using std::vector;  using std::min;  using std::max;
 
 
 //  ctor  ---------
