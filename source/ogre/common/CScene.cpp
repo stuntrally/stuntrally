@@ -16,7 +16,7 @@ CScene::CScene(App* app1)
 	,terrain(0), mTerrainGroup(0), mTerrainGlobals(0)
 	,horizon(0), mHorizonGroup(0), mHorizonGlobals(0)
 	,mWaterRTT(0)
-	,road(0)
+	,road(0), pace(0)
 	,vdrTrack(0)
 {
 	data = new CData();
@@ -26,6 +26,7 @@ CScene::CScene(App* app1)
 
 CScene::~CScene()
 {
+	delete pace;
 	delete road;
 
 	OGRE_DELETE mHorizonGroup;
@@ -45,6 +46,7 @@ void CScene::DestroyRoad()
 	if (!road)  return;
 	road->DestroyRoad();
 	delete road;  road = 0;
+	delete pace;  pace = 0;
 }
 
 

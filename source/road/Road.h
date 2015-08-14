@@ -73,7 +73,7 @@ public:
 	bool LoadFile(Ogre::String fname, bool build=true), SaveFile(Ogre::String fname);
 	
 	//  Rebuild
-	void RebuildRoadInt(bool editorAlign=false, bool edBulletFull=false);
+	bool RebuildRoadInt(bool editorAlign=false, bool edBulletFull=false);
 	void Destroy(), DestroyRoad(), DestroySeg(int id);
 
 

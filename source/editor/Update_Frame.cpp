@@ -7,6 +7,7 @@
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
+#include "../road/PaceNotes.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/MultiList2.h"
 #include "../ogre/common/RenderBoxScene.h"
@@ -236,7 +237,9 @@ if (pSet->bTrees)
 	if (road)  // road
 	{
 		road->bCastShadow = pSet->shadow_type >= Sh_Depth;
-		road->RebuildRoadInt();
+		bool full = road->RebuildRoadInt();
+		if (full && scn->pace)
+			scn->pace->Rebuild();  // pace
 	}
 
 	///**  Render Targets update

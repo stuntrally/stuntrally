@@ -8,6 +8,7 @@
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
+#include "../road/PaceNotes.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/RenderConst.h"
@@ -202,6 +203,8 @@ void App::LoadTrackEv()
 
 	if (scn->road)
 	{	scn->road->Destroy();  delete scn->road;  scn->road = 0;  }
+	if (scn->pace)
+	{	scn->pace->Destroy();  delete scn->pace;  scn->pace = 0;  }
 
 	// load scene
 	scn->sc->LoadXml(gcom->TrkDir()+"scene.xml");
@@ -245,6 +248,10 @@ void App::LoadTrackEv()
 	scn->road->Setup("sphere.mesh", pSet->road_sphr, scn->terrain, mSceneMgr, mCamera);
 	scn->road->LoadFile(gcom->TrkDir()+"road.xml");
 	scn->UpdPSSMMaterials();
+	
+	//  pace ~ ~
+	scn->pace = new PaceNotes(this);
+	scn->pace->Setup(mSceneMgr, mCamera, scn->terrain);
 	
 	
 	/// HW_Inst Test  * * *

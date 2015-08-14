@@ -11,10 +11,10 @@ using std::vector;  using std::min;  using std::max;
 ///  Rebuild geometry
 //--------------------------------------------------------------------------------------------------------------------------
 
-void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
+bool SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 {
 
-	if (!rebuild && !(editorAlign || bulletFull))  return;
+	if (!rebuild && !(editorAlign || bulletFull))  return false;
 	rebuild = false;
 
 	UpdRot(); //
@@ -85,6 +85,8 @@ void SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 
 	if (iDirtyId == -1)
 		LogO(String("::: Time Road Rebuild: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+
+	return iDirtyId == -1;
 }
 
 

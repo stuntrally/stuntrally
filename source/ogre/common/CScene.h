@@ -10,7 +10,7 @@ namespace Forests {  class PagedGeometry;  }
 namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class StaticGeometry;
 	class Light;  class SceneNode;  class Camera;  class Texture;  class SceneManager;  class Entity;
 	class Rectangle2D;  class RenderTexture;  class Viewport;  class Root;  class ParticleSystem; }
-class App;  class Scene;  class WaterRTT;  class CData;  class SplineRoad;
+class App;  class Scene;  class WaterRTT;  class CData;  class SplineRoad;  class PaceNotes;
 
 
 class CScene
@@ -59,6 +59,7 @@ public:
 
 	//  Road
 	SplineRoad* road;
+	PaceNotes* pace;
 	void DestroyRoad();
 
 	//  vdrift track

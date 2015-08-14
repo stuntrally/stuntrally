@@ -283,6 +283,14 @@
 			Name="Road"
 			>
 			<File
+				RelativePath="..\source\road\PaceNotes.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\road\PaceNotes.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\road\Road.h"
 				>
 			</File>
