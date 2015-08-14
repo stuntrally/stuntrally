@@ -189,6 +189,12 @@ void App::CreateObjects()
 			{
 				o.ms = fileLoader->ms;  // 1 only
 				o.rb = fileLoader->rb;  // 1 only
+
+				#ifndef SR_EDITOR
+				btTransform t1;  // save 1st pos for reset
+				o.ms->getWorldTransform(t1);
+				o.tr1 = new btTransform(t1);
+				#endif
 				#if 0
 				LogO(".bullet: "+o.name+
 					"  shapes:"+toStr(fileLoader->getNumCollisionShapes())+
@@ -212,6 +218,8 @@ void App::DestroyObjects(bool clear)
 	for (int i=0; i < scn->sc->objects.size(); ++i)
 	{
 		Object& o = scn->sc->objects[i];
+		delete o.tr1;  o.tr1 = 0;
+
 		// ogre
 		if (o.nd)  mSceneMgr->destroySceneNode(o.nd);  o.nd = 0;
 		#ifdef SR_EDITOR  // game has destroyAll
@@ -243,6 +251,24 @@ void App::DestroyObjects(bool clear)
 	}
 	if (clear)
 		scn->sc->objects.clear();
+}
+
+void App::ResetObjects()
+{
+	for (int i=0; i < scn->sc->objects.size(); ++i)
+	{
+		Object& o = scn->sc->objects[i];
+		if (o.dyn && o.ms && o.tr1)
+		{
+			o.rb->clearForces();
+			o.rb->setHitFraction(0.f);
+			o.rb->setLinearVelocity(btVector3(0,0,0));
+			o.rb->setAngularVelocity(btVector3(0,0,0));
+			o.rb->setActivationState(WANTS_DEACTIVATION);
+			o.rb->setWorldTransform(*o.tr1);
+			o.ms->setWorldTransform(*o.tr1);
+			o.SetFromBlt();
+	}	}
 }
 
 
