@@ -693,15 +693,16 @@ void CHud::ShowVp(bool vp)	// todo: use vis mask ..
 }
 
 
-void CHud::CreateArrow()
+void CHud::Arrow::Create(SceneManager* mSceneMgr, SETTINGS* pSet)
 {
-	if (!arrow.node)  arrow.node = app->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Entity* ent = app->mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
+	if (!node)  node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	if (ent)  return;
+	ent = mSceneMgr->createEntity("CheckpointArrow", "arrow.mesh");
 	ent->setRenderQueueGroup(RQG_Hud3);
 	ent->setCastShadows(false);
-	arrow.nodeRot = arrow.node->createChildSceneNode();
-	arrow.nodeRot->attachObject(ent);
-	arrow.nodeRot->setScale(pSet->size_arrow/2.f * Vector3::UNIT_SCALE);
+	nodeRot = node->createChildSceneNode();
+	nodeRot->attachObject(ent);
+	nodeRot->setScale(pSet->size_arrow/2.f * Vector3::UNIT_SCALE);
 	ent->setVisibilityFlags(RV_Hud);
-	arrow.nodeRot->setVisible(pSet->check_arrow);
+	nodeRot->setVisible(pSet->check_arrow);
 }

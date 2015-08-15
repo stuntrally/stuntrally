@@ -44,7 +44,7 @@ CHud::CHud(App* ap1)
 }
 
 CHud::Arrow::Arrow()
-	:node(0),nodeRot(0)
+	:ent(0),node(0),nodeRot(0)
 {	}
 
 

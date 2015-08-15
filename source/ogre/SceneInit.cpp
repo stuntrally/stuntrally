@@ -413,6 +413,7 @@ void App::LoadGame()  // 2
 	{	pGame->timer.waiting = true;  //+
 		pGame->timer.end_sim = false;
 	}
+	
 	pGame->NewGameDoLoadMisc(pretime);
 }
 //---------------------------------------------------------------------------------------------------------------
@@ -444,7 +445,7 @@ void App::LoadScene()  // 3
 	//  checkpoint arrow
 	bool deny = gui->pChall && !gui->pChall->chk_arr;
 	if (!bRplPlay && !deny)
-		hud->CreateArrow();
+		hud->arrow.Create(mSceneMgr, pSet);
 }
 
 
@@ -542,11 +543,7 @@ void App::LoadTerrain()  // 5
 
 
 	if (scn->sc->vdr)  // vdrift track
-	{
 		CreateVdrTrack(pSet->game.track, &pGame->track);
-		//CreateRacingLine();  //?-
-		//CreateRoadBezier();  //-
-	}
 }
 
 void App::LoadRoad()  // 6
@@ -775,24 +772,24 @@ void App::CreateRoad()
 {
 	///  road  ~ ~ ~
 	SplineRoad*& road = scn->road;
-	if (road)
-	{	road->DestroyRoad();  delete road;  road = 0;  }
+		if (road)
+		{	road->DestroyRoad();  delete road;  road = 0;  }
 
-	road = new SplineRoad(pGame);  // sphere.mesh
-	road->Setup("", 0.7,  scn->terrain, mSceneMgr, *mSplitMgr->mCameras.begin());
-	
-	String sr = gcom->TrkDir()+"road.xml";
-	road->LoadFile(gcom->TrkDir()+"road.xml");
+		road = new SplineRoad(pGame);  // sphere.mesh
+		road->Setup("", 0.7,  scn->terrain, mSceneMgr, *mSplitMgr->mCameras.begin());
+		
+		String sr = gcom->TrkDir()+"road.xml";
+		road->LoadFile(gcom->TrkDir()+"road.xml");
 	
 	//  after road load we have iChk1 so set it for carModels
 	for (int i=0; i < carModels.size(); ++i)
 		carModels[i]->ResetChecks(true);
 
-	scn->UpdPSSMMaterials();  ///+~-
+		scn->UpdPSSMMaterials();  ///+~-
 
-	road->bCastShadow = pSet->shadow_type >= Sh_Depth;
-	road->bRoadWFullCol = pSet->gui.collis_roadw;
+		road->bCastShadow = pSet->shadow_type >= Sh_Depth;
+		road->bRoadWFullCol = pSet->gui.collis_roadw;
 
-	road->RebuildRoadInt();
-	road->SetChecks();  // 2nd, upd
+		road->RebuildRoadInt();
+		road->SetChecks();  // 2nd, upd
 }
