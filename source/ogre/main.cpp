@@ -1,7 +1,5 @@
 #include "pch.h"
-//#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-//	#include "vld.h" // mem leaks +
-//#endif
+ //#include "vld.h" // mem leaks +
 #include "CGame.h"
 #include "../vdrift/game.h"
 #include "../vdrift/pathmanager.h"
