@@ -78,7 +78,7 @@ public:
 
 
 	///--------  Create
-	void Load(int startId=-1), Create(), CreateReflection();
+	void Load(int startId=-1), Create(), CreateReflection(), Destroy();
 	void CreatePart(Ogre::SceneNode* ndCar, Ogre::Vector3 vPofs,
 		Ogre::String sCar2, Ogre::String sCarI, Ogre::String sMesh, Ogre::String sEnt,
 		bool ghost, Ogre::uint32 visFlags,
@@ -180,6 +180,11 @@ public:
 	std::vector<Ogre::SceneNode*> ndWh, ndWhE, ndBrake;
 	Ogre::SceneNode* ndNextChk;
 	Ogre::Entity* entNextChk;
+
+	//  to destroy
+	std::vector<Ogre::SceneNode*> vDelNd;		void ToDel(Ogre::SceneNode* nd);
+	std::vector<Ogre::Entity*> vDelEnt;			void ToDel(Ogre::Entity* ent);
+	std::vector<Ogre::ParticleSystem*> vDelPar;	void ToDel(Ogre::ParticleSystem* par);
 	
 		
 	//  brake state

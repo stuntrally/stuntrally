@@ -242,7 +242,7 @@ void App::LoadCleanUp()  // 1 first
 	mRoot->addResourceLocation(resTrk, "FileSystem");
 	
 	//  Delete all cars
-	for (int i=0; i < carModels.size(); i++)
+	for (int i=0; i < carModels.size(); ++i)
 	{
 		CarModel* c = carModels[i];
 		if (c && c->fCam)
@@ -253,7 +253,6 @@ void App::LoadCleanUp()  // 1 first
 			if (i < 4)
 				pSet->cam_view[i] = carsCamNum[i];
 		}
-		if (c->pNickTxt)  {  mGui->destroyWidget(c->pNickTxt);  c->pNickTxt = 0;  }
 		delete c;
 	}
 	carModels.clear();  //carPoses.clear();
