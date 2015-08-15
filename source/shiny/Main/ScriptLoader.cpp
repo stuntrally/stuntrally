@@ -226,19 +226,6 @@ namespace sh
 					}
 					newNode->setValue(valueStr);
 
-					//Add root nodes to scriptList
-					if (!parent)
-					{
-						std::string key;
-
-						if (newNode->getValue() == "")
-								throw std::runtime_error("Root node must have a name (\"" + newNode->getName() + "\")");
-						key = newNode->getValue();
-
-						if (!m_scriptList.insert(ScriptItem(key, newNode)).second);
-							std::cout << "script node" << key << " already exists, will leak" << std::endl; // TODO: fix
-					}
-
 					_skipNewLines(stream);
 
 					//Add any sub-nodes
@@ -257,6 +244,23 @@ namespace sh
 					}
 
 					newNode->mFileName = mCurrentFileName;
+
+					//Add root nodes to scriptList
+					if (!parent)
+					{
+						std::string key;
+
+						if (newNode->getValue() == "")
+								throw std::runtime_error("Root node must have a name (\"" + newNode->getName() + "\")");
+						key = newNode->getValue();
+
+						if (!m_scriptList.insert(ScriptItem(key, newNode)).second)
+						{
+							std::cout << "Script node '" << key << "' already exists" << std::endl;
+							delete newNode;
+							newNode = NULL;
+						}
+					}
 
 					break;
 				}
@@ -285,15 +289,6 @@ namespace sh
 	{
 		mName = name;
 		mParent = parent;
-		mRemoveSelf = true;    //For proper destruction
-		mLastChildFound = -1;
-
-		//Add self to parent's child list (unless this is the root node being created)
-		if (parent != NULL)
-		{
-			mParent->mChildren.push_back(this);
-			mIter = --(mParent->mChildren.end());
-		}
 	}
 
 	ScriptNode::~ScriptNode()
@@ -303,21 +298,16 @@ namespace sh
 		for (i = mChildren.begin(); i != mChildren.end(); ++i)
 		{
 			ScriptNode *node = *i;
-			node->mRemoveSelf = false;
 			delete node;
 		}
 		mChildren.clear();
-
-		//Remove self from parent's child list
-		if (mRemoveSelf && mParent != NULL)
-		{
-			mParent->mChildren.erase(mIter);
-		}
 	}
 
 	ScriptNode *ScriptNode::addChild(const std::string &name)
 	{
-		return new ScriptNode(this, name);
+		ScriptNode* node = new ScriptNode(this, name);
+		mChildren.push_back(node);
+		return node;
 	}
 
 	ScriptNode *ScriptNode::findChild(const std::string &name)
@@ -327,10 +317,8 @@ namespace sh
 		//Search for the node from start to finish
 		for (int indx = 0; indx < childCount; ++indx){
 			ScriptNode *node = mChildren[indx];
-			if (node->mName == name) {
-				mLastChildFound = indx;
+			if (node->mName == name)
 				return node;
-			}
 		}
 
 		//Not found anywhere

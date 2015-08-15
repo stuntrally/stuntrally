@@ -119,12 +119,6 @@ namespace sh
 		std::string mValue;
 		std::vector<ScriptNode*> mChildren;
 		ScriptNode *mParent;
-
-
-		int mLastChildFound;  //The last child node's index found with a call to findChild()
-
-		std::vector<ScriptNode*>::iterator mIter;
-		bool mRemoveSelf;
 	};
  
 }
