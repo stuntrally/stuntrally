@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../vdrift/par.h"
 #include "common/Def_Str.h"
+#include "common/Axes.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"

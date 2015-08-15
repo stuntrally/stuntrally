@@ -8,6 +8,7 @@
 #include "settings.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/ShapeData.h"
+#include "../ogre/common/Axes.h"
 #include "../ogre/CarPosInfo.h"
 #include "Buoyancy.h"
 #include <OgreTimer.h>
@@ -93,7 +94,7 @@ CARDYNAMICS::~CARDYNAMICS()
 	delete poly;
 }
 
-static void ConvertV2to1(float & x, float & y, float & z)
+static void ConvertV2to1(float& x, float& y, float& z)
 {
 	float tx = x, ty = y, tz = z;
 	x = ty;  y = -tx;  z = tz;
@@ -117,7 +118,7 @@ void CARDYNAMICS::GetWPosStr(int i, int numWheels, WHEEL_POSITION& wl, WHEEL_POS
 //----------------------------------------------------------------------------------------------------------------------------------
 ///  Load  (.car file)
 //----------------------------------------------------------------------------------------------------------------------------------
-bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c)
+bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 {
 	pGame = game;
 	Ogre::Timer ti;
@@ -640,9 +641,9 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c)
 //----------------------------------------------------------------------------------------------------------------------------------
 void CARDYNAMICS::Init(
 	class SETTINGS* pSet1, class Scene* pScene1, class FluidsXml* pFluids1,
-	COLLISION_WORLD & world,
-	const MODEL & chassisModel, const MODEL & wheelModelFront, const MODEL & wheelModelRear,
-	const MATHVECTOR<Dbl,3> & position, const QUATERNION<Dbl> & orientation)
+	COLLISION_WORLD& world,
+	const MODEL& chassisModel, const MODEL& wheelModelFront, const MODEL& wheelModelRear,
+	const MATHVECTOR<Dbl,3>& position, const QUATERNION<Dbl>& orientation)
 {
 	pSet = pSet1;  pScene = pScene1;  pFluids = pFluids1;
 	this->world = &world;

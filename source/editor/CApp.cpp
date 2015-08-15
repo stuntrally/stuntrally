@@ -7,6 +7,7 @@
 #include "CGui.h"
 #include "../ogre/common/GuiCom.h"
 #include "../ogre/common/CScene.h"
+#include "../ogre/common/Axes.h"
 #include "../road/Road.h"
 #include "../paged-geom/PagedGeometry.h"
 #include "../ogre/common/WaterRTT.h"
@@ -48,6 +49,7 @@ App::App(SETTINGS* pSet1)
 	,inst(0)
 {
 	pSet = pSet1;
+	Axes::Init();
 	
 	mBrSize[0] = 16.f;	mBrSize[1] = 24.f;	mBrSize[2] = 16.f;	mBrSize[3] = 16.f;
 	mBrIntens[0] = 20.f;mBrIntens[1] = 20.f;mBrIntens[2] = 20.f;mBrIntens[3] = 20.f;

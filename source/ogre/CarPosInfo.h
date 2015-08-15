@@ -50,20 +50,3 @@ struct PosInfo
 	void FromRpl2(const ReplayFrame2* rf, class CARDYNAMICS* cd);
 	void FromCar(CAR* pCar);
 };
-
-
-struct Axes
-{
-	static void Init();
-	static Ogre::Quaternion qFixCar,qFixWh;
-
-	//  to ogre from vdrift
-	static void toOgre(Ogre::Vector3& vOut, const MATHVECTOR<float,3>& vIn);
-	static Ogre::Vector3 toOgre(const MATHVECTOR<float,3>& vIn);
-
-	static Ogre::Quaternion toOgre(const QUATERNION<float>& vIn);  // car
-	static Ogre::Quaternion toOgre(const QUATERNION<double>& vIn);
-	static Ogre::Quaternion toOgreW(const QUATERNION<half_float::half>& vIn);  // wheels
-	static Ogre::Quaternion toOgreW(const QUATERNION<float>& vIn);
-	static Ogre::Quaternion toOgreW(const QUATERNION<double>& vIn);
-};

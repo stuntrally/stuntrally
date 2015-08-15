@@ -707,6 +707,14 @@
 			Name="SceneCommon"
 			>
 			<File
+				RelativePath="..\source\ogre\common\Axes.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\ogre\common\Axes.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\ogre\common\CScene.cpp"
 				>
 			</File>

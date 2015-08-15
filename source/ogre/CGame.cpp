@@ -16,6 +16,7 @@
 #include "common/WaterRTT.h"
 #include "common/MultiList2.h"
 #include "common/Gui_Popup.h"
+#include "common/Axes.h"
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
 #include <OgreTerrainPaging.h>

@@ -30,6 +30,7 @@
 #include <OgreBillboardChain.h>
 #include <OgreSceneNode.h>
 #include <MyGUI_Gui.h>
+#include <MyGUI_TextBox.h>
 using namespace Ogre;
 using namespace std;
 #define  FileExists(s)  PATHMANAGER::FileExists(s)
