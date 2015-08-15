@@ -111,7 +111,7 @@ void App::createScene()
 	///  _Tool_ ghosts times .......
 	#if 0
 	gui->ToolGhosts();
-	//mShutDown = true;  return;
+	//ShutDown();  return;
 	exit(0);
 	#endif
 

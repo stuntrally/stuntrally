@@ -27,6 +27,7 @@ class App : public BaseApp,
 public:
 	App(SETTINGS* settings, GAME* game);
 	virtual ~App();
+	void ShutDown();
 	
 	CScene* scn;
 	CData* data;  //p

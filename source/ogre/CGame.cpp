@@ -75,12 +75,16 @@ App::App(SETTINGS *settings, GAME *game)
 		mThread = boost::thread(boost::bind(&App::UpdThr, boost::ref(*this)));
 }
 
-
-App::~App()
+void App::ShutDown()
 {
 	mShutDown = true;
 	if (mThread.joinable())
 		mThread.join();
+}
+
+App::~App()
+{
+	ShutDown();
 
 	OGRE_DELETE dbgdraw;
 

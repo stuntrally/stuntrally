@@ -1,5 +1,5 @@
 #include "pch.h"
- #include "vld.h" // mem leaks +
+ //#include "vld.h" // mem leaks +
 #include "../ogre/common/Def_Str.h"
 #include "settings.h"
 #include "CApp.h"
