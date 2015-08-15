@@ -195,18 +195,18 @@ void CHud::bltDumpRecursive(CProfileIterator* pit, int spacing, std::stringstrea
 	float accumulated_time=0,parent_time = pit->Is_Root() ? CProfileManager::Get_Time_Since_Reset() : pit->Get_Current_Parent_Total_Time();
 	int i,j;
 	int frames_since_reset = CProfileManager::Get_Frame_Count_Since_Reset();
-	for (i=0;i<spacing;i++)	os << ".";
+	for (i=0; i<spacing; ++i)  os << ".";
 	os << "----------------------------------\n";
-	for (i=0;i<spacing;i++)	os << ".";
+	for (i=0; i<spacing; ++i)  os << ".";
 	std::string s = "Profiling: "+String(pit->Get_Current_Parent_Name())+" (total running time: "+fToStr(parent_time,3)+" ms) ---\n";
 	os << s;
 	//float totalTime = 0.f;
 
 	int numChildren = 0;
 	
-	for (i = 0; !pit->Is_Done(); i++,pit->Next())
+	for (i = 0; !pit->Is_Done(); ++i,pit->Next())
 	{
-		numChildren++;
+		++numChildren;
 		float current_total_time = pit->Get_Current_Total_Time();
 		accumulated_time += current_total_time;
 		float fraction = parent_time > SIMD_EPSILON ? (current_total_time / parent_time) * 100 : 0.f;
@@ -223,12 +223,12 @@ void CHud::bltDumpRecursive(CProfileIterator* pit, int spacing, std::stringstrea
 	{
 		os << "what's wrong\n";
 	}
-	for (i=0;i<spacing;i++)	os << ".";
+	for (i=0; i<spacing; ++i)  os << ".";
 	double unaccounted=  parent_time > SIMD_EPSILON ? ((parent_time - accumulated_time) / parent_time) * 100 : 0.f;
 	s = "Unaccounted: ("+fToStr(unaccounted,3)+" %) :: "+fToStr(parent_time - accumulated_time,3)+" ms\n";
 	os << s;
 	
-	for (i=0;i<numChildren;i++)
+	for (i=0; i<numChildren; ++i)
 	{
 		pit->Enter_Child(i);
 		bltDumpRecursive(pit, spacing+3, os);

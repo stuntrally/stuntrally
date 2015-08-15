@@ -47,7 +47,7 @@ bool ExtractRepeating(std::vector <T> & output_vector, unsigned int repeats, std
 {
 	if (!s)
 		return false;
-	for (unsigned int i = 0; i < repeats; i++)
+	for (unsigned int i = 0; i < repeats; ++i)
 	{
 		std::string strformat = ReadFromStream(s);
 		if (strformat.empty())
@@ -151,7 +151,7 @@ bool MODEL_OBJ::Load(const std::string & filepath, std::ostream & error_log, boo
 				return false;
 			}
 			VERTEXARRAY::VERTEXDATA newverts[3];
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 3; ++i)
 			{
 				if (!BuildVertex(newverts[i], verts, normals, texcoords, faceverts[i]))
 				{
@@ -176,7 +176,7 @@ void WriteRange(std::ostream & s, const std::vector <float> & v, int startidx, i
 {
 	assert(startidx >= 0 && startidx < (int) v.size() && startidx < endidx && startidx != endidx);
 	assert(endidx <= (int) v.size());
-	for (int i = startidx; i < endidx; i++)
+	for (int i = startidx; i < endidx; ++i)
 	{
 		if (i != startidx)
 			s << " ";
@@ -187,7 +187,7 @@ void WriteRange(std::ostream & s, const std::vector <float> & v, int startidx, i
 void WriteVectorGroupings(std::ostream & s, const std::vector <float> & v, const std::string & id, int groupsize)
 {
 	assert(groupsize > 0);
-	for (int i = 0; i < (int)v.size()/groupsize; i++)
+	for (int i = 0; i < (int)v.size()/groupsize; ++i)
 	{
 		s << id << " ";
 		WriteRange(s, v, i*groupsize, i*groupsize+groupsize);
@@ -218,10 +218,10 @@ bool MODEL_OBJ::Save(const std::string & strFileName, std::ostream & error_outpu
 	WriteVectorGroupings(f, mesh.normals, "vn", 3);
 	f << endl;
 	
-	for (int i = 0; i < (int)mesh.faces.size()/3; i++)
+	for (int i = 0; i < (int)mesh.faces.size()/3; ++i)
 	{
 		f << "f ";
-		for (int v = 0; v < 3; v++)
+		for (int v = 0; v < 3; ++v)
 		{
 			WriteFace(f,mesh.faces[i*3+v]+1);
 			f << " ";

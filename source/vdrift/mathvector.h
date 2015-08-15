@@ -47,7 +47,7 @@ public:
 	const T MagnitudeSquared() const
 	{
 		T running_total(0);
-		for (size_type i = 0; i < dimension; i++)
+		for (size_type i = 0; i < dimension; ++i)
 			running_total += v[i] * v[i];
 		return running_total;
 	}
@@ -76,7 +76,7 @@ public:
 	///careful, there's no way to check the bounds of the array
 	void Set(const T * array_pointer)
 	{
-		for (size_t i = 0; i < dimension; i++)
+		for (size_t i = 0; i < dimension; ++i)
 			v[i] = array_pointer[i];
 	}
 	
@@ -89,7 +89,7 @@ public:
 		
 		assert(mag != 0);
 		
-		for (size_type i = 0; i < dimension; i++)
+		for (size_type i = 0; i < dimension; ++i)
 		{
 			output[i] = v[i]/mag;
 		}
@@ -101,7 +101,7 @@ public:
 	const T dot(const MATHVECTOR<T, dimension> & other) const
 	{
 		T output(0);
-		for (size_type i = 0; i < dimension; i++)
+		for (size_type i = 0; i < dimension; ++i)
 		{
 			output += v[i]*other.v[i];
 		}
@@ -147,7 +147,7 @@ public:
 	{
 		MATHVECTOR<T, dimension> output;
 		
-		for (size_type i = 0; i < dimension; i++)
+		for (size_type i = 0; i < dimension; ++i)
 		{
 			output[i] = v[i]*scalar;
 		}
@@ -162,7 +162,7 @@ public:
 		
 		MATHVECTOR<T, dimension> output;
 		
-		for (size_type i = 0; i < dimension; i++)
+		for (size_type i = 0; i < dimension; ++i)
 		{
 			output[i] = v[i]/scalar;
 		}
@@ -174,7 +174,7 @@ public:
 	{
 		MATHVECTOR<T, dimension> output;
 		
-		for (size_type i = 0; i < dimension; i++)
+		for (size_type i = 0; i < dimension; ++i)
 		{
 			output[i] = v[i] + other.v[i];
 		}
@@ -186,7 +186,7 @@ public:
 	{
 		MATHVECTOR<T, dimension> output;
 		
-		for (size_type i = 0; i < dimension; i++)
+		for (size_type i = 0; i < dimension; ++i)
 		{
 			output[i] = v[i] - other.v[i];
 		}
@@ -208,7 +208,7 @@ public:
 	{
 		bool same(true);
 		
-		for (size_type i = 0; i < dimension; i++)
+		for (size_type i = 0; i < dimension; ++i)
 		{
 			same = same && (v[i] == other.v[i]);
 		}
@@ -226,7 +226,7 @@ public:
 	MATHVECTOR<T, dimension> operator-() const
 	{
 		MATHVECTOR<T, dimension> output;
-		for (size_type i = 0; i < dimension; i++)
+		for (size_type i = 0; i < dimension; ++i)
 		{
 			output.v[i] = -v[i];
 		}
@@ -235,7 +235,7 @@ public:
 	
 	bool Serialize(joeserialize::Serializer & s)
 	{
-		for (unsigned int i = 0; i < dimension; i++)
+		for (unsigned int i = 0; i < dimension; ++i)
 		{
 			std::stringstream namestr;
 			namestr << "v" << i;
@@ -445,7 +445,7 @@ class MATHVECTOR<T,3>
 template <typename T, unsigned int dimension>
 std::ostream & operator << (std::ostream &os, const MATHVECTOR<T, dimension> & v)
 {
-	for (size_t i = 0; i < dimension-1; i++)
+	for (size_t i = 0; i < dimension-1; ++i)
 	{
 		os << v[i] << ", ";
 	}

@@ -13,7 +13,7 @@ bool ROADSTRIP::ReadFrom(std::istream & openfile, std::ostream & error_output)
 
 	//add all road patches to this strip
 	int badcount = 0;
-	for (int i = 0; i < num; i++)
+	for (int i = 0; i < num; ++i)
 	{
 		BEZIER * prevbezier = NULL;
 		if (!patches.empty())
@@ -103,7 +103,7 @@ void ROADSTRIP::Reverse()
 	for (std::list <ROADPATCH>::iterator i = patches.begin(); i != patches.end(); ++i)
 	{
 		std::list <ROADPATCH>::iterator n = i;
-		n++;
+		++n;
 		BEZIER * nextpatchptr = NULL;
 		if (n != patches.end())
 		{
@@ -126,7 +126,7 @@ void ROADSTRIP::Reverse()
 	for (std::list <ROADPATCH>::iterator i = patches.begin(); i != patches.end(); ++i)
 	{
 		std::list <ROADPATCH>::iterator n = i;
-		n++;
+		++n;
 		ROADPATCH * nextpatch(NULL);
 		if (n != patches.end())
 		{

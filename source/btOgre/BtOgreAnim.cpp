@@ -224,7 +224,7 @@ namespace BtOgre {
 		Ogre::Real fY1Min = kDiff.dotProduct(box_akAxis[1]), fY1Max = fY1Min;
 		Ogre::Real fY2Min = kDiff.dotProduct(box_akAxis[2]), fY2Max = fY2Min;
 
-		for (unsigned int i = 2; i < vertex_count; i++)
+		for (unsigned int i = 2; i < vertex_count; ++i)
 		{
 			kDiff = vertices[i] - box_kCenter;
 

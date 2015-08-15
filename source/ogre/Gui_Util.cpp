@@ -80,7 +80,7 @@ void CGui::CarListUpd(bool resetNotFound)
 				if (name == pSet->gui.car[0])  {  si = ii;
 					carList->setIndexSelected(si);
 					bFound = true;  }
-				ii++;
+				++ii;
 		}	}
 
 		//  not found last car, set last

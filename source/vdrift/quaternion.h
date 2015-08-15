@@ -81,7 +81,7 @@ public:
 	void Normalize()
 	{
 		T len = Magnitude();
-		for (size_t i = 0; i < 4; i++)
+		for (size_t i = 0; i < 4; ++i)
 			v[i] /= len;
 	}
 	
@@ -208,7 +208,7 @@ public:
 	{
 		bool same(true);
 		
-		for (size_type i = 0; i < 4; i++)
+		for (size_type i = 0; i < 4; ++i)
 		{
 			same = same && (v[i] == other.v[i]);
 		}
@@ -227,7 +227,7 @@ public:
 	{
 		QUATERNION qtemp;
 		qtemp.v[3] = v[3];
-		for (size_type i = 0; i < 3; i++)
+		for (size_type i = 0; i < 3; ++i)
 		{
 			qtemp.v[i] = -v[i];
 		}
@@ -264,12 +264,12 @@ public:
 		QUATERNION dirconj = -(*this);
 		QUATERNION qtemp;
 		qtemp.v[3] = 0;
-		for (size_t i = 0; i < 3; i++)
+		for (size_t i = 0; i < 3; ++i)
 			qtemp.v[i] = vec[i];
 		
 		QUATERNION qout = (*this) * qtemp * dirconj;
 		
-		for (size_t i = 0; i < 3; i++)
+		for (size_t i = 0; i < 3; ++i)
 			vec[i] = qout.v[i];
 	}
 	
@@ -285,7 +285,7 @@ public:
 		//create vectors for quats
 		T vec1[3];
 		T vec2[3];
-		for (size_t i = 0; i < 3; i++)
+		for (size_t i = 0; i < 3; ++i)
 			vec1[i] = vec2[i] = forward[i];
 		
 		RotateVector(vec1);
@@ -293,7 +293,7 @@ public:
 		
 		//return the angle between the vectors
 		T dotprod(0);
-		for (size_t i = 0; i < 3; i++)
+		for (size_t i = 0; i < 3; ++i)
 			dotprod += vec1[i]*vec2[i];
 		return acos(dotprod);
 	}
@@ -382,7 +382,7 @@ public:
 		up = side.cross(forward);
 
 		T m[16];
-		for (int i = 0; i < 16; i++)
+		for (int i = 0; i < 16; ++i)
 			m[i] = 0;
 		m[15] = 1;
 

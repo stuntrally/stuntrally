@@ -99,7 +99,7 @@ void PATHMANAGER::Init(bool log_paths)
 		{
 			SHGetPathFromIDList(pidl, AppDir);
 			int i;
-			for (i = 0; AppDir[i] != '\0'; i++) {
+			for (i = 0; AppDir[i] != '\0'; ++i) {
 				if (AppDir[i] == '\\') str += '/';
 				else str += AppDir[i];
 			}

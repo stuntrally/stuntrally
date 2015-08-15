@@ -36,7 +36,7 @@ class MATRIX3
 		
 		void DebugPrint(std::ostream & out) const
 		{
-			for (size_type i = 0; i < 9; i++)
+			for (size_type i = 0; i < 9; ++i)
 			{
 				out << i << ". " << data[i] << std::endl;
 			}
@@ -46,7 +46,7 @@ class MATRIX3
 		{
 			MATRIX3 out;
 	
-			for (int i = 0, i3 = 0; i < 3; i++,i3+=3)
+			for (int i = 0, i3 = 0; i < 3; ++i,i3+=3)
 			{
 				for (int j = 0; j < 3; j++)
 				{
@@ -69,7 +69,7 @@ class MATRIX3
 		void Set(const T * newdata)
 		{
 			//std::memcpy(data,newdata,sizeof(T)*9); //high performance, but portability issues?
-			for (int i = 0; i < 9; i++)
+			for (int i = 0; i < 9; ++i)
 				data[i] = newdata[i];
 		}
 		
@@ -80,7 +80,7 @@ class MATRIX3
 		bool Equals(const MATRIX3 <T> & other)
 		{
 			//return (memcmp(data,other.data,9*sizeof(T)) == 0); //high performance, but portability issues?
-			for (int i = 0; i < 9; i++)
+			for (int i = 0; i < 9; ++i)
 				if (data[i] != other.data[i])
 					return false;
 			
@@ -136,7 +136,7 @@ class MATRIX3
 			m.data[7] = b*g-a*h;
 			m.data[8] = -b*d+a*e;
 			
-			for (int i = 0; i < 9; i++)
+			for (int i = 0; i < 9; ++i)
 				m.data[i] *= invdiv;
 			
 			return m;
@@ -166,7 +166,7 @@ class MATRIX3
 		static bool Diagonalize(MATRIX3<T>& m, MATRIX3<T>& v, MATHVECTOR<T,3>& w)
 		{
 			double sm[3][3], ev[3][3], ew[3];
-			for(int i = 0; i < 3; i++)
+			for(int i = 0; i < 3; ++i)
 			{
 				for(int j = 0; j < 3; j++)
 				{
@@ -176,7 +176,7 @@ class MATRIX3
 			
 			if(MATRIX3<T>::dsyevj3(sm, ev, ew)) return false;
 			
-			for(int i = 0; i < 3; i++)
+			for(int i = 0; i < 3; ++i)
 			{
 				for(int j = 0; j < 3; j++)
 				{
@@ -215,7 +215,7 @@ class MATRIX3
 		  double thresh;
 		  
 		  // Initialize Q to the identitity matrix
-		  for (int i=0; i < n; i++)
+		  for (int i=0; i < n; ++i)
 		  {
 			Q[i][i] = 1.0;
 			for (int j=0; j < i; j++)
@@ -223,12 +223,12 @@ class MATRIX3
 		  }
 
 		  // Initialize w to diag(A)
-		  for (int i=0; i < n; i++)
+		  for (int i=0; i < n; ++i)
 			w[i] = A[i][i];
 
 		  // Calculate tr(A)^2 
 		  sd = 0.0;
-		  for (int i=0; i < n; i++)
+		  for (int i=0; i < n; ++i)
 			sd += fabs(w[i]);
 		  sd = sd * sd;
 		 

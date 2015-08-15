@@ -23,7 +23,7 @@ QT_TEST(linearframe_test)
 	double t = 0.0;
 	
 	//integrate for 10 seconds
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < 1000; ++i)
 	{
 		frame.Integrate1(0.01);
 		frame.ApplyForce(gravity);
@@ -51,7 +51,7 @@ QT_TEST(linearframe_test)
 	t = 0.0;
 	
 	//integrate for 10 seconds
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < 1000; ++i)
 	{
 		frame.Integrate1(0.01);
 		force.Set(0,1,0);

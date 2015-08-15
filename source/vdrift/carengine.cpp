@@ -128,7 +128,7 @@ void CARENGINE::SetTorqueCurve(Dbl max_power_rpm, std::vector <std::pair <Dbl, D
 	//write out a debug torque curve file
 	/*std::ofstream f("out.dat");
 	for (Dbl i = 0; i < curve[curve.size()-1].first+1000; i+= 20) f << i << " " << torque_curve.Interpolate(i) << std::endl;*/
-	//for (unsigned int i = 0; i < curve.size(); i++) f << curve[i].first << " " << curve[i].second << std::endl;
+	//for (unsigned int i = 0; i < curve.size(); ++i) f << curve[i].first << " " << curve[i].second << std::endl;
 	
 	//calculate engine friction
 	Dbl max_power_angvel = max_power_rpm * PI_d/30.0;

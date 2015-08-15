@@ -148,9 +148,9 @@ DensityMap::DensityMap(String map, MapChannel channel)
 	uint8 *outputPtr = (uint8*)pixels->data;
 	int width = pba.getWidth();
 	int height = pba.getHeight();
-	for(int i=0 ;i< width;i++)
+	for (int i=0; i < width; ++i)
 	{
-		for(int j=0;j< height;j++)
+		for (int j=0; j < height; ++j)
 		{
 			#if OGRE_VERSION_PATCH >= 3
 			ColourValue col = pba.getColourAt(i,j,0);

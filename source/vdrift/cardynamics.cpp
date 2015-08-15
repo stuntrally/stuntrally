@@ -158,7 +158,7 @@ void CARDYNAMICS::AlignWithGround()
 	
 	/*Dbl min_height = 0;
 	bool no_min_height = true;
-	for (int i = 0; i < WHEEL_POSITION_SIZE; i++)
+	for (int i = 0; i < WHEEL_POSITION_SIZE; ++i)
 		{
 		Dbl height = wheel_contact[i].GetDepth() - 2 * tire[i].GetRadius();
 		if (height < min_height || no_min_height)

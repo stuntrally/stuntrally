@@ -470,7 +470,7 @@ void SplineRoad::Insert(eIns ins)
 		mP.insert(mP.begin()+iChosen+1, pt);
 		vSegs.insert(vSegs.begin()+iChosen+1, rs);
 		if (ins == INS_Cur)  // INS_CurPre
-			iChosen++;
+			++iChosen;
 	}
 	recalcTangents();
 

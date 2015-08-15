@@ -319,7 +319,7 @@ void CAR::UpdateSounds(float dt)
 
 
 	///  tire squeal
-	for (int i = 0; i < numWheels; i++)
+	for (int i = 0; i < numWheels; ++i)
 	{
 		// make sure we don't get overlap
 		gravelsound[i].SetGain(0.0);
@@ -367,7 +367,7 @@ void CAR::UpdateSounds(float dt)
 
 	//  susp bump
 	if (dynamics.vtype == V_Car)
-	for (int i = 0; i < numWheels; i++)
+	for (int i = 0; i < numWheels; ++i)
 	{
 		suspbump[i].Update(suspVel[i], suspDisp[i], dt);
 		if (suspbump[i].JustSettled())

@@ -44,7 +44,7 @@ namespace ICS
 		this->mActive = active;
 
 		ICS_LOG("Channel count = " + ToString<size_t>(channelCount) );
-		for(size_t i=0;i<channelCount;i++)
+		for(size_t i=0; i<channelCount; ++i)
 		{
 			mChannels.push_back(new Channel((int)i));
 		}
@@ -108,7 +108,7 @@ namespace ICS
 			{
 				size_t dif = controlChannelCount - channelCount;
 				ICS_LOG("Warning: default channel count exceeded. Adding " + ToString<size_t>(dif) + " channels" );
-				for(size_t i = channelCount ; i < controlChannelCount ; i++)
+				for(size_t i = channelCount; i < controlChannelCount; ++i)
 				{
 					mChannels.push_back(new Channel((int)i));
 				}

@@ -129,7 +129,7 @@ class MATHPLANE
 template <typename T>
 std::ostream & operator << (std::ostream &os, const MATHPLANE <T> & v)
 {
-	for (size_t i = 0; i < 3; i++)
+	for (size_t i = 0; i < 3; ++i)
 	{
 		os << v[i] << ", ";
 	}

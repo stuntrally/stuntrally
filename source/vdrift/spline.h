@@ -33,7 +33,7 @@ private:
 		c [0] = diff / 6.0;
 		r [0] = ( points [1].second - points [0].second ) / diff - first_slope;
 	
-		for ( size_t i = 1; i < n - 1; i++ )
+		for ( size_t i = 1; i < n - 1; ++i )
 		{
 			T diff1 = points [i+1].first - points [i].first;
 			T diff2 = points [i].first - points [i-1].first;
@@ -52,7 +52,7 @@ private:
 		r [n-1] = last_slope - ( points [n-1].second - points [n-2].second ) / diff;
 	
 		// Gauss-Jordan Elimination
-		for ( size_t i = 1; i < n; i++ )
+		for ( size_t i = 1; i < n; ++i )
 		{
 			// Replace row i with row i - k * row (i-1) such that A_{i,i-1} = 0.0.
 			T factor = a [i] / b [i-1];
@@ -67,7 +67,7 @@ private:
 		// Solve for y"[N].
 		second_deriv.resize ( n );
 		second_deriv [n-1] = r [n-1] / b [n-1];
-		for ( int i = n - 2; i >= 0; i-- )
+		for ( int i = n - 2; i >= 0; --i )
 		{
 			// Use the solution for y"[i+1] to find y"[i].
 			second_deriv [i] = ( r [i] - c [i] * second_deriv [i+1] ) / b [i];

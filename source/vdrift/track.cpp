@@ -144,7 +144,7 @@ bool TRACK::LoadRoads(const string & trackpath, bool reverse)
 	int numroads=0;
 	trackfile >> numroads;
 
-	for (int i = 0; i < numroads && trackfile; i++)
+	for (int i = 0; i < numroads && trackfile; ++i)
 	{
 		roads.push_back(ROADSTRIP());
 		roads.back().ReadFrom(trackfile, cerr);

@@ -553,7 +553,7 @@ void CARDYNAMICS::SynchronizeChassis()
 void CARDYNAMICS::UpdateWheelContacts()
 {
 	MATHVECTOR<float,3> raydir = GetDownVector();
-	for (int i = 0; i < numWheels; i++)
+	for (int i = 0; i < numWheels; ++i)
 	{
 		COLLISION_CONTACT & wheelContact = wheel_contact[WHEEL_POSITION(i)];
 		MATHVECTOR<float,3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());

@@ -77,7 +77,7 @@ void OBJECTLOADER::CalculateNumObjects()
 	std::string junk;
 	while (GetParam(f, junk))
 	{
-		for (int i = 0; i < params_per_object-1; i++)
+		for (int i = 0; i < params_per_object-1; ++i)
 			GetParam(f, junk);
 
 		numobjects++;
@@ -155,7 +155,7 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 		GetParam(objectfile, surface_type);
 		
 		
-	for (int i = 0; i < params_per_object - expected_params; i++)
+	for (int i = 0; i < params_per_object - expected_params; ++i)
 		GetParam(objectfile, otherjunk);
 
 	MODEL * model(NULL);

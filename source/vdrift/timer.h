@@ -179,7 +179,7 @@ public:
 
 	void DebugPrint(std::ostream & out)
 	{
-		for (size_t i = 0; i < car.size(); i++)
+		for (size_t i = 0; i < car.size(); ++i)
 		{
 			out << i << ". ";
 			car[i].DebugPrint(out);

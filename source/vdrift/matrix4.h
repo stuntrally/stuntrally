@@ -28,7 +28,7 @@ class MATRIX4
 		
 		void DebugPrint(std::ostream & out) const
 		{
-			for (size_type i = 0; i < 16; i++)
+			for (size_type i = 0; i < 16; ++i)
 			{
 				out << i << ". " << data[i] << std::endl;
 			}
@@ -38,7 +38,7 @@ class MATRIX4
 		{
 			MATRIX4 out;
 	
-			for (int i = 0, i4 = 0; i < 4; i++,i4+=4)
+			for (int i = 0, i4 = 0; i < 4; ++i,i4+=4)
 			{
 				for (int j = 0; j < 4; j++)
 				{
@@ -61,7 +61,7 @@ class MATRIX4
 		inline void Set(const T * newdata)
 		{
 			std::memcpy(data,newdata,sizeof(T)*16); //high performance, but portability issues?
-			/*for (int i = 0; i < 16; i++)
+			/*for (int i = 0; i < 16; ++i)
 				data[i] = newdata[i];*/
 		}
 		
@@ -79,7 +79,7 @@ class MATRIX4
 		bool Equals(const MATRIX4 <T> & other)
 		{
 			return (memcmp(data,other.data,16*sizeof(T)) == 0); //high performance, but portability issues?
-			/*for (int i = 0; i < 16; i++)
+			/*for (int i = 0; i < 16; ++i)
 				if (data[i] != other.data[i])
 					return false;
 			
@@ -185,7 +185,7 @@ class MATRIX4
 			Inv[15] = + data[ 8]*A3 - data[ 9]*A1 + data[10]*A0;
 
 			T InvDet = 1.0 / Det;
-			for (int i = 0; i < 16; i++) Inv[i] *= InvDet;
+			for (int i = 0; i < 16; ++i) Inv[i] *= InvDet;
 						
 			return Inv;
 		}

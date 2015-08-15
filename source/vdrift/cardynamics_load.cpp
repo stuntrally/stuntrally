@@ -228,7 +228,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c)
 
 		if (!c.GetParamE("transmission.gears", gears))  return false;
 
-		for (int i = 0; i < gears; i++)
+		for (int i = 0; i < gears; ++i)
 		{
 			stringstream s;
 			s << "transmission.gear-ratio-" << i+1;
@@ -352,7 +352,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c)
 
 	//load the suspension
 	{
-		for (int i = 0; i < numWheels/2; i++)
+		for (int i = 0; i < numWheels/2; ++i)
 		{
 			string pos = "front", possh = "F";  WHEEL_POSITION wl = FRONT_LEFT, wr = FRONT_RIGHT;
 			if (i >= 1){  pos = "rear";  possh = "R";  wl = REAR_LEFT;  wr = REAR_RIGHT;  }
@@ -414,7 +414,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c)
 
 			if (!c.GetParamE("suspension-"+possh+"L.hinge", hinge))  return false;
 			//cap hinge to reasonable values
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 3; ++i)
 			{
 				if (hinge[i] < -100)	hinge[i] = -100;
 				if (hinge[i] > 100)		hinge[i] = 100;
@@ -424,7 +424,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c)
 			suspension[wl].SetHinge(vec);
 
 			if (!c.GetParamE("suspension-"+possh+"R.hinge", hinge))  return false;
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 3; ++i)
 			{
 				if (hinge[i] < -100)	hinge[i] = -100;
 				if (hinge[i] > 100)		hinge[i] = 100;
@@ -437,7 +437,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c)
 
 	//load the wheels
 	{
-		for (int i = 0; i < numWheels; i++)
+		for (int i = 0; i < numWheels; ++i)
 		{
 			string sPos = sCfgWh[i];
 			WHEEL_POSITION wp = WHEEL_POSITION(i);
@@ -584,7 +584,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE & c)
 		position.Set(pos[0], pos[1], pos[2]);
 		AddAerodynamicDevice(position, drag_area, drag_c, 0,0,0);
 
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 2; ++i)
 		{
 			string wingpos = i==1 ? "rear" : "front";
 			if (!c.GetParamE("wing-"+wingpos+".frontal-area", drag_area))  return false;
@@ -665,7 +665,7 @@ void CARDYNAMICS::Init(
 	btTransform tr;  tr.setIdentity();
 
 	AABB <float> box = chassisModel.GetAABB();
-	for (int i = 0; i < numWheels; i++)
+	for (int i = 0; i < numWheels; ++i)
 	{
 		MATHVECTOR<float,3> wheelpos = GetLocalWheelPosition(WHEEL_POSITION(i), 0);
 
@@ -827,7 +827,7 @@ void CARDYNAMICS::Init(
 
 
 	// init wheels, suspension
-	for (int i = 0; i < numWheels; i++)
+	for (int i = 0; i < numWheels; ++i)
 	{
 		wheel[WHEEL_POSITION(i)].SetInitialConditions();
 		wheel_velocity[i].Set(0.0);

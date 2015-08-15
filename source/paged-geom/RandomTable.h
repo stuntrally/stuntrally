@@ -78,7 +78,7 @@ inline void RandomTable::generateRandomNumbers()
 #else
 	srand(time(NULL));
 #endif
-	for(unsigned long i = 0; i < tableSize; i++)
+	for(unsigned long i = 0; i < tableSize; ++i)
 		table[i] = Ogre::Math::UnitRandom();
 #else
 	// using our Mersenne Twister (preferred way)
@@ -87,7 +87,7 @@ inline void RandomTable::generateRandomNumbers()
 #else
 	MTRand mtrand(time(NULL));
 #endif
-	for(unsigned long i = 0; i < tableSize; i++)
+	for(unsigned long i = 0; i < tableSize; ++i)
 		table[i] = (float)mtrand.rand();
 #endif //USE_OGRE_RANDOM
 }

@@ -618,12 +618,12 @@ void COLLISION_WORLD::Clear()
 {
 	cdOld = NULL;
 	track = NULL;
-	if(trackObject)
+	if (trackObject)
 	{
 		delete trackObject->getCollisionShape();
 		trackObject = NULL;
 	}
-	if(trackMesh)
+	if (trackMesh)
 	{
 		delete trackMesh;
 		trackMesh = NULL;
@@ -631,21 +631,21 @@ void COLLISION_WORLD::Clear()
 	//trackSurface.resize(0);
 
 	// remove constraint before deleting rigid body
-	for(int i = 0; i < constraints.size(); i++)
+	int i,c;
+	for (i = 0; i < constraints.size(); ++i)
 	{
 		world->removeConstraint(constraints[i]);
 		delete constraints[i];
 	}
 	constraints.resize(0);
 	
-	for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
+	for (i = world->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
 		btCollisionObject* obj = world->getCollisionObjectArray()[i];
 		btRigidBody* body = btRigidBody::upcast(obj);
 		if (body && body->getMotionState())
-		{
 			delete body->getMotionState();
-		}
+
 		world->removeCollisionObject(obj);
 
 		ShapeData* sd = (ShapeData*)obj->getUserPointer();
@@ -653,30 +653,26 @@ void COLLISION_WORLD::Clear()
 		delete obj;
 	}
 	
-	for(int i = 0; i < shapes.size(); i++)
+	for (i = 0; i < shapes.size(); ++i)
 	{
 		btCollisionShape * shape = shapes[i];
 		if (shape->isCompound())
 		{
 			btCompoundShape * cs = (btCompoundShape *)shape;
-			for (int i = 0; i < cs->getNumChildShapes(); i++)
-			{
-				delete cs->getChildShape(i);
-			}
+			for (c = 0; c < cs->getNumChildShapes(); ++c)
+				delete cs->getChildShape(c);
 		}
 		delete shape;
 	}
 	shapes.resize(0);
 	
-	for(int i = 0; i < meshes.size(); i++)
-	{
+	for (i = 0; i < meshes.size(); ++i)
 		delete meshes[i];
-	}
+
 	meshes.resize(0);
 	
-	for(int i = 0; i < actions.size(); i++)
-	{
+	for (i = 0; i < actions.size(); ++i)
 		world->removeAction(actions[i]);
-	}
+
 	actions.resize(0);
 }

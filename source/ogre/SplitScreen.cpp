@@ -81,7 +81,7 @@ void SplitScr::Align()
 		mDims[i].Default();
 
 	//  Create the viewports (sets of 3d render & hud viewports) based on mNumViewports = numPlayers
-	for (int i=0; i < mNumViewports; i++)
+	for (int i=0; i < mNumViewports; ++i)
 	{
 		//  set dimensions for the viewports
 		float dims[4];  // left,top, width,height
@@ -148,7 +148,7 @@ void SplitScr::Align()
 		mViewports.push_back(mWindow->addViewport( mCameras.back(), i+5, dims[0], dims[1], dims[2], dims[3]));
 	}
 	//  always create for 4 cars (replay offset camera view)
-	for (int i=mNumViewports; i < 4; i++)
+	for (int i=mNumViewports; i < 4; ++i)
 	{
 		mCameras.push_back(mSceneMgr->createCamera("PlayerCamera" + toStr(i)));
 		mCameras.back()->setPosition(Vector3(0,-100,0));

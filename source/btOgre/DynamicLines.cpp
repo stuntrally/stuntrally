@@ -239,7 +239,7 @@ void DynamicLines::fillHardwareBuffers()
 	Ogre::VertexDeclaration::VertexElementList elems = mRenderOp.vertexData->vertexDeclaration->findElementsBySource(0);
 	Ogre::VertexDeclaration::VertexElementList::const_iterator elemItr = elems.begin(), elemEnd = elems.end();
 
-	for(int i = 0; i < iBufferSize/*size*/; i++)
+	for(int i = 0; i < iBufferSize/*size*/; ++i)
 	{
 		for (elemItr = elems.begin(); elemItr != elemEnd; ++elemItr)
 		{

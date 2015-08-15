@@ -41,17 +41,17 @@ AABB <float> BEZIER::GetAABB() const
 	float maxv[3];
 	float minv[3];
 	bool havevals[6];
-	for (int n = 0; n < 6; n++)
+	for (int n = 0; n < 6; ++n)
 		havevals[n] = false;
 
-	for (int x = 0; x < 4; x++)
+	for (int x = 0; x < 4; ++x)
 	{
-		for (int y = 0; y < 4; y++)
+		for (int y = 0; y < 4; ++y)
 		{
 			MATHVECTOR<float,3> temp(points[x][y]);
 
 			//cache for bbox stuff
-			for ( int n = 0; n < 3; n++ )
+			for ( int n = 0; n < 3; ++n )
 			{
 				if (!havevals[n])
 				{
@@ -130,7 +130,7 @@ void BEZIER::SetFromCorners(const MATHVECTOR<float,3> & fl, const MATHVECTOR<flo
 	
 	//calculate intermediate left and right points	
 	int i;
-	for (i = 0; i < 4; i++)
+	for (i = 0; i < 4; ++i)
 	{
 		temp = points[3][i] - points[0][i];
 		if (temp.Magnitude() > 0.0001)
@@ -234,12 +234,12 @@ void BEZIER::Reverse()
 {
 	MATHVECTOR<float,3> oldpoints[4][4];
 	
-	for (int n = 0; n < 4; n++)
-		for (int i = 0; i < 4; i++)
+	for (int n = 0; n < 4; ++n)
+		for (int i = 0; i < 4; ++i)
 			oldpoints[n][i] = points[n][i];
 		
-	for (int n = 0; n < 4; n++)
-		for (int i = 0; i < 4; i++)
+	for (int n = 0; n < 4; ++n)
+		for (int i = 0; i < 4; ++i)
 			points[n][i] = oldpoints[3-n][3-i];
 }
 
@@ -274,7 +274,7 @@ MATHVECTOR<float,3> BEZIER::SurfCoord(float px, float py) const
 	//get splines along x axis
 	for (j = 0; j < 4; j++)
 	{
-		for (i = 0; i < 4; i++)
+		for (i = 0; i < 4; ++i)
 			temp2[i] = points[j][i];
 		temp[j] = Bernstein(px, temp2);
 	}
@@ -291,7 +291,7 @@ MATHVECTOR<float,3> BEZIER::SurfNorm(float px, float py) const
 	//get splines along x axis
 	for (int j = 0; j < 4; j++)
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 4; ++i)
 			temp2[i] = points[j][i];
 		temp[j] = Bernstein(px, temp2);
 	}
@@ -299,7 +299,7 @@ MATHVECTOR<float,3> BEZIER::SurfNorm(float px, float py) const
 	//get splines along y axis
 	for (int j = 0; j < 4; j++)
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 4; ++i)
 			temp2[i] = points[i][j];
 		tempx[j] = Bernstein(py, temp2);
 	}
@@ -407,7 +407,7 @@ bool BEZIER::CollideSubDivQuadSimpleNorm(const MATHVECTOR<float,3> & origin, con
 	
 	float areacut = 0.5;
 
-	for (int i = 0; i < COLLISION_QUAD_DIVS && loop; i++)
+	for (int i = 0; i < COLLISION_QUAD_DIVS && loop; ++i)
 	{
 		float tu[2];
 		float tv[2];
@@ -529,7 +529,7 @@ bool BEZIER::CheckForProblems() const
 	
 	bool problem = false;
 	
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; ++i)
 	{
 		MATHVECTOR<float,3> leg1(corners[(i+1)%4] - corners[i]);
 		MATHVECTOR<float,3> leg2(corners[(i+2)%4] - corners[i]);

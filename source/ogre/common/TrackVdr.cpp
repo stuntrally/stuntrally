@@ -42,7 +42,7 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 	if (gen)
 	{
 		String sMtrs;
-		for (int i=0; i < meshes.size(); i++)
+		for (int i=0; i < meshes.size(); ++i)
 		{
 			OGRE_MESH& msh = meshes[i];
 			if (msh.sky /*&& ownSky*/)  continue;

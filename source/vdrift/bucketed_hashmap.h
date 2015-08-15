@@ -27,7 +27,7 @@ class hasher <std::string>
 		{
 			unsigned int hash = 5381;
 			unsigned int strlen = str.length();
-			for(std::size_t i = 0; i < strlen; i++)
+			for(std::size_t i = 0; i < strlen; ++i)
 			{
 				hash = ((hash << 5) + hash) + str[i];
 			}
@@ -108,7 +108,7 @@ class hash_iterator
 		{
 			while (vi != data_end && vi->empty()) //move vi to first non-empty bucket
 			{
-				vi++;
+				++vi;
 				if (vi != data_end)
 					mi = vi->begin();
 			}
@@ -141,14 +141,14 @@ class hash_iterator
 			
 			if (mi != vi->end()) //mi is valid
 			{
-				mi++;
+				++mi;
 			
 				if (mi == vi->end()) //we moved to the end of our bucket
 				{
-					vi++;
+					++vi;
 					while (vi != data_end && vi->empty()) //move vi to next non-empty bucket
 					{
-						vi++;
+						++vi;
 						if (vi != data_end) //found a bucket
 							mi = vi->begin();
 					}
@@ -297,7 +297,7 @@ public:
 		unsigned int col = 0;
 		unsigned int lim = data.size();
 		
-		for (unsigned int i = 0; i < lim; i++)
+		for (unsigned int i = 0; i < lim; ++i)
 		{
 			unsigned int subsize = data[i].size();
 			if (subsize > 1)
@@ -312,7 +312,7 @@ public:
 		unsigned int obj = 0;
 		//unsigned int lim = data.size();
 		
-		/*for (unsigned int i = 0; i < lim; i++)
+		/*for (unsigned int i = 0; i < lim; ++i)
 		{
 			obj += data[i].size();
 		}*/
@@ -332,7 +332,7 @@ public:
 		float avg = 0;
 		unsigned int lim = data.size();
 		
-		for (unsigned int i = 0; i < lim; i++)
+		for (unsigned int i = 0; i < lim; ++i)
 		{
 			avg += data[i].size();
 		}
@@ -350,7 +350,7 @@ public:
 		unsigned int lim = data.size();
 		unsigned int empty = 0;
 		
-		for (unsigned int i = 0; i < lim; i++)
+		for (unsigned int i = 0; i < lim; ++i)
 		{
 			if (data[i].empty())
 				empty++;
@@ -364,7 +364,7 @@ public:
 		unsigned int lim = data.size();
 		unsigned int longest = 0;
 		
-		for (unsigned int i = 0; i < lim; i++)
+		for (unsigned int i = 0; i < lim; ++i)
 		{
 			if (data[i].size() > longest)
 				longest = data[i].size();

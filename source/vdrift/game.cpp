@@ -763,7 +763,7 @@ bool GAME::ParseArguments(list <string> & args)
 			argmap[*i] = "";
 
 		list <string>::iterator n = i;
-		n++;
+		++n;
 		if (n != args.end())
 		if ((*n)[0] != '-')
 			argmap[*i] = *n;
@@ -810,7 +810,7 @@ bool GAME::ParseArguments(list <string> & args)
 		for (map <string,string>::iterator i = arghelp.begin(); i != arghelp.end(); ++i)
 		{
 			helpstr.append(i->first);
-			for (unsigned int n = 0; n < longest+3-i->first.size(); n++)
+			for (unsigned int n = 0; n < longest+3-i->first.size(); ++n)
 				helpstr.push_back(' ');
 			helpstr.append(i->second + "\n");
 		}

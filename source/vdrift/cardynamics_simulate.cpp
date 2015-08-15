@@ -523,7 +523,7 @@ Dbl CARDYNAMICS::AutoClutch(Dbl last_clutch, Dbl dt) const
 
 	//take into account locked brakes
 	bool willlock(true);
-	for (int i = 0; i < numWheels; i++)
+	for (int i = 0; i < numWheels; ++i)
 	{
 		if (WheelDriven(WHEEL_POSITION(i)))
             willlock = willlock && brake[i].WillLock();

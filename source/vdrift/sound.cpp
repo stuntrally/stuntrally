@@ -122,7 +122,7 @@ bool SOUNDBUFFER::LoadWAV(const string & filename, const SOUNDINFO & sound_devic
 					#if SDL_BYTEORDER == SDL_BIG_ENDIAN
 					if (bits_per_sample == 16)
 					{
-						for (unsigned int i = 0; i < size/2; i++)
+						for (unsigned int i = 0; i < size/2; ++i)
 						{
 							//cout << "preswap i: " << sound_buffer[i] << "preswap i+1: " << sound_buffer[i+1] << endl;
 							//short preswap = ((short *)sound_buffer)[i];
@@ -388,7 +388,7 @@ void SOUND::Callback16bitstereo(void *myself, Uint8 *stream, int len)
 
 	if (active_sourcelist.empty())
 	{
-		for (int i = 0; i < len/4; i++)
+		for (int i = 0; i < len/4; ++i)
 		{
 			int pos = i*2;
 			((short *) stream)[pos] = ((short *) stream)[pos+1] = 0;
@@ -712,7 +712,7 @@ void SOUNDFILTER::SetFilter(const int neworder, const float * xcoeff, const floa
 		//UNRECOVERABLE_ERROR_FUNCTION(__FILE__,__LINE__,"Filter order is larger than maximum order");
 
 	order = neworder;
-	for (int i = 0; i < neworder+1; i++)
+	for (int i = 0; i < neworder+1; ++i)
 	{
 		xc[i] = xcoeff[i];
 		yc[i] = ycoeff[i];
@@ -730,7 +730,7 @@ void SOUNDFILTER::ClearState()
 
 void SOUNDFILTER::Filter(int * chan1, int * chan2, const int len)
 {
-	for (int i = 0; i < len; i++)
+	for (int i = 0; i < len; ++i)
 	{
 		//store old state
 		for (int s = 1; s <= order; s++)

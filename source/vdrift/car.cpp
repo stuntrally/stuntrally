@@ -74,12 +74,12 @@ bool CAR::Load(class App* pApp1,
 	LoadInto( carpath+"glass.joe", glassmodel);
 	std::stringstream nullout;
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 2; ++i)
 	{
 		LoadInto( carpath+"wheel_front.joe", wheelmodelfront);
 		LoadInto( carpath+"floating_front.joe", floatingmodelfront);
 	}
-	for (int i = 2; i < 4; i++)
+	for (int i = 2; i < 4; ++i)
 	{
 		LoadInto( carpath+"wheel_rear.joe", wheelmodelrear);
 		LoadInto( carpath+"floating_rear.joe", floatingmodelrear);

@@ -150,7 +150,7 @@ class AABB_SPACE_PARTITIONING_NODE
 		{
 			if (verbose)
 			{
-				for (int i = 0; i < level; i++)
+				for (int i = 0; i < level; ++i)
 					o << "-";
 		
 				o << "objects: " << objects.size() << ", child nodes: " << children.size() << ", aabb: ";

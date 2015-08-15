@@ -52,7 +52,7 @@ public:
 	{
 		std::vector <float> v3(3);
 		
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 3; ++i)
 			v3[i] = vertices[faces[face_number*3+vertex_number]*3+i];
 		
 		return v3;
@@ -62,7 +62,7 @@ public:
 	{
 		std::vector <float> n3(3);
 		
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 3; ++i)
 			n3[i] = normals[faces[face_number*3+vertex_number]*3+i];
 		
 		return n3;
@@ -72,7 +72,7 @@ public:
 	{
 		std::vector <float> t2(2);
 		
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 2; ++i)
 			t2[i] = texcoords[tc_set][faces[face_number*3+vertex_number]*2+i];
 		
 		return t2;

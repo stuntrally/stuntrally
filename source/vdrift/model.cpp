@@ -8,14 +8,14 @@ void MODEL::GenerateMeshMetrics()
 	float maxv[3] = {0, 0, 0};
 	float minv[3] = {0, 0, 0};
 	bool havevals[6];
-	for ( int n = 0; n < 6; n++ )
+	for ( int n = 0; n < 6; ++n )
 		havevals[n] = false;
 
 	const float * verts;
 	int vnum;
 	mesh.GetVertices(verts, vnum);
 	vnum = vnum / 3;
-	for ( int v = 0; v < vnum; v++ )
+	for ( int v = 0; v < vnum; ++v )
 	{
 		MATHVECTOR<float,3> temp;
 
@@ -24,7 +24,7 @@ void MODEL::GenerateMeshMetrics()
 		//cout << verts[v*3] << "," << verts[v*3+1] << "," << verts[v*3+2] << endl;
 	
 		//cache for bbox stuff
-		for ( int n = 0; n < 3; n++ )
+		for ( int n = 0; n < 3; ++n )
 		{
 			if (!havevals[n])
 			{

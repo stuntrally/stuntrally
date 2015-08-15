@@ -176,7 +176,7 @@ public:
 			}
 			void Set(T cfrustum[][4])
 			{
-				for (int i = 0; i < 6; i++)
+				for (int i = 0; i < 6; ++i)
 					planes[i].Set(cfrustum[i]);
 			}
 			
@@ -184,7 +184,7 @@ public:
 			
 			void DebugPrint(std::ostream & output)
 			{
-				for (int i = 0; i < 6; i++)
+				for (int i = 0; i < 6; ++i)
 					output << i << ". " << planes[i] << "\n";
 			}
 	};
@@ -193,18 +193,15 @@ public:
 	{
 		float rd;
 		const float bound = size.Magnitude()*0.5;
-		for (int i=0; i<6; i++)
+		for (int i=0; i<6; ++i)
 		{
-			rd=frustum.planes[i][0]*center[0]+
+			rd = frustum.planes[i][0]*center[0]+
 					frustum.planes[i][1]*center[1]+
 					frustum.planes[i][2]*center[2]+
 					frustum.planes[i][3];
 			if (rd <= -bound)
-			{
 				return false;
-			}
 		}
-		
 		return true;
 	}
 };

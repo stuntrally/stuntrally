@@ -48,7 +48,7 @@ bool JOEPACK::LoadPack(const string & fn)
 		char * fnch = new char[maxstrlen+1];
 		
 		//load FAT
-		for (unsigned int i = 0; i < numobjs; i++)
+		for (unsigned int i = 0; i < numobjs; ++i)
 		{
 			JOEPACK_FADATA fa;
 			f.read((char*)(&(fa.offset)), sizeof(unsigned int));

@@ -101,7 +101,7 @@ class Serializer
 				int listsize(0);
 				if (!this->Serialize("size", listsize)) return false;
 
-				for (int i = 0; i < listsize; i++)
+				for (int i = 0; i < listsize; ++i)
 				{
 					std::stringstream itemname;
 					itemname << "item" << i+1;
@@ -139,7 +139,7 @@ class Serializer
 				int listsize(0);
 				if (!this->Serialize("size", listsize)) return false;
 
-				for (int i = 0; i < listsize; i++)
+				for (int i = 0; i < listsize; ++i)
 				{
 					std::stringstream itemname;
 					itemname << "item" << i+1;
@@ -180,7 +180,7 @@ class Serializer
 				if (!this->Serialize("size", listsize)) return false;
 				t.resize(listsize); //only resize, don't clear; we don't want to throw away information
 
-				for (int i = 0; i < listsize; i++)
+				for (int i = 0; i < listsize; ++i)
 				{
 					std::stringstream itemname;
 					itemname << "item" << i+1;
@@ -218,7 +218,7 @@ class Serializer
 				if (!this->Serialize("size", listsize)) return false;
 				t.resize(listsize); //only resize, don't clear; we don't want to throw away information
 
-				for (int i = 0; i < listsize; i++)
+				for (int i = 0; i < listsize; ++i)
 				{
 					std::stringstream itemname;
 					itemname << "item" << i+1;
@@ -259,7 +259,7 @@ class Serializer
 				if (!this->Serialize("size", listsize)) return false;
 				t.resize(listsize); //only resize, don't clear; we don't want to throw away information
 
-				for (int i = 0; i < listsize; i++)
+				for (int i = 0; i < listsize; ++i)
 				{
 					std::stringstream itemname;
 					itemname << "item" << i+1;
@@ -304,7 +304,7 @@ class Serializer
 				int listsize;
 				if (!this->Serialize("size", listsize)) return false;
 
-				for (int i = 0; i < listsize; i++)
+				for (int i = 0; i < listsize; ++i)
 				{
 					std::stringstream countstr;
 					countstr << i+1;
@@ -354,7 +354,7 @@ class Serializer
 				int listsize;
 				if (!this->Serialize("size", listsize)) return false;
 
-				for (int i = 0; i < listsize; i++)
+				for (int i = 0; i < listsize; ++i)
 				{
 					std::stringstream countstr;
 					countstr << i+1;
@@ -397,7 +397,7 @@ class Serializer
 				int listsize(0);
 				if (!this->Serialize("size", listsize)) return false;
 
-				for (int i = 0; i < listsize; i++)
+				for (int i = 0; i < listsize; ++i)
 				{
 					std::stringstream itemname;
 					itemname << "item" << i+1;
@@ -636,7 +636,7 @@ class TextOutputSerializer : public SerializerOutput
 		
 		void PrintIndent()
 		{
-			for (int i = 0; i < indent_; i++)
+			for (int i = 0; i < indent_; ++i)
 				out_ << "  ";
 		}
 		
@@ -644,7 +644,7 @@ class TextOutputSerializer : public SerializerOutput
 		std::string Escape(const std::string & input) const
 		{
 			std::string outputstr;
-			for (unsigned int i = 0; i < input.length(); i++)
+			for (unsigned int i = 0; i < input.length(); ++i)
 			{
 				if (input[i] == '\n')
 					outputstr.append("\\n");
@@ -765,7 +765,7 @@ class TextInputSerializer : public SerializerInput
 					if (input[i] == '\\' && input[i+1] == 'n')
 					{
 						outputstr.append(1,'\n');
-						i++;
+						++i;
 					}
 					else
 					{
@@ -951,7 +951,7 @@ class BinaryOutputSerializer : public SerializerOutput
 			while (i<j)
 			{
 				std::swap(b[i], b[j]);
-				i++, j--;
+				++i;  --j;
 			}
 		}
 		
@@ -1030,7 +1030,7 @@ class BinaryInputSerializer : public SerializerInput
 			while (i<j)
 			{
 				std::swap(b[i], b[j]);
-				i++, j--;
+				++i;  --j;
 			}
 		}
 		
@@ -1062,7 +1062,7 @@ class BinaryInputSerializer : public SerializerInput
 				return false;
 			}
 			i.clear();
-			for (int n = 0; n < strlen; n++)
+			for (int n = 0; n < strlen; ++n)
 			{
 				i.push_back(inbuffer[n]);
 			}

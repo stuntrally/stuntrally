@@ -103,7 +103,7 @@ void VERTEXARRAY::SetNormals(float * newarray, size_t newarraycount)
 		myarray[i] = newarray[i];
 	}
 	
-	/*for (int i = 0; i < newarraycount; i++)
+	/*for (int i = 0; i < newarraycount; ++i)
 	{
 		normals[i] = newarray[i];
 	}*/
@@ -149,7 +149,7 @@ void VERTEXARRAY::SetFaces(int * newarray, size_t newarraycount)
 		myarray[i] = newarray[i];
 	}
 	
-	/*for (int i = 0; i < newarraycount; i++)
+	/*for (int i = 0; i < newarraycount; ++i)
 	{
 		faces[i] = newarray[i];
 	}*/
@@ -179,7 +179,7 @@ void VERTEXARRAY::SetTexCoords(size_t set, float * newarray, size_t newarraycoun
 		myarray[i] = newarray[i];
 	}
 	
-	/*for (int i = 0; i < newarraycount; i++)
+	/*for (int i = 0; i < newarraycount; ++i)
 	{
 		texcoords[set][i] = newarray[i];
 	}*/
@@ -236,7 +236,7 @@ VERTEXARRAY VERTEXARRAY::operator+ (const VERTEXARRAY & v) const
 	out.faces.insert(out.faces.end(), faces.begin(), faces.end());
 	//out.faces.insert(out.faces.end(), v.faces.begin(), v.faces.end());
 	//size_t startat = out.faces.size();
-	for (size_t i = 0; i < v.faces.size(); i++)
+	for (size_t i = 0; i < v.faces.size(); ++i)
 	{
 		//out.faces[faces.size() + i] = v.faces[i] + idxoffset;
 		//out.faces[startat + i] = v.faces[i];
@@ -250,7 +250,7 @@ VERTEXARRAY VERTEXARRAY::operator+ (const VERTEXARRAY & v) const
 	int tcsets2 = v.GetTexCoordSets();
 	out.SetTexCoordSets(maxtcsets);
 	//ITERVEC(vector <float>,texcoords,i)
-	for (int i = 0; i < maxtcsets; i++)
+	for (int i = 0; i < maxtcsets; ++i)
 	{
 		if (i >= tcsets1 && i < tcsets2)
 		{
@@ -652,7 +652,7 @@ void VERTEXARRAY::BuildFromFaces(const std::vector <FACE> & newfaces)
 	
 	for (std::vector <FACE>::const_iterator i = newfaces.begin(); i != newfaces.end(); ++i) //loop through input triangles
 	{
-		for (int v = 0; v < 3; v++) //loop through vertices in triangle
+		for (int v = 0; v < 3; ++v) //loop through vertices in triangle
 		{
 			const VERTEXDATA & curvertdata = i->GetVertexData(v); //grab vertex
 			std::map <VERTEXDATA, unsigned int>::iterator result = indexmap.find(curvertdata);

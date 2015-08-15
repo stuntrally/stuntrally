@@ -305,7 +305,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	if (pSet->particles && pCar)
 	{
 		//  boost
-		for (i=0; i < PAR_BOOST; i++)  if (parBoost[i])
+		for (i=0; i < PAR_BOOST; ++i)  if (parBoost[i])
 		{
 			/// <><> damage reduce
 			float dmg = pCar->dynamics.fDamage >= 80.f ? 0.f : std::max(0.f, 1.4f - pCar->dynamics.fDamage*0.01f);
@@ -314,7 +314,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 			pe->setEmissionRate(emitB);
 		}
 		//  spaceship thrusters
-		for (i=0; i < PAR_THRUST*2; i++)  if (parThrust[i])
+		for (i=0; i < PAR_THRUST*2; ++i)  if (parThrust[i])
 		{
 			float dmg = 1.f - 0.5f * pCar->dynamics.fDamage*0.01f;
 			float emitT = posInfo.hov_throttle * 60.f * dmg;  // par

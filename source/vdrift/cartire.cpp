@@ -225,10 +225,8 @@ void CARTIRE::CalculateSigmaHatAlphaHat(int tablesize)
 	Dbl HAT_LOAD = 0.5;
 	sigma_hat.resize(tablesize, 0);
 	alpha_hat.resize(tablesize, 0);
-	for (int i = 0; i < tablesize; i++)
-	{
+	for (int i = 0; i < tablesize; ++i)
 		FindSigmaHatAlphaHat((Dbl)(i+1)*HAT_LOAD, sigma_hat[i], alpha_hat[i]);
-	}
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------

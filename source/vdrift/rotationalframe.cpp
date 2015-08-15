@@ -21,7 +21,7 @@ QT_TEST(rotationalframe_test)
 	frame.SetInitialTorque(torque);
 	
 	//integrate for 10 seconds
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < 1000; ++i)
 	{
 		frame.Integrate1(0.01);
 		torque.Set(0,1,0);
@@ -53,7 +53,7 @@ QT_TEST(rotationalframe_test)
 		frame.SetInertia(inertia);
 		
 		//integrate for 10 seconds
-		for (int i = 0; i < 1000; i++)
+		for (int i = 0; i < 1000; ++i)
 		{
 			frame.Integrate1(0.01);
 			frame.ApplyTorque(torque);
