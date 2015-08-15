@@ -35,13 +35,9 @@ struct PaceNote
 class PaceNotes
 {
 public:
-	#ifdef SR_EDITOR
-		class App* pApp;  ///*
-		PaceNotes(App* papp);
-	#else
-		class GAME* pGame;  ///*
-		PaceNotes(GAME* pgame);
-	#endif
+	class App* pApp;  ///*
+	PaceNotes(App* papp);
+
 	//virtual ~PaceNotes();
 	//void Defaults();
 

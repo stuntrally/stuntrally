@@ -1,12 +1,19 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/RenderConst.h"
+#include "../ogre/common/Axes.h"
 #include "PaceNotes.h"
+#include "../ogre/ReplayTrk.h"
+#include "../editor/CApp.h"
+#include "../editor/settings.h"
+#include "../vdrift/pathmanager.h"
+//#include "CGui.h"
 #include <OgreTimer.h>
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
 #include <OgreBillboardSet.h>
 //#include <OgreTerrain.h>
+using namespace std;
 using namespace Ogre;
 
 
@@ -39,8 +46,71 @@ void PaceNotes::Rebuild()
 	
 	///  trace road
 	//TODO
+return;
+
+	///  trace Track's Ghost
+	TrackGhost gho;
 	
+	//  foreach track
+	bool rev = false;
+	string sRev = rev ? "_r" : "";
+	string track = pApp->pSet->gui.track;
+	//if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
 	
+	//  load
+	string file = PATHMANAGER::TrkGhosts()+"/"+ track + sRev + ".gho";
+	if (!PATHMANAGER::FileExists(file))
+	{	LogO("NOT found: "+file);/**/  }
+	else
+	{	LogO("---------  "+track+"  ---------");
+		gho.LoadFile(file);
+		
+		//  test
+		Vector3 pos,oldPos;  float oldTime = 0.f;
+		Quaternion rot;  float vel = 0.f;
+
+		int num = gho.getNumFrames(), jmp = 0;
+		for (int i=0; i < num; ++i)
+		{
+			const TrackFrame& fr = gho.getFrame0(i);
+			Axes::toOgre(pos, fr.pos);  // pos
+			rot = Axes::toOgre(fr.rot);
+
+			float dist = (pos - oldPos).length();
+			float dt = fr.time - oldTime;  // 0.04
+			if (i > 0 && dt > 0.001f)
+				vel = 3.6f * dist / dt;
+
+			//  check for sudden pos jumps  (rewind used but not with _Tool_ go back time !)
+			bool jmp = false;
+			if (i > 10 && i < num-1)  // ignore jumps at start or end
+			if (dist > 6.f)  //par
+				jmp = true;
+
+			LogO("i:"+ iToStr(i,4) +" t:"+ fToStr(fr.time,2,6)//+" dt: "+fToStr(dt)
+				+"  v:"+ fToStr(vel,1,4)
+				+"  b:"+ toStr(fr.brake)
+				+"  s: "+ (fr.steer==0 ? "----" : fToStr(fr.steer/127.f))
+				//+"  p: "+ fToStr(fr.pos[0])+" "+fToStr(fr.pos[1])+" "+fToStr(fr.pos[2])
+				+(jmp ? " !jd: "+fToStr(dist) : "")
+			);
+			
+			///  add pace note
+			if (i%20==0)
+			{
+				PaceNote n;
+				n.pos = pos;  //fr.brake  fr.steer
+				Create(n);
+				v.push_back(n);
+			}
+			
+			oldPos = pos;  oldTime = fr.time;
+		}
+		if (jmp > 0)
+			LogO("!Jumps: "+toStr(jmp));
+	}
+	
+
 
 	//UpdVis(fLodBias);
 
@@ -52,7 +122,7 @@ void PaceNotes::Rebuild()
 //  Create
 void PaceNotes::Create(PaceNote& n)
 {
-	float fSize = 12.f;  ++ii;
+	float fSize = 4.f;  ++ii;
 	n.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	n.bb = mSceneMgr->createBillboardSet("P-"+toStr(ii),2);
 	n.bb->setDefaultDimensions(fSize, fSize);
@@ -85,11 +155,7 @@ void PaceNotes::Destroy()  // all
 
 
 //  ctor  ---------
-#ifdef SR_EDITOR
 PaceNotes::PaceNotes(App* papp) :pApp(papp)
-#else
-PaceNotes::PaceNotes(GAME* pgame) :pGame(pgame)
-#endif
 	,mSceneMgr(0),mCamera(0),mTerrain(0), ii(0)
 {	}
 
