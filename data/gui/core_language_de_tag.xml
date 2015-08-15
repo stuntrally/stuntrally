@@ -131,7 +131,7 @@
 	<Tag name="Materials">Materialien</Tag>
 	<Tag name="InputMapResetGame">Spiel zurücksetzen</Tag>
 	<Tag name="smoke">Rauch</Tag>
-	<Tag name="ConvertAllRpl">Convert All (smaller size)</Tag>
+	<Tag name="ConvertAllRpl">Alle konvertieren (kleinere Größe)</Tag>
 	<Tag name="MouseCapture">Maus einfangen</Tag>
 	<Tag name="TipMinimapScrnEditor">Karte der ausgewählten Strecke, Sicht von oben.</Tag>
 	<Tag name="TipTerNoiseOnly">Geländewinkel und Höhenreichweiten ignorieren. Schicht wird nur dann auftauchen, wenn der Rauschfaktor in der anderen Schicht sanft übergeht.</Tag>
@@ -818,7 +818,7 @@
 	<Tag name="set2">Typ2</Tag>
 	<Tag name="auto">Auto</Tag>
 	<Tag name="TipWindInflH">Einfluss des Winds auf das Modell, Höhenskalierung.</Tag>
-	<Tag name="ToolsTime">Warning: May take several minutes!</Tag>
+	<Tag name="ToolsTime">Warnung: Kann einige Minuten dauern!</Tag>
 	<Tag name="Bloom">Überstrahlung</Tag>
 	<Tag name="Silver">Silber</Tag>
 	<Tag name="TipWindInflL">Einfluss des Winds auf das Modell, Längenskalierung.</Tag>

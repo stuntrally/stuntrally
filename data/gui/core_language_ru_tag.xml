@@ -131,7 +131,7 @@
 	<Tag name="Materials">Материалы</Tag>
 	<Tag name="InputMapResetGame">Сбросить игру</Tag>
 	<Tag name="smoke">дым</Tag>
-	<Tag name="ConvertAllRpl">Convert All (smaller size)</Tag>
+	<Tag name="ConvertAllRpl">Конвертировать Всё (меньший размер)</Tag>
 	<Tag name="MouseCapture">Захват мыши</Tag>
 	<Tag name="TipMinimapScrnEditor">Мини-карта выбранного трека, вид сверху.</Tag>
 	<Tag name="TipTerNoiseOnly">Будет игнорировать диапозон углов и высот ландшафта. Слой появиться только, если коэффициент шума других слоёв смешивает это.</Tag>
@@ -818,7 +818,7 @@
 	<Tag name="set2">набор2</Tag>
 	<Tag name="auto">Авто</Tag>
 	<Tag name="TipWindInflH">Влияние ветра на модель, шкала высоты.</Tag>
-	<Tag name="ToolsTime">Warning: May take several minutes!</Tag>
+	<Tag name="ToolsTime">Предупреждение: может занять несколько минут!</Tag>
 	<Tag name="Bloom">Свечение</Tag>
 	<Tag name="Silver">Серебро</Tag>
 	<Tag name="TipWindInflL">Влияние ветра на модель, шкала длины.</Tag>
