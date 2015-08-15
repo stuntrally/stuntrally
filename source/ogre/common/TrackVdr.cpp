@@ -127,50 +127,9 @@ void App::CreateVdrTrack(std::string strack, TRACK* pTrack)
 
 
 #ifndef SR_EDITOR
-///---------------------------------------------------------------------------------------------------------------
-//	 track racing line
-///---------------------------------------------------------------------------------------------------------------
-
-void App::CreateRacingLine()
-{
-	//void ROADPATCH::AddRacinglineScenenode(SCENENODE * node, ROADPATCH * nextpatch,	
-	ManualObject* m = mSceneMgr->createManualObject();
-	m->begin("track/Racingline", RenderOperation::OT_TRIANGLE_LIST);
-	int ii = 0;
-
-	const std::list <ROADSTRIP>& roads = pGame->track.GetRoadList();
-	for (std::list <ROADSTRIP>::const_iterator it = roads.begin(); it != roads.end(); ++it)
-	{
-		const std::list <ROADPATCH>& pats = (*it).GetPatchList();
-		for (std::list <ROADPATCH>::const_iterator i = pats.begin(); i != pats.end(); ++i)
-		{
-			const VERTEXARRAY* a = &((*i).racingline_vertexarray);
-			if (!a)  continue;
-
-			int verts = a->vertices.size();
-			if (verts == 0)  continue;
-			int faces = a->faces.size();
-
-			for (int v = 0; v < verts; v += 3)
-				m->position(a->vertices[v+0], a->vertices[v+2], -a->vertices[v+1]);
-
-			for (int f = 0; f < faces; ++f)
-				m->index(ii + a->faces[f]);
-
-			ii += verts/3;
-		}
-	}
-	m->setCastShadows(false);	
-	m->end();
-	hud->ndLine = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	hud->ndLine->attachObject(m);
-	//ndLine->setVisible(pSet->racingline);
-}
-		
-
 
 //---------------------------------------------------------------------------------------------------------------
-///	 track 2D minimap  -mesh, optym texture..  -todo: editor tex save, remove this ...
+///	 track 2D minimap
 //---------------------------------------------------------------------------------------------------------------
 
 ManualObject* CHud::CreateVdrMinimap()
@@ -256,83 +215,6 @@ ManualObject* CHud::CreateVdrMinimap()
 	m->setRenderingDistance(100000.f);
 	m->setRenderQueueGroup(RQG_Hud2);  m->setVisibilityFlags(RV_Hud);
 	return m;
-}
-
-
-//---------------------------------------------------------------------------------------------------------------
-///  3D bezier road  /test
-//---------------------------------------------------------------------------------------------------------------
-
-void App::CreateRoadBezier()
-{
-	ManualObject* m = mSceneMgr->createManualObject();
-	//m->begin("pipeGlass", RenderOperation::OT_TRIANGLE_LIST);
-	m->begin("roadAsphalt", RenderOperation::OT_TRIANGLE_LIST);
-	int ii=0;
-
-	#ifdef SR_EDITOR
-	const std::list <ROADSTRIP>& roads = track->GetRoadList();
-	#else
-	const std::list <ROADSTRIP>& roads = pGame->track.GetRoadList();
-	#endif
-	for (std::list <ROADSTRIP>::const_iterator it = roads.begin(); it != roads.end(); ++it)
-	{
-		#define VDR_LEN  // to get whole track length
-		#ifdef VDR_LEN
-		MATHVECTOR<float,3> vec0;  float length = 0.f;
-		#endif
-		const std::list <ROADPATCH>& pats = (*it).GetPatchList();
-		for (std::list <ROADPATCH>::const_iterator i = pats.begin(); i != pats.end(); ++i)
-		{
-			float p[16][3];  int a=0;
-			for (int y=0; y<4; ++y)
-			for (int x=0; x<4; ++x)
-			{
-				const MATHVECTOR<float,3>& vec = (*i).GetPatch().GetPoint(x,y);
-				p[a][0] = vec[2];  p[a][1] = vec[1] + 0.2f/*ofs up*/;  p[a][2] = -vec[0];  a++;
-				
-				#ifdef VDR_LEN
-				if (x==1 && y==1 /*&& it == roads.begin()*/)  //main only-
-				{
-					if (i != pats.begin())  // sum distance
-						length += (vec0-vec).Magnitude();
-					vec0 = vec;
-					//LogO(fToStr(length,2,6));
-				}
-				#endif
-			}
-			a=0;
-
-			// normal
-			Vector3 pos (p[a  ][0], p[a  ][1], p[a  ][2]);
-			Vector3 posX(p[a+3][0], p[a+3][1], p[a+3][2]);   posX-=pos;  posX.normalise();
-			Vector3 posY(p[a+12][0],p[a+12][1],p[a+12][2]);  posY-=pos;  posY.normalise();
-			Vector3 norm = posX.crossProduct(posY);  norm.normalise();/**/
-
-			for (int y=0; y<4; ++y)
-			for (int x=0; x<4; ++x)
-			{
-				Vector3 pos(p[a][0], p[a][1], p[a][2]);  a++;
-				m->position(pos);
-				m->normal(norm);/**/
-				m->textureCoord(y/3.f,x/3.f);
-				if (x<3 && y<3)
-				{
-					int a = ii+x+y*4;
-					m->index(a);	m->index(a+1);	m->index(a+4);
-					m->index(a+5);	m->index(a+4);	m->index(a+1);
-				}
-			}
-			ii += 16;
-		}
-		#ifdef VDR_LEN
-		LogO("VDR TRK: " + pSet->gui.track +" LEN: "+fToStr(length,2,6));
-		#endif
-	}
-	m->end();
-	AxisAlignedBox aabInf;	aabInf.setInfinite();
-	m->setBoundingBox(aabInf);  // always visible
-	mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(m);
 }
 #endif
 

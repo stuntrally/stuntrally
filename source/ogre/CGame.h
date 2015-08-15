@@ -103,8 +103,7 @@ public:
 	std::vector<Ogre::SceneNode*> vFlNd;
 
 	//  vdrift
-	void CreateVdrTrack(std::string strack, class TRACK* pTrack),
-		CreateRacingLine(), CreateRoadBezier();
+	void CreateVdrTrack(std::string strack, class TRACK* pTrack);
 
 	static Ogre::ManualObject* CreateModel(Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
 		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip, bool track=false, const Ogre::String& name="");
