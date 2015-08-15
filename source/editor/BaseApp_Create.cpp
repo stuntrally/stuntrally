@@ -174,7 +174,10 @@ BaseApp::BaseApp()
 }
 
 BaseApp::~BaseApp()
-{	
+{
+	delete mCursorManager;  mCursorManager = 0;
+	delete mInputWrapper;  mInputWrapper = 0;
+	
 	if (mGui)  {
 		mGui->shutdown();	delete mGui;	mGui = 0;  }
 	if (mPlatform)  {

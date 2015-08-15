@@ -1,4 +1,5 @@
 #include "pch.h"
+ #include "vld.h" // mem leaks +
 #include "../ogre/common/Def_Str.h"
 #include "settings.h"
 #include "CApp.h"
@@ -8,10 +9,6 @@
 #include <locale.h>
 #include <boost/filesystem.hpp>
 using namespace std;
-
-#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-//#include <X11/Xlib.h>
-#endif
 
 
 //  load settings from default file
@@ -29,10 +26,6 @@ void LoadDefaultSet(SETTINGS* settings, string setFile)
 	int main(int argc, char* argv[])
 #endif
 {
-#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-	//XInitThreads();
-#endif
-	
 	setlocale(LC_NUMERIC, "C");
 
 	//  Paths

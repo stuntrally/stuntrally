@@ -177,7 +177,7 @@ void App::NewCommon(bool onlyTerVeget)
 	scn->DestroyTerrain();
 		
 	//world.Clear();
-	track->Clear();
+	if (track)  track->Clear();
 
 	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
 	resTrk = gcom->TrkDir() + "objects";
@@ -233,6 +233,7 @@ void App::LoadTrackEv()
 	bNewHmap = false;/**/
 	scn->CreateTerrain(bNewHmap, scn->sc->ter);
 
+	if (track)
 	if (scn->sc->vdr)  // vdrift track
 	{
 		if (!LoadTrackVdr(pSet->gui.track))
@@ -534,7 +535,7 @@ void App::BltWorldDestroy()
 //  Clear - delete bullet pointers
 void App::BltClear()
 {
-	track = NULL;
+	//track = NULL;
 	DestroyVdrTrackBlt();
 	
 	if (world)

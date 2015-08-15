@@ -13,18 +13,12 @@
 #include "../ogre/common/WaterRTT.h"
 #include "../ogre/common/RenderBoxScene.h"
 #include "settings.h"
-
+#include "../vdrift/track.h"
 #include "../shiny/Main/Factory.hpp"
 #include "../shiny/Platforms/Ogre/OgrePlatform.hpp"
 #include "../shiny/Platforms/Ogre/OgreMaterial.hpp"
 #include <OgreTerrainPaging.h>
 #include <OgreTerrainGroup.h>
-
-#if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
-	// dir listing
-	#include <dirent.h>
-	#include <sys/types.h>
-#endif
 using namespace Ogre;
 
 
@@ -100,6 +94,12 @@ void App::postInit()
 
 App::~App()
 {
+	DestroyObjects(false);
+
+	delete scn;
+
+	delete mFactory;  //!
+
 	gui->viewBox->destroy();
 	delete gui->viewBox;
 
@@ -109,8 +109,6 @@ App::~App()
 	delete[] pBrFmask;  pBrFmask = 0;
 
 	delete[] mBrushData;
-
-	delete mFactory;  //!
 
 	delete gcom;
 	delete gui;
