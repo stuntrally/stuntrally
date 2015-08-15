@@ -56,12 +56,12 @@ void App::UpdThr()
 		double dt = double(gtim.getMicroseconds()) * 0.000001;
 		gtim.reset();
 		
-		if (pSet->multi_thr == 1 && !bLoading)
+		if (pSet->multi_thr == 1 && !bLoading && !mShutDown)
 		{
 			bSimulating = true;
 			bool ret = pGame->OneLoop(dt);
 			if (!ret)
-				mShutDown = true;
+				mShutDown = true;  //ShutDown();
 
 			DoNetworking();
 			bSimulating = false;
@@ -341,7 +341,8 @@ bool App::frameStart(Real time)
 		if (pSet->multi_thr == 0)
 		{
 			ret = pGame->OneLoop(time);
-			if (!ret)  mShutDown = true;
+			if (!ret)
+				ShutDown();
 			updatePoses(time);
 		}
 		
