@@ -88,7 +88,8 @@ void App::newPoses(float time)  // time only for camera update
 			}else  ///>>  ghost
 			{
 				ReplayFrame2 gf;
-				bool ok = ghplay.GetFrame(rewTime, &gf, 0);
+				float ti = std::min((float)rewTime, ghplay.GetTimeLength());
+				bool ok = ghplay.GetFrame(ti, &gf, 0);
 				if (ok)
 					pi.FromRpl2(&gf, 0);
 
@@ -437,14 +438,15 @@ void App::updatePoses(float time)
 		//  hide when empty or near car
 		bool bGhostCar = carM->eType == (isGhost2nd ? CarModel::CT_GHOST2 : CarModel::CT_GHOST),  // show only actual
 			bGhTrkVis = carM->isGhostTrk() && ghtrk.GetTimeLength()>0 && pSet->rpl_trackghost,
-			bGhostVis = ghplay.GetNumFrames()>0 && pSet->rpl_ghost;
+			bGhostVis = ghplay.GetNumFrames()>0 && pSet->rpl_ghost,
+			bGhostEnd = pGame->timer.GetPlayerTime(0) > ghplay.GetTimeLength();
 		if (bGhostCar)  cgh = c;
 
 		if (carM->isGhost())  // for all
 		{
 			bool loading = iLoad1stFrames >= 0;  // show during load ?..
 			bool curVisible = carM->mbVisible;
-			bool newVisible = bGhostVis && bGhostCar || bGhTrkVis;
+			bool newVisible = bGhostVis && bGhostCar /**/&& !bGhostEnd/**/ || bGhTrkVis;
 			
 			if (loading)
 				carM->setVisible(true);  //!carM->isGhost());
