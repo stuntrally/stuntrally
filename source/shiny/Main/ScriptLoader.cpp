@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ScriptLoader.hpp"
 
+#include <iostream>
 #include <vector>
 #include <map>
 #include <exception>
@@ -234,7 +235,8 @@ namespace sh
 								throw std::runtime_error("Root node must have a name (\"" + newNode->getName() + "\")");
 						key = newNode->getValue();
 
-						m_scriptList.insert(ScriptItem(key, newNode));
+						if (!m_scriptList.insert(ScriptItem(key, newNode)).second);
+							std::cout << "script node" << key << " already exists, will leak" << std::endl; // TODO: fix
 					}
 
 					_skipNewLines(stream);
@@ -313,103 +315,25 @@ namespace sh
 		}
 	}
 
-	ScriptNode *ScriptNode::addChild(const std::string &name, bool replaceExisting)
+	ScriptNode *ScriptNode::addChild(const std::string &name)
 	{
-		if (replaceExisting)
-		{
-			ScriptNode *node = findChild(name, false);
-			if (node)
-			{
-				return node;
-			}
-		}
 		return new ScriptNode(this, name);
 	}
 
-	ScriptNode *ScriptNode::findChild(const std::string &name, bool recursive)
+	ScriptNode *ScriptNode::findChild(const std::string &name)
 	{
-		int indx;
 		int childCount = (int)mChildren.size();
 
-		if (mLastChildFound != -1)
-		{
-			//If possible, try checking the nodes neighboring the last successful search
-			//(often nodes searched for in sequence, so this will boost search speeds).
-			int prevC = mLastChildFound-1;
-			if (prevC < 0)
-				prevC = 0;
-			else if (prevC >= childCount)
-				prevC = childCount-1;
-			int nextC = mLastChildFound+1;
-			if (nextC < 0)
-				nextC = 0;
-			else if (nextC >= childCount)
-				nextC = childCount-1;
-
-			for (indx = prevC; indx <= nextC; ++indx)
-			{
-				ScriptNode *node = mChildren[indx];
-				if (node->mName == name)
-				{
-					mLastChildFound = indx;
-					return node;
-				}
-			}
-
-			//If not found that way, search for the node from start to finish, avoiding the
-			//already searched area above.
-			for (indx = nextC + 1; indx < childCount; ++indx)
-			{
-				ScriptNode *node = mChildren[indx];
-				if (node->mName == name) {
-					mLastChildFound = indx;
-					return node;
-				}
-			}
-			for (indx = 0; indx < prevC; ++indx)
-			{
-				ScriptNode *node = mChildren[indx];
-				if (node->mName == name) {
-					mLastChildFound = indx;
-					return node;
-				}
-			}
-		}
-		else
-		{
-			//Search for the node from start to finish
-			for (indx = 0; indx < childCount; ++indx){
-				ScriptNode *node = mChildren[indx];
-				if (node->mName == name) {
-					mLastChildFound = indx;
-					return node;
-				}
-			}
-		}
-
-		//If not found, search child nodes (if recursive == true)
-		if (recursive)
-		{
-			for (indx = 0; indx < childCount; ++indx)
-			{
-				mChildren[indx]->findChild(name, recursive);
+		//Search for the node from start to finish
+		for (int indx = 0; indx < childCount; ++indx){
+			ScriptNode *node = mChildren[indx];
+			if (node->mName == name) {
+				mLastChildFound = indx;
+				return node;
 			}
 		}
 
 		//Not found anywhere
 		return NULL;
-	}
-
-	void ScriptNode::setParent(ScriptNode *newParent)
-	{
-		//Remove self from current parent
-		mParent->mChildren.erase(mIter);
-
-		//Set new parent
-		mParent = newParent;
-
-		//Add self to new parent
-		mParent->mChildren.push_back(this);
-		mIter = --(mParent->mChildren.end());
 	}
 }

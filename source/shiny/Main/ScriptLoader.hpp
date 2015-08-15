@@ -92,8 +92,8 @@ namespace sh
 			return mValue;
 		}
 
-		ScriptNode *addChild(const std::string &name = "untitled", bool replaceExisting = false);
-		ScriptNode *findChild(const std::string &name, bool recursive = false);
+		ScriptNode *addChild(const std::string &name = "untitled");
+		ScriptNode *findChild(const std::string &name);
 
 		inline std::vector<ScriptNode*> &getChildren()
 		{
@@ -105,8 +105,6 @@ namespace sh
 			assert(index < mChildren.size());
 			return mChildren[index];
 		}
-
-		void setParent(ScriptNode *newParent);
  
 		inline ScriptNode *getParent()
 		{
