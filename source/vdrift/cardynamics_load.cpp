@@ -86,6 +86,8 @@ void CARDYNAMICS::HoverPar::Default()
 
 CARDYNAMICS::~CARDYNAMICS()
 {
+	RemoveBlt();
+	
 	if (poly)
 	{
 		delete[] poly->verts;
@@ -751,14 +753,16 @@ void CARDYNAMICS::Init(
 	info.m_angularDamping = ang_damp;
 	info.m_restitution = 0.0;  //...
 	info.m_friction = coll_friction;  /// 0.4~ 0.7
+	shapes.push_back(chassisShape);
+
 	///  chasis^
-	chassis = world.AddRigidBody(info, true, pSet->game.collis_cars);
+	chassis = world.AddRigidBody(info, true, pSet->game.collis_cars);  rigids.push_back(chassis);
 	//TODO: update this when car rewinds..
 	//chassis->getBroadphaseProxy()->m_collisionFilterMask = 0; //setCollisionFilterMask();
 	chassis->setActivationState(DISABLE_DEACTIVATION);
 	chassis->setUserPointer(new ShapeData(ST_Car, this, 0));  ///~~
 	
-	world.AddAction(this);
+	world.AddAction(this);  actions.push_back(this);
 	
 
 	///  join chassis and wheel triggers
@@ -779,8 +783,9 @@ void CARDYNAMICS::Init(
 			whTrigs->setUserPointer(new ShapeData(ST_Wheel, this, 0, w));  ///~~
 			whTrigs->setActivationState(DISABLE_DEACTIVATION);
 			whTrigs->setCollisionFlags(whTrigs->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
-			world.world->addRigidBody(whTrigs);
-			world.shapes.push_back(whSph);
+
+			world.world->addRigidBody(whTrigs);  rigids.push_back(whTrigs);
+			world.shapes.push_back(whSph);  shapes.push_back(whSph);
 				
 			//todo: collision mask only to fluid triggers
 			//todo: optimize- 1 constr only or none?
@@ -794,8 +799,9 @@ void CARDYNAMICS::Init(
 			constr->setLimit(5,0,0);/*??*/
 			btTypedConstraint* constr = new btPoint2PointConstraint(*chassis, *whTrigs,
 				ToBulletVector(wheelpos), btVector3(0,0,0));
-			world.world->addConstraint(constr, true);
-			world.constraints.push_back(constr);
+
+			world.world->addConstraint(constr, true);  constraints.push_back(constr);
+			//world.constraints.push_back(constr);
 		}
 
 		///  init poly for buoyancy computations
@@ -837,4 +843,54 @@ void CARDYNAMICS::Init(
 	}
 
 	AlignWithGround();//--
+}
+
+//  remove from bullet
+//-------------------------------------------------------------	
+void CARDYNAMICS::RemoveBlt()
+{
+	int i,c;
+	for (i = 0; i < constraints.size(); ++i)
+	{
+		world->world->removeConstraint(constraints[i]);
+		delete constraints[i];
+	}
+	constraints.resize(0);
+	//world->constraints.remove  world->actions.remove  //ok not added
+	//btAlignedObjectArray<btCollisionShape*> shapes;
+	
+	for (i = rigids.size()-1; i >= 0; i--)
+	{
+		btRigidBody* body = rigids[i];
+		if (body && body->getMotionState())
+			delete body->getMotionState();
+
+		world->world->removeRigidBody(body);
+		//world->world->getCollisionObjectArray().remove(body);
+
+		ShapeData* sd = (ShapeData*)body->getUserPointer();
+		delete sd;
+		delete body;
+	}
+	
+	for (i = 0; i < shapes.size(); ++i)
+	{
+		btCollisionShape* shape = shapes[i];
+		world->shapes.remove(shape);  // duplicated
+		if (shape->isCompound())
+		{
+			btCompoundShape* cs = (btCompoundShape *)shape;
+			for (c = 0; c < cs->getNumChildShapes(); ++c)
+				delete cs->getChildShape(c);
+		}
+		ShapeData* sd = (ShapeData*)shape->getUserPointer();
+		delete sd;
+		delete shape;
+	}
+	shapes.resize(0);
+	
+	for (i = 0; i < actions.size(); ++i)
+		world->world->removeAction(actions[i]);
+
+	actions.resize(0);
 }

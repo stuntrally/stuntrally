@@ -37,7 +37,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,blendMtr(0), blendMapSize(513), dbgdraw(0)
 	,carIdWin(-1), iRplCarOfs(0)
 	// other
-	,newGameRpl(0), curLoadState(0)
+	,newGameRpl(0), curLoadState(0), dstTrk(1)
 	,bRplPlay(0),bRplPause(0), bRplRec(0), bRplWnd(1), iRplSkip(0)
 	,iEdTire(0), iTireLoad(0), iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,fLastFrameDT(0.001f)
@@ -54,6 +54,7 @@ App::App(SETTINGS *settings, GAME *game)
 	Axes::Init();
 
 	resCar = "";  resTrk = "";  resDrv = "";
+	oldTrack = "";  oldTrkUser = false;
 	
 	///  new
 	scn = new CScene(this);

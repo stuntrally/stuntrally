@@ -31,6 +31,7 @@ GAME::GAME(SETTINGS* pSettings)
 	//,framerate(0.01f),  ///~  0.004+  o:0.01
 	,fps_min(0), fps_max(0)
 	,pause(false), profilingmode(false), benchmode(false)
+	,bResetObj(false)
 	,framerate(1.0 / pSettings->game_fq)
 	,tire_ref_id(0), reloadSimNeed(0),reloadSimDone(0)
 {
@@ -364,7 +365,7 @@ void GAME::End()
 
 	LogO("Game shutting down.");
 
-	LeaveGame();
+	LeaveGame(true);
 
 	if (sound.Enabled())
 		sound.Pause(true); //stop the sound thread
@@ -470,9 +471,8 @@ void GAME::AdvanceGameLogic(double dt)
 					cd.inFluidsWh[w].clear();
 			}
 
-			if (!cars.empty() && cars.begin()->bResetObj)
-			{
-				cars.begin()->bResetObj = false;
+			if (bResetObj)
+			{	bResetObj = false;
 				app->ResetObjects();
 			}
 
@@ -525,12 +525,6 @@ void GAME::UpdateCarInputs(CAR & car)
 }
 
 
-bool GAME::NewGameDoCleanup()
-{
-	LeaveGame(); //this should clear out all data
-	return true;
-}
-
 bool GAME::NewGameDoLoadTrack()
 {
 	if (!LoadTrack(settings->game.track))
@@ -563,26 +557,28 @@ bool GAME::NewGameDoLoadMisc(float pre_time)
 }
 
 ///  clean up all game data
-void GAME::LeaveGame()
+void GAME::LeaveGame(bool dstTrk)
 {
 	controls.first = NULL;
 
-	track.Unload();
-	collision.Clear();
+	if (dstTrk)
+		track.Unload();
 
 	if (sound.Enabled())
+	for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
 	{
-		for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
-		{
-			list <SOUNDSOURCE *> soundlist;
-			i->GetSoundList(soundlist);
-			for (list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
-				sound.RemoveSource(*s);
-		}
+		list <SOUNDSOURCE *> soundlist;
+		i->GetSoundList(soundlist);
+		for (list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
+			sound.RemoveSource(*s);
 	}
 	
 	cars.clear();
 	timer.Unload();
+
+	if (dstTrk)
+		collision.Clear();
+
 	pause = false;
 }
 

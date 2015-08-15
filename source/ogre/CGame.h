@@ -97,6 +97,9 @@ public:
 
 	void NewGame();  void NewGameDoLoad();  bool IsVdrTrack();  bool newGameRpl;
 
+	bool dstTrk;  // destroy track, false if same
+	Ogre::String oldTrack;  bool oldTrkUser;
+
 	//  fluids to destroy
 	std::vector<Ogre::String/*MeshPtr*/> vFlSMesh;
 	std::vector<Ogre::Entity*> vFlEnt;

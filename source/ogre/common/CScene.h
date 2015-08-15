@@ -68,7 +68,7 @@ public:
 	
 	//  Vegetation
 	Forests::PagedGeometry *trees, *grass;
-	void CreateTrees(), DestroyTrees(), RecreateTrees(), updGrsTer();
+	void CreateTrees(), DestroyTrees(), RecreateTrees(), updGrsTer(), UpdCamera();
 
 
 	///  Terrain

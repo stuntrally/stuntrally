@@ -19,7 +19,7 @@ using namespace Ogre;
 
 ///  hit callback (accurate)
 //-------------------------------------------------------------------------------------------------------------------------------
-void IntTickCallback(btDynamicsWorld *world, btScalar timeStep)
+void IntTickCallback(btDynamicsWorld* world, btScalar timeStep)
 {
 	COLLISION_WORLD* cw = (COLLISION_WORLD*)world->getWorldUserInfo();
 
@@ -249,20 +249,20 @@ void COLLISION_WORLD::DebugDrawScene()
 {
 }
 
-btCollisionObject * COLLISION_WORLD::AddCollisionObject(const MODEL & model)
+btCollisionObject* COLLISION_WORLD::AddCollisionObject(const MODEL& model)
 {
-	btCollisionObject * col = new btCollisionObject();
-	btCollisionShape * shape = AddMeshShape(model);
+	btCollisionObject* col = new btCollisionObject();
+	btCollisionShape* shape = AddMeshShape(model);
 	col->setCollisionShape(shape);
 	world->addCollisionObject(col);
 	return col;
 }
 
-btRigidBody * COLLISION_WORLD::AddRigidBody(const btRigidBody::btRigidBodyConstructionInfo & info,
+btRigidBody* COLLISION_WORLD::AddRigidBody(const btRigidBody::btRigidBodyConstructionInfo & info,
 	bool car, bool bCarsCollis)
 {
-	btRigidBody * body = new btRigidBody(info);
-	btCollisionShape * shape = body->getCollisionShape();
+	btRigidBody* body = new btRigidBody(info);
+	btCollisionShape* shape = body->getCollisionShape();
 	//body->setActivationState(DISABLE_DEACTIVATION);  //!-for chassis only
 	//body->setCollisionFlags
 	#define  COL_CAR  (1<<2)
@@ -272,19 +272,19 @@ btRigidBody * COLLISION_WORLD::AddRigidBody(const btRigidBody::btRigidBodyConstr
 	return body;
 }
 
-void COLLISION_WORLD::AddAction(btActionInterface * action)
+void COLLISION_WORLD::AddAction(btActionInterface* action)
 {
 	world->addAction(action);
-	actions.push_back(action);
+	//actions.push_back(action);  // in CARDYN
 }
 
-void COLLISION_WORLD::AddConstraint(btTypedConstraint * constraint, bool disableCollisionsBetweenLinked)
+void COLLISION_WORLD::AddConstraint(btTypedConstraint* constraint, bool disableCollisionsBetweenLinked)
 {
 	world->addConstraint(constraint, disableCollisionsBetweenLinked);
-	constraints.push_back(constraint);
+	//constraints.push_back(constraint);  // in CARDYN
 }
 
-void COLLISION_WORLD::SetTrack(TRACK * t)
+void COLLISION_WORLD::SetTrack(TRACK* t)
 {
 	assert(t);
 	
@@ -312,10 +312,10 @@ void COLLISION_WORLD::SetTrack(TRACK * t)
 	{
 		if(ob->HasSurface())
 		{
-			MODEL & model = *ob->GetModel();
+			MODEL& model = *ob->GetModel();
 			btIndexedMesh mesh = GetIndexedMesh(model);
 			trackMesh->addIndexedMesh(mesh);
-			//const TRACKSURFACE * surface = ob->GetSurface();
+			//const TRACKSURFACE* surface = ob->GetSurface();
 			//trackSurface.push_back(surface);
 		}
 	}
@@ -330,7 +330,7 @@ void COLLISION_WORLD::SetTrack(TRACK * t)
 	if (!objects.empty())
 	{
 		// can not use QuantizedAabbCompression because of the track size
-		btCollisionShape * trackShape = new btBvhTriangleMeshShape(trackMesh, false);
+		btCollisionShape* trackShape = new btBvhTriangleMeshShape(trackMesh, false);
 		trackObject = new btCollisionObject();
 		trackObject->setCollisionShape(trackShape);
 		trackObject->setUserPointer(NULL);
@@ -341,8 +341,8 @@ void COLLISION_WORLD::SetTrack(TRACK * t)
 
 btIndexedMesh COLLISION_WORLD::GetIndexedMesh(const MODEL & model)
 {
-	const float * vertices;  int vcount;
-	const int * faces;  int fcount;
+	const float* vertices;  int vcount;
+	const int* faces;  int fcount;
 	model.GetVertexArray().GetVertices(vertices, vcount);
 	model.GetVertexArray().GetFaces(faces, fcount);
 	
@@ -350,18 +350,18 @@ btIndexedMesh COLLISION_WORLD::GetIndexedMesh(const MODEL & model)
 	
 	btIndexedMesh mesh;
 	mesh.m_numTriangles = fcount / 3;
-	mesh.m_triangleIndexBase = (const unsigned char *)faces;
+	mesh.m_triangleIndexBase = (const unsigned char*)faces;
 	mesh.m_triangleIndexStride = sizeof(int) * 3;
 	mesh.m_numVertices = vcount;
-	mesh.m_vertexBase = (const unsigned char *)vertices;
+	mesh.m_vertexBase = (const unsigned char*)vertices;
 	mesh.m_vertexStride = sizeof(float) * 3;
 	mesh.m_vertexType = PHY_FLOAT;
 	return mesh;
 }
 
-btCollisionShape * COLLISION_WORLD::AddMeshShape(const MODEL & model)
+btCollisionShape* COLLISION_WORLD::AddMeshShape(const MODEL & model)
 {
-	btTriangleIndexVertexArray * mesh = new btTriangleIndexVertexArray();
+	btTriangleIndexVertexArray* mesh = new btTriangleIndexVertexArray();
 	mesh->addIndexedMesh(GetIndexedMesh(model));
 	btCollisionShape * shape = new btBvhTriangleMeshShape(mesh, true);
 	
@@ -375,7 +375,7 @@ btCollisionShape * COLLISION_WORLD::AddMeshShape(const MODEL & model)
 struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 {
 	MyRayResultCallback(const btVector3 & rayFromWorld, const btVector3 & rayToWorld,
-			const btCollisionObject * exclude, bool ignoreCars, bool camTilt, bool camDist)//, bool ignoreGlass)
+			const btCollisionObject* exclude, bool ignoreCars, bool camTilt, bool camDist)//, bool ignoreGlass)
 		: m_rayFromWorld(rayFromWorld), m_rayToWorld(rayToWorld), m_exclude(exclude), m_shapeId(0)
 		, bIgnoreCars(ignoreCars), bCamTilt(camTilt), bCamDist(camDist)
 	{	}
@@ -387,7 +387,7 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 	btVector3	m_hitPointWorld;
 	
 	int m_shapeId;
-	const btCollisionObject * m_exclude;
+	const btCollisionObject* m_exclude;
 	bool bIgnoreCars,bCamTilt,bCamDist;
 		
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalRayResult& rayResult, bool normalInWorldSpace)
@@ -453,19 +453,19 @@ struct MyRayResultCallback : public btCollisionWorld::RayResultCallback
 bool COLLISION_WORLD::CastRay(
 	const MATHVECTOR<float,3> & origin,
 	const MATHVECTOR<float,3> & direction, const float length,
-	const btCollisionObject * caster,
-	COLLISION_CONTACT & contact,  //out
+	const btCollisionObject* caster,
+	COLLISION_CONTACT& contact,  //out
 	CARDYNAMICS* cd, int w, //out pCarDyn, nWheel
 	bool ignoreCars, bool camTilt/*or treat fluids as solid*/, bool camDist) const
 {
 	btVector3 from = ToBulletVector(origin);
-	btVector3 to = ToBulletVector(origin + direction * length);
+	btVector3 to = ToBulletVector(origin + direction* length);
 	MyRayResultCallback res(from, to, caster, ignoreCars, camTilt, camDist);
 	
 	//  data to set
 	MATHVECTOR<float,3> pos, norm;  float dist;
-	const TRACKSURFACE * surf = TRACKSURFACE::None();
-	btCollisionObject * col = NULL;  const BEZIER * bzr = NULL;
+	const TRACKSURFACE* surf = TRACKSURFACE::None();
+	btCollisionObject* col = NULL;  const BEZIER* bzr = NULL;
 	
 	world->rayTest(from, to, res);
 
@@ -555,10 +555,10 @@ bool COLLISION_WORLD::CastRay(
 				if (cd)
 				{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 1;  }
 
-				/*void * ptr = col->getUserPointer();
+				/*void* ptr = col->getUserPointer();
 				if (ptr != NULL)
 				{
-					const TRACK_OBJECT * const obj = reinterpret_cast <const TRACK_OBJECT * const> (ptr);
+					const TRACK_OBJECT* const obj = reinterpret_cast <const TRACK_OBJECT* const> (ptr);
 					assert(obj);
 					surf = obj->GetSurface();
 				}
@@ -579,7 +579,7 @@ bool COLLISION_WORLD::CastRay(
 			MATHVECTOR<float,3> bs_pos(origin[1], origin[2], origin[0]);  //bezierspace
 			MATHVECTOR<float,3> bs_dir(direction[1], direction[2], direction[0]);
 			MATHVECTOR<float,3> colpos, colnorm;
-			const BEZIER * colpatch = NULL;
+			const BEZIER* colpatch = NULL;
 			bool bezierHit = track->CastRay(bs_pos, bs_dir, length, colpos, colpatch, colnorm);
 			if (bezierHit)
 			{
@@ -614,6 +614,7 @@ void COLLISION_WORLD::DebugPrint(std::ostream & out)
 }
 
 //  Clear - delete bullet pointers
+//-------------------------------------------------------------	
 void COLLISION_WORLD::Clear()
 {
 	cdOld = NULL;
@@ -655,10 +656,10 @@ void COLLISION_WORLD::Clear()
 	
 	for (i = 0; i < shapes.size(); ++i)
 	{
-		btCollisionShape * shape = shapes[i];
+		btCollisionShape* shape = shapes[i];
 		if (shape->isCompound())
 		{
-			btCompoundShape * cs = (btCompoundShape *)shape;
+			btCompoundShape* cs = (btCompoundShape*)shape;
 			for (c = 0; c < cs->getNumChildShapes(); ++c)
 				delete cs->getChildShape(c);
 		}

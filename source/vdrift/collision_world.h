@@ -43,22 +43,22 @@ public:
 
 	class App* pApp;  //for blend mtr
 	
-	btCollisionObject * AddCollisionObject(const MODEL & model);
+	btCollisionObject* AddCollisionObject(const MODEL & model);
 	
-	btRigidBody * AddRigidBody(const btRigidBody::btRigidBodyConstructionInfo & info,
+	btRigidBody* AddRigidBody(const btRigidBody::btRigidBodyConstructionInfo & info,
 		bool car = false, bool bCarsCollis = false);
 
-	void AddAction(btActionInterface * action);
+	void AddAction(btActionInterface* action);
 
-	void AddConstraint(btTypedConstraint * constraint, bool disableCollisionsBetweenLinked=false);
+	void AddConstraint(btTypedConstraint* constraint, bool disableCollisionsBetweenLinked=false);
 	
 	// add track to collision world (unloads previous track)
-	void SetTrack(TRACK * t);
+	void SetTrack(TRACK* t);
 	
 	// cast ray into collision world, returns first hit, caster is excluded fom hits
 	bool CastRay(
 		const MATHVECTOR<float,3> & position, const MATHVECTOR<float,3> & direction, const float length,
-		const btCollisionObject * caster, COLLISION_CONTACT & contact,
+		const btCollisionObject* caster, COLLISION_CONTACT & contact,
 		class CARDYNAMICS* pCarDyn, int nWheel, //
 		bool ignoreCars, bool camTilt/*or treat fluids as solid*/, bool camDist=false) const;
 	
@@ -85,15 +85,15 @@ public:
 	DynamicsWorld* world;
 
 	// . . . . . .
-	btAlignedObjectArray<btCollisionShape *> shapes;
-	btAlignedObjectArray<btActionInterface *> actions;
-	btAlignedObjectArray<btTypedConstraint *> constraints;
-	btAlignedObjectArray<btTriangleIndexVertexArray *> meshes;
+	btAlignedObjectArray<btCollisionShape*> shapes;
+	btAlignedObjectArray<btActionInterface*> actions;
+	btAlignedObjectArray<btTypedConstraint*> constraints;
+	btAlignedObjectArray<btTriangleIndexVertexArray*> meshes;
 	
-	TRACK * track;
-	btCollisionObject * trackObject;
-	btTriangleIndexVertexArray * trackMesh;
+	TRACK* track;
+	btCollisionObject* trackObject;
+	btTriangleIndexVertexArray* trackMesh;
 	
-	btCollisionShape * AddMeshShape(const MODEL & model);
+	btCollisionShape* AddMeshShape(const MODEL & model);
 	btIndexedMesh GetIndexedMesh(const MODEL & model);
 };

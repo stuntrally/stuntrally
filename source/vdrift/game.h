@@ -51,13 +51,11 @@ public:
 	void UpdateTimer();
 	
 	/// ---  new game  ========
-	bool NewGameDoCleanup();  // call in this order
-	bool NewGameDoLoadTrack();
-	/// ---  create cars here
-	bool NewGameDoLoadMisc(float pre_time);
+	void LeaveGame(bool dstTrk);  // call in this order
+	bool NewGameDoLoadTrack();  // track
+	bool NewGameDoLoadMisc(float pre_time);  // timer,etc
 	
 	
-	void LeaveGame();
 	bool LoadTrack(const std::string& trackname);
 	CAR* LoadCar(const std::string& pathCar, const std::string& carname,
 		const MATHVECTOR<float,3>& start_pos, const QUATERNION<float>& start_rot,
@@ -93,6 +91,7 @@ public:
 	std::pair <CAR*, CARCONTROLMAP_LOCAL> controls;
 
 	COLLISION_WORLD collision;
+	bool bResetObj;
 	
 	TIMER timer;
 

@@ -66,6 +66,17 @@ void CScene::RecreateTrees()
 void CScene::updGrsTer()
 {	gTerrain = terrain;  }
 
+void CScene::UpdCamera()
+{
+	#ifndef SR_EDITOR
+	Camera* cam = app->mSplitMgr->mCameras.front();
+	#else
+	Camera* cam = app->mCamera;
+	#endif
+	if (grass)  grass->setCamera(cam);
+	if (trees)  trees->setCamera(cam);
+}
+
 
 void CScene::CreateTrees()
 {
@@ -117,14 +128,15 @@ void CScene::CreateTrees()
 	#else
 	Real fTrees = pSet->game.trees * sc->densTrees;
 	#endif
+	#ifndef SR_EDITOR
+	Camera* cam = app->mSplitMgr->mCameras.front();
+	#else
+	Camera* cam = app->mCamera;
+	#endif
 	
 	if (fGrass > 0.f)
 	{
-		#ifndef SR_EDITOR
-		grass = new PagedGeometry(app->mSplitMgr->mCameras.front(), sc->grPage);  //30
-		#else
-		grass = new PagedGeometry(app->mCamera, sc->grPage);  //30
-		#endif
+		grass = new PagedGeometry(cam, sc->grPage);  //30
 		
 		// create dir if not exist
 		boost::filesystem::create_directory(sCache);
@@ -171,11 +183,8 @@ void CScene::CreateTrees()
 	//---------------------------------------------- Trees ----------------------------------------------
 	if (fTrees > 0.f)
 	{
-		#ifndef SR_EDITOR
-		trees = new PagedGeometry(app->mSplitMgr->mCameras.front(), sc->trPage);
-		#else
-		trees = new PagedGeometry(app->mCamera, sc->trPage);
-		#endif
+		trees = new PagedGeometry(cam, sc->trPage);
+		
 		bool imp = pSet->use_imposters || (!pSet->use_imposters && pSet->imposters_only);
 		
 		// create dir if not exist

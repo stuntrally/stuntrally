@@ -19,6 +19,8 @@
 #include "cardefs.h"
 #include "collision_contact.h"
 #include "../btOgre/BtOgreDebug.h"
+#include "btBulletCollisionCommon.h"
+#include "btBulletDynamicsCommon.h"
 
 class MODEL;  class CONFIGFILE;  class COLLISION_WORLD;  class FluidBox;  class GAME;
 
@@ -47,10 +49,11 @@ public:
 		const MODEL & chassisModel, const MODEL & wheelModelFront, const MODEL & wheelModelRear,
 		const MATHVECTOR<Dbl,3> & position,
 		const QUATERNION<Dbl> & orientation);
+	void RemoveBlt();
 
 // bullet interface
-	virtual void updateAction(btCollisionWorld * collisionWorld, btScalar dt);
-	virtual void debugDraw(btIDebugDraw * debugDrawer)	{	}
+	virtual void updateAction(btCollisionWorld* collisionWorld, btScalar dt);
+	virtual void debugDraw(btIDebugDraw* debugDrawer)	{	}
 
 // graphics interface, interpolated
 	void Update(), UpdateBuoyancy(); // update interpolated chassis state
@@ -196,10 +199,16 @@ public:
 		void Default();
 	} hov;
 
+// bullet to delete  -----------------
+	btAlignedObjectArray<btCollisionShape*> shapes;
+	btAlignedObjectArray<btActionInterface*> actions;
+	btAlignedObjectArray<btTypedConstraint*> constraints;
+	btAlignedObjectArray<btRigidBody*> rigids;
+
 // chassis state  -----------------
 	RIGIDBODY body;
 	MATHVECTOR<Dbl,3> center_of_mass;
-	COLLISION_WORLD * world;
+	COLLISION_WORLD* world;
 	btRigidBody *chassis, *whTrigs;
 	
 // driveline state  -----------------

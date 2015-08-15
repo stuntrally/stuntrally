@@ -14,11 +14,9 @@
 #include "FollowCamera.h"
 #include "SplitScreen.h"
 #include "common/GraphView.h"
-
 #include "../network/gameclient.hpp"
 #include "../paged-geom/PagedGeometry.h"
 #include "../shiny/Main/Factory.hpp"
-
 #include <boost/thread.hpp>
 #include <MyGUI_OgrePlatform.h>
 #include "common/MyGUI_D3D11.h"
@@ -188,6 +186,7 @@ void App::NewGame()
 	pSet->rpl_rec = bRplRec;  // changed only at new game
 	gui->pChall = 0;
 	
+	
 	if (!newGameRpl)  // if from replay, dont
 	{
 		pSet->game = pSet->gui;  // copy game config from gui
@@ -199,6 +198,9 @@ void App::NewGame()
 			pSet->game.local_players = 1;
 	}
 	newGameRpl = false;
+
+	///<>  same track
+	dstTrk = oldTrack != pSet->game.track || oldTrkUser != pSet->gui.track_user;
 
 	///  check if track exist ..
 	if (!PATHMANAGER::FileExists(gcom->TrkDir()+"scene.xml"))
@@ -231,15 +233,19 @@ void App::LoadCleanUp()  // 1 first
 {
 	updMouse();
 	
-	scn->DestroyFluids();  DestroyObjects(true);
+	if (dstTrk)
+	{	scn->DestroyFluids();  DestroyObjects(true);  }
 	
 	DestroyGraphs();  hud->Destroy();
 	
 
 	// rem old track
-	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
-	resTrk = gcom->TrkDir() + "objects";
-	mRoot->addResourceLocation(resTrk, "FileSystem");
+	if (dstTrk)
+	{
+		if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
+		resTrk = gcom->TrkDir() + "objects";
+		mRoot->addResourceLocation(resTrk, "FileSystem");
+	}
 	
 	//  Delete all cars
 	for (int i=0; i < carModels.size(); ++i)
@@ -257,24 +263,29 @@ void App::LoadCleanUp()  // 1 first
 	}
 	carModels.clear();  //carPoses.clear();
 
-
-	scn->DestroyTrees();
-	scn->DestroyWeather();
 	
-	scn->DestroyTerrain();
-	scn->DestroyRoad();
-
+	if (dstTrk)
+	{
+		scn->DestroyTrees();
+		scn->DestroyWeather();
+		
+		scn->DestroyTerrain();
+		scn->DestroyRoad();
+	}
 
 	///  destroy all
 	///  todo: check if track/car changed, dont recreate if same..
-	//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();  // destroy all scenenodes
-	mSceneMgr->destroyAllManualObjects();
-	mSceneMgr->destroyAllEntities();
-	mSceneMgr->destroyAllStaticGeometry();
-	scn->vdrTrack = 0;
-	//mSceneMgr->destroyAllParticleSystems();
-	mSceneMgr->destroyAllRibbonTrails();
-	mSplitMgr->mGuiSceneMgr->destroyAllManualObjects(); // !?..
+	if (dstTrk)
+	{
+		//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();  // destroy all scenenodes
+		mSceneMgr->destroyAllManualObjects();
+		mSceneMgr->destroyAllEntities();
+		mSceneMgr->destroyAllStaticGeometry();
+		scn->vdrTrack = 0;
+		//mSceneMgr->destroyAllParticleSystems();
+		mSceneMgr->destroyAllRibbonTrails();
+		mSplitMgr->mGuiSceneMgr->destroyAllManualObjects(); // !?..
+	}
 
 	// remove junk from previous tracks
 	MeshManager::getSingleton().unloadUnreferencedResources();
@@ -292,7 +303,7 @@ void App::LoadGame()  // 2
 	mSplitMgr->Align();
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
 	
-	pGame->NewGameDoCleanup();
+	pGame->LeaveGame(dstTrk);
 
 	if (gui->bReloadSim)
 	{	gui->bReloadSim = false;
@@ -303,21 +314,28 @@ void App::LoadGame()  // 2
 			gui->updSld_TwkSurf(0);  }
 	}
 	
+	///<>  save old track
+	oldTrack = pSet->game.track;  oldTrkUser = pSet->game.track_user;
+	
+	
 	//  load scene.xml - default if not found
 	//  need to know sc->asphalt before vdrift car load
-	bool vdr = IsVdrTrack();
-	scn->sc->pGame = pGame;
-	scn->sc->LoadXml(gcom->TrkDir()+"scene.xml", !vdr/*for asphalt*/);
-	scn->sc->vdr = vdr;
-	pGame->track.asphalt = scn->sc->asphalt;  //*
-	pGame->track.sDefaultTire = scn->sc->asphalt ? "asphalt" : "gravel";  //*
-	if (scn->sc->denyReversed)
-		pSet->game.trackreverse = false;
+	if (dstTrk)
+	{
+		bool vdr = IsVdrTrack();
+		scn->sc->pGame = pGame;
+		scn->sc->LoadXml(gcom->TrkDir()+"scene.xml", !vdr/*for asphalt*/);
+		scn->sc->vdr = vdr;
+		pGame->track.asphalt = scn->sc->asphalt;  //*
+		pGame->track.sDefaultTire = scn->sc->asphalt ? "asphalt" : "gravel";  //*
+		if (scn->sc->denyReversed)
+			pSet->game.trackreverse = false;
 
-	pGame->NewGameDoLoadTrack();
+		pGame->NewGameDoLoadTrack();
 
-	if (!scn->sc->ter)
-		scn->sc->td.hfHeight = NULL;  // sc->td.layerRoad.smoke = 1.f;
+		if (!scn->sc->ter)
+			scn->sc->td.hfHeight = NULL;  // sc->td.layerRoad.smoke = 1.f;
+	}
 	
 	// upd car abs,tcs,sss
 	pGame->ProcessNewSettings();
@@ -428,9 +446,11 @@ void App::LoadScene()  // 3
 	refreshCompositor();
 
 	//  fluids
-	scn->CreateFluids();
+	if (dstTrk)
+		scn->CreateFluids();
 
-	pGame->collision.world->setGravity(btVector3(0.0, 0.0, -scn->sc->gravity));
+	if (dstTrk)
+		pGame->collision.world->setGravity(btVector3(0.0, 0.0, -scn->sc->gravity));
 
 
 	//  set sky tex name for water
@@ -440,7 +460,8 @@ void App::LoadScene()  // 3
 	
 
 	//  weather
-	scn->CreateWeather();
+	if (dstTrk)
+		scn->CreateWeather();
 		
 	//  checkpoint arrow
 	bool deny = gui->pChall && !gui->pChall->chk_arr;
@@ -477,6 +498,8 @@ void App::LoadCar()  // 4
 		}
 		iCurPoses[i] = 0;
 	}
+	if (!dstTrk)  // reset objects if same track
+		pGame->bResetObj = true;
 	
 	
 	///  Init Replay  header, once
@@ -530,11 +553,13 @@ void App::LoadCar()  // 4
 
 void App::LoadTerrain()  // 5
 {
-	scn->CreateTerrain(false, scn->sc->ter);  // common
-	GetTerMtrIds();
-	if (scn->sc->ter)
-		scn->CreateBltTerrain();
-	
+	if (dstTrk)
+	{
+		scn->CreateTerrain(false, scn->sc->ter);  // common
+		GetTerMtrIds();
+		if (scn->sc->ter)
+			scn->CreateBltTerrain();
+	}
 
 	for (int c=0; c < carModels.size(); ++c)
 		carModels[c]->terrain = scn->terrain;
@@ -542,13 +567,14 @@ void App::LoadTerrain()  // 5
 	sh::Factory::getInstance().setTextureAlias("CubeReflection", "ReflectionCube");
 
 
+	if (dstTrk)
 	if (scn->sc->vdr)  // vdrift track
 		CreateVdrTrack(pSet->game.track, &pGame->track);
 }
 
 void App::LoadRoad()  // 6
 {
-	CreateRoad();
+	CreateRoad();   // dstTrk inside
 		
 	if (scn->road && scn->road->getNumPoints() == 0 && hud->arrow.nodeRot)
 		hud->arrow.nodeRot->setVisible(false);  // hide when no road
@@ -599,11 +625,15 @@ void App::LoadRoad()  // 6
 
 void App::LoadObjects()  // 7
 {
-	CreateObjects();
+	if (dstTrk)
+		CreateObjects();
 }
 
 void App::LoadTrees()  // 8
 {
+	if (!dstTrk)
+		scn->UpdCamera();  // paged cam
+	else
 	if (scn->sc->ter)
 		scn->CreateTrees();
 	
@@ -646,6 +676,7 @@ void App::LoadMisc()  // 9 last
 			//(*it)->fCam->mWorld = &(pGame->collision);
 	}	}
 	
+	if (dstTrk)
 	try {
 	TexturePtr tex = Ogre::TextureManager::getSingleton().getByName("waterDepth.png");
 	if (!tex.isNull())
@@ -772,6 +803,8 @@ void App::CreateRoad()
 {
 	///  road  ~ ~ ~
 	SplineRoad*& road = scn->road;
+	if (dstTrk)
+	{
 		if (road)
 		{	road->DestroyRoad();  delete road;  road = 0;  }
 
@@ -780,11 +813,15 @@ void App::CreateRoad()
 		
 		String sr = gcom->TrkDir()+"road.xml";
 		road->LoadFile(gcom->TrkDir()+"road.xml");
+	}else
+		road->mCamera = *mSplitMgr->mCameras.begin();  // upd cam
 	
 	//  after road load we have iChk1 so set it for carModels
 	for (int i=0; i < carModels.size(); ++i)
 		carModels[i]->ResetChecks(true);
 
+	if (dstTrk)
+	{
 		scn->UpdPSSMMaterials();  ///+~-
 
 		road->bCastShadow = pSet->shadow_type >= Sh_Depth;
@@ -792,4 +829,5 @@ void App::CreateRoad()
 
 		road->RebuildRoadInt();
 		road->SetChecks();  // 2nd, upd
+	}
 }
