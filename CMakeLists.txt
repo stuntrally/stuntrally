@@ -98,9 +98,9 @@ if(BUILD_GAME OR BUILD_EDITOR)
         add_definitions(-DOGRE_PLUGIN_DIR_REL="${OGRE_PLUGIN_DIR_REL}")
         add_definitions(-DOGRE_PLUGIN_DIR_DBG="${OGRE_PLUGIN_DIR_DBG}")
 
-	#find_package(Bullet REQUIRED QUIET)
-	#include_directories(${BULLET_INCLUDE_DIRS})
-	#list(APPEND LIBS ${BULLET_LIBRARIES})
+	find_package(Bullet REQUIRED QUIET)
+	include_directories(${BULLET_INCLUDE_DIRS})
+	list(APPEND LIBS ${BULLET_LIBRARIES})
 
 	find_package(SDL2 REQUIRED)
 	include_directories(${SDL2_INCLUDE_DIR})
