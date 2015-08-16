@@ -7,24 +7,19 @@
 #pragma once
 #include "btBulletDynamicsCommon.h"
 #include "DynamicLines.h"
-
 #include <OgreVector3.h>
 
 namespace Ogre {  class SceneNode;  }
-
 
 namespace BtOgre  {
 
 
 typedef std::vector<Ogre::Vector3> Vector3Array;
 
-//  Converts from and to Bullet and Ogre stuff.
+//  Converts between Bullet and Ogre
 class Convert
 {
 public:
-	//Convert() {}
-	//~Convert() {}
-
 	static btQuaternion toBullet(const Ogre::Quaternion &q)
 	{
 		return btQuaternion(q.x, q.y, q.z, q.w);
@@ -65,6 +60,10 @@ public:
 	void drawSphere(btScalar radius, const btTransform& transform, const btVector3& color/*, int half*/);
 
 	void drawCircleZ(btScalar radius, const btVector3& p, const btVector3& x, const btVector3& y, const btVector3& color);
+
+	void drawCapsule(btScalar radius, btScalar halfHeight, int upAxis, const btTransform& transform, const btVector3& color);
+
+	void drawCylinder(btScalar radius, btScalar halfHeight, int upAxis, const btTransform& transform, const btVector3& color);
 
 	void drawContactPoint(const btVector3& PointOnB, const btVector3& normalOnB,
 		btScalar distance, int lifeTime, const btVector3& color);
