@@ -952,7 +952,6 @@ material BV_interior
 {
 	parent car_base
 	diffuseMap BV_interior.png
-	//specMap BV_interior_spec.png
 	reflMap BV_interior_refl.png
 	ambient 0.4 0.4 0.4
 	diffuse 0.4 0.4 0.4
@@ -975,4 +974,28 @@ material BV_wheel
 	//refl_amount 0.3
 	fresnel true
 	fresnelScaleBiasPower 0.6 0.15 4
+}
+
+//  U6  wip  -------------------------------
+material U6_interior
+{
+	parent car_base
+	diffuseMap U6_interior.png
+	reflMap U6_interior_refl.png
+	ambient 0.4 0.4 0.4
+	diffuse 0.4 0.4 0.4
+	specular 0.8 0.8 0.8 24
+	env_map true
+	fresnel true
+	fresnelScaleBiasPower 0.6 0.15 4
+}
+material U6_wheel
+{
+	parent car_wheel
+	diffuseMap U6_wheel.png
+	reflMap U6_wheel_refl.png
+	specMap U6_wheel_refl.png
+	specular 0.5 0.5 0.5 32
+	env_map true
+	refl_amount 0.3
 }
