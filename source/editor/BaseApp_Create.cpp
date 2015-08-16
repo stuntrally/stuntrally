@@ -183,7 +183,7 @@ BaseApp::~BaseApp()
 	if (mPlatform)  {
 		mPlatform->shutdown();	delete mPlatform;	mPlatform = 0;  }
 
-	delete mRoot;
+	OGRE_DELETE mRoot;
 }
 
 

@@ -113,6 +113,8 @@ void App::postInit()
 
 void App::destroyScene()
 {
+	delete dbgdraw;
+	
 	scn->mWaterRTT->destroy();
 	
 	DestroyObjects(true);
