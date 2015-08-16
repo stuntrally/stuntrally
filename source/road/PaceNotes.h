@@ -72,6 +72,6 @@ private:
 	Ogre::Terrain* mTerrain;
 	
 	//  all notes
-	std::vector<PaceNote> v;
+	std::vector<PaceNote> vv;
 	int ii;  // id for names
 };

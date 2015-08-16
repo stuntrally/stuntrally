@@ -7,6 +7,7 @@
 #include "../editor/CApp.h"
 #include "../editor/settings.h"
 #include "../vdrift/pathmanager.h"
+#include "../road/SplineBase.h"
 //#include "CGui.h"
 #include <OgreTimer.h>
 #include <OgreSceneManager.h>
@@ -33,19 +34,8 @@ void PaceNotes::Rebuild()
 	Ogre::Timer ti;	
 
 	Destroy();
-
-	#if 0	//  test
-	for (int i=0; i < 10; ++i)
-	{
-		PaceNote n;
-		n.pos = Vector3(i%4*20, 10+i/3, i/4*20);
-		Create(n);
-		v.push_back(n);
-	}
-	#endif
 	
 	///  trace road
-	//TODO
 return;
 
 	///  trace Track's Ghost
@@ -69,47 +59,94 @@ return;
 		Vector3 pos,oldPos;  float oldTime = 0.f;
 		Quaternion rot;  float vel = 0.f;
 
-		int num = gho.getNumFrames(), jmp = 0;
-		for (int i=0; i < num; ++i)
+		int num = gho.getNumFrames(), ijmp = 0;
+		float* sta = new float[num];
+		int i,ii,n;  float oy=0.f;
+		for (ii=0; ii < 2; ++ii)
+		for (i=0; i < num; ++i)
 		{
+			//  pos
 			const TrackFrame& fr = gho.getFrame0(i);
 			Axes::toOgre(pos, fr.pos);  // pos
 			rot = Axes::toOgre(fr.rot);
+			//float y = rot.getYaw().valueDegrees();
+			Vector3 pp = pos - oldPos;
+			
+			//  yaw
+			float yy = TerUtil::GetAngle(pp.x, pp.z) *180.f/PI_d;
+			float y = yy-oy;  if (y > 180)  y -= 360;  if (y < -180)  y += 360;
+			oy = yy;
 
-			float dist = (pos - oldPos).length();
+			//  vel
+			float dist = pp.length();
 			float dt = fr.time - oldTime;  // 0.04
-			if (i > 0 && dt > 0.001f)
+			if (i > 0 && i < num-1 && dt > 0.001f)
 				vel = 3.6f * dist / dt;
 
-			//  check for sudden pos jumps  (rewind used but not with _Tool_ go back time !)
-			bool jmp = false;
-			if (i > 10 && i < num-1)  // ignore jumps at start or end
-			if (dist > 6.f)  //par
-				jmp = true;
+			if (vel < 20)  y *= vel / 20.f;  // y sc
 
+			//  sudden pos jumps-
+			bool jmp = false;
+			if (i > 10 && i < num-1)
+			if (dist > 6.f)  //par
+			{	jmp = true;  ++ijmp;  }
+
+
+			//  avg steer
+			float sa = 0.f;  const int nn = 10;  //par
+			if (i < num-nn)
+			for (n=i; n < i+nn; ++n)
+			{
+				const TrackFrame& f = gho.getFrame0(n);
+				sa += fabs(f.steer/127.f);
+			}
+			sa /= float(nn);
+			sta[i] = sa;
+			
+			
+			//  log  ----
+			if (ii==0)
 			LogO("i:"+ iToStr(i,4) +" t:"+ fToStr(fr.time,2,6)//+" dt: "+fToStr(dt)
-				+"  v:"+ fToStr(vel,1,4)
+				+"  v:"+ fToStr(vel,0,4)
 				+"  b:"+ toStr(fr.brake)
-				+"  s: "+ (fr.steer==0 ? "----" : fToStr(fr.steer/127.f))
+				+"  s:"+ (fr.steer==0 ? " ---" : fToStr(fr.steer/127.f,1,4))
+				+"  a:"+ fToStr(sa,1,4)
+				+"  y:"+ fToStr(y,1,4)
 				//+"  p: "+ fToStr(fr.pos[0])+" "+fToStr(fr.pos[1])+" "+fToStr(fr.pos[2])
 				+(jmp ? " !jd: "+fToStr(dist) : "")
 			);
+	
 			
 			///  add pace note
-			if (i%20==0)
-			{
-				PaceNote n;
-				n.pos = pos;  //fr.brake  fr.steer
-				Create(n);
-				v.push_back(n);
+			if (ii==1)
+			{	
+				float sb = 0.f;  const int nn = 10;  //par
+				if (i < num-nn)
+				for (n=i; n < i+nn; ++n)
+				{
+					const TrackFrame& f = gho.getFrame0(n);
+					if (sa > 0.2f)
+					sb += sa;
+				}
+				sb /= float(nn);
+				//LogO(fToStr(sb));
+							
+				//  create
+				if (i%3==0 && sb > 0.3f)
+				{
+					PaceNote n;
+					n.pos = pos;  //fr.brake  fr.steer
+					Create(n);
+					vv.push_back(n);
+				}
 			}
 			
 			oldPos = pos;  oldTime = fr.time;
 		}
-		if (jmp > 0)
-			LogO("!Jumps: "+toStr(jmp));
-	}
-	
+		if (ijmp > 0)
+			LogO("!Jumps: "+toStr(ijmp));
+		delete[] sta;
+	}	
 
 
 	//UpdVis(fLodBias);
@@ -129,7 +166,7 @@ void PaceNotes::Create(PaceNote& n)
 
 	n.bb->setRenderQueueGroup(RQG_CarTrails);
 	n.bb->setVisibilityFlags(RV_Car);
-	n.bb->setCustomParameter(1, Vector4(1.f,0.5f, 0.f,0.f));  // uv ofs
+	n.bb->setCustomParameter(0, Vector4(1.f,1.f, 0.f,0.f));  // uv ofs
 
 	n.bb->createBillboard(Vector3(0,0,0), ColourValue::White);
 	//n.bb->setVisible(false);
@@ -147,9 +184,9 @@ void PaceNotes::Destroy(PaceNote& n)
 
 void PaceNotes::Destroy()  // all
 {
-	for (size_t i=0; i < v.size(); ++i)
-		Destroy(v[i]);
-	v.clear();
+	for (size_t i=0; i < vv.size(); ++i)
+		Destroy(vv[i]);
+	vv.clear();
 	ii = 0;
 }
 
