@@ -316,7 +316,7 @@ struct RayResult : public btCollisionWorld::RayResultCallback
 		
 	virtual	btScalar addSingleResult(btCollisionWorld::LocalRayResult& rayResult, bool normalInWorldSpace)
 	{
-		btCollisionObject* obj = rayResult.m_collisionObject;
+		const btCollisionObject* obj = rayResult.m_collisionObject;
 		if (obj->getUserPointer() != (void*)111)  // allow only road
 			return 1.0;
 
