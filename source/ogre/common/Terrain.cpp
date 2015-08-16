@@ -10,14 +10,14 @@
 #ifdef SR_EDITOR
 	#include "../../editor/CApp.h"
 	#include "../../editor/settings.h"
-	#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+	#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #else
 	#include "../CGame.h"
 	#include "../../vdrift/game.h"
 	#include "../../vdrift/settings.h"
 #endif
-#include "BulletCollision/CollisionDispatch/btCollisionObject.h"
-#include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+#include <BulletCollision/CollisionDispatch/btCollisionObject.h>
+#include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 #include <OgreTimer.h>
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>

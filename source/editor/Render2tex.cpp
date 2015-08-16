@@ -9,9 +9,9 @@
 #include "../road/Road.h"
 #include "../vdrift/pathmanager.h"
 
-#include "btBulletCollisionCommon.h"
-#include "btBulletDynamicsCommon.h"
-#include "BulletCollision/CollisionDispatch/btCollisionWorld.h"
+#include <btBulletCollisionCommon.h>
+#include <btBulletDynamicsCommon.h>
+#include <BulletCollision/CollisionDispatch/btCollisionWorld.h>
 
 #include <OgreTimer.h>
 #include <OgreTerrain.h>

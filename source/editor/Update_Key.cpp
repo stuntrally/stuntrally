@@ -17,9 +17,9 @@
 #include <OgreSceneNode.h>
 #include <OgreRenderTexture.h>
 #include <MyGUI.h>
-#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
-#include "BulletCollision/CollisionDispatch/btCollisionObject.h"
-#include "BulletDynamics/Dynamics/btRigidBody.h"
+#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
+#include <BulletCollision/CollisionDispatch/btCollisionObject.h>
+#include <BulletDynamics/Dynamics/btRigidBody.h>
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include "../sdl4ogre/sdlcursormanager.hpp"
 using namespace MyGUI;

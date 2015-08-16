@@ -15,9 +15,9 @@
 	#include "../../editor/settings.h"
 	#include "../../vdrift/pathmanager.h"
 #endif
-#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
-#include "BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h"
-#include "BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"
+#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
+#include <BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h>
+#include <BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h>
 #include <boost/filesystem.hpp>
 #include <Ogre.h> //!
 using namespace Ogre;

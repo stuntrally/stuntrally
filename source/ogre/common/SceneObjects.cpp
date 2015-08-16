@@ -14,14 +14,14 @@
 	#include "../CGame.h"
 	#include "../../vdrift/game.h"
 #endif
-#include "BulletCollision/CollisionDispatch/btCollisionObject.h"
-#include "BulletCollision/CollisionShapes/btCollisionShape.h"
-#include "LinearMath/btDefaultMotionState.h"
-#include "BulletDynamics/Dynamics/btRigidBody.h"
-#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
-#include "LinearMath/btSerializer.h"
-#include "Serialize/BulletFileLoader/btBulletFile.h"
-#include "Serialize/BulletWorldImporter/btBulletWorldImporter.h"
+#include <BulletCollision/CollisionDispatch/btCollisionObject.h>
+#include <BulletCollision/CollisionShapes/btCollisionShape.h>
+#include <LinearMath/btDefaultMotionState.h>
+#include <BulletDynamics/Dynamics/btRigidBody.h>
+#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
+#include <LinearMath/btSerializer.h>
+#include <BulletFileLoader/btBulletFile.h>
+#include <BulletWorldImporter/btBulletWorldImporter.h>
 
 #include <OgreManualObject.h>
 #include <OgreMeshManager.h>

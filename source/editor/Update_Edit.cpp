@@ -7,7 +7,7 @@
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
-#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include <OgreCamera.h>
 #include <OgreSceneNode.h>

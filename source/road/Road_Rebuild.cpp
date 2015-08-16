@@ -8,10 +8,10 @@
 	#include "../vdrift/game.h"
 #else
 	#include "../editor/CApp.h"
-	#include "../bullet/BulletCollision/CollisionShapes/btTriangleMesh.h"
-	#include "../bullet/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"
-	#include "../bullet/BulletCollision/CollisionDispatch/btCollisionObject.h"
-	#include "../bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+	#include <BulletCollision/CollisionShapes/btTriangleMesh.h>
+	#include <BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h>
+	#include <BulletCollision/CollisionDispatch/btCollisionObject.h>
+	#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #endif
 #include <OgreTerrain.h>
 #include <OgreMeshManager.h>
