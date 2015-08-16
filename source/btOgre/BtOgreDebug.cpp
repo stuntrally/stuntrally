@@ -93,12 +93,12 @@ int	DebugDrawer::getDebugMode() const
 //---------------------------------------------------------------------------------------------------------------------
 
 //  Quality params  //par
-#if 1  // low
+#if 1    // low 1 1
 const int sphere = 20, circle = 20, capSide = 90, cylSide = 90;  const btScalar capSph = 90, cylO = 20;
-#elif 1  // med
-const int sphere = 15, circle = 15, capSide = 45, cylSide = 60;  const btScalar capSph = 45, cylO = 15;
-#else  // hq
-const int sphere = 10, circle = 10, capSide = 30, cylSide = 30;  const btScalar capSph = 30, cylO = 10;
+#elif 1  // med 0 1 
+const int sphere = 15, circle = 15, capSide = 45, cylSide = 60;  const btScalar capSph = 15, cylO = 15;
+#else    // hq  0 0
+const int sphere = 10, circle = 10, capSide = 30, cylSide = 30;  const btScalar capSph = 10, cylO = 10;
 #endif
 
 
@@ -162,10 +162,12 @@ void DebugDrawer::drawCapsule(btScalar radius, btScalar halfHeight, int upAxis, 
 	{
 		btVector3 center = tr.getOrigin();
 		btVector3 up = tr.getBasis().getColumn((upAxis+1)%3);
+		btVector3 side = tr.getBasis().getColumn((upAxis+2)%3);
 		btVector3 axis = -tr.getBasis().getColumn(upAxis);
-		btScalar minTh = -SIMD_HALF_PI, maxTh = SIMD_HALF_PI;
-		btScalar minPs = -SIMD_HALF_PI, maxPs = SIMD_HALF_PI;
-		drawSpherePatch(center, up, axis, radius,minTh, maxTh, minPs, maxPs, color, capSph, false);
+		//drawSpherePatch(center, up, axis, radius, minTh, maxTh, minPs, maxPs, color, capSph);
+		drawArc(center,up,axis,radius,radius,-SIMD_HALF_PI,SIMD_HALF_PI,color,false,capSph);
+		drawArc(center,side,axis,radius,radius,-SIMD_HALF_PI,SIMD_HALF_PI,color,false,capSph);
+		drawArc(center,axis,side,radius,radius,0,SIMD_2_PI,color,false,capSph);
 	}
 
 	tr = transform;
@@ -173,10 +175,12 @@ void DebugDrawer::drawCapsule(btScalar radius, btScalar halfHeight, int upAxis, 
 	{
 		btVector3 center = tr.getOrigin();
 		btVector3 up = tr.getBasis().getColumn((upAxis+1)%3);
+		btVector3 side = tr.getBasis().getColumn((upAxis+2)%3);
 		btVector3 axis = tr.getBasis().getColumn(upAxis);
-		btScalar minTh = -SIMD_HALF_PI, maxTh = SIMD_HALF_PI;
-		btScalar minPs = -SIMD_HALF_PI, maxPs = SIMD_HALF_PI;
-		drawSpherePatch(center, up, axis, radius,minTh, maxTh, minPs, maxPs, color, capSph, false);
+		//drawSpherePatch(center, up, axis, radius, minTh, maxTh, minPs, maxPs, color, capSph);
+		drawArc(center,up,axis,radius,radius,-SIMD_HALF_PI,SIMD_HALF_PI,color,false,capSph);
+		drawArc(center,side,axis,radius,radius,-SIMD_HALF_PI,SIMD_HALF_PI,color,false,capSph);
+		drawArc(center,axis,side,radius,radius,0,SIMD_2_PI,color,false,capSph);
 	}
 
 	//  side lines
@@ -186,7 +190,7 @@ void DebugDrawer::drawCapsule(btScalar radius, btScalar halfHeight, int upAxis, 
 	{
 		capEnd[up1] = capStart[up1] = btSin(btScalar(i)*SIMD_RADS_PER_DEG)*radius;
 		capEnd[up2] = capStart[up2] = btCos(btScalar(i)*SIMD_RADS_PER_DEG)*radius;
-		drawLine(start+transform.getBasis() * capStart,start+transform.getBasis() * capEnd, color);
+		drawLine(start + transform.getBasis() * capStart, start + transform.getBasis() * capEnd, color);
 	}
 	
 }
@@ -198,6 +202,7 @@ void DebugDrawer::drawCylinder(btScalar radius, btScalar halfHeight, int upAxis,
 
 	btVector3 capStart(0.f,0.f,0.f);  capStart[upAxis] = -halfHeight;
 	btVector3 capEnd(0.f,0.f,0.f);    capEnd[upAxis] = halfHeight;
+	const btMatrix3x3& m = transform.getBasis();
 
 	//  side lines
 	int up1 = (upAxis+1)%3, up2 = (upAxis+2)%3;
@@ -205,14 +210,14 @@ void DebugDrawer::drawCylinder(btScalar radius, btScalar halfHeight, int upAxis,
 	{
 		capEnd[up1] = capStart[up1] = btSin(btScalar(i)*SIMD_RADS_PER_DEG)*radius;
 		capEnd[up2] = capStart[up2] = btCos(btScalar(i)*SIMD_RADS_PER_DEG)*radius;
-		drawLine(start+transform.getBasis() * capStart,start+transform.getBasis() * capEnd, color);
+		drawLine(start + m * capStart, start + m * capEnd, color);
 	}
 	//  top and bottom circles
 	btVector3 yaxis(0,0,0);  yaxis[upAxis] = btScalar(1.0);
 	btVector3 xaxis(0,0,0);  xaxis[up1] = btScalar(1.0);
 
-	drawArc(start-transform.getBasis()*(offsetHeight),transform.getBasis()*yaxis,transform.getBasis()*xaxis,radius,radius,0,SIMD_2_PI,color,false,cylO);
-	drawArc(start+transform.getBasis()*(offsetHeight),transform.getBasis()*yaxis,transform.getBasis()*xaxis,radius,radius,0,SIMD_2_PI,color,false,cylO);
+	drawArc(start-m*offsetHeight, m*yaxis,m*xaxis, radius,radius,0,SIMD_2_PI,color,false,cylO);
+	drawArc(start+m*offsetHeight, m*yaxis,m*xaxis, radius,radius,0,SIMD_2_PI,color,false,cylO);
 }
 
 
