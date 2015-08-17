@@ -272,18 +272,6 @@ btRigidBody* COLLISION_WORLD::AddRigidBody(const btRigidBody::btRigidBodyConstru
 	return body;
 }
 
-void COLLISION_WORLD::AddAction(btActionInterface* action)
-{
-	world->addAction(action);
-	//actions.push_back(action);  // in CARDYN
-}
-
-void COLLISION_WORLD::AddConstraint(btTypedConstraint* constraint, bool disableCollisionsBetweenLinked)
-{
-	world->addConstraint(constraint, disableCollisionsBetweenLinked);
-	//constraints.push_back(constraint);  // in CARDYN
-}
-
 void COLLISION_WORLD::SetTrack(TRACK* t)
 {
 	assert(t);

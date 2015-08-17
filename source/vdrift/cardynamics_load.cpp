@@ -762,7 +762,7 @@ void CARDYNAMICS::Init(
 	chassis->setActivationState(DISABLE_DEACTIVATION);
 	chassis->setUserPointer(new ShapeData(ST_Car, this, 0));  ///~~
 	
-	world.AddAction(this);  actions.push_back(this);
+	world.world->addAction(this);  actions.push_back(this);
 	
 
 	///  join chassis and wheel triggers
@@ -801,7 +801,6 @@ void CARDYNAMICS::Init(
 				ToBulletVector(wheelpos), btVector3(0,0,0));
 
 			world.world->addConstraint(constr, true);  constraints.push_back(constr);
-			//world.constraints.push_back(constr);
 		}
 
 		///  init poly for buoyancy computations
@@ -856,8 +855,6 @@ void CARDYNAMICS::RemoveBlt()
 		delete constraints[i];
 	}
 	constraints.resize(0);
-	//world->constraints.remove  world->actions.remove  //ok not added
-	//btAlignedObjectArray<btCollisionShape*> shapes;
 	
 	for (i = rigids.size()-1; i >= 0; i--)
 	{
@@ -866,7 +863,6 @@ void CARDYNAMICS::RemoveBlt()
 			delete body->getMotionState();
 
 		world->world->removeRigidBody(body);
-		//world->world->getCollisionObjectArray().remove(body);
 
 		ShapeData* sd = (ShapeData*)body->getUserPointer();
 		delete sd;
@@ -877,6 +873,7 @@ void CARDYNAMICS::RemoveBlt()
 	{
 		btCollisionShape* shape = shapes[i];
 		world->shapes.remove(shape);  // duplicated
+
 		if (shape->isCompound())
 		{
 			btCompoundShape* cs = (btCompoundShape *)shape;

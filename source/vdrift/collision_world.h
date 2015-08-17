@@ -48,10 +48,6 @@ public:
 	btRigidBody* AddRigidBody(const btRigidBody::btRigidBodyConstructionInfo & info,
 		bool car = false, bool bCarsCollis = false);
 
-	void AddAction(btActionInterface* action);
-
-	void AddConstraint(btTypedConstraint* constraint, bool disableCollisionsBetweenLinked=false);
-	
 	// add track to collision world (unloads previous track)
 	void SetTrack(TRACK* t);
 	
