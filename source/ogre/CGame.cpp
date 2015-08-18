@@ -86,8 +86,6 @@ App::~App()
 {
 	ShutDown();
 
-	OGRE_DELETE dbgdraw;
-
 	gui->viewBox->destroy();
 	delete gui->viewBox;
 
@@ -113,7 +111,7 @@ void App::postInit()
 
 void App::destroyScene()
 {
-	delete dbgdraw;
+	delete dbgdraw;  dbgdraw = 0;
 	
 	scn->mWaterRTT->destroy();
 	

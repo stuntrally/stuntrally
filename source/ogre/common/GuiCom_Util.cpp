@@ -463,6 +463,7 @@ void CGuiCom::CreateFonts()
 	string names[cnt] = {"font.small","font.normal","font.big"};
 	float sizes[cnt] = {26.f, 30.f, 34.f};  // par
 	
+	String inf;
 	for (int i=0; i < cnt; ++i)
 	{
 		//  del old
@@ -472,7 +473,7 @@ void CGuiCom::CreateFonts()
 
 		//  setup font				   // par
 		float size = sizes[i] * (1.f - 1.5f * (GetGuiMargin(2000) - GetGuiMargin(pSet->windowy)));
-		LogO("-- "+name+"  size: "+fToStr(size,1,3));
+		inf += name+"  "+fToStr(size,1,3)+"  ";
 
 		//  create
 	#if 0  //  mygui from svn
@@ -529,4 +530,6 @@ void CGuiCom::CreateFonts()
 		//  add
 		mgr.addResource(font);
 	}
+
+	LogO("-- Font sizes:  "+inf);
 }

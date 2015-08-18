@@ -106,7 +106,8 @@ std::pair <bool,bool> OBJECTLOADER::ContinueObjectLoad(	TRACK* track,
 
 	if (!(GetParam(objectfile, model_name)))
 	{
-		LogO("Track loaded: "+toStr(model_library.size())+" models, "+toStr(texture_library.size()));//+" textures, " << /*surfaces.size() << " surfaces" << */std::endl;
+		if (!model_library.empty())
+			LogO("VDrift track loaded: "+toStr(model_library.size())+" models, "+toStr(texture_library.size())+" textures");// << /*surfaces.size() << " surfaces" << */std::endl;
 		return std::pair <bool,bool> (false, false);
 	}
 
