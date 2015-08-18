@@ -61,7 +61,7 @@ public:
 //--------------------------------------------------------------------
 
 //  user Track's info
-//  rating, stats ...
+//  rating, stats ...  not yet used
 
 class UserTrkInfo
 {
@@ -123,5 +123,31 @@ public:
 	bool LoadXml(std::string file);
 	CarsXml()
 		:magic(0.010f)
+	{	}
+};
+
+
+//--------------------------------------------------------------------
+
+//  car colors.ini
+
+class CarColor
+{
+public:
+	float hue, sat, val, refl, gloss;
+};
+
+
+//  all colors
+class ColorsXml
+{
+public:
+	std::vector<CarColor> v;
+	int perRow, imgSize;  // gui params
+	
+	//  methods
+	bool LoadIni(std::string file);
+	ColorsXml()
+		:perRow(12), imgSize(18)
 	{	}
 };

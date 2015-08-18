@@ -326,3 +326,39 @@ bool CarsXml::LoadXml(string file)
 	}
 	return true;
 }
+
+
+
+//  Load car colors.ini
+//--------------------------------------------------------------------------------------------------------------------------------------
+bool ColorsXml::LoadIni(string file)
+{
+	v.clear();
+
+	char s[256];
+
+	ifstream fs(file.c_str());
+	if (fs.fail())  return false;
+	
+	while (fs.good())
+	{
+		fs.getline(s,254);
+		
+		if (strlen(s) > 0 && s[0] != '#' && s[0] != '/' && s[0] != ' ')  //  comment
+		{
+			string t = s;  //  params
+			     if (t.substr(0,6) == "perRow")   perRow =  s2i(t.substr(6));
+			else if (t.substr(0,7) == "imgSize")  imgSize = s2i(t.substr(7));
+			else
+			//  color, starting with digit
+			if (s[0] >= '0' && s[0] <= '9')
+			{
+				CarColor c;
+				sscanf(s, "%f %f %f %f %f",
+					&c.hue, &c.sat, &c.val, &c.gloss, &c.refl);
+
+				v.push_back(c);
+			}
+	}	}
+	return true;
+}

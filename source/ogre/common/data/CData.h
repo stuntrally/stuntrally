@@ -11,6 +11,7 @@ class CarsXml;
 #ifdef SR_EDITOR
 	class Presets;
 #else
+	class ColorsXml;
 	class ChampsXml;
 	class ChallXml;
 #endif
@@ -34,6 +35,7 @@ public:
 	#ifdef SR_EDITOR	// ed only
 		Presets* pre;
 	#else				// game only
+		ColorsXml* colors;  // car colors.ini
 		ChampsXml* champs;  //ProgressXml progress[2];
 		ChallXml* chall;  //ProgressLXml progressL[2];
 	#endif
