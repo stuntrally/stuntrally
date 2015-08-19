@@ -916,6 +916,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\config\colors.ini"
+				>
+			</File>
+			<File
 				RelativePath="..\source\vdrift\configfile.cpp"
 				>
 			</File>

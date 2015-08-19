@@ -461,7 +461,7 @@ void CGui::InitGui()
 	{
 		int x = i % clrRow, y = i / clrRow;
 		Img img = tbc->createWidget<ImageBox>("ImageBox",
-			6+x*sx, 6+y*sx, sx-1,sx-1, Align::Left, "carClr"+toStr(i));
+			6+x*sx, 1+y*sx, sx-1,sx-1, Align::Left, "carClr"+toStr(i));
 		img->setImageTexture("white.png");
 		gcom->setOrigPos(img, "GameWnd");
 
