@@ -201,10 +201,7 @@ void App::LoadTrackEv()
 	NewCommon(false);  // full destroy
 	iObjCur = -1;
 
-	if (scn->road)
-	{	scn->road->Destroy();  delete scn->road;  scn->road = 0;  }
-	if (scn->pace)
-	{	scn->pace->Destroy();  delete scn->pace;  scn->pace = 0;  }
+	scn->DestroyRoad();
 
 	// load scene
 	scn->sc->LoadXml(gcom->TrkDir()+"scene.xml");

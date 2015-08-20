@@ -4,8 +4,14 @@
 #include "../ogre/common/Axes.h"
 #include "PaceNotes.h"
 #include "../ogre/ReplayTrk.h"
-#include "../editor/CApp.h"
-#include "../editor/settings.h"
+#include "../vdrift/dbl.h"
+#ifdef SR_EDITOR
+	#include "../editor/CApp.h"
+	#include "../editor/settings.h"
+#else
+	#include "../ogre/CGame.h"
+	#include "../vdrift/settings.h"
+#endif
 #include "../vdrift/pathmanager.h"
 #include "../road/SplineBase.h"
 //#include "CGui.h"
@@ -44,7 +50,11 @@ return;
 	//  foreach track
 	bool rev = false;
 	string sRev = rev ? "_r" : "";
+	#ifdef SR_EDITOR
 	string track = pApp->pSet->gui.track;
+	#else
+	string track = pApp->pSet->game.track;
+	#endif
 	//if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
 	
 	//  load
@@ -125,14 +135,14 @@ return;
 				for (n=i; n < i+nn; ++n)
 				{
 					const TrackFrame& f = gho.getFrame0(n);
-					if (sa > 0.2f)
+					if (sa > 0.3f)
 					sb += sa;
 				}
 				sb /= float(nn);
 				//LogO(fToStr(sb));
 							
 				//  create
-				if (i%3==0 && sb > 0.3f)
+				if (i%6==0 && sb > 0.4f)
 				{
 					PaceNote n;
 					n.pos = pos;  //fr.brake  fr.steer

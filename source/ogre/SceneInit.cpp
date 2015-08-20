@@ -10,6 +10,7 @@
 #include "CGui.h"
 #include "../vdrift/game.h"
 #include "../road/Road.h"
+#include "../road/PaceNotes.h"
 #include "LoadingBar.h"
 #include "FollowCamera.h"
 #include "SplitScreen.h"
@@ -803,18 +804,22 @@ void App::CreateRoad()
 {
 	///  road  ~ ~ ~
 	SplineRoad*& road = scn->road;
+	Camera* cam = *mSplitMgr->mCameras.begin();
 	if (dstTrk)
 	{
-		if (road)
-		{	road->DestroyRoad();  delete road;  road = 0;  }
+		scn->DestroyRoad();
 
 		road = new SplineRoad(pGame);  // sphere.mesh
-		road->Setup("", 0.7,  scn->terrain, mSceneMgr, *mSplitMgr->mCameras.begin());
+		road->Setup("", 0.7,  scn->terrain, mSceneMgr, cam);
 		
 		String sr = gcom->TrkDir()+"road.xml";
 		road->LoadFile(gcom->TrkDir()+"road.xml");
+
+		//  pace ~ ~
+		scn->pace = new PaceNotes(this);
+		scn->pace->Setup(mSceneMgr, cam, scn->terrain);
 	}else
-		road->mCamera = *mSplitMgr->mCameras.begin();  // upd cam
+		road->mCamera = cam;  // upd
 	
 	//  after road load we have iChk1 so set it for carModels
 	for (int i=0; i < carModels.size(); ++i)
@@ -829,5 +834,7 @@ void App::CreateRoad()
 
 		road->RebuildRoadInt();
 		road->SetChecks();  // 2nd, upd
+
+		scn->pace->Rebuild();  //todo: load only..
 	}
 }

@@ -45,8 +45,10 @@ CScene::~CScene()
 void CScene::DestroyRoad()
 {
 	if (!road)  return;
-	road->DestroyRoad();
+	road->Destroy();
 	delete road;  road = 0;
+
+	if (pace)  pace->Destroy();
 	delete pace;  pace = 0;
 }
 
