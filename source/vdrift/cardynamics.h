@@ -46,7 +46,6 @@ public:
 	void Init(
 		class SETTINGS* pSet1, class Scene* pScene1, class FluidsXml* pFluids1,
 		COLLISION_WORLD & world,
-		const MODEL & chassisModel, const MODEL & wheelModelFront, const MODEL & wheelModelRear,
 		const MATHVECTOR<Dbl,3> & position,
 		const QUATERNION<Dbl> & orientation);
 	void RemoveBlt();

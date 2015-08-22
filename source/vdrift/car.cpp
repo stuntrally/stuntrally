@@ -153,7 +153,7 @@ bool CAR::Load(class App* pApp1,
 		dmgLastCheck = 0.f;
 		
 		cd.Init(pSet, pApp->scn->sc, pApp->scn->data->fluids,
-			world, bodymodel, wheelmodelfront, wheelmodelrear, position, orientation);
+			world, position, orientation);
 
 		sphYawAtStart = cd.sphereYaw;
 
@@ -175,24 +175,6 @@ bool CAR::Load(class App* pApp1,
 
 
 //--------------------------------------------------------------------------------------------------------------------------
-bool CAR::LoadInto(const std::string & joefile, MODEL_JOE03 & output_model)
-{
-	if (!output_model.Loaded())
-	{
-		std::stringstream nullout;
-		if (!output_model.ReadFromFile(joefile.substr(0,std::max((long unsigned int)0,(long unsigned int) joefile.size()-3))+"ova", nullout))
-		{
-			if (!output_model.Load(joefile, std::cerr))
-			{
-				//LogO("Error loading model: " +joefile);
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
-
 void CAR::Update(double dt)
 {
 	dynamics.Update();

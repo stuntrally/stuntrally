@@ -644,7 +644,6 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 void CARDYNAMICS::Init(
 	class SETTINGS* pSet1, class Scene* pScene1, class FluidsXml* pFluids1,
 	COLLISION_WORLD& world,
-	const MODEL& chassisModel, const MODEL& wheelModelFront, const MODEL& wheelModelRear,
 	const MATHVECTOR<Dbl,3>& position, const QUATERNION<Dbl>& orientation)
 {
 	pSet = pSet1;  pScene = pScene1;  pFluids = pFluids1;
@@ -667,21 +666,13 @@ void CARDYNAMICS::Init(
 	// init chassis
 	btTransform tr;  tr.setIdentity();
 
-	AABB <float> box = chassisModel.GetAABB();
+	AABB <float> box;
 	for (int i = 0; i < numWheels; ++i)
 	{
 		MATHVECTOR<float,3> wheelpos = GetLocalWheelPosition(WHEEL_POSITION(i), 0);
 
-		const MODEL * wheelmodel = &wheelModelFront;
-		if (i > 1) wheelmodel = &wheelModelRear;
-
 		AABB <float> wheelaabb;
-		float sidefactor = 1.0;
-		if (i == 1 || i == 3) sidefactor = -1.0;
-
-		wheelaabb.SetFromCorners(
-			wheelpos - wheelmodel->GetAABB().GetSize() * 0.5 * sidefactor,
-			wheelpos + wheelmodel->GetAABB().GetSize() * 0.5 * sidefactor);
+		wheelaabb.SetFromCorners(wheelpos, wheelpos);
 		box.CombineWith(wheelaabb);
 	}
 

@@ -291,16 +291,11 @@ public:
 public:
 	CARDYNAMICS dynamics;
 
-	MODEL_JOE03 bodymodel, interiormodel, glassmodel, drivermodel;
-	
 	std::vector<SUSPENSIONBUMPDETECTION> suspbump;
 	CRASHDETECTION crashdetection2;
 
 	std::map <std::string, SOUNDBUFFER> soundbuffers;
 	std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> > enginesounds;
-
-	MODEL_JOE03 wheelmodelfront, floatingmodelfront;
-	MODEL_JOE03 wheelmodelrear, floatingmodelrear;
 
 	/// sounds
 	std::vector<SOUNDSOURCE> tiresqueal, grasssound, gravelsound, tirebump;  // tires
@@ -320,10 +315,6 @@ public:
 	
 	float mz_nominalmax;  // the nominal maximum Mz force, used to scale force feedback
 
-	bool LoadInto(
-		const std::string & joefile,
-		MODEL_JOE03 & output_model);
-	
 	void UpdateSounds(float dt);
 	
 	bool LoadSounds(

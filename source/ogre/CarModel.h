@@ -82,7 +82,7 @@ public:
 	void CreatePart(Ogre::SceneNode* ndCar, Ogre::Vector3 vPofs,
 		Ogre::String sCar2, Ogre::String sCarI, Ogre::String sMesh, Ogre::String sEnt,
 		bool ghost, Ogre::uint32 visFlags,
-		Ogre::AxisAlignedBox* bbox=0, Ogre::String stMtr="", class VERTEXARRAY* var=0, bool bLogInfo=true);
+		Ogre::AxisAlignedBox* bbox=0, Ogre::String stMtr="", bool bLogInfo=true);
 
 	void LogMeshInfo(const Ogre::Entity* ent, const Ogre::String& name, int mul=1);
 	int all_subs, all_tris;  //stats

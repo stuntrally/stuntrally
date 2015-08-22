@@ -364,7 +364,7 @@ void CarModel::LogMeshInfo(const Entity* ent, const String& name, int mul)
 void CarModel::CreatePart(SceneNode* ndCar, Vector3 vPofs,
 	String sCar2, String sCarI, String sMesh, String sEnt,
 	bool ghost, uint32 visFlags,
-	AxisAlignedBox* bbox, String stMtr, VERTEXARRAY* var, bool bLogInfo)
+	AxisAlignedBox* bbox, String stMtr, bool bLogInfo)
 {
 	if (!FileExists(sCar2 + sMesh))  return;
 	Entity* ent = mSceneMgr->createEntity(sCarI + sEnt, sDirname + sMesh, sCarI);  ToDel(ent);
@@ -464,14 +464,14 @@ void CarModel::Create()
 		ndCar->setOrientation(Quaternion(Degree(90),Vector3::UNIT_Y)*Quaternion(Degree(180),Vector3::UNIT_X));
 
 
-	CreatePart(ndCar, vPofs, sCar, sCarI, "_body.mesh",     "",  ghost, RV_Car,  &bodyBox,  sMtr[Mtr_CarBody], pCar ? &pCar->bodymodel.mesh : 0,     bLogInfo);
+	CreatePart(ndCar, vPofs, sCar, sCarI, "_body.mesh",     "",  ghost, RV_Car,  &bodyBox,  sMtr[Mtr_CarBody],  bLogInfo);
 
 	vPofs = Vector3(interiorOffset[0],interiorOffset[1],interiorOffset[2]);  //x+ back y+ down z+ right
 	if (!ghost)
-	CreatePart(ndCar, vPofs, sCar, sCarI, "_interior.mesh", "i", ghost, RV_Car,      0, sMtr[Mtr_CarBody]+"i", pCar ? &pCar->interiormodel.mesh : 0, bLogInfo);
+	CreatePart(ndCar, vPofs, sCar, sCarI, "_interior.mesh", "i", ghost, RV_Car,      0, sMtr[Mtr_CarBody]+"i",  bLogInfo);
 
 	vPofs = Vector3::ZERO;
-	CreatePart(ndCar, vPofs, sCar, sCarI, "_glass.mesh",    "g", ghost, RV_CarGlass, 0, sMtr[Mtr_CarBody]+"g", pCar ? &pCar->glassmodel.mesh : 0,    bLogInfo);
+	CreatePart(ndCar, vPofs, sCar, sCarI, "_glass.mesh",    "g", ghost, RV_CarGlass, 0, sMtr[Mtr_CarBody]+"g",  bLogInfo);
 	
 
 	//  wheels  ----------------------
