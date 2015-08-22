@@ -835,6 +835,6 @@ void App::CreateRoad()
 		road->RebuildRoadInt();
 		road->SetChecks();  // 2nd, upd
 
-		scn->pace->Rebuild();  //todo: load only..
+		scn->pace->Rebuild(road);  //todo: load only..
 	}
 }

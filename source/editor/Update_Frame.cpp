@@ -239,7 +239,7 @@ if (pSet->bTrees)
 		road->bCastShadow = pSet->shadow_type >= Sh_Depth;
 		bool full = road->RebuildRoadInt();
 		if (full && scn->pace)
-			scn->pace->Rebuild();  // pace
+			scn->pace->Rebuild(road);  // pace
 	}
 
 	///**  Render Targets update

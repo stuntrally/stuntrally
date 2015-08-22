@@ -14,7 +14,7 @@
 #endif
 #include "../vdrift/pathmanager.h"
 #include "../road/SplineBase.h"
-//#include "CGui.h"
+#include "../road/Road.h"
 #include <OgreTimer.h>
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
@@ -35,13 +35,40 @@ PaceNote::PaceNote()
 
 //  Pace notes
 //--------------------------------------------------------------------------------------
-void PaceNotes::Rebuild()
+void PaceNotes::Rebuild(SplineRoad* road)
 {
 	Ogre::Timer ti;	
 
 	Destroy();
+return;
 	
 	///  trace road
+	Real a0 = 0.f;
+	for (int i=0; i < road->vPace.size(); ++i)
+	{
+		SplineRoad::PaceM m = road->vPace[i];
+		if (i==0)  a0 = m.ang.x;
+		else
+		//if (i%4==0)
+		{
+			Real aa = m.ang.x - a0;
+			while (aa > 160.f)  aa -= 180.f;
+			while (aa < -160.f)  aa += 180.f;
+			LogO(fToStr(aa));
+			//if (fabs(aa) > 0.2f && i%20==0 ||
+			//	fabs(aa) > 0.4f && i%6==0 ||
+			//	fabs(aa) > 0.8f && i%2==0)
+			if (fabs(aa) > 0.8f && i%2==0)
+			{
+				PaceNote n;
+				n.pos = m.pos;
+				Create(n);
+				vv.push_back(n);
+			}
+			a0 = m.ang.x;
+		}
+	}
+	
 return;
 
 	///  trace Track's Ghost
@@ -156,7 +183,7 @@ return;
 		if (ijmp > 0)
 			LogO("!Jumps: "+toStr(ijmp));
 		delete[] sta;
-	}	
+	}
 
 
 	//UpdVis(fLodBias);

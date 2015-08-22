@@ -8,6 +8,7 @@
 #include <OgreAxisAlignedBox.h>
 
 namespace Ogre {  class SceneManager;  class SceneNode;  class Entity;  class Terrain;  class Camera;  }
+class SplineRoad;
 
 
 enum PaceTypes                 // 90     // 180    // 270
@@ -45,7 +46,7 @@ public:
 	void Setup(Ogre::SceneManager* sceneMgr, Ogre::Camera* camera, Ogre::Terrain* terrain);
 
 	//  Rebuild
-	void Rebuild(), Create(PaceNote& n);
+	void Rebuild(SplineRoad* road), Create(PaceNote& n);
 	void Destroy(), Destroy(PaceNote& n);
 
 

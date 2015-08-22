@@ -62,13 +62,13 @@ bool SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		///  Segment
 		//-----------------------------------
 		int sNum = DR.sMax - DR.sMin,
-			segM = DR.sMin;
+			segM = DR.sMin, is0=0;
 
 		while (sNum > 0)
 		{
 			DataSeg DS;
 			
-			BuildSeg(DR,DL0,DL,ST,DLM, DS, segM);
+			BuildSeg(DR,DL0,DL,ST,DLM, DS, segM, is0);  ++is0;
 			
 			--sNum;  ++segM;  // next
 		}
