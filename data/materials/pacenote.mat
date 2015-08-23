@@ -16,7 +16,7 @@ material pacenote
 		{
 			texture pacenotes.png
 			//tex_address_mode clamp
-			filtering none
+			//filtering none
 		}
 	}
 }
