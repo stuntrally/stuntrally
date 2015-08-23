@@ -180,6 +180,7 @@ void App::NewCommon(bool onlyTerVeget)
 	if (track)  track->Clear();
 
 	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
+	LogO("------  Loading track: "+pSet->gui.track);
 	resTrk = gcom->TrkDir() + "objects";
 	mRoot->addResourceLocation(resTrk, "FileSystem");
 

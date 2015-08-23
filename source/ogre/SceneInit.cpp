@@ -244,6 +244,7 @@ void App::LoadCleanUp()  // 1 first
 	if (dstTrk)
 	{
 		if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
+		LogO("------  Loading track: "+pSet->game.track);
 		resTrk = gcom->TrkDir() + "objects";
 		mRoot->addResourceLocation(resTrk, "FileSystem");
 	}
