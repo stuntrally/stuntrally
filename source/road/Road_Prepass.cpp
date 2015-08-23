@@ -47,9 +47,11 @@ bool SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	///  LOD
 	//-----------------------------
 	DL0.Clear();
-
-	for (int lod = 0; lod < LODs; ++lod)
-	{
+	
+	for (int l = -1; l < LODs; ++l)
+	{	//  -1 is only for pacenotes data
+		//  swap -1 and 0,  0 has to be 1st for DL0 prepass
+		int lod = l==-1 ? 0 :  l==0 ? -1 :  l;
 		LogR("");
 		LogR("LOD: "+toStr(lod)+" ---");
 
@@ -145,6 +147,11 @@ void SplineRoad::PrepassAngles(DataRoad& DR)
 //---------------------------------------------------------------------------------------
 const int ciLodDivs[LODs] = {1,2,4,8};
 
+///par []()  pacenotes prepass
+const int pace_iDiv = 4, pace_iW = 2;
+const float pace_fLen = 8.f;
+
+
 void SplineRoad::PrepassLod(
 	const DataRoad& DR,
 	DataLod0& DL0, DataLod& DL, StatsLod& ST,
@@ -152,9 +159,10 @@ void SplineRoad::PrepassLod(
 {
 	DL.lod = lod;
 	DL.isLod0 = lod == 0;
+	DL.isPace = lod == -1;
 
-	int iLodDiv = ciLodDivs[lod];
-	DL.fLenDim = g_LenDim0 * iLodDiv;
+	int iLodDiv = DL.isPace ? pace_iDiv :  ciLodDivs[lod];
+	DL.fLenDim =  DL.isPace ? pace_fLen :  g_LenDim0 * iLodDiv;
 	DL.tcLen = 0.f;
 		
 	//if (isLod0)?
@@ -163,15 +171,17 @@ void SplineRoad::PrepassLod(
 	{
 		int seg1 = getNext(seg), seg0 = getPrev(seg);
 
-		//  width steps  --
+		//  width steps  pipe  --
 		Real sp = mP[seg].pipe, sp1 = mP[seg1].pipe, sp0 = mP[seg0].pipe;
 		Real p = sp * g_P_iw_mul, pl = max(sp, sp1)* g_P_iw_mul/4;
 		if (p < 0.f)  p = 1.f;  else  p = 1.f + p;
 		if (pl< 0.f)  pl= 1.f;  else  pl= 1.f + pl;
 		bool pipe = sp > 0.f || sp1 > 0.f;
 		//int wmin = pipe ? 5 : 1;  // min w steps  //par
-
-		int iw = max(1/*wmin*/, (int)(p * g_iWidthDiv0 / iLodDiv));  //* wid/widDiv..
+		
+		//  road  --
+		int iw = DL.isPace ? pace_iW :
+			max(1/*wmin*/, (int)(p * g_iWidthDiv0 / iLodDiv));  //* wid/widDiv..
 		DL.v_iW.push_back(iw);
 		int iwl = max(1, (int)(pl * g_iWidthDiv0 / iLodDiv));
 

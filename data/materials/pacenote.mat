@@ -5,13 +5,17 @@ material pacenote
 		vertex_program  pacenote_vertex
 		fragment_program  pacenote_fragment
 
+		depth_write off
+		//depth_check off
+		depth_bias 3.f
+		
 		scene_blend alpha_blend
 		fog_override true  // no fog
 
 		texture_unit diffuseMap
 		{
 			texture pacenotes.png
-			tex_address_mode clamp
+			//tex_address_mode clamp
 			filtering none
 		}
 	}

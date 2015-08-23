@@ -8,7 +8,7 @@ SH_BEGIN_PROGRAM    // vertex
     shUniform(float3, eyePosition) @shAutoConstant(eyePosition, camera_position)
     shUniform(float4x4, wvp) @shAutoConstant(wvp, worldviewproj_matrix)
     shUniform(float4x4, wv)  @shAutoConstant(wv, worldview_matrix)
-    shOutput(float3, eyeVector)
+    //shOutput(float3, eyeVector)
 
 	shVertexInput(float2, uv0)
 	shOutput(float2, UV)
@@ -21,7 +21,6 @@ SH_START_PROGRAM  //  vert  ----
 {
     shOutputPosition = shMatrixMult(wvp, shInputPosition);
     //eyeVector = shMatrixMult(wv, shInputPosition).xyz - eyePosition;
-    eyeVector = shMatrixMult(wv, shInputPosition).xyz - eyePosition;
 
 	UV = uv0;
 	vertColor = colour;
@@ -37,7 +36,7 @@ SH_START_PROGRAM  //  vert  ----
 SH_BEGIN_PROGRAM
 
 	shSampler2D(diffuseMap)
-    shInput(float3, eyeVector)
+    //shInput(float3, eyeVector)
 	shInput(float2, UV)
 	shInput(float4, vertColor)
 	shInput(float, fade)
@@ -46,10 +45,11 @@ SH_BEGIN_PROGRAM
 
 SH_START_PROGRAM  //  frag  ----
 {
-
-    float3 eyeVec = normalize(eyeVector);
+    //float3 eyeVec = normalize(eyeVector);
     
-    float4 tex = shSample(diffuseMap, UV.xy * 0.25f + par.zw);  // par.xy
+    float2 uv = UV.xy * 0.25f + par.zw;  // par.xy
+    
+    float4 tex = shSample(diffuseMap, uv);
 
     float a = tex.a * vertColor.a * fade;
 	if (a < 0.01f)
@@ -58,7 +58,6 @@ SH_START_PROGRAM  //  frag  ----
 	shOutputColour(0) = tex * vertColor;
 	shOutputColour(0).w *= fade;
 
-    //shOutputColour(0).w = 1.f-tex.r;  //0.7f;  //a
     //shOutputColour(0).w = UV.x*UV.y; //tex.g;  //a
 }
 

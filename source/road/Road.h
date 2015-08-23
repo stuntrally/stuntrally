@@ -174,11 +174,12 @@ private:
 		//  LOD vars
 		int lod, iLodDiv;  //.
 		Ogre::Real fLenDim;
-		bool isLod0;
+		bool isLod0, isPace;
 		
 		DataLod()
 			:tcLen(0.f), sumLenMrg(0.f), mrgCnt(0)
-			,lod(0), iLodDiv(1), fLenDim(1.f), isLod0(true)  //-
+			,lod(0), iLodDiv(1), fLenDim(1.f),
+			isLod0(true), isPace(false)
 		{	}
 	};
 	

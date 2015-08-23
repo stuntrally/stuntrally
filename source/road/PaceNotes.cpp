@@ -48,19 +48,31 @@ return;
 		const SplineRoad::PaceM& cur = road->vPace[i],
 			prv = road->vPace[(i-1+ii)%ii], nxt = road->vPace[(i+1)%ii];
 
-		Vector3 c1 = cur.pos - prv.pos, c2 = nxt.pos - prv.pos, cr;
+		//Vector3 c1 = cur.pos - prv.pos, c2 = nxt.pos - prv.pos;
+		Vector3 c1 = cur.pos - prv.pos, c2 = nxt.pos - cur.pos;
+		c1.y = 0.f;  c2.y = 0.f;
 		c1.normalise();  c2.normalise();
-		cr = c1.crossProduct(c2);
-		Real aa = asin(cr.length());
+
+		Vector3 cross = c1.crossProduct(c2);
+		Real dot = c1.dotProduct(c2);
+		Real aa = acos(dot);  // road yaw angle
+		//Real aa = asin(cross.length());
+
+		//prv.pos.y = 0.f;  cur.pos.y = 0.f;  nxt.pos.y = 0.f;
+		//Plane p(prv.pos, cur.pos, nxt.pos);
+		//Vector3 n = p.normal;
+		Vector3 n(0,1,0);
+		Real dn = n.dotProduct(cross);
+		if (dn < 0.f)  aa = -aa;
 			
-		//LogO(fToStr(aa*180.f/PI_d));
-		LogO(fToStr(aa));
+		LogO(fToStr(aa*180.f/PI_d)+" "+fToStr(dn));
+		//LogO(fToStr(aa));
 			
 		PaceNote o;  // add
-		o.pos = cur.pos + Vector3(0,2,0);
-		o.size = Vector2(1.f, 3.f);
+		o.pos = cur.pos;
+		o.size = Vector2(1.f, 6.f);
 		o.clr = Vector4(1,1,1,1);
-		o.uv = Vector2(0.f, 0.5f + aa*2.f);
+		o.uv = Vector2(aa < 0.f ? 0.25f : 0.f,  0.5f + fabs(aa)*0.5f);
 		//o.uv = Vector2(i/3 * 0.25f, i%2 * 0.25f);
 		Create(o);  vv.push_back(o);/**/
 	}

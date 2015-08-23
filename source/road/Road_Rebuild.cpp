@@ -244,14 +244,17 @@ void SplineRoad::BuildSeg(
 			
 			
 			/// []() pace   //par
-			if (full && DL.lod == 2 && w == 0)  // side
+	/**/if (DL.isPace)
+		{
+			if (full && w == 1)  // center
 			if (i >= 0 && i < il)
 			{	//  add
-				PaceM pm;    // width center
-				pm.pos = vP + vw * 0.5f;
+				PaceM pm;	
+				pm.pos = vP + vN * 3.f;  //par  + vw * 0.5f;
 				vPace.push_back(pm);
 			}
 
+	/**/}else{
 
 			///  color  for minimap preview
 			//  ---~~~====~~~---
@@ -280,8 +283,11 @@ void SplineRoad::BuildSeg(
 			if (vP.y > ST.stMaxH)  ST.stMaxH = vP.y;
 			if (w==w0)  vH0 = vP;  //#
 			if (w==w1)  vH1 = vP;
+	/**/}
 		}
 		
+/**/if (!DL.isPace)
+	{
 		//#  stats  banking angle
 		if (DL.isLod0 && i==0)
 		{
@@ -362,6 +368,7 @@ void SplineRoad::BuildSeg(
 				DLM.tcsC.push_back(Vector2( Real(w)/iwC * 4, vP.y * g_tcMulC ));  //par
 			}
 		}
+/**/}
 		
 		
 		if (i == -1 || i == il)  // add len
@@ -372,6 +379,10 @@ void SplineRoad::BuildSeg(
 	//  Length  vertices
 	//------------------------------------------------------------------------------------
 	
+
+/**/if (DL.isPace)
+		return;  // no mesh
+		
 
 	//  lod vis points
 	if (DL.isLod0)
