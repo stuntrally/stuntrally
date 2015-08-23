@@ -28,9 +28,8 @@ using namespace Ogre;
 PaceNote::PaceNote()
 	:nd(0), bb(0), pos(0,0,0)
 	,type(P_1), dir(0), vel(0.f)
+	,clr(0,0,0,0), ofs(0,0), uv(0,0)
 {	}
-
-//TODO: same mtr/tex, uv ofs for signs, fade alpha when close
 
 
 //  Pace notes
@@ -43,30 +42,27 @@ void PaceNotes::Rebuild(SplineRoad* road)
 return;
 	
 	///  trace road
-	Real a0 = 0.f;
-	for (int i=0; i < road->vPace.size(); ++i)
+	int ii = road->vPace.size();
+	for (int i=0; i < ii; ++i)
 	{
-		SplineRoad::PaceM m = road->vPace[i];
-		if (i==0)  a0 = m.ang.x;
-		else
-		//if (i%4==0)
-		{
-			Real aa = m.ang.x - a0;
-			while (aa > 160.f)  aa -= 180.f;
-			while (aa < -160.f)  aa += 180.f;
-			LogO(fToStr(aa));
-			//if (fabs(aa) > 0.2f && i%20==0 ||
-			//	fabs(aa) > 0.4f && i%6==0 ||
-			//	fabs(aa) > 0.8f && i%2==0)
-			if (fabs(aa) > 0.8f && i%2==0)
-			{
-				PaceNote n;
-				n.pos = m.pos;
-				Create(n);
-				vv.push_back(n);
-			}
-			a0 = m.ang.x;
-		}
+		const SplineRoad::PaceM& cur = road->vPace[i],
+			prv = road->vPace[(i-1+ii)%ii], nxt = road->vPace[(i+1)%ii];
+
+		Vector3 c1 = cur.pos - prv.pos, c2 = nxt.pos - prv.pos, cr;
+		c1.normalise();  c2.normalise();
+		cr = c1.crossProduct(c2);
+		Real aa = asin(cr.length());
+			
+		//LogO(fToStr(aa*180.f/PI_d));
+		LogO(fToStr(aa));
+			
+		PaceNote o;  // add
+		o.pos = cur.pos + Vector3(0,2,0);
+		o.size = Vector2(1.f, 3.f);
+		o.clr = Vector4(1,1,1,1);
+		o.uv = Vector2(0.f, 0.5f + aa*2.f);
+		//o.uv = Vector2(i/3 * 0.25f, i%2 * 0.25f);
+		Create(o);  vv.push_back(o);/**/
 	}
 	
 return;
@@ -196,18 +192,18 @@ return;
 //  Create
 void PaceNotes::Create(PaceNote& n)
 {
-	float fSize = 4.f;  ++ii;
+	++ii;
 	n.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	n.bb = mSceneMgr->createBillboardSet("P-"+toStr(ii),2);
-	n.bb->setDefaultDimensions(fSize, fSize);
+	n.bb->setDefaultDimensions(n.size.x, n.size.y);
 
 	n.bb->setRenderQueueGroup(RQG_CarTrails);
 	n.bb->setVisibilityFlags(RV_Car);
-	n.bb->setCustomParameter(0, Vector4(1.f,1.f, 0.f,0.f));  // uv ofs
+	n.bb->setCustomParameter(0, Vector4(n.ofs.x, n.ofs.y, n.uv.x, n.uv.y));  // params, uv ofs
 
-	n.bb->createBillboard(Vector3(0,0,0), ColourValue::White);
+	n.bb->createBillboard(Vector3(0,0,0), ColourValue(n.clr.x, n.clr.y, n.clr.z, n.clr.w));
 	//n.bb->setVisible(false);
-	n.bb->setMaterialName("flare2");
+	n.bb->setMaterialName("pacenote");
 	n.nd->attachObject(n.bb);
 	n.nd->setPosition(n.pos);
 }

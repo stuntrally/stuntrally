@@ -1,0 +1,15 @@
+shader_set pacenote_vertex
+{
+    source pacenote.shader
+    type vertex
+    profiles_cg vs_2_0 arbvp1
+    profiles_hlsl vs_2_0
+}
+
+shader_set pacenote_fragment
+{
+    source pacenote.shader
+    type fragment
+    profiles_cg ps_2_x arbfp1
+    profiles_hlsl ps_2_0
+}

@@ -46,7 +46,7 @@ void SplineRoad::BuildSeg(
 	const DataRoad& DR,
 	const DataLod0& DL0, DataLod& DL, StatsLod& ST,
 	DataLodMesh& DLM, DataSeg& DS,
-	int segM, int is0)
+	int segM, bool full)
 {
 	int seg = (segM + DR.segs) % DR.segs;  // iterator
 	int seg1 = getNext(seg), seg0 = getPrev(seg);
@@ -244,45 +244,12 @@ void SplineRoad::BuildSeg(
 			
 			
 			/// []() pace   //par
-			if (DL.lod == 2 && w==iw/2)  // width center
-			{
-				static Quaternion q0;  static Vector3 l0,n0,w0;  static Real a01=0.f;
-				if (i >= 0 && i <= il)
-				{
-					if (i==0)
-						LogO(toStr(i));
-					#define pvec(v)  fToStr(v.x,1,5)+" "+fToStr(v.y,1,5)+" "+fToStr(v.z,1,5)+" "
-					#define svec(v)  fToStr(v.x,2,5)+" "+fToStr(v.y,2,5)+" "+fToStr(v.z,2,5)+" "
-					Vector3 _w = vw.normalisedCopy(), _n = vN.normalisedCopy();  // vn no ter
-					//LogO("p "+pvec(vP)+" l "+svec(vl)+" w "+svec(vw)+" v "+svec(vN)+"  ");
-					//LogO(" l "+toStr(vl.length())+" w "+toStr(vW.length())+" n "+toStr(vN.length())+"  ");  // len 1
-					Vector3 _l = vn.crossProduct(_w).normalisedCopy();  // vl;
-					//LogO(" lw "+toStr(_l.dotProduct(_w))+" wn "+toStr(_w.dotProduct(_n))+" nl "+toStr(_n.dotProduct(_l))+"  ");
-					
-					if (is0 == 0 && i == 0)
-					{	q0.FromAxes(_l,_n,_w);  q0.normalise();
-						l0 = _l;  n0 = _n;  w0 = _w;  a01=0.f;
-					}else
-					{	Quaternion q,qq;
-						q.FromAxes(_l,_n,_w);  q.normalise();
-						qq = q0 - q;  //  diff, angles change
-						//qq = q;
-						Real a1 = qq.getYaw().valueDegrees(), a2 = qq.getPitch().valueDegrees(), a3 = qq.getRoll().valueDegrees();
-
-						Vector3 ll = _l - l0;
-						//ll.y = 0;  ll.normalise();
-						a1 = TerUtil::GetAngle(ll.x,ll.z) *180.f/PI_d;
-						//l0 = _l;
-
-						#define sdeg(a)  fToStr(a,2,5)
-						LogO("y "+sdeg(a1)+" p "+sdeg(a2)+" r "+sdeg(a3));
-
-						PaceM pm;  // add
-						pm.pos = vP;
-						pm.ang = Vector3(a1,a2,a3);
-						vPace.push_back(pm);
-					}
-				}
+			if (full && DL.lod == 2 && w == 0)  // side
+			if (i >= 0 && i < il)
+			{	//  add
+				PaceM pm;    // width center
+				pm.pos = vP + vw * 0.5f;
+				vPace.push_back(pm);
 			}
 
 

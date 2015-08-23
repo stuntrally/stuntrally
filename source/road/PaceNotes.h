@@ -25,7 +25,11 @@ struct PaceNote
 {
 	Ogre::SceneNode* nd;
 	Ogre::BillboardSet* bb;
+
 	Ogre::Vector3 pos;
+	Ogre::Vector4 clr;
+	Ogre::Vector2 size, ofs,uv;
+
 	PaceTypes type;
 	int dir;  // -1 left, 1 right
 	float vel;  // for jump

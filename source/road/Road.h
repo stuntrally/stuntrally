@@ -217,11 +217,10 @@ private:
 		void Clear();
 	};
 
-public:  ///  pacenotes data
+public:  ///  pacenotes prepass data
 	struct PaceM
 	{
 		Ogre::Vector3 pos;
-		Ogre::Vector3 ang;
 	};
 	std::vector<PaceM> vPace;
 private:
@@ -241,7 +240,7 @@ private:
 	void BuildSeg(
 		const DataRoad& DR,
 		const DataLod0& DL0, DataLod& DL, StatsLod& ST,
-		DataLodMesh& DLM, DataSeg& DS, int segM, int is0);
+		DataLodMesh& DLM, DataSeg& DS, int segM, bool full);
 		
 		
 	void createSeg_Meshes(

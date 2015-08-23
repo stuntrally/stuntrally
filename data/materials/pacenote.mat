@@ -1,0 +1,18 @@
+material pacenote
+{
+	pass
+	{
+		vertex_program  pacenote_vertex
+		fragment_program  pacenote_fragment
+
+		scene_blend alpha_blend
+		fog_override true  // no fog
+
+		texture_unit diffuseMap
+		{
+			texture pacenotes.png
+			tex_address_mode clamp
+			filtering none
+		}
+	}
+}

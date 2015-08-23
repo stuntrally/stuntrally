@@ -28,7 +28,8 @@ bool SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	
 		
 	//  full rebuild
-	if (iDirtyId == -1)
+	bool full = iDirtyId == -1;
+	if (full)
 	{
 		DestroyRoad();
 		for (int seg=0; seg < DR.segs; ++seg)
@@ -62,13 +63,13 @@ bool SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 		///  Segment
 		//-----------------------------------
 		int sNum = DR.sMax - DR.sMin,
-			segM = DR.sMin, is0=0;
+			segM = DR.sMin;
 
 		while (sNum > 0)
 		{
 			DataSeg DS;
 			
-			BuildSeg(DR,DL0,DL,ST,DLM, DS, segM, is0);  ++is0;
+			BuildSeg(DR,DL0,DL,ST,DLM, DS, segM, full);
 			
 			--sNum;  ++segM;  // next
 		}
@@ -79,14 +80,14 @@ bool SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	
 	
 	UpdLodVis(fLodBias);
-	if (iDirtyId == -1)
+	if (full)
 		iOldHide = -1;
 
 
-	if (iDirtyId == -1)
+	if (full)
 		LogO(String("::: Time Road Rebuild: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
-	return iDirtyId == -1;
+	return full;
 }
 
 
