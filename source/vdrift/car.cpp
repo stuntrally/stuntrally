@@ -22,7 +22,6 @@
 CAR::CAR()
 	:pSet(0), pApp(0), id(0), pCarM(0)
 	,last_steer(0)
-	,sector(-1)
 	,iCamNext(0), bLastChk(0),bLastChkOld(0)
 	,bRewind(0),bRewindOld(0),timeRew(0.f)
 	,fluidHitOld(0)

@@ -26,14 +26,11 @@ public:
 	void SetNumWheels(int n);
 	
 	bool Load(class App* pApp1,
-		CONFIGFILE & carconf,
-		const std::string & carname,
+		CONFIGFILE & carconf, const std::string & carname,
 		const MATHVECTOR<float,3> & init_pos, const QUATERNION<float> & init_rot,
 		COLLISION_WORLD & world,
 		bool soundenabled, const SOUNDINFO & sound_device_info, const SOUND_LIB & soundbufferlibrary,
-		bool defaultabs, bool defaulttcs,
-		bool isRemote, int idCar,
-		bool debugmode);
+		bool defaultabs, bool defaulttcs, bool isRemote, int idCar, bool debugmode);
 	
 	// will align car relative to track surface, returns false if the car isn't near ground
 	void SetPosition(const MATHVECTOR<float,3> & pos, const QUATERNION<float> & rot);
@@ -89,47 +86,16 @@ public:
 		dynamics.SetAutoClutch(value);
 	}
 
-	void SetAutoShift(bool value)
-	{
-		dynamics.SetAutoShift(value);
-	}
+	void SetAutoShift(bool value){	dynamics.SetAutoShift(value);	}
+	void SetAutoRear(bool value){	dynamics.SetAutoRear(value);	}
 
-	void SetAutoRear(bool value)
-	{
-		dynamics.SetAutoRear(value);
-	}
+	void SetABS(const bool active){	dynamics.SetABS(active);	}
+	bool GetABSEnabled() const	{	return dynamics.GetABSEnabled();	}
+	bool GetABSActive() const	{	return dynamics.GetABSActive();		}
 
-
-	void SetABS(const bool active)
-	{
-		dynamics.SetABS(active);
-	}
-
-	bool GetABSEnabled() const
-	{
-		return dynamics.GetABSEnabled();
-	}
-
-	bool GetABSActive() const
-	{
-		return dynamics.GetABSActive();
-	}
-
-
-	void SetTCS(const bool active)
-	{
-		dynamics.SetTCS(active);
-	}
-
-	bool GetTCSEnabled() const
-	{
-		return dynamics.GetTCSEnabled();
-	}
-
-	bool GetTCSActive() const
-	{
-		return dynamics.GetTCSActive();
-	}
+	void SetTCS(const bool active){	dynamics.SetTCS(active);	}
+	bool GetTCSEnabled() const	{	return dynamics.GetTCSEnabled();	}
+	bool GetTCSActive() const	{	return dynamics.GetTCSActive();		}
 	
 	/// return the speedometer reading (based on the driveshaft speed) in m/s
 	float GetSpeedometer() const
@@ -138,46 +104,20 @@ public:
 			dynamics.GetVelocity().Magnitude() : dynamics.GetSpeedMPS();
 	}
 
-	std::string GetCarType() const
-	{
-		return cartype;
-	}
-
-	void SetSector ( int value )
-	{
-		sector = value;
-	}
-
-	int GetSector() const
-	{
-		return sector;
-	}
-
+	std::string GetCarType() const	{	return cartype;	}
 	const BEZIER * GetCurPatch(unsigned int wheel) const
 	{
 		//assert (wheel < 4);
 		return dynamics.GetWheelContact(WHEEL_POSITION(wheel)).GetPatch();
 	}
 
-	float GetLastSteer() const
-	{
-		return last_steer;
-	}
+	float GetLastSteer() const	{	return last_steer;	}
+	float GetSpeed() const	{		return dynamics.GetSpeed();	}
 
-	float GetSpeed() const
-	{
-		return dynamics.GetSpeed();
-	}
-
-	float GetSpeedDir()
-	{
-		return dynamics.GetSpeedDir();
-	}
+	float GetSpeedDir()	{	return dynamics.GetSpeedDir();	}
 	
 	MATHVECTOR<float,3> GetTotalAero() const
-	{
-		return dynamics.GetTotalAero();
-	}
+	{	return dynamics.GetTotalAero();	}
 
 	float GetFeedback();
 
@@ -189,23 +129,8 @@ public:
 		dynamics.DebugPrint(out, p1, p2, p3, p4);
 	}
 	
-/// AI interface
-	int GetEngineRPM() const
-	{
-		return dynamics.GetTachoRPM();
-	}
-
-	int GetEngineStallRPM() const
-	{
-		return dynamics.GetEngine().GetStallRPM();
-	}
-
-	MATHVECTOR<float,3> GetCenterOfMassPosition() const
-	{
-		MATHVECTOR<float,3> pos;
-		pos = dynamics.GetCenterOfMassPosition();
-		return pos;
-	}
+	int GetEngineRPM() const	{	return dynamics.GetTachoRPM();	}
+	int GetEngineStallRPM() const{	return dynamics.GetEngine().GetStallRPM();	}
 
 	MATHVECTOR<float,3> GetPosition() const
 	{
@@ -213,7 +138,6 @@ public:
 		pos = dynamics.GetPosition();
 		return pos;
 	}
-
 	QUATERNION<float> GetOrientation() const
 	{
 		QUATERNION<float> q;
@@ -222,19 +146,12 @@ public:
 	}
 
 	float GetAerodynamicDownforceCoefficient() const
-	{
-		return dynamics.GetAerodynamicDownforceCoefficient();
-	}
+	{	return dynamics.GetAerodynamicDownforceCoefficient();	}
 
 	float GetAeordynamicDragCoefficient() const
-	{
-		return dynamics.GetAeordynamicDragCoefficient();
-	}
+	{	return dynamics.GetAeordynamicDragCoefficient();	}
 
-	float GetMass() const
-	{
-		return dynamics.GetMass();
-	}
+	float GetMass() const	{	return dynamics.GetMass();	}
 
 	MATHVECTOR<float,3> GetVelocity() const
 	{
@@ -242,39 +159,11 @@ public:
 		vel = dynamics.GetVelocity();
 		return vel;
 	}
-
 	MATHVECTOR<float,3> GetAngularVelocity() const
 	{
 		MATHVECTOR<float,3> vel;
 		vel = dynamics.GetAngularVelocity();
 		return vel;
-	}
-
-	float GetTireMaxFx(WHEEL_POSITION tire_index) const
-	{
-		return dynamics.GetTire(tire_index)->GetMaximumFx(GetMass()*0.25*9.81);
-	}
-
-	float GetTireMaxFy(WHEEL_POSITION tire_index) const
-	{
-		return dynamics.GetTire(tire_index)->GetMaximumFy(GetMass()*0.25*9.81, 0.0);
-	}
-	
-	float GetTireMaxMz(WHEEL_POSITION tire_index) const
-	{
-		return dynamics.GetTire(tire_index)->GetMaximumMz(GetMass()*0.25*9.81, 0.0);
-	}
-	
-	// optimum steering angle in degrees
-	float GetOptimumSteeringAngle() const
-	{
-		return dynamics.GetTire(FRONT_LEFT)->GetOptimumSteeringAngle(GetMass()*0.25*9.81);
-	}
-
-	// maximum steering angle in degrees
-	float GetMaxSteeringAngle() const
-	{
-		return dynamics.GetMaxSteeringAngle();
 	}
 
 	// Networking
@@ -303,14 +192,15 @@ public:
 	SOUNDSOURCE roadnoise, boostsnd, crashscrap,crashscreech;  // cont.
 	SOUNDSOURCE mudsnd, watersnd[Nwatersounds], mud_cont,water_cont;  // fluids
 	bool fluidHitOld;  float whMudSpin;  ///new vars, for snd
+
 	
-	// internal variables that might change during driving (so, they need to be serialized)
+	//  internal variables that might change during driving (so, they need to be serialized)
 	float last_steer;
 	float trackPercentCopy;  // copy from CarModel for network
 
 	std::string cartype;
 	class SETTINGS* pSet;  // for sound vol
-	int sector; //the last lap timing sector that the car hit
+
 	std::vector<const BEZIER*> curpatch; //the last bezier patch that each wheel hit
 	
 	float mz_nominalmax;  // the nominal maximum Mz force, used to scale force feedback
