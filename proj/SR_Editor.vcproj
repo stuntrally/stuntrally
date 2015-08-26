@@ -411,6 +411,18 @@
 				>
 			</File>
 			<File
+				RelativePath="..\data\materials\pacenote.mat"
+				>
+			</File>
+			<File
+				RelativePath="..\data\materials\pacenote.shader"
+				>
+			</File>
+			<File
+				RelativePath="..\data\materials\pacenote.shaderset"
+				>
+			</File>
+			<File
 				RelativePath="..\data\materials\shadowcaster.mat"
 				>
 			</File>
