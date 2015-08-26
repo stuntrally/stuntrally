@@ -129,6 +129,13 @@ if(BUILD_GAME OR BUILD_EDITOR)
 	endif()
 endif()
 
+# only game has sound
+if(BUILD_GAME)
+	find_package(OPENAL REQUIRED)
+	include_directories(${OPENAL_INCLUDE_DIR})
+	list(APPEND LIBS ${OPENAL_LIBRARY})
+endif()
+
 # Editor doesn't need networking
 if(BUILD_GAME OR BUILD_MASTER_SERVER)
 	find_package(ENet REQUIRED QUIET)

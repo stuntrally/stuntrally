@@ -2019,6 +2019,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\sound\SoundReverbSets.h"
+					>
+				</File>
+				<File
 					RelativePath="..\data\sounds\sounds.cfg"
 					>
 				</File>
