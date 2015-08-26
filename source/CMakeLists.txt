@@ -12,7 +12,7 @@ else()
 endif()
 
 # Search include files from all source sub directories
-include_directories(btOgre ogre ogre/common paged-geom road tinyxml vdrift)
+include_directories(btOgre ogre ogre/common paged-geom road tinyxml sound vdrift)
 
 
 # Compile our libraries  ------
@@ -38,6 +38,7 @@ if (BUILD_GAME)
 	# Glob .cpp files needed for the game
 	file(GLOB GAME_SOURCES
 		vdrift/*
+		sound/*
 		ogre/*.h
 		ogre/*.cpp
 		ogre/common/*.cpp
@@ -52,6 +53,7 @@ if (BUILD_GAME)
 		../data/materials/*.*
 	)
 
+	source_group(sound sound/*)
 	source_group(road road/*)
 	source_group(ogre ogre/*)
 	source_group(common ogre/common/*)
@@ -135,6 +137,7 @@ if (MSVC)
 		paged-geom/*.cpp
 		road/*.cpp
 		vdrift/*.cpp
+		sound/*.cpp
 	)
 
 	foreach( src_file ${GAME_SOURCES} )
