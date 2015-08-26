@@ -210,10 +210,10 @@ void CGui::btnChallStageStart(WP)
 		app->mWndChallEnd->setVisible(true);
 		
 		///  sounds  //)
-		if (iChSnd < 0)
-			pGame->snd_fail.Play();
-		else
-			pGame->snd_win[iChSnd].Play();  //)
+		//if (iChSnd < 0)
+		//	pGame->snd_fail.Play();
+		//else
+		//	pGame->snd_win[iChSnd].Play();  //)
 		return;
 	}
 
@@ -333,10 +333,10 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 	app->mWndChallStage->setVisible(true);
 
 	//  sound  //)
-	if (passed)
-		pGame->snd_stage.Play();
-	else
-		pGame->snd_fail.Play();  //)
+	//if (passed)
+	//	pGame->snd_stage.Play();
+	//else
+	//	pGame->snd_fail.Play();  //)
 
 
 	if (!last || (last && !passed))

@@ -11,6 +11,8 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "../road/PaceNotes.h"
+#include "../sound/SoundMgr.h"
+#include "../sound/SoundBaseMgr.h"
 #include "LoadingBar.h"
 #include "FollowCamera.h"
 #include "SplitScreen.h"
@@ -435,6 +437,7 @@ void App::LoadGame()  // 2
 	}
 	
 	pGame->NewGameDoLoadMisc(pretime);
+	pGame->snd->sound_mgr->CreateSources();  ///)
 }
 //---------------------------------------------------------------------------------------------------------------
 

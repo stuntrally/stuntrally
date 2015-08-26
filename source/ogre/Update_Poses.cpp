@@ -14,6 +14,7 @@
 #include "../vdrift/dbl.h"
 #include "../network/gameclient.hpp"
 #include "../shiny/Main/Factory.hpp"
+#include "../sound/SoundMgr.h"
 #include "common/Slider.h"
 #include "SplitScreen.h"
 #include <OgreCamera.h>
@@ -300,11 +301,11 @@ void App::newPoses(float time)  // time only for camera update
 						bool chs = champ || chall;
 						
 						if (!chs)
-						{	if (newbest)
-								pGame->snd_lapbest.Play();  //)
-							else
-								pGame->snd_lap.Play();  //)
-						}
+						//{	if (newbest)
+						//		pGame->snd_lapbest.Play();  //)
+						//	else
+						//		pGame->snd_lap.Play();  //)
+						//}
 						ghost.Clear();
 						
 						carM->ResetChecks();
@@ -333,7 +334,7 @@ void App::newPoses(float time)  // time only for camera update
 									if (pSet->game.local_players > 1)
 									{
 										int n = std::min(2, std::max(0, 3 - carIdWin));
-										pGame->snd_win[n].Play();  //)
+										//pGame->snd_win[n].Play();  //)
 									}
 									carM->iWonPlace = carIdWin++;
 								}
@@ -381,8 +382,8 @@ void App::newPoses(float time)  // time only for camera update
 								carM->pCar->SavePosAtCheck();
 								carM->updTimes = true;
 	
-								if (pSet->snd_chk && locar)
-									pGame->snd_chk.Play();  //)
+								//if (pSet->snd_chk && locar)
+								//	pGame->snd_chk.Play();  //)
 							}
 							else
 							if (carM->iInChk != carM->iCurChk &&
@@ -393,8 +394,8 @@ void App::newPoses(float time)  // time only for camera update
 								if (carM->iInWrChk != carM->iInChk)
 								{	carM->iInWrChk = carM->iInChk;
 									
-									if (pSet->snd_chkwr && locar)
-										pGame->snd_chkwr.Play();  //)
+									//if (pSet->snd_chkwr && locar)
+									//	pGame->snd_chkwr.Play();  //)
 							}	}
 							break;
 						}
@@ -411,6 +412,15 @@ void App::newPoses(float time)  // time only for camera update
 			if (carM->fCam)
 				carM->fCam->update(time, pi, &carPoses[qn][c], &pGame->collision, !bRplPlay && pSet->cam_bounce);
 			iCurPoses[c] = qn;  // atomic, set new index in queue
+			
+			///))  upd sound pos  ....
+			if (c == 0 && carM0->pCar->engine)
+			{
+				//  car
+				float rpm = carM0->pCar->dynamics.engine.GetRPM();
+				carM0->pCar->engine->setPosition(pi.pos, Vector3::ZERO);
+				carM0->pCar->engine->setPitch(rpm);
+			}
 		}
 	}
 	PROFILER.endBlock(".newPos ");
@@ -477,8 +487,16 @@ void App::updatePoses(float time)
 		int q = iCurPoses[c];
 		int cc = (c + iRplCarOfs) % carModels.size();  // replay offset, camera from other car
 		int qq = iCurPoses[cc];
+		PosInfo& pi = carPoses[q][c], &pic = carPoses[qq][cc];
 		carM->Update(carPoses[q][c], carPoses[qq][cc], time);
 		
+		///))  upd sound pos  ....  //TODO: splitscreen
+		if (c == 0 && pGame->snd /*&& pGame->engine*/)
+		{
+			Vector3 x,y,z;
+			pic.camRot.ToAxes(x,y,z);
+			pGame->snd->setCamera(pic.camPos, -z, y, Vector3::ZERO);
+		}
 
 		//  nick text pos upd
 		if (carM->pNickTxt && carM->pMainNode)

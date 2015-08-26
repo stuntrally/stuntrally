@@ -228,10 +228,10 @@ void CGui::btnChampStageStart(WP)
 		app->mWndChampEnd->setVisible(true);
 
 		///  sound  //)
-		if (iChSnd < 0)
-			pGame->snd_fail.Play();
-		else
-			pGame->snd_win[iChSnd].Play();  //)
+		//if (iChSnd < 0)
+		//	pGame->snd_fail.Play();
+		//else
+		//	pGame->snd_win[iChSnd].Play();  //)
 
 		return;
 	}
@@ -330,10 +330,10 @@ void CGui::ChampionshipAdvance(float timeCur)
 	app->mWndChampStage->setVisible(true);
 
 	//  sound  //)
-	if (passed)
-		pGame->snd_stage.Play();
-	else
-		pGame->snd_fail.Play();  //)
+	//if (passed)
+	//	pGame->snd_stage.Play();
+	//else
+	//	pGame->snd_fail.Play();  //)
 
 
 	if (!last || (last && !passed))
