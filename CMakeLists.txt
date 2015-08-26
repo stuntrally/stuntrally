@@ -131,7 +131,7 @@ endif()
 
 # only game has sound
 if(BUILD_GAME)
-	find_package(OPENAL REQUIRED)
+	find_package(OpenAL REQUIRED)
 	include_directories(${OPENAL_INCLUDE_DIR})
 	list(APPEND LIBS ${OPENAL_LIBRARY})
 endif()
