@@ -5,6 +5,7 @@
 #include "SoundBaseMgr.h"
 #include <AL/alc.h>
 #include <AL/alext.h>
+#include "SoundReverbSets.h"
 #include <OgreDataStream.h>
 #include <vorbis/vorbisfile.h>
 using namespace Ogre;
@@ -25,7 +26,7 @@ bool SoundBaseMgr::_checkALErrors(const char* file, int line)
 
 //  Load Effect
 //---------------------------------------------------------------------------------------------
-ALuint SoundBaseMgr::LoadEffect(LPEFXEAXREVERBPROPERTIES r)
+ALuint SoundBaseMgr::LoadEffect(REVERB_PRESET* r)
 {
 	//  Create the effect object and check if we can do EAX reverb.
 	ALuint e = 0;

@@ -4,7 +4,6 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 #include <AL/efx.h>
-#include <AL/efx-presets.h>
 
 
 class SoundBaseMgr
@@ -30,7 +29,7 @@ public:
 	static const unsigned int MAX_HW_SOURCES = 128;  //par 32
 	static const unsigned int MAX_BUFFERS = 1024;  //8192
 
-	ALuint LoadEffect(LPEFXEAXREVERBPROPERTIES reverb);
+	ALuint LoadEffect(struct REVERB_PRESET* reverb);
 
 	int hw_sources_num;  // total number of available hardware sources < MAX_HARDWARE_SOURCES
 	int hw_sources_in_use;
