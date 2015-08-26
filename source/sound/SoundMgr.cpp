@@ -3,6 +3,7 @@
 #include "SoundMgr.h"
 #include "SoundBase.h"
 #include "SoundBaseMgr.h"
+#include <OgreDataStream.h>
 using namespace Ogre;
 
 const float Sound::PITCHDOWN_FADE_FACTOR   = 2.0f;

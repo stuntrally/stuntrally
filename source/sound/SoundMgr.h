@@ -5,7 +5,7 @@ enum {
 	MAX_SOUNDS_PER_SCRIPT = 8,  // per 1 template
 	MAX_INSTANCES_PER_GROUP = 256
 };
-
+namespace Ogre  {  class FileStreamDataStream;  }
 class SoundBase;  class SoundBaseMgr;
 
 
