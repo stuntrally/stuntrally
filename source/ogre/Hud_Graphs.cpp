@@ -4,6 +4,8 @@
 #include "CGui.h"
 #include "../vdrift/game.h"
 #include "../vdrift/car.h"
+#include "../sound/SoundBaseMgr.h"
+#include "../sound/SoundMgr.h"
 #include "common/data/SceneXml.h"
 #include "common/CScene.h"
 #include "common/GraphView.h"
@@ -139,19 +141,16 @@ void App::CreateGraphs()
 		for (int i=0; i < 4; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGui);
-			int c = i%2*2;
-			gv->Create(i < 2 ? 512 : 2*512, "graph"+toStr(c+1), c>0 ? 0.f : 0.4f);
-			if (c == 0)
-				gv->CreateGrid(2,1, 0.4f, 0.5f);  //64,256
+			int c = i%3;
+			gv->Create(128, "graph"+toStr(c+1), c>0 ? 0.f : 0.2f);
 			switch(i)
 			{
-				case 0:  gv->CreateTitle("Sound vol ampl.",	c, 0.0f,-2, 24);  break;
-				case 1:  gv->CreateTitle("pan: L up R dn",	c, 0.0f, 2, 24);  break;
-				case 2:  gv->CreateTitle("wave L",			c, 0.0f,-2, 24);  break;
-				case 3:  gv->CreateTitle("wave R",			c, 0.0f, 2, 24);  break;
+				case 0:  gv->CreateTitle("Sound Info",	c, 0.0f,-2, 24);  break;
+				case 1:  gv->CreateTitle("",			c, 0.0f,-3, 24);  break;
+				case 2:  gv->CreateTitle("",			c, 0.0f,3, 24);  break;
+				case 3:  gv->CreateTitle("",			c, 0.0f,2, 24);  break;
 			}
-			if (i < 2)	gv->SetSize(0.00f, 0.24f, 0.4f, 0.25f);
-			else		gv->SetSize(0.60f, 0.24f, 0.4f, 0.25f);
+			gv->SetSize(0.00f, 0.24f, 0.15f, 0.1f);
 
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
@@ -347,25 +346,11 @@ void App::GraphsNewVals()				// Game
 	{
 	case Gh_Sound:  /// sound  vol,pan, wave L,R
 	if (gsi >= 4)
-	{	float minL=1.f,maxL=-1.f,minR=1.f,maxR=-1.f;
-		//for (int i=0; i < 4*512; i+=4)  if (sound.Init(/*2048*/512
-		for (int i=0; i < 2*512; ++i)
-		{
-			//  wave osc
-			float l = pGame->sound.waveL[i] / 32767.f * 0.5f + 0.5f;
-			float r = pGame->sound.waveR[i] / 32767.f * 0.5f + 0.5f;
-			//if (i%4==0)
-			{
-				graphs[2]->AddVal(l);  // L cyan  R yellow
-				graphs[3]->AddVal(r);
-			}
-			//  amplutude
-			if (l > maxL)  maxL = l;  if (l < minL)  minL = l;
-			if (r > maxR)  maxR = r;  if (r < minR)  minR = r;
-		}
-		float al = (maxL-minL), ar = (maxR-minR);
-		graphs[0]->AddVal((al+ar)*0.5f);       // vol ampl  cyan
-		graphs[1]->AddVal((al-ar)*0.5f+0.5f);  // pan  yellow  ^L 1  _R 0
+	{
+		SoundBaseMgr* snd = pGame->snd->sound_mgr;
+		graphs[1]->UpdTitle("buf: "+toStr(snd->buffers_in_use)+" /"+toStr(SoundBaseMgr::MAX_BUFFERS)+"\n"+
+							"src: "+toStr(snd->sources_in_use)+" /"+toStr(snd->hw_sources_num));
+		graphs[2]->UpdTitle("hw: "+iToStr(snd->hw_sources_in_use,2)+" /"+toStr(SoundBaseMgr::MAX_HW_SOURCES));
 	}	break;
 
 	case Gh_Fps:  /// fps
