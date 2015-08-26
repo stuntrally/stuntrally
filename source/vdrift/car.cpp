@@ -55,7 +55,6 @@ bool CAR::Load(class App* pApp1,
 	const std::string & carname,
 	const MATHVECTOR<float,3> & init_pos, const QUATERNION<float> & init_rot,
 	COLLISION_WORLD & world,
-	bool soundenabled, const SOUNDINFO & sound_device_info, const SOUND_LIB & soundbufferlibrary,
 	bool defaultabs, bool defaulttcs,
 	bool isRemote, int idCar,
   	bool debugmode)
@@ -161,11 +160,9 @@ bool CAR::Load(class App* pApp1,
 	}
 
 	// load sounds
-	if (soundenabled)
-	{
-		if (!LoadSounds(carpath, sound_device_info, soundbufferlibrary))
-			return false;
-	}
+	//if (soundenabled)
+
+		LoadSounds(carpath);
 
 	//mz_nominalmax = (GetTireMaxMz(FRONT_LEFT) + GetTireMaxMz(FRONT_RIGHT))*0.5;  //!! ff
 

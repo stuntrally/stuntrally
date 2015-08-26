@@ -4,23 +4,20 @@
 #include "pathmanager.h"
 #include "mathvector.h"
 #include "quaternion.h"
-
 #include "car.h"
 #include "collision_world.h"
 #include "collision_contact.h"
 #include "carcontrolmap_local.h"
-
 #include "cartire.h"
 #include "tracksurface.h"
-
-#include "sound.h"
 #include "track.h"
-
 #include "timer.h"
 #include "forcefeedback.h"
-
+//#include "../sound/SoundMgr.h"
 #include <OgreTimer.h>
 #include <boost/thread.hpp>
+
+class SoundMgr;  class Sound;
 
 
 class GAME
@@ -78,12 +75,6 @@ public:
 	bool benchmode, profilingmode, pause;
 
 
-	SOUND sound;
-	SOUND_LIB sound_lib;  //  hud 2d sounds  //)
-	SOUNDSOURCE snd_chk, snd_chkwr,  snd_lap, snd_lapbest,  snd_stage, snd_win[3], snd_fail;
-	void UpdHudSndVol();
-
-
 	SETTINGS* settings;
 	TRACK track;
 
@@ -94,6 +85,12 @@ public:
 	bool bResetObj;
 	
 	TIMER timer;
+
+	
+	SoundMgr* snd;
+	//Sound *
+	//SOUNDSOURCE snd_chk, snd_chkwr,  snd_lap, snd_lapbest,  snd_stage, snd_win[3], snd_fail;
+	void UpdHudSndVol();
 
 
 	///  New  carsim  -------------

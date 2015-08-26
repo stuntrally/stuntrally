@@ -6,7 +6,8 @@
 #include "configfile.h"
 #include "cardefs.h"
 #include <math.h>
-
+#include "../sound/SoundMgr.h"
+#include "../sound/SoundBaseMgr.h"
 #include "numprocessors.h"
 #include "quickprof.h"
 #include "tracksurface.h"
@@ -19,6 +20,7 @@
 #include "../ogre/FollowCamera.h"
 #include "../oics/ICSInputControlSystem.h"
 #include <OgreTimer.h>
+#include <OgreDataStream.h>
 
 #define M_PI  3.14159265358979323846
 using namespace std;
@@ -34,6 +36,7 @@ GAME::GAME(SETTINGS* pSettings)
 	,bResetObj(false)
 	,framerate(1.0 / pSettings->game_fq)
 	,tire_ref_id(0), reloadSimNeed(0),reloadSimDone(0)
+	,snd(0)
 {
 	track.pGame = this;
 	controls.first = NULL;
@@ -277,53 +280,24 @@ bool GAME::LoadSusp()
 bool GAME::InitializeSound()
 {
 	Ogre::Timer ti;
-	int i;
-	if (sound.Init(2048/*1024/*512*/))
-	{
-		sound_lib.SetLibraryPath(PATHMANAGER::Sounds());
-		const SOUNDINFO & sdi = sound.GetDeviceInfo();
+	
+	snd = new SoundMgr();
+	using namespace Ogre;
 
-		#define Lsnd(n)   if (!sound_lib.Load(n,1,sdi))  return false
-		#define Lsnd2(n,snd)  Lsnd(n);  \
-			if (!snd.Setup(sound_lib, n, false, false,1.f))  return false;  \
-			sound.AddSource(snd);
-		
-		//  Load sounds ----
-		Lsnd("tire_squeal");  Lsnd("grass");  Lsnd("gravel");
-		
-		Lsnd("bump_front");  Lsnd("bump_rear");
-		Lsnd("wind");  Lsnd("boost");
 
-		for (i = 1; i <= Ncrashsounds; ++i)
-		{	std::string s = "crash/";  s += toStr(i/10)+toStr(i%10);
-			Lsnd(s);
-		}
-		Lsnd("crash/scrap");
-		Lsnd("crash/screech");
+	//  sounds.cfg  ----
+	ifstream fi;
+	string path = PATHMANAGER::Sounds()+"/sounds.cfg";
+	fi.open(path.c_str(), ios_base::binary);
+	if (!fi)
+	{	LogO(">  Can't load sounds.cfg");  return false;  }
+	FileStreamDataStream fd(&fi,false);
+	snd->parseScript(&fd);
+	fd.close();
+	fi.close();
 
-		for (i = 0; i < Nwatersounds; ++i)
-			Lsnd("water"+toStr(i+1));
-
-		Lsnd("mud1");  Lsnd("mud_cont");  Lsnd("water_cont");
-
-		//  Hud 2d  ----
-		Lsnd2("hud/check", snd_chk);
-		Lsnd2("hud/check_wrong", snd_chkwr);
-
-		Lsnd2("hud/lap", snd_lap);
-		Lsnd2("hud/lap_best", snd_lapbest);
-
-		Lsnd2("hud/stage", snd_stage);
-		
-		for (i = 0; i < 3; ++i)
-		{	std::string s = "hud/win" + toStr(i);
-			if (!sound_lib.Load(s,0,sdi))  return false;
-			if (!snd_win[i].Setup(sound_lib, s,	false, false,1.f))  return false;
-			sound.AddSource(snd_win[i]);
-		}
-		Lsnd2("hud/fail", snd_fail);
-
-		
+	
+	#if 0
 		sound.SetMasterVolume(settings->vol_master);
 		sound.Pause(false);
 		UpdHudSndVol();
@@ -333,6 +307,7 @@ bool GAME::InitializeSound()
 	{	LogO("ERROR: Sound initialization failed!");
 		return false;
 	}
+	#endif
 
 	LogO("::: Time Sounds: "+ fToStr(ti.getMilliseconds(),0,3) +" ms");
 	return true;
@@ -341,10 +316,10 @@ bool GAME::InitializeSound()
 void GAME::UpdHudSndVol()
 {
 	float g = settings->vol_hud;
-	snd_chk.SetGain(g);  snd_chkwr.SetGain(g);
-	snd_lap.SetGain(g);  snd_lapbest.SetGain(g);
-	for (int i=0; i<3; ++i)  snd_win[i].SetGain(g);
-	snd_fail.SetGain(g);
+	//snd_chk.SetGain(g);  snd_chkwr.SetGain(g);
+	//snd_lap.SetGain(g);  snd_lapbest.SetGain(g);
+	//for (int i=0; i<3; ++i)  snd_win[i].SetGain(g);
+	//snd_fail.SetGain(g);
 }
 
 
@@ -352,6 +327,8 @@ void GAME::UpdHudSndVol()
 //  do any necessary cleanup
 void GAME::End()
 {
+	delete snd;  snd = 0;
+
 	if (benchmode)
 	{
 		float mean_fps = displayframe / clocktime;
@@ -367,8 +344,8 @@ void GAME::End()
 
 	LeaveGame(true);
 
-	if (sound.Enabled())
-		sound.Pause(true); //stop the sound thread
+	//if (sound.Enabled())
+	//	sound.Pause(true); //stop the sound thread
 
 	///+
 	settings->Save(PATHMANAGER::SettingsFile()); //save settings first incase later deinits cause crashes
@@ -453,11 +430,9 @@ void GAME::AdvanceGameLogic(double dt)
 	if (track.Loaded())
 	{
 		if (pause && controls.first)
-			sound.Pause(true);
+			snd->setPaused(true);
 		else
-		{
-			if (sound.Enabled())
-				sound.Pause(false);
+		{	snd->setPaused(false);
 
 			PROFILER.beginBlock("-physics");
 
@@ -535,15 +510,6 @@ bool GAME::NewGameDoLoadTrack()
 
 bool GAME::NewGameDoLoadMisc(float pre_time)
 {
-	//send car sounds to the sound subsystem
-	for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
-	{
-		list <SOUNDSOURCE *> soundlist;
-		i->GetSoundList(soundlist);
-		for (list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); ++s)
-			sound.AddSource(**s);
-	}
-
 	//load the timer
 	if (!timer.Load(PATHMANAGER::Records()+"/"+ settings->game.sim_mode+"/"+ settings->game.track+".txt", pre_time))
 		return false;
@@ -559,11 +525,15 @@ bool GAME::NewGameDoLoadMisc(float pre_time)
 ///  clean up all game data
 void GAME::LeaveGame(bool dstTrk)
 {
+	if (snd)
+		snd->sound_mgr->DestroySources();  ///)
+	
 	controls.first = NULL;
 
 	if (dstTrk)
 		track.Unload();
 
+	#if 0
 	if (sound.Enabled())
 	for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
 	{
@@ -572,6 +542,7 @@ void GAME::LeaveGame(bool dstTrk)
 		for (list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
 			sound.RemoveSource(*s);
 	}
+	#endif
 	
 	cars.clear();
 	timer.Unload();
@@ -593,13 +564,9 @@ CAR* GAME::LoadCar(const string & pathCar, const string & carname,
 
 	cars.push_back(CAR());
 
-	if (!cars.back().Load(app,
-		carconf, carname,
-		start_position, start_orientation,
-		collision,
-		sound.Enabled(), sound.GetDeviceInfo(), sound_lib,
-		settings->abs, settings->tcs,
-		isRemote, idCar, false))
+	if (!cars.back().Load(app,  carconf, carname,
+		start_position, start_orientation,  collision,
+		settings->abs, settings->tcs,  isRemote, idCar, false))
 	{
 		LogO("-=- Error: loading CAR: "+carname);
 		cars.pop_back();
@@ -704,7 +671,7 @@ void GAME::ProcessNewSettings()
 		controls.first->SetAutoRear(settings->autorear);
 		//controls.first->SetAutoClutch(settings->rear_inv);
 	}
-	sound.SetMasterVolume(settings->vol_master);
+	snd->setMasterVolume(settings->vol_master);
 }
 
 void GAME::UpdateForceFeedback(float dt)
@@ -783,9 +750,9 @@ bool GAME::ParseArguments(list <string> & args)
 		profilingmode = true;
 	}
 
-	if (argmap.find("-nosound") != argmap.end())
-		sound.DisableAllSound();
-	arghelp["-nosound"] = "Disable all sound.";
+	//if (argmap.find("-nosound") != argmap.end())
+	//	sound.DisableAllSound();
+	//arghelp["-nosound"] = "Disable all sound.";
 
 	if (argmap.find("-benchmark") != argmap.end())
 	{

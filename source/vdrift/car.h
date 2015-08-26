@@ -4,13 +4,13 @@
 #include "model_joe03.h"
 
 #include "cardefs.h"
-#include "sound.h"
 #include "suspensionbump.h"
 #include "crashdetection.h"
 #include "enginesoundinfo.h"
 
 class BEZIER;
 namespace protocol {  struct CarStatePackage;  }
+class Sound;
 
 
 class CAR
@@ -29,7 +29,6 @@ public:
 		CONFIGFILE & carconf, const std::string & carname,
 		const MATHVECTOR<float,3> & init_pos, const QUATERNION<float> & init_rot,
 		COLLISION_WORLD & world,
-		bool soundenabled, const SOUNDINFO & sound_device_info, const SOUND_LIB & soundbufferlibrary,
 		bool defaultabs, bool defaulttcs, bool isRemote, int idCar, bool debugmode);
 	
 	// will align car relative to track surface, returns false if the car isn't near ground
@@ -38,10 +37,6 @@ public:
 	void SetPosition1(const MATHVECTOR<float,3> & pos);
 	
 	void Update(double dt);
-
-	void GetSoundList(std::list <SOUNDSOURCE *> & outputlist);
-	
-	void GetEngineSoundList(std::list <SOUNDSOURCE *> & outputlist);
 
 
 	const MATHVECTOR<float,3> GetWheelPosition(const WHEEL_POSITION wpos) const
@@ -183,14 +178,16 @@ public:
 	std::vector<SUSPENSIONBUMPDETECTION> suspbump;
 	CRASHDETECTION crashdetection2;
 
-	std::map <std::string, SOUNDBUFFER> soundbuffers;
-	std::list <std::pair <ENGINESOUNDINFO, SOUNDSOURCE> > enginesounds;
 
-	/// sounds
-	std::vector<SOUNDSOURCE> tiresqueal, grasssound, gravelsound, tirebump;  // tires
-	SOUNDSOURCE crashsound[Ncrashsounds];  float crashsoundtime[Ncrashsounds];
-	SOUNDSOURCE roadnoise, boostsnd, crashscrap,crashscreech;  // cont.
-	SOUNDSOURCE mudsnd, watersnd[Nwatersounds], mud_cont,water_cont;  // fluids
+	///  Sounds  ---------------
+	Sound* engine;
+	std::vector<Sound*> tiresqueal, grasssound, gravelsound, tirebump;  // tires
+	
+	Sound* crashsound[Ncrashsounds];
+	float crashsoundtime[Ncrashsounds];
+	
+	Sound* wind, *boostsnd, *crashscrap,*crashscreech;  // cont.
+	Sound* mudsnd, *watersnd[Nwatersounds], *mud_cont,*water_cont;  // fluids
 	bool fluidHitOld;  float whMudSpin;  ///new vars, for snd
 
 	
@@ -207,10 +204,8 @@ public:
 
 	void UpdateSounds(float dt);
 	
-	bool LoadSounds(
-		const std::string & carpath,
-		const SOUNDINFO & sound_device_info,
-		const SOUND_LIB & soundbufferlibrary);
+	bool LoadSounds(const std::string & carpath);
+	bool DestroySounds();
 		
 
 	//-------------------------------------------------------------------------------
