@@ -4,6 +4,7 @@
 
 enum RecomputeSource {
 	REASON_PLAY, REASON_STOP, REASON_GAIN, REASON_LOOP, REASON_PTCH, REASON_POS, REASON_VEL, REASON_SEEK };
+class SoundBaseMgr;
 
 
 class SoundBase
