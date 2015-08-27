@@ -11,7 +11,7 @@
 #include "CHud.h"
 #include "CGui.h"
 #include "common/MultiList2.h"
-#include "sound/SoundMgr.h"
+#include "../sound/SoundMgr.h"
 #include <OgreTextureManager.h>
 using namespace std;
 using namespace Ogre;
