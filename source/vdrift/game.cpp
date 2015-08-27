@@ -541,12 +541,14 @@ void GAME::LeaveGame(bool dstTrk)
 	if (dstTrk)
 		track.Unload();
 
-	if (snd)
-		snd->sound_mgr->DestroySources();  ///)
-	
+
+	bool hadCars = !cars.empty();
 	for (size_t i = 0; i < cars.size(); ++i)
 		delete cars[i];
 	cars.clear();
+
+	if (snd && hadCars)
+		snd->sound_mgr->DestroySources();  ///)
 	
 	timer.Unload();
 

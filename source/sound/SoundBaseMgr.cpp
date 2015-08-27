@@ -186,7 +186,7 @@ void SoundBaseMgr::CreateSources()
 		alSourcef(hw_sources[i], AL_REFERENCE_DISTANCE, REF_DISTANCE);
 		alSourcef(hw_sources[i], AL_ROLLOFF_FACTOR, ROLLOFF_FACTOR);
 		alSourcef(hw_sources[i], AL_MAX_DISTANCE, MAX_DISTANCE);
-		LogO(toStr(i)+" +SRC: "+toStr(hw_sources[i]));
+		//LogO(toStr(i)+" +SRC: "+toStr(hw_sources[i]));
 		++hw_sources_num;
 	}
 
@@ -197,7 +197,7 @@ void SoundBaseMgr::CreateSources()
 //  Destroy  --
 void SoundBaseMgr::DestroySources()
 {
-	if (hw_sources_num <= HW_SRC_HUD)  return;
+	//if (hw_sources_num <= HW_SRC_HUD)  return;
 	
 	/*for (int i = 0; i < sources.size(); ++i)
 	{
@@ -205,24 +205,25 @@ void SoundBaseMgr::DestroySources()
 		delete sources[i];
 	}/**/
 	//sources
-	camera_position = Vector3(10000.f,10000.f,10000.f);
-	recomputeAllSources();
+	//camera_position = Vector3(10000.f,10000.f,10000.f);
+	//recomputeAllSources();
 	
 	//recomputeSource()
 	LogO("@ @  Destroying hw sources.");
 	for (int i = HW_SRC_HUD; i < HW_SRC_ALL; ++i)
 	{
-		LogO(toStr(i)+" -SRC: "+toStr(hw_sources[i]));
+		//LogO(toStr(i)+" -SRC: "+toStr(hw_sources[i]));
 		//ALboolean b = alIsSource(hw_sources[i]);
 		//alSourcei(hw_sources[i], AL_LOOPING, AL_FALSE);
-		alSourcef(hw_sources[i], AL_GAIN, 0.f);
+		//alSourcef(hw_sources[i], AL_GAIN, 0.f);
 		alSourceStop(hw_sources[i]);
 		alSourcei(hw_sources[i], AL_BUFFER, 0);
 		alDeleteSources(1, &hw_sources[i]);
 		--hw_sources_num;
 	}
+	// ??
 	//buffers_in_use = 0;  sources_in_use = 0;
-	//hw_sources_in_use = 0;  //hw_sources_num = 0;
+	hw_sources_in_use = 0;  //in retire  //hw_sources_num = 0;
 }
 
 //  Destroy

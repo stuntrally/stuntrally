@@ -27,7 +27,7 @@ public:
 	int getNumHardwareSources() {  return hw_sources_num;  }
 
 	static const float MAX_DISTANCE, REF_DISTANCE, ROLLOFF_FACTOR;
-	static const unsigned int HW_SRC = 128, HW_SRC_HUD = 16,
+	static const unsigned int HW_SRC = 128, HW_SRC_HUD = 0,//16
 		HW_SRC_ALL = HW_SRC_HUD + HW_SRC;  //par 32
 	static const unsigned int MAX_BUFFERS = 1024;  //8192
 
