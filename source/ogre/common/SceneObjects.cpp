@@ -190,6 +190,11 @@ void App::CreateObjects()
 				o.ms = fileLoader->ms;  // 1 only
 				o.rb = fileLoader->rb;  // 1 only
 
+				/*int nshp = fileLoader->getNumCollisionShapes();
+				for (int i=0; i < nshp; ++i)
+					pGame->collision.shapes.push_back(
+						fileLoader->getCollisionShapeByIndex(i));/**/
+
 				#ifndef SR_EDITOR
 				btTransform t1;  // save 1st pos for reset
 				o.ms->getWorldTransform(t1);

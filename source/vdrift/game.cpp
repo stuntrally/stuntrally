@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "game.h"
+#include "car.h"
 #include "unittest.h"
 #include "joepack.h"
 #include "matrix4.h"
@@ -7,6 +8,7 @@
 #include "cardefs.h"
 #include <math.h>
 #include "../sound/SoundMgr.h"
+#include "../sound/SoundBase.h"
 #include "../sound/SoundBaseMgr.h"
 #include "numprocessors.h"
 #include "quickprof.h"
@@ -323,6 +325,7 @@ bool GAME::InitializeSound()
 	return true;
 }
 
+
 void GAME::UpdHudSndVol()
 {
 	float g = settings->vol_hud;
@@ -334,10 +337,15 @@ void GAME::UpdHudSndVol()
 }
 
 
-
 //  do any necessary cleanup
 void GAME::End()
 {
+	delete snd_chk;  delete snd_chkwr;
+	delete snd_lap;  delete snd_lapbest;
+	delete snd_stage;  delete snd_fail;
+	for (int i=0; i < 3; ++i)
+	delete snd_win[i];
+	
 	delete snd;  snd = 0;
 
 	if (benchmode)

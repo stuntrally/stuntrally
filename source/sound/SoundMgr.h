@@ -112,4 +112,5 @@ private:
 	int instance_counter;
 
 	std::map <Ogre::String, SoundTemplate*> templates;
+	std::vector<SoundTemplate*> v_templ;  // to delete
 };

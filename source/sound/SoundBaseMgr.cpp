@@ -202,11 +202,9 @@ void SoundBaseMgr::DestroySources()
 		retire(i);
 		delete sources[i];
 	}/**/
-	//sources
 	//camera_position = Vector3(10000.f,10000.f,10000.f);
-	//recomputeAllSources();
-	
 	//recomputeSource()
+
 	LogO("@ @  Destroying hw sources.");
 	for (int i = 0; i < HW_SRC; ++i)
 	{
@@ -224,6 +222,10 @@ void SoundBaseMgr::DestroySources()
 //  Destroy
 SoundBaseMgr::~SoundBaseMgr()
 {
+	//for (int i=0; i < buffers_in_use; ++i)
+	//	if (sources[i] && sources[i]->hw_id != -1)
+	//		delete sources[i];
+
 	alDeleteAuxiliaryEffectSlots(1, &slot);
 	alDeleteEffects(1, &effect);
 

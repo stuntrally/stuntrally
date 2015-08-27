@@ -20,6 +20,7 @@
 #include "game.h"
 #include "../ogre/SplitScreen.h"  // num plr
 #include "../sound/SoundMgr.h"
+#include "../sound/SoundBase.h"
 #include <OgreCamera.h>
 using namespace std;
 using namespace Ogre;

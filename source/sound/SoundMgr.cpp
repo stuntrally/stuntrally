@@ -28,6 +28,8 @@ SoundMgr::SoundMgr()
 
 SoundMgr::~SoundMgr()
 {
+	for (size_t i=0; i < v_templ.size(); ++i)
+		delete v_templ[i];
 	delete sound_mgr;
 }
 
@@ -48,6 +50,7 @@ SoundTemplate* SoundMgr::createTemplate(String name, String filename)
 
 	SoundTemplate *ssi = new SoundTemplate(name, filename);
 	templates[name] = ssi;
+	v_templ.push_back(ssi);
 	return ssi;
 }
 
