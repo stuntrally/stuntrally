@@ -150,10 +150,9 @@ SoundBaseMgr::SoundBaseMgr()
 
 
 	//  hud sources  --
-	LogO("@ @  Creating hw sources.");
-	//  generate the AL sources
+	LogO("@ @  Creating hw sources hud.");
 	int i;
-	for (i=0; i < HW_SRC_HUD; ++i)
+	for (i = HW_SRC; i < HW_SRC + HW_SRC_HUD; ++i)
 	{
 		alGetError();
 		alGenSources(1, &hw_sources[i]);
@@ -166,7 +165,7 @@ SoundBaseMgr::SoundBaseMgr()
 		++hw_sources_num;
 	}
 
-	for (i=0; i < HW_SRC_HUD; ++i)
+	for (i=0; i < HW_SRC_ALL; ++i)
 		hw_sources_map[i] = -1;
 }
 
@@ -174,9 +173,8 @@ SoundBaseMgr::SoundBaseMgr()
 void SoundBaseMgr::CreateSources()
 {
 	LogO("@ @  Creating hw sources.");
-	//  generate the AL sources
 	int i;
-	for (i = HW_SRC_HUD; i < HW_SRC_ALL; ++i)
+	for (i = 0; i < HW_SRC; ++i)
 	{
 		alGetError();
 		alGenSources(1, &hw_sources[i]);
@@ -190,7 +188,7 @@ void SoundBaseMgr::CreateSources()
 		++hw_sources_num;
 	}
 
-	for (i = HW_SRC_HUD; i < HW_SRC_ALL; ++i)
+	for (i = 0; i < HW_SRC; ++i)
 		hw_sources_map[i] = -1;
 }
 
@@ -210,12 +208,9 @@ void SoundBaseMgr::DestroySources()
 	
 	//recomputeSource()
 	LogO("@ @  Destroying hw sources.");
-	for (int i = HW_SRC_HUD; i < HW_SRC_ALL; ++i)
+	for (int i = 0; i < HW_SRC; ++i)
 	{
 		//LogO(toStr(i)+" -SRC: "+toStr(hw_sources[i]));
-		//ALboolean b = alIsSource(hw_sources[i]);
-		//alSourcei(hw_sources[i], AL_LOOPING, AL_FALSE);
-		//alSourcef(hw_sources[i], AL_GAIN, 0.f);
 		alSourceStop(hw_sources[i]);
 		alSourcei(hw_sources[i], AL_BUFFER, 0);
 		alDeleteSources(1, &hw_sources[i]);
