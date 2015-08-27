@@ -286,6 +286,7 @@ bool GAME::InitializeSound()
 	Ogre::Timer ti;
 	
 	snd = new SoundMgr();
+	snd->setMasterVolume(settings->vol_master);
 	using namespace Ogre;
 
 
@@ -294,7 +295,7 @@ bool GAME::InitializeSound()
 	string path = PATHMANAGER::Sounds()+"/sounds.cfg";
 	fi.open(path.c_str(), ios_base::binary);
 	if (!fi)
-	{	LogO(">  Can't load sounds.cfg");  return false;  }
+	{	LogO("@  Can't load sounds.cfg");  return false;  }
 	FileStreamDataStream fd(&fi,false);
 	snd->parseScript(&fd);
 	fd.close();
@@ -313,11 +314,11 @@ bool GAME::InitializeSound()
 
 	
 	snd->setMasterVolume(settings->vol_master);
-	//sound.Pause(false);
+	//snd->setPaused(false);
 	UpdHudSndVol();
 
 
-	LogO(">  Sound init ok.");
+	LogO("@  Sound init ok.");
 	LogO("::: Time Sounds: "+ fToStr(ti.getMilliseconds(),0,3) +" ms");
 	return true;
 }
@@ -447,9 +448,9 @@ void GAME::AdvanceGameLogic(double dt)
 			PROFILER.beginBlock("-physics");
 
 			///~~  clear fluids for each car
-			for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
+			for (size_t i = 0; i < cars.size(); ++i)
 			{
-				CARDYNAMICS& cd = (*i).dynamics;
+				CARDYNAMICS& cd = cars[i]->dynamics;
 				cd.inFluids.clear();
 				cd.velPrev = cd.chassis->getLinearVelocity();
 				for (int w=0; w < cd.numWheels; ++w)
@@ -467,9 +468,8 @@ void GAME::AdvanceGameLogic(double dt)
 			PROFILER.endBlock("-physics");
 
 			PROFILER.beginBlock("-car-sim");
-			int i = 0;
-			for (list <CAR>::iterator it = cars.begin(); it != cars.end(); ++it, ++i)
-				UpdateCar(*it, TickPeriod());
+			for (size_t i = 0; i < cars.size(); ++i)
+				UpdateCar(*cars[i], TickPeriod());
 			PROFILER.endBlock("-car-sim");
 
 			UpdateTimer();
@@ -482,7 +482,7 @@ void GAME::AdvanceGameLogic(double dt)
 
 ///  send inputs to the car, check for collisions, and so on
 //-----------------------------------------------------------
-void GAME::UpdateCar(CAR & car, double dt)
+void GAME::UpdateCar(CAR& car, double dt)
 {
 	car.Update(dt);
 	UpdateCarInputs(car);
@@ -525,36 +525,29 @@ bool GAME::NewGameDoLoadMisc(float pre_time)
 		return false;
 
 	//add cars to the timer system
-	for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
-		timer.AddCar(i->GetCarType());
+	for (size_t i = 0; i < cars.size(); ++i)
+		timer.AddCar(cars[i]->GetCarType());
 	timer.AddCar("ghost");
 
+	snd->sound_mgr->CreateSources();  ///)
 	return true;
 }
 
 ///  clean up all game data
 void GAME::LeaveGame(bool dstTrk)
 {
-	if (snd)
-		snd->sound_mgr->DestroySources();  ///)
-	
 	controls.first = NULL;
 
 	if (dstTrk)
 		track.Unload();
 
-	#if 0
-	if (sound.Enabled())
-	for (list <CAR>::iterator i = cars.begin(); i != cars.end(); ++i)
-	{
-		list <SOUNDSOURCE *> soundlist;
-		i->GetSoundList(soundlist);
-		for (list <SOUNDSOURCE *>::iterator s = soundlist.begin(); s != soundlist.end(); s++)
-			sound.RemoveSource(*s);
-	}
-	#endif
+	if (snd)
+		snd->sound_mgr->DestroySources();  ///)
 	
+	for (size_t i = 0; i < cars.size(); ++i)
+		delete cars[i];
 	cars.clear();
+	
 	timer.Unload();
 
 	if (dstTrk)
@@ -572,24 +565,24 @@ CAR* GAME::LoadCar(const string & pathCar, const string & carname,
 	if (!carconf.Load(pathCar))
 		return NULL;
 
-	cars.push_back(CAR());
+	CAR* car = new CAR();
 
-	if (!cars.back().Load(app,  carconf, carname,
+	if (!car->Load(app,  carconf, carname,
 		start_position, start_orientation,  collision,
 		settings->abs, settings->tcs,  isRemote, idCar, false))
 	{
 		LogO("-=- Error: loading CAR: "+carname);
-		cars.pop_back();
 		return NULL;
 	}
 	else
 	{
+		cars.push_back(car);
 		LogO("-=- Car loaded: "+carname);
 
 		if (islocal)
 		{
 			//load local controls
-			controls.first = &cars.back();
+			controls.first = car;
 
 			//setup auto clutch and auto shift
 			ProcessNewSettings();
@@ -598,7 +591,7 @@ CAR* GAME::LoadCar(const string & pathCar, const string & carname,
 				controls.first->SetGear(1);
 		}
 	}
-	return &cars.back();
+	return car;
 }
 
 bool GAME::LoadTrack(const string & trackname)

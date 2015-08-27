@@ -79,7 +79,7 @@ public:
 	SETTINGS* settings;
 	TRACK track;
 
-	std::list <CAR> cars;
+	std::vector<CAR*> cars;
 	std::pair <CAR*, CARCONTROLMAP_LOCAL> controls;
 
 	COLLISION_WORLD collision;

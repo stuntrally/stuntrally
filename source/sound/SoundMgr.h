@@ -47,7 +47,7 @@ class Sound
 
 public:
 	Sound(int car, SoundTemplate* tpl, SoundBaseMgr* mgr, Ogre::String name);
-	//~Sound();
+	~Sound();
 
 	void setGain(float value);
 	void setPitch(float value);
@@ -56,6 +56,7 @@ public:
 	bool isAudible();
 	void start(), stop(), kill();
 	bool is2D;  // hud sounds, no distance attenuation
+	void set2D(bool b);
 
 	void seek(float pos);
 	void runOnce();

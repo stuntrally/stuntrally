@@ -19,6 +19,7 @@ public:
 	class GAME* pGame;
 	class App* pApp;
 	class CarModel* pCarM;
+
 	CAR();
 	~CAR();
 
@@ -183,11 +184,12 @@ public:
 	Sound* engine;
 	std::vector<Sound*> tiresqueal, grasssound, gravelsound, tirebump;  // tires
 	
-	Sound* crashsound[Ncrashsounds];
-	float crashsoundtime[Ncrashsounds];
+	std::vector<Sound*> crashsound;
+	std::vector<float> crashsoundtime;
 	
 	Sound* wind, *boostsnd, *crashscrap,*crashscreech;  // cont.
-	Sound* mudsnd, *watersnd[Nwatersounds], *mud_cont,*water_cont;  // fluids
+	Sound* mudsnd, *mud_cont,*water_cont;  // fluids
+	std::vector<Sound*> watersnd;
 	bool fluidHitOld;  float whMudSpin;  ///new vars, for snd
 
 	

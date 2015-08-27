@@ -437,7 +437,6 @@ void App::LoadGame()  // 2
 	}
 	
 	pGame->NewGameDoLoadMisc(pretime);
-	pGame->snd->sound_mgr->CreateSources();  ///)
 }
 //---------------------------------------------------------------------------------------------------------------
 

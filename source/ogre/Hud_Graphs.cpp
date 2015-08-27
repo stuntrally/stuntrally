@@ -350,7 +350,7 @@ void App::GraphsNewVals()				// Game
 		SoundBaseMgr* snd = pGame->snd->sound_mgr;
 		graphs[1]->UpdTitle("buf: "+toStr(snd->buffers_in_use)+" /"+toStr(SoundBaseMgr::MAX_BUFFERS)+"\n"+
 							"src: "+toStr(snd->sources_in_use)+" /"+toStr(snd->hw_sources_num));
-		graphs[2]->UpdTitle("hw: "+iToStr(snd->hw_sources_in_use,2)+" /"+toStr(SoundBaseMgr::MAX_HW_SOURCES));
+		graphs[2]->UpdTitle("hw: "+iToStr(snd->hw_sources_in_use,2)+" /"+toStr(SoundBaseMgr::HW_SRC));
 	}	break;
 
 	case Gh_Fps:  /// fps

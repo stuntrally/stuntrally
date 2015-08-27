@@ -40,8 +40,8 @@ bool CAR::LoadSounds(const std::string & carpath)
 		tirebump[i] =   snd->createInstance(i >= 2 ? "bump_rear" : "bump_front", 0);
 	}
 
-	for (i = 1; i <= Ncrashsounds; ++i)  // crashes
-	{	string s = "crash/";  s += toStr(i/10)+toStr(i%10);
+	for (i = 0; i < Ncrashsounds; ++i)  // crashes
+	{	string s = "crash/";  int n=i+1;  s += toStr(n/10)+toStr(n%10);
 		crashsound[i] = snd->createInstance(s, 0);
 	}
 	crashscrap   = snd->createInstance("crash/scrap",  0);
@@ -71,7 +71,7 @@ bool CAR::DestroySounds()
 		delete tirebump[i];
 	}
 
-	for (i = 1; i <= Ncrashsounds; ++i)  // crashes
+	for (i = 0; i < Ncrashsounds; ++i)  // crashes
 		delete crashsound[i];
 
 	delete crashscrap;

@@ -17,13 +17,13 @@ SoundMgr::SoundMgr()
 {
 	sound_mgr = new SoundBaseMgr();
 	if (!sound_mgr)
-	{	LogO(">  SoundScript: Failed to create Sound Manager");  return;  }
+	{	LogO("@  SoundScript: Failed to create Sound Manager");  return;  }
 
 	disabled = sound_mgr->isDisabled();
 	if (disabled)
-	{	LogO(">  SoundScript: Sound Manager is disabled");  return;  }
+	{	LogO("@  SoundScript: Sound Manager is disabled");  return;  }
 
-	LogO(">  SoundScript: Sound Manager started with " + toStr(sound_mgr->getNumHardwareSources())+" sources");
+	LogO("@  SoundScript: Sound Manager started with " + toStr(sound_mgr->getNumHardwareSources())+" sources");
 }
 
 SoundMgr::~SoundMgr()
@@ -65,7 +65,7 @@ Sound* SoundMgr::createInstance(Ogre::String name, int car)
 	++instance_counter;
 	
 	String ss = name.substr(0,4);
-	inst->is2D = ss=="hud/";  // set 2d
+	inst->set2D(ss=="hud/");  // set 2d
 
 	//  start looped
 	inst->setGain(0.f);
@@ -83,7 +83,7 @@ void SoundMgr::parseScript(FileStreamDataStream* stream)
 	SoundTemplate* sst = 0;
 	String line = "";  int cnt=0;
 
-	LogO(">  SoundScript: Parsing"/*+stream->getName()*/);
+	LogO("@  SoundScript: Parsing"/*+stream->getName()*/);
 
 	while (!stream->eof())
 	{
@@ -95,13 +95,13 @@ void SoundMgr::parseScript(FileStreamDataStream* stream)
 			{
 				//  no current SoundScript
 				//  so first valid data should be a SoundScript name
-				//LogO(">  SoundScriptManager: creating template "+line);
-				//LogO(">  "+line);
+				//LogO("@  SoundScriptManager: creating template "+line);
+				//LogO("@  "+line);
 				sst = createTemplate(line, stream->getName());
 				if (!sst)
 				{
 					//  there is a name collision for this Sound Script
-					LogO(">  Error, this sound script is already defined: "+line);
+					LogO("@  Error, this sound script is already defined: "+line);
 					skipToNextOpenBrace(stream);
 					skipToNextCloseBrace(stream);
 					continue;
@@ -118,11 +118,11 @@ void SoundMgr::parseScript(FileStreamDataStream* stream)
 					Ogre::StringVector veclineparams = StringUtil::split(line, "\t ", 0);
 
 					if (!sst->setParameter(veclineparams))
-						LogO(">  Bad SoundScript attribute line: '"+line);
+						LogO("@  Bad SoundScript attribute line: '"+line);
 				}
 			}
 	}	}
-	LogO(">  SoundScript: Parsed: "+toStr(cnt)+" templates.");
+	LogO("@  SoundScript: Parsed: "+toStr(cnt)+" templates.");
 }
 
 void SoundMgr::skipToNextCloseBrace(FileStreamDataStream* stream)
@@ -195,7 +195,7 @@ bool SoundTemplate::setParameter(Ogre::StringVector vec)
 		if (vec.size() < 3)  return false;
 		if (free_sound >= MAX_SOUNDS_PER_SCRIPT)
 		{
-			LogO(">  SoundScript: Reached MAX_SOUNDS_PER_SCRIPT limit (" + toStr(MAX_SOUNDS_PER_SCRIPT) + ")");
+			LogO("@  SoundScript: Reached MAX_SOUNDS_PER_SCRIPT limit (" + toStr(MAX_SOUNDS_PER_SCRIPT) + ")");
 			return false;
 		}
 		sound_pitches[free_sound] = StringConverter::parseReal(vec[1]); // unpitched = 0.0
@@ -234,9 +234,22 @@ Sound::Sound(int car1, SoundTemplate* tpl, SoundBaseMgr* mgr1, Ogre::String name
 	setPitch(0.0f);
 	setGain(1.0f);
 
-	//LogO(">  Sound created: "+name);
+	//LogO("@  Sound created: "+name);
 }
 
+Sound::~Sound()
+{
+	delete start_sound;
+	delete stop_sound;
+	
+	if (templ)
+	for (int i=0; i < templ->free_sound; i++)
+		delete sounds[i];
+}
+
+
+//  Pitch
+//---------------------------------------------------------------------
 void Sound::setPitch(float value)
 {
 	if (start_sound)
@@ -249,6 +262,24 @@ void Sound::setPitch(float value)
 
 	if (templ->free_sound)
 	{
+		/*for (int i=0; i < templ->free_sound; i++)
+			if (sounds[i])
+			{
+				float fq = templ->sound_pitches[i];
+				float p = value / fq, v = 1.f;
+				if (p > 2.f) {  p = 2.f;   v = 0.f;  }
+				else
+				if (p < 0.5f){  p = 0.5f;  v = 0.f;  }
+				else
+				if (p > 1.f) {  v = 1.f - (p - 1.f);      if (v < 0.f)  v = 0.f;  }
+				else
+				if (p < 1.f) {  v = 1.f - (1.f - p)*2.f;  if (v < 0.f)  v = 0.f;  }
+				
+				sounds[i]->setGain(v);  //LogO(toStr(v));
+				sounds[i]->setPitch(p);  //LogO(toStr(p));
+			}
+		return;/**/
+
 		// searching the interval
 		int up = 0;
 
@@ -351,6 +382,8 @@ float Sound::pitchgain_cutoff(float sourcepitch, float targetpitch)
 		(sourcepitch / PITCHDOWN_FADE_FACTOR - sourcepitch / PITCHDOWN_CUTOFF_FACTOR);
 }
 
+//  Gain
+//---------------------------------------------------------------------
 void Sound::setGain(float value)
 {
 	if (start_sound)
@@ -364,6 +397,20 @@ void Sound::setGain(float value)
 		stop_sound->setGain(value * stop_sound_pitchgain);
 
 	lastgain = value;
+}
+
+void Sound::set2D(bool b)
+{
+	is2D = b;
+	if (start_sound)
+		start_sound->is2D = b;
+
+	for (int i=0; i < templ->free_sound; ++i)
+		if (sounds[i])
+			sounds[i]->is2D = b;
+
+	if (stop_sound)
+		stop_sound->is2D = b;
 }
 
 void Sound::seek(float pos)
@@ -407,6 +454,8 @@ bool Sound::isAudible()
 	return false;
 }
 
+//  Play
+//---------------------------------------------------------------------
 void Sound::runOnce()
 {
 	if (start_sound)

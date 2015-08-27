@@ -19,6 +19,7 @@
 #include "game.h"  //sound
 
 
+///  ctor
 CAR::CAR()
 	:pSet(0), pApp(0), id(0), pCarM(0)
 	,last_steer(0)
@@ -31,9 +32,28 @@ CAR::CAR()
 {
 	SetNumWheels(4);
 	//dynamics.pCar = this;
-	
+
+	int i;
+	crashsoundtime.resize(Ncrashsounds);
 	for (int i=0; i < Ncrashsounds; ++i)
 		crashsoundtime[i] = 0.f;
+
+	engine = 0;
+	for (i = 0; i < numWheels; ++i)  // tires
+	{	tiresqueal[i] = 0;  grasssound[i] = 0;  gravelsound[i] = 0;  tirebump[i] = 0;  }
+
+	crashsound.resize(Ncrashsounds);
+	for (i = 0; i < Ncrashsounds; ++i)  // crashes
+		crashsound[i] = 0;
+
+	crashscrap = 0;  crashscreech = 0;
+	wind = 0;  boostsnd = 0;
+
+	watersnd.resize(Nwatersounds);
+	for (i = 0; i < Nwatersounds; ++i)  // fluids
+		watersnd[i] = 0;
+
+	mudsnd = 0;  mud_cont = 0;  water_cont = 0;
 }
 
 void CAR::SetNumWheels(int n)
@@ -44,9 +64,11 @@ void CAR::SetNumWheels(int n)
 	curpatch.resize(n);
 }
 
-///unload any loaded assets
+///  dtor
 CAR::~CAR()
-{	}
+{
+	DestroySounds();
+}
 
 
 //--------------------------------------------------------------------------------------------------------------------------
@@ -64,25 +86,6 @@ bool CAR::Load(class App* pApp1,
 	cartype = carname;
 	bRemoteCar = isRemote;  id = idCar;
 	std::string carpath = PATHMANAGER::Cars()+"/"+carname+"/";
-
-	#if 0  // .joe meshes old
-	std::stringstream nullout;
-	LoadInto( carpath+"body.joe", bodymodel);
-	LoadInto( carpath+"interior.joe", interiormodel);
-	LoadInto( carpath+"glass.joe", glassmodel);
-	std::stringstream nullout;
-
-	for (int i = 0; i < 2; ++i)
-	{
-		LoadInto( carpath+"wheel_front.joe", wheelmodelfront);
-		LoadInto( carpath+"floating_front.joe", floatingmodelfront);
-	}
-	for (int i = 2; i < 4; ++i)
-	{
-		LoadInto( carpath+"wheel_rear.joe", wheelmodelrear);
-		LoadInto( carpath+"floating_rear.joe", floatingmodelrear);
-	}
-	#endif
 
 	// get coordinate system version
 	int version = 2;

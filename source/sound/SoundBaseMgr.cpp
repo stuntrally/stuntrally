@@ -26,6 +26,13 @@ SoundBaseMgr::SoundBaseMgr()
 	,context(NULL), device(NULL)
 	,slot(0), effect(0), master_volume(1.f)
 {
+	hw_sources_map.resize(HW_SRC_ALL);
+	hw_sources.resize(HW_SRC_ALL);
+	sources.resize(MAX_BUFFERS);
+	//std::pair<int, float> sources_most_audible[MAX_BUFFERS];
+	buffers.resize(MAX_BUFFERS);
+	buffer_file.resize(MAX_BUFFERS);
+
 
 	//  open device
 	String sdevice = "";  //par
@@ -37,15 +44,15 @@ SoundBaseMgr::SoundBaseMgr()
 
 	if (!device)
 	{
-		LogO(">  Sound Init - Could not open device");
+		LogO("@@@  Sound Init - Could not open device");
 		hasALErrors();
 		return;
 	}
 
 	//  efx
 	ALCboolean efx = alcIsExtensionPresent(device, "ALC_EXT_EFX");
-	if (efx == ALC_FALSE)		LogO(">  EFX extention not found !");
-	else if (efx == ALC_TRUE)	LogO(">  EFX extension found.");
+	if (efx == ALC_FALSE)		LogO("@  EFX extention not found !");
+	else if (efx == ALC_TRUE)	LogO("@  EFX extension found.");
 
 	ALint attr[4] = { 0 };
 	attr[0] = ALC_MAX_AUXILIARY_SENDS;
@@ -57,7 +64,7 @@ SoundBaseMgr::SoundBaseMgr()
 	if (context == NULL ||
 		alcMakeContextCurrent(context) == ALC_FALSE)
 	{
-		LogO(">  Sound Init - Could not create context");
+		LogO("@@@  Sound Init - Could not create context");
 		if (context != NULL)
 			alcDestroyContext(context);
 		alcCloseDevice(device);
@@ -69,19 +76,19 @@ SoundBaseMgr::SoundBaseMgr()
 	
 	//  log info  ----
 	String s,t;
-	LogO(">  ---- SoundManager Info ----");
-	s = alGetString(AL_VENDOR);		LogO(">  vendor is: " + s);
-	s = alGetString(AL_VERSION);	LogO(">  version is: " + s);
-	s = alGetString(AL_RENDERER);	LogO(">  renderer is: " + s);
-	s = alGetString(AL_EXTENSIONS);	LogO(">  extensions are: " + s);
-	s = alcGetString(device, ALC_DEVICE_SPECIFIER);	LogO(">  device is: " + s);
-	s = alcGetString(device, ALC_EXTENSIONS);		LogO(">  ALC extensions are: " + s);
+	LogO("@ @  ---- SoundManager Info ----");
+	s = alGetString(AL_VENDOR);		LogO("@  vendor: " + s);
+	s = alGetString(AL_VERSION);	LogO("@  version: " + s);
+	s = alGetString(AL_RENDERER);	LogO("@  renderer: " + s);
+	//t = alcGetString(device, ALC_DEVICE_SPECIFIER);	LogO("@  renderer: " + s + "  alc device: " + t);
+	s = alGetString(AL_EXTENSIONS);	LogO("@  extensions: " + s);
+	//t = alcGetString(device, ALC_EXTENSIONS);	LogO("@  alc extensions: " + s);
 
 
 	//  sends
 	ALint iSends = 0;
 	alcGetIntegerv(device, ALC_MAX_AUXILIARY_SENDS, 1, &iSends);
-	LogO(">  Aux Sends per Source: " + toStr(iSends));
+	LogO("@  Aux Sends per Source: " + toStr(iSends));
 
    
 	//  get function pointers
@@ -129,7 +136,7 @@ SoundBaseMgr::SoundBaseMgr()
 
 	effect = LoadEffect(&reverb);
 	if (!effect)
-		LogO(">  Can't load effect !!");
+		LogO("@  Can't load effect !!");
 
 	//  This is what plays an effect on sources that connect to it
 	alGenAuxiliaryEffectSlots(1, &slot);
@@ -139,16 +146,14 @@ SoundBaseMgr::SoundBaseMgr()
 	//  effect object afterward without affecting the effect slot.
 	alAuxiliaryEffectSloti(slot, AL_EFFECTSLOT_EFFECT, effect);
 	if (alGetError() != AL_NO_ERROR)
-		LogO(">  Failed to set effect slot");
-}
+		LogO("@  Failed to set effect slot");
 
-//  Create  --
-void SoundBaseMgr::CreateSources()
-{
-	LogO(">  Creating hw sources.");
+
+	//  hud sources  --
+	LogO("@ @  Creating hw sources.");
 	//  generate the AL sources
 	int i;
-	for (i=0; i < MAX_HW_SOURCES; ++i)
+	for (i=0; i < HW_SRC_HUD; ++i)
 	{
 		alGetError();
 		alGenSources(1, &hw_sources[i]);
@@ -161,19 +166,63 @@ void SoundBaseMgr::CreateSources()
 		++hw_sources_num;
 	}
 
-	for (i=0; i < MAX_HW_SOURCES; ++i)
+	for (i=0; i < HW_SRC_HUD; ++i)
+		hw_sources_map[i] = -1;
+}
+
+//  Create  --
+void SoundBaseMgr::CreateSources()
+{
+	LogO("@ @  Creating hw sources.");
+	//  generate the AL sources
+	int i;
+	for (i = HW_SRC_HUD; i < HW_SRC_ALL; ++i)
+	{
+		alGetError();
+		alGenSources(1, &hw_sources[i]);
+		//alSource3i(source, AL_AUXILIARY_SEND_FILTER, slot, 0, AL_FILTER_NULL);
+
+		if (alGetError() != AL_NO_ERROR)  break;
+		alSourcef(hw_sources[i], AL_REFERENCE_DISTANCE, REF_DISTANCE);
+		alSourcef(hw_sources[i], AL_ROLLOFF_FACTOR, ROLLOFF_FACTOR);
+		alSourcef(hw_sources[i], AL_MAX_DISTANCE, MAX_DISTANCE);
+		LogO(toStr(i)+" +SRC: "+toStr(hw_sources[i]));
+		++hw_sources_num;
+	}
+
+	for (i = HW_SRC_HUD; i < HW_SRC_ALL; ++i)
 		hw_sources_map[i] = -1;
 }
 
 //  Destroy  --
 void SoundBaseMgr::DestroySources()
 {
-	LogO(">  Destroying hw sources.");
-	for (int i = 0; i < MAX_HW_SOURCES; ++i)
+	if (hw_sources_num <= HW_SRC_HUD)  return;
+	
+	/*for (int i = 0; i < sources.size(); ++i)
+	{
+		retire(i);
+		delete sources[i];
+	}/**/
+	//sources
+	camera_position = Vector3(10000.f,10000.f,10000.f);
+	recomputeAllSources();
+	
+	//recomputeSource()
+	LogO("@ @  Destroying hw sources.");
+	for (int i = HW_SRC_HUD; i < HW_SRC_ALL; ++i)
+	{
+		LogO(toStr(i)+" -SRC: "+toStr(hw_sources[i]));
+		//ALboolean b = alIsSource(hw_sources[i]);
+		//alSourcei(hw_sources[i], AL_LOOPING, AL_FALSE);
+		alSourcef(hw_sources[i], AL_GAIN, 0.f);
+		alSourceStop(hw_sources[i]);
+		alSourcei(hw_sources[i], AL_BUFFER, 0);
 		alDeleteSources(1, &hw_sources[i]);
-
-	buffers_in_use = 0;  sources_in_use = 0;
-	hw_sources_in_use = 0;  hw_sources_num = 0;
+		--hw_sources_num;
+	}
+	//buffers_in_use = 0;  sources_in_use = 0;
+	//hw_sources_in_use = 0;  //hw_sources_num = 0;
 }
 
 //  Destroy
@@ -184,7 +233,7 @@ SoundBaseMgr::~SoundBaseMgr()
 
 	// delete the sources and buffers
 	//alDeleteSources(MAX_HW_SOURCES, hw_sources);
-	alDeleteBuffers(MAX_BUFFERS, buffers);
+	alDeleteBuffers(MAX_BUFFERS, &buffers[0]);
 
 	// destroy the sound context and device
 	ALCcontext* context = alcGetCurrentContext();
@@ -196,7 +245,7 @@ SoundBaseMgr::~SoundBaseMgr()
 	if (device)
 		alcCloseDevice(device);
 
-	LogO(">  SoundManager destroyed.");
+	LogO("@ @  SoundManager destroyed.");
 }
 
 
@@ -277,15 +326,15 @@ void SoundBaseMgr::recomputeSource(int id, int reason, float fl, Vector3* vec)
 			//  update the AL settings
 			switch (reason)
 			{
-			case REASON_GAIN: alSourcef(hw_sources[sources[id]->hw_id], AL_GAIN, fl * master_volume); break;
-			case REASON_PTCH: alSourcef(hw_sources[sources[id]->hw_id], AL_PITCH, fl); break;
-			case REASON_POS: alSource3f(hw_sources[sources[id]->hw_id], AL_POSITION, vec->x, vec->y, vec->z); break;
-			case REASON_VEL: alSource3f(hw_sources[sources[id]->hw_id], AL_VELOCITY, vec->x, vec->y, vec->z); break;
+			case REASON_GAIN:  alSourcef(hw_sources[sources[id]->hw_id], AL_GAIN, fl * master_volume); break;
+			case REASON_PTCH:  alSourcef(hw_sources[sources[id]->hw_id], AL_PITCH, fl); break;
+			case REASON_POS:  alSource3f(hw_sources[sources[id]->hw_id], AL_POSITION, vec->x, vec->y, vec->z); break;
+			case REASON_VEL:  alSource3f(hw_sources[sources[id]->hw_id], AL_VELOCITY, vec->x, vec->y, vec->z); break;
 
-			case REASON_PLAY: alSourcePlay(hw_sources[sources[id]->hw_id]); break;
-			case REASON_STOP: alSourceStop(hw_sources[sources[id]->hw_id]); break;
-			case REASON_LOOP: alSourcei(hw_sources[sources[id]->hw_id], AL_LOOPING, fl > 0.5f ? AL_TRUE : AL_FALSE); break;
-			case REASON_SEEK: alSourcei(hw_sources[sources[id]->hw_id], AL_SAMPLE_OFFSET, fl); break;
+			case REASON_PLAY:  alSourcePlay(hw_sources[sources[id]->hw_id]); break;
+			case REASON_STOP:  alSourceStop(hw_sources[sources[id]->hw_id]); break;
+			case REASON_LOOP:  alSourcei(hw_sources[sources[id]->hw_id], AL_LOOPING, fl > 0.5f ? AL_TRUE : AL_FALSE); break;
+			case REASON_SEEK:  alSourcei(hw_sources[sources[id]->hw_id], AL_SAMPLE_OFFSET, fl); break;
 			default: break;
 			}
 		}else
@@ -352,6 +401,18 @@ void SoundBaseMgr::assign(int id, int hw_id)
 
 	alSource3f(source, AL_POSITION, sources[id]->pos.x, sources[id]->pos.y, sources[id]->pos.z);
 	alSource3f(source, AL_VELOCITY, sources[id]->vel.x, sources[id]->vel.y, sources[id]->vel.z);
+
+	if (sources[id]->is2D)  // hud
+	{
+		alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE);
+		alSource3f(source, AL_POSITION, 0.0, 0.0, 0.0);
+		alSourcef(source, AL_GAIN, 1.f);
+		alSourcef(source, AL_ROLLOFF_FACTOR, 0.0f);
+
+		//alSourcef(source, AL_REFERENCE_DISTANCE, FLT_MAX-10.0f);
+		//alSourcef(source, AL_ROLLOFF_FACTOR, 0.0f);
+		//alSourcef(source, AL_MAX_DISTANCE, FLT_MAX-9.0f);
+	}
 
 	if (sources[id]->should_play)
 		alSourcePlay(hw_sources[hw_id]);

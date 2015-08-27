@@ -9,7 +9,7 @@ SoundBase::SoundBase(ALuint buffer1, SoundBaseMgr* sound_mgr1, int source_id1, i
 	,audibility(0.0f), gain(0.0f), pitch(1.0f)
 	,pos(Vector3::ZERO), vel(Vector3::ZERO)
 	,enabled(true), loop(false), should_play(false), hw_id(-1)
-	,samples(samples1)
+	,samples(samples1), is2D(false)
 {
 }
 
@@ -37,7 +37,15 @@ void SoundBase::computeAudibility(Vector3 pos1)
 		audibility = 0.0f;
 		return;
 	}
+	
+	//  hud
+	if (is2D)
+	{
+		audibility = 1.0f;
+		return;
+	}		
 
+	//  3d
 	float distance = (pos1 - pos).length();
 	
 	if (distance > sound_mgr->MAX_DISTANCE)

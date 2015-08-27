@@ -33,7 +33,7 @@ ALuint SoundBaseMgr::LoadEffect(REVERB_PRESET* r)
 	alGenEffects(1, &e);
 	if (alGetEnumValue("AL_EFFECT_EAXREVERB") != 0)
 	{
-		LogO(">  Using EAX Reverb");
+		LogO("@  Using EAX Reverb");
 		alEffecti(e, AL_EFFECT_TYPE, AL_EFFECT_EAXREVERB);
 		alEffectf(e, AL_EAXREVERB_DENSITY, r->flDensity);
 		alEffectf(e, AL_EAXREVERB_DIFFUSION, r->flDiffusion);
@@ -59,7 +59,7 @@ ALuint SoundBaseMgr::LoadEffect(REVERB_PRESET* r)
 		alEffectf(e, AL_EAXREVERB_ROOM_ROLLOFF_FACTOR, r->flRoomRolloffFactor);
 		alEffecti(e, AL_EAXREVERB_DECAY_HFLIMIT, r->iDecayHFLimit);
 	}else{
-		LogO(">  Using Standard Reverb");
+		LogO("@  Using Standard Reverb");
 		alEffecti(e, AL_EFFECT_TYPE, AL_EFFECT_REVERB);
 		alEffectf(e, AL_REVERB_DENSITY, r->flDensity);
 		alEffectf(e, AL_REVERB_DIFFUSION, r->flDiffusion);
@@ -95,19 +95,20 @@ SoundBase* SoundBaseMgr::createSound(String file)
 
 	if (buffers_in_use >= MAX_BUFFERS)
 	{
-		LogO(">  SoundManager: Reached MAX_AUDIO_BUFFERS limit (" + toStr(MAX_BUFFERS) + ")");
+		LogO("@  SoundManager: Reached MAX_AUDIO_BUFFERS limit (" + toStr(MAX_BUFFERS) + ")");
 		return NULL;
 	}
 
 	ALuint buffer = 0;
 
 	//  is the file already loaded?
-	for (int i=0; i < buffers_in_use; i++)
+	for (int i=0; i < buffers_in_use; ++i)
 	{
 		if (file == buffer_file[i])
 		{
 			buffer = buffers[i];
-			break;
+			sources[i] = new SoundBase(buffer, this, i, sources[i]->samples);
+			return sources[i];
 		}
 	}
 
@@ -135,13 +136,13 @@ SoundBase* SoundBaseMgr::createSound(String file)
 				return NULL;
 			}
 		}else
-			LogO(">  Not supported sound file extension: "+ext);
+			LogO("@  Not supported sound file extension: "+ext);
 		
 		buffer = buffers[buffers_in_use];
 		buffer_file[buffers_in_use] = file;
 	}
 
-	//LogO(">  samples: "+toStr(samples));
+	//LogO("@  samples: "+toStr(samples));
 	sources[buffers_in_use] = new SoundBase(buffer, this, buffers_in_use, samples);
 
 	return sources[buffers_in_use++];
@@ -153,7 +154,7 @@ SoundBase* SoundBaseMgr::createSound(String file)
 bool SoundBaseMgr::loadWAVFile(String file, ALuint buffer, int& outSamples)
 {
 	outSamples = 0;
-	//LogO(">  Loading WAV file "+file);
+	//LogO("@  Loading WAV file "+file);
 
 	// create the Stream
 	std::string path = PATHMANAGER::Sounds()+"/"+file;
@@ -229,17 +230,17 @@ bool SoundBaseMgr::loadWAVFile(String file, ALuint buffer, int& outSamples)
 		 if (channels == 1 && bps == 16) {	format = AL_FORMAT_MONO16;    outSamples = size/2;  }
 	else if (channels == 2 && bps == 16) {	format = AL_FORMAT_STEREO16;  outSamples = size/2 / 2;  }
 	else
-	{	LogO(">  Invalid WAV file wrong channels: "+toStr(channels)+" or bps: "+toStr(bps)+"  file: "+file);  return false;  }
+	{	LogO("@  Invalid WAV file wrong channels: "+toStr(channels)+" or bps: "+toStr(bps)+"  file: "+file);  return false;  }
 
 	if (channels != 1)  // for 3D only mono!
-		LogO(">  WAV file is not mono: "+file);
+		LogO("@  WAV file is not mono: "+file);
 
 	//  creating buffer
 	void* bdata = malloc(size);
 	if (!bdata)
-	{	LogO(">  Memory error reading file "+file);  return false;  }
+	{	LogO("@  Memory error reading file "+file);  return false;  }
 	if (stream->read(bdata, size) != size)
-	{	LogO(">  Could not read file "+file); free(bdata);  return false;  }
+	{	LogO("@  Could not read file "+file); free(bdata);  return false;  }
 
 	//LOG("alBufferData: format "+toStr(format)+" size "+toStr(dataSize)+" freq "+toStr(freq));
 	alGetError();  // reset errors
@@ -250,7 +251,7 @@ bool SoundBaseMgr::loadWAVFile(String file, ALuint buffer, int& outSamples)
 	free(bdata);
 
 	if (error != AL_NO_ERROR)
-	{	LogO(">  OpenAL error while loading buffer for "+file+" : "+toStr(error));  return false;  }
+	{	LogO("@  OpenAL error while loading buffer for "+file+" : "+toStr(error));  return false;  }
 
 	fd.close();  fi.close();
 	return true;
@@ -274,7 +275,6 @@ bool SoundBaseMgr::loadOGGFile(String file, ALuint buffer, int& outSamples)
 
 		//  assuming ogg is always 16-bit
 		unsigned int samples = ov_pcm_total(&oggFile, -1);
-		//info = SOUNDINFO(samples*pInfo->channels, pInfo->rate, pInfo->channels, 2);
 
 		//  allocate space
 		unsigned int size = samples * info->channels * 2;
@@ -288,7 +288,6 @@ bool SoundBaseMgr::loadOGGFile(String file, ALuint buffer, int& outSamples)
 			bytes = ov_read(&oggFile, bdata+bufpos, size-bufpos,
 				0/*little endian*/, 2/**/, 1/*issigned*/, &bitstream);
 			bufpos += bytes;
-			//cout << bytes << "...";
 		}
 
 		int format = 0;
@@ -300,14 +299,14 @@ bool SoundBaseMgr::loadOGGFile(String file, ALuint buffer, int& outSamples)
 		alBufferData(buffer, format, bdata, size, info->rate/*freq*/);
 		error = alGetError();
 
-		free(bdata);  // stream will be closed by itself
+		delete[] bdata;  // stream will be closed by itself
 
 		if (error != AL_NO_ERROR)
-		{	LogO(">  OpenAL error while loading buffer for "+file+" : "+toStr(error));  return false;  }
+		{	LogO("@  OpenAL error while loading buffer for "+file+" : "+toStr(error));  return false;  }
 
 		//note: no need to call fclose(); ov_clear does it for us
 		ov_clear(&oggFile);
 		return true;
 	}
-	LogO(">  Can't open OGG sound file: "+file);  return false;
+	LogO("@  Can't open OGG sound file: "+file);  return false;
 }

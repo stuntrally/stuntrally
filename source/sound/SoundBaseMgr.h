@@ -27,12 +27,13 @@ public:
 	int getNumHardwareSources() {  return hw_sources_num;  }
 
 	static const float MAX_DISTANCE, REF_DISTANCE, ROLLOFF_FACTOR;
-	static const unsigned int MAX_HW_SOURCES = 128;  //par 32
+	static const unsigned int HW_SRC = 128, HW_SRC_HUD = 16,
+		HW_SRC_ALL = HW_SRC_HUD + HW_SRC;  //par 32
 	static const unsigned int MAX_BUFFERS = 1024;  //8192
 
 	ALuint LoadEffect(struct REVERB_PRESET* reverb);
 
-	int hw_sources_num;  // total number of available hardware sources < MAX_HARDWARE_SOURCES
+	int hw_sources_num;  // total number of available hardware sources < HW_SRC
 	int hw_sources_in_use;
 	int sources_in_use;
 	int buffers_in_use;
@@ -50,18 +51,18 @@ private:
 	bool loadOGGFile(Ogre::String file, ALuint buffer, int& outSamples);
 
 	//  active audio sources (hardware sources)
-	int    hw_sources_map[MAX_HW_SOURCES]; // stores the hardware index for each source. -1 = unmapped
-	ALuint hw_sources[MAX_HW_SOURCES];     // this buffer contains valid AL handles up to hwe_sources_num
+	std::vector<int>  hw_sources_map;   // stores the hardware index for each source. -1 = unmapped
+	std::vector<ALuint> hw_sources;     // this buffer contains valid AL handles up to hw_sources_num
 
 	//  audio sources
-	SoundBase* sources[MAX_BUFFERS];
+	std::vector<SoundBase*> sources;
 	
 	//  helper for calculating the most audible sources
 	std::pair<int, float> sources_most_audible[MAX_BUFFERS];
 	
 	//  audio buffers: Array of AL buffers and filenames
-	ALuint       buffers[MAX_BUFFERS];
-	Ogre::String buffer_file[MAX_BUFFERS];
+	std::vector<ALuint>  buffers;
+	std::vector<Ogre::String> buffer_file;
 
 	Ogre::Vector3 camera_position;
 

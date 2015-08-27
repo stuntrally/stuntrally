@@ -30,6 +30,7 @@ public:
 	bool isPlaying();
 	
 	void seek(float pos);  // [0..1)
+	bool is2D;
 
 private:
 	void computeAudibility(Ogre::Vector3 pos);

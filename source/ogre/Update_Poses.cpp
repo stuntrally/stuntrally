@@ -511,7 +511,7 @@ void App::updatePoses(float time)
 	}
 	
 	///  Replay info
-	if (bRplPlay && pGame->cars.size() > 0)
+	if (bRplPlay && !pGame->cars.empty())
 	{
 		double pos = pGame->timer.GetPlayerTime(0);
 		float len = replay.GetTimeLength();
