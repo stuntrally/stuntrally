@@ -11,6 +11,7 @@
 #include "CHud.h"
 #include "CGui.h"
 #include "common/MultiList2.h"
+#include "sound/SoundMgr.h"
 #include <OgreTextureManager.h>
 using namespace std;
 using namespace Ogre;
@@ -210,10 +211,10 @@ void CGui::btnChallStageStart(WP)
 		app->mWndChallEnd->setVisible(true);
 		
 		///  sounds  //)
-		//if (iChSnd < 0)
-		//	pGame->snd_fail.Play();
-		//else
-		//	pGame->snd_win[iChSnd].Play();  //)
+		if (iChSnd < 0)
+			pGame->snd_fail->start();
+		else
+			pGame->snd_win[iChSnd]->start();  //)
 		return;
 	}
 
@@ -333,10 +334,10 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 	app->mWndChallStage->setVisible(true);
 
 	//  sound  //)
-	//if (passed)
-	//	pGame->snd_stage.Play();
-	//else
-	//	pGame->snd_fail.Play();  //)
+	if (passed)
+		pGame->snd_stage->start();
+	else
+		pGame->snd_fail->start();  //)
 
 
 	if (!last || (last && !passed))

@@ -11,6 +11,7 @@
 #include "CGui.h"
 #include "../road/Road.h"
 #include "common/MultiList2.h"
+#include "sound/SoundMgr.h"
 #include <OgreTextureManager.h>
 using namespace std;
 using namespace Ogre;
@@ -228,10 +229,10 @@ void CGui::btnChampStageStart(WP)
 		app->mWndChampEnd->setVisible(true);
 
 		///  sound  //)
-		//if (iChSnd < 0)
-		//	pGame->snd_fail.Play();
-		//else
-		//	pGame->snd_win[iChSnd].Play();  //)
+		if (iChSnd < 0)
+			pGame->snd_fail->start();
+		else
+			pGame->snd_win[iChSnd]->start();  //)
 
 		return;
 	}
@@ -330,10 +331,10 @@ void CGui::ChampionshipAdvance(float timeCur)
 	app->mWndChampStage->setVisible(true);
 
 	//  sound  //)
-	//if (passed)
-	//	pGame->snd_stage.Play();
-	//else
-	//	pGame->snd_fail.Play();  //)
+	if (passed)
+		pGame->snd_stage->start();
+	else
+		pGame->snd_fail->start();  //)
 
 
 	if (!last || (last && !passed))

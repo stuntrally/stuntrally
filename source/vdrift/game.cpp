@@ -43,6 +43,10 @@ GAME::GAME(SETTINGS* pSettings)
 	//  sim settings
 	collision.fixedTimestep = 1.0 / pSettings->blt_fq;
 	collision.maxSubsteps = pSettings->blt_iter;
+	
+	snd_chk=0; snd_chkwr=0;  snd_lap=0; snd_lapbest=0;
+	snd_stage=0; snd_fail=0;
+	for (int i=0;i<3;++i)  snd_win[i]=0;
 }
 
 
@@ -297,18 +301,23 @@ bool GAME::InitializeSound()
 	fi.close();
 
 	
-	#if 0
-		sound.SetMasterVolume(settings->vol_master);
-		sound.Pause(false);
-		UpdHudSndVol();
+	//  load hud sounds
+	snd_chk = snd->createInstance("hud/chk",  0);
+	snd_chkwr = snd->createInstance("hud/chkwrong",  0);
+	snd_lap = snd->createInstance("hud/lap",  0);
+	snd_lapbest = snd->createInstance("hud/lapbest",  0);
+	snd_stage = snd->createInstance("hud/stage",  0);
+	for (int i=0; i < 3; ++i)
+	snd_win[i] = snd->createInstance("hud/win"+toStr(i),  0);
+	snd_fail = snd->createInstance("hud/fail",  0);
 
-		LogO("SOUND initialization successful.");
-	}else
-	{	LogO("ERROR: Sound initialization failed!");
-		return false;
-	}
-	#endif
+	
+	snd->setMasterVolume(settings->vol_master);
+	//sound.Pause(false);
+	UpdHudSndVol();
 
+
+	LogO(">  Sound init ok.");
 	LogO("::: Time Sounds: "+ fToStr(ti.getMilliseconds(),0,3) +" ms");
 	return true;
 }
@@ -316,10 +325,11 @@ bool GAME::InitializeSound()
 void GAME::UpdHudSndVol()
 {
 	float g = settings->vol_hud;
-	//snd_chk.SetGain(g);  snd_chkwr.SetGain(g);
-	//snd_lap.SetGain(g);  snd_lapbest.SetGain(g);
-	//for (int i=0; i<3; ++i)  snd_win[i].SetGain(g);
-	//snd_fail.SetGain(g);
+	snd_chk->setGain(g);  snd_chkwr->setGain(g);
+	snd_lap->setGain(g);  snd_lapbest->setGain(g);
+	snd_stage->setGain(g);
+	for (int i=0; i<3; ++i)  snd_win[i]->setGain(g);
+	snd_fail->setGain(g);
 }
 
 

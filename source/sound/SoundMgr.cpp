@@ -63,6 +63,9 @@ Sound* SoundMgr::createInstance(Ogre::String name, int car)
 	Sound* inst = new Sound(car, templ, sound_mgr,
 		/*templ->file_name+*/"c"+toStr(car)+"-"+toStr(instance_counter));
 	++instance_counter;
+	
+	String ss = name.substr(0,4);
+	inst->is2D = ss=="hud/";  // set 2d
 
 	//  start looped
 	inst->setGain(0.f);
@@ -215,7 +218,8 @@ bool SoundTemplate::setParameter(Ogre::StringVector vec)
 Sound::Sound(int car1, SoundTemplate* tpl, SoundBaseMgr* mgr1, Ogre::String name)
 	:car(car1), templ(tpl), sound_mgr(mgr1)
 	,start_sound(NULL), start_sound_pitchgain(0.0f)
-	,stop_sound(NULL), stop_sound_pitchgain(0.0f), lastgain(1.0f)
+	,stop_sound(NULL), stop_sound_pitchgain(0.0f)
+	,lastgain(1.0f), is2D(false)
 {
 	// create sounds
 	if (tpl->has_start_sound)
@@ -230,7 +234,7 @@ Sound::Sound(int car1, SoundTemplate* tpl, SoundBaseMgr* mgr1, Ogre::String name
 	setPitch(0.0f);
 	setGain(1.0f);
 
-	LogO(">  Sound created: "+name);
+	//LogO(">  Sound created: "+name);
 }
 
 void Sound::setPitch(float value)

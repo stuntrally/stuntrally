@@ -75,6 +75,7 @@ public:
 	bool benchmode, profilingmode, pause;
 
 
+	//  cars  ---
 	SETTINGS* settings;
 	TRACK track;
 
@@ -86,10 +87,10 @@ public:
 	
 	TIMER timer;
 
-	
+
+	//  Sound  ---
 	SoundMgr* snd;
-	//Sound *
-	//SOUNDSOURCE snd_chk, snd_chkwr,  snd_lap, snd_lapbest,  snd_stage, snd_win[3], snd_fail;
+	Sound* snd_chk, *snd_chkwr,  *snd_lap, *snd_lapbest,  *snd_stage, *snd_win[3], *snd_fail;
 	void UpdHudSndVol();
 
 

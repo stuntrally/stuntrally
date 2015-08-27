@@ -153,7 +153,7 @@ SoundBase* SoundBaseMgr::createSound(String file)
 bool SoundBaseMgr::loadWAVFile(String file, ALuint buffer, int& outSamples)
 {
 	outSamples = 0;
-	LogO(">  Loading WAV file "+file);
+	//LogO(">  Loading WAV file "+file);
 
 	// create the Stream
 	std::string path = PATHMANAGER::Sounds()+"/"+file;
@@ -262,7 +262,7 @@ bool SoundBaseMgr::loadWAVFile(String file, ALuint buffer, int& outSamples)
 bool SoundBaseMgr::loadOGGFile(String file, ALuint buffer, int& outSamples)
 {
 	outSamples = 0;
-	LogO("Loading OGG file "+file);
+	//LogO("Loading OGG file "+file);
 
 	String path = PATHMANAGER::Sounds()+"/"+file;
 	FILE* fp = fopen(path.c_str(), "rb");

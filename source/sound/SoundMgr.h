@@ -55,6 +55,7 @@ public:
 
 	bool isAudible();
 	void start(), stop(), kill();
+	bool is2D;  // hud sounds, no distance attenuation
 
 	void seek(float pos);
 	void runOnce();

@@ -301,11 +301,11 @@ void App::newPoses(float time)  // time only for camera update
 						bool chs = champ || chall;
 						
 						if (!chs)
-						//{	if (newbest)
-						//		pGame->snd_lapbest.Play();  //)
-						//	else
-						//		pGame->snd_lap.Play();  //)
-						//}
+						{	if (newbest)
+								pGame->snd_lapbest->start();  //)
+							else
+								pGame->snd_lap->start();  //)
+						}
 						ghost.Clear();
 						
 						carM->ResetChecks();
@@ -334,7 +334,7 @@ void App::newPoses(float time)  // time only for camera update
 									if (pSet->game.local_players > 1)
 									{
 										int n = std::min(2, std::max(0, 3 - carIdWin));
-										//pGame->snd_win[n].Play();  //)
+										pGame->snd_win[n]->start();  //)
 									}
 									carM->iWonPlace = carIdWin++;
 								}
@@ -382,8 +382,8 @@ void App::newPoses(float time)  // time only for camera update
 								carM->pCar->SavePosAtCheck();
 								carM->updTimes = true;
 	
-								//if (pSet->snd_chk && locar)
-								//	pGame->snd_chk.Play();  //)
+								if (pSet->snd_chk && locar)
+									pGame->snd_chk->start();  //)
 							}
 							else
 							if (carM->iInChk != carM->iCurChk &&
@@ -394,8 +394,8 @@ void App::newPoses(float time)  // time only for camera update
 								if (carM->iInWrChk != carM->iInChk)
 								{	carM->iInWrChk = carM->iInChk;
 									
-									//if (pSet->snd_chkwr && locar)
-									//	pGame->snd_chkwr.Play();  //)
+									if (pSet->snd_chkwr && locar)
+										pGame->snd_chkwr->start();  //)
 							}	}
 							break;
 						}
