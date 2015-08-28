@@ -29,34 +29,38 @@ using namespace Ogre;
 //--------------------------------------------------------------------------------------------------------------------------
 bool CAR::LoadSounds(const std::string & carpath)
 {
+	bool s = pApp->pSet->game.local_players > 1;
+	
 	SoundMgr* snd = pGame->snd;
-	engine = snd->createInstance("engine",0);  engine->start();
+	const string& eng = dynamics.engine.sound_name;
+	engine = snd->createInstance(eng,0);  engine->set2D(s);  engine->start();
 
 	int i;  float fw = numWheels;
 	for (i = 0; i < numWheels; ++i)  // tires
 	{
-		tiresqueal[i] = snd->createInstance("tire_squeal", 0);
-		grasssound[i] = snd->createInstance("grass", 0);
-		gravelsound[i]= snd->createInstance("gravel", 0);  gravelsound[i]->seek(float(i)/fw);
-		tirebump[i] =   snd->createInstance(i >= 2 ? "bump_rear" : "bump_front", 0);
+		tiresqueal[i] = snd->createInstance("tire_squeal", 0);	tiresqueal[i]->set2D(s);
+		grasssound[i] = snd->createInstance("grass", 0);		grasssound[i]->set2D(s);
+		gravelsound[i]= snd->createInstance("gravel", 0);
+		gravelsound[i]->seek(float(i)/fw);  gravelsound[i]->set2D(s);
+		tirebump[i] =   snd->createInstance(i >= 2 ? "bump_rear" : "bump_front", 0);  tirebump[i]->set2D(s);
 	}
 
 	for (i = 0; i < Ncrashsounds; ++i)  // crashes
-	{	string s = "crash/";  int n=i+1;  s += toStr(n/10)+toStr(n%10);
-		crashsound[i] = snd->createInstance(s, 0);
+	{	string cn = "crash/";  int n=i+1;  cn += toStr(n/10)+toStr(n%10);
+		crashsound[i] = snd->createInstance(cn, 0);  crashsound[i]->set2D(s);
 	}
-	crashscrap   = snd->createInstance("crash/scrap",  0);
-	crashscreech = snd->createInstance("crash/screech",0);
+	crashscrap   = snd->createInstance("crash/scrap",  0);  crashscrap->set2D(s);
+	crashscreech = snd->createInstance("crash/screech",0);	crashscreech->set2D(s);
 
-	wind	 = snd->createInstance("wind",  0);
-	boostsnd = snd->createInstance("boost", 0);
+	wind	 = snd->createInstance("wind",  0);  wind->set2D(s);
+	boostsnd = snd->createInstance("boost", 0);  boostsnd->set2D(s);
 
 	for (i = 0; i < Nwatersounds; ++i)  // fluids
-		watersnd[i] = snd->createInstance("water"+toStr(i+1), 0);
+	{	watersnd[i] = snd->createInstance("water"+toStr(i+1), 0);  watersnd[i]->set2D(s);  }
 
-	mudsnd   = snd->createInstance("mud1", 0);
-	mud_cont   = snd->createInstance("mud_cont",   0);
-	water_cont = snd->createInstance("water_cont", 0);
+	mudsnd   = snd->createInstance("mud1", 0);          mudsnd->set2D(s);
+	mud_cont   = snd->createInstance("mud_cont",   0);	mud_cont->set2D(s);
+	water_cont = snd->createInstance("water_cont", 0);	water_cont->set2D(s);
 	return true;
 }
 
