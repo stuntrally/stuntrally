@@ -75,18 +75,14 @@ bool CAR::DestroySounds()
 	for (i = 0; i < Ncrashsounds; ++i)  // crashes
 		delete crashsound[i];
 
-	delete crashscrap;
-	delete crashscreech;
+	delete crashscrap;  delete crashscreech;
 
-	delete wind;
-	delete boostsnd;
+	delete wind;  delete boostsnd;
 
 	for (i = 0; i < Nwatersounds; ++i)  // fluids
 		delete watersnd[i];
 
-	delete mudsnd;
-	delete mud_cont;
-	delete water_cont;
+	delete mudsnd;  delete mud_cont;  delete water_cont;
 	//--instance_counter;
 	return true;
 }
@@ -249,7 +245,7 @@ void CAR::UpdateSounds(float dt)
 	{
 		float gain = 1.f;
 	
-		if (dynamics.vtype == V_Spaceship)
+		if (dynamics.vtype >= V_Spaceship)
 		{
 			engine->setPitch(1.f);
 			gain = throttle;

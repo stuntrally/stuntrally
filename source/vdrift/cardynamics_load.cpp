@@ -147,6 +147,9 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		float mass, rpm_limit, inertia, friction,
 			start_rpm, stall_rpm, fuel_consumption;
 		MATHVECTOR<double,3> position;
+		
+		if (!c.GetParamE("engine.sound", engine.sound_name))
+			engine.sound_name = "engine";
 
 		if (!c.GetParamE("engine.rpm-limit", rpm_limit))  return false;
 		engine.SetRpmMax(rpm_limit);

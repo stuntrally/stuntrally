@@ -45,13 +45,15 @@ private:
 public:
 	//default constructor makes an S2000-like car
 	CARENGINE();
-	Dbl real_pow_tq_mul;
+
+	Dbl real_pow_tq_mul;  // .car params
+	std::string sound_name;
 
 	Dbl GetTorqueCurve(const Dbl cur_throttle, const Dbl cur_rpm) const;
 	
 	Dbl GetFrictionTorque(Dbl cur_angvel, Dbl friction_factor, Dbl throttle_position);
 
-	void SetInertia (const Dbl& value)
+	void SetInertia(const Dbl& value)
 	{
 		MATRIX3 <Dbl> inertia;
 		inertia.Scale(value);
@@ -63,21 +65,21 @@ public:
 		return crankshaft.GetInertia()[0];
 	}
 	
-	void SetFrictionB (const Dbl& value){	frict_coeffB = value;	}
+	void SetFrictionB(const Dbl& value) {	frict_coeffB = value;	}
 	Dbl GetFrictionB() const			{	return frict_coeffB;	}
 
-	void SetRpmMax (const Dbl& value)	{	rpm_max = value;	}
+	void SetRpmMax(const Dbl& value)	{	rpm_max = value;	}
 	Dbl GetRpmMax() const				{	return rpm_max;		}
 	
 	Dbl GetIdle() const		{	return idle;	}
 
-	void SetStartRPM (const Dbl& value)	{	start_rpm = value;	}
+	void SetStartRPM(const Dbl& value)	{	start_rpm = value;	}
 	Dbl GetStartRPM() const				{	return start_rpm;	}
 	
-	void SetStallRPM (const Dbl& value)	{	stall_rpm = value;	}
+	void SetStallRPM(const Dbl& value)	{	stall_rpm = value;	}
 	Dbl GetStallRPM() const				{	return stall_rpm;	}
 
-	void SetFuelConsumption (const Dbl& value)	{	fuel_consumption = value;	}
+	void SetFuelConsumption(const Dbl& value)	{	fuel_consumption = value;	}
 	Dbl GetFuelConsumption() const				{	return fuel_consumption;	}
 	
 	void Integrate1(const Dbl dt)
@@ -99,7 +101,7 @@ public:
 	}
 	
 	///set the throttle position where 0.0 is no throttle and 1.0 is full throttle
-	void SetThrottle (const Dbl& value)	{	throttle_position = value;	}
+	void SetThrottle(const Dbl& value)	{	throttle_position = value;	}
 	Dbl GetThrottle() const		{	return throttle_position;	}
 	
 	void SetInitialConditions()
@@ -148,10 +150,10 @@ public:
 	/// the max_power_rpm value should be set to the engine's redline
 	void SetTorqueCurve(Dbl max_power_rpm, std::vector <std::pair <Dbl, Dbl> > & curve);
 
-	void SetMass (const Dbl& value)	{	mass = value;	}
+	void SetMass(const Dbl& value)	{	mass = value;	}
 	Dbl GetMass() const		{	return mass;	}
 
-	void SetPosition (const MATHVECTOR<Dbl,3>& value)	{	position = value;	}
+	void SetPosition(const MATHVECTOR<Dbl,3>& value)	{	position = value;	}
 	MATHVECTOR<Dbl,3> GetPosition() const	{	return position;	}
 	
 	Dbl FuelRate() const
@@ -159,7 +161,7 @@ public:
 		return fuel_consumption * GetAngularVelocity() * throttle_position;
 	}
 
-	void SetOutOfGas (bool value)	{	out_of_gas = value;		}
+	void SetOutOfGas(bool value)	{	out_of_gas = value;		}
 	
 	///returns true if the engine is combusting fuel
 	bool GetCombustion() const

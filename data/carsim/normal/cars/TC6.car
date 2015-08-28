@@ -45,6 +45,7 @@ friction = 0.4
 #  engine
 #---------------------------
 [ engine ]
+sound = engineTC
 position = 0.0, 1.33, 0.44
 mass = 180.0
 rpm-limit = 6300

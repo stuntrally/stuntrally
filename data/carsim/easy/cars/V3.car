@@ -98,6 +98,7 @@ hov_rise = 5000
 #  engine
 #---------------------------
 [ engine ]
+sound = thruster
 position = 0.0, 0.0, 0.0
 mass = 250.0
 rpm-limit = 6500
