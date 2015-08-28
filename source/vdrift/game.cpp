@@ -288,7 +288,7 @@ bool GAME::InitializeSound()
 	Ogre::Timer ti;
 	
 	snd = new SoundMgr();
-	snd->setMasterVolume(settings->vol_master);
+	snd->setMasterVolume(0.f);
 	using namespace Ogre;
 
 

@@ -100,6 +100,7 @@ SoundBase* SoundBaseMgr::createSound(String file)
 	}
 
 	ALuint buffer = 0;
+	int samples = 0;
 
 	//  is the file already loaded?
 	for (int i=0; i < buffers_in_use; ++i)
@@ -107,12 +108,13 @@ SoundBase* SoundBaseMgr::createSound(String file)
 		if (file == buffer_file[i])
 		{
 			buffer = buffers[i];
+			//samples = sources[i]->samples;
 			sources[i] = new SoundBase(buffer, this, i, sources[i]->samples);
 			return sources[i];
+			//break;
 		}
 	}
 
-	int samples = 0;
 	if (!buffer)
 	{
 		alGenBuffers(1, &buffers[buffers_in_use]);

@@ -31,9 +31,7 @@ private:
 	Ogre::String sound_names[MAX_SOUNDS_PER_SCRIPT];
 	float        sound_pitches[MAX_SOUNDS_PER_SCRIPT];
 	Ogre::String start_sound_name;
-	float        start_sound_pitch;
 	Ogre::String stop_sound_name;
-	float        stop_sound_pitch;
 
 	int   trigger_source;
 	int   free_sound;
@@ -62,12 +60,7 @@ public:
 	void runOnce();
 	void setEnabled(bool e);
 
-	static const float PITCHDOWN_FADE_FACTOR;
-	static const float PITCHDOWN_CUTOFF_FACTOR;
-
 private:
-	float pitchgain_cutoff(float sourcepitch, float targetpitch);
-
 	SoundTemplate* templ;
 	SoundBaseMgr* sound_mgr;
 

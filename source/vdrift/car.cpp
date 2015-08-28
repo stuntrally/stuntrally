@@ -87,11 +87,11 @@ bool CAR::Load(class App* pApp1,
 	bRemoteCar = isRemote;  id = idCar;
 	std::string carpath = PATHMANAGER::Cars()+"/"+carname+"/";
 
-	// get coordinate system version
+	//  get coordinate system version
 	int version = 2;
 	cf.GetParam("version", version);
 	
-	// wheels count
+	//  wheels count
 	int nw = 0;
 	cf.GetParam("wheels", nw);
 	if (nw >= 2 && nw <= MAX_WHEELS)
@@ -136,7 +136,7 @@ bool CAR::Load(class App* pApp1,
 	cd.coll_flTrig_H -= cd.com_ofs_H;  //|
 	
 
-	// load cardynamics
+	//  load cardynamics
 	{
 		if (!cd.Load(pGame, cf))  return false;
 
@@ -162,10 +162,8 @@ bool CAR::Load(class App* pApp1,
 		cd.SetTCS(defaulttcs);
 	}
 
-	// load sounds
-	//if (soundenabled)
-
-		LoadSounds(carpath);
+	//  load sounds
+	LoadSounds(carpath);
 
 	//mz_nominalmax = (GetTireMaxMz(FRONT_LEFT) + GetTireMaxMz(FRONT_RIGHT))*0.5;  //!! ff
 

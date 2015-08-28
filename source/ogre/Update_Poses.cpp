@@ -414,13 +414,12 @@ void App::newPoses(float time)  // time only for camera update
 			iCurPoses[c] = qn;  // atomic, set new index in queue
 			
 			///))  upd sound pos  ....
-			if (c == 0 && carM0->pCar->engine)
+			if (c == 0 && pGame->snd)
 			{
-				//  car
-				float rpm = carM0->pCar->dynamics.engine.GetRPM();
-				carM0->pCar->engine->setPosition(pi.pos, Vector3::ZERO);
-				carM0->pCar->engine->setPitch(rpm);
-			}
+				Vector3 x,y,z;
+				carPoses[qn][c].camRot.ToAxes(x,y,z);
+				pGame->snd->setCamera(carPoses[qn][c].camPos, -z, y, Vector3::ZERO);
+			}/**/
 		}
 	}
 	PROFILER.endBlock(".newPos ");
@@ -490,13 +489,13 @@ void App::updatePoses(float time)
 		PosInfo& pi = carPoses[q][c], &pic = carPoses[qq][cc];
 		carM->Update(carPoses[q][c], carPoses[qq][cc], time);
 		
-		///))  upd sound pos  ....  //TODO: splitscreen
-		if (c == 0 && pGame->snd /*&& pGame->engine*/)
+		///))  upd sound pos  ....
+		/*if (c == 0 && pGame->snd)
 		{
 			Vector3 x,y,z;
 			pic.camRot.ToAxes(x,y,z);
 			pGame->snd->setCamera(pic.camPos, -z, y, Vector3::ZERO);
-		}
+		}/**/
 
 		//  nick text pos upd
 		if (carM->pNickTxt && carM->pMainNode)
