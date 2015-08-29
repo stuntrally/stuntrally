@@ -243,132 +243,135 @@ void SplineRoad::BuildSeg(
 				vP -= vn * skH;
 			
 			
-			/// []() pace   //par
-	/**/if (DL.isPace)
-		{
-			if (full && w == 1)  // center
-			if (i >= 0 && i < il)
-			{	//  add
-				PaceM pm;	
-				pm.pos = vP + vN * 3.f;  //par  + vw * 0.5f;
-				vPace.push_back(pm);
-			}
-
-	/**/}else{
-
-			///  color  for minimap preview
-			//  ---~~~====~~~---
-			Real brdg = min(1.f, std::abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
-			Real h = max(0.f, 1.f - std::abs(vP.y - yTer) / 30.f);  // for grass dens tex
-			
-			bool onP = mP[seg].onPipe > 0;
-			float pp = fPipe * 0.5f + (onP ? 0.5f : 0.f);  // put onP in pipe
-			
-			Vector4 c(brdg, pp, 1.f, h);
-			Vector2 vtc(tcw * 1.f /**2p..*/, tcL);
-
-
-			//>  data road
-			DLM.pos.push_back(vP);   DLM.norm.push_back(vN);
-			DLM.tcs.push_back(vtc);  DLM.clr.push_back(c);
-			if (DS.hasBlend)
-			{	//  alpha, blend 2nd mtr
-				c.z = std::max(0.f, std::min(1.f, float(i)/il ));
-				DLM.posB.push_back(vP);   DLM.normB.push_back(vN);
-				DLM.tcsB.push_back(vtc);  DLM.clrB.push_back(c);
-			}
-			
-			//#  stats
-			if (vP.y < ST.stMinH)  ST.stMinH = vP.y;
-			if (vP.y > ST.stMaxH)  ST.stMaxH = vP.y;
-			if (w==w0)  vH0 = vP;  //#
-			if (w==w1)  vH1 = vP;
-	/**/}
-		}
-		
-/**/if (!DL.isPace)
-	{
-		//#  stats  banking angle
-		if (DL.isLod0 && i==0)
-		{
-			float h = (vH0.y - vH1.y), w = vH0.distance(vH1), d = fabs(h/w), a = asin(d)*180.f/PI_d;
-			ST.bankAvg += a;
-			if (a > ST.bankMax)  ST.bankMax = a;
-			//LogO("RD seg :" + toStr(seg)+ "  h " + fToStr(h,1,3)
-			//	+ "  w " + fToStr(w,1,3)+ "  d " + fToStr(d,1,3)+ "  a " + fToStr(a,1,3) );
-		}
-		
-
-		///  wall ]
-		//------------------------------------------------------------------------------------
-		Real uv = 0.f;  // tc
-		bool onP = mP[seg].onPipe==2;
-
-		if (!DS.onTer)
-		if (i >= 0 && i <= il)  // length +1
-		{
-			++DLM.iLmrgW;
-			Real tcLW = tc * (DS.pipe ? g_tcMulPW : g_tcMulW);
-			for (int w=0; w <= ciwW; ++w)  // width +1
+			/// []()  pace
+			if (DL.isPace)
 			{
-				int pp = (p1 > 0.f || p2 > 0.f) ? (onP ? 2 : 1) : 0;  //  pipe wall
-				stWiPntW wP = wiPntW[w][pp];
+				if (full && w == 1)  // center
+				if (i >= 0 && i < il)
+				{	//  add
+					PaceM pm;
+					pm.pos = vP + vN * 3.f;  //par  + vw * 0.5f;
+					pm.loop = DL0.v0_Loop[seg] > 0;
+					vPace.push_back(pm);
+				}
 
-				if (trans)
+			}else{
+
+				///  color  for minimap preview
+				//  ---~~~====~~~---
+				Real brdg = min(1.f, std::abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
+				Real h = max(0.f, 1.f - std::abs(vP.y - yTer) / 30.f);  // for grass dens tex
+				
+				bool onP = mP[seg].onPipe > 0;
+				float pp = fPipe * 0.5f + (onP ? 0.5f : 0.f);  // put onP in pipe
+				
+				Vector4 c(brdg, pp, 1.f, h);
+				Vector2 vtc(tcw * 1.f /**2p..*/, tcL);
+
+
+				//>  data road
+				DLM.pos.push_back(vP);   DLM.norm.push_back(vN);
+				DLM.tcs.push_back(vtc);  DLM.clr.push_back(c);
+				if (DS.hasBlend)
+				{	//  alpha, blend 2nd mtr
+					c.z = std::max(0.f, std::min(1.f, float(i)/il ));
+					DLM.posB.push_back(vP);   DLM.normB.push_back(vN);
+					DLM.tcsB.push_back(vtc);  DLM.clrB.push_back(c);
+				}
+				
+				//#  stats
+				if (vP.y < ST.stMinH)  ST.stMinH = vP.y;
+				if (vP.y > ST.stMaxH)  ST.stMaxH = vP.y;
+				if (w==w0)  vH0 = vP;  //#
+				if (w==w1)  vH1 = vP;
+			}
+		}	// width
+		
+		
+		/// []()  normal
+		if (!DL.isPace)
+		{
+			//#  stats  banking angle
+			if (DL.isLod0 && i==0)
+			{
+				float h = (vH0.y - vH1.y), w = vH0.distance(vH1), d = fabs(h/w), a = asin(d)*180.f/PI_d;
+				ST.bankAvg += a;
+				if (a > ST.bankMax)  ST.bankMax = a;
+				//LogO("RD seg :" + toStr(seg)+ "  h " + fToStr(h,1,3)
+				//	+ "  w " + fToStr(w,1,3)+ "  d " + fToStr(d,1,3)+ "  a " + fToStr(a,1,3) );
+			}
+			
+
+			///  wall ]
+			//------------------------------------------------------------------------------------
+			Real uv = 0.f;  // tc
+			bool onP = mP[seg].onPipe==2;
+
+			if (!DS.onTer)
+			if (i >= 0 && i <= il)  // length +1
+			{
+				++DLM.iLmrgW;
+				Real tcLW = tc * (DS.pipe ? g_tcMulPW : g_tcMulW);
+				for (int w=0; w <= ciwW; ++w)  // width +1
 				{
-					//  road to pipe, wall transition
-					wP.x *= 1.f + 0.5f * trp;  // broader
-					wP.y *= 1.f - 1.f * trp;   // flat
-					if (!onP)
-						wP.y -= 0.02f * trp;  //par move start down
+					int pp = (p1 > 0.f || p2 > 0.f) ? (onP ? 2 : 1) : 0;  //  pipe wall
+					stWiPntW wP = wiPntW[w][pp];
+
+					if (trans)
+					{
+						//  road to pipe, wall transition
+						wP.x *= 1.f + 0.5f * trp;  // broader
+						wP.y *= 1.f - 1.f * trp;   // flat
+						if (!onP)
+							wP.y -= 0.02f * trp;  //par move start down
+					}
+					uv += wP.uv;
+
+					Vector3 vP = vL0 + vw * wP.x + vn * wP.y;
+					Vector3 vN =     vwn * wP.nx + vn * wP.ny;  vN.normalise();
+
+					//>  data Wall
+					DLM.posW.push_back(vP);  DLM.normW.push_back(vN);
+					DLM.tcsW.push_back(0.25f * Vector2(uv, tcLW));  //par
 				}
-				uv += wP.uv;
+			}
+			
+			
+			///  columns |
+			//------------------------------------------------------------------------------------
+			if (!DS.onTer && mP[seg].cols > 0)
+			if (i == il/2)  // middle-
+			{	
+				++DLM.iLmrgC;
+				const Real r = g_ColRadius;  // column radius
 
-				Vector3 vP = vL0 + vw * wP.x + vn * wP.y;
-				Vector3 vN =     vwn * wP.nx + vn * wP.ny;  vN.normalise();
+				for (int h=0; h <= 1; ++h)  // height
+				for (int w=0; w <= iwC; ++w)  // width +1
+				{
+					Real a = Real(w)/iwC *2*PI_d,  //+PI_d/4.f
+						x = r*cosf(a), y = r*sinf(a);
 
-				//>  data Wall
-				DLM.posW.push_back(vP);  DLM.normW.push_back(vN);
-				DLM.tcsW.push_back(0.25f * Vector2(uv, tcLW));  //par
+					Vector3 vlXZ(vl.x, 0.f, vl.z);  Real fl = 1.f/max(0.01f, vlXZ.length());
+					Vector3 vP = vL0 + fl * vl * x + vwn * y;
+					Real yy;
+
+					if (h==0)  // top below road
+					{	yy = vn.y * (onP ? 1.5f : -0.8f);  //par
+						vP.y += yy;
+					}
+					else  // bottom below ground
+					{	yy = (mTerrain ? mTerrain->getHeightAtWorldPosition(vP) : 0.f) - 0.3f;
+						vP.y = yy;
+					}
+
+					Vector3 vN(vP.x-vL0.x, 0.f, vP.z-vL0.z);  vN.normalise();
+
+					//>  data Col
+					DLM.posC.push_back(vP);  DLM.normC.push_back(vN);
+					DLM.tcsC.push_back(Vector2( Real(w)/iwC * 4, vP.y * g_tcMulC ));  //par
+				}
 			}
 		}
-		
-		
-		///  columns |
-		//------------------------------------------------------------------------------------
-		if (!DS.onTer && mP[seg].cols > 0)
-		if (i == il/2)  // middle-
-		{	
-			++DLM.iLmrgC;
-			const Real r = g_ColRadius;  // column radius
-
-			for (int h=0; h <= 1; ++h)  // height
-			for (int w=0; w <= iwC; ++w)  // width +1
-			{
-				Real a = Real(w)/iwC *2*PI_d,  //+PI_d/4.f
-					x = r*cosf(a), y = r*sinf(a);
-
-				Vector3 vlXZ(vl.x, 0.f, vl.z);  Real fl = 1.f/max(0.01f, vlXZ.length());
-				Vector3 vP = vL0 + fl * vl * x + vwn * y;
-				Real yy;
-
-				if (h==0)  // top below road
-				{	yy = vn.y * (onP ? 1.5f : -0.8f);  //par
-					vP.y += yy;
-				}
-				else  // bottom below ground
-				{	yy = (mTerrain ? mTerrain->getHeightAtWorldPosition(vP) : 0.f) - 0.3f;
-					vP.y = yy;
-				}
-
-				Vector3 vN(vP.x-vL0.x, 0.f, vP.z-vL0.z);  vN.normalise();
-
-				//>  data Col
-				DLM.posC.push_back(vP);  DLM.normC.push_back(vN);
-				DLM.tcsC.push_back(Vector2( Real(w)/iwC * 4, vP.y * g_tcMulC ));  //par
-			}
-		}
-/**/}
 		
 		
 		if (i == -1 || i == il)  // add len
@@ -380,7 +383,8 @@ void SplineRoad::BuildSeg(
 	//------------------------------------------------------------------------------------
 	
 
-/**/if (DL.isPace)
+	/// []()  pace
+	if (DL.isPace)
 		return;  // no mesh
 		
 

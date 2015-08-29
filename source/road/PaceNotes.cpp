@@ -48,7 +48,6 @@ return;
 		const SplineRoad::PaceM& cur = road->vPace[i],
 			prv = road->vPace[(i-1+ii)%ii], nxt = road->vPace[(i+1)%ii];
 
-		//Vector3 c1 = cur.pos - prv.pos, c2 = nxt.pos - prv.pos;
 		Vector3 c1 = cur.pos - prv.pos, c2 = nxt.pos - cur.pos;
 		c1.y = 0.f;  c2.y = 0.f;
 		c1.normalise();  c2.normalise();
@@ -58,15 +57,14 @@ return;
 		Real aa = acos(dot);  // road yaw angle
 		//Real aa = asin(cross.length());
 
-		//prv.pos.y = 0.f;  cur.pos.y = 0.f;  nxt.pos.y = 0.f;
-		//Plane p(prv.pos, cur.pos, nxt.pos);
-		//Vector3 n = p.normal;
 		Vector3 n(0,1,0);
 		Real dn = n.dotProduct(cross);
 		if (dn < 0.f)  aa = -aa;
+		if (cur.loop)  aa = 0.f;  // loop zero
 			
-		LogO(fToStr(aa*180.f/PI_d)+" "+fToStr(dn));
+		// LogO(fToStr(aa*180.f/PI_d,1,5));//+" "+fToStr(dn));
 		//LogO(fToStr(aa));
+		if (fabs(aa) < 0.05f)  aa = 0.f;
 			
 		PaceNote o;  // add
 		o.pos = cur.pos;

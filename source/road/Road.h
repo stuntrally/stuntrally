@@ -149,8 +149,9 @@ private:
 		std::vector<int>            v0_iL;  // length steps
 		std::vector<Ogre::Real>     v0_tc;  // tex coords
 		std::vector<Ogre::Vector3>  v0_N;   // normals
+		std::vector<char>         v0_Loop;  // bool, inside loop
 		void Clear()
-		{	v0_iL.clear();  v0_tc.clear();  v0_N.clear();  }
+		{	v0_iL.clear();  v0_tc.clear();  v0_N.clear();  v0_Loop.clear();  }
 	}
 	DL0;  // stays after build since N is used for SetChecks
 	void SetChecks();  // Init  1st in file load, 2nd time for N
@@ -222,6 +223,10 @@ public:  ///  pacenotes prepass data
 	struct PaceM
 	{
 		Ogre::Vector3 pos;
+		int used;  bool loop;
+		PaceM()
+			:used(0), loop(false)
+		{	}
 	};
 	std::vector<PaceM> vPace;
 private:
