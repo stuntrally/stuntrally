@@ -149,7 +149,7 @@ const int ciLodDivs[LODs] = {1,2,4,8};
 
 ///par []()  pacenotes prepass
 const int pace_iDiv = 4, pace_iW = 2;
-const float pace_fLen = 18.f;
+const float pace_fLen = 12.f;
 
 
 void SplineRoad::PrepassLod(

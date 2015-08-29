@@ -95,7 +95,9 @@ return;
 	#if 1
 	///  simple turns  ~ ~ ~
 	const int nn = 7;  // levels
-	const float an[nn] = {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 1.0f};
+	const float angN[nn] = {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.7f, 1.0f}, aNm = 0.5f;
+	const int Radd[nn]	 = {2,    1,    1,    0,    0,    0,    0};
+	const int Rlen[nn]	 = {10,   10,   8,    8,    7,    7,    6};
 	bool dirR = road->iDir > 0;
 
 	//for (int n=2; n >= 0; --n)
@@ -103,15 +105,16 @@ return;
 	for (int i=0; i < ii; ++i)  // all road points
 	{
 		SplineRoad::PaceM& p = road->vPace[i];
-		if (fabs(p.aa) > an[n] && p.used < 0)
+		if (fabs(p.aa) > angN[n]*aNm && p.used < 0)
 		{
-			p.used = n;
+			//p.used = n;
 			
 			//  get neighbors too
 			//  staying in range not below amul of original angle
-			const int ri = ii/2;  // road search range
-			float amul = 0.5f,  //par
-				am = an[n]*amul;
+			const int ri = Rlen[n];  //ii/2;  // road search range
+			//float amul = 0.4f,  //par
+			//	am = angN[n]*aNm * amul;
+			float am = n==0 ? 0.05f: angN[n-1]*aNm * 0.4f;  //par
 			bool dir = dirR ? p.aa > 0.f : p.aa < 0.f;
 			float Adir = dir ? 0.f : 1.f;
 			
@@ -129,7 +132,7 @@ return;
 			while (ok && rr < ri)
 			{
 				SplineRoad::PaceM& pp = road->vPace[(i+r)%ii];
-				ok = /*pp.used < 0 && /**/(
+				ok = pp.used < 0 && /**/(
 					p.aa > 0.f && pp.aa > am ||
 					p.aa < 0.f && pp.aa <-am);
 					
@@ -150,7 +153,7 @@ return;
 			while (ok && rr < ri)
 			{
 				SplineRoad::PaceM& pp = road->vPace[(i+r+ii)%ii];
-				ok = /*pp.used < 0 && /**/(
+				ok = pp.used < 0 && /**/(
 					p.aa > 0.f && pp.aa > am ||
 					p.aa < 0.f && pp.aa <-am);
 					
@@ -170,8 +173,9 @@ return;
 			
 			#if 1  // add turn
 			//if (rsub > 1 || radd > 1)
-			if (rsub + radd > 1)
+			if (rsub + radd > Radd[n])
 			{
+				p.used = n;
 				PaceNote o(pos, signX,signX, 1,1,1,1,  // size, clr
 					Adir, 0.f,  n*u, 0.f);  // dir, uv
 				Create(o);  vPN.push_back(o);
