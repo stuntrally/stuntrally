@@ -27,8 +27,14 @@ using namespace Ogre;
 //  ctor  ---------
 PaceNote::PaceNote()
 	:nd(0), bb(0), pos(0,0,0)
-	,type(P_1), dir(0), vel(0.f)
-	,clr(0,0,0,0), ofs(0,0), uv(0,0)
+	//,type(P_1), dir(0), vel(0.f)
+	,size(4.f,4.f), clr(0,0,0,0), ofs(0,0), uv(0,0)
+{	}
+PaceNote::PaceNote(Vector3 p, float sx,float sy,
+		float r,float g,float b,float a, float ox,float oy, float u,float v)
+	:nd(0), bb(0), pos(p)
+	//,type(P_1), dir(0), vel(0.f)
+	,size(sx,sy), clr(r,g,b,a), ofs(ox,oy), uv(u,v)
 {	}
 
 
@@ -39,43 +45,145 @@ void PaceNotes::Rebuild(SplineRoad* road)
 	Ogre::Timer ti;	
 
 	Destroy();
+
 return;
+
+	const float u=0.125f, signX = 4.f, // size
+		barX=1.f,barY=6.f, barA=0.6f, useX=2.f, useA=0.6f;
 	
-	///  trace road
+	///  trace Road  |||
 	int ii = road->vPace.size();
 	for (int i=0; i < ii; ++i)
 	{
-		const SplineRoad::PaceM& cur = road->vPace[i],
+		SplineRoad::PaceM& cur = road->vPace[i],
 			prv = road->vPace[(i-1+ii)%ii], nxt = road->vPace[(i+1)%ii];
 
+		//  dir xz
 		Vector3 c1 = cur.pos - prv.pos, c2 = nxt.pos - cur.pos;
 		c1.y = 0.f;  c2.y = 0.f;
 		c1.normalise();  c2.normalise();
 
+		//  yaw ang
 		Vector3 cross = c1.crossProduct(c2);
 		Real dot = c1.dotProduct(c2);
 		Real aa = acos(dot);  // road yaw angle
 		//Real aa = asin(cross.length());
 
-		Vector3 n(0,1,0);
-		Real dn = n.dotProduct(cross);
+		//  sign
+		Real dn = Vector3::UNIT_Y.dotProduct(cross);
 		if (dn < 0.f)  aa = -aa;
-		if (cur.loop)  aa = 0.f;  // loop zero
+		
+		//  no loops
+		if (cur.loop)  aa = 0.f;
 			
-		// LogO(fToStr(aa*180.f/PI_d,1,5));//+" "+fToStr(dn));
-		//LogO(fToStr(aa));
-		if (fabs(aa) < 0.05f)  aa = 0.f;
-			
-		PaceNote o;  // add
-		o.pos = cur.pos;
-		o.size = Vector2(1.f, 6.f);
-		o.clr = Vector4(1,1,1,1);
-		o.uv = Vector2(aa < 0.f ? 0.25f : 0.f,  0.5f + fabs(aa)*0.5f);
-		//o.uv = Vector2(i/3 * 0.25f, i%2 * 0.25f);
-		Create(o);  vv.push_back(o);/**/
+		//LogO(fToStr(aa*180.f/PI_d,1,5));//+" "+fToStr(dn));
+		LogO(fToStr(aa));
+
+		//  no straights  //par 0.05
+		if (fabs(aa) < 0.02f)  aa = 0.f;
+		cur.aa = aa;  // save
+
+		#if 1  // add dbg bar |
+		PaceNote o(cur.pos, barX,barY, 1,1,1,barA,  // size,clr
+			aa < 0.f ? 0.f : 1.f, 0.5f,  // dir, width   //par_ 0.3-1.2
+			aa < 0.f ? 7.5f*u : 7.f*u, u + fabs(aa)*0.6f);  // uv
+		Create(o);  vPN.push_back(o);
+		#endif
 	}
 	
+	
+	#if 1
+	///  simple turns  ~ ~ ~
+	const int nn = 7;  // levels
+	const float an[nn] = {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 1.0f};
+	bool dirR = road->iDir > 0;
+
+	//for (int n=2; n >= 0; --n)
+	for (int n=nn-1; n >= 0; --n)  // all levels
+	for (int i=0; i < ii; ++i)  // all road points
+	{
+		SplineRoad::PaceM& p = road->vPace[i];
+		if (fabs(p.aa) > an[n] && p.used < 0)
+		{
+			p.used = n;
+			
+			//  get neighbors too
+			//  staying in range not below amul of original angle
+			const int ri = ii/2;  // road search range
+			float amul = 0.5f,  //par
+				am = an[n]*amul;
+			bool dir = dirR ? p.aa > 0.f : p.aa < 0.f;
+			float Adir = dir ? 0.f : 1.f;
+			
+			#define USED 1
+			Vector3 pos = p.pos;  // main sign pos
+
+			#if USED  // add used
+			PaceNote o(p.pos2, useX,useX, 1,1,1,1,  // size, clr
+				Adir, 0.f,  n*u, 0.f);  // dir, uv
+			Create(o);  vPN.push_back(o);
+			#endif
+
+			int r=1, rr=0, radd=0, rsub=0;
+			bool ok = true;
+			while (ok && rr < ri)
+			{
+				SplineRoad::PaceM& pp = road->vPace[(i+r)%ii];
+				ok = /*pp.used < 0 && /**/(
+					p.aa > 0.f && pp.aa > am ||
+					p.aa < 0.f && pp.aa <-am);
+					
+				if (ok && pp.used < 0)
+				{
+					pp.used = n;  ++radd;
+					if (!dirR)  pos = pp.pos;  // back pos
+
+					#if USED  // add used
+					PaceNote o(pp.pos2, useX,useX, 0.9,0.95,1,useA,  // size, clr
+						Adir, 0.f,  n*u, 0.f);  // dir, uv
+					Create(o);  vPN.push_back(o);
+					#endif
+				}
+				++rr;  ++r;
+			}
+			r=1;  rr=0;  ok = true;
+			while (ok && rr < ri)
+			{
+				SplineRoad::PaceM& pp = road->vPace[(i+r+ii)%ii];
+				ok = /*pp.used < 0 && /**/(
+					p.aa > 0.f && pp.aa > am ||
+					p.aa < 0.f && pp.aa <-am);
+					
+				if (ok && pp.used < 0)
+				{
+					pp.used = n;  ++rsub;
+					if (dirR)  pos = pp.pos;  // back pos
+
+					#if USED  // add used
+					PaceNote o(pp.pos2, useX,useX, 1,0.95,0.9,useA,  // size, clr
+						Adir, 0.f,  n*u, 0.f);  // dir, uv
+					Create(o);  vPN.push_back(o);
+					#endif
+				}
+				++rr;  --r;
+			}
+			
+			#if 1  // add turn
+			//if (rsub > 1 || radd > 1)
+			if (rsub + radd > 1)
+			{
+				PaceNote o(pos, signX,signX, 1,1,1,1,  // size, clr
+					Adir, 0.f,  n*u, 0.f);  // dir, uv
+				Create(o);  vPN.push_back(o);
+			}
+			#endif
+		}
+	}
+	#endif
+	
+	LogO(String("::: Time PaceNotes Rebuild: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 return;
+
 
 	///  trace Track's Ghost
 	TrackGhost gho;
@@ -180,7 +288,7 @@ return;
 					PaceNote n;
 					n.pos = pos;  //fr.brake  fr.steer
 					Create(n);
-					vv.push_back(n);
+					vPN.push_back(n);
 				}
 			}
 			
@@ -227,9 +335,9 @@ void PaceNotes::Destroy(PaceNote& n)
 
 void PaceNotes::Destroy()  // all
 {
-	for (size_t i=0; i < vv.size(); ++i)
-		Destroy(vv[i]);
-	vv.clear();
+	for (size_t i=0; i < vPN.size(); ++i)
+		Destroy(vPN[i]);
+	vPN.clear();
 	ii = 0;
 }
 

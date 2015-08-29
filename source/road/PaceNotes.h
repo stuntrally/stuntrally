@@ -30,10 +30,12 @@ struct PaceNote
 	Ogre::Vector4 clr;
 	Ogre::Vector2 size, ofs,uv;
 
-	PaceTypes type;
-	int dir;  // -1 left, 1 right
-	float vel;  // for jump
+	//PaceTypes type;
+	//int dir;  // -1 left, 1 right
+	//float vel;  // for jump
 	PaceNote();
+	PaceNote(Ogre::Vector3 p, float sx,float sy,
+		float r,float g,float b,float a, float ox,float oy, float u,float v);
 };
 
 
@@ -77,6 +79,6 @@ private:
 	Ogre::Terrain* mTerrain;
 	
 	//  all notes
-	std::vector<PaceNote> vv;
+	std::vector<PaceNote> vPN;
 	int ii;  // id for names
 };

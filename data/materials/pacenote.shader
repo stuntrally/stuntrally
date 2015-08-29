@@ -47,7 +47,10 @@ SH_START_PROGRAM  //  frag  ----
 {
     //float3 eyeVec = normalize(eyeVector);
     
-    float2 uv = UV.xy * 0.25f + par.zw;  // par.xy
+    float2 uv = UV.xy * 0.125f;
+    if (par.x < 0.5f)  uv.x = 0.125f - uv.x;  // dir, mirror
+    if (par.y > 0.f)  uv.x *= par.y;  // width mul
+    uv += par.zw;  // offset
     
     float4 tex = shSample(diffuseMap, uv);
 

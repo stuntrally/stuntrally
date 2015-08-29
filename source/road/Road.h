@@ -222,10 +222,11 @@ private:
 public:  ///  pacenotes prepass data
 	struct PaceM
 	{
-		Ogre::Vector3 pos;
+		Ogre::Vector3 pos, pos2;
+		float aa;
 		int used;  bool loop;
 		PaceM()
-			:used(0), loop(false)
+			:used(-1), loop(false), aa(0.f)
 		{	}
 	};
 	std::vector<PaceM> vPace;

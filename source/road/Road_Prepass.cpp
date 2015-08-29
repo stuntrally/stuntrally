@@ -227,7 +227,7 @@ void SplineRoad::PrepassLod(
 		if (DL.isLod0)
 		{
 			if (mP[seg].loopChk)
-				inLoop = !inLoop;
+				inLoop = !inLoop;  ///[]()
 
 			DL0.v0_iL.push_back(il);
 			DL0.v0_Loop.push_back(inLoop? 1: 0);
