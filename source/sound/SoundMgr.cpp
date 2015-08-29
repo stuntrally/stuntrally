@@ -163,7 +163,7 @@ void SoundMgr::setMasterVolume(float vol)
 //---------------------------------------------------------------------------------------
 SoundTemplate::SoundTemplate(String name1, String filename1)
 	:file_name(filename1), name(name1), free_sound(0)
-	,has_start_sound(false), has_stop_sound(false)
+	,has_start(false), has_stop(false)
 	,unpitchable(false)
 {
 }
@@ -175,16 +175,16 @@ bool SoundTemplate::setParameter(Ogre::StringVector vec)
 	if (vec[0] == "start")
 	{
 		if (vec.size() < 2)  return false;
-		start_sound_name  = vec[1];
-		has_start_sound   = true;
+		start_name  = vec[1];
+		has_start   = true;
 		return true;
 	}
 	else
 	if (vec[0] == "stop")
 	{
 		if (vec.size() < 2)  return false;
-		stop_sound_name  = vec[1];
-		has_stop_sound   = true;
+		stop_name  = vec[1];
+		has_stop   = true;
 		return true;
 	}
 	else
@@ -215,21 +215,21 @@ bool SoundTemplate::setParameter(Ogre::StringVector vec)
 //---------------------------------------------------------------------------------------------------------
 Sound::Sound(int car1, SoundTemplate* tpl, SoundBaseMgr* mgr1, Ogre::String name)
 	:car(car1), templ(tpl), sound_mgr(mgr1)
-	,start_sound(NULL), start_sound_pitchgain(0.0f)
-	,stop_sound(NULL), stop_sound_pitchgain(0.0f)
+	,start_sound(NULL), stop_sound(NULL)
 	,lastgain(1.0f), is2D(false)
 {
 	//  create sounds
-	if (tpl->has_start_sound)
-		start_sound = sound_mgr->createSound(tpl->start_sound_name);
+	if (tpl->has_start)
+		start_sound = sound_mgr->createSound(tpl->start_name);
 	
-	if (tpl->has_stop_sound)
-		stop_sound = sound_mgr->createSound(tpl->stop_sound_name);
+	if (tpl->has_stop)
+		stop_sound = sound_mgr->createSound(tpl->stop_name);
 	
 	for (int i=0; i < tpl->free_sound; i++)
 		sounds[i] = sound_mgr->createSound(tpl->sound_names[i]);
 	
-	setPitch(1.f);
+	if (tpl->free_sound > 0)
+		setPitch(1.f);
 	setGain(0.f);
 
 	//LogO("@  Sound created: "+name+" "+toStr(tpl->free_sound));
@@ -270,7 +270,9 @@ void Sound::setPitch(float value)
 			else
 			if (p < 1.f) {  v = 1.f - (1.f - p)*2.f;  if (v < 0.f)  v = 0.f;  }
 			
-			sounds_pitchgain[i] = v;
+			pitch_gain[i] = v;
+			//if (value < 100)
+			//LogO(fToStr(v));
 			sounds[i]->setGain(v * lastgain);
 			sounds[i]->setPitch(p);
 			//if (value > 100)  LogO(toStr(i)+" "+fToStr(p)+" "+fToStr(v));
@@ -289,7 +291,7 @@ void Sound::setGain(float value)
 
 	for (int i=0; i < templ->free_sound; ++i)
 		if (sounds[i])
-			sounds[i]->setGain(value * sounds_pitchgain[i]);
+			sounds[i]->setGain(value * pitch_gain[i]);
 
 	if (stop_sound)
 		stop_sound->setGain(value);

@@ -221,29 +221,8 @@ void CAR::UpdateSounds(float dt)
 		fCarScreech = gain;
 	}
 	
-	///  listener  ------------------------------------------
-	if (!bRemoteCar)
-	{
-		MATHVECTOR<float,3> campos = pos;
-		QUATERNION<float> camrot;// = rot;
-		using namespace Ogre;
-		if (pCarM && pCarM->fCam)
-		{	//  pos
-			Vector3 cp = pCarM->fCam->camPosFinal;
-			campos[0] = cp.x;  campos[1] =-cp.z;  campos[2] = cp.y;
-			//  rot
-			Quaternion rr = pCarM->fCam->mCamera->getOrientation() * Object::qrFix2;
-			Quaternion b(-rr.w,  -rr.x, -rr.y, -rr.z);
-			//  fix pan
-			b = b * Quaternion(Degree(90.f), Vector3::UNIT_X) * Quaternion(Degree(-90.f), Vector3::UNIT_Z);
-			camrot[0] = b.x;  camrot[1] = b.y;  camrot[2] = b.z;  camrot[3] = b.w;
-		}
-		//if (pApp->pGame->sound.Enabled())
-		//	pApp->pGame->sound.SetListener(campos, camrot, MATHVECTOR<float,3>(),
-		//		pApp->mSplitMgr->mNumViewports == 1);  // 3D for 1 player
-	}
 
-	//  engine
+	///  engine  ====
 	Vector3 ep, ev = Vector3::ZERO;
 	ep = Axes::toOgre(engPos);
 	{
@@ -255,7 +234,6 @@ void CAR::UpdateSounds(float dt)
 			gain = throttle;
 		}else
 		{	//  car
-			//float pitch = rpm / info.naturalrpm;
 			gain = throttle * 0.5 + 0.5;
 			engine->setPitch(rpm);
 		}
@@ -292,14 +270,13 @@ void CAR::UpdateSounds(float dt)
 		pitch = 1.0 - pitch;
 		pitch *= pitchvar;
 		pitch = pitch + (1.f - pitchvar);
-		//pitch = std::min(4.f, std::max(0.1f, pitch ));
-		//pitch = std::min(2.f, std::max(0.5f, pitch ));
 		pitch = std::min(4.f, std::max(0.25f, pitch ));
 
 		Vector3 wh;  wh = Axes::toOgre(whPos[i]);
 		(*snd)[i]->setPosition(wh, ev);
 		(*snd)[i]->setGain(squeal[i]*maxgain * pSet->vol_tires);
 		(*snd)[i]->setPitch(pitch * pmul);
+		//todo: setGain(0.f) on others..
 
 
 		//  susp bump
@@ -317,7 +294,7 @@ void CAR::UpdateSounds(float dt)
 
 				if (gain > 0 && !tirebump[i]->isAudible())
 				{
-					tirebump[i]->setGain(gain * pSet->vol_susp);
+			tirebump[i]->setGain(gain * pSet->vol_susp);
 					tirebump[i]->setPosition(wh, ev);
 					tirebump[i]->start();
 				}

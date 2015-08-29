@@ -45,7 +45,7 @@ void LoadDefaultSet(SETTINGS* settings, string setFile)
 
 	//  redirect cerr
 	streambuf* oldCout = cout.rdbuf(), *oldCerr = cerr.rdbuf();
-	#if 0
+	#if 0  //par
 	string po = PATHMANAGER::UserConfigDir() + "/ogre.out";
 	ofstream out(po.c_str());  cout.rdbuf(out.rdbuf());
 	#endif

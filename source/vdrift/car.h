@@ -6,7 +6,6 @@
 #include "cardefs.h"
 #include "suspensionbump.h"
 #include "crashdetection.h"
-#include "enginesoundinfo.h"
 
 class BEZIER;
 namespace protocol {  struct CarStatePackage;  }

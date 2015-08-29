@@ -1,10 +1,8 @@
 #pragma once
 
 
-enum {
-	MAX_SOUNDS_PER_SCRIPT = 8,  // per 1 template
-	MAX_INSTANCES_PER_GROUP = 256
-};
+const int MAX_SOUNDS_PER_SCRIPT = 8;  // per 1 template
+
 namespace Ogre  {  class FileStreamDataStream;  }
 class SoundBase;  class SoundBaseMgr;
 
@@ -21,19 +19,15 @@ public:
 private:
 	bool setParameter(Ogre::StringVector vec);
 
-	Ogre::String name;
-	Ogre::String file_name;
+	Ogre::String name, file_name;
 
-	//bool  base_template;
-	bool  has_start_sound, has_stop_sound;
+	bool  has_start, has_stop;
 	bool  unpitchable;
 
 	Ogre::String sound_names[MAX_SOUNDS_PER_SCRIPT];
 	float        sound_pitches[MAX_SOUNDS_PER_SCRIPT];
-	Ogre::String start_sound_name;
-	Ogre::String stop_sound_name;
+	Ogre::String start_name, stop_name;
 
-	int   trigger_source;
 	int   free_sound;
 };
 
@@ -67,9 +61,7 @@ private:
 	SoundBase* start_sound, *stop_sound;
 	SoundBase* sounds[MAX_SOUNDS_PER_SCRIPT];
 
-	float start_sound_pitchgain;
-	float stop_sound_pitchgain;
-	float sounds_pitchgain[MAX_SOUNDS_PER_SCRIPT];
+	float pitch_gain[MAX_SOUNDS_PER_SCRIPT];
 	float lastgain;
 
 	int car;  //  number of the car this is for
