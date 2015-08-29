@@ -27,7 +27,7 @@ SH_START_PROGRAM  //  vert  ----
 
 	float dist = shOutputPosition.w;
 	//fade = shSaturate((dist+0.5f)*0.1f) * shSaturate(1.f - pow(dist,1.5f)*0.002f);
-	fade = shSaturate( (dist-5.f)*0.1f );
+	fade = shSaturate( (dist-5.f)*0.02f );  // par
 }
 
 

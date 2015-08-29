@@ -48,8 +48,15 @@ void PaceNotes::Rebuild(SplineRoad* road)
 
 return;
 
-	const float u=0.125f, signX = 4.f, // size
-		barX=1.f,barY=6.f, barA=0.6f, useX=2.f, useA=0.6f;
+	const float u=0.125f,
+		barX=1.f,barY=6.f, barA=0.6f, useX=2.f, useA=0.6f,
+	#ifdef SR_EDITOR
+	#define USED
+	#define BARS
+	signX = 4.f;  // ed
+	#else
+	signX = 2.f;  // game
+	#endif
 	
 	///  trace Road  |||
 	int ii = road->vPace.size();
@@ -80,10 +87,10 @@ return;
 		LogO(fToStr(aa));
 
 		//  no straights  //par 0.05
-		if (fabs(aa) < 0.02f)  aa = 0.f;
+		if (fabs(aa) < 0.01f)  aa = 0.f;
 		cur.aa = aa;  // save
 
-		#if 1  // add dbg bar |
+		#ifdef BARS  // add dbg bar |
 		PaceNote o(cur.pos, barX,barY, 1,1,1,barA,  // size,clr
 			aa < 0.f ? 0.f : 1.f, 0.5f,  // dir, width   //par_ 0.3-1.2
 			aa < 0.f ? 7.5f*u : 7.f*u, u + fabs(aa)*0.6f);  // uv
@@ -94,11 +101,11 @@ return;
 	
 	#if 1
 	///  simple turns  ~ ~ ~
-	const int nn = 7;  // levels
-	const float angN[nn] = {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.7f, 1.0f}, aNm = 0.5f;
-	const int Radd[nn]	 = {2,    1,    1,    0,    0,    0,    0};
-	const int Rlen[nn]	 = {10,   10,   8,    8,    7,    7,    6};
-	bool dirR = road->iDir > 0;
+	const int nn = 7;  // levels								//par turn sharpness
+	const float angN[nn] = {0.06f, 0.2f, 0.3f, 0.4f, 0.5f, 0.7f, 1.0f}, aNm = 0.7f;
+	const int Radd[nn]	 = {2,    1,    1,    0,    0,    0,    0};  // needed for sign
+	const int Rlen[nn]	 = {10,   10,   8,    8,    7,    7,    6};  // road search range
+	bool dirR = road->iDir > 0, loop1 = false;
 
 	//for (int n=2; n >= 0; --n)
 	for (int n=nn-1; n >= 0; --n)  // all levels
@@ -111,17 +118,16 @@ return;
 			
 			//  get neighbors too
 			//  staying in range not below amul of original angle
-			const int ri = Rlen[n];  //ii/2;  // road search range
+			const int ri = Rlen[n];
 			//float amul = 0.4f,  //par
 			//	am = angN[n]*aNm * amul;
-			float am = n==0 ? 0.05f: angN[n-1]*aNm * 0.4f;  //par
+			float am = n==0 ? 0.05f: angN[n-1]*aNm * 0.4f;  //par sustain
 			bool dir = dirR ? p.aa > 0.f : p.aa < 0.f;
 			float Adir = dir ? 0.f : 1.f;
 			
-			#define USED 1
 			Vector3 pos = p.pos;  // main sign pos
 
-			#if USED  // add used
+			#ifdef USED  // add used
 			PaceNote o(p.pos2, useX,useX, 1,1,1,1,  // size, clr
 				Adir, 0.f,  n*u, 0.f);  // dir, uv
 			Create(o);  vPN.push_back(o);
@@ -141,7 +147,7 @@ return;
 					pp.used = n;  ++radd;
 					if (!dirR)  pos = pp.pos;  // back pos
 
-					#if USED  // add used
+					#ifdef USED  // add used
 					PaceNote o(pp.pos2, useX,useX, 0.9,0.95,1,useA,  // size, clr
 						Adir, 0.f,  n*u, 0.f);  // dir, uv
 					Create(o);  vPN.push_back(o);
@@ -162,7 +168,7 @@ return;
 					pp.used = n;  ++rsub;
 					if (dirR)  pos = pp.pos;  // back pos
 
-					#if USED  // add used
+					#ifdef USED  // add used
 					PaceNote o(pp.pos2, useX,useX, 1,0.95,0.9,useA,  // size, clr
 						Adir, 0.f,  n*u, 0.f);  // dir, uv
 					Create(o);  vPN.push_back(o);
@@ -181,6 +187,18 @@ return;
 				Create(o);  vPN.push_back(o);
 			}
 			#endif
+		}
+		//  loop signs
+		if (n==0)
+		{
+			bool lp = dirR ? p.loop && !loop1 :
+							!p.loop && loop1;
+			if (lp)
+			{	PaceNote o(p.pos, signX,signX, 1,1,1,1,  // size, clr
+					0.f/**/, 0.f,  0.f*u, u);  // dir, uv
+				Create(o);  vPN.push_back(o);
+			}
+			loop1 = p.loop;		
 		}
 	}
 	#endif
@@ -337,12 +355,28 @@ void PaceNotes::Destroy(PaceNote& n)
 	mSceneMgr->destroySceneNode(n.nd);  n.nd = 0;
 }
 
-void PaceNotes::Destroy()  // all
+//  all
+void PaceNotes::Destroy()
 {
 	for (size_t i=0; i < vPN.size(); ++i)
 		Destroy(vPN[i]);
 	vPN.clear();
 	ii = 0;
+}
+
+
+//  update visibility
+void PaceNotes::UpdVis()
+{					//par, fade in?
+	const Real dd = 200.f, dd2 = dd*dd;
+	const Vector3& c = mCamera->getPosition();
+	for (size_t i=0; i < vPN.size(); ++i)
+	{
+		const Vector3& p = vPN[i].pos;
+		Real dist = c.squaredDistance(p);
+		bool vis = dist < dd2;
+		vPN[i].nd->setVisible(vis);
+	}
 }
 
 

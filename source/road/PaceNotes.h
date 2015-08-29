@@ -54,6 +54,7 @@ public:
 	//  Rebuild
 	void Rebuild(SplineRoad* road), Create(PaceNote& n);
 	void Destroy(), Destroy(PaceNote& n);
+	void UpdVis();
 
 
 	//  Update

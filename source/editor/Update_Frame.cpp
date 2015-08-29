@@ -374,6 +374,12 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	}/**/
 	
 	
+	//  pace vis
+	#if 1
+	if (scn->pace)
+		scn->pace->UpdVis();
+	#endif
+	
 	//  upd terrain generator preview
 	if (bUpdTerPrv)
 	{	bUpdTerPrv = false;

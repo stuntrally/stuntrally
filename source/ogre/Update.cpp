@@ -11,6 +11,7 @@
 #include "common/data/FluidsXml.h"
 #include "FollowCamera.h"
 #include "../road/Road.h"
+#include "../road/PaceNotes.h"
 #include "../vdrift/game.h"
 #include "../vdrift/quickprof.h"
 #include "../paged-geom/PagedGeometry.h"
@@ -414,6 +415,11 @@ bool App::frameStart(Real time)
 			}
 			//PROFILER.endBlock("g.road");
 		}
+
+		//[]()  pace upd vis
+		if (scn->pace)
+			scn->pace->UpdVis();
+		
 
 		//**  bullet bebug draw
 		if (dbgdraw)  {							// DBG_DrawWireframe
