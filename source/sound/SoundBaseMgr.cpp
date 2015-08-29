@@ -36,7 +36,6 @@ SoundBaseMgr::SoundBaseMgr()
 
 	//  open device
 	String sdevice = "";  //par
-
 	if (sdevice == "")
 		device = alcOpenDevice(NULL);
 	else
@@ -172,6 +171,7 @@ SoundBaseMgr::SoundBaseMgr()
 //  Create  --
 void SoundBaseMgr::CreateSources()
 {
+	if (!device)  return;
 	LogO("@ @  Creating hw sources.");
 	int i;
 	for (i = 0; i < HW_SRC; ++i)
@@ -195,6 +195,7 @@ void SoundBaseMgr::CreateSources()
 //  Destroy  --
 void SoundBaseMgr::DestroySources()
 {
+	if (!device)  return;
 	//if (hw_sources_num <= HW_SRC_HUD)  return;
 	
 	/*for (int i = 0; i < sources.size(); ++i)
@@ -222,21 +223,33 @@ void SoundBaseMgr::DestroySources()
 //  Destroy
 SoundBaseMgr::~SoundBaseMgr()
 {
+	//todo: leaks..
 	//for (int i=0; i < buffers_in_use; ++i)
 	//	if (sources[i] && sources[i]->hw_id != -1)
 	//		delete sources[i];
+	if (device)
+	{
+		alDeleteAuxiliaryEffectSlots(1, &slot);
+		alDeleteEffects(1, &effect);
 
-	alDeleteAuxiliaryEffectSlots(1, &slot);
-	alDeleteEffects(1, &effect);
+		//  delete sources and buffers
+		//DestroySources();  //..
+		//alDeleteSources(MAX_HW_SOURCES, hw_sources);
+		int i;
+		//for (i = HW_SRC; i < HW_SRC + HW_SRC_HUD; ++i)
+		for (i = 0; i < HW_SRC_ALL; ++i)
+		{
+			alDeleteSources(1, &hw_sources[i]);
+		}
+		alDeleteBuffers(MAX_BUFFERS, &buffers[0]);
+	}
 
-	// delete the sources and buffers
-	//alDeleteSources(MAX_HW_SOURCES, hw_sources);
-	alDeleteBuffers(MAX_BUFFERS, &buffers[0]);
-
-	// destroy the sound context and device
+	//  context and device
 	ALCcontext* context = alcGetCurrentContext();
-	if(context == NULL)
+	if (context == NULL)
+	{	LogO("@ @  SoundManager was disabled.");
 		return;
+	}
 	ALCdevice* device = alcGetContextsDevice(context);
 	alcMakeContextCurrent(NULL);
 	alcDestroyContext(context);

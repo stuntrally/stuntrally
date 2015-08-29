@@ -15,6 +15,7 @@
 #include "../ogre/FollowCamera.h"  //+ camera pos
 #include "../ogre/common/GraphView.h"
 #include "../network/protocol.hpp"
+#include "../sound/SoundMgr.h"
 #include "tobullet.h"
 #include "game.h"  //sound
 
@@ -163,7 +164,8 @@ bool CAR::Load(class App* pApp1,
 	}
 
 	//  load sounds
-	LoadSounds(carpath);
+	if (!pGame->snd->isDisabled())
+		LoadSounds(carpath);
 
 	//mz_nominalmax = (GetTireMaxMz(FRONT_LEFT) + GetTireMaxMz(FRONT_RIGHT))*0.5;  //!! ff
 
@@ -175,8 +177,9 @@ bool CAR::Load(class App* pApp1,
 void CAR::Update(double dt)
 {
 	dynamics.Update();
-	UpdateSounds(dt);
-
+	
+	UpdateSounds(dt);  // and damage
+	
 	///  graphs new values  .-_/\_.-
 	if (pApp->pSet->show_graphs && id == 0)  // for 1st car
 		GraphsNewVals(dt);  // implementation in Hud_Graphs.cpp

@@ -96,6 +96,10 @@ bool CAR::DestroySounds()
 //--------------------------------------------------------------------------------------------------------------------------
 void CAR::UpdateSounds(float dt)
 {
+	//  get data  //
+	//  note: Damage is updated here
+	bool bSound = !pGame->snd->isDisabled();
+	
 	float rpm, throttle, speed, dynVel;  bool hitp = false;
 	MATHVECTOR<float,3> pos, engPos, whPos[MAX_WHEELS], hitPos;  // car, engine, wheels pos
 	QUATERNION<float> rot;
@@ -107,7 +111,7 @@ void CAR::UpdateSounds(float dt)
 	bool dmg = pSet->game.damage_type > 0, reduced = pSet->game.damage_type==1;
 	bool terminal = dynamics.fDamage >= 100.f;
 	float fDmg = pApp->scn->sc->damageMul;
-	
+
 	///  replay play  ------------------------------------------
 	if (pApp->bRplPlay)
 	{	dmg = false;
@@ -222,25 +226,29 @@ void CAR::UpdateSounds(float dt)
 		fCarScreech = gain;
 	}
 	
-
-	///  engine  ====
+	//  engine pos  //todo: vel..
 	Vector3 ep, ev = Vector3::ZERO;
 	ep = Axes::toOgre(engPos);
+
+
+//))  update sounds
+if (bSound)
+{	/**/	
+
+	///  engine  ====
+	float gain = 1.f;
+
+	if (dynamics.vtype >= V_Spaceship)
 	{
-		float gain = 1.f;
-	
-		if (dynamics.vtype >= V_Spaceship)
-		{
-			engine->setPitch(1.f);
-			gain = throttle;
-		}else
-		{	//  car
-			gain = throttle * 0.5 + 0.5;
-			engine->setPitch(rpm);
-		}
-		engine->setPosition(ep, ev);
-		engine->setGain(gain * dynamics.engine_vol_mul * pSet->vol_engine);
+		engine->setPitch(1.f);
+		gain = throttle;
+	}else
+	{	//  car
+		gain = throttle * 0.5 + 0.5;
+		engine->setPitch(rpm);
 	}
+	engine->setPosition(ep, ev);
+	engine->setGain(gain * dynamics.engine_vol_mul * pSet->vol_engine);
 
 
 	///  tires  oooo
@@ -312,17 +320,15 @@ void CAR::UpdateSounds(float dt)
 	
 
 	//  wind  ----
-	{
-		float gain = dynVel;
-		if (dynamics.vtype == V_Spaceship)   gain *= 0.7f;
-		//if (dynamics.sphere)  gain *= 0.9f;
-		if (gain < 0.f)	gain = -gain;
-		gain *= 0.02f;	gain *= gain;
-		if (gain > 1.f)	gain = 1.f;
-		
-		wind->setGain(gain * pSet->vol_env);
-		wind->setPosition(ep, ev);
-	}
+	gain = dynVel;
+	if (dynamics.vtype == V_Spaceship)   gain *= 0.7f;
+	//if (dynamics.sphere)  gain *= 0.9f;
+	if (gain < 0.f)	gain = -gain;
+	gain *= 0.02f;	gain *= gain;
+	if (gain > 1.f)	gain = 1.f;
+	
+	wind->setGain(gain * pSet->vol_env);
+	wind->setPosition(ep, ev);
 
 	//  boost
 	boostsnd->setGain(boostVal * 0.55f * pSet->vol_engine);
@@ -370,7 +376,9 @@ void CAR::UpdateSounds(float dt)
 	water_cont->setGain(std::min(1.f, velW * 1.5f) * pSet->vol_fl_cont);
 	water_cont->setPitch(std::max(0.7f, std::min(1.3f, velW)));
 	water_cont->setPosition(ep, ev);
-
+}
+//))  sounds
+	
 	
 	//  crash  ----
 	Vector3 hp;  hp = Axes::toOgre(hitPos);
@@ -390,12 +398,15 @@ void CAR::UpdateSounds(float dt)
 
 			if (/*gain > mingain &&*/ crashsoundtime[i] > /*ti*/0.4f)  //!crashsound.isAudible())
 			{
-				crashsound[i]->setGain(gain * pSet->vol_car_crash);
-				if (hitp)
-				crashsound[i]->setPosition(hp, ev);
-				crashsound[i]->start();
+				if (bSound)
+				{
+					crashsound[i]->setGain(gain * pSet->vol_car_crash);
+					if (hitp)
+					crashsound[i]->setPosition(hp, ev);
+					crashsound[i]->start();
+				}
 				crashsoundtime[i] = 0.f;
-
+				
 				/// <><> Damage <><> 
 				if (dmg && !terminal)
 					if (reduced)
@@ -416,6 +427,7 @@ void CAR::UpdateSounds(float dt)
 	
 
 	//  crash scrap and screech
+	if (bSound)
 	{
 		crashscrap->setGain(fCarScrap * pSet->vol_car_scrap);
 		if (hitp)

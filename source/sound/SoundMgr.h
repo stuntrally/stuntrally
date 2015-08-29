@@ -1,10 +1,9 @@
 #pragma once
 
-
-const int MAX_SOUNDS_PER_SCRIPT = 8;  // per 1 template
-
 namespace Ogre  {  class FileStreamDataStream;  }
 class SoundBase;  class SoundBaseMgr;
+
+const int MAX_SOUNDS_PER_SCRIPT = 8;  // per 1 template
 
 
 //---------------------------------------------------------------------------------------
@@ -79,12 +78,12 @@ public:
 
 	Sound* createInstance(Ogre::String templatename, int car);
 
-
 	//  functions
 	void setPaused(bool mute);
 	void setMasterVolume(float vol);
 
 	void setCamera(Ogre::Vector3 position, Ogre::Vector3 direction, Ogre::Vector3 up, Ogre::Vector3 velocity);
+	bool isDisabled() {  return disabled;  }
 
 	SoundBaseMgr* sound_mgr;
 

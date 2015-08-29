@@ -305,6 +305,7 @@ bool GAME::InitializeSound()
 
 	
 	//  load hud sounds
+	//  even if disabled, no null check
 	snd_chk = snd->createInstance("hud/chk",  0);
 	snd_chkwr = snd->createInstance("hud/chkwrong",  0);
 	snd_lap = snd->createInstance("hud/lap",  0);
@@ -320,8 +321,13 @@ bool GAME::InitializeSound()
 	UpdHudSndVol();
 
 
-	LogO("@  Sound init ok.");
 	LogO("::: Time Sounds: "+ fToStr(ti.getMilliseconds(),0,3) +" ms");
+	if (snd->sound_mgr->isDisabled())
+	{
+		LogO("@  Sound init - Disabled.");
+		return false;
+	}
+	LogO("@  Sound init ok.");
 	return true;
 }
 
