@@ -184,7 +184,7 @@ public:
 	std::vector<Sound*> tiresqueal, grasssound, gravelsound, tirebump;  // tires
 	
 	std::vector<Sound*> crashsound;
-	std::vector<float> crashsoundtime;
+	std::vector<float> crashsoundtime, bumpsoundtime, bumpsoundvol;
 	
 	Sound* wind, *boostsnd, *crashscrap,*crashscreech;  // cont.
 	Sound* mudsnd, *mud_cont,*water_cont;  // fluids

@@ -42,7 +42,8 @@ bool CAR::LoadSounds(const std::string & carpath)
 		grasssound[i] = snd->createInstance("grass", 0);		grasssound[i]->set2D(s);
 		gravelsound[i]= snd->createInstance("gravel", 0);
 		gravelsound[i]->seek(float(i)/fw);  gravelsound[i]->set2D(s);
-		tirebump[i] =   snd->createInstance(i >= 2 ? "bump_rear" : "bump_front", 0);  tirebump[i]->set2D(s);
+		tirebump[i] = snd->createInstance("bump"+toStr(i%4), 0);  tirebump[i]->set2D(s);
+		tirebump[i]->seek(float(i)/fw);
 	}
 
 	for (i = 0; i < Ncrashsounds; ++i)  // crashes
@@ -242,7 +243,7 @@ void CAR::UpdateSounds(float dt)
 	}
 
 
-	///  tires
+	///  tires  oooo
 	for (int i = 0; i < numWheels; ++i)
 	{
 		//  make sure we don't get overlap
@@ -279,31 +280,38 @@ void CAR::UpdateSounds(float dt)
 		//todo: setGain(0.f) on others..
 
 
-		//  susp bump
+		//  susp bump  ~~~
 		if (dynamics.vtype == V_Car)
 		{
 			suspbump[i].Update(suspVel[i], suspDisp[i], dt);
 			if (suspbump[i].JustSettled())
 			{
 				float bumpsize = suspbump[i].GetTotalBumpSize();
+				float gain = bumpsize * speed * 0.2f;  //par
+				gain = std::max(0.f, std::min(1.2f, gain));
 
-				const float breakevenms = 5.0;
-				float gain = bumpsize * speed / breakevenms;
-				if (gain > 1)	gain = 1;
-				if (gain < 0)	gain = 0;
-
-				if (gain > 0 && !tirebump[i]->isAudible())
+				if (gain > 0.2f //&& !tirebump[i]->isAudible()
+					//&& bumpsoundtime[i] > 0.22f)  //par len
+					&& (gain > bumpsoundvol[i] || bumpsoundtime[i] > 0.22f))
 				{
-			tirebump[i]->setGain(gain * pSet->vol_susp);
-					tirebump[i]->setPosition(wh, ev);
-					tirebump[i]->start();
+					bumpsoundvol[i] = gain;
+					bumpsoundtime[i] = 0.f;
+					//tirebump[i]->start();
+					//LogO("bump "+toStr(i)+" "+fToStr(gain));
 				}
 			}
+			tirebump[i]->setPosition(wh, ev);  //par gain, time fade
+			float gain = 0.5f + 0.7f*bumpsoundvol[i] - bumpsoundtime[i]*(2.f+2.f*bumpsoundvol[i]);
+			gain = std::max(0.f, std::min(1.0f, gain));
+
+			tirebump[i]->setGain(gain * pSet->vol_susp);
+			if (bumpsoundtime[i] < 5.f)
+				bumpsoundtime[i] += dt;
 		}
 	}
 	
 
-	//  wind
+	//  wind  ----
 	{
 		float gain = dynVel;
 		if (dynamics.vtype == V_Spaceship)   gain *= 0.7f;
@@ -311,12 +319,17 @@ void CAR::UpdateSounds(float dt)
 		if (gain < 0.f)	gain = -gain;
 		gain *= 0.02f;	gain *= gain;
 		if (gain > 1.f)	gain = 1.f;
+		
 		wind->setGain(gain * pSet->vol_env);
 		wind->setPosition(ep, ev);
 	}
 
+	//  boost
+	boostsnd->setGain(boostVal * 0.55f * pSet->vol_engine);
+	boostsnd->setPosition(ep, ev);  //back?-
 
-	//  fluids - hit
+
+	//  fluids - hit  ~~~~
 	bool fluidHit = whH_all > 1.f;
 	//LogO(toStr(whH_all) + "  v "+ toStr(dynVel));
 
@@ -359,11 +372,7 @@ void CAR::UpdateSounds(float dt)
 	water_cont->setPosition(ep, ev);
 
 	
-	//  boost
-	boostsnd->setGain(boostVal * 0.55f * pSet->vol_engine);
-	boostsnd->setPosition(ep, ev);  //back?-
-	
-	//  crash
+	//  crash  ----
 	Vector3 hp;  hp = Axes::toOgre(hitPos);
 	{
 		crashdetection2.Update(-fHitForce, dt);
@@ -379,7 +388,7 @@ void CAR::UpdateSounds(float dt)
 			int i = std::max(1, std::min(Ncrashsounds-1, f));
 			//LogO("crash: "+toStr(i));
 
-			if (/*gain > mingain &&*/ crashsoundtime[i] > /*ti*/0.4f)  //!crashsound.Audible())
+			if (/*gain > mingain &&*/ crashsoundtime[i] > /*ti*/0.4f)  //!crashsound.isAudible())
 			{
 				crashsound[i]->setGain(gain * pSet->vol_car_crash);
 				if (hitp)
