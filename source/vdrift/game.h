@@ -58,9 +58,6 @@ public:
 		const MATHVECTOR<float,3>& start_pos, const QUATERNION<float>& start_rot,
 		bool islocal, bool isRemote/*=false*/, int idCar);
 
-	enum OPTION_ACTION	{	SAVE, LOAD	};
-	void LoadSaveOptions(OPTION_ACTION action, std::map<std::string, std::string>& options);
-
 	void ProcessNewSettings();
 	void UpdateForceFeedback(float dt);
 	float GetSteerRange() const;

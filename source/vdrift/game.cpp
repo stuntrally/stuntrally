@@ -64,9 +64,7 @@ void GAME::Start(list <string> & args)
 
 	InitializeSound(); //if sound initialization fails, that's okay, it'll disable itself
 
-	//initialize GUI
-	map<string, string> optionmap;
-	LoadSaveOptions(LOAD, optionmap);
+	//ProcessNewSettings();
 
 	//initialize force feedback
 	#ifdef ENABLE_FORCE_FEEDBACK
@@ -645,37 +643,6 @@ bool GAME::LoadTrack(const string & trackname)
 bool SortStringPairBySecond (const pair<string,string> & first, const pair<string,string> & second)
 {
 	return first.second < second.second;
-}
-
-void GAME::LoadSaveOptions(OPTION_ACTION action, map<string, string> & options)
-{
-	if (action == LOAD) //load from the settings class to the options map
-	{
-		CONFIGFILE tempconfig;
-		settings->Serialize(true, tempconfig);
-		list <string> paramlistoutput;
-		tempconfig.GetParamList(paramlistoutput);
-		for (list <string>::iterator i = paramlistoutput.begin(); i != paramlistoutput.end(); ++i)
-		{
-			string val;
-			tempconfig.GetParam(*i, val);
-			options[*i] = val;
-			//cout << "LOAD - PARAM: " << *i << " = " << val << endl;
-		}
-	}
-	else //save from the options map to the settings class
-	{
-		CONFIGFILE tempconfig;
-		for (map<string, string>::iterator i = options.begin(); i != options.end(); ++i)
-		{
-			tempconfig.SetParam(i->first, i->second);
-			//cout << "SAVE - PARAM: " << i->first << " = " << i->second << endl;
-		}
-		settings->Serialize(false, tempconfig);
-
-		//account for new settings
-		ProcessNewSettings();
-	}
 }
 
 //  update the game with any new setting changes that have just been made
