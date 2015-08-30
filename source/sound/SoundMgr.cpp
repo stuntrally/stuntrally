@@ -68,10 +68,10 @@ Sound* SoundMgr::createInstance(Ogre::String name, int car)
 	inst->set2D(ss=="hud/");  // set 2d
 
 	//  start looped
-	inst->setGain(0.f);
 	if (!inst->start_sound)
+	{	inst->setGain(0.f);
 		inst->start();
-
+	}
 	return inst;
 }
 
@@ -216,19 +216,19 @@ bool SoundTemplate::setParameter(Ogre::StringVector vec)
 Sound::Sound(int car1, SoundTemplate* tpl, SoundBaseMgr* mgr1, Ogre::String name)
 	:car(car1), templ(tpl), sound_mgr(mgr1)
 	,start_sound(NULL), stop_sound(NULL)
-	,lastgain(1.0f), is2D(false)
+	,lastgain(1.0f), is2D(false), engine(false)
 {
 	//  create sounds
 	if (tpl->has_start)
-		start_sound = sound_mgr->createSound(tpl->start_name);
+		start_sound = sound_mgr->createSound(tpl->start_name, templ->name);
 	
 	if (tpl->has_stop)
-		stop_sound = sound_mgr->createSound(tpl->stop_name);
+		stop_sound = sound_mgr->createSound(tpl->stop_name, templ->name);
 	
 	for (int i=0; i < tpl->free_sound; i++)
-		sounds[i] = sound_mgr->createSound(tpl->sound_names[i]);
+		sounds[i] = sound_mgr->createSound(tpl->sound_names[i], templ->name);
 	
-	if (tpl->free_sound > 0)
+	//if (tpl->free_sound > 0)
 		setPitch(1.f);
 	setGain(0.f);
 
@@ -251,11 +251,7 @@ Sound::~Sound()
 void Sound::setPitch(float value)
 {
 	//if (start_sound)  // only pitch looped
-	//if (stop_sound)
-
 	if (templ->free_sound == 0)  return;
-
-	//if (value > 100)  LogO(" "+fToStr(value));
 
 	for (int i=0; i < templ->free_sound; ++i)
 		if (sounds[i])
@@ -270,9 +266,8 @@ void Sound::setPitch(float value)
 			else
 			if (p < 1.f) {  v = 1.f - (1.f - p)*2.f;  if (v < 0.f)  v = 0.f;  }
 			
+			if (engine && v < 0.001f)  v = 0.001f;  // engine always on
 			pitch_gain[i] = v;
-			//if (value < 100)
-			//LogO(fToStr(v));
 			sounds[i]->setGain(v * lastgain);
 			sounds[i]->setPitch(p);
 			//if (value > 100)  LogO(toStr(i)+" "+fToStr(p)+" "+fToStr(v));
@@ -298,6 +293,9 @@ void Sound::setGain(float value)
 
 	lastgain = value;
 }
+
+void Sound::setEngine(bool b)
+{	engine = b;  }
 
 void Sound::set2D(bool b)
 {

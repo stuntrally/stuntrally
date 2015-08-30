@@ -413,13 +413,13 @@ void App::newPoses(float time)  // time only for camera update
 				carM->fCam->update(time, pi, &carPoses[qn][c], &pGame->collision, !bRplPlay && pSet->cam_bounce);
 			iCurPoses[c] = qn;  // atomic, set new index in queue
 			
-			///))  upd sound pos  ....
+			///))  upd sound camera
 			if (c == 0 && pGame->snd)
 			{
 				Vector3 x,y,z;
 				carPoses[qn][c].camRot.ToAxes(x,y,z);
 				pGame->snd->setCamera(carPoses[qn][c].camPos, -z, y, Vector3::ZERO);
-			}/**/
+			}
 		}
 	}
 	PROFILER.endBlock(".newPos ");
@@ -489,13 +489,6 @@ void App::updatePoses(float time)
 		PosInfo& pi = carPoses[q][c], &pic = carPoses[qq][cc];
 		carM->Update(carPoses[q][c], carPoses[qq][cc], time);
 		
-		///))  upd sound pos  ....
-		/*if (c == 0 && pGame->snd)
-		{
-			Vector3 x,y,z;
-			pic.camRot.ToAxes(x,y,z);
-			pGame->snd->setCamera(pic.camPos, -z, y, Vector3::ZERO);
-		}/**/
 
 		//  nick text pos upd
 		if (carM->pNickTxt && carM->pMainNode)

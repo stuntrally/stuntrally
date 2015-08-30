@@ -63,6 +63,8 @@ void CAR::SetNumWheels(int n)
 	suspbump.resize(n);
 	tiresqueal.resize(n);  grasssound.resize(n);  gravelsound.resize(n);  tirebump.resize(n);
 	curpatch.resize(n);  bumpsoundtime.resize(n);  bumpsoundvol.resize(n);
+	for (int i=0; i < n; ++i)
+	{	bumpsoundvol[i]=0.f;  bumpsoundtime[i] = 5.f;  }
 }
 
 ///  dtor

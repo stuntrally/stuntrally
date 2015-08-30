@@ -13,6 +13,7 @@ class SoundBase
 
 public:
 	SoundBase(ALuint buffer1, SoundBaseMgr* sound_mgr1, int source_id1, int samples1);
+	Ogre::String name;
 
 	void setPitch(float pitch);
 	void setGain(float gain);
@@ -32,8 +33,12 @@ public:
 	void seek(float pos);  // [0..1)
 	bool is2D;
 
-private:
+//private:
 	void computeAudibility(Ogre::Vector3 pos);
+
+	//  must not be changed during the lifetime of this object
+	int source_id;
+	int samples;
 
 	float audibility;
 	float gain;
@@ -51,8 +56,4 @@ private:
 	Ogre::Vector3 vel;
 
 	SoundBaseMgr* sound_mgr;
-
-	//  must not be changed during the lifetime of this object
-	int source_id;
-	int samples;
 };

@@ -47,7 +47,7 @@ public:
 	bool isAudible();
 	void start(), stop(), kill();
 	bool is2D;  // hud sounds, no distance attenuation
-	void set2D(bool b);
+	void set2D(bool b), setEngine(bool b);
 
 	void seek(float pos);
 	void runOnce();
@@ -64,6 +64,7 @@ private:
 	float lastgain;
 
 	int car;  //  number of the car this is for
+	bool engine;
 };
 
 //---------------------------------------------------------------------------------------

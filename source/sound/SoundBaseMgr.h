@@ -16,7 +16,7 @@ public:
 
 	void CreateSources(), DestroySources();  // for game reload
 
-	SoundBase* createSound(Ogre::String file);
+	SoundBase* createSound(Ogre::String file, Ogre::String name);
 
 	void setCamera(Ogre::Vector3 position, Ogre::Vector3 direction, Ogre::Vector3 up, Ogre::Vector3 velocity);
 	void pauseAll(bool mute);
@@ -38,7 +38,7 @@ public:
 	int sources_in_use;
 	int buffers_in_use;
 
-private:
+//private:
 	void recomputeAllSources();
 	void recomputeSource(int source_id, int reason, float vfl, Ogre::Vector3 *vvec);
 	ALuint getHwSource(int hw_id) {  return hw_sources[hw_id];  };
@@ -50,6 +50,9 @@ private:
 	bool loadWAVFile(Ogre::String file, ALuint buffer, int& outSamples);
 	bool loadOGGFile(Ogre::String file, ALuint buffer, int& outSamples);
 
+	//  ambient sound (own, low level)
+	ALuint amb_source, amb_buffer;
+	
 	//  active audio sources (hardware sources)
 	std::vector<int>  hw_sources_map;   // stores the hardware index for each source. -1 = unmapped
 	std::vector<ALuint> hw_sources;     // this buffer contains valid AL handles up to hw_sources_num

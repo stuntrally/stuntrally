@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "../ogre/common/Def_Str.h"
 #include "SoundBase.h"
 #include "SoundBaseMgr.h"
 using namespace Ogre;
@@ -15,6 +16,9 @@ SoundBase::SoundBase(ALuint buffer1, SoundBaseMgr* sound_mgr1, int source_id1, i
 
 void SoundBase::computeAudibility(Vector3 pos1)
 {
+	//audibility = 1.f;
+	//return;
+	
 	//  disable sound?
 	if (!enabled)
 	{
@@ -41,7 +45,7 @@ void SoundBase::computeAudibility(Vector3 pos1)
 	//  hud
 	if (is2D)
 	{
-		audibility = 1.0f;
+		audibility = gain;
 		return;
 	}		
 
@@ -105,6 +109,7 @@ void SoundBase::setLoop(bool loop1)
 
 void SoundBase::setPitch(float pitch1)
 {
+	if (is2D)  return;
 	pitch = pitch1;
 	sound_mgr->recomputeSource(source_id, REASON_PTCH, pitch, NULL);
 }

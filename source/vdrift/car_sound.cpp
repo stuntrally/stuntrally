@@ -33,15 +33,20 @@ bool CAR::LoadSounds(const std::string & carpath)
 	
 	SoundMgr* snd = pGame->snd;
 	const string& eng = dynamics.engine.sound_name;
-	engine = snd->createInstance(eng,0);  engine->set2D(s);  engine->start();
+	engine = snd->createInstance(eng,0);  engine->set2D(s);
+	engine->setEngine(true);  engine->start();
 
 	int i;  float fw = numWheels;
 	for (i = 0; i < numWheels; ++i)  // tires
 	{
-		tiresqueal[i] = snd->createInstance("tire_squeal", 0);	tiresqueal[i]->set2D(s);
-		grasssound[i] = snd->createInstance("grass", 0);		grasssound[i]->set2D(s);
+		tiresqueal[i] = snd->createInstance("asphalt", 0);	tiresqueal[i]->set2D(s);
+		grasssound[i] = snd->createInstance("grass", 0);
+		grasssound[i]->seek(float(i)/fw);  grasssound[i]->set2D(s);
 		gravelsound[i]= snd->createInstance("gravel", 0);
 		gravelsound[i]->seek(float(i)/fw);  gravelsound[i]->set2D(s);
+	}
+	for (i = 0; i < numWheels; ++i)
+	{
 		tirebump[i] = snd->createInstance("bump"+toStr(i%4), 0);  tirebump[i]->set2D(s);
 		tirebump[i]->seek(float(i)/fw);
 	}
@@ -254,11 +259,8 @@ if (bSound)
 	///  tires  oooo
 	for (int i = 0; i < numWheels; ++i)
 	{
-		//  make sure we don't get overlap
-		//gravelsound[i]->setGain(0.0);
-		//grasssound[i]->setGain(0.0);
-		//tiresqueal[i]->setGain(0.0);
-
+		Vector3 wh;  wh = Axes::toOgre(whPos[i]);
+		#if 1
 		float maxgain = 0.6, pitchvar = 0.4, pmul = 1.f;
 
 		std::vector<Sound*>* snd = &gravelsound;
@@ -281,12 +283,11 @@ if (bSound)
 		pitch = pitch + (1.f - pitchvar);
 		pitch = std::min(4.f, std::max(0.25f, pitch ));
 
-		Vector3 wh;  wh = Axes::toOgre(whPos[i]);
 		(*snd)[i]->setPosition(wh, ev);
 		(*snd)[i]->setGain(squeal[i]*maxgain * pSet->vol_tires);
 		(*snd)[i]->setPitch(pitch * pmul);
 		//todo: setGain(0.f) on others..
-
+		#endif
 
 		//  susp bump  ~~~
 		if (dynamics.vtype == V_Car)

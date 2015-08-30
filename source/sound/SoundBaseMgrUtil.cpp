@@ -89,7 +89,7 @@ ALuint SoundBaseMgr::LoadEffect(REVERB_PRESET* r)
 
 //  Create
 //---------------------------------------------------------------------------------------------
-SoundBase* SoundBaseMgr::createSound(String file)
+SoundBase* SoundBaseMgr::createSound(String file, String name)
 {
 	if (!device)  return NULL;
 
@@ -108,10 +108,8 @@ SoundBase* SoundBaseMgr::createSound(String file)
 		if (file == buffer_file[i])
 		{
 			buffer = buffers[i];
-			//samples = sources[i]->samples;
-			sources[i] = new SoundBase(buffer, this, i, sources[i]->samples);
-			return sources[i];
-			//break;
+			samples = sources[i]->samples;
+			break;
 		}
 	}
 
@@ -146,6 +144,7 @@ SoundBase* SoundBaseMgr::createSound(String file)
 
 	//LogO("@  samples: "+toStr(samples));
 	sources[buffers_in_use] = new SoundBase(buffer, this, buffers_in_use, samples);
+	sources[buffers_in_use]->name = name;
 
 	return sources[buffers_in_use++];
 }
@@ -247,6 +246,7 @@ bool SoundBaseMgr::loadWAVFile(String file, ALuint buffer, int& outSamples)
 	//LOG("alBufferData: format "+toStr(format)+" size "+toStr(dataSize)+" freq "+toStr(freq));
 	alGetError();  // reset errors
 	ALint error;
+
 	alBufferData(buffer, format, bdata, size, freq);
 	error = alGetError();
 

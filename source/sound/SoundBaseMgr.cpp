@@ -49,7 +49,7 @@ SoundBaseMgr::SoundBaseMgr()
 	}
 
 	//  efx
-	ALCboolean efx = alcIsExtensionPresent(device, "ALC_EXT_EFX");
+	ALCboolean efx = alcIsExtensionPresent(device, ALC_EXT_EFX_NAME);
 	if (efx == ALC_FALSE)		LogO("@  EFX extention not found !");
 	else if (efx == ALC_TRUE)	LogO("@  EFX extension found.");
 
@@ -103,35 +103,32 @@ SoundBaseMgr::SoundBaseMgr()
 
 
 	//  doppler
-	//alDopplerFactor(1.0f);
-	//alDopplerVelocity(343.0f);
+	alDopplerFactor(0.f);  //1.f
+	//alDopplerVelocity(343.f);
 
 	alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);  //+
-	//alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED);
-	//alDistanceModel(AL_EXPONENT_DISTANCE_CLAMPED);
 
 	//  reverb
 	//return;
 	REVERB_PRESET reverb = ReverbPresets[
-		//RVB_GENERIC];
-		//RVB_CAVE];
-		//RVB_ARENA];
-		//RVB_HANGAR];
-		//RVB_FOREST];
-		RVB_MOUNTAINS];  //`
-		//RVB_UNDERWATER];
-		//RVB_CASTLE_LARGEROOM];
-		//RVB_FACTORY_HALL];
-		//RVB_SPACESTATION_HALL];
-		//RVB_WOODEN_HALL];
+		//RVB_FOREST];  //
+		//RVB_MOUNTAINS];  //`
 		//RVB_DOME_TOMB];
-		//RVB_PREFAB_CARAVAN];
-		//RVB_PIPE_LARGE];
-		//RVB_PIPE_RESONANT];
+		RVB_PREFAB_CARAVAN];  //short
 		//RVB_OUTDOORS_VALLEY];
 		//RVB_OUTDOORS_ROLLINGPLAINS];  //`
-		//RVB_MOOD_HELL];
-		//RVB_DRUGGED];
+
+		//RVB_CARPETEDHALLWAY];  //RVB_CITY];  //RVB_PADDEDCELL];  //RVB_LIVINGROOM];  //none
+		//RVB_ROOM];  //RVB_PLAIN];  //RVB_PARKINGLOT];  //none
+
+		//RVB_SEWERPIPE];  //RVB_UNDERWATER];  //+
+		//RVB_STONECORRIDOR];  //RVB_HALLWAY];  //RVB_PIPE_SMALL];  //RVB_PIPE_LARGE];  //pipe`
+
+		//RVB_CASTLE_COURTYARD];  //RVB_STONEROOM];  //cave  //RVB_CAVE];  //cave rev
+		//RVB_QUARRY];  //RVB_CASTLE_LARGEROOM];  //RVB_WOODEN_HALL];  //echo`
+
+		//RVB_ARENA];  //RVB_AUDITORIUM];  //RVB_CONCERTHALL];  //long
+		//RVB_HANGAR];  //RVB_DIZZY];  //RVB_MOOD_HELL];  //RVB_DRUGGED];  //RVB_PSYCHOTIC];  //vlong
 
 	effect = LoadEffect(&reverb);
 	if (!effect)
@@ -404,7 +401,8 @@ void SoundBaseMgr::assign(int id, int hw_id)
 	alSourcei(source, AL_BUFFER, sources[id]->buffer);
 
 	// use reverb +
-	alSource3i(source, AL_AUXILIARY_SEND_FILTER, slot, 0, AL_FILTER_NULL);
+	if (!sources[id]->is2D)
+		alSource3i(source, AL_AUXILIARY_SEND_FILTER, slot, 0, AL_FILTER_NULL);
 
 	alSourcef(source, AL_GAIN, sources[id]->gain * master_volume);
 	alSourcei(source, AL_LOOPING, sources[id]->loop ? AL_TRUE : AL_FALSE);
@@ -416,13 +414,11 @@ void SoundBaseMgr::assign(int id, int hw_id)
 	if (sources[id]->is2D)  // hud
 	{
 		alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE);
-		alSource3f(source, AL_POSITION, 0.0, 0.0, 0.0);
-		alSourcef(source, AL_GAIN, 1.f);
-		alSourcef(source, AL_ROLLOFF_FACTOR, 0.0f);
-
+		alSource3f(source, AL_POSITION, 0.f,0.f,0.f);
+		//alSourcef(source, AL_ROLLOFF_FACTOR, 0.f);
 		//alSourcef(source, AL_REFERENCE_DISTANCE, FLT_MAX-10.0f);
-		//alSourcef(source, AL_ROLLOFF_FACTOR, 0.0f);
 		//alSourcef(source, AL_MAX_DISTANCE, FLT_MAX-9.0f);
+		//alSourcef(source, AL_GAIN, 0.77f);
 	}
 
 	if (sources[id]->should_play)
