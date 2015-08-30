@@ -6,6 +6,7 @@
 #include "../vdrift/car.h"
 #include "../sound/SoundBaseMgr.h"
 #include "../sound/SoundMgr.h"
+#include "../sound/SoundBase.h"
 #include "common/data/SceneXml.h"
 #include "common/CScene.h"
 #include "common/GraphView.h"
@@ -138,19 +139,23 @@ void App::CreateGraphs()
 		}	break;
 
 	case Gh_Sound:  /// sound
-		for (int i=0; i < 4; ++i)
+		for (int i=0; i < 5; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGui);
 			int c = i%3;
-			gv->Create(128, "graph"+toStr(c+1), c>0 ? 0.f : 0.2f);
+			gv->Create(128, "graph"+toStr(c+1), i>=3 ? 0.30f : i>0 ? 0.f : 0.2f);
+			String t = i==0 ? "Sound Info" : "";
 			switch(i)
 			{
-				case 0:  gv->CreateTitle("Sound Info",	c, 0.0f,-2, 24);  break;
-				case 1:  gv->CreateTitle("",			c, 0.0f,-3, 24);  break;
-				case 2:  gv->CreateTitle("",			c, 0.0f,3, 24);  break;
-				case 3:  gv->CreateTitle("",			c, 0.0f,2, 24);  break;
+				case 0:  gv->CreateTitle(t,	c, 0.f,-2, 20);  break;
+				case 1:  gv->CreateTitle(t,	c, 0.f,-3, 24);  break;
+				case 2:  gv->CreateTitle(t,	c, 0.f, 3, 24);  break;
+				case 3:  gv->CreateTitle(t,	8, 0.f,-2, 18,256,1);  break;
+				case 4:  gv->CreateTitle(t,	6, 0.f,-2, 18,256,1);  break;
 			}
-			gv->SetSize(0.00f, 0.24f, 0.15f, 0.1f);
+			if (i==4)	gv->SetSize(0.06f, 0.15f, 0.09f, 0.8f); else
+			if (i==3)	gv->SetSize(0.00f, 0.15f, 0.06f, 0.8f);
+			else		gv->SetSize(0.00f, 0.05f, 0.15f, 0.1f);
 
 			gv->SetVisible(pSet->show_graphs);
 			graphs.push_back(gv);
@@ -345,16 +350,43 @@ void App::GraphsNewVals()				// Game
 	switch (pSet->graphs_type)
 	{
 	case Gh_Sound:  /// sound  vol,pan, wave L,R
-	if (gsi >= 4)
+	if (gsi >= 5)
 	{
 		SoundBaseMgr* snd = pGame->snd->sound_mgr;
 		graphs[1]->UpdTitle("buf: "+toStr(snd->buffers_in_use)+" /"+toStr(SoundBaseMgr::MAX_BUFFERS)+"\n"+
 							"src: "+toStr(snd->sources_in_use)+" /"+toStr(snd->hw_sources_num));
 		graphs[2]->UpdTitle("hw: "+iToStr(snd->hw_sources_in_use,2)+" /"+toStr(SoundBaseMgr::HW_SRC));
+		
+		String s3,s4,ss;
+		for (size_t i=0; i < snd->sources.size(); ++i)
+		{
+			const SoundBase* sb = snd->sources[i];
+			if (sb)
+			{	ss = sb->name.substr(0,4);
+				if (ss!="asph" && ss!="grav" /*&& ss!="gras" /*&& ss!="cras"/**/)
+				{
+					//s3 += String(" ")+(sb->is2D?"2 ":"   ")+(sb->loop?"L":" ");
+					for (int n = sb->name.length(); n < 15; ++n)  s3+=" ";
+					s3 += sb->name;
+				
+					//s4 += " "+iToStr(sb->source_id,2);
+					s4 += " "+(sb->audibility == 0.f ? "......." : fToStr(sb->audibility,2,4));
+					s4 += " "+(sb->hw_id == -1 ? "..." : fToStr(sb->hw_id,0,2,'0'));
+					//s4 += "  b"+(toStr(sb->buffer));
+					//s4 += String(" ")+(sb->enabled?"Y ":"N ")+(sb->should_play?"PP ":"OO ");
+					s4 += String(" ")+(sb->should_play?"p ":".. ");
+					s4 += " "+(sb->gain ==0.f ? "":fToStr(sb->gain,2,4));
+					s4 += " "+(sb->pitch==1.f ? "":fToStr(sb->pitch,2,4));
+					s3 += "\n";  s4 += "\n";
+				}
+			}
+		}
+		graphs[3]->UpdTitle(s3);
+		graphs[4]->UpdTitle(s4);
 	}	break;
 
 	case Gh_Fps:  /// fps
-	if (gsi >= 1)
+	if (gsi >= 2)
 	{
 		const RenderTarget::FrameStats& stats = mWindow->getStatistics();
 		graphs[0]->AddVal(stats.lastFPS /60.f*0.5f);  // 60 fps in middle
