@@ -21,6 +21,7 @@
 #include "../ogre/SplitScreen.h"  // num plr
 #include "../sound/SoundMgr.h"
 #include "../sound/SoundBase.h"
+#include "../sound/SoundBaseMgr.h"
 #include <OgreCamera.h>
 using namespace std;
 using namespace Ogre;
@@ -131,7 +132,6 @@ void CAR::CARsounds::Destroy()
 		delete water[i];
 
 	delete mud;  delete mud_cont;  delete water_cont;
-	//--instance_counter;
 }
 
 
@@ -438,6 +438,8 @@ if (bSound)
 			{
 				if (bSound)
 				{
+					//case 1: pGame->snd->sound_mgr->SetReverb("UNDERWATER"); break;
+
 					s.crash[i]->setGain(gain * pSet->vol_car_crash);
 					if (hitp)
 					s.crash[i]->setPosition(hp, ev);

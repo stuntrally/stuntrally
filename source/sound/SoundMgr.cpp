@@ -10,7 +10,7 @@ using namespace Ogre;
 //  Init
 //---------------------------------------------------------------------------------------
 SoundMgr::SoundMgr()
-	:disabled(true), instance_counter(0), sound_mgr(0)
+	:disabled(true), sound_mgr(0)
 {
 	sound_mgr = new SoundBaseMgr();
 	if (!sound_mgr)
@@ -20,7 +20,7 @@ SoundMgr::SoundMgr()
 	if (disabled)
 	{	LogO("@  SoundScript: Sound Manager is disabled");  return;  }
 
-	LogO("@  SoundScript: Sound Manager started with " + toStr(sound_mgr->getNumHardwareSources())+" sources");
+	LogO("@  SoundScript: Sound Manager started with " + toStr(sound_mgr->hw_sources_num)+" sources");
 }
 
 SoundMgr::~SoundMgr()
@@ -60,9 +60,7 @@ Sound* SoundMgr::createInstance(Ogre::String name, int car)
 
 	SoundTemplate* templ = templates[name];
 
-	Sound* inst = new Sound(car, templ, sound_mgr,
-		/*templ->file_name+*/"c"+toStr(car)+"-"+toStr(instance_counter));
-	++instance_counter;
+	Sound* inst = new Sound(car, templ, sound_mgr);
 	
 	String ss = name.substr(0,4);
 	inst->set2D(ss=="hud/");  // set 2d
@@ -213,7 +211,7 @@ bool SoundTemplate::setParameter(Ogre::StringVector vec)
 
 ///  Sound
 //---------------------------------------------------------------------------------------------------------
-Sound::Sound(int car1, SoundTemplate* tpl, SoundBaseMgr* mgr1, Ogre::String name)
+Sound::Sound(int car1, SoundTemplate* tpl, SoundBaseMgr* mgr1)
 	:car(car1), templ(tpl), sound_mgr(mgr1)
 	,start_sound(NULL), stop_sound(NULL)
 	,lastgain(1.0f), is2D(false), engine(false)

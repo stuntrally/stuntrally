@@ -54,7 +54,7 @@ bool CAR::Load(class App* pApp1,
 	const std::string & carname,
 	const MATHVECTOR<float,3> & init_pos, const QUATERNION<float> & init_rot,
 	COLLISION_WORLD & world,
-	bool defaultabs, bool defaulttcs,
+	bool abs, bool tcs,
 	bool isRemote, int idCar,
   	bool debugmode)
 {
@@ -114,30 +114,27 @@ bool CAR::Load(class App* pApp1,
 	
 
 	//  load cardynamics
-	{
-		if (!cd.Load(pGame, cf))  return false;
+	if (!cd.Load(pGame, cf))
+		return false;
 
-		MATHVECTOR<double,3> position;
-		QUATERNION<double> orientation;
-		position = init_pos;	
-		orientation = init_rot;
+	MATHVECTOR<double,3> pos = init_pos;
+	QUATERNION<double> rot;  rot = init_rot;
 
-		float stOfsY = 0.f;
-		cf.GetParam("collision.start-offsetY", stOfsY);
-			position[2] += stOfsY -0.4/**/ + cd.com_ofs_H;  //|
+	float stOfsY = 0.f;
+	cf.GetParam("collision.start-offsetY", stOfsY);
+		pos[2] += stOfsY -0.4/**/ + cd.com_ofs_H;  //|
 
-		posAtStart = posLastCheck = position;
-		rotAtStart = rotLastCheck = orientation;
-		dmgLastCheck = 0.f;
-		
-		cd.Init(pSet, pApp->scn->sc, pApp->scn->data->fluids,
-			world, position, orientation);
+	posAtStart = posLastCheck = pos;
+	rotAtStart = rotLastCheck = rot;
+	dmgLastCheck = 0.f;
+	
+	cd.Init(pSet, pApp->scn->sc, pApp->scn->data->fluids,
+		world, pos, rot);
 
-		sphYawAtStart = cd.sphereYaw;
+	sphYawAtStart = cd.sphereYaw;
 
-		cd.SetABS(defaultabs);
-		cd.SetTCS(defaulttcs);
-	}
+	cd.SetABS(abs);  cd.SetTCS(tcs);
+
 
 	//  load sounds
 	if (!pGame->snd->isDisabled())

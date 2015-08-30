@@ -37,7 +37,7 @@ class Sound
 	friend class SoundMgr;
 
 public:
-	Sound(int car, SoundTemplate* tpl, SoundBaseMgr* mgr, Ogre::String name);
+	Sound(int car, SoundTemplate* tpl, SoundBaseMgr* mgr);
 	~Sound();
 
 	void setGain(float value);
@@ -94,7 +94,6 @@ private:
 	void skipToNextOpenBrace(Ogre::FileStreamDataStream* chunk);
 
 	bool disabled;
-	int instance_counter;
 
 	std::map <Ogre::String, SoundTemplate*> templates;
 	std::vector<SoundTemplate*> v_templ;  // to delete

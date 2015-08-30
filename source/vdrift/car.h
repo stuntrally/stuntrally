@@ -28,8 +28,8 @@ public:
 	bool Load(class App* pApp1,
 		CONFIGFILE & carconf, const std::string & carname,
 		const MATHVECTOR<float,3> & init_pos, const QUATERNION<float> & init_rot,
-		COLLISION_WORLD & world,
-		bool defaultabs, bool defaulttcs, bool isRemote, int idCar, bool debugmode);
+		COLLISION_WORLD & world,	bool abs, bool tcs,
+		bool isRemote, int idCar, bool debugmode);
 	
 	// will align car relative to track surface, returns false if the car isn't near ground
 	void SetPosition(const MATHVECTOR<float,3> & pos, const QUATERNION<float> & rot);
@@ -61,25 +61,17 @@ public:
 	
 
 	int GetGear() const
-	{
-		return dynamics.GetTransmission().GetGear();
-	}
+	{	return dynamics.GetTransmission().GetGear();  }
 	
     void SetGear(int gear)
-	{
-	    dynamics.ShiftGear(gear);
-	}
+	{	dynamics.ShiftGear(gear);  }
 	
 	float GetClutch() const
-	{
-		return dynamics.GetClutch().GetClutch();
-	}
-
+	{	return dynamics.GetClutch().GetClutch();  }
 
 	void SetAutoClutch(bool value)
-	{
-		dynamics.SetAutoClutch(value);
-	}
+	{	dynamics.SetAutoClutch(value);  }
+
 
 	void SetAutoShift(bool value){	dynamics.SetAutoShift(value);	}
 	void SetAutoRear(bool value){	dynamics.SetAutoRear(value);	}
