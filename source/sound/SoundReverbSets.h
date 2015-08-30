@@ -1,5 +1,6 @@
 #pragma once
-/* Reverb presets for EFX - copy from AL/efx-presets.h  */
+#include <al.h>
+//  EFX Reverb presets - copy from AL/efx-presets.h
 
 //---------------------
 enum {
@@ -138,29 +139,29 @@ RVB_PRESETS_ALL
 //---------------------
 struct REVERB_PRESET
 {
-    float flDensity;
-    float flDiffusion;
-    float flGain;
-    float flGainHF;
-    float flGainLF;
-    float flDecayTime;
-    float flDecayHFRatio;
-    float flDecayLFRatio;
-    float flReflectionsGain;
-    float flReflectionsDelay;
-    float flReflectionsPan[3];
-    float flLateReverbGain;
-    float flLateReverbDelay;
-    float flLateReverbPan[3];
-    float flEchoTime;
-    float flEchoDepth;
-    float flModulationTime;
-    float flModulationDepth;
-    float flAirAbsorptionGainHF;
-    float flHFReference;
-    float flLFReference;
-    float flRoomRolloffFactor;
-    int   iDecayHFLimit;
+    ALfloat flDensity;
+    ALfloat flDiffusion;
+    ALfloat flGain;
+    ALfloat flGainHF;
+    ALfloat flGainLF;
+    ALfloat flDecayTime;
+    ALfloat flDecayHFRatio;
+    ALfloat flDecayLFRatio;
+    ALfloat flReflectionsGain;
+    ALfloat flReflectionsDelay;
+    ALfloat flReflectionsPan[3];
+    ALfloat flLateReverbGain;
+    ALfloat flLateReverbDelay;
+    ALfloat flLateReverbPan[3];
+    ALfloat flEchoTime;
+    ALfloat flEchoDepth;
+    ALfloat flModulationTime;
+    ALfloat flModulationDepth;
+    ALfloat flAirAbsorptionGainHF;
+    ALfloat flHFReference;
+    ALfloat flLFReference;
+    ALfloat flRoomRolloffFactor;
+    ALint iDecayHFLimit;
 };
 
 
