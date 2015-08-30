@@ -237,8 +237,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				break;
 
 			case key(F10):	//  blt debug
-				if (shift)	gui->ckBltProfTxt.Invert(); else
-				if (ctrl)	gui->ckBulletDebug.Invert();
+				if (ctrl)	gui->ckBulletDebug.Invert(); else
+				if (alt)	gui->ckSoundInfo.Invert(); else
+				if (shift)	gui->ckBltProfTxt.Invert();
 				else		gui->ckWireframe.Invert();
 				return false;
 

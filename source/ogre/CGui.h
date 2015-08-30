@@ -228,7 +228,7 @@ public:
 	//  Hud dbg,other
 	Ck ckFps;  CK(Wireframe);
 	//  profiler
-	Ck ckProfilerTxt, ckBulletDebug, ckBltProfTxt;
+	Ck ckProfilerTxt, ckBulletDebug, ckBltProfTxt, ckSoundInfo;
 	//  car dbg
 	Ck ckCarDbgBars, ckCarDbgTxt, ckCarDbgSurf;
 	Ck ckTireVis;  void chkHudCreate(Ck*);

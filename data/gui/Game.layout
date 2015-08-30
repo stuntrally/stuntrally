@@ -3897,6 +3897,10 @@
 							<Property key="Caption" value="#{BulletProfilerTxt}  shift-F10"/>
 							<Property key="TextColour" value="0.7 0.65 0.5"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="388 176 256 24" name="SoundInfo">
+							<Property key="Caption" value="#{FullSoundsInfo}  alt-F10"/>
+							<Property key="TextColour" value="0.5 0.65 0.8"/>
+						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 342 656 24" name="DevKeys">
 							<Property key="TextColour" value="0.65 0.5 0.5"/>
 							<Property key="Caption" value="#{DevKeys}"/>
