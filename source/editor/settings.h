@@ -40,6 +40,9 @@ public:
 
 	//  align ter
 	float al_w_mul, al_w_add, al_smooth;
+	
+	//  pacenotes
+	int pace_show;  float pace_dist;
 
 	//  tweak
 	std::string tweak_mtr;

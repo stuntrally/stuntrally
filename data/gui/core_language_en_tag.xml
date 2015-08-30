@@ -660,6 +660,9 @@
 	<Tag name="CheckBeam">Next checkpoint beam</Tag>
 	<Tag name="CountdownTime">Race countdown time</Tag>
 
+	<!--  View  Pacenotes  -->
+	<Tag name="Pacenotes">Pacenotes</Tag>
+
 	<!--  View  Camera  -->
 	<Tag name="Camera">Camera</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
@@ -670,13 +673,14 @@
 	<Tag name="FOV">View angle</Tag>
 
 
-	<!--  Settings  -->
+	<!--  Settings  debug  -->
 	<Tag name="Other">Other</Tag>
 	<Tag name="Development">Development</Tag>
 	<Tag name="FPS">Fps, Triangles, Batches</Tag>
 	<Tag name="Wireframe">Wireframe</Tag>
 	<Tag name="BulletDebug">Bullet debug</Tag>
 	<Tag name="BulletProfilerTxt">Bullet Profiler Times</Tag>
+	<Tag name="FullSoundsInfo">Full sounds info in graphs.</Tag>
 	
 	<!--  Settings  car tweak visualizeations  -->
 	<Tag name="CarDebug">Car susp, long|,lat- slips</Tag>

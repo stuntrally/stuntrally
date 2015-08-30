@@ -26,13 +26,13 @@ using namespace Ogre;
 
 //  ctor  ---------
 PaceNote::PaceNote()
-	:nd(0), bb(0), pos(0,0,0)
+	:nd(0), bb(0), pos(0,0,0), use(1)
 	//,type(P_1), dir(0), vel(0.f)
 	,size(4.f,4.f), clr(0,0,0,0), ofs(0,0), uv(0,0)
 {	}
-PaceNote::PaceNote(Vector3 p, float sx,float sy,
+PaceNote::PaceNote(int t, Vector3 p, float sx,float sy,
 		float r,float g,float b,float a, float ox,float oy, float u,float v)
-	:nd(0), bb(0), pos(p)
+	:nd(0), bb(0), pos(p), use(t)
 	//,type(P_1), dir(0), vel(0.f)
 	,size(sx,sy), clr(r,g,b,a), ofs(ox,oy), uv(u,v)
 {	}
@@ -46,7 +46,7 @@ void PaceNotes::Rebuild(SplineRoad* road)
 
 	Destroy();
 
-return;
+//return;
 
 	const float u=0.125f,
 		barX=1.f,barY=6.f, barA=0.6f, useX=2.f, useA=0.6f,
@@ -84,14 +84,14 @@ return;
 		if (cur.loop)  aa = 0.f;
 			
 		//LogO(fToStr(aa*180.f/PI_d,1,5));//+" "+fToStr(dn));
-		LogO(fToStr(aa));
+		//LogO(fToStr(aa));
 
 		//  no straights  //par 0.05
 		if (fabs(aa) < 0.01f)  aa = 0.f;
 		cur.aa = aa;  // save
 
 		#ifdef BARS  // add dbg bar |
-		PaceNote o(cur.pos, barX,barY, 1,1,1,barA,  // size,clr
+		PaceNote o(4, cur.pos, barX,barY, 1,1,1,barA,  // size,clr
 			aa < 0.f ? 0.f : 1.f, 0.5f,  // dir, width   //par_ 0.3-1.2
 			aa < 0.f ? 7.5f*u : 7.f*u, u + fabs(aa)*0.6f);  // uv
 		Create(o);  vPN.push_back(o);
@@ -103,8 +103,8 @@ return;
 	///  simple turns  ~ ~ ~
 	const int nn = 7;  // levels								//par turn sharpness
 	const float angN[nn] = {0.06f, 0.2f, 0.3f, 0.4f, 0.5f, 0.7f, 1.0f}, aNm = 0.7f;
-	const int Radd[nn]	 = {2,    1,    1,    0,    0,    0,    0};  // needed for sign
-	const int Rlen[nn]	 = {10,   10,   8,    8,    7,    7,    6};  // road search range
+	const int Radd[nn]	 = {2,     1,    1,    0,    0,    0,    0};  // needed for sign
+	const int Rlen[nn]	 = {10,    10,   8,    8,    7,    7,    6};  // road search range
 	bool dirR = road->iDir > 0, loop1 = false;
 
 	//for (int n=2; n >= 0; --n)
@@ -124,11 +124,12 @@ return;
 			float am = n==0 ? 0.05f: angN[n-1]*aNm * 0.4f;  //par sustain
 			bool dir = dirR ? p.aa > 0.f : p.aa < 0.f;
 			float Adir = dir ? 0.f : 1.f;
-			
+
 			Vector3 pos = p.pos;  // main sign pos
+			float Asum = p.aa;
 
 			#ifdef USED  // add used
-			PaceNote o(p.pos2, useX,useX, 1,1,1,1,  // size, clr
+			PaceNote o(2, p.pos2, useX,useX, 1,1,1,1,  // size, clr
 				Adir, 0.f,  n*u, 0.f);  // dir, uv
 			Create(o);  vPN.push_back(o);
 			#endif
@@ -138,17 +139,14 @@ return;
 			while (ok && rr < ri)
 			{
 				SplineRoad::PaceM& pp = road->vPace[(i+r)%ii];
-				ok = pp.used < 0 && /**/(
-					p.aa > 0.f && pp.aa > am ||
-					p.aa < 0.f && pp.aa <-am);
-					
-				if (ok && pp.used < 0)
+				ok = pp.used < 0 && (p.aa > 0.f && pp.aa > am || p.aa < 0.f && pp.aa <-am);
+				if (ok)
 				{
-					pp.used = n;  ++radd;
+					pp.used = n;  Asum += pp.aa;  ++radd;
 					if (!dirR)  pos = pp.pos;  // back pos
 
 					#ifdef USED  // add used
-					PaceNote o(pp.pos2, useX,useX, 0.9,0.95,1,useA,  // size, clr
+					PaceNote o(3, pp.pos2, useX,useX, 0.9,0.95,1,useA,  // size, clr
 						Adir, 0.f,  n*u, 0.f);  // dir, uv
 					Create(o);  vPN.push_back(o);
 					#endif
@@ -159,17 +157,14 @@ return;
 			while (ok && rr < ri)
 			{
 				SplineRoad::PaceM& pp = road->vPace[(i+r+ii)%ii];
-				ok = pp.used < 0 && /**/(
-					p.aa > 0.f && pp.aa > am ||
-					p.aa < 0.f && pp.aa <-am);
-					
-				if (ok && pp.used < 0)
+				ok = pp.used < 0 && (p.aa > 0.f && pp.aa > am || p.aa < 0.f && pp.aa <-am);
+				if (ok)
 				{
-					pp.used = n;  ++rsub;
+					pp.used = n;  Asum += pp.aa;  ++rsub;
 					if (dirR)  pos = pp.pos;  // back pos
 
 					#ifdef USED  // add used
-					PaceNote o(pp.pos2, useX,useX, 1,0.95,0.9,useA,  // size, clr
+					PaceNote o(3, pp.pos2, useX,useX, 1,0.95,0.9,useA,  // size, clr
 						Adir, 0.f,  n*u, 0.f);  // dir, uv
 					Create(o);  vPN.push_back(o);
 					#endif
@@ -178,11 +173,18 @@ return;
 			}
 			
 			#if 1  // add turn
-			//if (rsub > 1 || radd > 1)
-			if (rsub + radd > Radd[n])
+			int rsad = rsub + radd;
+			if (rsad > Radd[n])
 			{
 				p.used = n;
-				PaceNote o(pos, signX,signX, 1,1,1,1,  // size, clr
+				//  long turn, total angle  ...
+				float s = signX * (0.5f + 0.5f * (1+rsad) / (1+Radd[n]));
+				float l = std::min(2.f, std::max(0.5f,
+					Asum / (rsad * angN[n]*aNm) ));
+				LogO("n "+toStr(n)+"  Asum:"+fToStr(Asum,2,5)+"  s: "+fToStr(s)+"  l: "+fToStr(l));
+				s = signX;  l = 1.f;//
+
+				PaceNote o(1, pos, s,s*l, 1,1,1,1,  // size, clr
 					Adir, 0.f,  n*u, 0.f);  // dir, uv
 				Create(o);  vPN.push_back(o);
 			}
@@ -194,7 +196,7 @@ return;
 			bool lp = dirR ? p.loop && !loop1 :
 							!p.loop && loop1;
 			if (lp)
-			{	PaceNote o(p.pos, signX,signX, 1,1,1,1,  // size, clr
+			{	PaceNote o(1, p.pos, signX,signX, 1,1,1,1,  // size, clr
 					0.f/**/, 0.f,  0.f*u, u);  // dir, uv
 				Create(o);  vPN.push_back(o);
 			}
@@ -278,6 +280,7 @@ return;
 			
 			
 			//  log  ----
+			#if 0
 			if (ii==0)
 			LogO("i:"+ iToStr(i,4) +" t:"+ fToStr(fr.time,2,6)//+" dt: "+fToStr(dt)
 				+"  v:"+ fToStr(vel,0,4)
@@ -288,6 +291,7 @@ return;
 				//+"  p: "+ fToStr(fr.pos[0])+" "+fToStr(fr.pos[1])+" "+fToStr(fr.pos[2])
 				+(jmp ? " !jd: "+fToStr(dist) : "")
 			);
+			#endif
 	
 			
 			///  add pace note
@@ -337,7 +341,7 @@ void PaceNotes::Create(PaceNote& n)
 	n.bb = mSceneMgr->createBillboardSet("P-"+toStr(ii),2);
 	n.bb->setDefaultDimensions(n.size.x, n.size.y);
 
-	n.bb->setRenderQueueGroup(RQG_CarTrails);
+	n.bb->setRenderQueueGroup(RQG_CarParticles);
 	n.bb->setVisibilityFlags(RV_Car);
 	n.bb->setCustomParameter(0, Vector4(n.ofs.x, n.ofs.y, n.uv.x, n.uv.y));  // params, uv ofs
 
@@ -367,12 +371,20 @@ void PaceNotes::Destroy()
 
 //  update visibility
 void PaceNotes::UpdVis()
-{					//par, fade in?
-	const Real dd = 200.f, dd2 = dd*dd;
+{
+	const Real dd = pApp->pSet->pace_dist, dd2 = dd*dd;
+	#ifdef SR_EDITOR
+	const int uu = pApp->pSet->pace_show;
+	#else
+	const int uu = 0;
+	#endif
+
 	const Vector3& c = mCamera->getPosition();
 	for (size_t i=0; i < vPN.size(); ++i)
-	{
-		const Vector3& p = vPN[i].pos;
+	if (vPN[i].use > uu)
+		vPN[i].nd->setVisible(false);
+	else
+	{	const Vector3& p = vPN[i].pos;
 		Real dist = c.squaredDistance(p);
 		bool vis = dist < dd2;
 		vPN[i].nd->setVisible(vis);

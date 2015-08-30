@@ -474,6 +474,12 @@ void CGui::InitGui()
 	ck= &ckTerrainEmissive;	ck->Init("TerrainEmissive",	&sc->td.emissive);
 	ck= &ckNoWrongChks;		ck->Init("NoWrongChks",		&sc->noWrongChks);
 	txtEdInfo = fTxt("EdInfo");
+	
+	
+	///  [Pacenotes]  ------------------------------------
+	sv= &svPaceShow;	sv->Init("PaceShow",	&pSet->pace_show,   0,4, 1.f);  sv->DefaultI(3);
+	sv= &svPaceDist;	sv->Init("PaceDist",	&pSet->pace_dist,   20.f,2000.f, 1.5f, 0,3);  sv->DefaultF(1000.f);
+	
 
 	///  [Surface]
 	ck= &ckRoad1Mtr;	ck->Init("Road1Mtr",	&sc->td.road1mtr);

@@ -291,6 +291,10 @@ public:
 	CK(NoWrongChks);
 	void SldUpd_Game();
 	Txt txtEdInfo;  void UpdEdInfo();
+	
+
+	//  [Pacenotes]  ----
+	SV svPaceShow, svPaceDist;
 
 
 	//  [Objects]  ----

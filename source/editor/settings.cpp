@@ -56,8 +56,10 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "teralign.w_mul", al_w_mul);			Param(c,w, "teralign.smooth", al_smooth);
 	Param(c,w, "teralign.w_add", al_w_add);
+
+	Param(c,w, "pacenotes.show", pace_show);		Param(c,w, "pacenotes.dist", pace_dist);
+
 	Param(c,w, "tweak.mtr", tweak_mtr);
-	
 	Param(c,w, "pick.set_par", pick_setpar);
 }
 
@@ -82,6 +84,8 @@ SETTINGS::SETTINGS()  ///  Defaults
 	,gen_terMinH(-300.f),gen_terMaxH(300.f),gen_terSmH(10.f)
 	//  align ter
 	,al_w_mul(1.f), al_w_add(8.f), al_smooth(2.f)
+	//  pacenotes
+	,pace_show(3), pace_dist(1000.f)
 	,tweak_mtr("")
 	//  pick
 	,pick_setpar(1)

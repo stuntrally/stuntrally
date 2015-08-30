@@ -55,7 +55,7 @@ SH_START_PROGRAM  //  frag  ----
     float4 tex = shSample(diffuseMap, uv);
 
     float a = tex.a * vertColor.a * fade;
-	if (a < 0.01f)
+	if (a < 0.01f || tex.a < 0.5f)
 		discard;
 
 	shOutputColour(0) = tex * vertColor;
