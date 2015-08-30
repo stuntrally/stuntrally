@@ -26,51 +26,25 @@ CAR::CAR()
 	,last_steer(0)
 	,iCamNext(0), bLastChk(0),bLastChkOld(0)
 	,bRewind(0),bRewindOld(0),timeRew(0.f)
-	,fluidHitOld(0)
 	,trackPercentCopy(0), bRemoteCar(0)
 	,bResetPos(0)
 	,dmgLastCheck(0.f), sphYawAtStart(0.f)
 {
 	SetNumWheels(4);
 	//dynamics.pCar = this;
-
-	int i;
-	crashsoundtime.resize(Ncrashsounds);
-	for (int i=0; i < Ncrashsounds; ++i)
-		crashsoundtime[i] = 0.f;
-
-	engine = 0;
-	for (i = 0; i < numWheels; ++i)  // tires
-	{	tiresqueal[i] = 0;  grasssound[i] = 0;  gravelsound[i] = 0;  tirebump[i] = 0;  }
-
-	crashsound.resize(Ncrashsounds);
-	for (i = 0; i < Ncrashsounds; ++i)  // crashes
-		crashsound[i] = 0;
-
-	crashscrap = 0;  crashscreech = 0;
-	wind = 0;  boostsnd = 0;
-
-	watersnd.resize(Nwatersounds);
-	for (i = 0; i < Nwatersounds; ++i)  // fluids
-		watersnd[i] = 0;
-
-	mudsnd = 0;  mud_cont = 0;  water_cont = 0;
 }
 
 void CAR::SetNumWheels(int n)
 {
 	numWheels = n;
-	suspbump.resize(n);
-	tiresqueal.resize(n);  grasssound.resize(n);  gravelsound.resize(n);  tirebump.resize(n);
-	curpatch.resize(n);  bumpsoundtime.resize(n);  bumpsoundvol.resize(n);
-	for (int i=0; i < n; ++i)
-	{	bumpsoundvol[i]=0.f;  bumpsoundtime[i] = 5.f;  }
+	suspbump.resize(n);  curpatch.resize(n);
+	sounds.SetNumWheels(n);
 }
 
 ///  dtor
 CAR::~CAR()
 {
-	DestroySounds();
+	sounds.Destroy();
 }
 
 

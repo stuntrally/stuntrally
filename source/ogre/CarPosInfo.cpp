@@ -216,7 +216,7 @@ void ReplayFrame::FromCar(const CAR* pCar)
 	//  hit sparks
 	fHitTime = cd.fHitTime;	fParIntens = cd.fParIntens;	fParVel = cd.fParVel;
 	vHitPos = cd.vHitPos;	vHitNorm = cd.vHitNorm;
-	whMudSpin = pCar->whMudSpin;
+	whMudSpin = pCar->sounds.whMudSpin;
 	fHitForce = cd.fHitForce;
 	fCarScrap = std::min(1.f, cd.fCarScrap);
 	fCarScreech = std::min(1.f, cd.fCarScreech);
@@ -280,9 +280,9 @@ void ReplayFrame2::FromCar(const CAR* pCar, half prevHitTime)
 
 	
 	// fluid
-	bool mud = pCar->whMudSpin < 0.01f;
+	bool mud = pCar->sounds.whMudSpin < 0.01f;
 	set(b_fluid, mud);
-	whMudSpin = pCar->whMudSpin;
+	whMudSpin = pCar->sounds.whMudSpin;
 
 	//  scrap
 	bool scr = cd.fCarScrap > 0.01f || cd.fCarScreech > 0.01f;

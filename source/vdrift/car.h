@@ -180,17 +180,23 @@ public:
 
 
 	///  Sounds  ---------------
-	Sound* engine;
-	std::vector<Sound*> tiresqueal, grasssound, gravelsound, tirebump;  // tires
-	
-	std::vector<Sound*> crashsound;
-	std::vector<float> crashsoundtime, bumpsoundtime, bumpsoundvol;
-	
-	Sound* wind, *boostsnd, *crashscrap,*crashscreech;  // cont.
-	Sound* mudsnd, *mud_cont,*water_cont;  // fluids
-	std::vector<Sound*> watersnd;
-	bool fluidHitOld;  float whMudSpin;  ///new vars, for snd
+	struct CARsounds
+	{
+		Sound* engine;
+		std::vector<Sound*> asphalt, grass, gravel, bump;  // tires
+		
+		std::vector<Sound*> crash;
+		std::vector<float> crashtime, bumptime, bumpvol;
+		
+		Sound* wind, *boost, *scrap,*screech;  // cont.
+		Sound* mud, *mud_cont,*water_cont;  // fluids
+		std::vector<Sound*> water;
+		bool fluidHitOld;  float whMudSpin;  ///new vars, for snd
 
+		CARsounds();
+		void SetNumWheels(int n);
+		void Destroy();
+	} sounds;
 	
 	//  internal variables that might change during driving (so, they need to be serialized)
 	float last_steer;
