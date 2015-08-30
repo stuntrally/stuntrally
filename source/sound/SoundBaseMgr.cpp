@@ -21,15 +21,14 @@ const float SoundBaseMgr::ROLLOFF_FACTOR = 0.05f;  // 0.05 0.1
 //  Init
 //---------------------------------------------------------------------------------------------
 SoundBaseMgr::SoundBaseMgr()
-	:buffers_in_use(0), sources_in_use(0)
-	,hw_sources_in_use(0), hw_sources_num(0)
+	:buffers_use(0), sources_use(0)
+	,hw_sources_use(0), hw_sources_num(0)
 	,context(NULL), device(NULL)
 	,slot(0), effect(0), master_volume(1.f)
 {
-	hw_sources_map.resize(HW_SRC_ALL);
-	hw_sources.resize(HW_SRC_ALL);
+	hw_sources_map.resize(HW_SRC);
+	hw_sources.resize(HW_SRC);
 	sources.resize(MAX_BUFFERS);
-	//std::pair<int, float> sources_most_audible[MAX_BUFFERS];
 	buffers.resize(MAX_BUFFERS);
 	buffer_file.resize(MAX_BUFFERS);
 
@@ -109,61 +108,64 @@ SoundBaseMgr::SoundBaseMgr()
 	alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);  //+
 
 	//  reverb
-	//return;
-	REVERB_PRESET reverb = ReverbPresets[
-		//RVB_FOREST];  //
-		//RVB_MOUNTAINS];  //`
-		//RVB_DOME_TOMB];
-		RVB_PREFAB_CARAVAN];  //short
-		//RVB_OUTDOORS_VALLEY];
-		//RVB_OUTDOORS_ROLLINGPLAINS];  //`
+	//  slot is what plays an effect on sources that connect to it
+	alGenAuxiliaryEffectSlots(1, &slot);
+	InitReverMap();
+	
+	SetReverb("FOREST");
+}
 
-		//RVB_CARPETEDHALLWAY];  //RVB_CITY];  //RVB_PADDEDCELL];  //RVB_LIVINGROOM];  //none
-		//RVB_ROOM];  //RVB_PLAIN];  //RVB_PARKINGLOT];  //none
 
-		//RVB_SEWERPIPE];  //RVB_UNDERWATER];  //+
-		//RVB_STONECORRIDOR];  //RVB_HALLWAY];  //RVB_PIPE_SMALL];  //RVB_PIPE_LARGE];  //pipe`
+//  Reverb
+//-----------------------------------------------------------------------------------
+void SoundBaseMgr::SetReverb(std::string name)
+{
+	sReverb = name;
+	int r = mapReverbs[name] -1;
+	if (r < 0 || r >= RVB_PRESETS_ALL)
+	{	r = RVB_GENERIC;  // use generic
+		LogO("@  Reverb preset not found! "+name);
+	}
+	const REVERB_PRESET* reverb = &ReverbPresets[r];
 
-		//RVB_CASTLE_COURTYARD];  //RVB_STONEROOM];  //cave  //RVB_CAVE];  //cave rev
-		//RVB_QUARRY];  //RVB_CASTLE_LARGEROOM];  //RVB_WOODEN_HALL];  //echo`
-
-		//RVB_ARENA];  //RVB_AUDITORIUM];  //RVB_CONCERTHALL];  //long
-		//RVB_HANGAR];  //RVB_DIZZY];  //RVB_MOOD_HELL];  //RVB_DRUGGED];  //RVB_PSYCHOTIC];  //vlong
-
-	effect = LoadEffect(&reverb);
+	effect = LoadEffect(reverb);
 	if (!effect)
 		LogO("@  Can't load effect !!");
 
-	//  This is what plays an effect on sources that connect to it
-	alGenAuxiliaryEffectSlots(1, &slot);
-
-	//  Tell the effect slot to use the loaded effect object. Note that the this
-	//  effectively copies the effect properties. You can modify or delete the
-	//  effect object afterward without affecting the effect slot.
+	//  Tell the effect slot to use the loaded effect object.
+	//  Note that the this copies the effect properties.
 	alAuxiliaryEffectSloti(slot, AL_EFFECTSLOT_EFFECT, effect);
 	if (alGetError() != AL_NO_ERROR)
-		LogO("@  Failed to set effect slot");
-
-
-	//  hud sources  --
-	LogO("@ @  Creating hw sources hud.");
-	int i;
-	for (i = HW_SRC; i < HW_SRC + HW_SRC_HUD; ++i)
-	{
-		alGetError();
-		alGenSources(1, &hw_sources[i]);
-		//alSource3i(source, AL_AUXILIARY_SEND_FILTER, slot, 0, AL_FILTER_NULL);
-
-		if (alGetError() != AL_NO_ERROR)  break;
-		alSourcef(hw_sources[i], AL_REFERENCE_DISTANCE, REF_DISTANCE);
-		alSourcef(hw_sources[i], AL_ROLLOFF_FACTOR, ROLLOFF_FACTOR);
-		alSourcef(hw_sources[i], AL_MAX_DISTANCE, MAX_DISTANCE);
-		++hw_sources_num;
-	}
-
-	for (i=0; i < HW_SRC_ALL; ++i)
-		hw_sources_map[i] = -1;
+		LogO("@  Failed to set effect slot!");
+	alDeleteEffects(1, &effect);
 }
+
+void SoundBaseMgr::InitReverMap()
+{
+	#define REV(a)  mapReverbs[#a] = RVB_##a +1;
+	REV(GENERIC)  //mapReverbs["GENERIC"] = RVB_GENERIC+1;
+	REV(FOREST)  //
+	REV(MOUNTAINS)  //`
+	REV(DOME_TOMB)
+	REV(PREFAB_CARAVAN)  //short
+	REV(OUTDOORS_VALLEY)
+	REV(OUTDOORS_ROLLINGPLAINS)  //`
+
+	REV(PLAIN)
+	//RVB_CARPETEDHALLWAY)  //RVB_CITY)  //RVB_PADDEDCELL)  //RVB_LIVINGROOM)  //none
+	//RVB_ROOM)  //RVB_PLAIN)  //RVB_PARKINGLOT)  //none
+
+	REV(SEWERPIPE)  REV(UNDERWATER)  //+
+	REV(STONECORRIDOR)  REV(HALLWAY)  REV(PIPE_SMALL)  REV(PIPE_LARGE)  //pipe`
+
+	REV(CASTLE_COURTYARD)  REV(STONEROOM)  //cave
+	REV(CAVE)  //cave rev
+	REV(QUARRY)  REV(CASTLE_LARGEROOM)  REV(WOODEN_HALL)  //echo`
+
+	REV(ARENA)  REV(AUDITORIUM)  REV(CONCERTHALL)  //long
+	REV(HANGAR)  REV(DIZZY)  REV(MOOD_HELL)  REV(DRUGGED)  REV(PSYCHOTIC)  //vlong
+}
+
 
 //  Create  --
 void SoundBaseMgr::CreateSources()
@@ -193,16 +195,7 @@ void SoundBaseMgr::CreateSources()
 void SoundBaseMgr::DestroySources()
 {
 	if (!device)  return;
-	//if (hw_sources_num <= HW_SRC_HUD)  return;
 	
-	/*for (int i = 0; i < sources.size(); ++i)
-	{
-		retire(i);
-		delete sources[i];
-	}/**/
-	//camera_position = Vector3(10000.f,10000.f,10000.f);
-	//recomputeSource()
-
 	LogO("@ @  Destroying hw sources.");
 	for (int i = 0; i < HW_SRC; ++i)
 	{
@@ -214,7 +207,7 @@ void SoundBaseMgr::DestroySources()
 	}
 	// ??
 	//buffers_in_use = 0;  sources_in_use = 0;
-	hw_sources_in_use = 0;  //in retire  //hw_sources_num = 0;
+	hw_sources_use = 0;  //in retire  //hw_sources_num = 0;
 }
 
 //  Destroy
@@ -227,17 +220,15 @@ SoundBaseMgr::~SoundBaseMgr()
 	if (device)
 	{
 		alDeleteAuxiliaryEffectSlots(1, &slot);
-		alDeleteEffects(1, &effect);
 
 		//  delete sources and buffers
-		//DestroySources();  //..
+		DestroySources();  //DestroySources();  //..
 		//alDeleteSources(MAX_HW_SOURCES, hw_sources);
-		int i;
-		//for (i = HW_SRC; i < HW_SRC + HW_SRC_HUD; ++i)
-		for (i = 0; i < HW_SRC_ALL; ++i)
+		/*int i;
+		for (i = 0; i < HW_SRC; ++i)
 		{
 			alDeleteSources(1, &hw_sources[i]);
-		}
+		}*/
 		alDeleteBuffers(MAX_BUFFERS, &buffers[0]);
 	}
 
@@ -284,30 +275,31 @@ void SoundBaseMgr::recomputeAllSources()
 {
 	if (!device)  return;
 
-	for (int i=0; i < sources_in_use; i++)
+	int i;
+	for (i=0; i < sources_use; i++)
 	{
 		sources[i]->computeAudibility(camera_position);
-		sources_most_audible[i].first = i;
-		sources_most_audible[i].second = sources[i]->audibility;
+		src_audible[i].first = i;
+		src_audible[i].second = sources[i]->audibility;
 	}
 
 	//  sort first 'num_hardware_sources' sources by audibility
 	//  see: https://en.wikipedia.org/wiki/Selection_algorithm
-	if ((sources_in_use - 1) > hw_sources_num)
-		std::nth_element(sources_most_audible, sources_most_audible+hw_sources_num, sources_most_audible+sources_in_use-1, compareByAudibility);
+	if (sources_use - 1 > hw_sources_num)
+		std::nth_element(src_audible, src_audible+hw_sources_num, src_audible+sources_use-1, compareByAudibility);
 
 	// retire out of range sources first
-	for (int i=0; i < sources_in_use; i++)
-		if (sources[sources_most_audible[i].first]->hw_id != -1 && (i >= hw_sources_num || sources_most_audible[i].second == 0))
-			retire(sources_most_audible[i].first);
+	for (i=0; i < sources_use; i++)
+		if (sources[src_audible[i].first]->hw_id != -1 && (i >= hw_sources_num || src_audible[i].second == 0))
+			retire(src_audible[i].first);
 
 	// assign new sources
-	for (int i=0; i < std::min(sources_in_use, hw_sources_num); i++)
-	if (sources[sources_most_audible[i].first]->hw_id == -1 && sources_most_audible[i].second > 0)
+	for (i=0; i < std::min(sources_use, hw_sources_num); i++)
+	if (sources[src_audible[i].first]->hw_id == -1 && src_audible[i].second > 0)
 		for (int j=0; j < hw_sources_num; j++)
 		if (hw_sources_map[j] == -1)
 		{
-			assign(sources_most_audible[i].first, j);
+			assign(src_audible[i].first, j);
 			break;
 		}
 }
@@ -349,7 +341,7 @@ void SoundBaseMgr::recomputeSource(int id, int reason, float fl, Vector3* vec)
 		{
 			//  try to make it play by the hardware
 			//  check if there is one free sources[id] in the pool
-			if (hw_sources_in_use < hw_sources_num)
+			if (hw_sources_use < hw_sources_num)
 			{
 				for (int i=0; i < hw_sources_num; i++)
 				{
@@ -424,7 +416,7 @@ void SoundBaseMgr::assign(int id, int hw_id)
 	if (sources[id]->should_play)
 		alSourcePlay(hw_sources[hw_id]);
 
-	++hw_sources_in_use;
+	++hw_sources_use;
 }
 
 
@@ -436,7 +428,7 @@ void SoundBaseMgr::retire(int id)
 	alSourceStop(hw_sources[sources[id]->hw_id]);
 	hw_sources_map[sources[id]->hw_id] = -1;
 	sources[id]->hw_id = -1;
-	--hw_sources_in_use;
+	--hw_sources_use;
 }
 
 

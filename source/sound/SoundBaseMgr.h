@@ -4,7 +4,7 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 #include <AL/efx.h>
-class SoundBase;
+class SoundBase;  struct REVERB_PRESET;
 
 
 class SoundBaseMgr
@@ -14,6 +14,8 @@ public:
     SoundBaseMgr();
 	~SoundBaseMgr();
 
+
+	//  main  ---
 	void CreateSources(), DestroySources();  // for game reload
 
 	SoundBase* createSound(Ogre::String file, Ogre::String name);
@@ -24,19 +26,25 @@ public:
 
 	bool isDisabled() {  return device == 0;  }
 
-	int getNumHardwareSources() {  return hw_sources_num;  }
 
+	//  const
 	static const float MAX_DISTANCE, REF_DISTANCE, ROLLOFF_FACTOR;
-	static const unsigned int HW_SRC = 128, HW_SRC_HUD = 0,//16
-		HW_SRC_ALL = HW_SRC_HUD + HW_SRC;  //par 32
-	static const unsigned int MAX_BUFFERS = 1024;  //8192
+	static const unsigned int HW_SRC = 256;  //par
+	static const unsigned int MAX_BUFFERS = 1024;  //
 
-	ALuint LoadEffect(struct REVERB_PRESET* reverb);
+	//  reverb
+	void SetReverb(std::string name);
 
+	std::string sReverb;  // info
+	void InitReverMap();
+	std::map <std::string, int> mapReverbs;
+	ALuint LoadEffect(const REVERB_PRESET* reverb);
+
+	//  var
 	int hw_sources_num;  // total number of available hardware sources < HW_SRC
-	int hw_sources_in_use;
-	int sources_in_use;
-	int buffers_in_use;
+	int hw_sources_use;
+	int sources_use;
+	int buffers_use;
 
 //private:
 	void recomputeAllSources();
@@ -61,7 +69,7 @@ public:
 	std::vector<SoundBase*> sources;
 	
 	//  helper for calculating the most audible sources
-	std::pair<int, float> sources_most_audible[MAX_BUFFERS];
+	std::pair<int, float> src_audible[MAX_BUFFERS];
 	
 	//  audio buffers: Array of AL buffers and filenames
 	std::vector<ALuint>  buffers;
@@ -69,8 +77,9 @@ public:
 
 	Ogre::Vector3 camera_position;
 
-	ALCdevice*    device;
-	ALCcontext*   context;
+	//  al vars
+	ALCdevice*  device;
+	ALCcontext* context;
 
 	ALuint slot, effect;
 

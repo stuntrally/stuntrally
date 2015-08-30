@@ -11,89 +11,13 @@
 using namespace Ogre;
 
 
-bool SoundBaseMgr::_checkALErrors(const char* file, int line)
-{
-	int err = alGetError();
-	if (err != AL_NO_ERROR)
-	{
-		char buf[4096] = {};
-		sprintf(buf, "))  OpenAL Error: %s (0x%x), @ %s:%d", alGetString(err), err, file, line);
-		LogO(buf);
-		return true;
-	}
-	return false;
-}
-
-//  Load Effect
-//---------------------------------------------------------------------------------------------
-ALuint SoundBaseMgr::LoadEffect(REVERB_PRESET* r)
-{
-	//  Create the effect object and check if we can do EAX reverb.
-	ALuint e = 0;
-	alGenEffects(1, &e);
-	if (alGetEnumValue("AL_EFFECT_EAXREVERB") != 0)
-	{
-		LogO("@  Using EAX Reverb");
-		alEffecti(e, AL_EFFECT_TYPE, AL_EFFECT_EAXREVERB);
-		alEffectf(e, AL_EAXREVERB_DENSITY, r->flDensity);
-		alEffectf(e, AL_EAXREVERB_DIFFUSION, r->flDiffusion);
-		alEffectf(e, AL_EAXREVERB_GAIN, r->flGain);
-		alEffectf(e, AL_EAXREVERB_GAINHF, r->flGainHF);
-		alEffectf(e, AL_EAXREVERB_GAINLF, r->flGainLF);
-		alEffectf(e, AL_EAXREVERB_DECAY_TIME, r->flDecayTime);
-		alEffectf(e, AL_EAXREVERB_DECAY_HFRATIO, r->flDecayHFRatio);
-		alEffectf(e, AL_EAXREVERB_DECAY_LFRATIO, r->flDecayLFRatio);
-		alEffectf(e, AL_EAXREVERB_REFLECTIONS_GAIN, r->flReflectionsGain);
-		alEffectf(e, AL_EAXREVERB_REFLECTIONS_DELAY, r->flReflectionsDelay);
-		alEffectfv(e,AL_EAXREVERB_REFLECTIONS_PAN, r->flReflectionsPan);
-		alEffectf(e, AL_EAXREVERB_LATE_REVERB_GAIN, r->flLateReverbGain);
-		alEffectf(e, AL_EAXREVERB_LATE_REVERB_DELAY, r->flLateReverbDelay);
-		alEffectfv(e,AL_EAXREVERB_LATE_REVERB_PAN, r->flLateReverbPan);
-		alEffectf(e, AL_EAXREVERB_ECHO_TIME, r->flEchoTime);
-		alEffectf(e, AL_EAXREVERB_ECHO_DEPTH, r->flEchoDepth);
-		alEffectf(e, AL_EAXREVERB_MODULATION_TIME, r->flModulationTime);
-		alEffectf(e, AL_EAXREVERB_MODULATION_DEPTH, r->flModulationDepth);
-		alEffectf(e, AL_EAXREVERB_AIR_ABSORPTION_GAINHF, r->flAirAbsorptionGainHF);
-		alEffectf(e, AL_EAXREVERB_HFREFERENCE, r->flHFReference);
-		alEffectf(e, AL_EAXREVERB_LFREFERENCE, r->flLFReference);
-		alEffectf(e, AL_EAXREVERB_ROOM_ROLLOFF_FACTOR, r->flRoomRolloffFactor);
-		alEffecti(e, AL_EAXREVERB_DECAY_HFLIMIT, r->iDecayHFLimit);
-	}else{
-		LogO("@  Using Standard Reverb");
-		alEffecti(e, AL_EFFECT_TYPE, AL_EFFECT_REVERB);
-		alEffectf(e, AL_REVERB_DENSITY, r->flDensity);
-		alEffectf(e, AL_REVERB_DIFFUSION, r->flDiffusion);
-		alEffectf(e, AL_REVERB_GAIN, r->flGain);
-		alEffectf(e, AL_REVERB_GAINHF, r->flGainHF);
-		alEffectf(e, AL_REVERB_DECAY_TIME, r->flDecayTime);
-		alEffectf(e, AL_REVERB_DECAY_HFRATIO, r->flDecayHFRatio);
-		alEffectf(e, AL_REVERB_REFLECTIONS_GAIN, r->flReflectionsGain);
-		alEffectf(e, AL_REVERB_REFLECTIONS_DELAY, r->flReflectionsDelay);
-		alEffectf(e, AL_REVERB_LATE_REVERB_GAIN, r->flLateReverbGain);
-		alEffectf(e, AL_REVERB_LATE_REVERB_DELAY, r->flLateReverbDelay);
-		alEffectf(e, AL_REVERB_AIR_ABSORPTION_GAINHF, r->flAirAbsorptionGainHF);
-		alEffectf(e, AL_REVERB_ROOM_ROLLOFF_FACTOR, r->flRoomRolloffFactor);
-		alEffecti(e, AL_REVERB_DECAY_HFLIMIT, r->iDecayHFLimit);
-	}
-
-	//  Check if an error occured, and clean up if so.
-	if (hasALErrors())
-	{
-		if (alIsEffect(e))
-			alDeleteEffects(1, &e);
-		return 0;
-	}
-	return e;
-}
- 
-
 //  Create
 //---------------------------------------------------------------------------------------------
 SoundBase* SoundBaseMgr::createSound(String file, String name)
 {
 	if (!device)  return NULL;
 
-	if (buffers_in_use >= MAX_BUFFERS)
+	if (buffers_use >= MAX_BUFFERS)
 	{
 		LogO("@  SoundManager: Reached MAX_AUDIO_BUFFERS limit (" + toStr(MAX_BUFFERS) + ")");
 		return NULL;
@@ -103,7 +27,7 @@ SoundBase* SoundBaseMgr::createSound(String file, String name)
 	int samples = 0;
 
 	//  is the file already loaded?
-	for (int i=0; i < buffers_in_use; ++i)
+	for (int i=0; i < buffers_use; ++i)
 	{
 		if (file == buffer_file[i])
 		{
@@ -115,41 +39,42 @@ SoundBase* SoundBaseMgr::createSound(String file, String name)
 
 	if (!buffer)
 	{
-		alGenBuffers(1, &buffers[buffers_in_use]);
+		alGenBuffers(1, &buffers[buffers_use]);
 
 		//  load the file
 		String ext = file.substr(file.length()-3);
 		if (ext == "wav")
 		{
-			if (!loadWAVFile(file, buffers[buffers_in_use], samples))
+			if (!loadWAVFile(file, buffers[buffers_use], samples))
 			{	//  error
-				alDeleteBuffers(1, &buffers[buffers_in_use]);
-				buffer_file[buffers_in_use] = "";
+				alDeleteBuffers(1, &buffers[buffers_use]);
+				buffer_file[buffers_use] = "";
 				return NULL;
 			}
 		}else if (ext == "ogg")
 		{
-			if (!loadOGGFile(file, buffers[buffers_in_use], samples))
+			if (!loadOGGFile(file, buffers[buffers_use], samples))
 			{	//  error
-				alDeleteBuffers(1, &buffers[buffers_in_use]);
-				buffer_file[buffers_in_use] = "";
+				alDeleteBuffers(1, &buffers[buffers_use]);
+				buffer_file[buffers_use] = "";
 				return NULL;
 			}
 		}else
 			LogO("@  Not supported sound file extension: "+ext);
 		
-		buffer = buffers[buffers_in_use];
-		buffer_file[buffers_in_use] = file;
+		buffer = buffers[buffers_use];
+		buffer_file[buffers_use] = file;
 	}
 
 	//LogO("@  samples: "+toStr(samples));
-	sources[buffers_in_use] = new SoundBase(buffer, this, buffers_in_use, samples);
-	sources[buffers_in_use]->name = name;
+	sources[buffers_use] = new SoundBase(buffer, this, buffers_use, samples);
+	sources[buffers_use]->name = name;
 
-	return sources[buffers_in_use++];
+	return sources[buffers_use++];
 }
 
 
+//---------------------------------------------------------------------------------------------
 //  WAV
 //---------------------------------------------------------------------------------------------
 bool SoundBaseMgr::loadWAVFile(String file, ALuint buffer, int& outSamples)
@@ -311,4 +236,81 @@ bool SoundBaseMgr::loadOGGFile(String file, ALuint buffer, int& outSamples)
 		return true;
 	}
 	LogO("@  Can't open OGG sound file: "+file);  return false;
+}
+
+
+//---------------------------------------------------------------------------------------------
+bool SoundBaseMgr::_checkALErrors(const char* file, int line)
+{
+	int err = alGetError();
+	if (err != AL_NO_ERROR)
+	{
+		char buf[4096] = {};
+		sprintf(buf, "))  OpenAL Error: %s (0x%x), @ %s:%d", alGetString(err), err, file, line);
+		LogO(buf);
+		return true;
+	}
+	return false;
+}
+
+//  Load Effect
+//---------------------------------------------------------------------------------------------
+ALuint SoundBaseMgr::LoadEffect(const REVERB_PRESET* r)
+{
+	//  Create the effect object and check if we can do EAX reverb.
+	ALuint e = 0;
+	alGenEffects(1, &e);
+	if (alGetEnumValue("AL_EFFECT_EAXREVERB") != 0)
+	{
+		LogO("@  Using EAX Reverb");
+		alEffecti(e, AL_EFFECT_TYPE, AL_EFFECT_EAXREVERB);
+		alEffectf(e, AL_EAXREVERB_DENSITY, r->flDensity);
+		alEffectf(e, AL_EAXREVERB_DIFFUSION, r->flDiffusion);
+		alEffectf(e, AL_EAXREVERB_GAIN, r->flGain);
+		alEffectf(e, AL_EAXREVERB_GAINHF, r->flGainHF);
+		alEffectf(e, AL_EAXREVERB_GAINLF, r->flGainLF);
+		alEffectf(e, AL_EAXREVERB_DECAY_TIME, r->flDecayTime);
+		alEffectf(e, AL_EAXREVERB_DECAY_HFRATIO, r->flDecayHFRatio);
+		alEffectf(e, AL_EAXREVERB_DECAY_LFRATIO, r->flDecayLFRatio);
+		alEffectf(e, AL_EAXREVERB_REFLECTIONS_GAIN, r->flReflectionsGain);
+		alEffectf(e, AL_EAXREVERB_REFLECTIONS_DELAY, r->flReflectionsDelay);
+		alEffectfv(e,AL_EAXREVERB_REFLECTIONS_PAN, r->flReflectionsPan);
+		alEffectf(e, AL_EAXREVERB_LATE_REVERB_GAIN, r->flLateReverbGain);
+		alEffectf(e, AL_EAXREVERB_LATE_REVERB_DELAY, r->flLateReverbDelay);
+		alEffectfv(e,AL_EAXREVERB_LATE_REVERB_PAN, r->flLateReverbPan);
+		alEffectf(e, AL_EAXREVERB_ECHO_TIME, r->flEchoTime);
+		alEffectf(e, AL_EAXREVERB_ECHO_DEPTH, r->flEchoDepth);
+		alEffectf(e, AL_EAXREVERB_MODULATION_TIME, r->flModulationTime);
+		alEffectf(e, AL_EAXREVERB_MODULATION_DEPTH, r->flModulationDepth);
+		alEffectf(e, AL_EAXREVERB_AIR_ABSORPTION_GAINHF, r->flAirAbsorptionGainHF);
+		alEffectf(e, AL_EAXREVERB_HFREFERENCE, r->flHFReference);
+		alEffectf(e, AL_EAXREVERB_LFREFERENCE, r->flLFReference);
+		alEffectf(e, AL_EAXREVERB_ROOM_ROLLOFF_FACTOR, r->flRoomRolloffFactor);
+		alEffecti(e, AL_EAXREVERB_DECAY_HFLIMIT, r->iDecayHFLimit);
+	}else{
+		LogO("@  Using Standard Reverb");
+		alEffecti(e, AL_EFFECT_TYPE, AL_EFFECT_REVERB);
+		alEffectf(e, AL_REVERB_DENSITY, r->flDensity);
+		alEffectf(e, AL_REVERB_DIFFUSION, r->flDiffusion);
+		alEffectf(e, AL_REVERB_GAIN, r->flGain);
+		alEffectf(e, AL_REVERB_GAINHF, r->flGainHF);
+		alEffectf(e, AL_REVERB_DECAY_TIME, r->flDecayTime);
+		alEffectf(e, AL_REVERB_DECAY_HFRATIO, r->flDecayHFRatio);
+		alEffectf(e, AL_REVERB_REFLECTIONS_GAIN, r->flReflectionsGain);
+		alEffectf(e, AL_REVERB_REFLECTIONS_DELAY, r->flReflectionsDelay);
+		alEffectf(e, AL_REVERB_LATE_REVERB_GAIN, r->flLateReverbGain);
+		alEffectf(e, AL_REVERB_LATE_REVERB_DELAY, r->flLateReverbDelay);
+		alEffectf(e, AL_REVERB_AIR_ABSORPTION_GAINHF, r->flAirAbsorptionGainHF);
+		alEffectf(e, AL_REVERB_ROOM_ROLLOFF_FACTOR, r->flRoomRolloffFactor);
+		alEffecti(e, AL_REVERB_DECAY_HFLIMIT, r->iDecayHFLimit);
+	}
+
+	//  Check if an error occured, and clean up if so.
+	if (hasALErrors())
+	{
+		if (alIsEffect(e))
+			alDeleteEffects(1, &e);
+		return 0;
+	}
+	return e;
 }
