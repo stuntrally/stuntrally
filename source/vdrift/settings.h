@@ -50,9 +50,12 @@ public:
 	float fov_min, fov_max, fov_smooth;
 	bool cam_loop_chng;  int cam_in_loop;
 	bool cam_bounce;  float cam_bnc_mul;
+	//  pacenotes
+	bool show_pace;  float pace_dist;
 	
 	eGraphType graphs_type;
 	int car_dbgtxtclr, car_dbgtxtcnt;
+	bool sounds_info;
 	//  gui
 	bool cars_sortup;  int cars_view, cars_sort;
 	int tut_type, champ_type, chall_type;

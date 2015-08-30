@@ -105,7 +105,9 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_size.fov", fov_min);		Param(c,w, "hud_size.fov_max", fov_max);
 	Param(c,w, "hud_size.fov_smooth", fov_smooth);
 	Param(c,w, "hud_size.cam_bounce", cam_bounce);		Param(c,w, "hud_size.cam_bnc_mul", cam_bnc_mul);
-
+	//  pacenotes
+	Param(c,w, "pacenotes.distance", pace_dist);
+	
 
 	//  graphics
 	Param(c,w, "graph_par.particles", particles);			Param(c,w, "graph_par.trails", trails);
@@ -180,7 +182,8 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,show_cam(1), show_times(0), show_digits(1)
 	,show_opponents(1), opplist_sort(true), cam_tilt(1)
 	,car_dbgtxt(0), car_dbgbars(0), car_dbgsurf(0), show_graphs(0)
-	,car_dbgtxtclr(0), car_dbgtxtcnt(0), car_tirevis(0)
+	,car_dbgtxtclr(0), car_dbgtxtcnt(0), car_tirevis(0), sounds_info(0)
+	
 	,size_gauges(0.18), size_minimap(0.2), size_minipos(0.1), zoom_minimap(1.0)
 	,mini_zoomed(0), mini_rotated(1), mini_terrain(0), mini_border(1)
 	,check_arrow(0),size_arrow(0.2), check_beam(1)
@@ -189,6 +192,9 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,cam_loop_chng(1), cam_in_loop(1)
 	,fov_min(90.f), fov_max(120.f), fov_smooth(5.f)
 	,cam_bounce(1), cam_bnc_mul(1.f)
+	//  pace
+	,show_pace(1), pace_dist(200.f)
+	
 	//  gui
 	,cars_view(0), cars_sort(1), cars_sortup(1)
 	,champ_type(0),tut_type(0),chall_type(0), champ_info(1)
