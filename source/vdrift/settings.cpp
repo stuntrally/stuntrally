@@ -102,11 +102,12 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_size.gauges_type", gauges_type);	//Param(c,w, "hud_size.gauges_layout", gauges_layout);
 	//  cam
 	Param(c,w, "hud_size.cam_loop_chng", cam_loop_chng); Param(c,w, "hud_size.cam_in_loop", cam_in_loop);
-	Param(c,w, "hud_size.fov", fov_min);		Param(c,w, "hud_size.fov_max", fov_max);
+	Param(c,w, "hud_size.fov", fov_min);				Param(c,w, "hud_size.fov_max", fov_max);
 	Param(c,w, "hud_size.fov_smooth", fov_smooth);
 	Param(c,w, "hud_size.cam_bounce", cam_bounce);		Param(c,w, "hud_size.cam_bnc_mul", cam_bnc_mul);
 	//  pacenotes
-	Param(c,w, "pacenotes.distance", pace_dist);		//Param(c,w, "show_pace
+	Param(c,w, "pacenotes.show", pace_show);		Param(c,w, "pacenotes.dist", pace_dist);
+	Param(c,w, "pacenotes.near", pace_near);		Param(c,w, "pacenotes.size", pace_size);
 	
 
 	//  graphics
@@ -193,7 +194,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,fov_min(90.f), fov_max(120.f), fov_smooth(5.f)
 	,cam_bounce(1), cam_bnc_mul(1.f)
 	//  pace
-	,show_pace(1), pace_dist(200.f)
+	,pace_show(1), pace_dist(200.f), pace_near(1.f), pace_size(1.f)
 	
 	//  gui
 	,cars_view(0), cars_sort(1), cars_sortup(1)

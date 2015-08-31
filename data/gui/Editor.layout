@@ -1487,6 +1487,22 @@
 				<Widget type="TextBox" skin="TextBox" position="32 188 60 24" name="PaceDistVal">
 					<Property key="TextColour" value="0.8 0.8 0.6"/>
 				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 260 268 24">
+					<Property key="Caption" value="#{Size}"/>
+					<Property key="TextColour" value="0.7 0.7 0.5"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="96 288 248 18" name="PaceSize"/>
+				<Widget type="TextBox" skin="TextBox" position="32 288 60 24" name="PaceSizeVal">
+					<Property key="TextColour" value="0.7 0.7 0.5"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 360 268 24">
+					<Property key="Caption" value="#{Near}"/>
+					<Property key="TextColour" value="0.6 0.6 0.4"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="96 388 248 18" name="PaceNear"/>
+				<Widget type="TextBox" skin="TextBox" position="32 388 60 24" name="PaceNearVal">
+					<Property key="TextColour" value="0.6 0.6 0.4"/>
+				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#E0A0A0#{Warnings}"/>

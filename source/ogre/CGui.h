@@ -212,15 +212,17 @@ public:
 	CK(Arrow);  CK(Beam);
 	CK(Minimap);  void chkMiniUpd(Ck*);
 	Ck ckMiniZoom, ckMiniRot, ckMiniTer, ckMiniBorder;
-	//  cam
+	//  Camera
 	Ck ckCamInfo, ckCamTilt, ckCamLoop;
 	Ck ckCamBnc;  SV svCamBnc;
 	SV svFov, svFovMax, svFovSm;
+	//  Pacenotes
+	Ck ckPaceShow;  SV svPaceDist, svPaceNear, svPaceSize;
+	void slUpd_Pace(SV*);
 	//  Times, opp
-	Ck ckTimes;
-	Ck ckOpponents, ckOppSort;
+	Ck ckTimes, ckOpponents, ckOppSort;
 
-	//  graphs
+	//  Graphs
 	SV svTC_r, svTC_xr;
 	SV svTE_yf, svTE_xfx, svTE_xfy, svTE_xpow;
 	Ck ckTE_Common, ckTE_Reference;  void chkTEupd(Ck*);

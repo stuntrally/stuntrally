@@ -311,6 +311,12 @@ void CGui::SldUpd_Game()
 	svGravity.UpdF(&sc->gravity);
 }
 
+//  Pacenotes
+void CGui::slUpd_Pace(SV*)
+{
+	scn->UpdPaceParams();
+}
+
 
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

@@ -375,8 +375,8 @@ void PaceNotes::UpdVis()
 	const Real dd = pApp->pSet->pace_dist, dd2 = dd*dd;
 	#ifdef SR_EDITOR
 	const int uu = pApp->pSet->pace_show;
-	#else
-	const int uu = 0;
+	#else  // game
+	const int uu = pApp->pSet->pace_show ? 1 : 0;
 	#endif
 
 	const Vector3& c = mCamera->getPosition();

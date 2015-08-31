@@ -363,6 +363,12 @@ void CGui::chkMiniUpd(Ck*)
 	hud->UpdMiniTer();
 }
 
+//  pacenotes
+void CGui::slUpd_Pace(SV*)
+{
+	app->scn->UpdPaceParams();
+}
+
 void CGui::chkReverse(Ck*){  gcom->ReadTrkStats();  }
 
 //  graphs

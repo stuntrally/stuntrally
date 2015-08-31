@@ -225,6 +225,7 @@ void App::SetFactoryDefaults()
 	fct.setSharedParameter("waterTimer", sh::makeProperty<sh::FloatValue>(new sh::FloatValue(0)));
 	fct.setSharedParameter("waterSunFade_sunHeight", sh::makeProperty<sh::Vector2>(new sh::Vector2(1, 0.6)));
 	fct.setSharedParameter("windDir_windSpeed", sh::makeProperty<sh::Vector3>(new sh::Vector3(0.5, -0.8, 0.2)));
+	fct.setSharedParameter("paceParams", sh::makeProperty<sh::Vector3>(new sh::Vector3(1.f, 5.f, 0.02f)));
 
 
 	///  uncomment to enable shader output to files
@@ -248,4 +249,10 @@ void App::SetFactoryDefaults()
 	mFactory->setCurrentLanguage(lang);
 
 	mFactory->loadAllFiles();
+}
+
+void CScene::UpdPaceParams()  // pacenotes
+{
+	app->mFactory->setSharedParameter("paceParams", sh::makeProperty<sh::Vector3>(new sh::Vector3(
+		app->pSet->pace_size, 5.f / app->pSet->pace_near, 0.03f * app->pSet->pace_near)));
 }

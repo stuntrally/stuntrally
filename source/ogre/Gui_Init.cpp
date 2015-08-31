@@ -218,7 +218,7 @@ void CGui::InitGui()
 	graphSSS->setWidth(3.5f);
 
 
-	///  Checks
+	///  View Checks
 	//------------------------------------------------------------------------
 	ck= &ckReverse;		ck->Init("ReverseOn",	&pSet->gui.trackreverse);  Cev(Reverse);
 
@@ -251,7 +251,13 @@ void CGui::InitGui()
 	sv= &svFov;			sv->Init("Fov",			&pSet->fov_min,   50.f, 180.f, 1.f, 1,4);  sv->DefaultF(90.f);
 	sv= &svFovMax;		sv->Init("FovMax",		&pSet->fov_max,   50.f, 180.f, 1.f, 1,4);  sv->DefaultF(120.f);
 	sv= &svFovSm;		sv->Init("FovSm",		&pSet->fov_smooth, 0.f, 15.f, 1.5f);  sv->DefaultF(5.f);
-
+	
+	//  pacenotes
+	ck= &ckPaceShow;	ck->Init("ChkPace",		&pSet->pace_show);
+	sv= &svPaceDist;	sv->Init("PaceDist",	&pSet->pace_dist,   20.f,1000.f, 2.f, 0,3);  sv->DefaultF(200.f);
+	sv= &svPaceNear;	sv->Init("PaceNear",	&pSet->pace_near,   0.1f,2.f);  sv->DefaultF(1.f);  Sev(Upd_Pace);
+	sv= &svPaceSize;	sv->Init("PaceSize",	&pSet->pace_size,   0.1f,2.f);  sv->DefaultF(1.f);  Sev(Upd_Pace);
+	//slUpd_Pace(0);
 
 	//  times, opp
 	ck= &ckTimes;		ck->Init("Times",       &pSet->show_times);      Cev(HudShow);

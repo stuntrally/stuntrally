@@ -212,15 +212,16 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					MyGUI::InputManager::getInstance().setKeyFocusWidget(gcom->edTrkFind);
 					return true;
 				}	break;
-
-
+			
+			
 			case key(F7):	//  Times
+				if (alt)	gui->ckCarDbgBars.Invert(); else
 				if (shift)	gui->ckOpponents.Invert(); else
 				if (!ctrl)	gui->ckTimes.Invert();
 				return false;
 
 			case key(F8):	//  Minimap
-				if (ctrl)	gui->ckCarDbgBars.Invert(); else
+				if (alt)	gui->ckPaceShow.Invert(); else
 				if (!shift)	gui->ckMinimap.Invert();
 				return false;
 

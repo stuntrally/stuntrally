@@ -2952,11 +2952,11 @@
 						</Widget>-->
 
 						<Widget type="Button" skin="CheckBox" position="32 256 184 24" name="Times">
-							<Property key="Caption" value="#{TimesBar} F7"/>
+							<Property key="Caption" value="#{TimesBar} #7890A8 F7"/>
 							<Property key="TextColour" value="0.75 0.88 1.0"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 296 184 24" name="Opponents">
-							<Property key="Caption" value="#{OpponentsList}  shift-F7"/>
+							<Property key="Caption" value="#{OpponentsList} #586878 shift-F7"/>
 							<Property key="TextColour" value="0.6 0.76 0.9"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="232 296 260 24" name="OppSort">
@@ -2989,6 +2989,59 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">
+						<Property key="Caption" value="#E0F8C0#{Pacenotes}"/>
+						<!--<Widget type="ImageBox" skin="ImageBox" position="620 140 80 80">
+							<Property key="ImageCoord" value="512 512 128 128"/>
+							<Property key="Alpha" value="0.7"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+						</Widget>-->
+
+						<Widget type="Button" skin="CheckBox" position="32 56 184 24" name="ChkPace">
+							<Property key="Caption" value="#{Pacenotes} #709050 alt-F8"/>
+							<Property key="TextColour" value="0.8 1.0 0.6"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="232 58 164 24">
+							<Property key="TextColour" value="0.9 0.9 0.7"/>
+							<Property key="Caption" value="#{ViewDist}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 96 320 18" name="PaceDist">
+							<Property key="Colour" value="0.9 0.9 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 96 48 24" name="PaceDistVal">
+							<Property key="TextColour" value="0.9 0.9 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="232 136 64 24">
+							<Property key="TextColour" value="0.8 0.8 0.6"/>
+							<Property key="Caption" value="#{Size}"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 136 320 18" name="PaceSize">
+							<Property key="Colour" value="0.8 0.8 0.6"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 136 48 24" name="PaceSizeVal">
+							<Property key="TextColour" value="0.8 0.8 0.6"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="232 176 64 24">
+							<Property key="Caption" value="#{Near}"/>
+							<Property key="TextColour" value="0.7 0.7 0.5"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 176 320 18" name="PaceNear">
+							<Property key="Colour" value="0.7 0.7 0.5"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 176 48 24" name="PaceNearVal">
+							<Property key="TextColour" value="0.7 0.7 0.5"/>
+						</Widget>
+						<!--<Widget type="TextBox" skin="TextBox" position="232 176 64 24">
+							<Property key="Caption" value="#{Layout}"/>
+							<Property key="TextColour" value="0.8 0.35 0.5"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 176 48 24" name="LayoutGaugVal">
+							<Property key="TextColour" value="0.8 0.4 0.6"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 176 216 16" name="LayoutGaug">
+							<Property key="Colour" value="0.9 0.7 0.8"/>
+						</Widget>-->
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 738 472">
 						<Property key="Caption" value="#60F8F8#{Minimap}"/>
 						<Widget type="ImageBox" skin="ImageBox" position="620 140 80 80">
 							<Property key="ImageCoord" value="512 512 128 128"/>
@@ -2997,7 +3050,7 @@
 						</Widget>
 
 						<Widget type="Button" skin="CheckBox" position="32 56 184 24" name="Minimap">
-							<Property key="Caption" value="#{Minimap} F8"/>
+							<Property key="Caption" value="#{Minimap} #509090 F8"/>
 							<Property key="TextColour" value="0.4 1.0 1.0"/>
 						</Widget>
 						<Widget type="Slider" skin="Slider" position="344 58 320 18" name="SizeMinimap">
@@ -3033,12 +3086,12 @@
 							<Property key="TextColour" value="0.6 0.9 0.75"/>
 						</Widget>
 
-						<Widget type="Button" skin="CheckBox" position="32 256 284 24" name="ChkBeam">
-							<Property key="Caption" value="#{CheckBeam}"/>
+						<Widget type="Button" skin="CheckBox" position="32 256 364 24" name="ChkBeam">
+							<Property key="Caption" value="#{CheckBeam} #507050 shift-F6"/>
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 						</Widget>
-						<Widget type="Button" skin="CheckBox" position="32 296 184 24" name="Arrow">
-							<Property key="Caption" value="#{CheckArrow}"/>
+						<Widget type="Button" skin="CheckBox" position="32 296 196 24" name="Arrow">
+							<Property key="Caption" value="#{CheckArrow} #587850 F6"/>
 							<Property key="TextColour" value="0.5 1.0 0.4"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="232 296 64 24">
@@ -3918,7 +3971,7 @@
 							<Property key="TextColour" value="0.7 0.9 0.7"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 120 320 24" name="CarDbgBars">
-							<Property key="Caption" value="#{CarDebug}  ctrl-F8"/>
+							<Property key="Caption" value="#{CarDebug}  alt-F7"/>
 							<Property key="TextColour" value="0.6 0.8 0.6"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 156 320 24" name="CarDbgSurf">

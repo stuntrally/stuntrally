@@ -294,7 +294,8 @@ public:
 	
 
 	//  [Pacenotes]  ----
-	SV svPaceShow, svPaceDist;
+	SV svPaceShow, svPaceDist, svPaceNear, svPaceSize;
+	void slUpd_Pace(SV*);
 
 
 	//  [Objects]  ----
