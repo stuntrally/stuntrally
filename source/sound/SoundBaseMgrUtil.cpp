@@ -274,10 +274,10 @@ ALuint SoundBaseMgr::LoadEffect(const REVERB_PRESET* r)
 		alEffectf(e, AL_EAXREVERB_DECAY_LFRATIO, r->flDecayLFRatio);
 		alEffectf(e, AL_EAXREVERB_REFLECTIONS_GAIN, r->flReflectionsGain);
 		alEffectf(e, AL_EAXREVERB_REFLECTIONS_DELAY, r->flReflectionsDelay);
-		alEffectfv(e,AL_EAXREVERB_REFLECTIONS_PAN, &r->flReflectionsPan[0]);
+		alEffectfv(e,AL_EAXREVERB_REFLECTIONS_PAN, (ALfloat*)&r->flReflectionsPan[0]);
 		alEffectf(e, AL_EAXREVERB_LATE_REVERB_GAIN, r->flLateReverbGain);
 		alEffectf(e, AL_EAXREVERB_LATE_REVERB_DELAY, r->flLateReverbDelay);
-		alEffectfv(e,AL_EAXREVERB_LATE_REVERB_PAN, &r->flLateReverbPan[0]);
+		alEffectfv(e,AL_EAXREVERB_LATE_REVERB_PAN, (ALfloat*)&r->flLateReverbPan[0]);
 		alEffectf(e, AL_EAXREVERB_ECHO_TIME, r->flEchoTime);
 		alEffectf(e, AL_EAXREVERB_ECHO_DEPTH, r->flEchoDepth);
 		alEffectf(e, AL_EAXREVERB_MODULATION_TIME, r->flModulationTime);
