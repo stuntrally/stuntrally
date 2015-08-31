@@ -10,10 +10,7 @@
 using namespace Ogre;
 
 
-//const float SoundBaseMgr::MAX_DISTANCE   = 500.f;  // for linear
-//const float SoundBaseMgr::REF_DISTANCE   = 1.0f;
-//const float SoundBaseMgr::ROLLOFF_FACTOR = 3.0f;
-const float SoundBaseMgr::MAX_DISTANCE	 = 500.f;  // 500  inverse
+const float SoundBaseMgr::MAX_DISTANCE	 = 500.f;  // 500
 const float SoundBaseMgr::REF_DISTANCE   = 1.0f;   // 1
 const float SoundBaseMgr::ROLLOFF_FACTOR = 0.05f;  // 0.05 0.1
 
@@ -140,32 +137,6 @@ void SoundBaseMgr::SetReverb(std::string name)
 	alDeleteEffects(1, &effect);
 }
 
-void SoundBaseMgr::InitReverMap()
-{
-	#define REV(a)  mapReverbs[#a] = RVB_##a +1;
-	REV(GENERIC)  //mapReverbs["GENERIC"] = RVB_GENERIC+1;
-	REV(FOREST)  //
-	REV(MOUNTAINS)  //`
-	REV(DOME_TOMB)
-	REV(PREFAB_CARAVAN)  //short
-	REV(OUTDOORS_VALLEY)
-	REV(OUTDOORS_ROLLINGPLAINS)  //`
-
-	REV(PLAIN)
-	//RVB_CARPETEDHALLWAY)  //RVB_CITY)  //RVB_PADDEDCELL)  //RVB_LIVINGROOM)  //none
-	//RVB_ROOM)  //RVB_PLAIN)  //RVB_PARKINGLOT)  //none
-
-	REV(SEWERPIPE)  REV(UNDERWATER)  //+
-	REV(STONECORRIDOR)  REV(HALLWAY)  REV(PIPE_SMALL)  REV(PIPE_LARGE)  //pipe`
-
-	REV(CASTLE_COURTYARD)  REV(STONEROOM)  //cave
-	REV(CAVE)  //cave rev
-	REV(QUARRY)  REV(CASTLE_LARGEROOM)  REV(WOODEN_HALL)  //echo`
-
-	REV(ARENA)  REV(AUDITORIUM)  REV(CONCERTHALL)  //long
-	REV(HANGAR)  REV(DIZZY)  REV(MOOD_HELL)  REV(DRUGGED)  REV(PSYCHOTIC)  //vlong
-}
-
 
 //  Create  --
 void SoundBaseMgr::CreateSources()
@@ -198,7 +169,7 @@ void SoundBaseMgr::DestroySources(bool all)
 	
 	LogO("@ @  Destroying hw sources.");
 	int i,i0;
-	for (i = 0; i < HW_SRC; ++i)
+	for (int i = 0; i < HW_SRC; ++i)
 	{
 		//LogO(toStr(i)+" -SRC: "+toStr(hw_sources[i]));
 		alSourceStop(hw_sources[i]);
@@ -207,7 +178,7 @@ void SoundBaseMgr::DestroySources(bool all)
 		--hw_sources_num;
 	}
 	i0 = all ? 0 : buffers_use_hud;
-	/*for (i = i0; i < buffers_use; ++i)
+	/*for (int i = i0; i < buffers_use; ++i)
 	{
 		//retire(i);
 		delete sources[i];
@@ -221,7 +192,6 @@ void SoundBaseMgr::DestroySources(bool all)
 //  Destroy
 SoundBaseMgr::~SoundBaseMgr()
 {
-
 	if (device)
 	{
 		alDeleteAuxiliaryEffectSlots(1, &slot);
@@ -422,6 +392,7 @@ void SoundBaseMgr::assign(int id, int hw_id)
 void SoundBaseMgr::retire(int id)
 {
 	if (!device)  return;
+	if (id < sources.size())  return;
 	if (sources[id]->hw_id == -1)  return;
 	
 	alSourceStop(hw_sources[sources[id]->hw_id]);

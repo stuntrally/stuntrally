@@ -316,10 +316,9 @@ if (bSound)
 		// todo: sum slip, spin, stop tire sounds
 
 		float pitch = std::min(1.f, std::max(0.f, (whVel[i]-5.0f)*0.1f ));
-		pitch = 1.0 - pitch;
-		pitch *= pitchvar;
+		pitch = (1.f - pitch) * pitchvar;
 		pitch = pitch + (1.f - pitchvar);
-		pitch = std::min(4.f, std::max(0.25f, pitch ));
+		pitch = std::min(2.f, std::max(0.25f, pitch ));
 
 		(*snd)[i]->setPosition(wh, ev);
 		(*snd)[i]->setGain(squeal[i]*maxgain * pSet->vol_tires);
