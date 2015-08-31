@@ -106,7 +106,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "hud_size.fov_smooth", fov_smooth);
 	Param(c,w, "hud_size.cam_bounce", cam_bounce);		Param(c,w, "hud_size.cam_bnc_mul", cam_bnc_mul);
 	//  pacenotes
-	Param(c,w, "pacenotes.distance", pace_dist);
+	Param(c,w, "pacenotes.distance", pace_dist);		//Param(c,w, "show_pace
 	
 
 	//  graphics

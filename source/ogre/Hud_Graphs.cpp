@@ -142,16 +142,15 @@ void App::CreateGraphs()
 		for (i=0; i < 5; ++i)
 		{
 			GraphView* gv = new GraphView(scm,mWindow,mGui);
-			c = i%3;
+			c = i%3;  String t;
 			gv->Create(1, "graphA5", i>=3 ? 0.30f : i>0 ? 0.f : 0.3f);
-			String t = i==0 ? "Sound Info" : "";
 			switch(i)
 			{
-				case 0:  gv->CreateTitle(t,	c, 0.f,-2, 20);  break;
-				case 1:  gv->CreateTitle(t,	c, 0.f,-3, 22);  break;
-				case 2:  gv->CreateTitle(t,	c, 0.f, 3, 24);  break;
-				case 3:  gv->CreateTitle(t,	8, 0.f,-2, 18,256,1);  break;
-				case 4:  gv->CreateTitle(t,	6, 0.f,-2, 18,256,1);  break;
+				case 0:  gv->CreateTitle(t,	c, 0.1f,-2, 20);  break;
+				case 1:  gv->CreateTitle(t,	c, 0.1f,-3, 22,3);  break;
+				case 2:  gv->CreateTitle(t,	c, 0.1f, 2, 24);  break;
+				case 3:  gv->CreateTitle(t,	8, 0.1f,-2, 18,256,1);  break;
+				case 4:  gv->CreateTitle(t,	6, 0.1f,-2, 18,256,1);  break;
 			}
 			if (i==4)	gv->SetSize(0.06f, 0.15f, 0.09f, 0.8f); else
 			if (i==3)	gv->SetSize(0.00f, 0.15f, 0.06f, 0.8f);
@@ -353,8 +352,9 @@ void App::GraphsNewVals()				// Game
 	if (gsi >= 5)
 	{
 		SoundBaseMgr* snd = pGame->snd->sound_mgr;
-		graphs[1]->UpdTitle("buf: "+toStr(snd->buffers_use)+" /"+toStr(SoundBaseMgr::MAX_BUFFERS)+"\n"+
-							"src: "+toStr(snd->sources_use)+" /"+toStr(snd->hw_sources_num)+"  "+snd->sReverb);
+		graphs[0]->UpdTitle("Sounds Info\n"+snd->sReverb);
+		graphs[1]->UpdTitle("\nbuf: "+toStr(snd->buffers_use)+" /"+toStr(SoundBaseMgr::MAX_BUFFERS)+"\n"+
+							"src: "+toStr(snd->sources_use)+" /"+toStr(snd->hw_sources_num));
 		graphs[2]->UpdTitle("hw: "+iToStr(snd->hw_sources_use,2)+" /"+toStr(SoundBaseMgr::HW_SRC));
 		
 		bool info = pSet->sounds_info;

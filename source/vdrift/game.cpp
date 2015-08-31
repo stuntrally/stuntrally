@@ -313,6 +313,8 @@ bool GAME::InitializeSound()
 	snd_win[i] = snd->createInstance("hud/win"+toStr(i),  0);
 	snd_fail = snd->createInstance("hud/fail",  0);
 
+	snd->sound_mgr->buffers_use_hud = snd->sound_mgr->buffers_use;  // save for reload
+
 	
 	snd->setMasterVolume(settings->vol_master);
 	//snd->setPaused(false);

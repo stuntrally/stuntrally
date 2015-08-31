@@ -44,7 +44,7 @@ public:
 	int hw_sources_num;  // total number of available hardware sources < HW_SRC
 	int hw_sources_use;
 	int sources_use;
-	int buffers_use;
+	int buffers_use, buffers_use_hud;
 
 //private:
 	void recomputeAllSources();

@@ -21,7 +21,7 @@ const float SoundBaseMgr::ROLLOFF_FACTOR = 0.05f;  // 0.05 0.1
 //  Init
 //---------------------------------------------------------------------------------------------
 SoundBaseMgr::SoundBaseMgr()
-	:buffers_use(0), sources_use(0)
+	:buffers_use(0), buffers_use_hud(0), sources_use(0)
 	,hw_sources_use(0), hw_sources_num(0)
 	,context(NULL), device(NULL)
 	,slot(0), effect(0), master_volume(1.f)
@@ -205,8 +205,8 @@ void SoundBaseMgr::DestroySources()
 		alDeleteSources(1, &hw_sources[i]);
 		--hw_sources_num;
 	}
-	// ??
-	//buffers_in_use = 0;  sources_in_use = 0;
+
+	buffers_use = buffers_use_hud;  //sources_use = 0;
 	hw_sources_use = 0;  //in retire  //hw_sources_num = 0;
 }
 
@@ -221,14 +221,8 @@ SoundBaseMgr::~SoundBaseMgr()
 	{
 		alDeleteAuxiliaryEffectSlots(1, &slot);
 
-		//  delete sources and buffers
-		DestroySources();  //DestroySources();  //..
-		//alDeleteSources(MAX_HW_SOURCES, hw_sources);
-		/*int i;
-		for (i = 0; i < HW_SRC; ++i)
-		{
-			alDeleteSources(1, &hw_sources[i]);
-		}*/
+		//  sources and buffers
+		DestroySources();  //..
 		alDeleteBuffers(MAX_BUFFERS, &buffers[0]);
 	}
 

@@ -438,8 +438,6 @@ if (bSound)
 			{
 				if (bSound)
 				{
-					//case 1: pGame->snd->sound_mgr->SetReverb("UNDERWATER"); break;
-
 					s.crash[i]->setGain(gain * pSet->vol_car_crash);
 					if (hitp)
 					s.crash[i]->setPosition(hp, ev);
