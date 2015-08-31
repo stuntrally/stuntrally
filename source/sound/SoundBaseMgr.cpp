@@ -30,9 +30,29 @@ SoundBaseMgr::SoundBaseMgr()
 	buffer_file.resize(MAX_BUFFERS);
 }
 
+void logList(const char *list)
+{
+	if (!list || *list == '\0')
+		LogO("@@@  None!");
+	else
+	do
+	{	LogO(String("@  ") + list);
+		list += strlen(list) + 1;
+	}
+	while (*list != '\0');
+}
+
 bool SoundBaseMgr::Init(std::string snd_device, bool reverb1)
 {
 	reverb = reverb1;
+
+    //  list devices
+    LogO("@  ---- Sound devices ----");
+    if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
+        logList(alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER));
+    else
+        logList(alcGetString(NULL, ALC_DEVICE_SPECIFIER));
+
 	
 	//  open device
 	if (snd_device == "")
@@ -131,7 +151,8 @@ void SoundBaseMgr::SetReverb(std::string name)
 	sReverb = name;
 	int r = mapReverbs[name] -1;
 	if (r < 0 || r >= RVB_PRESETS_ALL)
-	{	r = RVB_GENERIC;  // use generic
+	{
+		r = RVB_GENERIC;  // use generic
 		LogO("@  Reverb preset not found! "+name);
 		sReverb = "GENERIC, not found";
 	}
