@@ -204,7 +204,6 @@ public:
 	void UpdateSounds(float dt);
 	
 	bool LoadSounds(const std::string & carpath);
-	bool DestroySounds();
 		
 
 	//-------------------------------------------------------------------------------

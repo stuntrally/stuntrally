@@ -55,6 +55,7 @@ void App::CreateGraphs()
 	if (!graphs.empty())  return;
 	SceneManager* scm = mSplitMgr->mGuiSceneMgr;
 	bool tireEdit = false;
+	GraphView* gv;
 	int nWh = carModels[0]->numWheels, i,j,c,w,n;
 
 	switch (pSet->graphs_type)
@@ -62,7 +63,7 @@ void App::CreateGraphs()
 	case Gh_Fps:  /// fps
 		for (i=0; i < 2; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			gv = new GraphView(scm,mWindow,mGui);
 			c = i;
 			gv->Create(400, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
 			if (i == 0)
@@ -78,7 +79,7 @@ void App::CreateGraphs()
 	case Gh_CarAccelG:  /// car accel
 		for (i=0; i < 3; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			gv = new GraphView(scm,mWindow,mGui);
 			const int t[3] = {0,1,2};
 			c = t[i];
 			gv->Create(256, "graph"+toStr(c+1), i==0 ? 0.45f : 0.f);
@@ -98,7 +99,7 @@ void App::CreateGraphs()
 	case Gh_CamBounce:   /// cam bounce
 		for (i=0; i < 3; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			gv = new GraphView(scm,mWindow,mGui);
 			const int t[3] = {0,1,2};
 			c = t[i];
 			gv->Create(256, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
@@ -118,7 +119,7 @@ void App::CreateGraphs()
 	case Gh_BulletHit:  /// bullet hit
 		for (i=0; i < 6; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			gv = new GraphView(scm,mWindow,mGui);
 			c = i%6;  /*clr*/
 			gv->Create(256/*len*/, "graph"+toStr(c+1), i==0||i==2 ? 0.52f : 0.f/*alpha*/);
 			switch(i)
@@ -141,7 +142,7 @@ void App::CreateGraphs()
 	case Gh_Sound:  /// sound
 		for (i=0; i < 5; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			gv = new GraphView(scm,mWindow,mGui);
 			c = i%3;  String t;
 			gv->Create(1, "graphA5", i>=3 ? 0.30f : i>0 ? 0.f : 0.3f);
 			switch(i)
@@ -164,7 +165,7 @@ void App::CreateGraphs()
 	case Gh_Suspension:	 /// susp
 		for (i=0; i < nWh * 2; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			gv = new GraphView(scm,mWindow,mGui);
 			c = i % nWh;  bool w2 = nWh == 2, g1 = i/nWh;
 			gv->Create(256/*512*/, "graph"+toStr(c+1), c>0 ? 0.f : (i < 14 ? 0.44f : 0.62f));
 			if (c == 0)
@@ -190,7 +191,7 @@ void App::CreateGraphs()
 		for (j=0; j < 4; ++j)  // lat,long x2 for ref
 		for (i=0; i < TireNG; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			gv = new GraphView(scm,mWindow,mGui);
 			c = i;  bool b = j==1 || j==3, r = j >= 2;
 			gv->Create(TireLenG,
 				String("graph") + (b?"B":"A") + toStr(c*3/2) /*+ (r?"r":"")*/,
@@ -215,7 +216,7 @@ void App::CreateGraphs()
 	case Gh_Tires4Edit:  /// all tires pacejka vis,edit
 		for (i=0; i < nWh * 2; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			gv = new GraphView(scm,mWindow,mGui);
 			c = 2;  bool b = i >= nWh;
 			gv->Create(TireLenG, String("graph")+(b?"B":"A")+toStr(c), b ? 0.f : 0.3f, true);
 			gv->CreateGrid(6,6, 0.2f, 0.4f);
@@ -240,7 +241,7 @@ void App::CreateGraphs()
 		for (w=0; w < 6*2; ++w)
 		{
 			i = w % 6;  n = w / 6;
-			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			gv = new GraphView(scm,mWindow,mGui);
 			gv->Create(512, String("graph")+(n>0 ? "B":"A")+toStr(i), w>0 ? 0.f : 0.5f, true);
 			if (n == 0)
 			if (i == 0)	{   gv->CreateGrid(4,5, 0.f, 0.5f);
@@ -259,7 +260,7 @@ void App::CreateGraphs()
 	case Gh_Engine:  /// engine torque, power
 		for (i=0; i < 2; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			gv = new GraphView(scm,mWindow,mGui);
 			gv->Create(512, String("graph")+toStr(i*3+1), i>0 ? 0.f : 0.4f, true);
 			if (i == 0)
 			{	gv->CreateGrid(6,6, 0.f, 0.6f);
@@ -277,7 +278,7 @@ void App::CreateGraphs()
 	case Gh_Clutch:
 		for (i=0; i < 4; ++i)
 		{
-			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			gv = new GraphView(scm,mWindow,mGui);
 			gv->Create(160, String("graph")+toStr(3-i), i==0 ? 0.43f : i==3 ? 0.3f : 0.f);
 			if (i == 3)
 			{	gv->CreateGrid(6,1, 0.f, 0.3f);
@@ -300,7 +301,7 @@ void App::CreateGraphs()
 	case Gh_Diffs:
 		for (i=0; i < 3*2; ++i)
 		{	n = i/3;  c = i%3;
-			GraphView* gv = new GraphView(scm,mWindow,mGui);
+			gv = new GraphView(scm,mWindow,mGui);
 			gv->Create(256, String("graph")+(n?"B":"A")+toStr(c+2), n > 0 ? 0.f :  c<2 ? 0.4f : 0.3f);
 			if (i == 2)
 			{	gv->CreateGrid(4,1, 0.f, 0.3f);
@@ -326,7 +327,7 @@ void App::CreateGraphs()
 	if (tireEdit)
 	{
 		//  edit vals area
-		GraphView* gv = new GraphView(scm,mWindow,mGui);
+		gv = new GraphView(scm,mWindow,mGui);
 		gv->Create(1, "graphA6", 0.4f);  gv->CreateTitle("", 5+1, 0.f, -2, 24, 30/*, true*/);
 		gv->SetSize(0.73f, 0.48f, 0.07f, 0.44f);
 		gv->SetVisible(pSet->show_graphs);

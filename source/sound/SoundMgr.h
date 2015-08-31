@@ -6,6 +6,7 @@ class SoundBase;  class SoundBaseMgr;
 const int MAX_SOUNDS_PER_SCRIPT = 8;  // per 1 template
 
 
+///  sound template  from .cfg to create
 //---------------------------------------------------------------------------------------
 class SoundTemplate
 {
@@ -31,6 +32,7 @@ private:
 };
 
 
+///  Sound instance
 //---------------------------------------------------------------------------------------
 class Sound
 {
@@ -67,6 +69,8 @@ private:
 	bool engine;
 };
 
+
+///  Sounds manager
 //---------------------------------------------------------------------------------------
 class SoundMgr
 {
@@ -74,12 +78,10 @@ public:
 	SoundMgr();
 	~SoundMgr();
 
-	//  interface
-	void parseScript(Ogre::FileStreamDataStream* stream);
+	void parseScript(Ogre::FileStreamDataStream* stream);  // sounds.cfg
 
-	Sound* createInstance(Ogre::String templatename, int car);
+	Sound* createInstance(Ogre::String templatename, int car);  // new Sound
 
-	//  functions
 	void setPaused(bool mute);
 	void setMasterVolume(float vol);
 

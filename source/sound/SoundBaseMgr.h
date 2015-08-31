@@ -16,7 +16,7 @@ public:
 
 
 	//  main  ---
-	void CreateSources(), DestroySources();  // for game reload
+	void CreateSources(), DestroySources(bool all=false);  // for game reload
 
 	SoundBase* createSound(Ogre::String file, Ogre::String name);
 
@@ -48,7 +48,7 @@ public:
 
 //private:
 	void recomputeAllSources();
-	void recomputeSource(int source_id, int reason, float vfl, Ogre::Vector3 *vvec);
+	void recomputeSource(int source_id, int reason, float vfl, Ogre::Vector3* vvec);
 	ALuint getHwSource(int hw_id) {  return hw_sources[hw_id];  };
 
 	void assign(int source_id, int hw_id);

@@ -26,10 +26,10 @@ SoundBaseMgr::SoundBaseMgr()
 	,context(NULL), device(NULL)
 	,slot(0), effect(0), master_volume(1.f)
 {
-	hw_sources_map.resize(HW_SRC);
-	hw_sources.resize(HW_SRC);
-	sources.resize(MAX_BUFFERS);
-	buffers.resize(MAX_BUFFERS);
+	hw_sources_map.resize(HW_SRC,0);
+	hw_sources.resize(HW_SRC,0);
+	sources.resize(MAX_BUFFERS,0);
+	buffers.resize(MAX_BUFFERS,0);
 	buffer_file.resize(MAX_BUFFERS);
 
 
@@ -192,12 +192,13 @@ void SoundBaseMgr::CreateSources()
 }
 
 //  Destroy  --
-void SoundBaseMgr::DestroySources()
+void SoundBaseMgr::DestroySources(bool all)
 {
 	if (!device)  return;
 	
 	LogO("@ @  Destroying hw sources.");
-	for (int i = 0; i < HW_SRC; ++i)
+	int i,i0;
+	for (i = 0; i < HW_SRC; ++i)
 	{
 		//LogO(toStr(i)+" -SRC: "+toStr(hw_sources[i]));
 		alSourceStop(hw_sources[i]);
@@ -205,24 +206,28 @@ void SoundBaseMgr::DestroySources()
 		alDeleteSources(1, &hw_sources[i]);
 		--hw_sources_num;
 	}
+	i0 = all ? 0 : buffers_use_hud;
+	/*for (i = i0; i < buffers_use; ++i)
+	{
+		//retire(i);
+		delete sources[i];
+		sources[i] = 0;
+	}*/
 
-	buffers_use = buffers_use_hud;  //sources_use = 0;
+	buffers_use = i0;  //sources_use = 0;
 	hw_sources_use = 0;  //in retire  //hw_sources_num = 0;
 }
 
 //  Destroy
 SoundBaseMgr::~SoundBaseMgr()
 {
-	//todo: leaks..
-	//for (int i=0; i < buffers_in_use; ++i)
-	//	if (sources[i] && sources[i]->hw_id != -1)
-	//		delete sources[i];
+
 	if (device)
 	{
 		alDeleteAuxiliaryEffectSlots(1, &slot);
 
 		//  sources and buffers
-		DestroySources();  //..
+		DestroySources(true);
 		alDeleteBuffers(MAX_BUFFERS, &buffers[0]);
 	}
 

@@ -346,14 +346,6 @@ void GAME::UpdHudSndVol()
 //  do any necessary cleanup
 void GAME::End()
 {
-	delete snd_chk;  delete snd_chkwr;
-	delete snd_lap;  delete snd_lapbest;
-	delete snd_stage;  delete snd_fail;
-	for (int i=0; i < 3; ++i)
-	delete snd_win[i];
-	
-	delete snd;  snd = 0;
-
 	if (benchmode)
 	{
 		float mean_fps = displayframe / clocktime;
@@ -367,13 +359,21 @@ void GAME::End()
 
 	LogO("Game shutting down.");
 
+
 	LeaveGame(true);
 
-	//if (sound.Enabled())
-	//	sound.Pause(true); //stop the sound thread
+	//  hud sounds
+	delete snd_chk;  delete snd_chkwr;
+	delete snd_lap;  delete snd_lapbest;
+	delete snd_stage;  delete snd_fail;
+	for (int i=0; i < 3; ++i)
+	delete snd_win[i];
+	
+	delete snd;  snd = 0;
 
-	///+
-	settings->Save(PATHMANAGER::SettingsFile()); //save settings first incase later deinits cause crashes
+
+	///+  save settings first incase later deinits cause crashes
+	settings->Save(PATHMANAGER::SettingsFile());
 
 	collision.Clear();
 	track.Clear();
@@ -562,7 +562,7 @@ void GAME::LeaveGame(bool dstTrk)
 	cars.clear();
 
 	if (snd && hadCars)
-		snd->sound_mgr->DestroySources();  ///)
+		snd->sound_mgr->DestroySources(false);  ///)
 	
 	timer.Unload();
 
