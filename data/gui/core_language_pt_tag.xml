@@ -115,6 +115,7 @@
 	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
 	<Tag name="TipTexTiling">Texture tiling length (less means more repeats).</Tag>
 	<Tag name="InputKeyboardEmulation">Emulação do Teclado</Tag>
+	<Tag name="Reverb">Reverberation</Tag>
 	<Tag name="InputMapFlip">Virar</Tag>
 	<Tag name="TBLast">Último</Tag>
 	<Tag name="TrackBankAng">Ângulos de inclinação da estrada: média e máx., em graus.</Tag>
@@ -311,7 +312,7 @@
 	<Tag name="Effects">Efeitos</Tag>
 	<Tag name="WidthSteps">Width Steps</Tag>
 	<Tag name="Multiply">Multiply</Tag>
-	<Tag name="Hint-6text">Pressione [Ctrl] para o turbo. Dependendo das configurações, ele pode ser dado a cada volta, regenerar com o tempo, ou ser infinito.</Tag>
+	<Tag name="FullSoundsInfo">Full sounds info in graphs.</Tag>
 	<Tag name="GrassSway">Sway</Tag>
 	<Tag name="TipSpeedSensitiveSteering">Diminui o alcance da direção em altas velocidades.</Tag>
 	<Tag name="HDRTab">HDR</Tag>
@@ -924,6 +925,7 @@
 	<Tag name="ImpostorDist">Impostors dist.</Tag>
 	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
 	<Tag name="AlignSmooth">Smooth size</Tag>
+	<Tag name="smooth">smooth</Tag>
 	<Tag name="RollingResist">Rolling Resistance</Tag>
 	<Tag name="Hint-12text">Dê uma olhada em outros veículos, nós temos também naves espaciais, e pistas em outros planetas.</Tag>
 	<Tag name="TipGrassDens">How dense/rare will the grass be on terrain.</Tag>
@@ -1088,6 +1090,7 @@
 	<Tag name="ColSat">Saturação</Tag>
 	<Tag name="Collis.">Colis.</Tag>
 	<Tag name="Scenery">Cenário</Tag>
+	<Tag name="Hint-6text">Pressione [Ctrl] para o turbo. Dependendo das configurações, ele pode ser dado a cada volta, regenerar com o tempo, ou ser infinito.</Tag>
 	<Tag name="RenameAllOld">Rename All Old</Tag>
 	<Tag name="SC_Autumn">Outono</Tag>
 	<Tag name="Track">Pista</Tag>
@@ -1133,7 +1136,7 @@
 	<Tag name="GraphicsAll_VeryHigh">Muito Alto</Tag>
 	<Tag name="SC_Moss">Musgo</Tag>
 	<Tag name="Terrain">Terreno</Tag>
-	<Tag name="smooth">smooth</Tag>
+	<Tag name="Pacenotes">Pacenotes</Tag>
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="Hint-10text">Nos loops, a câmera irá automaticamente mudar para a visão interna, para facilitar a direção enquanto estiver dentro deles.</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>

@@ -115,6 +115,7 @@
 	<Tag name="SleepMS">Инт. сна [миллисек.]</Tag>
 	<Tag name="TipTexTiling">Длина текстуры покрытия плитками (меньше означает больше повторов).</Tag>
 	<Tag name="InputKeyboardEmulation">Эмуляция клавиатуры</Tag>
+	<Tag name="Reverb">Reverberation</Tag>
 	<Tag name="InputMapFlip">Перевор.</Tag>
 	<Tag name="TBLast">Посл.</Tag>
 	<Tag name="TrackBankAng">Углы виражей дороги: сред. и макс., в градусах.</Tag>
@@ -311,7 +312,7 @@
 	<Tag name="Effects">Эффекты</Tag>
 	<Tag name="WidthSteps">Ширина шага</Tag>
 	<Tag name="Multiply">Множить</Tag>
-	<Tag name="Hint-6text">Держи [Ctrl] для турбо. Зависит от настроек, турбо даётся за круг, восстанавливается за время, или бесконечное.</Tag>
+	<Tag name="FullSoundsInfo">Full sounds info in graphs.</Tag>
 	<Tag name="GrassSway">Качание</Tag>
 	<Tag name="TipSpeedSensitiveSteering">Уменьшает диапазон управления при увеличении скорости.</Tag>
 	<Tag name="HDRTab">HDR</Tag>
@@ -924,6 +925,7 @@
 	<Tag name="ImpostorDist">Дист. спрайта</Tag>
 	<Tag name="Road1SurfOnly">Только 1 дор. повер.</Tag>
 	<Tag name="AlignSmooth">Ровность</Tag>
+	<Tag name="smooth">ровный</Tag>
 	<Tag name="RollingResist">Сопротив. вращ.</Tag>
 	<Tag name="Hint-12text">Обратите внимание на машины, имеются также парящие космические корабли и трассы на других планетах.</Tag>
 	<Tag name="TipGrassDens">Как часто/редко трава будет на ландшафте.</Tag>
@@ -1088,6 +1090,7 @@
 	<Tag name="ColSat">Насыщен.</Tag>
 	<Tag name="Collis.">Столк.</Tag>
 	<Tag name="Scenery">Пейзаж</Tag>
+	<Tag name="Hint-6text">Держи [Ctrl] для турбо. Зависит от настроек, турбо даётся за круг, восстанавливается за время, или бесконечное.</Tag>
 	<Tag name="RenameAllOld">Переименовать Все Старые</Tag>
 	<Tag name="SC_Autumn">Осень</Tag>
 	<Tag name="Track">Трасса</Tag>
@@ -1133,7 +1136,7 @@
 	<Tag name="GraphicsAll_VeryHigh">Очень высокая</Tag>
 	<Tag name="SC_Moss">Болото</Tag>
 	<Tag name="Terrain">Ландш.</Tag>
-	<Tag name="smooth">ровный</Tag>
+	<Tag name="Pacenotes">Pacenotes</Tag>
 	<Tag name="Pitch">наклон</Tag>
 	<Tag name="Hint-10text">В петлях, камера автоматически переключается на внутренний вид, что помогает управлять в петле.</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - пред.,след. вкладка (alt - ниже)</Tag>

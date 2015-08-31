@@ -115,6 +115,7 @@
 	<Tag name="SleepMS">Intervallo sonno [milisec]</Tag>
 	<Tag name="TipTexTiling">Lunghezza texture tiling (meno significa più ripetizoni).</Tag>
 	<Tag name="InputKeyboardEmulation">Emulazione tastiera</Tag>
+	<Tag name="Reverb">Reverberation</Tag>
 	<Tag name="InputMapFlip">Ribalta l'auto</Tag>
 	<Tag name="TBLast">Ultimo</Tag>
 	<Tag name="TrackBankAng">Angoli di piegamento della strada: medio e massimo, in gradi.</Tag>
@@ -311,7 +312,7 @@
 	<Tag name="Effects">Effetti</Tag>
 	<Tag name="WidthSteps">Passi larghezza</Tag>
 	<Tag name="Multiply">Moltiplica</Tag>
-	<Tag name="Hint-6text">Hold [Ctrl] to boost. Depending on the settings, boost is given each lap, regenerates over time, or is infinite.</Tag>
+	<Tag name="FullSoundsInfo">Full sounds info in graphs.</Tag>
 	<Tag name="GrassSway">Ondeggiamento</Tag>
 	<Tag name="TipSpeedSensitiveSteering">Riduci il raggio di sterzata con maggiore velocità.</Tag>
 	<Tag name="HDRTab">HDR</Tag>
@@ -924,6 +925,7 @@
 	<Tag name="ImpostorDist">Dist. impostori</Tag>
 	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
 	<Tag name="AlignSmooth">Dim. smooth</Tag>
+	<Tag name="smooth">smooth</Tag>
 	<Tag name="RollingResist">Rolling Resistance</Tag>
 	<Tag name="Hint-12text">Check out other vehicles, we also have hovering spaceships, and tracks on other planets.</Tag>
 	<Tag name="TipGrassDens">Quanto fitta/scarsa sarà l'erba presente sul terreno.</Tag>
@@ -1088,6 +1090,7 @@
 	<Tag name="ColSat">Saturazione</Tag>
 	<Tag name="Collis.">Collis.</Tag>
 	<Tag name="Scenery">Scenario</Tag>
+	<Tag name="Hint-6text">Hold [Ctrl] to boost. Depending on the settings, boost is given each lap, regenerates over time, or is infinite.</Tag>
 	<Tag name="RenameAllOld">Rename All Old</Tag>
 	<Tag name="SC_Autumn">Autunno</Tag>
 	<Tag name="Track">Pista</Tag>
@@ -1133,7 +1136,7 @@
 	<Tag name="GraphicsAll_VeryHigh">Molto alta</Tag>
 	<Tag name="SC_Moss">Palude</Tag>
 	<Tag name="Terrain">Terreno</Tag>
-	<Tag name="smooth">smooth</Tag>
+	<Tag name="Pacenotes">Pacenotes</Tag>
 	<Tag name="Pitch">pitch</Tag>
 	<Tag name="Hint-10text">In loops, the camera will automatically switch to an interior view, to make it easier to steer while in a loop.</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prec.,pross. scheda (alt - sottoschede)</Tag>

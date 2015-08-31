@@ -115,6 +115,7 @@
 	<Tag name="SleepMS">Schlafintervall (ms)</Tag>
 	<Tag name="TipTexTiling">Kachellänge der Textur (kleinerer Wert bedeutet mehr Wiederholungen)</Tag>
 	<Tag name="InputKeyboardEmulation">Tastaturemulation</Tag>
+	<Tag name="Reverb">Reverberation</Tag>
 	<Tag name="InputMapFlip">Umdrehen</Tag>
 	<Tag name="TBLast">Letzte</Tag>
 	<Tag name="TrackBankAng">Straßenbankett: Schnitt und Maximum, in Grad.</Tag>
@@ -311,7 +312,7 @@
 	<Tag name="Effects">Effekte</Tag>
 	<Tag name="WidthSteps">Breiten-Steps</Tag>
 	<Tag name="Multiply">Multiplizieren</Tag>
-	<Tag name="Hint-6text">Halten sie [Strg] gedrückt, um den Boost zu benutzen. Abhängig von den Einstellungen wird Treibstoff für den Boost wahlweise jede Runde, über die Zeit oder unbegrenzt vergeben.</Tag>
+	<Tag name="FullSoundsInfo">Full sounds info in graphs.</Tag>
 	<Tag name="GrassSway">Schaukeln</Tag>
 	<Tag name="TipSpeedSensitiveSteering">Reduziert die Lenkreichweite bei hoher Geschwindigkeit.</Tag>
 	<Tag name="HDRTab">HDR</Tag>
@@ -924,6 +925,7 @@
 	<Tag name="ImpostorDist">Bestrügerabstand</Tag>
 	<Tag name="Road1SurfOnly">Nur 1 Straßenbelag</Tag>
 	<Tag name="AlignSmooth">Glättungsgröße</Tag>
+	<Tag name="smooth">Glättung</Tag>
 	<Tag name="RollingResist">Rollwiderstand</Tag>
 	<Tag name="Hint-12text">Versuchen Sie es auch mit anderen Fahrzeugen; wir haben auch schwebende Raumschiffe und Strecken auf anderen Planeten.</Tag>
 	<Tag name="TipGrassDens">Wie häufig/selten wird das Gras auf Gelände aufkommen.</Tag>
@@ -1088,6 +1090,7 @@
 	<Tag name="ColSat">Sättigung</Tag>
 	<Tag name="Collis.">Kollis.</Tag>
 	<Tag name="Scenery">Landschaft</Tag>
+	<Tag name="Hint-6text">Halten sie [Strg] gedrückt, um den Boost zu benutzen. Abhängig von den Einstellungen wird Treibstoff für den Boost wahlweise jede Runde, über die Zeit oder unbegrenzt vergeben.</Tag>
 	<Tag name="RenameAllOld">Alle Alten umbenennen</Tag>
 	<Tag name="SC_Autumn">Herbst</Tag>
 	<Tag name="Track">Strecke</Tag>
@@ -1133,7 +1136,7 @@
 	<Tag name="GraphicsAll_VeryHigh">Sehr hoch</Tag>
 	<Tag name="SC_Moss">Moos</Tag>
 	<Tag name="Terrain">Gelände</Tag>
-	<Tag name="smooth">Glättung</Tag>
+	<Tag name="Pacenotes">Pacenotes</Tag>
 	<Tag name="Pitch">Nick</Tag>
 	<Tag name="Hint-10text">In Loopings wird die Kamera automatisch zu einer Innenansicht wechseln, um das Lenken innerhalb eines Loopings zu vereinfachen.</Tag>
 	<Tag name="InputNextOptTab">F2/F3 - Vorh./nächst. Tab (Alt: Untertab)</Tag>

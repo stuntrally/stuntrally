@@ -115,6 +115,7 @@
 	<Tag name="SleepMS">Intervalle de repos en millisecondes</Tag>
 	<Tag name="TipTexTiling">Répétitions de la texture (moins = plus de répétitions).</Tag>
 	<Tag name="InputKeyboardEmulation">Émulation du clavier</Tag>
+	<Tag name="Reverb">Reverberation</Tag>
 	<Tag name="InputMapFlip">Retourner</Tag>
 	<Tag name="TBLast">Dernier</Tag>
 	<Tag name="TrackBankAng">Angles d'incurvation de la route : moyen et maximum, en degrés.</Tag>
@@ -311,7 +312,7 @@
 	<Tag name="Effects">Effets</Tag>
 	<Tag name="WidthSteps">Mesures de largeur</Tag>
 	<Tag name="Multiply">Multiplier</Tag>
-	<Tag name="Hint-6text">Utilisez [Ctrl] pour vous propulser. En fonction des réglages, le turbo est donné à chaque tour, se régénère avec le temps, ou est tout simplement infini.</Tag>
+	<Tag name="FullSoundsInfo">Full sounds info in graphs.</Tag>
 	<Tag name="GrassSway">Vent</Tag>
 	<Tag name="TipSpeedSensitiveSteering">Rend la direction moins forte avec des vitesses élevées.</Tag>
 	<Tag name="HDRTab">HDR</Tag>
@@ -924,6 +925,7 @@
 	<Tag name="ImpostorDist">Distance des sprites</Tag>
 	<Tag name="Road1SurfOnly">Seulement 1 surface de route</Tag>
 	<Tag name="AlignSmooth">Taille d'adoucissement</Tag>
+	<Tag name="smooth">doux</Tag>
 	<Tag name="RollingResist">Rolling Resistance</Tag>
 	<Tag name="Hint-12text">Jetez un coup d'œil aux autres véhicules, nous avons également des vaisseaux spatiaux et des circuits sur d'autres planètes.</Tag>
 	<Tag name="TipGrassDens">À quelle fréquence l'herbe apparaîtra sur le terrain.</Tag>
@@ -1088,6 +1090,7 @@
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="Collis.">Collision</Tag>
 	<Tag name="Scenery">Paysage</Tag>
+	<Tag name="Hint-6text">Utilisez [Ctrl] pour vous propulser. En fonction des réglages, le turbo est donné à chaque tour, se régénère avec le temps, ou est tout simplement infini.</Tag>
 	<Tag name="RenameAllOld">Renommer tous les anciens</Tag>
 	<Tag name="SC_Autumn">Automne</Tag>
 	<Tag name="Track">Circuit</Tag>
@@ -1133,7 +1136,7 @@
 	<Tag name="GraphicsAll_VeryHigh">Très élevé</Tag>
 	<Tag name="SC_Moss">Mousse</Tag>
 	<Tag name="Terrain">Terrain</Tag>
-	<Tag name="smooth">doux</Tag>
+	<Tag name="Pacenotes">Pacenotes</Tag>
 	<Tag name="Pitch">angle vertical</Tag>
 	<Tag name="Hint-10text">Dans les boucles, la caméra se transforme automatiquement en vue intérieure, de manière à rendre la conduite plus facile.</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - onglet précédent/suivant (Alt. - sous-onglet)</Tag>

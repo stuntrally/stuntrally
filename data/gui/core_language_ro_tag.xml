@@ -115,6 +115,7 @@
 	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
 	<Tag name="TipTexTiling">Texture tiling length (less means more repeats).</Tag>
 	<Tag name="InputKeyboardEmulation">Keyboard Emulation</Tag>
+	<Tag name="Reverb">Reverberation</Tag>
 	<Tag name="InputMapFlip">Flip</Tag>
 	<Tag name="TBLast">Ultimul</Tag>
 	<Tag name="TrackBankAng">Road banking angles: average and maximum, in degrees.</Tag>
@@ -311,7 +312,7 @@
 	<Tag name="Effects">Efecte</Tag>
 	<Tag name="WidthSteps">Trepte lățime</Tag>
 	<Tag name="Multiply">Multiply</Tag>
-	<Tag name="Hint-6text">Hold [Ctrl] to boost. Depending on the settings, boost is given each lap, regenerates over time, or is infinite.</Tag>
+	<Tag name="FullSoundsInfo">Full sounds info in graphs.</Tag>
 	<Tag name="GrassSway">Sway</Tag>
 	<Tag name="TipSpeedSensitiveSteering">Decreases steering range with higher velocity.</Tag>
 	<Tag name="HDRTab">HDR</Tag>
@@ -924,6 +925,7 @@
 	<Tag name="ImpostorDist">Impostors dist.</Tag>
 	<Tag name="Road1SurfOnly">Only 1 road surface</Tag>
 	<Tag name="AlignSmooth">Smooth size</Tag>
+	<Tag name="smooth">smooth</Tag>
 	<Tag name="RollingResist">Rolling Resistance</Tag>
 	<Tag name="Hint-12text">Check out other vehicles, we also have hovering spaceships, and tracks on other planets.</Tag>
 	<Tag name="TipGrassDens">How dense/rare will the grass be on terrain.</Tag>
@@ -1088,6 +1090,7 @@
 	<Tag name="ColSat">Saturation</Tag>
 	<Tag name="Collis.">Collis.</Tag>
 	<Tag name="Scenery">Scenery</Tag>
+	<Tag name="Hint-6text">Hold [Ctrl] to boost. Depending on the settings, boost is given each lap, regenerates over time, or is infinite.</Tag>
 	<Tag name="RenameAllOld">Rename All Old</Tag>
 	<Tag name="SC_Autumn">Autumn</Tag>
 	<Tag name="Track">Track</Tag>
@@ -1133,7 +1136,7 @@
 	<Tag name="GraphicsAll_VeryHigh">Very High</Tag>
 	<Tag name="SC_Moss">Moss</Tag>
 	<Tag name="Terrain">Teren</Tag>
-	<Tag name="smooth">smooth</Tag>
+	<Tag name="Pacenotes">Pacenotes</Tag>
 	<Tag name="Pitch">gudron</Tag>
 	<Tag name="Hint-10text">In loops, the camera will automatically switch to an interior view, to make it easier to steer while in a loop.</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - prev,next tab (alt - sub-tab)</Tag>
