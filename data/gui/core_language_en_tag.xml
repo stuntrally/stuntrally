@@ -817,6 +817,7 @@
 	<Tag name="Tires">Tires</Tag>
 	<Tag name="Suspension">Suspension</Tag>
 	<Tag name="Environment">Environment</Tag>
+	<Tag name="Reverb">Reverberation</Tag>
 
 	<!--  Sound  other  -->
 	<Tag name="FluidSplash">Fluid Splash</Tag>

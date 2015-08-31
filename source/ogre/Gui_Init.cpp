@@ -169,6 +169,7 @@ void CGui::InitGui()
 
 	//  Sound
 	sv= &svVolMaster;	sv->Init("VolMaster",	&pSet->vol_master, 0.f, 2.0f);  sv->DefaultF(0.80f);  Sev(VolMaster);
+	ck= &ckReverb;		ck->Init("ChkReverb",   &pSet->snd_reverb);
 
 	sv= &svVolEngine;	sv->Init("VolEngine",	&pSet->vol_engine, 0.f, 1.4f);  sv->DefaultF(0.56f);
 	sv= &svVolTires;	sv->Init("VolTires",	&pSet->vol_tires,  0.f, 1.4f);  sv->DefaultF(0.80f);

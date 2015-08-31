@@ -147,6 +147,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	
 	//  sound
+	Param(c,w, "sound.device", snd_device);			Param(c,w, "sound.reverb", snd_reverb);
 	Param(c,w, "sound.volume", vol_master);			Param(c,w, "sound.vol_engine", vol_engine);
 	Param(c,w, "sound.vol_tires", vol_tires);		Param(c,w, "sound.vol_env", vol_env);
 	Param(c,w, "sound.vol_susp", vol_susp);
@@ -236,6 +237,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,vol_master(1.f), vol_engine(0.6f), vol_tires(1.f), vol_env(1.f), vol_susp(1.f)
 	,vol_fl_splash(1.f),vol_fl_cont(1.f), vol_car_crash(1.f),vol_car_scrap(1.f)
 	,vol_hud(1.f), snd_chk(0), snd_chkwr(1)
+	,snd_device(""), snd_reverb(1)
 	//  video eff
 	,all_effects(false), godrays(false), filmgrain(false)
 	,bloom(false), bloom_int(0.13), bloom_orig(0.9), hdr(false)

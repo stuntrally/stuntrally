@@ -196,7 +196,7 @@ public:
 	SlV(VolMaster);  SlV(VolHud);
 	SV svVolEngine, svVolTires, svVolSusp, svVolEnv;
 	SV svVolFlSplash, svVolFlCont, svVolCarCrash, svVolCarScrap;
-	Ck ckSndChk, ckSndChkWr;
+	Ck ckSndChk, ckSndChkWr, ckReverb;
 	
 	
 	///  Checks  . . . . . . . . . . . . . . . . . . . .

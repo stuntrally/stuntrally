@@ -281,11 +281,13 @@ bool GAME::LoadSusp()
 //------------------------------------------------------------------------------------------------------------------------------
 
 
+///  Sound Init
 bool GAME::InitializeSound()
 {
 	Ogre::Timer ti;
 	
 	snd = new SoundMgr();
+	snd->Init(settings->snd_device, settings->snd_reverb);
 	snd->setMasterVolume(0.f);
 	using namespace Ogre;
 

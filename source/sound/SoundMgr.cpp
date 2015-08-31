@@ -11,16 +11,22 @@ using namespace Ogre;
 //---------------------------------------------------------------------------------------
 SoundMgr::SoundMgr()
 	:disabled(true), sound_mgr(0)
+{	}
+
+bool SoundMgr::Init(std::string snd_device, bool reverb)
 {
 	sound_mgr = new SoundBaseMgr();
-	if (!sound_mgr)
-	{	LogO("@  SoundScript: Failed to create Sound Manager");  return;  }
+
+	bool ok = sound_mgr->Init(snd_device, reverb);
+	if (!ok)
+	{	LogO("@  SoundScript: Failed to create Sound Manager");  return false;  }
 
 	disabled = sound_mgr->isDisabled();
 	if (disabled)
-	{	LogO("@  SoundScript: Sound Manager is disabled");  return;  }
+	{	LogO("@  SoundScript: Sound Manager is disabled");  return false;  }
 
 	LogO("@  SoundScript: Sound Manager started with " + toStr(sound_mgr->hw_sources_num)+" sources");
+	return true;
 }
 
 SoundMgr::~SoundMgr()

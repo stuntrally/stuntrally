@@ -16,8 +16,8 @@ public:
     SoundBaseMgr();
 	~SoundBaseMgr();
 
-
 	//  main  ---
+	bool Init(std::string snd_device, bool reverb1);
 	void CreateSources(), DestroySources(bool all=false);  // for game reload
 
 	SoundBase* createSound(Ogre::String file, Ogre::String name);
@@ -34,9 +34,10 @@ public:
 	static const unsigned int HW_SRC = 256;  //par
 	static const unsigned int MAX_BUFFERS = 1024;  //
 
-	//  reverb
+	//  reverb  ---
 	void SetReverb(std::string name);
 
+	bool reverb;
 	std::string sReverb;  // info
 	void InitReverMap();
 	std::map <std::string, int> mapReverbs;
@@ -62,6 +63,7 @@ public:
 
 	//  ambient sound (own, low level)
 	ALuint amb_source, amb_buffer;
+
 	
 	//  active audio sources (hardware sources)
 	std::vector<int>  hw_sources_map;   // stores the hardware index for each source. -1 = unmapped

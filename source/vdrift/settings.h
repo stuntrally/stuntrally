@@ -20,7 +20,7 @@ enum eGraphType  {
 const static std::string csGraphNames[Gh_ALL] = {
 	"Fps graphics perf.", "Car Accel G's",
 	"Camera bounce", "Car Hit chassis",
-	"Sound volume & pan, wave",
+	"Sound info, sources",
 	"Suspension pos & vel",
 	"Tires slip| & slide-",
 	"Tire Edit (Pacejka coeffs)*", "All Tires Pacejka vis and edit*",
@@ -129,6 +129,7 @@ public:
 		vol_engine, vol_tires, vol_susp, vol_env,
 		vol_fl_splash,vol_fl_cont, vol_car_crash,vol_car_scrap;
 	bool snd_chk, snd_chkwr;  // play hud
+	bool snd_reverb;  std::string snd_device;
 	
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq,  perf_speed;

@@ -28,20 +28,23 @@ SoundBaseMgr::SoundBaseMgr()
 	sources.resize(MAX_BUFFERS,0);
 	buffers.resize(MAX_BUFFERS,0);
 	buffer_file.resize(MAX_BUFFERS);
+}
 
-
+bool SoundBaseMgr::Init(std::string snd_device, bool reverb1)
+{
+	reverb = reverb1;
+	
 	//  open device
-	String sdevice = "";  //par
-	if (sdevice == "")
+	if (snd_device == "")
 		device = alcOpenDevice(NULL);
 	else
-		device = alcOpenDevice(sdevice.c_str());
+		device = alcOpenDevice(snd_device.c_str());
 
 	if (!device)
 	{
 		LogO("@@@  Sound Init - Could not open device");
 		hasALErrors();
-		return;
+		return false;
 	}
 
 	//  efx
@@ -55,7 +58,7 @@ SoundBaseMgr::SoundBaseMgr()
 
 
 	//  context
-	context = alcCreateContext(device, attr/*NULL*/);
+	context = alcCreateContext(device, reverb ? attr : NULL);
 	if (context == NULL ||
 		alcMakeContextCurrent(context) == ALC_FALSE)
 	{
@@ -65,7 +68,7 @@ SoundBaseMgr::SoundBaseMgr()
 		alcCloseDevice(device);
 		device = NULL;
 		hasALErrors();
-		return;
+		return false;
 	}
 
 	
@@ -99,17 +102,24 @@ SoundBaseMgr::SoundBaseMgr()
 
 
 	//  doppler
-	alDopplerFactor(0.f);  //1.f
+	alDopplerFactor(0.f);  // 1.f  todo: vel..
 	//alDopplerVelocity(343.f);
 
 	alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);  //+
 
 	//  reverb
+	if (!reverb)
+	{
+		LogO("@  Not using reverb.");
+		return true;
+	}
+
 	//  slot is what plays an effect on sources that connect to it
 	alGenAuxiliaryEffectSlots(1, &slot);
 	InitReverMap();
 	
-	SetReverb("FOREST");
+	SetReverb("MOUNTAINS");
+	return true;
 }
 
 
@@ -117,11 +127,13 @@ SoundBaseMgr::SoundBaseMgr()
 //-----------------------------------------------------------------------------------
 void SoundBaseMgr::SetReverb(std::string name)
 {
+	if (!reverb)  return;
 	sReverb = name;
 	int r = mapReverbs[name] -1;
 	if (r < 0 || r >= RVB_PRESETS_ALL)
 	{	r = RVB_GENERIC;  // use generic
 		LogO("@  Reverb preset not found! "+name);
+		sReverb = "GENERIC, not found";
 	}
 	const REVERB_PRESET* reverb = &ReverbPresets[r];
 
@@ -194,7 +206,8 @@ SoundBaseMgr::~SoundBaseMgr()
 {
 	if (device)
 	{
-		alDeleteAuxiliaryEffectSlots(1, &slot);
+		if (reverb)
+			alDeleteAuxiliaryEffectSlots(1, &slot);
 
 		//  sources and buffers
 		DestroySources(true);
@@ -362,7 +375,7 @@ void SoundBaseMgr::assign(int id, int hw_id)
 	alSourcei(source, AL_BUFFER, sources[id]->buffer);
 
 	// use reverb +
-	if (!sources[id]->is2D)
+	if (reverb && !sources[id]->is2D)
 		alSource3i(source, AL_AUXILIARY_SEND_FILTER, slot, 0, AL_FILTER_NULL);
 
 	alSourcef(source, AL_GAIN, sources[id]->gain * master_volume);
