@@ -257,7 +257,8 @@ void Sound::setPitch(float value)
 	//if (start_sound)  // only pitch looped
 	if (templ->free_sound == 0)  return;
 
-	for (int i=0; i < templ->free_sound; ++i)
+	int i, ii = templ->free_sound;
+	for (int i=0; i < ii; ++i)
 		if (sounds[i])
 		{
 			float fq = templ->sound_pitches[i];
@@ -271,6 +272,8 @@ void Sound::setPitch(float value)
 			if (p < 1.f) {  v = 1.f - (1.f - p)*2.f;  if (v < 0.f)  v = 0.f;  }
 			
 			if (engine && v < 0.001f)  v = 0.001f;  // engine always on
+			if (ii == 1)  v = 1.f;
+			
 			pitch_gain[i] = v;
 			sounds[i]->setGain(v * lastgain);
 			sounds[i]->setPitch(p);
@@ -282,8 +285,8 @@ void Sound::setPitch(float value)
 //---------------------------------------------------------------------
 void Sound::setGain(float value)
 {
-	if (fabs(lastgain - value) < 0.001f)
-		return;
+	//if (fabs(lastgain - value) < 0.001f)
+	//	return;
 	
 	if (start_sound)
 		start_sound->setGain(value);

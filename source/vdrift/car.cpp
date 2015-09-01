@@ -284,11 +284,11 @@ float CAR::GetTireSquealAmount(WHEEL_POSITION i, float* slide, float* s1, float*
 
 	float wheelspeed = dynamics.GetWheel(i).GetAngularVelocity() * dynamics.GetWheel(i).GetRadius();
 	groundvel[0] -= wheelspeed;
-	groundvel[1] *= 2.0;
-	groundvel[2] = 0;
+	groundvel[1] *= 2.f;
+	groundvel[2] = 0.f;
 
-	float squeal = (groundvel.Magnitude() - 3.0) * 0.2;
-	if (slide)  *slide = squeal + 0.6;
+	float squeal = (groundvel.Magnitude() - 3.f) * 0.2f;
+	if (slide)  *slide = squeal + 0.6f;
 
 	Dbl slideratio = dynamics.GetWheel(i).slips.slideratio;
 	Dbl slipratio = dynamics.GetWheel(i).slips.slipratio;
@@ -307,8 +307,8 @@ float CAR::GetTireSquealAmount(WHEEL_POSITION i, float* slide, float* s1, float*
 	//if (s2)  *s2 = std::max(-10.f, brk*1.f);  //test
 	squeal += std::max(0.f, brk);
 
-	if (squeal < 0)  squeal = 0;
-	if (squeal > 1)  squeal = 1;  // 0..1
+	if (squeal < 0.f)  squeal = 0.f;
+	if (squeal > 1.f)  squeal = 1.f;  // 0..1
 	return squeal;
 }
 

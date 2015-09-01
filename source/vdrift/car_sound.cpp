@@ -31,6 +31,7 @@ using namespace Ogre;
 //--------------------------------------------------------------------------------------------------------------------------
 bool CAR::LoadSounds(const std::string & carpath)
 {
+	Ogre::Timer ti;
 	bool ss = pApp->pSet->game.local_players > 1;
 	CARsounds& s = sounds;
 	
@@ -70,6 +71,8 @@ bool CAR::LoadSounds(const std::string & carpath)
 	s.mud        = snd->createInstance("mud1", 0);        s.mud->set2D(ss);
 	s.mud_cont   = snd->createInstance("mud_cont",   0);  s.mud_cont->set2D(ss);
 	s.water_cont = snd->createInstance("water_cont", 0);  s.water_cont->set2D(ss);
+
+	LogO("::: Time car Sounds: "/*+carpath+" "*/+ fToStr(ti.getMilliseconds(),0,3) +" ms");
 	return true;
 }
 
@@ -298,19 +301,19 @@ if (bSound)
 	for (int i = 0; i < numWheels; ++i)
 	{
 		Vector3 wh;  wh = Axes::toOgre(whPos[i]);
-		#if 1
-		float maxgain = 0.6, pitchvar = 0.4, pmul = 1.f;
 
-		std::vector<Sound*>* snd = &s.gravel;
+		float maxgain = 0.6f, pitchvar = 0.4f, pmul = 1.f;
+
+		Sound* snd = s.gravel[i];
 		switch (surfType[i])
 		{
-		case TRACKSURFACE::ASPHALT:		snd = &s.asphalt;	maxgain = 0.4;  pitchvar = 0.40;  pmul = 0.8f;  break;
-		case TRACKSURFACE::GRASS:		snd = &s.grass;		maxgain = 0.7;	pitchvar = 0.25;  break;
-		case TRACKSURFACE::GRAVEL:		snd = &s.gravel;	maxgain = 0.7;	break;
-		case TRACKSURFACE::CONCRETE:	snd = &s.asphalt;	maxgain = 0.5;	pitchvar = 0.25;  pmul = 0.7f;  break;
-		case TRACKSURFACE::SAND:		snd = &s.grass;		maxgain = 0.5;  pitchvar = 0.25;  break;
+		case TRACKSURFACE::ASPHALT:		snd = s.asphalt[i];  maxgain = 0.4f;  pitchvar = 0.40f;  pmul = 0.8f;  break;
+		case TRACKSURFACE::GRASS:		snd = s.grass[i];    maxgain = 0.7f;  pitchvar = 0.25f;  break;
+		case TRACKSURFACE::GRAVEL:		snd = s.gravel[i];   maxgain = 0.7f;  break;
+		case TRACKSURFACE::CONCRETE:	snd = s.asphalt[i];  maxgain = 0.5f;  pitchvar = 0.25f;  pmul = 0.7f;  break;
+		case TRACKSURFACE::SAND:		snd = s.grass[i];    maxgain = 0.5f;  pitchvar = 0.25f;  break;
 		case TRACKSURFACE::NONE:
-						default:		snd = &s.asphalt;	maxgain = 0.0;	break;
+						default:		snd = s.asphalt[i];  maxgain = 0.0f;  break;
 		}
 		/// todo: more,sounds.. sand,snow,grass-new,mud..
 		// todo: sum slip, spin, stop tire sounds
@@ -320,11 +323,14 @@ if (bSound)
 		pitch = pitch + (1.f - pitchvar);
 		pitch = std::min(2.f, std::max(0.25f, pitch ));
 
-		(*snd)[i]->setPosition(wh, ev);
-		(*snd)[i]->setGain(squeal[i]*maxgain * pSet->vol_tires);
-		(*snd)[i]->setPitch(pitch * pmul);
-		//todo: setGain(0.f) on others..
-		#endif
+		snd->setPosition(wh, ev);
+		snd->setGain(squeal[i]*maxgain * pSet->vol_tires);
+		snd->setPitch(pitch * pmul);
+		//  mute others
+		if (snd != s.asphalt[i])  s.asphalt[i]->setGain(0.f);
+		if (snd != s.grass[i])    s.grass[i]->setGain(0.f);
+		if (snd != s.gravel[i])   s.gravel[i]->setGain(0.f);
+
 
 		//  susp bump  ~~~
 		if (dynamics.vtype == V_Car)

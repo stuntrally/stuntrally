@@ -354,7 +354,7 @@ void App::GraphsNewVals()				// Game
 	{
 		SoundBaseMgr* snd = pGame->snd->sound_mgr;
 		graphs[0]->UpdTitle("Sounds Info\n"+snd->sReverb);
-		graphs[1]->UpdTitle("\nbuf: "+toStr(snd->buffers_use)+" /"+toStr(SoundBaseMgr::MAX_BUFFERS)+"\n"+
+		graphs[1]->UpdTitle("\nbuf: "+toStr(snd->buffers_used_max)+" /"+toStr(SoundBaseMgr::MAX_BUFFERS)+"\n"+
 							"src: "+toStr(snd->sources_use)+" /"+toStr(snd->hw_sources_num));
 		graphs[2]->UpdTitle("hw: "+iToStr(snd->hw_sources_use,2)+" /"+toStr(SoundBaseMgr::HW_SRC));
 		
@@ -365,6 +365,7 @@ void App::GraphsNewVals()				// Game
 			{	const SoundBase* sb = snd->sources[i];
 				if (sb)
 				{	ss = sb->name.substr(0,4);
+					//if (/*ss!="asph" && */ss!="grav" && ss!="gras" /*&& ss!="cras"/**/)
 					if (ss!="asph" && ss!="grav" /*&& ss!="gras" /*&& ss!="cras"/**/)
 					{
 						//s3 += String(" ")+(sb->is2D?"2 ":"   ")+(sb->loop?"L":" ");

@@ -33,12 +33,14 @@ SoundBase* SoundBaseMgr::createSound(String file, String name)
 		{
 			buffer = buffers[i];
 			samples = sources[i]->samples;
+			//LogO("buf ok "+file);
 			break;
 		}
 	}
 
 	if (!buffer)
 	{
+		//LogO("buf gen "+file);
 		alGenBuffers(1, &buffers[buffers_use]);
 
 		//  load the file

@@ -36,7 +36,7 @@ public:
 	bool reloadSimNeed,reloadSimDone;  //for tweak tire save
 	
 	bool ParseArguments(std::list <std::string>& args);
-	bool InitializeSound();
+	bool InitializeSound();  void LoadHudSounds();
 	void End();
 
 	void Test();

@@ -18,7 +18,7 @@ const float SoundBaseMgr::ROLLOFF_FACTOR = 0.05f;  // 0.05 0.1
 //  Init
 //---------------------------------------------------------------------------------------------
 SoundBaseMgr::SoundBaseMgr()
-	:buffers_use(0), buffers_use_hud(0), sources_use(0)
+	:buffers_use(0), buffers_used_max(0), sources_use(0)
 	,hw_sources_use(0), hw_sources_num(0)
 	,context(NULL), device(NULL)
 	,slot(0), effect(0), master_volume(1.f)
@@ -193,6 +193,9 @@ void SoundBaseMgr::CreateSources()
 
 	for (i = 0; i < HW_SRC; ++i)
 		hw_sources_map[i] = -1;
+
+	buffers_used_max = buffers_use;  // save for info
+	buffers_use = 0;  //)+ zero after all loaded
 }
 
 //  Destroy  --
@@ -201,7 +204,7 @@ void SoundBaseMgr::DestroySources(bool all)
 	if (!device)  return;
 	
 	LogO("@ @  Destroying hw sources.");
-	int i,i0;
+	int i;
 	for (int i = 0; i < HW_SRC; ++i)
 	{
 		//LogO(toStr(i)+" -SRC: "+toStr(hw_sources[i]));
@@ -210,16 +213,9 @@ void SoundBaseMgr::DestroySources(bool all)
 		alDeleteSources(1, &hw_sources[i]);
 		--hw_sources_num;
 	}
-	i0 = all ? 0 : buffers_use_hud;
-	/*for (int i = i0; i < buffers_use; ++i)
-	{
-		//retire(i);
-		delete sources[i];
-		sources[i] = 0;
-	}*/
 
-	buffers_use = i0;  //sources_use = 0;
-	hw_sources_use = 0;  //in retire  //hw_sources_num = 0;
+	//buffers_use = 0;  //)+ needed when loading, zero after CreateSources
+	hw_sources_use = 0;
 }
 
 //  Destroy
@@ -395,7 +391,7 @@ void SoundBaseMgr::assign(int id, int hw_id)
 	ALuint source = hw_sources[hw_id];
 	alSourcei(source, AL_BUFFER, sources[id]->buffer);
 
-	// use reverb +
+	//  use reverb +
 	if (reverb && !sources[id]->is2D)
 		alSource3i(source, AL_AUXILIARY_SEND_FILTER, slot, 0, AL_FILTER_NULL);
 
@@ -406,14 +402,12 @@ void SoundBaseMgr::assign(int id, int hw_id)
 	alSource3f(source, AL_POSITION, sources[id]->pos.x, sources[id]->pos.y, sources[id]->pos.z);
 	alSource3f(source, AL_VELOCITY, sources[id]->vel.x, sources[id]->vel.y, sources[id]->vel.z);
 
-	if (sources[id]->is2D)  // hud
+	//  hud, 2d
+	if (sources[id]->is2D)
 	{
 		alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE);
 		alSource3f(source, AL_POSITION, 0.f,0.f,0.f);
 		//alSourcef(source, AL_ROLLOFF_FACTOR, 0.f);
-		//alSourcef(source, AL_REFERENCE_DISTANCE, FLT_MAX-10.0f);
-		//alSourcef(source, AL_MAX_DISTANCE, FLT_MAX-9.0f);
-		//alSourcef(source, AL_GAIN, 0.77f);
 	}
 
 	if (sources[id]->should_play)
@@ -426,7 +420,7 @@ void SoundBaseMgr::assign(int id, int hw_id)
 void SoundBaseMgr::retire(int id)
 {
 	if (!device)  return;
-	if (id < sources.size())  return;
+	//if (sources[id]->is2D)  return;
 	if (sources[id]->hw_id == -1)  return;
 	
 	alSourceStop(hw_sources[sources[id]->hw_id]);

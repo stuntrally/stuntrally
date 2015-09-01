@@ -27,7 +27,7 @@ void SoundBase::computeAudibility(Vector3 pos1)
 	}
 
 	//  first check if the sound is finished!
-	if (!loop && should_play && hw_id != -1)
+	if (!is2D && !loop && should_play && hw_id != -1)
 	{
 		int value = 0;
 		alGetSourcei((ALuint)sound_mgr->getHwSource(hw_id), AL_SOURCE_STATE, &value);

@@ -303,24 +303,7 @@ bool GAME::InitializeSound()
 	fd.close();
 	fi.close();
 
-	
-	//  load hud sounds
-	//  even if disabled, no null check
-	snd_chk = snd->createInstance("hud/chk",  0);
-	snd_chkwr = snd->createInstance("hud/chkwrong",  0);
-	snd_lap = snd->createInstance("hud/lap",  0);
-	snd_lapbest = snd->createInstance("hud/lapbest",  0);
-	snd_stage = snd->createInstance("hud/stage",  0);
-	for (int i=0; i < 3; ++i)
-	snd_win[i] = snd->createInstance("hud/win"+toStr(i),  0);
-	snd_fail = snd->createInstance("hud/fail",  0);
-
-	snd->sound_mgr->buffers_use_hud = snd->sound_mgr->buffers_use;  // save for reload
-
-	
 	snd->setMasterVolume(settings->vol_master);
-	//snd->setPaused(false);
-	UpdHudSndVol();
 
 
 	LogO("::: Time Sounds: "+ fToStr(ti.getMilliseconds(),0,3) +" ms");
@@ -331,6 +314,22 @@ bool GAME::InitializeSound()
 	}
 	LogO("@  Sound init ok.");
 	return true;
+}
+
+
+void GAME::LoadHudSounds()
+{
+	Ogre::Timer ti;
+	snd_chk = snd->createInstance("hud/chk",  0);
+	snd_chkwr = snd->createInstance("hud/chkwrong",  0);
+	snd_lap = snd->createInstance("hud/lap",  0);
+	snd_lapbest = snd->createInstance("hud/lapbest",  0);
+	snd_stage = snd->createInstance("hud/stage",  0);
+	for (int i=0; i < 3; ++i)
+	snd_win[i] = snd->createInstance("hud/win"+toStr(i),  0);
+	snd_fail = snd->createInstance("hud/fail",  0);
+	UpdHudSndVol();
+	LogO("::: Time Hud Sounds: "+ fToStr(ti.getMilliseconds(),0,3) +" ms");
 }
 
 
@@ -536,15 +535,16 @@ bool GAME::NewGameDoLoadTrack()
 
 bool GAME::NewGameDoLoadMisc(float pre_time)
 {
-	//load the timer
+	//  load the timer
 	if (!timer.Load(PATHMANAGER::Records()+"/"+ settings->game.sim_mode+"/"+ settings->game.track+".txt", pre_time))
 		return false;
 
-	//add cars to the timer system
 	for (size_t i = 0; i < cars.size(); ++i)
 		timer.AddCar(cars[i]->GetCarType());
 	timer.AddCar("ghost");
 
+	//  sounds
+	LoadHudSounds();
 	snd->sound_mgr->CreateSources();  ///)
 	return true;
 }
@@ -557,12 +557,13 @@ void GAME::LeaveGame(bool dstTrk)
 	if (dstTrk)
 		track.Unload();
 
-
+	//  cars
 	bool hadCars = !cars.empty();
 	for (size_t i = 0; i < cars.size(); ++i)
 		delete cars[i];
 	cars.clear();
 
+	//  sounds
 	if (snd && hadCars)
 		snd->sound_mgr->DestroySources(false);  ///)
 	
