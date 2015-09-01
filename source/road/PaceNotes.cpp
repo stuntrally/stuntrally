@@ -40,25 +40,55 @@ PaceNote::PaceNote(int t, Vector3 p, float sx,float sy,
 
 //  Pace notes
 //--------------------------------------------------------------------------------------
-void PaceNotes::Rebuild(SplineRoad* road)
+void PaceNotes::Rebuild(SplineRoad* road, bool reversed)
 {
 	Ogre::Timer ti;	
 
 	Destroy();
 
-//return;
-
+	//  const, vis
 	const float u=0.125f,
-		barX=1.f,barY=6.f, barA=0.6f, useX=2.f, useA=0.6f,
-	#ifdef SR_EDITOR
+		barX=1.f,barY=6.f, barA=0.6f,
+		use1X=1.4f, use1A=1.f, useX=0.9f, useA=0.7f,
+
+#ifdef SR_EDITOR
 	#define USED
 	#define BARS
 	signX = 4.f;  // ed
-	#else
+#else
 	signX = 2.f;  // game
-	#endif
+#endif
+
+
+	///  Simple Turns
+	///  ~~~  params  ~~~
+	const int nn = 8;  // levels +1, 0 fake        // turn sharpness,  max single angle in rad
+	const float angN[nn] = {0.02f, 0.06f, 0.2f, 0.3f, 0.4f, 0.5f, 0.7f, 1.0f};
+	const int Radd[nn]	 = {2,     2,     1,    1,    0,    0,    0,    0};  // needed for sign
+	const int Rlen[nn]	 = {10,    10,    10,   8,    8,    7,    7,    6};  // road search range
+	const float  ///par
+		angStr = 0.01f,  /// 0.01 straight angle
+		angMul = 0.7f,   /// 0.7 angN scale
+		sustain = 0.34f, /// 0.3-0.4  sustain current turn, more splits if higher
+		LenLong = 60.f;  /// 60  above this length turn is long
+
+	struct PNote  // total angle sum, tex uv, color
+	{	float ang;  int iu,iv;  float h,s,v;  };
 	
-	///  trace Road  |||
+	const static PNote arPN[nn][2] =
+	{			// short						// long					
+		{{150.f, 6,7, 0.00f, 1.f, 0.5f},{150.f, 6,6, 0.00f, 0.5f, 0.5f}},
+		{{120.f, 6,7, 0.00f, 1.f, 1.f}, {120.f, 6,6, 0.05f, 0.5f, 1.f}},
+		{{ 90.f, 5,7, 0.05f, 1.f, 1.f}, { 90.f, 5,6, 0.10f, 0.5f, 1.f}},
+		{{ 60.f, 4,7, 0.10f, 1.f, 1.f}, { 60.f, 4,6, 0.15f, 0.5f, 1.f}},
+		{{ 45.f, 3,7, 0.15f, 1.f, 1.f}, { 45.f, 3,6, 0.20f, 0.5f, 1.f}},
+		{{ 30.f, 2,7, 0.20f, 1.f, 1.f}, { 30.f, 2,6, 0.25f, 0.5f, 1.f}},
+		{{ 15.f, 1,7, 0.25f, 1.f, 1.f}, { 15.f, 1,6, 0.30f, 0.5f, 1.f}},
+		{{  0.f, 0,7, 0.30f, 1.f, 1.f}, {  0.f, 0,6, 0.35f, 0.5f, 1.f}},
+	};
+
+	
+	///  Trace Road  |||
 	int ii = road->vPace.size();
 	for (int i=0; i < ii; ++i)
 	{
@@ -70,10 +100,10 @@ void PaceNotes::Rebuild(SplineRoad* road)
 		c1.y = 0.f;  c2.y = 0.f;
 		c1.normalise();  c2.normalise();
 
-		//  yaw ang
+		//  aa - road yaw angle
 		Vector3 cross = c1.crossProduct(c2);
 		Real dot = c1.dotProduct(c2);
-		Real aa = acos(dot);  // road yaw angle
+		Real aa = acos(dot);
 		//Real aa = asin(cross.length());
 
 		//  sign
@@ -86,7 +116,7 @@ void PaceNotes::Rebuild(SplineRoad* road)
 		//LogO(fToStr(aa*180.f/PI_d,1,5));//+" "+fToStr(dn));
 		//LogO(fToStr(aa));
 
-		//  no straights  //par 0.05
+		///  no straights  //par 0.01
 		if (fabs(aa) < 0.01f)  aa = 0.f;
 		cur.aa = aa;  // save
 
@@ -99,50 +129,44 @@ void PaceNotes::Rebuild(SplineRoad* road)
 	}
 	
 	
-	#if 1
-	///  simple turns  ~ ~ ~
-	const int nn = 7;  // levels								//par turn sharpness
-	const float angN[nn] = {0.06f, 0.2f, 0.3f, 0.4f, 0.5f, 0.7f, 1.0f}, aNm = 0.7f;
-	const int Radd[nn]	 = {2,     1,    1,    0,    0,    0,    0};  // needed for sign
-	const int Rlen[nn]	 = {10,    10,   8,    8,    7,    7,    6};  // road search range
 	bool dirR = road->iDir > 0, loop1 = false;
+	if (reversed)  dirR = !dirR;  // track dir
 
-	//for (int n=2; n >= 0; --n)
-	for (int n=nn-1; n >= 0; --n)  // all levels
-	for (int i=0; i < ii; ++i)  // all road points
+
+	///  ~~~  Auto Gen. turn signs  ~~~
+	int i,n;
+	for (n=nn-1; n >= 1; --n)  // all levels, 0 fake
+	for (i=0; i < ii; ++i)     // all road points
 	{
 		SplineRoad::PaceM& p = road->vPace[i];
-		if (fabs(p.aa) > angN[n]*aNm && p.used < 0)
+		if (fabs(p.aa) > angN[n]*angMul && p.used < 0)
 		{
-			//p.used = n;
-			
-			//  get neighbors too
-			//  staying in range not below amul of original angle
+			///  Get Neighbors  ~~~
+			//  staying in range, not below sustain * original angle
 			const int ri = Rlen[n];
-			//float amul = 0.4f,  //par
-			//	am = angN[n]*aNm * amul;
-			float am = n==0 ? 0.05f: angN[n-1]*aNm * 0.4f;  //par sustain
+			float am = angN[n-1]*angMul * sustain;
 			bool dir = dirR ? p.aa > 0.f : p.aa < 0.f;
 			float Adir = dir ? 0.f : 1.f;
 
-			Vector3 pos = p.pos;  // main sign pos
-			float Asum = p.aa;
+			Vector3 pos = p.pos, prv = pos;  // main sign pos
+			float Asum = p.aa, Lsum = 0.f;
 
-			#ifdef USED  // add used
-			PaceNote o(2, p.pos2, useX,useX, 1,1,1,1,  // size, clr
+			#ifdef USED  // add used start
+			PaceNote o(2, p.pos2, use1X,use1X, 1,1,1,use1A,  // size, clr
 				Adir, 0.f,  n*u, 0.f);  // dir, uv
 			Create(o);  vPN.push_back(o);
 			#endif
 
 			int r=1, rr=0, radd=0, rsub=0;
 			bool ok = true;
-			while (ok && rr < ri)
+			while (ok && rr < ri)  // search next  ++
 			{
 				SplineRoad::PaceM& pp = road->vPace[(i+r)%ii];
 				ok = pp.used < 0 && (p.aa > 0.f && pp.aa > am || p.aa < 0.f && pp.aa <-am);
 				if (ok)
 				{
-					pp.used = n;  Asum += pp.aa;  ++radd;
+					pp.used = n;  ++radd;
+					Asum += pp.aa;  Lsum += prv.distance(pp.pos);
 					if (!dirR)  pos = pp.pos;  // back pos
 
 					#ifdef USED  // add used
@@ -151,16 +175,17 @@ void PaceNotes::Rebuild(SplineRoad* road)
 					Create(o);  vPN.push_back(o);
 					#endif
 				}
-				++rr;  ++r;
+				++rr;  ++r;  prv = pp.pos;
 			}
 			r=1;  rr=0;  ok = true;
-			while (ok && rr < ri)
+			while (ok && rr < ri)  // search prev  --
 			{
 				SplineRoad::PaceM& pp = road->vPace[(i+r+ii)%ii];
 				ok = pp.used < 0 && (p.aa > 0.f && pp.aa > am || p.aa < 0.f && pp.aa <-am);
 				if (ok)
 				{
-					pp.used = n;  Asum += pp.aa;  ++rsub;
+					pp.used = n;  ++rsub;
+					Asum += pp.aa;  Lsum += prv.distance(pp.pos);
 					if (dirR)  pos = pp.pos;  // back pos
 
 					#ifdef USED  // add used
@@ -169,28 +194,48 @@ void PaceNotes::Rebuild(SplineRoad* road)
 					Create(o);  vPN.push_back(o);
 					#endif
 				}
-				++rr;  --r;
+				++rr;  --r;  prv = pp.pos;
 			}
 			
-			#if 1  // add turn
+			///  Add Turn  ~ ~ ~
 			int rsad = rsub + radd;
 			if (rsad > Radd[n])
 			{
 				p.used = n;
-				//  long turn, total angle  ...
-				float s = signX * (0.5f + 0.5f * (1+rsad) / (1+Radd[n]));
-				float l = std::min(2.f, std::max(0.5f,
-					Asum / (rsad * angN[n]*aNm) ));
-				LogO("n "+toStr(n)+"  Asum:"+fToStr(Asum,2,5)+"  s: "+fToStr(s)+"  l: "+fToStr(l));
-				s = signX;  l = 1.f;//
 
-				PaceNote o(1, pos, s,s*l, 1,1,1,1,  // size, clr
-					Adir, 0.f,  n*u, 0.f);  // dir, uv
+				float ang = fabs(Asum) *180.f/PI_d;  // total turn yaw in degrees
+				int iLong = Lsum > LenLong ? 1 : 0;  // long turn
+
+				//  find sign by angle in table
+				bool ff = true;  int ai = 0;
+				while (ff  && ai < nn)
+				{
+					if (ang >= arPN[ai][iLong].ang)
+					{	ff = false;  }
+					else  ++ai;
+				}
+				const PNote& PN = arPN[ai][iLong];
+				
+				#if 1
+				LogO("n "+toStr(n)+
+					"  A "+fToStr(Asum*180.f/PI_d, 1,6)+
+					"  L "+fToStr(Lsum, 1,5)+
+					"  AL "+fToStr(Asum*180.f/PI_d / Lsum, 1,5)+
+					"  u "+iToStr(PN.iu,1)+"  v "+iToStr(PN.iv,1)+
+					"  h "+fToStr(PN.h)+"  s "+fToStr(PN.h)+"  v "+fToStr(PN.v));
+				#endif
+
+				ColourValue c;  c.setHSB(PN.h, PN.s, PN.v);
+				
+				PaceNote o(1, pos,  signX,signX, // size
+					c.r,c.g,c.b,1,  // clr
+					Adir, 0.f,  // dir
+					PN.iu *u, PN.iv *u);  // uv
 				Create(o);  vPN.push_back(o);
 			}
-			#endif
 		}
-		//  loop signs
+
+		//  loop signs todo..
 		if (n==0)
 		{
 			bool lp = dirR ? p.loop && !loop1 :
@@ -203,13 +248,14 @@ void PaceNotes::Rebuild(SplineRoad* road)
 			loop1 = p.loop;		
 		}
 	}
-	#endif
 	
 	LogO(String("::: Time PaceNotes Rebuild: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 return;
 
 
 	///  trace Track's Ghost
+	//todo: jumps,vel, ter bumps..
+	//cast ray down, on pipe..
 	TrackGhost gho;
 	
 	//  foreach track
@@ -326,7 +372,7 @@ return;
 	}
 
 
-	//UpdVis(fLodBias);
+	//UpdVis();
 
 	LogO(String("::: Time PaceNotes Rebuild: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
@@ -343,10 +389,10 @@ void PaceNotes::Create(PaceNote& n)
 
 	n.bb->setRenderQueueGroup(RQG_CarParticles);
 	n.bb->setVisibilityFlags(RV_Car);
-	n.bb->setCustomParameter(0, Vector4(n.ofs.x, n.ofs.y, n.uv.x, n.uv.y));  // params, uv ofs
 
+	n.bb->setCustomParameter(0, Vector4(n.ofs.x, n.ofs.y, n.uv.x, n.uv.y));  // params, uv ofs
 	n.bb->createBillboard(Vector3(0,0,0), ColourValue(n.clr.x, n.clr.y, n.clr.z, n.clr.w));
-	//n.bb->setVisible(false);
+
 	n.bb->setMaterialName("pacenote");
 	n.nd->attachObject(n.bb);
 	n.nd->setPosition(n.pos);

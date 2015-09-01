@@ -250,8 +250,11 @@ void SplineRoad::BuildSeg(
 				if (i >= 0 && i < il)
 				{	//  add
 					PaceM pm;
-					pm.pos = vP + vN * 3.f;  //par  + vw * 0.5f;
-					pm.pos2 = vP + vN * 4.f + vw * 0.5f;  // extra, info
+					bool onP = mP[seg].onPipe > 0;
+					float h = onP ? wiMul + 3.f : 3.f;
+					
+					pm.pos  = vP + vN * h;  //par  + vw * 0.5f;
+					pm.pos2 = vP + vN * (h + 1.f) + vw * 0.5f;  // extra, info
 					pm.loop = DL0.v0_Loop[seg] > 0;
 					vPace.push_back(pm);
 				}

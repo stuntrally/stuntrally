@@ -42,12 +42,13 @@ SH_BEGIN_PROGRAM
 
 SH_START_PROGRAM  //  frag  ----
 {
-    float2 uv = UV.xy * 0.125f;
+    float2 uv = UV.xy * 0.125f, uvb = uv + float2(6*0.125f, 2*0.125f);
     if (par.x < 0.5f)  uv.x = 0.125f - uv.x;  // dir, mirror
     if (par.y > 0.f)  uv.x *= par.y;  // width mul
     uv += par.zw;  // offset
     
-    float4 tex = shSample(diffuseMap, uv);
+    float4 texb = shSample(diffuseMap, uvb), texc = shSample(diffuseMap, uv);
+    float4 tex = float4(lerp(texb.rgb, texc.rgb, texc.a), texb.a);
 
     float a = tex.a * vertColor.a * fade;
 	if (a < 0.01f || tex.a < 0.5f)

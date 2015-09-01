@@ -837,7 +837,8 @@ void App::CreateRoad()
 
 		road->RebuildRoadInt();
 		road->SetChecks();  // 2nd, upd
-
-		scn->pace->Rebuild(road);  //todo: load only..
 	}
+	
+	//todo: load only..
+	scn->pace->Rebuild(road, pSet->game.trackreverse);
 }

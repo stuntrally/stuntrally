@@ -29,11 +29,12 @@ struct PaceNote
 	Ogre::Vector3 pos;
 	Ogre::Vector4 clr;
 	Ogre::Vector2 size, ofs,uv;
-	int use;  // 0 norm 1 dbg 2 3
+	int use;  // 0 normal  1 dbg start 2 dbg cont  3 bar
 
 	//PaceTypes type;
 	//int dir;  // -1 left, 1 right
 	//float vel;  // for jump
+
 	PaceNote();
 	PaceNote(int t, Ogre::Vector3 p, float sx,float sy,
 		float r,float g,float b,float a, float ox,float oy, float u,float v);
@@ -53,25 +54,23 @@ public:
 	void Setup(Ogre::SceneManager* sceneMgr, Ogre::Camera* camera, Ogre::Terrain* terrain);
 
 	//  Rebuild
-	void Rebuild(SplineRoad* road), Create(PaceNote& n);
+	void Rebuild(SplineRoad* road, bool reversed), Create(PaceNote& n);
 	void Destroy(), Destroy(PaceNote& n);
-	void UpdVis();
-
+	
+	//  pacenotes.xml
+	//bool LoadFile(Ogre::String fname), SaveFile(Ogre::String fname);
 
 	//  Update
-	//void UpdVis(/*Camera* pCam,*/ float fBias=1.f, bool bFull=false);
+	void UpdVis();
 
+	//  edit ..
 	//void Pick(Ogre::Camera* mCamera, Ogre::Real mx, Ogre::Real my,
 	//		bool bRay=true, bool bAddH=false, bool bHide=false);
-	//void SelectMarker(bool bHide=false);
-
+	//void Select(bool bHide=false);
 
 	//  Insert  -------
-	//void Insert(eIns ins);
-	//void Delete(), DelSel();
-
-	//bool CopySel();
-	//void Paste(bool reverse=false);
+	//void Insert();
+	//void Delete();
 	
 
 private:
