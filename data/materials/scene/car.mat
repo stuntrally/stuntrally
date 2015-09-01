@@ -991,11 +991,14 @@ material U6_interior
 }
 material U6_wheel
 {
-	parent car_wheel
+	parent car_base
 	diffuseMap U6_wheel.png
-	reflMap U6_wheel_refl.png
 	specMap U6_wheel_refl.png
-	specular 0.5 0.5 0.5 32
+	reflMap U6_wheel_refl.png
+	ambient 0.5 0.5 0.5
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 8
 	env_map true
-	refl_amount 0.3
+	fresnel true
+	fresnelScaleBiasPower 0.7 0.15 4
 }
