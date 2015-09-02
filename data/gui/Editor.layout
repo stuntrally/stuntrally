@@ -1471,39 +1471,47 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#C0C060#{Pacenotes}"/>
-				<Widget type="TextBox" skin="TextBox" position="32 60 268 24">
+				<Widget type="TextBox" skin="TextBox" position="232 226 268 24">
 					<Property key="Caption" value="#{Detail}"/>
-					<Property key="TextColour" value="0.8 0.8 0.5"/>
+					<Property key="TextColour" value="1.0 1.0 0.9"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="96 88 248 18" name="PaceShow"/>
-				<Widget type="TextBox" skin="TextBox" position="32 88 60 24" name="PaceShowVal">
+				<Widget type="Slider" skin="Slider" position="344 226 180 20" name="PaceShow">
+					<Property key="Colour" value="1.0 1.0 0.9"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="296 226 60 24" name="PaceShowVal">
 					<Property key="TextColour" value="0.9 0.9 0.6"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 160 268 24">
+				<Widget type="TextBox" skin="TextBox" position="162 96 164 24">
+					<Property key="TextColour" value="0.9 0.9 0.7"/>
 					<Property key="Caption" value="#{ViewDist}"/>
-					<Property key="TextColour" value="0.8 0.8 0.5"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="96 188 248 18" name="PaceDist"/>
-				<Widget type="TextBox" skin="TextBox" position="32 188 60 24" name="PaceDistVal">
+				<Widget type="Slider" skin="Slider" position="344 96 320 18" name="PaceDist">
+					<Property key="Colour" value="0.9 0.9 0.7"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="296 96 48 24" name="PaceDistVal">
+					<Property key="TextColour" value="0.9 0.9 0.7"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="232 136 64 24">
+					<Property key="TextColour" value="0.8 0.8 0.6"/>
+					<Property key="Caption" value="#{Size}"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="344 136 320 18" name="PaceSize">
+					<Property key="Colour" value="0.8 0.8 0.6"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="296 136 48 24" name="PaceSizeVal">
 					<Property key="TextColour" value="0.8 0.8 0.6"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 260 268 24">
-					<Property key="Caption" value="#{Size}"/>
-					<Property key="TextColour" value="0.7 0.7 0.5"/>
-				</Widget>
-				<Widget type="Slider" skin="Slider" position="96 288 248 18" name="PaceSize"/>
-				<Widget type="TextBox" skin="TextBox" position="32 288 60 24" name="PaceSizeVal">
-					<Property key="TextColour" value="0.7 0.7 0.5"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 360 268 24">
+				<Widget type="TextBox" skin="TextBox" position="232 176 64 24">
 					<Property key="Caption" value="#{Near}"/>
-					<Property key="TextColour" value="0.6 0.6 0.4"/>
+					<Property key="TextColour" value="0.7 0.7 0.5"/>
 				</Widget>
-				<Widget type="Slider" skin="Slider" position="96 388 248 18" name="PaceNear"/>
-				<Widget type="TextBox" skin="TextBox" position="32 388 60 24" name="PaceNearVal">
-					<Property key="TextColour" value="0.6 0.6 0.4"/>
+				<Widget type="Slider" skin="Slider" position="344 176 320 18" name="PaceNear">
+					<Property key="Colour" value="0.7 0.7 0.5"/>
 				</Widget>
-				<Widget type="Button" skin="CheckBox" position="380 504 132 24" name="ReverseOn">
+				<Widget type="TextBox" skin="TextBox" position="296 176 48 24" name="PaceNearVal">
+					<Property key="TextColour" value="0.7 0.7 0.5"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="344 266 132 24" name="ReverseOn">
 					<Property key="Caption" value="#{Track} - #{Reverse}"/>
 					<Property key="Colour" value="0.8 1 0.6"/>
 					<Property key="TextColour" value="0.8 1 0.5"/>

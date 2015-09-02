@@ -2995,7 +2995,6 @@
 							<Property key="Alpha" value="0.7"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>-->
-
 						<Widget type="Button" skin="CheckBox" position="32 56 184 24" name="ChkPace">
 							<Property key="Caption" value="#{Pacenotes} #789858 alt-F8"/>
 							<Property key="TextColour" value="0.8 1.0 0.6"/>
@@ -3030,16 +3029,6 @@
 						<Widget type="TextBox" skin="TextBox" position="296 176 48 24" name="PaceNearVal">
 							<Property key="TextColour" value="0.7 0.7 0.5"/>
 						</Widget>
-						<!--<Widget type="TextBox" skin="TextBox" position="232 176 64 24">
-							<Property key="Caption" value="#{Layout}"/>
-							<Property key="TextColour" value="0.8 0.35 0.5"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 176 48 24" name="LayoutGaugVal">
-							<Property key="TextColour" value="0.8 0.4 0.6"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 176 216 16" name="LayoutGaug">
-							<Property key="Colour" value="0.9 0.7 0.8"/>
-						</Widget>-->
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">
 						<Property key="Caption" value="#60F8F8#{Minimap}"/>
