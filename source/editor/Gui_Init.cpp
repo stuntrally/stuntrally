@@ -482,6 +482,7 @@ void CGui::InitGui()
 	sv= &svPaceNear;	sv->Init("PaceNear",	&pSet->pace_near,   0.1f,2.f);  sv->DefaultF(1.f);  Sev(Upd_Pace);
 	sv= &svPaceSize;	sv->Init("PaceSize",	&pSet->pace_size,   0.1f,2.f);  sv->DefaultF(1.f);  Sev(Upd_Pace);
 	slUpd_Pace(0);
+	ck= &ckTrkReverse;	ck->Init("ReverseOn",	&pSet->trk_reverse);  Cev(TrkReverse);
 	
 
 	///  [Surface]

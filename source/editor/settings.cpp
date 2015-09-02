@@ -59,6 +59,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 
 	Param(c,w, "pacenotes.show", pace_show);		Param(c,w, "pacenotes.dist", pace_dist);
 	Param(c,w, "pacenotes.near", pace_near);		Param(c,w, "pacenotes.size", pace_size);
+	Param(c,w, "pacenotes.trk_reverse", trk_reverse);
 
 	Param(c,w, "tweak.mtr", tweak_mtr);
 	Param(c,w, "pick.set_par", pick_setpar);
@@ -87,6 +88,8 @@ SETTINGS::SETTINGS()  ///  Defaults
 	,al_w_mul(1.f), al_w_add(8.f), al_smooth(2.f)
 	//  pacenotes
 	,pace_show(3), pace_dist(1000.f), pace_near(1.f), pace_size(1.f)
+	,trk_reverse(0)
+	//  tweak
 	,tweak_mtr("")
 	//  pick
 	,pick_setpar(1)

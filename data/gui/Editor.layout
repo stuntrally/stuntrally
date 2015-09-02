@@ -1503,6 +1503,12 @@
 				<Widget type="TextBox" skin="TextBox" position="32 388 60 24" name="PaceNearVal">
 					<Property key="TextColour" value="0.6 0.6 0.4"/>
 				</Widget>
+				<Widget type="Button" skin="CheckBox" position="380 504 132 24" name="ReverseOn">
+					<Property key="Caption" value="#{Track} - #{Reverse}"/>
+					<Property key="Colour" value="0.8 1 0.6"/>
+					<Property key="TextColour" value="0.8 1 0.5"/>
+					<UserString key="tip" value="#{TipReverse}"/>
+				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#E0A0A0#{Warnings}"/>

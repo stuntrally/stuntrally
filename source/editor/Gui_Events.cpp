@@ -317,6 +317,11 @@ void CGui::slUpd_Pace(SV*)
 	scn->UpdPaceParams();
 }
 
+void CGui::chkTrkReverse(Ck*)
+{
+	scn->road->Rebuild(true);
+}
+
 
 //  [Settings]  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

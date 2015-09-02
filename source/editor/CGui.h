@@ -296,6 +296,7 @@ public:
 	//  [Pacenotes]  ----
 	SV svPaceShow, svPaceDist, svPaceNear, svPaceSize;
 	void slUpd_Pace(SV*);
+	CK(TrkReverse);
 
 
 	//  [Objects]  ----
