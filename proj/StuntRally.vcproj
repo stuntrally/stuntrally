@@ -1991,6 +1991,10 @@
 				Name="Sound"
 				>
 				<File
+					RelativePath="..\data\sounds\reverbs.xml"
+					>
+				</File>
+				<File
 					RelativePath="..\source\sound\SoundBase.cpp"
 					>
 				</File>

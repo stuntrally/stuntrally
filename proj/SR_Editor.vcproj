@@ -639,6 +639,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\data\sounds\reverbs.xml"
+				>
+			</File>
+			<File
 				RelativePath="..\config\tracks.ini"
 				>
 			</File>

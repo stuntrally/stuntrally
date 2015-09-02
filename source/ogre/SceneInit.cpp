@@ -70,6 +70,7 @@ void App::createScene()
 	bool check = 0;
 	scn->data->Load(&pGame->surf_map, check);
 	scn->sc->pFluidsXml = scn->data->fluids;
+	scn->sc->pReverbsXml = scn->data->reverbs;
 
 	//  championships.xml, progress.xml
 	gui->Ch_XmlLoad();

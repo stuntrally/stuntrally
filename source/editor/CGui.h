@@ -290,6 +290,10 @@ public:
 	CK(DenyReversed);  CK(TiresAsphalt);  CK(TerrainEmissive);
 	CK(NoWrongChks);
 	void SldUpd_Game();
+	//  sound
+	Txt txtRevebDescr;
+	Cmb cmbReverbs;  void comboReverbs(CMB), UpdRevDescr();
+	//  info
 	Txt txtEdInfo;  void UpdEdInfo();
 	
 

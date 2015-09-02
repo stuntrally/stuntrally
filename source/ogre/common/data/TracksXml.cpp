@@ -362,3 +362,54 @@ bool ColorsXml::LoadIni(string file)
 	}	}
 	return true;
 }
+
+
+///  Load  reverbs.xml
+//-------------------------------------------------------------------------------------
+
+bool ReverbsXml::LoadXml(string file)
+{
+	XMLDocument doc;
+	XMLError e = doc.LoadFile(file.c_str());
+	if (e != XML_SUCCESS)  return false;
+
+	XMLElement* root = doc.RootElement();
+	if (!root)  return false;
+
+	//  clear
+	revs.clear();  revmap.clear();
+
+
+	//  base
+	XMLElement* b = root->FirstChildElement("base");
+	if (b)
+		GetParams(b, base);
+
+	///  revs
+	int i=1;  //0 = none
+	XMLElement* n = root->FirstChildElement("rev");
+	while (n)
+	{
+		ReverbSet r;
+		GetParams(n, r);
+
+		revs.push_back(r);
+		revmap[r.name] = i++;
+		n = n->NextSiblingElement("rev");
+	}
+	return true;
+}
+
+void ReverbsXml::GetParams(XMLElement* e, ReverbSet& r)
+{
+	const char* a;
+	a = e->Attribute("name");		if (a)  r.name = string(a);
+	a = e->Attribute("descr");		if (a)  r.descr = string(a);
+
+	a = e->Attribute("normal");		if (a)  r.normal = string(a);
+	a = e->Attribute("cave");		if (a)  r.cave = string(a);
+	a = e->Attribute("cavebig");	if (a)  r.cavebig = string(a);
+	a = e->Attribute("pipe");		if (a)  r.pipe = string(a);
+	a = e->Attribute("pipebig");	if (a)  r.pipebig = string(a);
+	a = e->Attribute("influid");	if (a)  r.influid = string(a);
+}

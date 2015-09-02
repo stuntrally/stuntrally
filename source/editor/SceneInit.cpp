@@ -75,6 +75,7 @@ void App::createScene()  // once, init
 	//  data load xml
 	scn->data->Load();
 	scn->sc->pFluidsXml = scn->data->fluids;
+	scn->sc->pReverbsXml = scn->data->reverbs;
 	
 	//  surfaces.cfg
 	LoadAllSurfaces();

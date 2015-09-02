@@ -299,7 +299,15 @@ public:
 	float windAmt;  //, windDirYaw, windTurbulFreq,windTurbulAmp;
 	float damageMul;  // reduce car damage in loops
 	float gravity;  // 9.81
-
+	
+	//  sound
+	std::string sAmbient, sReverbs;  void UpdRevSet();
+	struct RevSet  // copy from ReverbSet, name = sReverbs, from base if ""
+	{	std::string descr,
+			normal, cave, cavebig, pipe, pipebig, influid;
+	} revSet;
+	class ReverbsXml* pReverbsXml;  //! set this after Load
+	
 
 	//  particle types
 	Ogre::String  sParDust, sParMud, sParSmoke;
@@ -333,7 +341,7 @@ public:
 	
 	//  Fluids
 	std::vector<FluidBox> fluids;
-	class FluidsXml* pFluidsXml;  // set this after Load
+	class FluidsXml* pFluidsXml;  //! set this after Load
 	
 	//  Objects
 	std::vector<Object> objects;

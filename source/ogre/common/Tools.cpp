@@ -163,6 +163,10 @@ void CGui::ToolSceneXml()
 		int l = 17-trk.length();  // align
 		for (n=0; n < l; ++n)  trk += " ";
 
+		///  sound
+		if (sc.sReverbs=="")
+			LogO("No reverb! "+trk);
+		
 		///  sky clrs
 		string s;
 		s += sc.lAmb.Check("amb");  s += sc.lDiff.Check("dif");  s += sc.lSpec.Check("spc");

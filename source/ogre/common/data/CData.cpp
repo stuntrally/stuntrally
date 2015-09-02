@@ -17,24 +17,30 @@ using Ogre::String;
 
 void CData::Load(std::map <std::string, int>* surf_map, bool check)
 {
+	//  common
 	fluids->LoadXml(PATHMANAGER::Data() + "/materials2/fluids.xml", /**/surf_map);
 	LogO(String("**** Loaded Fluids: ") + toStr(fluids->fls.size()));
 
 	objs->LoadXml();  //  collisions.xml
 	LogO(String("**** Loaded Vegetation objects: ") + toStr(objs->colsMap.size()));
 	
+	std::string snd = PATHMANAGER::Sounds();
+	reverbs->LoadXml(snd + "/reverbs.xml");
+	LogO(String("**** Loaded Reverbs sets: ") + toStr(reverbs->revs.size()));
+
+	//  cars and tracks
 	std::string path = PATHMANAGER::GameConfigDir();
 	tracks->LoadIni(path + "/tracks.ini", check);
 	cars->LoadXml(path + "/cars.xml");
-
-	#ifdef SR_EDITOR
+	
+	#ifdef SR_EDITOR  // ed
 		pre->LoadXml(path + "/presets.xml");
 		LogO(String("**** Loaded Presets  sky: ") + toStr(pre->sky.size())+
 			"  ter: " + toStr(pre->ter.size()) +
 			"  road: " + toStr(pre->rd.size()) +
 			"  grass: " + toStr(pre->gr.size()) +
 			"  veget: " + toStr(pre->veg.size()) );
-	#else
+	#else	// game
 		colors->LoadIni(path + "/colors.ini");
 		LogO(String("**** Loaded Car Colors: ") + toStr(colors->v.size()));
 
@@ -50,6 +56,7 @@ CData::CData()
 {
 	fluids = new FluidsXml();
 	objs = new BltObjects();
+	reverbs = new ReverbsXml();
 
 	tracks = new TracksXml();
 	cars = new CarsXml();
@@ -67,6 +74,7 @@ CData::~CData()
 {
 	delete fluids;
 	delete objs;
+	delete reverbs;
 
 	delete tracks;
 	delete cars;

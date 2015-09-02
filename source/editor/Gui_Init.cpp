@@ -3,6 +3,7 @@
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/GuiCom.h"
 #include "../ogre/common/data/CData.h"
+#include "../ogre/common/data/TracksXml.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -80,27 +81,28 @@ void CGui::InitGui()
 
 	//  get sub tabs
 	vSubTabsTrack.clear();
-	for (size_t i=0; i < app->mWndTabsTrack->getItemCount(); ++i)
+	size_t u;
+	for (u=0; u < app->mWndTabsTrack->getItemCount(); ++u)
 	{
-		sub = gcom->FindSubTab(app->mWndTabsTrack->getItemAt(i));
+		sub = gcom->FindSubTab(app->mWndTabsTrack->getItemAt(u));
 		vSubTabsTrack.push_back(sub);
 	}
 	vSubTabsEdit.clear();
-	for (size_t i=0; i < app->mWndTabsEdit->getItemCount(); ++i)
+	for (u=0; u < app->mWndTabsEdit->getItemCount(); ++u)
 	{
-		sub = gcom->FindSubTab(app->mWndTabsEdit->getItemAt(i));
+		sub = gcom->FindSubTab(app->mWndTabsEdit->getItemAt(u));
 		vSubTabsEdit.push_back(sub);
 	}
 	vSubTabsHelp.clear();
-	for (size_t i=0; i < app->mWndTabsHelp->getItemCount(); ++i)
+	for (u=0; u < app->mWndTabsHelp->getItemCount(); ++u)
 	{
-		sub = gcom->FindSubTab(app->mWndTabsHelp->getItemAt(i));
+		sub = gcom->FindSubTab(app->mWndTabsHelp->getItemAt(u));
 		vSubTabsHelp.push_back(sub);
 	}
 	vSubTabsOpts.clear();
-	for (size_t i=0; i < app->mWndTabsOpts->getItemCount(); ++i)
+	for (u=0; u < app->mWndTabsOpts->getItemCount(); ++u)
 	{
-		sub = gcom->FindSubTab(app->mWndTabsOpts->getItemAt(i));
+		sub = gcom->FindSubTab(app->mWndTabsOpts->getItemAt(u));
 		vSubTabsOpts.push_back(sub);
 	}
 
@@ -530,13 +532,21 @@ void CGui::InitGui()
 	String sMat = sData +"/materials/scene/";  // path
 
 	
+	//---------------------  Game, Reverbs  ---------------------
+	txtRevebDescr = fTxt("txtRevebDescr");
+	Cmb(cmbReverbs, "CmbReverbs", comboReverbs);
+
+	for (u=0; u < data->reverbs->revs.size(); ++u)
+		cmbReverbs->addItem(data->reverbs->revs[u].name);
+
+
 	//---------------------  Weather  ---------------------
 	Cmb(cmbRain1, "Rain1Cmb", comboRain1);  cmbRain1->addItem("");
 	Cmb(cmbRain2, "Rain2Cmb", comboRain2);  cmbRain2->addItem("");
 
 	GetMaterials("weather.particle", true, "particle_system");
-	for (size_t i=0; i < vsMaterials.size(); ++i)
-	{	const String& s = vsMaterials[i];
+	for (u=0; u < vsMaterials.size(); ++u)
+	{	const String& s = vsMaterials[u];
 		cmbRain1->addItem(s);  cmbRain2->addItem(s);
 	}	
 
@@ -544,53 +554,53 @@ void CGui::InitGui()
 	//---------------------  Terrain  ---------------------
 	Cmb(cmbTexNorm, "TexNormal", comboTexNorm);  cmbTexNorm->addItem("flat_n.png");
 
-	strlist li;
+	strlist li;  strlist::iterator q;
 	PATHMANAGER::DirList(sData + (pSet->tex_size > 0 ? "/terrain" : "/terrain_s"), li);
 
-	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
-	{	String s = *i;
-		if (StringUtil::match(*i, "*_n.*", false))
-			cmbTexNorm->addItem(*i);
+	for (q = li.begin(); q != li.end(); ++q)
+	{
+		if (StringUtil::match(*q, "*_n.*", false))
+			cmbTexNorm->addItem(*q);
 		//else
-		//if (StringUtil::match(*i, "*_d.*", false))  //_T
-		//	cmbTexDiff->addItem(*i);
+		//if (StringUtil::match(*q, "*_d.*", false))  //_T
+		//	cmbTexDiff->addItem(*q);
 	}
 	
 	//  particles
 	GetMaterials("tires.particle", true, "particle_system");
-	for (size_t i=0; i < vsMaterials.size(); ++i)
-	{	const String& s = vsMaterials[i];
+	for (u=0; u < vsMaterials.size(); ++u)
+	{	const String& s = vsMaterials[u];
 		cmbParDust->addItem(s);  cmbParMud->addItem(s);  cmbParSmoke->addItem(s);
 	}
 	
 	//  surfaces
-	for (size_t i=0; i < app->surfaces.size(); ++i)
-		cmbSurface->addItem(app->surfaces[i].name);
+	for (u=0; u < app->surfaces.size(); ++u)
+		cmbSurface->addItem(app->surfaces[u].name);
 	
 
 	//---------------------  Grass  ---------------------
 	PATHMANAGER::DirList(sData + "/grass", li);
-	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
+	for (q = li.begin(); q != li.end(); ++q)
 	{
-		if (StringUtil::startsWith(*i, "grClr", false))
-			cmbGrassClr->addItem(*i);
+		if (StringUtil::startsWith(*q, "grClr", false))
+			cmbGrassClr->addItem(*q);
 	}
 
 
 	//---------------------  Roads  ---------------------
 	GetMaterialsMat(sMat+"road.mat");
 	GetMaterialsMat(sMat+"pipe.mat",false);
-	for (size_t i=0; i<4; ++i)
+	for (u=0; u<4; ++u)
 	{
-		Cmb(cmbPipeMtr[i], "RdMtrP"+toStr(i+1), comboPipeMtr);
-		if (i>0)  {  cmbPipeMtr[i]->addItem("");  }
+		Cmb(cmbPipeMtr[u], "RdMtrP"+toStr(u+1), comboPipeMtr);
+		if (u>0)  {  cmbPipeMtr[u]->addItem("");  }
 	}
 	Cmb(cmbRoadWMtr, "RdMtrW1", comboRoadWMtr);
 	Cmb(cmbPipeWMtr, "RdMtrPW1", comboPipeWMtr);
 	Cmb(cmbRoadColMtr, "RdMtrC1", comboRoadColMtr);
 
-	for (size_t i=0; i < vsMaterials.size(); ++i)
-	{	String s = vsMaterials[i];
+	for (u=0; u < vsMaterials.size(); ++u)
+	{	const String& s = vsMaterials[u];
 		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_"))
 			for (int n=0; n<4; ++n)  cmbPipeMtr[n]->addItem(s);
 		if (StringUtil::startsWith(s,"road_wall"))  cmbRoadWMtr->addItem(s);
@@ -602,9 +612,9 @@ void CGui::InitGui()
 	//---------------------  Objects  ---------------------
 	app->vObjNames.clear();  strlist lo;
 	PATHMANAGER::DirList(sData + "/objects", lo);
-	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
-		if (StringUtil::endsWith(*i,".mesh") && !StringUtil::startsWith(*i,"sphere"))
-			app->vObjNames.push_back((*i).substr(0,(*i).length()-5));  //no .ext
+	for (q = lo.begin(); q != lo.end(); ++q)
+		if (StringUtil::endsWith(*q,".mesh") && !StringUtil::startsWith(*q,"sphere"))
+			app->vObjNames.push_back((*q).substr(0,(*q).length()-5));  //no .ext
 	
 	objListDyn = fLi("ObjListDyn");  Lev(objListDyn, ObjsChng);
 	objListSt  = fLi("ObjListSt");   Lev(objListSt,  ObjsChng);
@@ -613,8 +623,8 @@ void CGui::InitGui()
 	objListCat = fLi("ObjListCat");  Lev(objListCat, ObjsCatChng);
 	objPan = fWP("objPan");
 
-	for (int i=0; i < app->vObjNames.size(); ++i)
-	{	const string& name = app->vObjNames[i];
+	for (u=0; u < app->vObjNames.size(); ++u)
+	{	const string& name = app->vObjNames[u];
 		if (name != "sphere")
 		{
 			if (StringUtil::startsWith(name,"rock",false)||StringUtil::startsWith(name,"cave",false))
@@ -633,10 +643,10 @@ void CGui::InitGui()
 	app->vBuildings.clear();
 	PATHMANAGER::DirList(sData + "/objects0", lo);
 	PATHMANAGER::DirList(sData + "/objectsC", lo);//-
-	for (strlist::iterator i = lo.begin(); i != lo.end(); ++i)
-		if (StringUtil::endsWith(*i,".mesh"))
+	for (q = lo.begin(); q != lo.end(); ++q)
+		if (StringUtil::endsWith(*q,".mesh"))
 		{
-			string name = (*i).substr(0,(*i).length()-5);  //no .ext
+			string name = (*q).substr(0,(*q).length()-5);  //no .ext
 			string cat = name.substr(0,4);
 			++cats[cat];
 			app->vBuildings.push_back(name);
@@ -653,9 +663,9 @@ void CGui::InitGui()
 			objListCat->addItem("#E09090"+cat);
 	}
 	//  push Bld back to Obj list (if <= 1, rare cat)
-	for (size_t i=0; i < app->vBuildings.size(); ++i)
+	for (u=0; u < app->vBuildings.size(); ++u)
 	{
-		const string& name = app->vBuildings[i];
+		const string& name = app->vBuildings[u];
 		string cat = name.substr(0,4);
 		if (cats[cat] <= 1)
 			objListSt->addItem("#D0D0C8"+name);
@@ -684,10 +694,9 @@ void CGui::InitGui()
 	GetMaterialsMat(sMat+"objects_static.mat",false);
 
 	cmbTwk->addItem("");
-	for (size_t i=0; i < vsMaterials.size(); ++i)
-	{	String s = vsMaterials[i];
-			cmbTwk->addItem(s);
-	}
+	for (u=0; u < vsMaterials.size(); ++u)
+		cmbTwk->addItem(vsMaterials[u]);
+
 	cmbTwk->setIndexSelected( cmbTwk->findItemIndexWith(pSet->tweak_mtr) );
 
 	
@@ -704,9 +713,6 @@ void CGui::InitGui()
 	}
 	ck= &ckPickSetPar;	ck->Init("PickSetPar",	&pSet->pick_setpar);
 	panPick = fWP("PanelPick");
-
-	// todo: pick filter sceneries ..
-	//const char sc[17]="TJSFGWIADCVUMOER";  //chk "Pick"+sc[i]
 	//"PickRadAll" "PickRadCur" "PickRadFilter"
 
 
@@ -723,8 +729,8 @@ void CGui::InitGui()
 	lp->addColumn(" ", 20);
 	liPickW[P_Sky] = 280;
 
-	for (i=0; i < data->pre->sky.size(); ++i)
-	{	const PSky& s = data->pre->sky[i];
+	for (u=0; u < data->pre->sky.size(); ++u)
+	{	const PSky& s = data->pre->sky[u];
 		String c = s.clr;
 		lp->addItem(c, 0);  l = lp->getItemCount()-1;
 
@@ -746,8 +752,8 @@ void CGui::InitGui()
 	lp->addColumn(" ", 20);
 	liPickW[P_Tex] = 280;
 
-	for (i=0; i < data->pre->ter.size(); ++i)
-	{	const PTer& t = data->pre->ter[i];
+	for (u=0; u < data->pre->ter.size(); ++u)
+	{	const PTer& t = data->pre->ter[u];
 		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
 		lp->addItem(c+ t.sc, 0);  l = lp->getItemCount()-1;
 
@@ -769,8 +775,8 @@ void CGui::InitGui()
 	lp->addColumn(" ", 20);
 	liPickW[P_Grs] = 205;
 
-	for (i=0; i < data->pre->gr.size(); ++i)
-	{	const PGrass& t = data->pre->gr[i];
+	for (u=0; u < data->pre->gr.size(); ++u)
+	{	const PGrass& t = data->pre->gr[u];
 		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
 		lp->addItem(c+ t.sc, 0);  l = lp->getItemCount()-1;
 
@@ -791,8 +797,8 @@ void CGui::InitGui()
 	lp->addColumn(" ", 20);
 	liPickW[P_Veg] = 280;
 
-	for (i=0; i < data->pre->veg.size(); ++i)
-	{	const PVeget& t = data->pre->veg[i];
+	for (u=0; u < data->pre->veg.size(); ++u)
+	{	const PVeget& t = data->pre->veg[u];
 		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
 		lp->addItem(c+ t.sc, 0);  l = lp->getItemCount()-1;
 
@@ -815,8 +821,8 @@ void CGui::InitGui()
 	liPickW[P_Rd] = 280;
 	lp->addItem("#102030J", 0);  lp->setSubItemNameAt(1,0, "#102030");  // ""
 
-	for (i=0; i < data->pre->rd.size(); ++i)
-	{	const PRoad& t = data->pre->rd[i];
+	for (u=0; u < data->pre->rd.size(); ++u)
+	{	const PRoad& t = data->pre->rd[u];
 		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
 		lp->addItem(c+ t.sc, 0);  l = lp->getItemCount()-1;
 
@@ -854,7 +860,7 @@ void CGui::InitGui()
 	Btn("TrackDelete",	btnTrackDel);
 	
     //  load = new game
-    for (int i=1; i<=3; ++i)
+    for (i=1; i<=3; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  }
 
 	CreateGUITweakMtr();

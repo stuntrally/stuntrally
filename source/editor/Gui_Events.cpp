@@ -310,6 +310,17 @@ void CGui::SldUpd_Game()
 	svWind.UpdF(&sc->windAmt);
 	svGravity.UpdF(&sc->gravity);
 }
+void CGui::comboReverbs(Cmb cmb, size_t val)  // reverb sets
+{
+	String s = cmb->getItemNameAt(val);
+	sc->sReverbs = s;
+	UpdRevDescr();
+}
+void CGui::UpdRevDescr()
+{
+	sc->UpdRevSet();
+	txtRevebDescr->setCaption(sc->revSet.descr);
+}
 
 //  Pacenotes
 void CGui::slUpd_Pace(SV*)

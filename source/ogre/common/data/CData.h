@@ -4,6 +4,7 @@
 
 class FluidsXml;
 class BltObjects;
+class ReverbsXml;
 
 class TracksXml;
 class CarsXml;
@@ -27,6 +28,7 @@ public:
 
 	FluidsXml* fluids;	//  fluids params for car sim
 	BltObjects* objs;	//  collisions.xml, for vegetation models
+	ReverbsXml* reverbs;  // reverb presets for sceneries, used in scene.xml
 	
 	TracksXml* tracks;  // tracks.ini info for Gui
 	CarsXml* cars;		// cars info for Gui

@@ -3,6 +3,7 @@
 #include "../vdrift/par.h"
 #include "SceneXml.h"
 #include "FluidsXml.h"
+#include "TracksXml.h"
 #include "tinyxml.h"
 #include "tinyxml2.h"
 #include <OgreSceneNode.h>
@@ -15,7 +16,7 @@ using namespace tinyxml2;
 Scene::Scene()
 	: pGame(0)
 {
-	pFluidsXml = 0;
+	pFluidsXml = 0;  pReverbsXml = 0;
 	Default();
 }
 void Scene::Default()
@@ -25,6 +26,8 @@ void Scene::Default()
 	asphalt = false;  denyReversed = false;  noWrongChks = false;
 	windAmt = 0.f;  damageMul = 1.f;
 	gravity = 9.81f;
+	
+	sAmbient = "";  sReverbs = "";
 
 	skyMtr = "World/NoonSky";  skyYaw = 0.f;
 	rainEmit = 0;  rainName = "";
@@ -133,6 +136,25 @@ void Object::SetFromBlt()
 }
 
 
+void Scene::UpdRevSet()
+{
+	if (!pReverbsXml)  return;
+	string s = sReverbs == "" ? "base" : sReverbs;
+
+	int id = pReverbsXml->revmap[sReverbs]-1;
+	if (id == -1)
+	{	LogO("!scene.xml reverb set not found in xml: "+sReverbs);
+		//..
+	}else
+	{	const ReverbSet& r = pReverbsXml->revs[id], &b = pReverbsXml->base;
+		#define rvs(par)  revSet.##par = r.##par != "" ? r.##par : b.##par
+		rvs(descr);
+		rvs(normal);  rvs(cave);  rvs(cavebig);
+		rvs(pipe);  rvs(pipebig);  rvs(influid);
+	}
+}
+
+
 void Scene::UpdateFluidsId()
 {
 	if (!pFluidsXml)  return;
@@ -148,6 +170,7 @@ void Scene::UpdateFluidsId()
 			LogO("!Warning: Scene fluid name: " + fluids[i].name + " not found in xml!");
 	}
 }
+
 
 void Scene::UpdateSurfId()
 {

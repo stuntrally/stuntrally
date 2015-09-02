@@ -1,0 +1,50 @@
+<reverbs>
+	<base name="base" normal="MOUNTAINS"
+		cave="STONEROOM" cavebig="CAVE" pipe="PIPE_SMALL" pipebig="PIPE_LARGE" influid="UNDERWATER"
+		descr="basic, general, low reverb" />
+
+	<rev name="Desert"       normal="PLAIN" 
+		descr="Open flat terrain, no reverb" />
+
+	<rev name="Australia"    normal="OUTDOORS_ROLLINGPLAINS" 
+		descr="Mostly open, flat terrain - nearly no reverb" />
+
+	<rev name="Islands"      normal="PLAIN" 
+		descr="Rare vegetation or rocks - very low reverb" />
+
+	<rev name="Savanna"      normal="OUTDOORS_VALLEY" 
+		descr="Rare trees - low reverb" />
+
+	<rev name="Forest"       normal="OUTDOORS_CREEK" 
+		descr="Some trees - low reverb" />
+
+	<rev name="ForestDense"  normal="FOREST" 
+		descr="Many trees - close reverb" />
+
+	<rev name="Jungle"       normal="WOODEN_LARGEROOM" 
+		descr="Plenty of vegetation - close reverb" />
+
+	<rev name="JungleDense"  normal="WOODEN_MEDIUMROOM" 
+		descr="Lots of vegetation - high close reverb" />
+
+	<rev name="Rocky"        normal="CASTLE_COURTYARD" 
+		descr="Some rocks and vegetation - longer reverb" />
+
+	<rev name="Canyon"       normal="QUARRY" 
+		descr="Valleys open rocks - medium echo" />
+
+	<rev name="Mountains"    normal="MOUNTAINS" 
+		descr="High mountains - long echoing" />
+
+	<!--  special atmosphere  -->
+	<rev name="Crystals"     normal="PLAIN" 
+		descr="custom" />
+	<rev name="Alien"        normal="PLAIN" 
+		descr="custom" />
+	<rev name="Mars"         normal="PLAIN" 
+		descr="custom" />
+	<rev name="Space"        normal="PLAIN" 
+		descr="custom" />
+	<rev name="Unidentified" normal="PLAIN" 
+		descr="custom" />
+</reverbs>

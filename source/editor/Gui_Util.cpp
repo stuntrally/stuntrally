@@ -54,6 +54,7 @@ void CGui::SetGuiFromXmls()
 	svRain1Rate.Upd();	svRain2Rate.Upd();	
 	_Cmb(cmbRain1, sc->rainName);
 	_Cmb(cmbRain2, sc->rain2Name);
+	_Cmb(cmbReverbs, sc->sReverbs);  UpdRevDescr();
 	
 	//  [Terrain]
 	//-----------------------------------------------

@@ -199,6 +199,14 @@ bool Scene::LoadXml(String file, bool bTer)
 			LogO("!Error: Can't load start from "+s);
 	}
 
+	///  sound
+	e = root->FirstChildElement("sound");
+	if (e)
+	{	a = e->Attribute("ambient");	if (a)  sAmbient = string(a);
+		a = e->Attribute("reverbs");	if (a)  sReverbs = string(a);
+		UpdRevSet();
+	}
+
 	///  sky
 	e = root->FirstChildElement("sky");
 	if (e)
@@ -512,6 +520,12 @@ bool Scene::SaveXml(String file)
 		st.SetAttribute("rot",	s.c_str());
 	root.InsertEndChild(st);
 
+
+	TiXmlElement snd("sound");
+		snd.SetAttribute("ambient",		sAmbient.c_str());
+		snd.SetAttribute("reverbs",		sReverbs.c_str());
+	root.InsertEndChild(snd);
+	
 
 	TiXmlElement sky("sky");
 		sky.SetAttribute("material",	skyMtr.c_str());
