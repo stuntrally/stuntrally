@@ -7,49 +7,49 @@
 		descr="Open flat terrain, no reverb" />
 
 	<rev name="Australia"    normal="OUTDOORS_ROLLINGPLAINS" 
-		descr="Mostly open, flat terrain - nearly no reverb" />
+		descr="Mostly open, flat terrain - nearly no reverb" /><!--OUTDOORS_ROLLINGPLAINS-->
 
-	<rev name="Islands"      normal="PLAIN" 
-		descr="Rare vegetation or rocks - very low reverb" />
+	<rev name="Islands"      normal="MOUNTAINS" 
+		descr="Rare vegetation or rocks - very low reverb" /><!--MOUNTAINS-->
 
 	<rev name="Savanna"      normal="OUTDOORS_VALLEY" 
-		descr="Rare trees - low reverb" />
+		descr="Rare trees - low reverb" /><!--OUTDOORS_VALLEY-->
 
-	<rev name="Forest"       normal="OUTDOORS_CREEK" 
-		descr="Some trees - low reverb" />
+	<rev name="Forest"       normal="WOODEN_COURTYARD" 
+		descr="Some trees - low reverb" /><!--WOODEN_COURTYARD OUTDOORS_CREEK-->
 
-	<rev name="ForestDense"  normal="FOREST" 
-		descr="Many trees - close reverb" />
+	<rev name="ForestDense"  normal="OUTDOORS_BACKYARD" 
+		descr="Many trees - close reverb" /><!--OUTDOORS_BACKYARD FOREST-->
 
 	<rev name="Jungle"       normal="WOODEN_LARGEROOM" 
-		descr="Plenty of vegetation - close reverb" />
+		descr="Plenty of vegetation - close reverb" /><!--WOODEN_LARGEROOM WOODEN_LONGPASSAGE-->
 
 	<rev name="JungleDense"  normal="WOODEN_MEDIUMROOM" 
-		descr="Lots of vegetation - high close reverb" />
+		descr="Lots of vegetation - dull close reverb" /><!--WOODEN_MEDIUMROOM-->
 
-	<rev name="Rocky"        normal="CASTLE_COURTYARD" 
-		descr="Some rocks and vegetation - longer reverb" />
+	<rev name="Rocky"        normal="OUTDOORS_DEEPCANYON" 
+		descr="Some rocks and vegetation - longer reverb" /><!--OUTDOORS_DEEPCANYON` CASTLE_COURTYARD-->
 
-	<rev name="Canyon"       normal="QUARRY" 
-		descr="Valleys open rocks - medium echo" />
+	<rev name="Canyon"       normal="ALLEY" 
+		descr="Valleys open rocks - medium echo" /><!--ALLEY` CHAPEL-->
 
-	<rev name="Mountains"    normal="MOUNTAINS" 
-		descr="High mountains - long echoing" />
+	<rev name="Mountains"    normal="WOODEN_HALL" 
+		descr="High mountains - long echoing" /><!--AUDITORIUM FACTORY_LARGEROOM` WOODEN_HALL-->
 
-	<rev name="MountainsClose"  normal="MOUNTAINS" 
-		descr="High mountains close, high long close reverb" />
+	<rev name="MountainsClose"  normal="CASTLE_HALL" 
+		descr="High mountains close - high long close reverb" /><!--CASTLE_HALL CASTLE_LONGPASSAGE STONECORRIDOR-->
 
 	<!--  special atmosphere  -->
-	<rev name="Crystals"     normal="PLAIN" 
-		descr="custom Crystals - own setup" />
-	<rev name="Alien"        normal="PLAIN" 
+	<rev name="Crystals"     normal="ICEPALACE_LONGPASSAGE" 
+		descr="custom Crystals - own setup" /><!--ICEPALACE_LONGPASSAGE-->
+	<rev name="Alien"        normal="QUARRY" 
 		descr="custom Alien - own setup" />
-	<rev name="Mars"         normal="PLAIN" 
-		descr="custom" />
 	<rev name="Space"        normal="PLAIN" 
 		descr="custom" />
-	<rev name="Unidentified" normal="PLAIN" 
+	<rev name="Unidentified" normal="MOOD_HEAVEN" 
 		descr="custom Unidentified - own setup" />
-	<rev name="UnidentMntn" normal="PLAIN" 
+	<rev name="UnidentMntn" normal="CHAPEL" 
 		descr="custom Unidentified, Mountains - long close reverb" />
+	
+	<!-- See SoundBaseMgrUtil :328  InitReverMap()  for more names -->
 </reverbs>
