@@ -228,7 +228,7 @@ public:  ///  pacenotes prepass data
 		int used;  bool loop, jump,jumpR, onpipe;
 		PaceM()
 			:used(-1), aa(0.f)
-			,loop(0), jump(0), jumpR(0), onpipe(0)
+			,loop(0), jump(0),jumpR(0), onpipe(0)
 		{	}
 	};
 	std::vector<PaceM> vPace;
@@ -242,7 +242,7 @@ private:
 		bool pipe;
 		bool hasBlend;
 		int iwC;
-		bool jfw0,jfw1;  // jump front walls
+		bool jfw0,jfw1,jfw2;  // jump front walls
 	};
 	
 	//  Build Segment Geometry

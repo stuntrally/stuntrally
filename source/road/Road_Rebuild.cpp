@@ -49,7 +49,7 @@ void SplineRoad::BuildSeg(
 	int segM, bool full)
 {
 	int seg = (segM + DR.segs) % DR.segs;  // iterator
-	int seg1 = getNext(seg), seg0 = getPrev(seg);
+	int seg1 = getNext(seg), seg0 = getPrev(seg), seg02 = getAdd(seg,-2);
 	/**/DS.seg = seg;  DS.seg1 = seg1;  DS.seg0 = seg0;
 	
 	//if (isLod0)
@@ -57,6 +57,12 @@ void SplineRoad::BuildSeg(
 
 	//  on terrain  (whole seg)
 	DS.onTer = mP[seg].onTer && mP[seg1].onTer;
+
+	//  jump front wall, ends in air - this is pure madness
+	//  0,1 for geometry, 2,1 for pacenotes
+	DS.jfw0 = iDir<0 ? !mP[seg].onTer && mP[seg0].idMtr < 0: !mP[seg].onTer && mP[seg].idMtr >= 0 && mP[seg0].idMtr < 0;
+	DS.jfw1 = iDir<0 ? !mP[seg1].onTer && mP[seg1].idMtr < 0 : !mP[seg1].onTer && mP[seg1].idMtr < 0;
+	DS.jfw2 = iDir<0 ? !mP[seg0].onTer && mP[seg02].idMtr < 0: !mP[seg0].onTer && mP[seg0].idMtr >= 0 && mP[seg02].idMtr < 0;
 	
 	// on merging segs only for game in whole road rebuild
 	// off for editor (partial, 4segs rebuild)
@@ -135,7 +141,8 @@ void SplineRoad::BuildSeg(
 	//  Length  vertices
 	//------------------------------------------------------------------------------------
 	//LogR( " __len");
-	if (mP[seg].idMtr >= 0)  // -1 hides segment
+	bool vis = mP[seg].idMtr >= 0;  // visible, -1 hides segment
+	if (vis || DL.isPace)
 	for (int i = -1; i <= il+1; ++i)  // length +1  +2-gap
 	{
 		++DLM.iLmrg;
@@ -196,7 +203,7 @@ void SplineRoad::BuildSeg(
 
 		//LogR("   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw)
 		//	/*+(bNew?"  New ":"") +(bNxt?"  Nxt ":"")/**/);
-		if (DS.hasBlend)
+		if (DS.hasBlend && vis)
 			++DLM.iLmrgB;
 		
 		
@@ -243,7 +250,7 @@ void SplineRoad::BuildSeg(
 				vP -= vn * skH;
 			
 			
-			/// []()  pace
+			/// []()  pace  ~ ~ ~
 			if (DL.isPace)
 			{
 				if (full && w == 1)  // center
@@ -255,12 +262,16 @@ void SplineRoad::BuildSeg(
 					
 					pm.pos  = vP + vN * h;  //par  + vw * 0.5f;
 					pm.pos2 = vP + vN * (h + 1.f) + vw * 0.5f;  // extra, info
+					
 					pm.loop = DL0.v0_Loop[seg] > 0;
+					pm.onpipe = onP;
+					pm.jump = DS.jfw2;  pm.jumpR = DS.jfw1;
+					
 					vPace.push_back(pm);
 				}
 
-			}else{
-
+			}else if (vis)
+			{
 				///  color  for minimap preview
 				//  ---~~~====~~~---
 				Real brdg = min(1.f, std::abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
@@ -293,7 +304,7 @@ void SplineRoad::BuildSeg(
 		
 		
 		/// []()  normal
-		if (!DL.isPace)
+		if (!DL.isPace && vis)
 		{
 			//#  stats  banking angle
 			if (DL.isLod0 && i==0)
@@ -562,8 +573,6 @@ void SplineRoad::createSeg_Meshes(
 
 	///  wall ]
 	//------------------------------------------------------------------------------------
-	DS.jfw0 = !mP[seg].onTer  && mP[seg0].idMtr < 0;  // jump front wall, ends in air
-	DS.jfw1 = !mP[seg1].onTer && mP[seg1].idMtr < 0;
 	bool pipeGlass = DS.pipe && bMtrPipeGlass[ mP[seg].idMtr ];  // pipe glass mtr
 	if (wall)
 	{

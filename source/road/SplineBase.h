@@ -84,8 +84,12 @@ public:
 	inline int getNumPoints() const {  return (int)mP.size();  }
 
 	//  get next, prev points
-	inline int getPrev(int id) const {  int s = (int)mP.size();  return isLooped ?  (id-1+s) % s : std::max(0,   id-1);  }
-	inline int getNext(int id) const {  int s = (int)mP.size();  return isLooped ?  (id+1) % s   : std::min(s-1, id+1);  }
+	inline int getPrev(int id) const
+	{	int s = (int)mP.size();  return isLooped ?  (id-1+s) % s : std::max(0,   id-1);  }
+	inline int getNext(int id) const
+	{	int s = (int)mP.size();  return isLooped ?  (id+1) % s   : std::min(s-1, id+1);  }
+	inline int getAdd(int id, int n) const
+	{	int s = (int)mP.size();  return isLooped ?  (id+n+s) % s : std::min(s-1, std::max(0, id+n));  }
 
 
 	//  pos

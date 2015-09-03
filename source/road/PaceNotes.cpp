@@ -132,7 +132,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 	}
 	
 	
-	bool loop1 = false, jump1 = false, onpipe1 = false;
+	bool loop1 = false, jump1 = false, jump1R = false, onpipe1 = false;  // old vals
 	bool dirR = road->iDir > 0;
 	if (reversed)  dirR = !dirR;  // track dir
 
@@ -250,7 +250,35 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 					0.f, 0.f,  0.f*u, u);  // dir, uv
 				Create(o);  vPN.push_back(o);
 			}
-			loop1 = p.loop;		
+			loop1 = p.loop;
+		}
+
+		///  jump
+		if (n==n1)
+		{
+			bool jmp1  = dirR ? p.jumpR : p.jump;
+			bool jmp1R = dirR ? p.jump : p.jumpR;
+			bool jump = jmp1  && !jump1;   // jump/start
+			bool land = jmp1R && !jump1R;  // land/end
+			if (jump || land)
+			{	PaceNote o(1, p.pos, signX,signX, 1,1,1,1,  // size, clr
+					0.f, 0.f,  (land ? 3.f : 2.f)*u, u);  // dir, uv
+				Create(o);  vPN.push_back(o);
+			}
+			jump1 = jmp1;  jump1R = jmp1R;
+		}
+
+		///  on pipe
+		if (n==n1)
+		{
+			bool onp = dirR ? p.onpipe && !onpipe1 :
+							 !p.onpipe && onpipe1;
+			if (onp)
+			{	PaceNote o(1, p.pos, signX,signX, 1,1,1,1,  // size, clr
+					0.f, 0.f,  4.f*u, 2.f*u);  // dir, uv
+				Create(o);  vPN.push_back(o);
+			}
+			onpipe1 = p.onpipe;
 		}
 	}
 	
