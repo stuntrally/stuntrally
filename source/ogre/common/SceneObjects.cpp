@@ -3,6 +3,7 @@
 #include "Def_Str.h"
 #include "../common/data/SceneXml.h"
 #include "../common/CScene.h"
+#include "../common/Axes.h"
 #include "../../vdrift/pathmanager.h"
 #include "../../btOgre/BtOgreGP.h"
 #include "../../road/Road.h"
@@ -152,11 +153,8 @@ void App::CreateObjects()
 		if (!o.dyn)
 		{
 			///  static  . . . . . . . . . . . . 
-			Vector3 posO = Vector3(o.pos[0],o.pos[2],-o.pos[1]);
-			Quaternion q(o.rot[0],o.rot[1],o.rot[2],o.rot[3]), q1;
-			Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-			q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));
-			Quaternion rotO = q1 * Object::qrFix;
+			Vector3 posO = Axes::toOgre(o.pos);
+			Quaternion rotO = Axes::toOgreW(o.rot);
 
 			Matrix4 tre;  tre.makeTransform(posO,o.scale,rotO);
 			BtOgre::StaticMeshToShapeConverter converter(o.ent, tre);
@@ -299,12 +297,8 @@ void App::UpdObjPick()
 	const AxisAlignedBox& ab = o.nd->getAttachedObject(0)->getBoundingBox();
 	Vector3 s = o.scale * ab.getSize();  // * sel obj's node aabb
 
-	Vector3 posO = Vector3(o.pos[0],o.pos[2],-o.pos[1]);
-
-	Quaternion q(o.rot[0],o.rot[1],o.rot[2],o.rot[3]), q1;
-	Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-	q1.FromAngleAxis(-rad,Vector3(axi.z,-axi.x,-axi.y));
-	Quaternion rotO = q1 * Object::qrFix;
+	Vector3 posO = Axes::toOgre(o.pos);
+	Quaternion rotO = Axes::toOgreW(o.rot);
 
 	Vector3 scaledCenter = ab.getCenter() * o.scale;
 	posO += (rotO * scaledCenter);
