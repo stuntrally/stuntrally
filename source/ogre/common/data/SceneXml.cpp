@@ -4,6 +4,7 @@
 #include "SceneXml.h"
 #include "FluidsXml.h"
 #include "TracksXml.h"
+#include "../Axes.h"
 #include "tinyxml.h"
 #include "tinyxml2.h"
 #include <OgreSceneNode.h>
@@ -126,13 +127,8 @@ Quaternion Object::qrFix2(-0.707107, 0, 0.707107, 0);  //SetAxisAngle(-PI_d/2.f,
 void Object::SetFromBlt()
 {
 	if (!nd)  return;
-	Vector3 posO = Vector3(pos[0],pos[2],-pos[1]);
-
-	Quaternion q(rot[0],-rot[3],rot[1],rot[2]);
-	Quaternion rotO = q * qrFix;
-
-	nd->setPosition(posO);
-	nd->setOrientation(rotO);
+	nd->setPosition(Axes::toOgre(pos));
+	nd->setOrientation(Axes::toOgreW(rot));
 }
 
 

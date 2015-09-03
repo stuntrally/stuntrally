@@ -2,6 +2,7 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/CScene.h"
+#include "../ogre/common/Axes.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -55,18 +56,9 @@ void App::UpdStartPos()
 			ndObjBox->setVisible(false);
 	}	}
 
-	float* pos = &scn->sc->startPos[0], *rot = &scn->sc->startRot[0];
-	Vector3 p1 = Vector3(pos[0],pos[2],-pos[1]);
-
-	Quaternion q(rot[0],rot[1],rot[2],rot[3]);
-	Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-
-	Vector3 vrot(axi.z, -axi.x, -axi.y);
-		QUATERNION <double> fix;  fix.Rotate(PI_d, 0, 1, 0);
-		Quaternion qr;  qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();
-	Quaternion q1;  q1.FromAngleAxis(-rad, vrot);  q1 = q1 * qr;
-
-	ndCar->setPosition(p1);    ndCar->setOrientation(q1);
+	Vector3 p1 = Axes::toOgre(scn->sc->startPos);
+	Quaternion q1 = Axes::toOgre(scn->sc->startRot);
+	ndCar->setPosition(p1);  ndCar->setOrientation(q1);
 	ndCar->setVisible(scn->road);  // hide before load
 
 	ndStBox->setPosition(p1);  ndStBox->setOrientation(q1);

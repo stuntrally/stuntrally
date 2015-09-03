@@ -2,6 +2,7 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/data/SceneXml.h"
 #include "../ogre/common/CScene.h"
+#include "../ogre/common/Axes.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -41,15 +42,8 @@ void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 	{
 		///-  start  -------------
 		int cnt = road->getNumPoints();
-		const float* pos = &app->scn->sc->startPos[0], *rot = &app->scn->sc->startRot[0];
-		Vector3 stPos = Vector3(pos[0],pos[2],-pos[1]);
-
-		Quaternion q(rot[0],rot[1],rot[2],rot[3]);
-		Radian rad;  Vector3 axi;  q.ToAngleAxis(rad, axi);
-		Vector3 vrot(axi.z, -axi.x, -axi.y);
-			QUATERNION <double> fix;  fix.Rotate(PI_d, 0, 1, 0);
-			Quaternion qr;  qr.w = fix.w();  qr.x = fix.x();  qr.y = fix.y();  qr.z = fix.z();
-		Quaternion q1;  q1.FromAngleAxis(-rad, vrot);  q1 = q1 * qr;
+		Vector3 stPos = Axes::toOgre(app->scn->sc->startPos);
+		Quaternion q1 = Axes::toOgre(app->scn->sc->startRot);
 		Vector3 vx,vy,vz;  q1.ToAxes(vx,vy,vz);  Vector3 stDir = -vx;
 		Plane stPla(stDir, stPos);
 
