@@ -109,7 +109,6 @@ void SoundBase::setLoop(bool loop1)
 
 void SoundBase::setPitch(float pitch1)
 {
-	if (is2D)  return;
 	pitch = pitch1;
 	sound_mgr->recomputeSource(source_id, REASON_PTCH, pitch, NULL);
 }

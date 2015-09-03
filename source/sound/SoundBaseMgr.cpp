@@ -327,7 +327,8 @@ void SoundBaseMgr::recomputeSource(int id, int reason, float fl, Vector3* vec)
 			{
 			case REASON_GAIN:  alSourcef(hw_sources[sources[id]->hw_id], AL_GAIN, fl * master_volume); break;
 			case REASON_PTCH:  alSourcef(hw_sources[sources[id]->hw_id], AL_PITCH, fl); break;
-			case REASON_POS:  alSource3f(hw_sources[sources[id]->hw_id], AL_POSITION, vec->x, vec->y, vec->z); break;
+			case REASON_POS:  if (!sources[id]->is2D)
+							  alSource3f(hw_sources[sources[id]->hw_id], AL_POSITION, vec->x, vec->y, vec->z); break;
 			case REASON_VEL:  alSource3f(hw_sources[sources[id]->hw_id], AL_VELOCITY, vec->x, vec->y, vec->z); break;
 
 			case REASON_PLAY:  alSourcePlay(hw_sources[sources[id]->hw_id]); break;
