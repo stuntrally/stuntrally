@@ -138,7 +138,7 @@ bool SoundBaseMgr::Init(std::string snd_device, bool reverb1)
 	alGenAuxiliaryEffectSlots(1, &slot);
 	InitReverMap();
 	
-	SetReverb("MOUNTAINS");
+	//SetReverb("MOUNTAINS");
 	return true;
 }
 
@@ -147,7 +147,7 @@ bool SoundBaseMgr::Init(std::string snd_device, bool reverb1)
 //-----------------------------------------------------------------------------------
 void SoundBaseMgr::SetReverb(std::string name)
 {
-	if (!reverb)  return;
+	if (!device || !reverb)  return;
 	sReverb = name;
 	int r = mapReverbs[name] -1;
 	if (r < 0 || r >= RVB_PRESETS_ALL)

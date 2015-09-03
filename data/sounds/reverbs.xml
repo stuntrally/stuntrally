@@ -36,15 +36,20 @@
 	<rev name="Mountains"    normal="MOUNTAINS" 
 		descr="High mountains - long echoing" />
 
+	<rev name="MountainsClose"  normal="MOUNTAINS" 
+		descr="High mountains close, high long close reverb" />
+
 	<!--  special atmosphere  -->
 	<rev name="Crystals"     normal="PLAIN" 
-		descr="custom" />
+		descr="custom Crystals - own setup" />
 	<rev name="Alien"        normal="PLAIN" 
-		descr="custom" />
+		descr="custom Alien - own setup" />
 	<rev name="Mars"         normal="PLAIN" 
 		descr="custom" />
 	<rev name="Space"        normal="PLAIN" 
 		descr="custom" />
 	<rev name="Unidentified" normal="PLAIN" 
-		descr="custom" />
+		descr="custom Unidentified - own setup" />
+	<rev name="UnidentMntn" normal="PLAIN" 
+		descr="custom Unidentified, Mountains - long close reverb" />
 </reverbs>

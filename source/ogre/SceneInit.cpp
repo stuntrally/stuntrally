@@ -341,8 +341,10 @@ void App::LoadGame()  // 2
 		if (!scn->sc->ter)
 			scn->sc->td.hfHeight = NULL;  // sc->td.layerRoad.smoke = 1.f;
 	}
+	//  set normal reverb
+	pGame->snd->sound_mgr->SetReverb(scn->sc->revSet.normal);
 	
-	// upd car abs,tcs,sss
+	//  upd car abs,tcs,sss
 	pGame->ProcessNewSettings();
 
 		

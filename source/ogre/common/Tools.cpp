@@ -166,7 +166,10 @@ void CGui::ToolSceneXml()
 		///  sound
 		if (sc.sReverbs=="")
 			LogO("No reverb! "+trk);
-		
+		else
+		{	int id = data->reverbs->revmap[sc.sReverbs]-1;
+			if (id==-1)  LogO("Reverb not found! "+trk+"  "+sc.sReverbs);
+		}		
 		///  sky clrs
 		string s;
 		s += sc.lAmb.Check("amb");  s += sc.lDiff.Check("dif");  s += sc.lSpec.Check("spc");
