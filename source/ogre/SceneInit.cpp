@@ -242,6 +242,9 @@ void App::LoadCleanUp()  // 1 first
 	
 	DestroyGraphs();  hud->Destroy();
 	
+	//  hide hud arrow,beam,pace
+	bHideHudAid = bRplPlay || pSet->game.local_players > 1 ||
+		scn->road && scn->road->getNumPoints() < 2;
 
 	// rem old track
 	if (dstTrk)
@@ -472,7 +475,7 @@ void App::LoadScene()  // 3
 		
 	//  checkpoint arrow
 	bool deny = gui->pChall && !gui->pChall->chk_arr;
-	if (!bRplPlay && !deny)
+	if (!bHideHudAid && !deny)
 		hud->arrow.Create(mSceneMgr, pSet);
 }
 
@@ -583,8 +586,8 @@ void App::LoadRoad()  // 6
 {
 	CreateRoad();   // dstTrk inside
 		
-	if (scn->road && scn->road->getNumPoints() == 0 && hud->arrow.nodeRot)
-		hud->arrow.nodeRot->setVisible(false);  // hide when no road
+	if (hud->arrow.nodeRot)
+		hud->arrow.nodeRot->setVisible(!bHideHudAid);
 
 	//  boost fuel at start  . . .
 	//  based on road length
@@ -829,8 +832,7 @@ void App::CreateRoad()
 	//  pace ~ ~
 	scn->DestroyPace();
 
-	bool hasPace = pSet->game.local_players == 1 && !bRplPlay;
-	if (hasPace)  // not in splitscreen or replay
+	if (!bHideHudAid)
 	{
 		scn->pace = new PaceNotes(this);
 		scn->pace->Setup(mSceneMgr, cam, scn->terrain);

@@ -342,12 +342,12 @@ void CGui::chkHudShow(Ck*)
 void CGui::chkArrow(Ck*)
 {
 	if (hud->arrow.nodeRot)
-		hud->arrow.nodeRot->setVisible(pSet->check_arrow);
+		hud->arrow.nodeRot->setVisible(pSet->check_arrow && !app->bHideHudAid);
 }
 void CGui::chkBeam(Ck*)
 {
 	for (int i=0; i < app->carModels.size(); ++i)
-		app->carModels[i]->ShowNextChk(pSet->check_beam);
+		app->carModels[i]->ShowNextChk(pSet->check_beam && !app->bHideHudAid);
 }
 
 //  hud minimap

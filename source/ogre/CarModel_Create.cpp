@@ -431,7 +431,7 @@ void CarModel::Create()
 
 	//  next checkpoint marker
 	bool deny = pApp->gui->pChall && !pApp->gui->pChall->chk_beam;
-	if (eType == CT_LOCAL && !deny)
+	if (eType == CT_LOCAL && !deny && !pApp->bHideHudAid)
 	{
 		entNextChk = mSceneMgr->createEntity("Chk"+strI, "check.mesh");  ToDel(entNextChk);
 		entNextChk->setRenderQueueGroup(RQG_Weather);  entNextChk->setCastShadows(false);

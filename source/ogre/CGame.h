@@ -148,6 +148,7 @@ public:
 	PreviewTex prvView,prvRoad,prvTer;  // track tab
 	PreviewTex prvStCh;  // champ,chall stage view
 
+	bool bHideHudAid;  // hides arrow,beam,pacenotes when replay,splitscreen or no road
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
 	int carIdWin, iRplCarOfs, iRplSkip;
 
