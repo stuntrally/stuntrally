@@ -121,9 +121,6 @@ pair <MATHVECTOR<float,3>, QUATERNION<float> > Scene::GetStart(int index)
 
 
 ///  bullet to ogre  ----------
-Quaternion Object::qrFix(  0.707107, 0, 0.707107, 0);  //SetAxisAngle( PI_d/2.f, 0,1,0);
-Quaternion Object::qrFix2(-0.707107, 0, 0.707107, 0);  //SetAxisAngle(-PI_d/2.f, 0,1,0);
-
 void Object::SetFromBlt()
 {
 	if (!nd)  return;

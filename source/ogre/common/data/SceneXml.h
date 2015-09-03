@@ -261,7 +261,6 @@ public:
 
 	Object();
 	void SetFromBlt();
-	static Ogre::Quaternion qrFix,qrFix2;
 };
 
 

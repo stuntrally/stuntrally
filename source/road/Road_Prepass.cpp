@@ -8,6 +8,43 @@ using std::vector;  using std::min;  using std::max;
 
 
 
+///  rebuild for Pace  ~ ~
+void SplineRoad::RebuildRoadPace()
+{
+	Ogre::Timer ti;	
+	vPace.clear();
+
+	DataRoad DR(false, true);
+	PrepassRange(DR);
+	
+	LogR("");
+	LogR("LOD: -1 pace ---");
+	// lod -1 is only for pacenotes data
+
+	DataLod DL;
+	StatsLod ST;
+
+	PrepassLod(DR,DL0,DL,ST, -1, false);
+	
+	DataLodMesh DLM;
+
+	///  Segment
+	int sNum = DR.sMax - DR.sMin,
+		segM = DR.sMin;
+
+	while (sNum > 0)
+	{
+		DataSeg DS;
+		
+		BuildSeg(DR,DL0,DL,ST,DLM, DS, segM, true);
+		
+		--sNum;  ++segM;  // next
+	}
+
+	LogO(String("::: Time Road Pace Rebuild: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+}
+
+
 ///  Rebuild geometry
 //--------------------------------------------------------------------------------------------------------------------------
 
@@ -48,10 +85,8 @@ bool SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	//-----------------------------
 	DL0.Clear();
 	
-	for (int l = -1; l < LODs; ++l)
-	{	//  -1 is only for pacenotes data
-		//  swap -1 and 0,  0 has to be 1st for DL0 prepass
-		int lod = l==-1 ? 0 :  l==0 ? -1 :  l;
+	for (int lod = 0; lod < LODs; ++lod)
+	{
 		LogR("");
 		LogR("LOD: "+toStr(lod)+" ---");
 

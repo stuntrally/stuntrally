@@ -198,6 +198,8 @@ void App::LoadTrackEv()
 	iObjCur = -1;
 
 	scn->DestroyRoad();
+	scn->DestroyPace();
+	
 
 	// load scene
 	scn->sc->LoadXml(gcom->TrkDir()+"scene.xml");

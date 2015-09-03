@@ -74,6 +74,7 @@ public:
 	
 	//  Rebuild
 	bool RebuildRoadInt(bool editorAlign=false, bool edBulletFull=false);
+	void RebuildRoadPace();  ///  Rebuild road only for pacenotes, after RebuildRoadInt
 	void Destroy(), DestroyRoad(), DestroySeg(int id);
 
 
@@ -224,9 +225,10 @@ public:  ///  pacenotes prepass data
 	{
 		Ogre::Vector3 pos, pos2;
 		float aa;
-		int used;  bool loop;
+		int used;  bool loop, jump,jumpR, onpipe;
 		PaceM()
-			:used(-1), loop(false), aa(0.f)
+			:used(-1), aa(0.f)
+			,loop(0), jump(0), jumpR(0), onpipe(0)
 		{	}
 	};
 	std::vector<PaceM> vPace;

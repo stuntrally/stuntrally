@@ -207,7 +207,6 @@ void SplineRoad::DestroySeg(int id)
 
 void SplineRoad::DestroyRoad()
 {
-	vPace.clear();//
 	
 #ifndef SR_EDITOR
 	for (int i=0; i < vbtTriMesh.size(); ++i)

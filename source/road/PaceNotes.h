@@ -8,7 +8,7 @@
 #include <OgreAxisAlignedBox.h>
 
 namespace Ogre {  class SceneManager;  class SceneNode;  class Entity;  class Terrain;  class Camera;  }
-class SplineRoad;
+class SplineRoad;  class Scene;
 
 
 enum PaceTypes                 // 90     // 180    // 270
@@ -46,16 +46,14 @@ class PaceNotes
 public:
 	class App* pApp;  ///*
 	PaceNotes(App* papp);
-
-	//virtual ~PaceNotes();
 	//void Defaults();
 
 	//  Setup, call this on Init
 	void Setup(Ogre::SceneManager* sceneMgr, Ogre::Camera* camera, Ogre::Terrain* terrain);
 
 	//  Rebuild
-	void Rebuild(SplineRoad* road, bool reversed), Create(PaceNote& n);
-	void Destroy(), Destroy(PaceNote& n);
+	void Rebuild(SplineRoad* road, Scene* sc, bool reversed);
+	void Destroy(),  Create(PaceNote& n), Destroy(PaceNote& n);
 	
 	//  pacenotes.xml
 	bool LoadFile(Ogre::String fname), SaveFile(Ogre::String fname);
@@ -69,8 +67,7 @@ public:
 	//void Select(bool bHide=false);
 
 	//  Insert  -------
-	//void Insert();
-	//void Delete();
+	//void Insert(), Delete();
 	
 
 private:

@@ -811,21 +811,31 @@ void App::CreateRoad()
 	///  road  ~ ~ ~
 	SplineRoad*& road = scn->road;
 	Camera* cam = *mSplitMgr->mCameras.begin();
+
+	//  road
 	if (dstTrk)
 	{
-		scn->DestroyRoad();
+		scn->DestroyRoad();//
 
 		road = new SplineRoad(pGame);  // sphere.mesh
 		road->Setup("", 0.7,  scn->terrain, mSceneMgr, cam);
 		
 		String sr = gcom->TrkDir()+"road.xml";
 		road->LoadFile(gcom->TrkDir()+"road.xml");
-
-		//  pace ~ ~
-		scn->pace = new PaceNotes(this);
-		scn->pace->Setup(mSceneMgr, cam, scn->terrain);
 	}else
 		road->mCamera = cam;  // upd
+
+
+	//  pace ~ ~
+	scn->DestroyPace();
+
+	bool hasPace = pSet->game.local_players == 1 && !bRplPlay;
+	if (hasPace)  // not in splitscreen or replay
+	{
+		scn->pace = new PaceNotes(this);
+		scn->pace->Setup(mSceneMgr, cam, scn->terrain);
+	}
+
 	
 	//  after road load we have iChk1 so set it for carModels
 	for (int i=0; i < carModels.size(); ++i)
@@ -842,6 +852,11 @@ void App::CreateRoad()
 		road->SetChecks();  // 2nd, upd
 	}
 	
-	//todo: load only..
-	scn->pace->Rebuild(road, pSet->game.trackreverse);
+
+	//  pace ~ ~
+	if (scn->pace)
+	{
+		road->RebuildRoadPace();  //todo: load only..
+		scn->pace->Rebuild(road, scn->sc, pSet->game.trackreverse);
+	}
 }

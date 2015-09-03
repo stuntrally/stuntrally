@@ -27,12 +27,10 @@ CScene::CScene(App* app1)
 
 CScene::~CScene()
 {
-	delete pace;
-	delete road;
+	delete road;  delete pace;
 
 	OGRE_DELETE mHorizonGroup;
 	OGRE_DELETE mHorizonGlobals;
-
 	OGRE_DELETE mTerrainGroup;
 	OGRE_DELETE mTerrainGlobals;
 
@@ -47,8 +45,11 @@ void CScene::DestroyRoad()
 	if (!road)  return;
 	road->Destroy();
 	delete road;  road = 0;
-
-	if (pace)  pace->Destroy();
+}
+void CScene::DestroyPace()
+{
+	if (!pace)  return;
+	pace->Destroy();
 	delete pace;  pace = 0;
 }
 
@@ -57,10 +58,8 @@ void CScene::destroyScene()
 {
 	mWaterRTT->destroy();
 
-	DestroyRoad();
-
+	DestroyRoad();  DestroyPace();
 	DestroyTrees();
-
 	DestroyWeather();
 
 	delete[] sc->td.hfHeight;

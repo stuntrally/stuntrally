@@ -60,7 +60,7 @@ public:
 	//  Road
 	SplineRoad* road;
 	PaceNotes* pace;
-	void DestroyRoad();
+	void DestroyRoad(), DestroyPace();
 
 	//  vdrift track
 	Ogre::StaticGeometry* vdrTrack;

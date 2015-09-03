@@ -43,7 +43,7 @@ PaceNote::PaceNote(int t, Vector3 p, float sx,float sy,
 
 //  Pace notes
 //--------------------------------------------------------------------------------------
-void PaceNotes::Rebuild(SplineRoad* road, bool reversed)
+void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 {
 	Ogre::Timer ti;	
 
@@ -132,13 +132,14 @@ void PaceNotes::Rebuild(SplineRoad* road, bool reversed)
 	}
 	
 	
-	bool dirR = road->iDir > 0, loop1 = false;
+	bool loop1 = false, jump1 = false, onpipe1 = false;
+	bool dirR = road->iDir > 0;
 	if (reversed)  dirR = !dirR;  // track dir
 
 
 	///  ~~~  Auto Gen. turn signs  ~~~
-	int i,n;
-	for (n=nn-1; n >= 1; --n)  // all levels, 0 fake
+	int i,n, n1=1;
+	for (n=nn-1; n >= n1; --n)  // all levels, 0 fake
 	for (i=0; i < ii; ++i)     // all road points
 	{
 		SplineRoad::PaceM& p = road->vPace[i];
@@ -238,14 +239,15 @@ void PaceNotes::Rebuild(SplineRoad* road, bool reversed)
 			}
 		}
 
-		//  loop signs todo..
-		if (n==0)
+		//  todo: ...
+		///  loop
+		if (n==n1)
 		{
 			bool lp = dirR ? p.loop && !loop1 :
 							!p.loop && loop1;
 			if (lp)
 			{	PaceNote o(1, p.pos, signX,signX, 1,1,1,1,  // size, clr
-					0.f/**/, 0.f,  0.f*u, u);  // dir, uv
+					0.f, 0.f,  0.f*u, u);  // dir, uv
 				Create(o);  vPN.push_back(o);
 			}
 			loop1 = p.loop;		
