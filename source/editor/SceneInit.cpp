@@ -96,19 +96,13 @@ void App::createScene()  // once, init
 
 	///__  All  #if 0  in Release !!!
 
-	///  _Tool_ scene  ...........................
+	///  _Tool_ scene  ...................
 	#if 0
 	gui->ToolSceneXml();
 	exit(0);
 	#endif
 	
-	///  _Tool_ presets  .......
-	#if 0
-	gui->ToolPresets();
-	exit(0);
-	#endif
-
-	///  _Tool_	warnings  ...........................
+	///  _Tool_	warnings  ................
 	///  takes some time
 	#if 0
 	gui->ToolTracksWarnings();
@@ -119,7 +113,7 @@ void App::createScene()  // once, init
 	TerCircleInit();
 	createBrushPrv();
 	
-	///  _Tool_ brushes prv  ...........................
+	///  _Tool_ brushes prv  .............
 	#if 0
 	gui->ToolBrushesPrv();
 	#endif
