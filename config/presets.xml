@@ -141,6 +141,7 @@
 <t sc="S"  t="mntn_gray_d"        n="mntn_dark_n"        s="31.19" su="Rocks"          tp="1" du="0.0" ds="0.2" md="0.8" tr="0.18 0.18 0.14 0.7"  aa="35" ab="50" z="FOS" />
 <t sc="J"  t="mntn_green_d"       n="mntn_green_n"       s="32.00" su="Rocks"          tp="1" du="0.0" ds="0.2" md="1.0" tr="0.32 0.32 0.32 1.0"  aa="31" ab="90" z="FGJ" />
 <t sc="W"  t="mntn_white_d"       n="jungle_stone_n"     s="30.60" su="Rocks"          tp="1" du="0.0" ds="0.0" md="1.0" tr="0.40 0.40 0.40 0.7"  aa="51" ab="90" z="FSTW" />
+<t sc="W"  t="mntn_white2_d"      n="jungle_stone_n"     s="46.13" su="Rocks"          tp="1" du="0.2" ds="0.2" md="0.0" tr="0.40 0.40 0.40 0.6"  aa="42" ab="90" z="G" />
 
 <t sc="X"  t="mntn_x1_d"          n="mntn_x1_n"          s="26.04" su="Rocks"          tp="1" du="0.0" ds="0.2" md="0.2" tr="0.32 0.31 0.50 0.9"  aa="28" ab="44" z="X" />
 <t sc="X"  t="mntn_x2_d"          n="mntn_x2_n"          s="12.78" su="Rocks"          tp="0" du="0.0" ds="0.2" md="0.0" tr="0.32 0.31 0.80 0.9"  aa="33" ab="43" z="X" />
@@ -218,6 +219,9 @@
 <r sc="V"  m="roadJDarkDs"     su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.30 0.1" z="V" />
 <r sc="F"  m="roadJungle"      su="roadForest"   du="0.0" ds="0.2" md="0.2" tr="0.30 0.26 0.16 0.8" z="CFGJT" />
 						
+<r sc="R"  m="roadMars"        su="roadForest"   du="0.2" ds="0.4" md="0.0" tr="0.042 0.593 0.540 0.7 0.0" />
+<r sc="R"  m="roadFunny"       su="roadJungle"   du="0.0" ds="0.4" md="0.0" tr="0.042 0.593 0.540 0.7 0.0" />
+
 <r sc="O"  m="roadMoss"        su="roadJungle"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" z="O" />
 <r sc="M"  m="roadMud"         su="roadGravel"   du="0.0" ds="1.0" md="0.8" tr="0.21 0.13 0.00 0.8" z="DJMTV" />
 						
