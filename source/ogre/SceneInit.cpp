@@ -587,7 +587,7 @@ void App::LoadRoad()  // 6
 	CreateRoad();   // dstTrk inside
 		
 	if (hud->arrow.nodeRot)
-		hud->arrow.nodeRot->setVisible(!bHideHudAid);
+		hud->arrow.nodeRot->setVisible(pSet->check_arrow && !bHideHudAid);
 
 	//  boost fuel at start  . . .
 	//  based on road length
