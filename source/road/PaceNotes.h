@@ -58,7 +58,7 @@ public:
 	void Destroy(), Destroy(PaceNote& n);
 	
 	//  pacenotes.xml
-	//bool LoadFile(Ogre::String fname), SaveFile(Ogre::String fname);
+	bool LoadFile(Ogre::String fname), SaveFile(Ogre::String fname);
 
 	//  Update
 	void UpdVis();
