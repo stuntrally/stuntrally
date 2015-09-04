@@ -115,7 +115,7 @@
 	<Tag name="SleepMS">Schlafintervall (ms)</Tag>
 	<Tag name="TipTexTiling">Kachellänge der Textur (kleinerer Wert bedeutet mehr Wiederholungen)</Tag>
 	<Tag name="InputKeyboardEmulation">Tastaturemulation</Tag>
-	<Tag name="Reverb">Reverberation</Tag>
+	<Tag name="Reverb">Nachhall</Tag>
 	<Tag name="InputMapFlip">Umdrehen</Tag>
 	<Tag name="TBLast">Letzte</Tag>
 	<Tag name="TrackBankAng">Straßenbankett: Schnitt und Maximum, in Grad.</Tag>
@@ -312,7 +312,7 @@
 	<Tag name="Effects">Effekte</Tag>
 	<Tag name="WidthSteps">Breiten-Steps</Tag>
 	<Tag name="Multiply">Multiplizieren</Tag>
-	<Tag name="FullSoundsInfo">Full sounds info in graphs.</Tag>
+	<Tag name="FullSoundsInfo">Vollständige Toninfo in Graphen.</Tag>
 	<Tag name="GrassSway">Schaukeln</Tag>
 	<Tag name="TipSpeedSensitiveSteering">Reduziert die Lenkreichweite bei hoher Geschwindigkeit.</Tag>
 	<Tag name="HDRTab">HDR</Tag>

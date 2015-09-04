@@ -115,7 +115,7 @@
 	<Tag name="SleepMS">Инт. сна [миллисек.]</Tag>
 	<Tag name="TipTexTiling">Длина текстуры покрытия плитками (меньше означает больше повторов).</Tag>
 	<Tag name="InputKeyboardEmulation">Эмуляция клавиатуры</Tag>
-	<Tag name="Reverb">Reverberation</Tag>
+	<Tag name="Reverb">Реверберация</Tag>
 	<Tag name="InputMapFlip">Перевор.</Tag>
 	<Tag name="TBLast">Посл.</Tag>
 	<Tag name="TrackBankAng">Углы виражей дороги: сред. и макс., в градусах.</Tag>

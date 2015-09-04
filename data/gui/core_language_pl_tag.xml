@@ -115,7 +115,7 @@
 	<Tag name="SleepMS">Czas czekania [milisek]</Tag>
 	<Tag name="TipTexTiling">Odległość powtarzania tekstury (mniejsza znaczy więcej powtórzeń).</Tag>
 	<Tag name="InputKeyboardEmulation">Emulacja klawiatury</Tag>
-	<Tag name="Reverb">Reverberation</Tag>
+	<Tag name="Reverb">Pogłos</Tag>
 	<Tag name="InputMapFlip">Odwróć</Tag>
 	<Tag name="TBLast">Ostatni</Tag>
 	<Tag name="TrackBankAng">Kąty pochylenia drogi: średni i maksymalny, w stopniach.</Tag>
@@ -312,7 +312,7 @@
 	<Tag name="Effects">Efekty</Tag>
 	<Tag name="WidthSteps">Kroków szerokości</Tag>
 	<Tag name="Multiply">Pomnóż</Tag>
-	<Tag name="FullSoundsInfo">Full sounds info in graphs.</Tag>
+	<Tag name="FullSoundsInfo">Pełne info dźwięków w grafach.</Tag>
 	<Tag name="GrassSway">Kołysanie</Tag>
 	<Tag name="TipSpeedSensitiveSteering">Zmniejsza zakres sterowania kół, z większą szybkością auta.</Tag>
 	<Tag name="HDRTab">HDR</Tag>
@@ -1136,7 +1136,7 @@
 	<Tag name="GraphicsAll_VeryHigh">Bardzo wysokie</Tag>
 	<Tag name="SC_Moss">Mech</Tag>
 	<Tag name="Terrain">Teren</Tag>
-	<Tag name="Pacenotes">Pacenotes</Tag>
+	<Tag name="Pacenotes">Notatki rajdowe</Tag>
 	<Tag name="Pitch">nachylenie</Tag>
 	<Tag name="Hint-10text">W pętlach, kamera automatycznie zmienia się na widoć ze środka, by ułatwić sterowanie.</Tag>
 	<Tag name="InputNextOptTab">F2,F3 - poprz.,następna zakładka (alt - pod-zakładka)</Tag>
