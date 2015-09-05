@@ -102,6 +102,7 @@ if (BUILD_EDITOR)
 		ogre/common/*.h
 		ogre/common/*/*.cpp
 		ogre/common/*/*.h
+		ogre/ReplayTrk.*
 		road/*
 		../data/gui/Editor.layout
 	)
