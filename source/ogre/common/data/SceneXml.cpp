@@ -139,11 +139,14 @@ void Scene::UpdRevSet()
 	{	LogO("!scene.xml reverb set not found in xml: "+sReverbs);
 		//..
 	}else
-	{	const ReverbSet& r = pReverbsXml->revs[id], &b = pReverbsXml->base;
-		#define rvs(par)  revSet.##par = r.##par != "" ? r.##par : b.##par
-		rvs(descr);
-		rvs(normal);  rvs(cave);  rvs(cavebig);
-		rvs(pipe);  rvs(pipebig);  rvs(influid);
+	{	const ReverbSet &r = pReverbsXml->revs[id], &b = pReverbsXml->base;
+		revSet.descr   = r.descr   != "" ? r.descr   : b.descr;
+		revSet.normal  = r.normal  != "" ? r.normal  : b.normal;
+		revSet.cave    = r.cave    != "" ? r.cave    : b.cave;
+		revSet.cavebig = r.cavebig != "" ? r.cavebig : b.cavebig;
+		revSet.pipe    = r.pipe    != "" ? r.pipe    : b.pipe;
+		revSet.pipebig = r.pipebig != "" ? r.pipebig : b.pipebig;
+		revSet.influid = r.influid != "" ? r.influid : b.influid;
 	}
 }
 
