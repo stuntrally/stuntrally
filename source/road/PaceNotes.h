@@ -7,7 +7,8 @@
 #include <OgreMesh.h>
 #include <OgreAxisAlignedBox.h>
 
-namespace Ogre {  class SceneManager;  class SceneNode;  class Entity;  class Terrain;  class Camera;  }
+namespace Ogre {  class SceneManager;  class SceneNode;  class Entity;  class Terrain;  class Camera;
+	class BillboardSet;  class Billboard;  }
 class SplineRoad;  class Scene;
 
 
@@ -28,6 +29,7 @@ struct PaceNote
 {
 	Ogre::SceneNode* nd;
 	Ogre::BillboardSet* bb;
+	Ogre::Billboard* bc;
 
 	Ogre::Vector3 pos;
 	Ogre::Vector4 clr;
@@ -35,6 +37,7 @@ struct PaceNote
 	int use;  // 1 normal  2 dbg start 3 dbg cont  4 bar  5 trk gho
 	int id;
 	bool start;  // start pos only
+	int jump;  // 0 none 1 jump 2 land
 
 	//PaceTypes type;
 	//int dir;  // -1 left, 1 right
@@ -58,7 +61,8 @@ public:
 
 	//  Rebuild
 	void Rebuild(SplineRoad* road, Scene* sc, bool reversed);
-	void Destroy(),  Create(PaceNote& n), Destroy(PaceNote& n);
+	void Destroy(), Destroy(PaceNote& n);
+	void Create(PaceNote& n), Update(PaceNote& n);
 	
 	//  pacenotes.xml
 	bool LoadFile(Ogre::String fname), SaveFile(Ogre::String fname);

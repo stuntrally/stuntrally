@@ -262,7 +262,8 @@ void SplineRoad::BuildSeg(
 				{	//  add
 					PaceM pm;
 					bool onP = mP[seg].onPipe > 0;
-					float h = onP ? wiMul + 3.f : 3.f;
+					float h = 3.f;  // above
+					if (mP[seg].onPipe == 1)  h += wiMul;
 					
 					pm.pos  = vP + vN * h;  //par  + vw * 0.5f;
 					pm.pos2 = vP + vN * (h + 1.f) + vw * 0.5f;  // extra, info

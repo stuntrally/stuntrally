@@ -490,7 +490,7 @@ void App::updatePoses(float time)
 		carM->Update(carPoses[q][c], carPoses[qq][cc], time);
 		
 
-		//  nick text pos upd
+		//  nick text pos upd  3d to 2d
 		if (carM->pNickTxt && carM->pMainNode)
 		{
 			Camera* cam = playerCar->fCam->mCamera;  //above car 1m

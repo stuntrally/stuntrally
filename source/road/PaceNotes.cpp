@@ -30,13 +30,15 @@ using namespace Ogre;
 
 //  ctor  ---------
 PaceNote::PaceNote()
-	:nd(0), bb(0), pos(0,0,0), use(1), id(0), vel(0.f)
-	,size(4.f,4.f), clr(0,0,0,0), ofs(0,0), uv(0,0), start(0)
+	:nd(0), bb(0),bc(0), pos(0,0,0), use(1), id(0)
+	,size(4.f,4.f), clr(0,0,0,0), ofs(0,0), uv(0,0)
+	,start(0), jump(0), vel(0.f)
 {	}
 PaceNote::PaceNote(int i, int t, Vector3 p, float sx,float sy,
 		float r,float g,float b,float a, float ox,float oy, float u,float v)
-	:nd(0), bb(0), pos(p), use(t), id(i), vel(0.f)
-	,size(sx,sy), clr(r,g,b,a), ofs(ox,oy), uv(u,v), start(0)
+	:nd(0), bb(0),bc(0), pos(p), use(t), id(i)
+	,size(sx,sy), clr(r,g,b,a), ofs(ox,oy), uv(u,v)
+	,start(0), jump(0), vel(0.f)
 {	}
 
 
@@ -314,12 +316,14 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			bool land = jmp1R && !jump1R;  // land/end
 			if (jump || land)
 			{
-				ColourValue c;  c.setHSB(land? 0.8f: 0.7f, land? 0.5f: 1.f, land? 0.5f: 1.f);
-				PaceNote o(i,1, p.pos, signX,signX, 1,1,1,1,  // ADD
-					(land? 1.f: 0.f), 0.f,  /*par len*/1.f*u, 4.f*u);
+				ColourValue c;  c.setHSB(land? 0.57f: 0.56f, land? 0.5f: 1.f, land? 0.9f: 1.f);
+				PaceNote o(i,1, p.pos, signX,signX, c.r,c.g,c.b,1,  // ADD
+					land? 0.f: 1.f, 0.f,  1.f*u, 4.f*u);
+				o.jump = land ? 2 : 1;
 				Create(o);  vPN.push_back(o);
 				(jump ? vJ : vJe).push_back(vPN.size()-1);
 			}
+
 			jump1 = jmp1;  jump1R = jmp1R;  
 
 			///~~~  On Pipe
@@ -333,7 +337,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			onpipe1 = p.onpipe;
 		}
 	}
-	
+
 	
 	///:  only real signs
 	#ifndef SR_EDITOR  // game
@@ -362,7 +366,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 
 
 ///  ~~~  trace Track's Ghost  ~~~
-	#if 1
+
 	//  util dist to jump points
 	std::vector<float> vJd;
 	vJd.resize(vJ.size(), FLT_MAX);
@@ -387,9 +391,8 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 		//  test
 		Vector3 pos,oldPos;  float oldTime = 0.f;
 		Quaternion rot;  float vel = 0.f;
-		int num = gho.getNumFrames(), ijmp = 0;
+		int num = gho.getNumFrames();
 
-		int i,n;  float oy=0.f;
 		for (i=0; i < num; ++i)
 		{
 			//  pos
@@ -404,12 +407,6 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 				vel = 3.6f * dist / dt;
 
 			//if (vel < 20)  y *= vel / 20.f;  // y sc
-
-			//  sudden pos jumps-
-			bool jmp = false;
-			if (i > 10 && i < num-1)
-			if (dist > 6.f)  //par
-			{	jmp = true;  ++ijmp;  }
 
 			//todo: ter jmp, bumps cast ray down to ter..
 			//mTerrain->getHeightAtWorldPosition
@@ -429,11 +426,11 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			//~~~  check all jumps for dist
 			for (int j=0; j < vJ.size(); ++j)
 			{
-				const PaceNote& p = vPN[vJ[j]];
+				PaceNote& p = vPN[vJ[j]];
 				float d = pos.squaredDistance(p.pos);
 				if (d < vJd[j])
 				{	vJd[j] = d;
-					vPN[vJ[j]].vel = vel;
+					p.vel = vel;
 					//LogO("j "+toStr(j)+"  i "+toStr(vJ[j])+"  v "+fToStr(vel));  //j
 				}
 			}
@@ -449,14 +446,24 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			
 			oldPos = pos;  oldTime = fr.time;
 		}
-		if (ijmp > 0)
-			LogO("!Jumps: "+toStr(ijmp));
 	}
-	#endif
 
-	for (int j=0; j < vJ.size(); ++j)  //j
-		LogO("jump "+toStr(j)+"  vel "+fToStr(vPN[vJ[j]].vel));
+	///  upd Jumps vel  ~~~
+	LogO("== jump "+toStr(vJ.size())+" land "+toStr(vJe.size()));  //j
+	size_t s = std::min(vJ.size(), vJe.size());
+	for (i=0; i < s; ++i)
+	{
+		PaceNote& p = vPN[vJ[i]], pe = vPN[vJe[i]];
+		float len = p.pos.distance(pe.pos);
+		int l = std::min(2.f, len / 60.f);
+		bool land = p.jump == 2;
 
+		p.uv.x = l*u;  // UPD
+		Update(p);
+		//o.txt = 
+
+		LogO("jump "+toStr(i)+"  vel "+fToStr(p.vel)+"  len "+fToStr(p.vel));  //j
+	}
 
 	LogO(String("::: Time PaceNotes Rebuild2: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
@@ -477,16 +484,24 @@ void PaceNotes::Create(PaceNote& n)
 	n.bb->setVisibilityFlags(RV_Car);
 
 	n.bb->setCustomParameter(0, Vector4(n.ofs.x, n.ofs.y, n.uv.x, n.uv.y));  // params, uv ofs
-	n.bb->createBillboard(Vector3(0,0,0), ColourValue(n.clr.x, n.clr.y, n.clr.z, n.clr.w));
+	n.bc = n.bb->createBillboard(Vector3(0,0,0), ColourValue(n.clr.x, n.clr.y, n.clr.z, n.clr.w));
 
 	n.bb->setMaterialName("pacenote");
 	n.nd->attachObject(n.bb);
 	n.nd->setPosition(n.pos);
+	n.nd->setVisible(false);
+}
+
+void PaceNotes::Update(PaceNote& n)
+{
+	n.bc->setColour(ColourValue(n.clr.x, n.clr.y, n.clr.z, n.clr.w));
+	n.bb->setCustomParameter(0, Vector4(n.ofs.x, n.ofs.y, n.uv.x, n.uv.y));  // params, uv ofs
 }
 
 //  Destroy
 void PaceNotes::Destroy(PaceNote& n)
 {
+	//if (txt)  
 	mSceneMgr->destroyBillboardSet(n.bb);  n.bb = 0;
 	mSceneMgr->destroySceneNode(n.nd);  n.nd = 0;
 }
@@ -510,9 +525,6 @@ void PaceNotes::UpdVis(Vector3 carPos, bool hide)
 	const Vector3& c = mCamera->getPosition();
 	int i,s;
 
-	const int rng = pApp->pSet->pace_next;  // vis next count
-	const float radiusA = 9.f*9.f;  //par pace sphere radius
-	
 	//static int xx=0;  ++xx;  // inc test
 	//if (xx > 10) {  xx=0;  iCur++;  if (iCur>=iAll)  iCur-=iAll;  }
 	//LogO(toStr(iCur));
@@ -521,7 +533,11 @@ void PaceNotes::UpdVis(Vector3 carPos, bool hide)
 	///  strict jfw not: hid, onpipe, under ter
 	///  reset car pos iCur, prev chk 0
 	
-#ifndef SR_EDITOR  // game
+#ifndef SR_EDITOR
+	//  game  ----
+	const int rng = pApp->pSet->pace_next;  // vis next count
+	const float radiusA = 9.f*9.f;  //par pace sphere radius
+
 	s = vPS.size();
 	for (i=0; i < s; ++i)
 	{
@@ -537,31 +553,29 @@ void PaceNotes::UpdVis(Vector3 carPos, bool hide)
 		vis &= vrng;
 
 		if (vrng)
-		{
-			float d = p.pos.squaredDistance(carPos);
+		{	float d = p.pos.squaredDistance(carPos);
 			if (d < radiusA && i != iCur)  // close next only
 			{
-				LogO("iCur "+iToStr(i,3)+"  d "+fToStr(sqrt(d))+"  <> "+iToStr(i-iCur));
+				//LogO("iCur "+iToStr(i,3)+"  d "+fToStr(sqrt(d))+"  <> "+iToStr(i-iCur));
 				iCur = i;
-			}
-		}
+		}	}
 		p.nd->setVisible(vis);
 	}
-#else  // ed
+#else  //  ed  ----
 	s = vPN.size();
+	if (hide)
+	{	for (i=0; i < s; ++i)
+			vPN[i].nd->setVisible(false);
+		return;
+	}
 	for (i=0; i < s; ++i)
 	{
 		PaceNote& p = vPN[i];
-		if (hide)
-		{	p.nd->setVisible(false);
-			continue;
-		}
 		bool vis = p.use <= pApp->pSet->pace_show;
 
 		const Vector3& o = p.pos;
 		Real dist = c.squaredDistance(o);
 		bool vnear = dist < dd2;
-		//bool anear = dist < 60.f*60.f;
 		vis &= vnear;
 
 		p.nd->setVisible(vis);
