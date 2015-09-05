@@ -43,7 +43,7 @@ public:
 	
 	//  pacenotes
 	int pace_show;  float pace_dist, pace_near, pace_size;
-	bool trk_reverse;
+	bool trk_reverse, show_mph;
 
 	//  tweak
 	std::string tweak_mtr;

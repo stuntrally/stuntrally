@@ -421,6 +421,8 @@ bool App::frameStart(Real time)
 		{	
 			const CarModel* cm = *carModels.begin();
 			Vector3 p = cm->pMainNode->getPosition();
+			float vel = cm->pCar->GetSpeedometer();
+			scn->pace->carVel = vel;
 			scn->pace->UpdVis(p);
 		}
 		

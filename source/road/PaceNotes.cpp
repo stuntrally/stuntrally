@@ -23,11 +23,12 @@ using namespace tinyxml2;
 //#include <OgreTerrain.h>
 using namespace std;
 using namespace Ogre;
+using namespace MyGUI;
 
 
 //  ctor  ---------
 PaceNote::PaceNote()
-	:nd(0), bb(0),bc(0)//, txt(0), text(0)
+	:nd(0), bb(0),bc(0), txt(0), text(0)
 	,pos(0,0,0), use(1), id(0)
 	,size(4.f,4.f), clr(0,0,0,0), ofs(0,0), uv(0,0)
 	,start(0), jump(0), vel(0.f)
@@ -35,7 +36,7 @@ PaceNote::PaceNote()
 PaceNote::PaceNote(int i, int t, Vector3 p,  //id,use, pos
 		float sx,float sy,  float r,float g,float b,float a,  //size, clr
 		float ox,float oy, float u,float v)  //ofs:dir,bar width, tex uv
-	:nd(0), bb(0),bc(0)//, txt(0), text(0)
+	:nd(0), bb(0),bc(0), txt(0), text(0)
 	,pos(p), use(t), id(i)
 	,size(sx,sy), clr(r,g,b,a), ofs(ox,oy), uv(u,v)
 	,start(0), jump(0), vel(0.f)
@@ -62,22 +63,32 @@ void PaceNotes::Create(PaceNote& n)
 	n.nd->attachObject(n.bb);
 	n.nd->setPosition(n.pos);
 	n.nd->setVisible(false);
-	//if (n.text)
-	//{
-	//	n.txt = mGui->createWidget
-	//}
+
+	if (n.text)
+	{	n.txt = mGui->createWidget<TextBox>("TextBox",
+			100,100, 120,64, Align::Center, "Back", "jvel"+toStr(ii));
+		n.txt->setVisible(false);
+		n.txt->setFontHeight(34);  //par
+		n.txt->setTextShadow(true);  n.txt->setTextShadowColour(Colour::Black);
+		//n.txt->setCaption("140");
+	}
 }
 
 void PaceNotes::Update(PaceNote& n)
 {
 	n.bc->setColour(ColourValue(n.clr.x, n.clr.y, n.clr.z, n.clr.w));
 	n.bb->setCustomParameter(0, Vector4(n.ofs.x, n.ofs.y, n.uv.x, n.uv.y));  // params, uv ofs
+	UpdateTxt(n);
+}
+void PaceNotes::UpdateTxt(PaceNote& n)
+{	if (n.txt && n.vel > 0.f)
+		n.txt->setCaption(fToStr(n.vel * (pSet->show_mph ? 2.23693629f : 3.6f),0,3));
 }
 
 //  Destroy
 void PaceNotes::Destroy(PaceNote& n)
 {
-	//if (n.txt){  mGui->destroyWidget(n.txt);  n.txt = 0;  }
+	if (n.txt){  mGui->destroyWidget(n.txt);  n.txt = 0;  }
 	mSceneMgr->destroyBillboardSet(n.bb);  n.bb = 0;
 	mSceneMgr->destroySceneNode(n.nd);  n.nd = 0;
 }
@@ -96,29 +107,23 @@ void PaceNotes::Destroy()
 //  update visibility  ---------
 void PaceNotes::UpdVis(Vector3 carPos, bool hide)
 {
-	const Real dd = pApp->pSet->pace_dist, dd2 = dd*dd;
-
-	const Vector3& c = mCamera->getPosition();
+	const Real dd = pSet->pace_dist, dd2 = dd*dd;
 	int i,s;
 
-	//static int xx=0;  ++xx;  // inc test
-	//if (xx > 10) {  xx=0;  iCur++;  if (iCur>=iAll)  iCur-=iAll;  }
-	//LogO(toStr(iCur));
-
-	///todo: cd. jump vel, loop side-, onpipe key8
+	///todo: loop side-, onpipe
 	///  strict jfw not: hid, onpipe, under ter
-	///  reset car pos iCur, prev chk 0
+	///! reset car pos iCur, prev chk 0
 	
 #ifndef SR_EDITOR
 	//  game  ----
-	const int rng = pApp->pSet->pace_next;  // vis next count
-	const float radiusA = 9.f*9.f;  //par pace sphere radius
+	const int rng = pSet->pace_next;  // vis next count
+	const Real radiusA = 9.f*9.f;  //par pace sphere radius
 
 	s = vPS.size();
 	for (i=0; i < s; ++i)
 	{
 		PaceNote& p = vPS[i];
-		bool vis = pApp->pSet->pace_show;
+		bool vis = pSet->pace_show;
 
 		//  Advance to next sign  ~ ~ ~
 		//        a    iCur   s-1  s=7
@@ -129,50 +134,96 @@ void PaceNotes::UpdVis(Vector3 carPos, bool hide)
 		vis &= vrng;
 
 		if (vrng)
-		{	float d = p.pos.squaredDistance(carPos);
+		{	Real d = p.pos.squaredDistance(carPos);
+			bool vnear = d < dd2;
+			vis &= vnear;
+			
 			if (d < radiusA && i != iCur)  // close next only
 			{
 				//LogO("iCur "+iToStr(i,3)+"  d "+fToStr(sqrt(d))+"  <> "+iToStr(i-iCur));
 				iCur = i;
 		}	}
-		//if (vis && p.nd->txt)  updTxt(p);
+		
+		if (p.txt)  updTxt(p, vis);
 		p.nd->setVisible(vis);
 	}
 #else  //  ed  ----
+	
 	s = vPN.size();
 	if (hide)
 	{	for (i=0; i < s; ++i)
-			vPN[i].nd->setVisible(false);
+		{	PaceNote& p = vPN[i];
+			p.nd->setVisible(false);
+			if (p.txt)  p.txt->setVisible(false);
+		}
 		return;
 	}
+	const Vector3& c = mCamera->getPosition();
 	for (i=0; i < s; ++i)
 	{
 		PaceNote& p = vPN[i];
-		bool vis = p.use <= pApp->pSet->pace_show;
+		bool vis = p.use <= pSet->pace_show;
 
 		const Vector3& o = p.pos;
-		Real dist = c.squaredDistance(o);
-		bool vnear = dist < dd2;
+		Real d = c.squaredDistance(o);
+		bool vnear = d < dd2;
 		vis &= vnear;
 
+		if (p.txt)  updTxt(p, vis);
 		p.nd->setVisible(vis);
 	}
 #endif
 }
 
+//  kmh/mph change
+void PaceNotes::UpdTxt()
+{
+	int i, s = vPS.size();
+	for (i=0; i < s; ++i)
+		UpdateTxt(vPS[i]);
+}
+
+//  text pos upd  3d to 2d
+void PaceNotes::updTxt(PaceNote& n, bool vis)
+{
+	if (!vis || !mCamera->isVisible(n.pos))
+	{	n.txt->setVisible(false);
+		return;
+	}
+	Vector3 pos2D = mCamera->getProjectionMatrix() * (mCamera->getViewMatrix() * n.pos);
+	Real x =  pos2D.x * 0.5f + 0.5f;
+	Real y = -pos2D.y * 0.5f + 0.5f;
+
+	Vector3 p = Vector3(x * mWindow->getWidth(), y * mWindow->getHeight(), 1.f);
+	//p.x = p.x * /*mSplitMgr->mDims[0].width **/ 0.5f;  //1st viewport dims 1,1 only
+	//p.y = p.y * /*mSplitMgr->mDims[0].height **/ 0.5f;
+	
+	n.txt->setPosition(p.x+40, p.y-16);
+	n.txt->setVisible(true);
+
+	//  vel diff clr
+	//LogO(toStr(n.id)+" "+fToStr(n.vel)+" "+fToStr(carVel)+" ");
+	float d = std::max(-1.f, std::min(1.f, 0.12f*(carVel - n.vel)));  
+	ColourValue c;						   //par sens
+	//c.setHSB(0.4f-d*0.2f, 1,1);
+	if (d > 0.f)  c.setHSB(0.40f+d*0.2f, 1.f-d*1.f,1.f);  // above ok
+	else		  c.setHSB(0.3f +d*0.3f, 1.f+d*0.3f,1.f);  // too low
+	n.txt->setTextColour(Colour(c.r,c.g,c.b,1.f));
+}
+
 
 //  ctor  ---------
-PaceNotes::PaceNotes(App* papp) :pApp(papp)
-	,mSceneMgr(0),mCamera(0),mTerrain(0)
-	,ii(0), iStart(0),iAll(1), iDir(1), iCur(0)
+PaceNotes::PaceNotes(SETTINGS* pset) :pSet(pset)
+	,mSceneMgr(0),mCamera(0),mTerrain(0),mGui(0),mWindow(0)
+	,ii(0), iStart(0),iAll(1), iDir(1), iCur(0), carVel(0.f)
 {	}
 
 //  setup
 void PaceNotes::Setup(SceneManager* sceneMgr, Camera* camera,
-	Terrain* terrain, MyGUI::Gui* gui)
+	Terrain* terrain, MyGUI::Gui* gui, RenderWindow* window)
 {
 	mSceneMgr = sceneMgr;  mCamera = camera;
-	mTerrain = terrain;  //mGui = gui;
+	mTerrain = terrain;  mGui = gui;  mWindow = window;
 }
 
 

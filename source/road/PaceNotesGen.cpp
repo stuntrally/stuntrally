@@ -298,7 +298,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 				ColourValue c;  c.setHSB(land? 0.57f: 0.56f, land? 0.5f: 1.f, land? 0.9f: 1.f);
 				PaceNote o(i,1, p.pos, signX,signX, c.r,c.g,c.b,1,  // ADD
 					land? 0.f: 1.f, 0.f,  1.f*u, 4.f*u);
-				o.jump = land ? 2 : 1;
+				o.jump = land ? 2 : 1;  o.text = true;
 				Create(o);  vPN.push_back(o);
 				(jump ? vJ : vJe).push_back(vPN.size()-1);
 			}
@@ -317,32 +317,8 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 		}
 	}
 
-	
-	///:  only real signs
-	#ifndef SR_EDITOR  // game
-	vPS.clear();
-	for (i=0; i < vPN.size(); ++i)
-		if (vPN[i].use == 1)
-			vPS.push_back(vPN[i]);
-	
-	std::sort(vPS.begin(), vPS.end(), PaceSort);
-	
-	///:  find start
-	iAll = vPS.size();
-	for (i=0; i < iAll; ++i)
-	{	if (vPS[i].start)
-			iStart = i;
-		//LogO("SS "+toStr(vPS[i].id));
-	}
-	iCur = iStart;
-	#endif
-
-	if (vJ.size() != vJe.size())
-		LogO("Pace Jumps != JumpEnds");  //j
-	
 	LogO(String("::: Time PaceNotes Rebuild1: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 	
-
 
 ///  ~~~  trace Track's Ghost  ~~~
 
@@ -353,9 +329,9 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 	bool rev = false;
 	string sRev = rev ? "_r" : "";
 	#ifdef SR_EDITOR
-	string track = pApp->pSet->gui.track;
+	string track = pSet->gui.track;
 	#else
-	string track = pApp->pSet->game.track;
+	string track = pSet->game.track;
 	#endif
 	
 	//  load
@@ -383,7 +359,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			float dist = pp.length();
 			float dt = fr.time - oldTime;  // 0.04
 			if (i > 0 && i < num-1 && dt > 0.001f)
-				vel = 3.6f * dist / dt;
+				vel = dist / dt;  // *3.6f
 
 			//if (vel < 20)  y *= vel / 20.f;  // y sc
 
@@ -408,10 +384,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 				PaceNote& p = vPN[vJ[j]];
 				float d = pos.squaredDistance(p.pos);
 				if (d < vJd[j])
-				{	vJd[j] = d;
-					p.vel = vel;
-					//LogO("j "+toStr(j)+"  i "+toStr(vJ[j])+"  v "+fToStr(vel));  //j
-				}
+				{	vJd[j] = d;  p.vel = vel;  }
 			}
 			
 			//  pos marks . .
@@ -428,21 +401,45 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 	}
 
 	///  upd Jumps vel  ~~~
-	LogO("== jump "+toStr(vJ.size())+" land "+toStr(vJe.size()));  //j
+	LogO("jump "+toStr(vJ.size())+" = "+toStr(vJe.size())+" land");  //j
+	if (vJ.size() != vJe.size())
+		LogO("Pace Jumps != JumpEnds");  //j
+	
 	size_t s = std::min(vJ.size(), vJe.size());
 	for (i=0; i < s; ++i)
 	{
 		PaceNote& p = vPN[vJ[i]], pe = vPN[vJe[i]];
 		float len = p.pos.distance(pe.pos);
-		int l = std::min(2.f, len / 60.f);
+		int l = std::max(0.f, std::min(2.f, (len-60.f) / 40.f));  //par
 		bool land = p.jump == 2;
 
-		p.uv.x = l*u;  // UPD
+		pe.vel = p.vel;
+		pe.uv.x = p.uv.x = l*u;  // UPD
 		Update(p);
-		//o.txt = 
 
-		LogO("jump "+toStr(i)+"  vel "+fToStr(p.vel)+"  len "+fToStr(p.vel));  //j
+		LogO((land?"land ":"jump ")+toStr(i)+" id "+toStr(p.id)+"-"+toStr(pe.id)+
+			" vel "+fToStr(p.vel*3.6f,0,3)+" len "+fToStr(len,0,3));  //j
 	}
+
+
+	///:  only real signs
+	#ifndef SR_EDITOR  // game
+	vPS.clear();
+	for (i=0; i < vPN.size(); ++i)
+		if (vPN[i].use == 1)
+			vPS.push_back(vPN[i]);
+	
+	std::sort(vPS.begin(), vPS.end(), PaceSort);
+	
+	///:  find start
+	iAll = vPS.size();
+	for (i=0; i < iAll; ++i)
+	{	if (vPS[i].start)
+			iStart = i;
+		//LogO("SS "+toStr(vPS[i].id));
+	}
+	iCur = iStart;
+	#endif
 
 	LogO(String("::: Time PaceNotes Rebuild2: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }

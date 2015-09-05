@@ -143,8 +143,7 @@ Vector3 CHud::projectPoint(const Camera* cam, const Vector3& pos)
 {
 	Vector3 pos2D = cam->getProjectionMatrix() * (cam->getViewMatrix() * pos);
 
-	//Real x = std::min(1.f, std::max(0.f,  pos2D.x * 0.5f + 0.5f ));  // leave on screen edges
-	//Real y = std::min(1.f, std::max(0.f, -pos2D.y * 0.5f + 0.5f ));
+	//std::min(1.f, std::max(0.f,  ));  // leave on screen edges
 	Real x =  pos2D.x * 0.5f + 0.5f;
 	Real y = -pos2D.y * 0.5f + 0.5f;
 	bool out = !cam->isVisible(pos);

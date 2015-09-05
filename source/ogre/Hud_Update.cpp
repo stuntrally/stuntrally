@@ -378,8 +378,8 @@ void CHud::Update(int carId, float time)
 		h.txVel->setCaption(fToStr(fabs(vel),0,3));
 
 		float k = pCar->GetSpeedometer() * 3.6f * 0.0025f;	// vel clr
-		#define m01(x)  std::min(1.0f, std::max(0.0f, (float) (x) ))
-		h.txVel->setTextColour(Colour(m01(k*2), m01(0.5+k*1.5-k*k*2.5), m01(1+k*0.8-k*k*3.5)));
+		#define m01(x)  std::min(1.f, std::max(0.f, (float) (x) ))
+		h.txVel->setTextColour(Colour(m01(k*2.f), m01(0.5f+k*1.5f-k*k*2.5f), m01(1+k*0.8f-k*k*3.5f)));
 	}
 
 	//  boost fuel (time)  ------

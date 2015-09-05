@@ -91,9 +91,7 @@ public:
 
 	///  create  . . . . . . . . . . . . . . . . . . . . . . . . 
 	Ogre::String resCar, resTrk, resDrv;
-	void CreateCar();
-	void CreateRoad();
-
+	void CreateCar(), CreateRoad();
 	void CreateObjects(), DestroyObjects(bool clear), ResetObjects();
 
 	void NewGame();  void NewGameDoLoad();  bool IsVdrTrack();  bool newGameRpl;

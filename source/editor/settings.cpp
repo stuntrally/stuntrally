@@ -88,7 +88,7 @@ SETTINGS::SETTINGS()  ///  Defaults
 	,al_w_mul(1.f), al_w_add(8.f), al_smooth(2.f)
 	//  pacenotes
 	,pace_show(3), pace_dist(1000.f), pace_near(1.f), pace_size(1.f)
-	,trk_reverse(0)
+	,trk_reverse(0), show_mph(0)
 	//  tweak
 	,tweak_mtr("")
 	//  pick

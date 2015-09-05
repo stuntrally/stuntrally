@@ -5,6 +5,7 @@
 #include "common/CScene.h"
 #include "../vdrift/settings.h"
 #include "../vdrift/game.h"
+#include "../road/PaceNotes.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
@@ -218,8 +219,8 @@ void CGui::comboRewind(CMB)
 	pSet->gui.rewind_type = val;
 }
 	
-void CGui::radKmh(WP wp){	Radio2(bRkmh, bRmph, true);   pSet->show_mph = false;  hud->Size();  }
-void CGui::radMph(WP wp){	Radio2(bRkmh, bRmph, false);  pSet->show_mph = true;   hud->Size();  }
+void CGui::radKmh(WP wp){	Radio2(bRkmh, bRmph, true);   pSet->show_mph = false;  hud->Size();  app->scn->pace->UpdTxt();  }
+void CGui::radMph(WP wp){	Radio2(bRkmh, bRmph, false);  pSet->show_mph = true;   hud->Size();  app->scn->pace->UpdTxt();  }
 
 void CGui::setSimMode(std::string mode)
 {

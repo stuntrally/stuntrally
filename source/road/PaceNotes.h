@@ -4,11 +4,11 @@
 #include <OgreVector3.h>
 
 namespace Ogre {  class SceneManager;  class SceneNode;  class Entity;  class Terrain;  class Camera;
-	class BillboardSet;  class Billboard;  }
+	class BillboardSet;  class Billboard;  class RenderWindow;  }
 namespace MyGUI {  class TextBox;  class Gui;  }
-class SplineRoad;  class Scene;
+class SplineRoad;  class Scene;  class SETTINGS;
 
-
+#if 0
 enum PaceTypes                 // 90     // 180    // 270
 {	P_1=0, P_2, P_3, P_4, P_5, P_6sq, P_7hrp, P_8u, P_9o,  // turns
 	P_Loop, P_LoopBig, P_LoopSide, P_LoopBarrel,  // loops
@@ -21,6 +21,7 @@ enum PaceTypes                 // 90     // 180    // 270
 	P_Ice, P_Mud, P_Water,  //..
 	Pace_ALL
 };
+#endif
 
 struct PaceNote
 {
@@ -28,7 +29,7 @@ struct PaceNote
 	Ogre::SceneNode* nd;
 	Ogre::BillboardSet* bb;
 	Ogre::Billboard* bc;
-	//MyGUI::TextBox* txt;  // text for jmp vel
+	MyGUI::TextBox* txt;  // text for jmp vel
 
 	//  data
 	Ogre::Vector3 pos;
@@ -42,7 +43,7 @@ struct PaceNote
 	//PaceTypes type;
 	//int dir;  // -1 left, 1 right
 	float vel;  // for jump
-	//bool text;
+	bool text;
 
 	PaceNote();
 	PaceNote(int i,int t, Ogre::Vector3 p, float sx,float sy,
@@ -53,24 +54,26 @@ struct PaceNote
 class PaceNotes
 {
 public:
-	class App* pApp;  ///*
-	PaceNotes(App* papp);
+	SETTINGS* pSet;  ///*
+	PaceNotes(SETTINGS* pset);
 	//void Defaults();
 
 	//  Setup, call this on Init
 	void Setup(Ogre::SceneManager* sceneMgr, Ogre::Camera* camera,
-		Ogre::Terrain* terrain, MyGUI::Gui* gui);
+		Ogre::Terrain* terrain, MyGUI::Gui* gui, Ogre::RenderWindow* window);
 
 	//  Rebuild
 	void Rebuild(SplineRoad* road, Scene* sc, bool reversed);
 	void Destroy(), Destroy(PaceNote& n);
-	void Create(PaceNote& n), Update(PaceNote& n);
+	void Create(PaceNote& n);
+	void Update(PaceNote& n), UpdateTxt(PaceNote& n), UpdTxt();
 	
 	//  pacenotes.xml
 	bool LoadFile(Ogre::String fname), SaveFile(Ogre::String fname);
 
 	//  Update
 	void UpdVis(Ogre::Vector3 carPos, bool hide=false);
+	void updTxt(PaceNote& n, bool vis);
 
 	//  edit ..
 	//void Pick(Ogre::Camera* mCamera, Ogre::Real mx, Ogre::Real my,
@@ -79,14 +82,14 @@ public:
 
 	//  Insert  -------
 	//void Insert(), Delete();
-	
 
 private:
 	//  ogre vars
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::Camera* mCamera;
 	Ogre::Terrain* mTerrain;
-	//MyGUI::Gui* mGui;
+	MyGUI::Gui* mGui;
+	Ogre::RenderWindow* mWindow;
 	
 	//  all notes
 	std::vector<PaceNote> vPN, vPS;  // sorted
@@ -96,6 +99,7 @@ public:
 	int iAll;  // all road markers from road->vPace
 	int iDir;  // copy from road
 	int iCur;  // cur car pace id, for tracking
+	float carVel;
 };
 
 
