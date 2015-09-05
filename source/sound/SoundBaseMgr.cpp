@@ -393,8 +393,9 @@ void SoundBaseMgr::assign(int id, int hw_id)
 	alSourcei(source, AL_BUFFER, sources[id]->buffer);
 
 	//  use reverb +
-	if (reverb && !sources[id]->is2D)
-		alSource3i(source, AL_AUXILIARY_SEND_FILTER, slot, 0, AL_FILTER_NULL);
+	if (reverb)
+		alSource3i(source, AL_AUXILIARY_SEND_FILTER,
+			!sources[id]->is2D ? slot : AL_EFFECTSLOT_NULL,  0, AL_FILTER_NULL);
 
 	alSourcef(source, AL_GAIN, sources[id]->gain * master_volume);
 	alSourcei(source, AL_LOOPING, sources[id]->loop ? AL_TRUE : AL_FALSE);
