@@ -835,7 +835,7 @@ void App::CreateRoad()
 	if (!bHideHudAid)
 	{
 		scn->pace = new PaceNotes(this);
-		scn->pace->Setup(mSceneMgr, cam, scn->terrain);
+		scn->pace->Setup(mSceneMgr, cam, scn->terrain, gui->mGui);
 	}
 
 	

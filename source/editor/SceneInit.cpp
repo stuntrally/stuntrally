@@ -247,7 +247,7 @@ void App::LoadTrackEv()
 	
 	//  pace ~ ~
 	scn->pace = new PaceNotes(this);
-	scn->pace->Setup(mSceneMgr, mCamera, scn->terrain);
+	scn->pace->Setup(mSceneMgr, mCamera, scn->terrain, gui->mGui);
 	
 	
 	/// HW_Inst Test  * * *

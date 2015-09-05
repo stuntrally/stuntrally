@@ -291,6 +291,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\road\PaceNotesGen.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\ogre\ReplayTrk.cpp"
 				>
 			</File>

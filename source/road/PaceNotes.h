@@ -1,36 +1,36 @@
 #pragma once
-
 #include <vector>
 #include <OgreString.h>
 #include <OgreVector3.h>
 
-#include <OgreMesh.h>
-#include <OgreAxisAlignedBox.h>
-
 namespace Ogre {  class SceneManager;  class SceneNode;  class Entity;  class Terrain;  class Camera;
 	class BillboardSet;  class Billboard;  }
+namespace MyGUI {  class TextBox;  class Gui;  }
 class SplineRoad;  class Scene;
 
 
 enum PaceTypes                 // 90     // 180    // 270
 {	P_1=0, P_2, P_3, P_4, P_5, P_6sq, P_7hrp, P_8u, P_9o,  // turns
-	P_Loop, P_Loop2, P_SideLoop, P_LoopBarrel,  // loops
+	P_Loop, P_LoopBig, P_LoopSide, P_LoopBarrel,  // loops
 	P_Jump, P_JumpTer,  // jumps
 	P_OnPipe,
 	P_Bumps,
 	//  manual..
 	P_Slow, P_Stop, P_Danger,   // brake, warn
-	P_Narrow, P_Obstacle, P_Split,
+	P_Obstacle, P_Narrow, P_Split,
 	P_Ice, P_Mud, P_Water,  //..
 	Pace_ALL
 };
 
 struct PaceNote
 {
+	//  ogre
 	Ogre::SceneNode* nd;
 	Ogre::BillboardSet* bb;
 	Ogre::Billboard* bc;
+	//MyGUI::TextBox* txt;  // text for jmp vel
 
+	//  data
 	Ogre::Vector3 pos;
 	Ogre::Vector4 clr;
 	Ogre::Vector2 size, ofs,uv;
@@ -42,6 +42,7 @@ struct PaceNote
 	//PaceTypes type;
 	//int dir;  // -1 left, 1 right
 	float vel;  // for jump
+	//bool text;
 
 	PaceNote();
 	PaceNote(int i,int t, Ogre::Vector3 p, float sx,float sy,
@@ -57,7 +58,8 @@ public:
 	//void Defaults();
 
 	//  Setup, call this on Init
-	void Setup(Ogre::SceneManager* sceneMgr, Ogre::Camera* camera, Ogre::Terrain* terrain);
+	void Setup(Ogre::SceneManager* sceneMgr, Ogre::Camera* camera,
+		Ogre::Terrain* terrain, MyGUI::Gui* gui);
 
 	//  Rebuild
 	void Rebuild(SplineRoad* road, Scene* sc, bool reversed);
@@ -84,6 +86,7 @@ private:
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::Camera* mCamera;
 	Ogre::Terrain* mTerrain;
+	//MyGUI::Gui* mGui;
 	
 	//  all notes
 	std::vector<PaceNote> vPN, vPS;  // sorted
