@@ -7,6 +7,7 @@
 #include "../sound/SoundBaseMgr.h"
 #include "../sound/SoundMgr.h"
 #include "../sound/SoundBase.h"
+#include "../road/PaceNotes.h"
 #include "common/data/SceneXml.h"
 #include "common/CScene.h"
 #include "common/GraphView.h"
@@ -147,9 +148,9 @@ void App::CreateGraphs()
 			gv->Create(1, "graphA5", i>=3 ? 0.30f : i>0 ? 0.f : 0.3f);
 			switch(i)
 			{
-				case 0:  gv->CreateTitle(t,	c, 0.1f,-2, 20);  break;
-				case 1:  gv->CreateTitle(t,	c, 0.1f,-3, 22,3);  break;
-				case 2:  gv->CreateTitle(t,	c, 0.1f, 2, 24);  break;
+				case 0:  gv->CreateTitle(t,	c, 0.1f,-2, 20,2,1);  break;
+				case 1:  gv->CreateTitle(t,	c, 0.1f,-3, 22,3,1);  break;
+				case 2:  gv->CreateTitle(t,	c, 0.1f, 2, 24,2,1);  break;
 				case 3:  gv->CreateTitle(t,	8, 0.1f,-2, 18,256,1);  break;
 				case 4:  gv->CreateTitle(t,	6, 0.1f,-2, 18,256,1);  break;
 			}
@@ -160,7 +161,24 @@ void App::CreateGraphs()
 			gv->SetVisible(pSet->show_graphs && (i < 3 || pSet->sounds_info));
 			graphs.push_back(gv);
 		}	break;
-
+		
+	case Gh_Checks:  /// checkpoints
+		for (i=0; i < 2; ++i)
+		{
+			gv = new GraphView(scm,mWindow,mGui);
+			c = i%3;  String t;
+			gv->Create(1, "graphA5", i>0 ? 0.f : 0.4f);
+			switch(i)
+			{
+				case 0:  gv->CreateTitle(t,	c, 0.1f,-2, 22,2,1);  break;
+				case 1:  gv->CreateTitle(t,	c, 0.1f,-3, 22,4,1);  break;
+			}
+			gv->SetSize(0.00f, 0.05f, 0.15f, 0.1f);
+			
+			gv->SetVisible(pSet->show_graphs);
+			graphs.push_back(gv);
+		}	break;
+		
 	case Gh_TireSlips:  /// tire
 	case Gh_Suspension:	 /// susp
 		for (i=0; i < nWh * 2; ++i)
@@ -387,6 +405,16 @@ void App::GraphsNewVals()				// Game
 		graphs[3]->SetVisible(info);  graphs[4]->SetVisible(info);
 	}	break;
 
+	case Gh_Checks:  /// checkpoints
+		if (gsi >= 2 && !carModels.empty())
+		{
+			CarModel* cm = carModels[0];
+			graphs[0]->UpdTitle("Pacenotes\n"
+				"#E0F0FF cur "+toStr(scn->pace->iCur)+"  all "+toStr(scn->pace->iAll)+"  st "+toStr(scn->pace->iStart));
+			graphs[1]->UpdTitle("\nCheckpoints  #F0F0D0 in "+iToStr(cm->iInChk,2)+(cm->bInSt?" inSt":"")+"\n"+
+				" cur "+iToStr(cm->iCurChk,2)+" next "+iToStr(cm->iNextChk,2)+" all "+iToStr(cm->iNumChks,2));
+		}	break;
+		
 	case Gh_Fps:  /// fps
 	if (gsi >= 2)
 	{
@@ -470,7 +498,6 @@ void CAR::GraphsNewVals(double dt)		 // CAR
 			pApp->graphs[i]->AddVal(susp.GetDisplacementPercent());
 		}	break;
 
-		
 	case Gh_TorqueCurve:  /// torque curves, gears
 	//. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 	{	static int ii = 0;  ++ii;  // skip upd cntr
