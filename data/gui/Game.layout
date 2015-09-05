@@ -2999,7 +2999,7 @@
 							<Property key="Caption" value="#{Pacenotes} #789858 alt-F8"/>
 							<Property key="TextColour" value="0.8 1.0 0.6"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="232 58 164 24">
+						<Widget type="TextBox" skin="TextBox" position="162 96 164 24">
 							<Property key="TextColour" value="0.9 0.9 0.7"/>
 							<Property key="Caption" value="#{ViewDist}"/>
 						</Widget>
@@ -3028,6 +3028,16 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="296 176 48 24" name="PaceNearVal">
 							<Property key="TextColour" value="0.7 0.7 0.5"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="162 216 164 24">
+							<Property key="Caption" value="#{PaceNextVisible}"/>
+							<Property key="TextColour" value="0.8 0.7 0.5"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 216 320 18" name="PaceNext">
+							<Property key="Colour" value="0.8 0.7 0.5"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 216 48 24" name="PaceNextVal">
+							<Property key="TextColour" value="0.8 0.7 0.5"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">

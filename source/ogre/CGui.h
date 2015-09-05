@@ -217,7 +217,7 @@ public:
 	Ck ckCamBnc;  SV svCamBnc;
 	SV svFov, svFovMax, svFovSm;
 	//  Pacenotes
-	Ck ckPaceShow;  SV svPaceDist, svPaceNear, svPaceSize;
+	Ck ckPaceShow;  SV svPaceDist, svPaceNear, svPaceSize, svPaceNext;
 	void slUpd_Pace(SV*);
 	//  Times, opp
 	Ck ckTimes, ckOpponents, ckOppSort;

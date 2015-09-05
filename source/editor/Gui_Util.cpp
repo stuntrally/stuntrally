@@ -8,6 +8,7 @@
 #include "CApp.h"
 #include "CGui.h"
 #include "../road/Road.h"
+#include "../road/PaceNotes.h"
 #include "../ogre/common/MultiList2.h"
 #include "../sdl4ogre/sdlcursormanager.hpp"
 #include "../sdl4ogre/sdlinputwrapper.hpp"

@@ -662,6 +662,7 @@
 
 	<!--  View  Pacenotes  -->
 	<Tag name="Pacenotes">Pacenotes</Tag>
+	<Tag name="PaceNextVisible">Next shown</Tag>
 
 	<!--  View  Camera  -->
 	<Tag name="Camera">Camera</Tag>

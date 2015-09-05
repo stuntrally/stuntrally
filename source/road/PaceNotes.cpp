@@ -2,6 +2,7 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/Axes.h"
+#include "../ogre/common/data/SceneXml.h"
 #include "PaceNotes.h"
 #include "../ogre/ReplayTrk.h"
 #include "../vdrift/dbl.h"
@@ -29,15 +30,13 @@ using namespace Ogre;
 
 //  ctor  ---------
 PaceNote::PaceNote()
-	:nd(0), bb(0), pos(0,0,0), use(1)
-	//,type(P_1), dir(0), vel(0.f)
-	,size(4.f,4.f), clr(0,0,0,0), ofs(0,0), uv(0,0)
+	:nd(0), bb(0), pos(0,0,0), use(1), id(0), vel(0.f)
+	,size(4.f,4.f), clr(0,0,0,0), ofs(0,0), uv(0,0), start(0)
 {	}
-PaceNote::PaceNote(int t, Vector3 p, float sx,float sy,
+PaceNote::PaceNote(int i, int t, Vector3 p, float sx,float sy,
 		float r,float g,float b,float a, float ox,float oy, float u,float v)
-	:nd(0), bb(0), pos(p), use(t)
-	//,type(P_1), dir(0), vel(0.f)
-	,size(sx,sy), clr(r,g,b,a), ofs(ox,oy), uv(u,v)
+	:nd(0), bb(0), pos(p), use(t), id(i), vel(0.f)
+	,size(sx,sy), clr(r,g,b,a), ofs(ox,oy), uv(u,v), start(0)
 {	}
 
 
@@ -91,15 +90,28 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 	};
 
 	
-	///  Trace Road  |||
+	//  find start point
+	Vector3 posSt = Axes::toOgre(sc->startPos), vSt = posSt;
+	float stDist = FLT_MAX;
+	int ist = -1;
+	iStart = 0;  iAll = 1;
+	iDir = reversed ? -road->iDir : road->iDir;
+
+
+	///  Trace Road  |||  prepass
 	int ii = road->vPace.size();
 	for (int i=0; i < ii; ++i)
 	{
-		SplineRoad::PaceM& cur = road->vPace[i],
+		SplineRoad::PaceM& p = road->vPace[i],
 			prv = road->vPace[(i-1+ii)%ii], nxt = road->vPace[(i+1)%ii];
 
+		//  closest to trk start
+		float dist = p.pos.squaredDistance(posSt);
+		if (dist < stDist)
+		{	stDist = dist;  ist = i;  vSt = p.pos;  }
+		
 		//  dir xz
-		Vector3 c1 = cur.pos - prv.pos, c2 = nxt.pos - cur.pos;
+		Vector3 c1 = p.pos - prv.pos, c2 = nxt.pos - p.pos;
 		c1.y = 0.f;  c2.y = 0.f;
 		c1.normalise();  c2.normalise();
 
@@ -110,38 +122,59 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 		//Real aa = asin(cross.length());
 
 		//  sign
-		Real dn = Vector3::UNIT_Y.dotProduct(cross);
-		if (dn < 0.f)  aa = -aa;
+		Real neg = Vector3::UNIT_Y.dotProduct(cross);
+		if (neg < 0.f)  aa = -aa;
 		
-		//  no loops
-		if (cur.loop)  aa = 0.f;
+		///  no loops  no hidden
+		if (p.loop || !p.vis)  aa = 0.f;
 			
-		//LogO(fToStr(aa*180.f/PI_d,1,5));//+" "+fToStr(dn));
-		//LogO(fToStr(aa));
+		//LogO(fToStr(aa*180.f/PI_d,1,5));//+" "+fToStr(neg));
 
 		///  no straights  //par 0.01
 		if (fabs(aa) < 0.01f)  aa = 0.f;
-		cur.aa = aa;  // save
+		p.aa = aa;  // save
 
 		#ifdef BARS  // add dbg bar |
-		PaceNote o(4, cur.pos, barX,barY, 1,1,1,barA,  // size,clr
-			aa < 0.f ? 0.f : 1.f, 0.5f,  // dir, width   //par_ 0.3-1.2
-			aa < 0.f ? 7.5f*u : 7.f*u, u + fabs(aa)*0.6f);  // uv
+		PaceNote o(i,4, p.pos,  // vis use, pos   // ADD dbg
+			barX,barY, 1,1,1,barA,  // size, clr
+			aa < 0.f ? 0.f : 1.f, 0.5f,  // dir, bar width
+			aa < 0.f ? 7.5f*u : 7.f*u,  // u
+			u + fabs(aa)*0.6f);  // v  //par scale 0.3-1.2
 		Create(o);  vPN.push_back(o);
 		#endif
 	}
+
+
+	//  start sign  ~~
+	if (ist==-1)
+		LogO("!! Pace start pos NOT found!");
+	else
+	{	//ist = road->vPace[ist].id;
+		LogO("Pace start pos: "+toStr(ist)+"/"+toStr(ii)+"  dist: "+fToStr(sqrt(stDist)));
+	}
+
+	PaceNote o(ist,1, vSt, signX,signX, 1,1,1,use1A,  // ADD start
+		0.f, 1.f,  1.f*u, 2.f*u);  o.start = 1;
+	Create(o);  vPN.push_back(o);
+
 	
-	
-	bool loop1 = false, jump1 = false, jump1R = false, onpipe1 = false;  // old vals
-	bool dirR = road->iDir > 0;
+	//  old prev vals
+	bool loop1 = false, jump1 = false, jump1R = false, onpipe1 = false;
+	bool dirR = road->iDir > 0;  // road dir
 	if (reversed)  dirR = !dirR;  // track dir
+	
+	//  jump signs, set vel in trk gho
+	std::vector<int> vJ,vJe;  // id for vPN
 
 
-	///  ~~~  Auto Gen. turn signs  ~~~
+///  ~~~  Auto Gen. turn signs  ~~~
 	int i,n, n1=1;
 	for (n=nn-1; n >= n1; --n)  // all levels, 0 fake
 	for (i=0; i < ii; ++i)     // all road points
 	{
+		const PNote& PD = arPN[nn-1-n][0];  // dbg
+		ColourValue c;  c.setHSB(PD.h, PD.s, PD.v);
+		
 		SplineRoad::PaceM& p = road->vPace[i];
 		if (fabs(p.aa) > angN[n]*angMul && p.used < 0)
 		{
@@ -156,8 +189,9 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			float Asum = p.aa, Lsum = 0.f;
 
 			#ifdef USED  // add used start
-			PaceNote o(2, p.pos2, use1X,use1X, 1,1,1,use1A,  // size, clr
-				Adir, 0.f,  n*u, 0.f);  // dir, uv
+			///  type, pos | size, clr | dir, bar, u,v
+			PaceNote o(i,2, p.pos2, use1X,use1X, c.r,c.g,c.b,use1A,  // ADD dbg
+				Adir, 0.f,  PD.iu *u, PD.iv *u);
 			Create(o);  vPN.push_back(o);
 			#endif
 
@@ -174,8 +208,8 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 					if (!dirR)  pos = pp.pos;  // back pos
 
 					#ifdef USED  // add used
-					PaceNote o(3, pp.pos2, useX,useX, 0.9,0.95,1,useA,  // size, clr
-						Adir, 0.f,  n*u, 0.f);  // dir, uv
+					PaceNote o(i,3, pp.pos2, useX,useX, c.r,c.g,c.b,useA,  // ADD dbg
+						Adir, 0.f,  PD.iu *u, PD.iv *u);
 					Create(o);  vPN.push_back(o);
 					#endif
 				}
@@ -193,15 +227,15 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 					if (dirR)  pos = pp.pos;  // back pos
 
 					#ifdef USED  // add used
-					PaceNote o(3, pp.pos2, useX,useX, 1,0.95,0.9,useA,  // size, clr
-						Adir, 0.f,  n*u, 0.f);  // dir, uv
+					PaceNote o(i,3, pp.pos2, useX,useX, c.r,1-c.g,1-c.b,useA,  // ADD dbg
+						Adir, 0.f,  PD.iu *u, PD.iv *u);
 					Create(o);  vPN.push_back(o);
 					#endif
 				}
 				++rr;  --r;  prv = pp.pos;
 			}
 			
-			///  Add Turn  ~ ~ ~
+			///  Add Turn  ~~~  ~ ~ ~
 			int rsad = rsub + radd;
 			if (rsad > Radd[n])
 			{
@@ -231,67 +265,108 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 
 				ColourValue c;  c.setHSB(PN.h, PN.s, PN.v);
 				
-				PaceNote o(1, pos,  signX,signX, // size
-					c.r,c.g,c.b,1,  // clr
-					Adir, 0.f,  // dir
-					PN.iu *u, PN.iv *u);  // uv
+				PaceNote o(i,1, pos,  signX,signX, c.r,c.g,c.b,1,  // ADD
+					Adir, 0.f,  PN.iu *u, PN.iv *u);  // uv
 				Create(o);  vPN.push_back(o);
 			}
 		}
 
-		//  todo: ...
-		///  loop
 		if (n==n1)
 		{
+			///~~~  Loop
 			bool lp = dirR ? p.loop && !loop1 :
 							!p.loop && loop1;
 			if (lp)
-			{	PaceNote o(1, p.pos, signX,signX, 1,1,1,1,  // size, clr
-					0.f, 0.f,  0.f*u, u);  // dir, uv
+			{
+				//  find loop end  //todo: loop type?
+				#if 0
+				int r=3, rr=0, radd=1, ri = 40;  // max loop len
+				int rs = dirR ? 1 : -1;
+				SplineRoad::PaceM* pe = &p;
+				
+				bool ok = true;
+				while (ok && rr < ri)  // search next/prev
+				{
+					int id = (i+r*rs+ii)%ii;
+					pe = &road->vPace[id];
+					LogO("Loop: "+iToStr(id)+(pe->loop?"+":"-")+" "+fToStr(pe->aa));
+					ok = pe->loop;
+					if (ok)  ++radd;
+					++rr;  ++r;
+				}
+				PaceNote q(j,2, pe->pos, signX,signX, 0.6,0.8,1,0.6,  // ADD dbg
+					0.f, 0.f,  1.f*u, 5.f*u);
+				Create(q);  vPN.push_back(q);
+				LogO("Loop: "+iToStr(radd));
+				#endif
+
+				ColourValue c;  c.setHSB(0.55f, 0.7f, 1.f);
+				PaceNote o(i,1, p.pos, signX,signX, c.r,c.g,c.b,1,  // ADD
+					0.f, 0.f,  0.f*u, 5.f*u);
 				Create(o);  vPN.push_back(o);
 			}
 			loop1 = p.loop;
-		}
 
-		///  jump
-		if (n==n1)
-		{
+			///~~~  Jump
 			bool jmp1  = dirR ? p.jumpR : p.jump;
 			bool jmp1R = dirR ? p.jump : p.jumpR;
 			bool jump = jmp1  && !jump1;   // jump/start
 			bool land = jmp1R && !jump1R;  // land/end
 			if (jump || land)
-			{	PaceNote o(1, p.pos, signX,signX, 1,1,1,1,  // size, clr
-					0.f, 0.f,  (land ? 3.f : 2.f)*u, u);  // dir, uv
+			{
+				ColourValue c;  c.setHSB(land? 0.8f: 0.7f, land? 0.5f: 1.f, land? 0.5f: 1.f);
+				PaceNote o(i,1, p.pos, signX,signX, 1,1,1,1,  // ADD
+					(land? 1.f: 0.f), 0.f,  /*par len*/1.f*u, 4.f*u);
 				Create(o);  vPN.push_back(o);
+				(jump ? vJ : vJe).push_back(vPN.size()-1);
 			}
-			jump1 = jmp1;  jump1R = jmp1R;
-		}
+			jump1 = jmp1;  jump1R = jmp1R;  
 
-		///  on pipe
-		if (n==n1)
-		{
+			///~~~  On Pipe
 			bool onp = dirR ? p.onpipe && !onpipe1 :
 							 !p.onpipe && onpipe1;
 			if (onp)
-			{	PaceNote o(1, p.pos, signX,signX, 1,1,1,1,  // size, clr
-					0.f, 0.f,  4.f*u, 2.f*u);  // dir, uv
+			{	PaceNote o(i,1, p.pos, signX,signX, 1,1,1,1,  // ADD
+					0.f, 0.f,  4.f*u, 2.f*u);
 				Create(o);  vPN.push_back(o);
 			}
 			onpipe1 = p.onpipe;
 		}
 	}
 	
-	LogO(String("::: Time PaceNotes Rebuild: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
-return;
-
-
-	///  trace Track's Ghost
-	//todo: jumps,vel, ter bumps..
-	//cast ray down, on pipe..
-	TrackGhost gho;
 	
-	//  foreach track
+	///:  only real signs
+	#ifndef SR_EDITOR  // game
+	vPS.clear();
+	for (i=0; i < vPN.size(); ++i)
+		if (vPN[i].use == 1)
+			vPS.push_back(vPN[i]);
+	
+	std::sort(vPS.begin(), vPS.end(), PaceSort);
+	
+	///:  find start
+	iAll = vPS.size();
+	for (i=0; i < iAll; ++i)
+	{	if (vPS[i].start)
+			iStart = i;
+		//LogO("SS "+toStr(vPS[i].id));
+	}
+	iCur = iStart;
+	#endif
+
+	if (vJ.size() != vJe.size())
+		LogO("Pace Jumps != JumpEnds");  //j
+	
+	LogO(String("::: Time PaceNotes Rebuild1: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	
+
+
+///  ~~~  trace Track's Ghost  ~~~
+	#if 1
+	//  util dist to jump points
+	std::vector<float> vJd;
+	vJd.resize(vJ.size(), FLT_MAX);
+	
 	bool rev = false;
 	string sRev = rev ? "_r" : "";
 	#ifdef SR_EDITOR
@@ -299,37 +374,28 @@ return;
 	#else
 	string track = pApp->pSet->game.track;
 	#endif
-	//if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
 	
 	//  load
 	string file = PATHMANAGER::TrkGhosts()+"/"+ track + sRev + ".gho";
 	if (!PATHMANAGER::FileExists(file))
-	{	LogO("NOT found: "+file);/**/  }
+	{	LogO("Pace trk gho not found: "+file);/**/  }
 	else
 	{	LogO("---------  "+track+"  ---------");
+		TrackGhost gho;
 		gho.LoadFile(file);
 		
 		//  test
 		Vector3 pos,oldPos;  float oldTime = 0.f;
 		Quaternion rot;  float vel = 0.f;
-
 		int num = gho.getNumFrames(), ijmp = 0;
-		float* sta = new float[num];
-		int i,ii,n;  float oy=0.f;
-		for (ii=0; ii < 2; ++ii)
+
+		int i,n;  float oy=0.f;
 		for (i=0; i < num; ++i)
 		{
 			//  pos
 			const TrackFrame& fr = gho.getFrame0(i);
 			Axes::toOgre(pos, fr.pos);  // pos
-			rot = Axes::toOgre(fr.rot);
-			//float y = rot.getYaw().valueDegrees();
 			Vector3 pp = pos - oldPos;
-			
-			//  yaw
-			float yy = TerUtil::GetAngle(pp.x, pp.z) *180.f/PI_d;
-			float y = yy-oy;  if (y > 180)  y -= 360;  if (y < -180)  y += 360;
-			oy = yy;
 
 			//  vel
 			float dist = pp.length();
@@ -337,7 +403,7 @@ return;
 			if (i > 0 && i < num-1 && dt > 0.001f)
 				vel = 3.6f * dist / dt;
 
-			if (vel < 20)  y *= vel / 20.f;  // y sc
+			//if (vel < 20)  y *= vel / 20.f;  // y sc
 
 			//  sudden pos jumps-
 			bool jmp = false;
@@ -345,69 +411,54 @@ return;
 			if (dist > 6.f)  //par
 			{	jmp = true;  ++ijmp;  }
 
+			//todo: ter jmp, bumps cast ray down to ter..
+			//mTerrain->getHeightAtWorldPosition
 
-			//  avg steer
-			float sa = 0.f;  const int nn = 10;  //par
-			if (i < num-nn)
-			for (n=i; n < i+nn; ++n)
-			{
-				const TrackFrame& f = gho.getFrame0(n);
-				sa += fabs(f.steer/127.f);
-			}
-			sa /= float(nn);
-			sta[i] = sa;
-			
 			
 			//  log  ----
 			#if 0
-			if (ii==0)
 			LogO("i:"+ iToStr(i,4) +" t:"+ fToStr(fr.time,2,6)//+" dt: "+fToStr(dt)
 				+"  v:"+ fToStr(vel,0,4)
 				+"  b:"+ toStr(fr.brake)
 				+"  s:"+ (fr.steer==0 ? " ---" : fToStr(fr.steer/127.f,1,4))
-				+"  a:"+ fToStr(sa,1,4)
-				+"  y:"+ fToStr(y,1,4)
-				//+"  p: "+ fToStr(fr.pos[0])+" "+fToStr(fr.pos[1])+" "+fToStr(fr.pos[2])
+				//+"  a:"+ fToStr(sa,1,4)+"  y:"+ fToStr(y,1,4)
 				+(jmp ? " !jd: "+fToStr(dist) : "")
 			);
 			#endif
-	
 			
-			///  add pace note
-			if (ii==1)
-			{	
-				float sb = 0.f;  const int nn = 10;  //par
-				if (i < num-nn)
-				for (n=i; n < i+nn; ++n)
-				{
-					const TrackFrame& f = gho.getFrame0(n);
-					if (sa > 0.3f)
-					sb += sa;
+			//~~~  check all jumps for dist
+			for (int j=0; j < vJ.size(); ++j)
+			{
+				const PaceNote& p = vPN[vJ[j]];
+				float d = pos.squaredDistance(p.pos);
+				if (d < vJd[j])
+				{	vJd[j] = d;
+					vPN[vJ[j]].vel = vel;
+					//LogO("j "+toStr(j)+"  i "+toStr(vJ[j])+"  v "+fToStr(vel));  //j
 				}
-				sb /= float(nn);
-				//LogO(fToStr(sb));
-							
-				//  create
-				if (i%6==0 && sb > 0.4f)
-				{
-					PaceNote n;
-					n.pos = pos;  //fr.brake  fr.steer
-					Create(n);
-					vPN.push_back(n);
-				}
+			}
+			
+			//  pos marks . .
+			if (i%6==0)
+			{
+				//fr.brake  fr.steer
+				PaceNote o(1000,5, pos, useX,useX, 1,1,1,1,  // ADD dbg
+					0.f, 0.f,  1.f*u, 1.f*u);
+				Create(o);  vPN.push_back(o);
 			}
 			
 			oldPos = pos;  oldTime = fr.time;
 		}
 		if (ijmp > 0)
 			LogO("!Jumps: "+toStr(ijmp));
-		delete[] sta;
 	}
+	#endif
+
+	for (int j=0; j < vJ.size(); ++j)  //j
+		LogO("jump "+toStr(j)+"  vel "+fToStr(vPN[vJ[j]].vel));
 
 
-	//UpdVis();
-
-	LogO(String("::: Time PaceNotes Rebuild: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	LogO(String("::: Time PaceNotes Rebuild2: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
 //--------------------------------------------------------------------------------------
 
@@ -415,6 +466,8 @@ return;
 //  Create
 void PaceNotes::Create(PaceNote& n)
 {
+	//if (n.use == 1)
+	//	LogO("PP "+toStr(n.id)+(n.start?" ST":""));
 	++ii;
 	n.nd = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	n.bb = mSceneMgr->createBillboardSet("P-"+toStr(ii),2);
@@ -444,36 +497,83 @@ void PaceNotes::Destroy()
 	for (size_t i=0; i < vPN.size(); ++i)
 		Destroy(vPN[i]);
 	vPN.clear();
+	vPS.clear();
 	ii = 0;
 }
 
 
-//  update visibility
-void PaceNotes::UpdVis()
+//  update visibility  ---------
+void PaceNotes::UpdVis(Vector3 carPos, bool hide)
 {
 	const Real dd = pApp->pSet->pace_dist, dd2 = dd*dd;
-	#ifdef SR_EDITOR
-	const int uu = pApp->pSet->pace_show;
-	#else  // game
-	const int uu = pApp->pSet->pace_show ? 1 : 0;
-	#endif
 
 	const Vector3& c = mCamera->getPosition();
-	for (size_t i=0; i < vPN.size(); ++i)
-	if (vPN[i].use > uu)
-		vPN[i].nd->setVisible(false);
-	else
-	{	const Vector3& p = vPN[i].pos;
-		Real dist = c.squaredDistance(p);
-		bool vis = dist < dd2;
-		vPN[i].nd->setVisible(vis);
+	int i,s;
+
+	const int rng = pApp->pSet->pace_next;  // vis next count
+	const float radiusA = 9.f*9.f;  //par pace sphere radius
+	
+	//static int xx=0;  ++xx;  // inc test
+	//if (xx > 10) {  xx=0;  iCur++;  if (iCur>=iAll)  iCur-=iAll;  }
+	//LogO(toStr(iCur));
+
+	///todo: cd. jump vel, loop side-, onpipe key8
+	///  strict jfw not: hid, onpipe, under ter
+	///  reset car pos iCur, prev chk 0
+	
+#ifndef SR_EDITOR  // game
+	s = vPS.size();
+	for (i=0; i < s; ++i)
+	{
+		PaceNote& p = vPS[i];
+		bool vis = pApp->pSet->pace_show;
+
+		//  Advance to next sign  ~ ~ ~
+		//        a    iCur   s-1  s=7
+		//  0  1  2  3  4  5  6   -id
+		bool vrng = iDir > 0 ?  // inside cur..cur+range with cycle
+			(i >= iCur && i <= iCur+rng || i < iCur+rng-iAll) :
+			(i <= iCur && i >= iCur-rng || i > iCur-rng+iAll);
+		vis &= vrng;
+
+		if (vrng)
+		{
+			float d = p.pos.squaredDistance(carPos);
+			if (d < radiusA && i != iCur)  // close next only
+			{
+				LogO("iCur "+iToStr(i,3)+"  d "+fToStr(sqrt(d))+"  <> "+iToStr(i-iCur));
+				iCur = i;
+			}
+		}
+		p.nd->setVisible(vis);
 	}
+#else  // ed
+	s = vPN.size();
+	for (i=0; i < s; ++i)
+	{
+		PaceNote& p = vPN[i];
+		if (hide)
+		{	p.nd->setVisible(false);
+			continue;
+		}
+		bool vis = p.use <= pApp->pSet->pace_show;
+
+		const Vector3& o = p.pos;
+		Real dist = c.squaredDistance(o);
+		bool vnear = dist < dd2;
+		//bool anear = dist < 60.f*60.f;
+		vis &= vnear;
+
+		p.nd->setVisible(vis);
+	}
+#endif
 }
 
 
 //  ctor  ---------
 PaceNotes::PaceNotes(App* papp) :pApp(papp)
-	,mSceneMgr(0),mCamera(0),mTerrain(0), ii(0)
+	,mSceneMgr(0),mCamera(0),mTerrain(0)
+	,ii(0), iStart(0),iAll(1), iDir(1), iCur(0)
 {	}
 
 //  setup

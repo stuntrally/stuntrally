@@ -25,7 +25,7 @@ SH_START_PROGRAM  //  vert  ----
 	UV = uv0;
 	vertColor = colour;
 
-	float dist = shOutputPosition.w;
+	float dist = shOutputPosition.w;  // depth, fade
 	fade = shSaturate( (dist - paceParams.y ) * paceParams.z );
 }
 
@@ -42,15 +42,17 @@ SH_BEGIN_PROGRAM
 
 SH_START_PROGRAM  //  frag  ----
 {
-    float2 uv = UV.xy * 0.125f, uvb = uv + float2(6*0.125f, 2*0.125f);
-    if (par.x < 0.5f)  uv.x = 0.125f - uv.x;  // dir, mirror
-    if (par.y > 0.f)  uv.x *= par.y;  // width mul
+    float2 uv = UV.xy * 0.125f;  // sign
+	float2 uvb = uv + float2(par.y > 0.f ? 7*0.125f : 6*0.125f, 0.125f);  // backgr
+
+    if (par.x < 0.5f)  uv.x = 0.125f - uv.x;  // dir, mirror, left,right
+    if (par.y > 0.f)  uv.x *= par.y;  // width mul, bar narrow
     uv += par.zw;  // offset
     
-    float4 texb = shSample(diffuseMap, uvb), texc = shSample(diffuseMap, uv);
-    float4 tex = float4(lerp(texb.rgb, texc.rgb, texc.a), texb.a);
+    float4 texb = shSample(diffuseMap, uvb), texc = shSample(diffuseMap, uv);  // tex b,c
+    float4 tex = float4( lerp(texb.rgb, texc.rgb, texc.a), texb.a);  // tex sum, final
 
-    float a = tex.a * vertColor.a * fade;
+    float a = tex.a * vertColor.a * fade;  // alpha
 	if (a < 0.01f || tex.a < 0.5f)
 		discard;
 

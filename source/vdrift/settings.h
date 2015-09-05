@@ -10,6 +10,7 @@ enum eGraphType  {
 	Gh_Fps=0, Gh_CarAccelG,
 	Gh_CamBounce, Gh_BulletHit,
 	Gh_Sound,
+	Gh_Checks,
 	Gh_Suspension,
 	Gh_TireSlips,
 	Gh_TireEdit, Gh_Tires4Edit,
@@ -21,6 +22,7 @@ const static std::string csGraphNames[Gh_ALL] = {
 	"Fps graphics perf.", "Car Accel G's",
 	"Camera bounce", "Car Hit chassis",
 	"Sound info, sources",
+	"Checkpoints",
 	"Suspension pos & vel",
 	"Tires slip| & slide-",
 	"Tire Edit (Pacejka coeffs)*", "All Tires Pacejka vis and edit*",
@@ -51,7 +53,8 @@ public:
 	bool cam_loop_chng;  int cam_in_loop;
 	bool cam_bounce;  float cam_bnc_mul;
 	//  pacenotes
-	bool pace_show;  float pace_dist, pace_near, pace_size;
+	bool pace_show;  int pace_next;
+	float pace_dist, pace_near, pace_size;
 	
 	eGraphType graphs_type;
 	int car_dbgtxtclr, car_dbgtxtcnt;

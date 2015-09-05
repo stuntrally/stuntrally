@@ -378,7 +378,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	
 	//  pace vis
 	if (scn->pace)
-		scn->pace->UpdVis();
+		scn->pace->UpdVis(Vector3::ZERO, edMode == ED_PrvCam);
 
 	
 	//  upd terrain generator preview

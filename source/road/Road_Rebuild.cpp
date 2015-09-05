@@ -48,9 +48,10 @@ void SplineRoad::BuildSeg(
 	DataLodMesh& DLM, DataSeg& DS,
 	int segM, bool full)
 {
-	int seg = (segM + DR.segs) % DR.segs;  // iterator
+	//  iterators
+	int seg = (segM + DR.segs) % DR.segs;
 	int seg1 = getNext(seg), seg0 = getPrev(seg), seg02 = getAdd(seg,-2);
-	/**/DS.seg = seg;  DS.seg1 = seg1;  DS.seg0 = seg0;
+	DS.seg = seg;  DS.seg1 = seg1;  DS.seg0 = seg0;  // save
 	
 	//if (isLod0)
 	//LogR("[Seg]  cur: " + toStr(seg) + "/" + toStr(sNumO) + "  all:" + toStr(segs));/**/
@@ -58,14 +59,17 @@ void SplineRoad::BuildSeg(
 	//  on terrain  (whole seg)
 	DS.onTer = mP[seg].onTer && mP[seg1].onTer;
 
-	//  jump front wall, ends in air - this is pure madness
+
+	///  jump front wall, ends in air
 	//  0,1 for geometry, 2,1 for pacenotes
-	DS.jfw0 = iDir<0 ? !mP[seg].onTer && mP[seg0].idMtr < 0: !mP[seg].onTer && mP[seg].idMtr >= 0 && mP[seg0].idMtr < 0;
-	DS.jfw1 = iDir<0 ? !mP[seg1].onTer && mP[seg1].idMtr < 0 : !mP[seg1].onTer && mP[seg1].idMtr < 0;
-	DS.jfw2 = iDir<0 ? !mP[seg0].onTer && mP[seg02].idMtr < 0: !mP[seg0].onTer && mP[seg0].idMtr >= 0 && mP[seg02].idMtr < 0;
+	//  Test on tracks:  iDir<0: jumps, CrossJumps  iDir>0: Mars, Platforms
+	DS.jfw0 = iDir<0 ? !mP[seg ].onTer && mP[seg0].idMtr < 0: !mP[seg ].onTer && mP[seg].idMtr  >= 0 && mP[seg0].idMtr < 0;
+	DS.jfw1 = iDir<0 ? !mP[seg1].onTer && mP[seg1].idMtr < 0: !mP[seg1].onTer && mP[seg1].idMtr < 0;
+	DS.jfw2 = iDir<0 ? !mP[seg0].onTer && mP[seg02].idMtr< 0: !mP[seg0].onTer && mP[seg0].idMtr >= 0 && mP[seg02].idMtr < 0;
 	
-	// on merging segs only for game in whole road rebuild
-	// off for editor (partial, 4segs rebuild)
+	
+	//  on merging segs only for game in whole road rebuild
+	//  off for editor (partial, 4segs rebuild)
 	bool bNew = true, bNxt = true;
 
 	if (bMerge)
@@ -250,7 +254,7 @@ void SplineRoad::BuildSeg(
 				vP -= vn * skH;
 			
 			
-			/// []()  pace  ~ ~ ~
+			/// []()  pace  add marker  ~ ~ ~  ~ ~ ~
 			if (DL.isPace)
 			{
 				if (full && w == 1)  // center
@@ -266,7 +270,8 @@ void SplineRoad::BuildSeg(
 					pm.loop = DL0.v0_Loop[seg] > 0;
 					pm.onpipe = onP;
 					pm.jump = DS.jfw2;  pm.jumpR = DS.jfw1;
-					
+
+					pm.vis = vis;
 					vPace.push_back(pm);
 				}
 

@@ -416,9 +416,13 @@ bool App::frameStart(Real time)
 			//PROFILER.endBlock("g.road");
 		}
 
-		//[]()  pace upd vis
+		//[]()  pace upd vis  ~ ~ ~
 		if (scn->pace)
-			scn->pace->UpdVis();
+		{	
+			const CarModel* cm = *carModels.begin();
+			Vector3 p = cm->pMainNode->getPosition();
+			scn->pace->UpdVis(p);
+		}
 		
 
 		//**  bullet bebug draw

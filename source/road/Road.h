@@ -225,9 +225,10 @@ public:  ///  pacenotes prepass data
 	{
 		Ogre::Vector3 pos, pos2;
 		float aa;
-		int used;  bool loop, jump,jumpR, onpipe;
+		int used;  bool vis;
+		bool loop, jump,jumpR, onpipe;
 		PaceM()
-			:used(-1), aa(0.f)
+			:used(-1), aa(0.f), vis(1)
 			,loop(0), jump(0),jumpR(0), onpipe(0)
 		{	}
 	};
