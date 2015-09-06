@@ -92,10 +92,11 @@ private:
 	Ogre::RenderWindow* mWindow;
 	
 	//  all notes
-	std::vector<PaceNote> vPN, vPS;  // sorted
+	std::vector<PaceNote> vPN,  // all incl. debug
+		vPS;  // game, signs only, sorted by id
 	int ii;  // id for names
 public:
-	int iStart;  // vPN id closest to track start
+	int iStart;  // vPS id of track start
 	int iAll;  // all road markers from road->vPace
 	int iDir;  // copy from road
 	int iCur;  // cur car pace id, for tracking

@@ -60,7 +60,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 	
 	const static PNote arPN[nn][2] =
 	{			// short						// long					
-		{{150.f, 6,7, 0.00f, 1.f, 0.5f},{150.f, 6,6, 0.00f, 0.5f, 0.5f}},
+		{{150.f, 6,7, 0.00f, 1.f, 0.5f},{150.f, 6,6, 0.00f, 0.7f, 0.7f}},
 		{{120.f, 6,7, 0.00f, 1.f, 1.f}, {120.f, 6,6, 0.05f, 0.5f, 1.f}},
 		{{ 90.f, 5,7, 0.05f, 1.f, 1.f}, { 90.f, 5,6, 0.10f, 0.5f, 1.f}},
 		{{ 60.f, 4,7, 0.10f, 1.f, 1.f}, { 60.f, 4,6, 0.15f, 0.5f, 1.f}},
@@ -306,11 +306,11 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			jump1 = jmp1;  jump1R = jmp1R;  
 
 			///~~~  On Pipe
-			bool onp = dirR ? p.onpipe && !onpipe1 :
-							 !p.onpipe && onpipe1;
+			bool onp = p.onpipe && !onpipe1 ||
+						!p.onpipe && onpipe1;
 			if (onp)
-			{	PaceNote o(i,1, p.pos, signX,signX, 1,1,1,1,  // ADD
-					0.f, 0.f,  4.f*u, 2.f*u);
+			{	PaceNote o(i,1, p.pos, signX,signX, 0.7,0.5,1,1,  // ADD
+					0.f, 0.f,  0.f*u, 2.f*u);
 				Create(o);  vPN.push_back(o);
 			}
 			onpipe1 = p.onpipe;
@@ -401,9 +401,8 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 	}
 
 	///  upd Jumps vel  ~~~
-	LogO("jump "+toStr(vJ.size())+" = "+toStr(vJe.size())+" land");  //j
 	if (vJ.size() != vJe.size())
-		LogO("Pace Jumps != JumpEnds");  //j
+		LogO("Pace jumps "+toStr(vJ.size())+" != "+toStr(vJe.size())+" lands");  //j
 	
 	size_t s = std::min(vJ.size(), vJe.size());
 	for (i=0; i < s; ++i)

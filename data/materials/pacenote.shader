@@ -50,7 +50,8 @@ SH_START_PROGRAM  //  frag  ----
     uv += par.zw;  // offset
     
     float4 texb = shSample(diffuseMap, uvb), texc = shSample(diffuseMap, uv);  // tex b,c
-    float4 tex = float4( lerp(texb.rgb, texc.rgb, texc.a), texb.a);  // tex sum, final
+    float4 tex = float4( lerp(texb.rgb, texc.rgb, texc.a),
+		par.y > 0.f ? texc.a : texb.a);  // tex sum, final
 
     float a = tex.a * vertColor.a * fade;  // alpha
 	if (a < 0.01f || tex.a < 0.5f)

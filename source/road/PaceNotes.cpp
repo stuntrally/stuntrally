@@ -215,7 +215,8 @@ void PaceNotes::updTxt(PaceNote& n, bool vis)
 //  ctor  ---------
 PaceNotes::PaceNotes(SETTINGS* pset) :pSet(pset)
 	,mSceneMgr(0),mCamera(0),mTerrain(0),mGui(0),mWindow(0)
-	,ii(0), iStart(0),iAll(1), iDir(1), iCur(0), carVel(0.f)
+	,ii(0), iStart(0),iAll(1), iDir(1), iCur(0)
+	,carVel(140.f/3.6f)  // for ed
 {	}
 
 //  setup
