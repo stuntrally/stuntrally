@@ -252,9 +252,10 @@ bool SplineRoad::LoadFile(String fname, bool build)
 
 		a = n->Attribute("pipe");	newP.pipe = !a ? 0.f : std::max(0.f, std::min(1.f, s2r(a)));
 		a = n->Attribute("mtr");	newP.idMtr = !a ? 0 : std::max(-1, std::min(MTRs-1, s2i(a)));
+		a = n->Attribute("not");	newP.notReal = !a ? 0 : (s2i(a) > 0);
 		
 		a = n->Attribute("chkR");	newP.chkR = !a ? 0.f : s2r(a);
-		a = n->Attribute("ckL");	newP.loopChk = !a ? 0 : s2i(a);
+		a = n->Attribute("ckL");	newP.loop = !a ? 0 : s2i(a);
 		a = n->Attribute("onP");	newP.onPipe = !a ? 0 : s2i(a);
 				
 		//  Add point
@@ -385,11 +386,14 @@ bool SplineRoad::SaveFile(String fname)
 			if (mP[i].idMtr != 0)
 				p.SetAttribute("mtr", toStrC( mP[i].idMtr ));
 
+			if (mP[i].notReal)
+				p.SetAttribute("not", "1");
+
 			if (mP[i].chkR > 0.f)
-			{	p.SetAttribute("chkR", toStrC( mP[i].chkR ));
-				if (mP[i].loopChk)
-					p.SetAttribute("ckL", toStrC( mP[i].loopChk ));
-			}
+				p.SetAttribute("chkR", toStrC( mP[i].chkR ));
+			if (mP[i].loop)
+				p.SetAttribute("ckL", toStrC( mP[i].loop ));
+			
 			if (mP[i].onPipe > 0)
 				p.SetAttribute("onP", toStrC( mP[i].onPipe ));
 		}

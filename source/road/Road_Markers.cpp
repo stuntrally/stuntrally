@@ -305,7 +305,7 @@ void SplineRoad::SetChecks()
 				cs.r *= 0.5f;  }  // exact-
 			
 			cs.r2 = cs.r * cs.r;
-			cs.loop = mP[i].loopChk > 0;
+			cs.loop = mP[i].loop > 0;
 
 			if (mP[i].chk1st)  //1st checkpoint
 				iChkId1 = mChks.size();

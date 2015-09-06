@@ -30,6 +30,7 @@ class btTriangleMesh;
 
 #define  LODs  4
 #define  MTRs  4
+#define  LoopTypes  5  // for pace notes
 
 
 struct RoadSeg
@@ -225,10 +226,10 @@ public:  ///  pacenotes prepass data
 	{
 		Ogre::Vector3 pos, pos2;
 		float aa;
-		int used;  bool vis;
+		int used;  bool vis, notReal;
 		bool loop, jump,jumpR, onpipe;
 		PaceM()
-			:used(-1), aa(0.f), vis(1)
+			:used(-1), aa(0.f), vis(1), notReal(0)
 			,loop(0), jump(0),jumpR(0), onpipe(0)
 		{	}
 	};

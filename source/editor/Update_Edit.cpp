@@ -167,7 +167,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		rdTxt[0]->setCaption(TR(sp.onTer ? "#{Road_OnTerrain}" : "#{Road_Height}"));
 		rdVal[0]->setCaption(sp.onTer ? "" : fToStr(sp.pos.y,1,3));
 
-		rdVal[1]->setCaption(fToStr(sp.width,2,4));
+		rdVal[1]->setCaption(fToStr(sp.width,2,4));  // angles
 		rdVal[2]->setCaption(fToStr(sp.aRoll,1,3));
 		rdVal[3]->setCaption(fToStr(sp.aYaw,1,3));
 		rdTxt[4]->setCaption(toStr(sp.aType)+" "+TR("#{Road_Angle"+csAngType[sp.aType]+"}"));
@@ -180,20 +180,23 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		rdTxt[7]->setVisible(!sp.onTer);	rdKey[7]->setVisible(!sp.onTer);
 		rdVal[7]->setCaption(sp.onTer ? "" : toStr(sp.cols));
 		
-		rdTxt[8]->setCaption(toStr(sp.idMtr)+" "+road->getMtrStr(ic));
+		rdTxt[8]->setCaption(toStr(sp.idMtr)+" "+road->getMtrStr(ic));  // mtr
 
-		rdTxt[9]->setTextColour(sp.loopChk ? MyGUI::Colour(0.5,1,1) : MyGUI::Colour(0.75,0.64,0.96));
-		rdTxt[9]->setCaption(sp.loopChk ? TR("#{Road_Loop}") : TR("#{Road_ChkR}"));
 		rdVal[9]->setCaption( sp.chkR == 0.f ? "" : fToStr(sp.chkR,1,3)+"  "+ (sp.chk1st ? "#D0D0FF(1)":"") );
 
+		const static String sLoop[5]={"","#{Road_Loop}","Side Loop","Barrel Loop","Double Loop"};
+		rdTxt[10]->setCaption(TR(sLoop[sp.loop]));
+		rdVal[10]->setCaption(!sp.notReal ? "" : "Not Real");
+
+		//  status
 		if (road->vSel.size() > 0)  s = TR("#{Road_sel}")+": "+toStr(road->vSel.size());
 		else  s = fToStr(road->iChosen+1,0,2)+"/"+toStr(road->vSegs.size());
-		rdVal[10]->setCaption(s);
+		rdVal[11]->setCaption(s);
 
-		rdTxt[10]->setCaption(TR(bCur ? "#{Road_Cur}" : "#{Road_New}"));
-		rdTxt[10]->setTextColour(bCur ? MyGUI::Colour(0.85,0.75,1) : MyGUI::Colour(0.3,1,0.1));
+		rdTxt[11]->setCaption(TR(bCur ? "#{Road_Cur}" : "#{Road_New}"));
+		rdTxt[11]->setTextColour(bCur ? MyGUI::Colour(0.85,0.75,1) : MyGUI::Colour(0.3,1,0.1));
 
-		rdKey[10]->setCaption(road->bMerge ? "Mrg":"");
+		rdKey[11]->setCaption(road->bMerge ? "Mrg":"");
 
 
 		//  road stats  --------------------------------

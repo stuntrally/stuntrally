@@ -63,18 +63,22 @@ void SplineRoad::BuildSeg(
 	///  jump front wall, ends in air
 	//  0,1 for geometry, 2,1 for pacenotes
 	//  Test on tracks:  iDir<0: jumps, CrossJumps  iDir>0: Mars, Platforms
-	DS.jfw0 = iDir<0 ? !mP[seg ].onTer && mP[seg0].idMtr < 0: !mP[seg ].onTer && mP[seg].idMtr  >= 0 && mP[seg0].idMtr < 0;
-	DS.jfw1 = iDir<0 ? !mP[seg1].onTer && mP[seg1].idMtr < 0: !mP[seg1].onTer && mP[seg1].idMtr < 0;
-	DS.jfw2 = iDir<0 ? !mP[seg0].onTer && mP[seg02].idMtr< 0: !mP[seg0].onTer && mP[seg0].idMtr >= 0 && mP[seg02].idMtr < 0;
-	
+	DS.jfw0 = iDir < 0 ?
+		!mP[seg ].onTer && mP[seg0].isnt() :
+		!mP[seg ].onTer && !mP[seg].isnt() && mP[seg0].isnt();
+	DS.jfw1 = iDir < 0 ?
+		!mP[seg1].onTer && mP[seg1].isnt() :
+		!mP[seg1].onTer && mP[seg1].isnt();
+	DS.jfw2 = iDir < 0 ?
+		!mP[seg0].onTer && mP[seg02].isnt() :
+		!mP[seg0].onTer && !mP[seg0].isnt() && mP[seg02].isnt();
+
 	
 	//  on merging segs only for game in whole road rebuild
 	//  off for editor (partial, 4segs rebuild)
 	bool bNew = true, bNxt = true;
-
 	if (bMerge)
-	{
-		bNew = (segM   == DR.sMin/*1st*/)  || DL.v_bMerge[seg];
+	{	bNew = (segM   == DR.sMin/*1st*/)  || DL.v_bMerge[seg];
 		bNxt = (segM+1 == DR.sMax/*last*/) || DL.v_bMerge[seg1];  // next is new
 	}
 	
@@ -274,9 +278,10 @@ void SplineRoad::BuildSeg(
 					
 					pm.loop = DL0.v0_Loop[seg] > 0;
 					pm.onpipe = onP;
-					pm.jump = DS.jfw2;  pm.jumpR = DS.jfw1;
+					bool not = mP[seg].notReal;
+					pm.jump = not? 0: DS.jfw2;  pm.jumpR = not? 0: DS.jfw1;
 
-					pm.vis = vis;
+					pm.vis = vis;  pm.notReal = not;
 					vPace.push_back(pm);
 				}
 

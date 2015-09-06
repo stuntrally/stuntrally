@@ -106,8 +106,8 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 		Real neg = Vector3::UNIT_Y.dotProduct(cross);
 		if (neg < 0.f)  aa = -aa;
 		
-		///  no loops  no hidden
-		if (p.loop || !p.vis)  aa = 0.f;
+		///  no loops  only visible and real
+		if (p.loop || !p.vis || p.notReal)  aa = 0.f;
 			
 		//LogO(fToStr(aa*180.f/PI_d,1,5));//+" "+fToStr(neg));
 

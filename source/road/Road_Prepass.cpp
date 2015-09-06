@@ -229,11 +229,13 @@ void SplineRoad::PrepassLod(
 		DL.v_iL.push_back(il);
 		DL.v_len.push_back(len);
 
-		ST.roadLen += len;  //#
-		if (pipe)
-		{	ST.rdPipe += len; //#
-			if (mP[seg].onPipe)  ST.rdOnPipe += len;  //#
-		}
+		if (!mP[seg].notReal)
+		{	//  add len
+			ST.roadLen += len;  //#
+			if (pipe)
+			{	ST.rdPipe += len; //#
+				if (mP[seg].onPipe)  ST.rdOnPipe += len;  //#
+		}	}
 
 		///-  Merge conditions
 		DL.sumLenMrg += len;
@@ -261,7 +263,7 @@ void SplineRoad::PrepassLod(
 		
 		if (DL.isLod0)
 		{
-			if (mP[seg].loopChk)
+			if (mP[seg].loop)
 				inLoop = !inLoop;  ///[]()
 
 			DL0.v0_iL.push_back(il);

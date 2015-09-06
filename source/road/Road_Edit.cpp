@@ -353,44 +353,57 @@ void SplineEdit::ToggleOnPipe(bool old)  ///  On Pipe  (old for stats only,  new
 	Move(Vector3::ZERO);
 }
 
-void SplineEdit::ToggleLoopChk()       ///  Loop chkR  (for camera change)
+void SplineEdit::ToggleNotReal()  ///  Not Real  (not drivable road)
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
-			mP[*it].loopChk = 1-mP[*it].loopChk;
+			mP[*it].notReal = !mP[*it].notReal;
 		return;  }
 
 	if (iChosen == -1)  {  // one
-			newP.loopChk = 1-newP.loopChk;  return;  }
+			newP.notReal = !newP.notReal;  return;  }
 
-	mP[iChosen].loopChk  = 1-mP[iChosen].loopChk;
+	mP[iChosen].notReal = !mP[iChosen].notReal;
 }
 
-
-void SplineEdit::ChgMtrId(int relId)   ///  Mtr Id
+void SplineEdit::ChgLoopType(int rel)   ///  Loop type,  (camera change, pacenotes)
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
-			mP[*it].idMtr = std::max(-1, std::min(MTRs-1, mP[*it].idMtr + relId));
+			mP[*it].loop = std::max(0, std::min(LoopTypes-1, mP[*it].loop + rel));
+		return;  }
+
+	if (iChosen == -1)  {  // one
+			newP.loop = std::max(0, std::min(LoopTypes-1, newP.loop + rel));  return;  }
+
+	mP[iChosen].loop  = std::max(0, std::min(LoopTypes-1, mP[iChosen].loop + rel));
+}
+
+
+void SplineEdit::ChgMtrId(int rel)   ///  Mtr Id
+{
+	if (!vSel.empty()) {  // sel
+		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
+			mP[*it].idMtr = std::max(-1, std::min(MTRs-1, mP[*it].idMtr + rel));
 		bSelChng = true;	return;  }
 
 	if (iChosen == -1)  {  // one
-			newP.idMtr = std::max(-1, std::min(MTRs-1, newP.idMtr + relId));  return;  }
-	mP[iChosen].idMtr  = std::max(-1, std::min(MTRs-1, mP[iChosen].idMtr + relId));
+			newP.idMtr = std::max(-1, std::min(MTRs-1, newP.idMtr + rel));  return;  }
+	mP[iChosen].idMtr  = std::max(-1, std::min(MTRs-1, mP[iChosen].idMtr + rel));
 
 	Move(Vector3::ZERO);
 }
 
-void SplineEdit::ChgAngType(int relId)   ///  Ang Type
+void SplineEdit::ChgAngType(int rel)   ///  Ang Type
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
-			mP[*it].aType = (AngType)std::max(0, std::min(AT_ALL-1, mP[*it].aType + relId));
+			mP[*it].aType = (AngType)std::max(0, std::min(AT_ALL-1, mP[*it].aType + rel));
 		bSelChng = true;	return;  }
 
 	if (iChosen == -1)  {  // one
-			newP.aType = (AngType)std::max(0, std::min(AT_ALL-1, newP.aType + relId));  return;  }
-	mP[iChosen].aType  = (AngType)std::max(0, std::min(AT_ALL-1, mP[iChosen].aType + relId));
+			newP.aType = (AngType)std::max(0, std::min(AT_ALL-1, newP.aType + rel));  return;  }
+	mP[iChosen].aType  = (AngType)std::max(0, std::min(AT_ALL-1, mP[iChosen].aType + rel));
 
 	Move(Vector3::ZERO);
 }
@@ -426,11 +439,11 @@ const String& SplineRoad::getMtrStr(int seg)
 	if (seg < 0)  // new
 	{
 		int i = newP.idMtr;
-		if (i < 0)  return sHid;
+		if (i==-1)  return sHid;
 		return newP.pipe == 0.f ? sMtrRoad[i] : sMtrPipe[i];
 	}
 	int i = mP[seg].idMtr;
-	if (i < 0)  return sHid;
+	if (i==-1)  return sHid;
 	return !isPipe(seg) ? sMtrRoad[i] : sMtrPipe[i];
 }
 

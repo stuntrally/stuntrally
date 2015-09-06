@@ -334,8 +334,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 						else		road->ChgAngType(-1);  break;
 			case key(2):  if (alt)	road->ChgAngType(1);  break;
 
-			case key(7):  road->ToggleLoopChk();  break;  
-			case key(8):  road->ToggleOnPipe(ctrl);  break;
+			case key(7):  road->ChgLoopType(shift ? -1 : 1);  break;  
+			case key(8): if (shift)	road->ToggleNotReal();
+						 else		road->ToggleOnPipe(ctrl);  break;
 
 			case key(5):  snap = shift ? 1 :-1;  break;
 			
