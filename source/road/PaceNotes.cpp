@@ -13,6 +13,7 @@
 #include <OgreCamera.h>
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
+#include <OgreRenderWindow.h>
 #include <OgreBillboard.h>
 #include <OgreBillboardSet.h>
 #include <MyGUI_Gui.h>
