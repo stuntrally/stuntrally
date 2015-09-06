@@ -77,12 +77,12 @@ void CarModel::UpdNextCheck()
 	p.y -= gPar.chkBeamSy;  // lower
 	ndNextChk->setPosition(p);
 	ndNextChk->setScale(gPar.chkBeamSx, gPar.chkBeamSy, gPar.chkBeamSx);
-	ndNextChk->setVisible(pSet->check_beam && !pApp->bHideHudAid);
+	ndNextChk->setVisible(pSet->check_beam && !pApp->bHideHudBeam);
 }
 void CarModel::ShowNextChk(bool visible)
 {
 	if (ndNextChk)
-		ndNextChk->setVisible(visible && !pApp->bHideHudAid);
+		ndNextChk->setVisible(visible && !pApp->bHideHudBeam);
 }
 
 

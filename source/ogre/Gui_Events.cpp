@@ -348,7 +348,7 @@ void CGui::chkArrow(Ck*)
 void CGui::chkBeam(Ck*)
 {
 	for (int i=0; i < app->carModels.size(); ++i)
-		app->carModels[i]->ShowNextChk(pSet->check_beam && !app->bHideHudAid);
+		app->carModels[i]->ShowNextChk(pSet->check_beam && !app->bHideHudBeam);
 }
 
 //  hud minimap

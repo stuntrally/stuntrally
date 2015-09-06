@@ -225,20 +225,33 @@ void SplitScr::preViewportUpdate(const RenderTargetViewportEvent& evt)
 		if (pSet->particles)
 			pApp->scn->UpdateWeather(evt.source->getCamera());
 
-		// Change FOV when boosting
-		if (pApp->pSet->boost_fov && carId < pApp->carModels.size())
+		int s = pApp->carModels.size();
+		if (carId < s)
 		{
-			CAR* pCar = pApp->carModels[carId]->pCar;
-			if (pCar)
+			CarModel* cm = pApp->carModels[carId];
+			//  split screen, show beam for cur car's viewport only
+			if (pSet->check_beam && !pApp->bHideHudBeam && pApp->pSet->game.local_players > 1)
 			{
-				float fov = pSet->fov_min + (pSet->fov_max - pSet->fov_min) * pCar->dynamics.fBoostFov;
-				evt.source->getCamera()->setFOVy(Degree(0.5f*fov));
-			}
-		}else
-			evt.source->getCamera()->setFOVy(Degree(0.5f*pSet->fov_min));
+				for (int i=0; i < s; ++i)
+				{	CarModel* c = pApp->carModels[i];
+					if (c->ndNextChk)
+						c->ndNextChk->setVisible(i==carId);
+			}	}
+				
+			//  change FOV when boosting
+			if (pApp->pSet->boost_fov)
+			{
+				CAR* pCar = cm->pCar;
+				if (pCar)
+				{
+					float fov = pSet->fov_min + (pSet->fov_max - pSet->fov_min) * pCar->dynamics.fBoostFov;
+					evt.source->getCamera()->setFOVy(Degree(0.5f*fov));
+				}
+			}else
+				evt.source->getCamera()->setFOVy(Degree(0.5f*pSet->fov_min));
+		}
 
-		//update soft particle Depth Target
-
+		//  update soft particle Depth Target
 		if (pApp->pSet->softparticles && pApp->pSet->all_effects)
 		{
 			CompositorInstance  *compositor = CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer");
