@@ -278,10 +278,10 @@ void SplineRoad::BuildSeg(
 					
 					pm.loop = DL0.v0_Loop[seg];
 					pm.onpipe = onP;
-					bool not = mP[seg].notReal;
-					pm.jump = not? 0: DS.jfw2;  pm.jumpR = not? 0: DS.jfw1;
+					bool no = mP[seg].notReal;
+					pm.jump = no? 0: DS.jfw2;  pm.jumpR = no? 0: DS.jfw1;
 
-					pm.vis = vis;  pm.notReal = not;
+					pm.vis = vis;  pm.notReal = no;
 					vPace.push_back(pm);
 				}
 
