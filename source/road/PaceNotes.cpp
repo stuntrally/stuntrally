@@ -201,11 +201,10 @@ void PaceNotes::updTxt(PaceNote& n, bool vis)
 	n.txt->setPosition(p.x+40, p.y-16);
 	n.txt->setVisible(true);
 
-	//  vel diff clr
+	//  vel diff clr					   //par sens
 	//LogO(toStr(n.id)+" "+fToStr(n.vel)+" "+fToStr(carVel)+" ");
 	float d = std::max(-1.f, std::min(1.f, 0.12f*(carVel - n.vel)));  
-	ColourValue c;						   //par sens
-	//c.setHSB(0.4f-d*0.2f, 1,1);
+	ColourValue c;			///par  HUD jump vel clrs
 	if (d > 0.f)  c.setHSB(0.40f+d*0.2f, 1.f-d*1.f,1.f);  // above ok
 	else		  c.setHSB(0.3f +d*0.3f, 1.f+d*0.3f,1.f);  // too low
 	n.txt->setTextColour(Colour(c.r,c.g,c.b,1.f));

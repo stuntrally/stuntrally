@@ -140,7 +140,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 
 	
 	//  old prev vals
-	bool loop1 = false, jump1 = false, jump1R = false, onpipe1 = false;
+	bool loop1 = false, jump1 = false, jump1R = false;
 	bool dirR = road->iDir > 0;  // road dir
 	if (reversed)  dirR = !dirR;  // track dir
 	
@@ -306,14 +306,11 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			jump1 = jmp1;  jump1R = jmp1R;  
 
 			///~~~  On Pipe
-			bool onp = p.onpipe && !onpipe1 ||
-						!p.onpipe && onpipe1;
-			if (onp)
+			if (p.onpipe)
 			{	PaceNote o(i,1, p.pos, signX,signX, 0.7,0.5,1,1,  // ADD
 					0.f, 0.f,  0.f*u, 2.f*u);
 				Create(o);  vPN.push_back(o);
 			}
-			onpipe1 = p.onpipe;
 		}
 	}
 
