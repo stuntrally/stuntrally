@@ -366,17 +366,17 @@ void SplineEdit::ToggleNotReal()  ///  Not Real  (not drivable road)
 	mP[iChosen].notReal = !mP[iChosen].notReal;
 }
 
-void SplineEdit::ChgLoopType(int rel)   ///  Loop type,  (camera change, pacenotes)
+void SplineEdit::ChgLoopType(int rel)   ///  Loop type,  (camera change on chk, pacenotes)
 {
 	if (!vSel.empty()) {  // sel
 		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
-			mP[*it].loop = std::max(0, std::min(LoopTypes-1, mP[*it].loop + rel));
+			mP[*it].loop = (LoopTypes+ mP[*it].loop + rel)%LoopTypes;
 		return;  }
 
 	if (iChosen == -1)  {  // one
-			newP.loop = std::max(0, std::min(LoopTypes-1, newP.loop + rel));  return;  }
+			newP.loop = (LoopTypes+ newP.loop + rel)%LoopTypes;  return;  }
 
-	mP[iChosen].loop  = std::max(0, std::min(LoopTypes-1, mP[iChosen].loop + rel));
+	mP[iChosen].loop  = (LoopTypes+ mP[iChosen].loop + rel)%LoopTypes;
 }
 
 

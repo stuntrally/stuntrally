@@ -30,7 +30,7 @@ class btTriangleMesh;
 
 #define  LODs  4
 #define  MTRs  4
-#define  LoopTypes  5  // for pace notes
+#define  LoopTypes  8  // for pace notes
 
 
 struct RoadSeg
@@ -151,7 +151,7 @@ private:
 		std::vector<int>            v0_iL;  // length steps
 		std::vector<Ogre::Real>     v0_tc;  // tex coords
 		std::vector<Ogre::Vector3>  v0_N;   // normals
-		std::vector<char>         v0_Loop;  // bool, inside loop
+		std::vector<int>          v0_Loop;  // bool, inside loop
 		void Clear()
 		{	v0_iL.clear();  v0_tc.clear();  v0_N.clear();  v0_Loop.clear();  }
 	}
@@ -227,7 +227,7 @@ public:  ///  pacenotes prepass data
 		Ogre::Vector3 pos, pos2;
 		float aa;
 		int used;  bool vis, notReal;
-		bool loop, jump,jumpR, onpipe;
+		int loop;  bool jump,jumpR, onpipe;
 		PaceM()
 			:used(-1), aa(0.f), vis(1), notReal(0)
 			,loop(0), jump(0),jumpR(0), onpipe(0)

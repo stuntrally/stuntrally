@@ -199,7 +199,7 @@ void SplineRoad::PrepassLod(
 	int iLodDiv = DL.isPace ? pace_iDiv :  ciLodDivs[lod];
 	DL.fLenDim =  DL.isPace ? pace_fLen :  g_LenDim0 * iLodDiv;
 	DL.tcLen = 0.f;
-	bool inLoop = false;
+	int inLoop = 0;
 		
 	//if (isLod0)?
 	LogR("--- Lod segs prepass ---");
@@ -262,12 +262,14 @@ void SplineRoad::PrepassLod(
 			"  pipe prv" + toStr(sp0) + "  cur " + toStr(sp) + "  nxt" + toStr(sp1));
 		
 		if (DL.isLod0)
-		{
-			if (mP[seg].loop)
-				inLoop = !inLoop;  ///[]()
+		{	
+			int l = mP[seg].loop;  // type
+			if (l > 0)	///[]()
+			if (inLoop == 0)  inLoop = l;
+			else  inLoop = 0;
 
 			DL0.v0_iL.push_back(il);
-			DL0.v0_Loop.push_back(inLoop? 1: 0);
+			DL0.v0_Loop.push_back(inLoop);
 		}
 
 		///  length <dir>  |

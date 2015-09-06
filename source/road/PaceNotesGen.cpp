@@ -140,7 +140,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 
 	
 	//  old prev vals
-	bool loop1 = false, jump1 = false, jump1R = false;
+	int loop1 = 0;  bool jump1 = false, jump1R = false;
 	bool dirR = road->iDir > 0;  // road dir
 	if (reversed)  dirR = !dirR;  // track dir
 	
@@ -259,8 +259,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 							!p.loop && loop1;
 			if (lp)
 			{
-				//  find loop end  //todo: loop type?
-				#if 0
+			#if 0	//  find loop end
 				int r=3, rr=0, radd=1, ri = 40;  // max loop len
 				int rs = dirR ? 1 : -1;
 				SplineRoad::PaceM* pe = &p;
@@ -279,11 +278,12 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 					0.f, 0.f,  1.f*u, 5.f*u);
 				Create(q);  vPN.push_back(q);
 				LogO("Loop: "+iToStr(radd));
-				#endif
+			#endif
 
+				int t = p.loop>0 ? p.loop : loop1;  --t;
 				ColourValue c;  c.setHSB(0.55f, 0.7f, 1.f);
 				PaceNote o(i,1, p.pos, signX,signX, c.r,c.g,c.b,1,  // ADD
-					0.f, 0.f,  0.f*u, 5.f*u);
+					0.f, 0.f,  t*u, 5.f*u);
 				Create(o);  vPN.push_back(o);
 			}
 			loop1 = p.loop;
