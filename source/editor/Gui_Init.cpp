@@ -481,8 +481,10 @@ void CGui::InitGui()
 	///  [Pacenotes]  ------------------------------------
 	sv= &svPaceShow;	sv->Init("PaceShow",	&pSet->pace_show,   0,5, 1.f);  sv->DefaultI(3);
 	sv= &svPaceDist;	sv->Init("PaceDist",	&pSet->pace_dist,   20.f,2000.f, 2.f, 0,3);  sv->DefaultF(600.f);
-	sv= &svPaceNear;	sv->Init("PaceNear",	&pSet->pace_near,   0.1f,2.f);  sv->DefaultF(1.f);  Sev(Upd_Pace);
+
 	sv= &svPaceSize;	sv->Init("PaceSize",	&pSet->pace_size,   0.1f,2.f);  sv->DefaultF(1.f);  Sev(Upd_Pace);
+	sv= &svPaceNear;	sv->Init("PaceNear",	&pSet->pace_near,   0.1f,2.f);  sv->DefaultF(1.f);  Sev(Upd_Pace);
+	sv= &svPaceAlpha;	sv->Init("PaceAlpha",	&pSet->pace_alpha,  0.3f,1.f);  sv->DefaultF(1.f);  Sev(Upd_Pace);
 	slUpd_Pace(0);
 	ck= &ckTrkReverse;	ck->Init("ReverseOn",	&pSet->trk_reverse);  Cev(TrkReverse);
 	

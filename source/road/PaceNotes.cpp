@@ -57,7 +57,7 @@ void PaceNotes::Create(PaceNote& n)
 	n.bb->setRenderQueueGroup(RQG_CarParticles);
 	n.bb->setVisibilityFlags(RV_Car);
 
-	n.bb->setCustomParameter(0, Vector4(n.ofs.x, n.ofs.y, n.uv.x, n.uv.y));  // params, uv ofs
+	n.bb->setCustomParameter(2, Vector4(n.ofs.x, n.ofs.y, n.uv.x, n.uv.y));  // params, uv ofs
 	n.bc = n.bb->createBillboard(Vector3(0,0,0), ColourValue(n.clr.x, n.clr.y, n.clr.z, n.clr.w));
 
 	n.bb->setMaterialName("pacenote");
@@ -111,7 +111,7 @@ void PaceNotes::UpdVis(Vector3 carPos, bool hide)
 	const Real dd = pSet->pace_dist, dd2 = dd*dd;
 	int i,s;
 
-	///todo: loop side-, onpipe
+	///todo: loop side-
 	///  strict jfw not: hid, onpipe, under ter
 	///! reset car pos iCur, prev chk 0
 	

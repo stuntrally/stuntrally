@@ -8,7 +8,7 @@ SH_BEGIN_PROGRAM    // vertex
     shUniform(float3, eyePosition) @shAutoConstant(eyePosition, camera_position)
     shUniform(float4x4, wvp) @shAutoConstant(wvp, worldviewproj_matrix)
 
-	shUniform(float3, paceParams)  @shSharedParameter(paceParams)
+	shUniform(float4, paceParams)  @shSharedParameter(paceParams)
 
 	shVertexInput(float2, uv0)
 	shOutput(float2, UV)
@@ -24,6 +24,7 @@ SH_START_PROGRAM  //  vert  ----
 
 	UV = uv0;
 	vertColor = colour;
+	vertColor.w *= paceParams.w;
 
 	float dist = shOutputPosition.w;  // depth, fade
 	fade = shSaturate( (dist - paceParams.y ) * paceParams.z );
@@ -38,7 +39,7 @@ SH_BEGIN_PROGRAM
 	shInput(float4, vertColor)
 	shInput(float, fade)
     
-	shUniform(float4, par)  @shAutoConstant(par, custom, 0)
+	shUniform(float4, par)  @shAutoConstant(par, custom, 2)
 
 SH_START_PROGRAM  //  frag  ----
 {

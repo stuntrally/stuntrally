@@ -54,7 +54,7 @@ public:
 	bool cam_bounce;  float cam_bnc_mul;
 	//  pacenotes
 	bool pace_show;  int pace_next;
-	float pace_dist, pace_near, pace_size;
+	float pace_dist, pace_size, pace_near, pace_alpha;
 	
 	eGraphType graphs_type;
 	int car_dbgtxtclr, car_dbgtxtcnt;

@@ -42,7 +42,7 @@ public:
 	float al_w_mul, al_w_add, al_smooth;
 	
 	//  pacenotes
-	int pace_show;  float pace_dist, pace_near, pace_size;
+	int pace_show;  float pace_dist, pace_size, pace_near, pace_alpha;
 	bool trk_reverse, show_mph;
 
 	//  tweak

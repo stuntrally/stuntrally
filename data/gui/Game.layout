@@ -3029,15 +3029,25 @@
 						<Widget type="TextBox" skin="TextBox" position="296 176 48 24" name="PaceNearVal">
 							<Property key="TextColour" value="0.7 0.7 0.5"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="162 216 164 24">
+						<Widget type="TextBox" skin="TextBox" position="162 256 164 24">
 							<Property key="Caption" value="#{PaceNextVisible}"/>
 							<Property key="TextColour" value="0.8 0.7 0.5"/>
 						</Widget>
-						<Widget type="Slider" skin="Slider" position="344 216 320 18" name="PaceNext">
+						<Widget type="Slider" skin="Slider" position="344 256 320 18" name="PaceNext">
 							<Property key="Colour" value="0.8 0.7 0.5"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="296 216 48 24" name="PaceNextVal">
+						<Widget type="TextBox" skin="TextBox" position="296 256 48 24" name="PaceNextVal">
 							<Property key="TextColour" value="0.8 0.7 0.5"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="162 216 164 24">
+							<Property key="Caption" value="#{Transparency}"/>
+							<Property key="TextColour" value="0.6 0.6 0.4"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="344 216 320 18" name="PaceAlpha">
+							<Property key="Colour" value="0.6 0.6 0.4"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="296 216 48 24" name="PaceAlphaVal">
+							<Property key="TextColour" value="0.6 0.6 0.4"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">
