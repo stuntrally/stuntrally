@@ -202,7 +202,6 @@ public:
 	float mz_nominalmax;  // the nominal maximum Mz force, used to scale force feedback
 
 	void UpdateSounds(float dt);
-	
 	bool LoadSounds(const std::string & carpath);
 		
 

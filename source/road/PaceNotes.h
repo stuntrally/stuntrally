@@ -67,6 +67,7 @@ public:
 	void Destroy(), Destroy(PaceNote& n);
 	void Create(PaceNote& n);
 	void Update(PaceNote& n), UpdateTxt(PaceNote& n), UpdTxt();
+	void Reset();
 	
 	//  pacenotes.xml
 	bool LoadFile(Ogre::String fname), SaveFile(Ogre::String fname);

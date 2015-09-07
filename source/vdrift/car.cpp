@@ -10,10 +10,11 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/data/CData.h"
 #include "../ogre/common/CScene.h"
+#include "../ogre/common/GraphView.h"
 #include "../ogre/CGame.h"  //+ replay
 #include "../ogre/CarModel.h"  //+ camera pos
 #include "../ogre/FollowCamera.h"  //+ camera pos
-#include "../ogre/common/GraphView.h"
+#include "../road/PaceNotes.h"  //+ pace reset
 #include "../network/protocol.hpp"
 #include "../sound/SoundMgr.h"
 #include "tobullet.h"
@@ -242,7 +243,6 @@ void CAR::HandleInputs(const std::vector <float> & inputs, float dt)
 	else
 	if (bLastChk && !bLastChkOld)
 		ResetPos(false);  // goto last checkpoint
-		//ResetPos(false, shift);  // for 2nd ... press twice?
 	
 
 	///  Rewind  with cooldown
@@ -414,6 +414,7 @@ void CAR::ResetPos(bool fromStart)
 
 		dynamics.boostFuel = dynamics.boostFuelStart;  // restore boost fuel
 		dynamics.fDamage = 0.f;  // clear damage
+		pApp->scn->pace->Reset();  //
 	}else
 		dynamics.fDamage = dmgLastCheck;
 

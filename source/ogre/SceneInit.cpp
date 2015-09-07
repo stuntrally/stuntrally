@@ -243,7 +243,7 @@ void App::LoadCleanUp()  // 1 first
 	DestroyGraphs();  hud->Destroy();
 	
 	//  hide hud arrow,beam,pace
-	bool rplRd = bRplPlay || scn->road && scn->road->getNumPoints() < 2;
+	bool rplRd = bRplPlay /*|| scn->road && scn->road->getNumPoints() < 2/**/;
 	bHideHudBeam = rplRd;
 	bHideHudAid = rplRd || pSet->game.local_players > 1;
 

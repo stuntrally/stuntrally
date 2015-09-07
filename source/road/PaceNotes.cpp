@@ -21,7 +21,6 @@
 #include "tinyxml.h"
 #include "tinyxml2.h"
 using namespace tinyxml2;
-//#include <OgreTerrain.h>
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
@@ -71,7 +70,6 @@ void PaceNotes::Create(PaceNote& n)
 		n.txt->setVisible(false);
 		n.txt->setFontHeight(34);  //par
 		n.txt->setTextShadow(true);  n.txt->setTextShadowColour(Colour::Black);
-		//n.txt->setCaption("140");
 	}
 }
 
@@ -111,10 +109,6 @@ void PaceNotes::UpdVis(Vector3 carPos, bool hide)
 	const Real dd = pSet->pace_dist, dd2 = dd*dd;
 	int i,s;
 
-	///todo: loop side-
-	///  strict jfw not: hid, onpipe, under ter
-	///! reset car pos iCur, prev chk 0
-	
 #ifndef SR_EDITOR
 	//  game  ----
 	const int rng = pSet->pace_next;  // vis next count
@@ -203,7 +197,6 @@ void PaceNotes::updTxt(PaceNote& n, bool vis)
 	n.txt->setVisible(true);
 
 	//  vel diff clr					   //par sens
-	//LogO(toStr(n.id)+" "+fToStr(n.vel)+" "+fToStr(carVel)+" ");
 	float d = std::max(-1.f, std::min(1.f, 0.12f*(carVel - n.vel)));  
 	ColourValue c;			///par  HUD jump vel clrs
 	if (d > 0.f)  c.setHSB(0.40f+d*0.2f, 1.f-d*1.f,1.f);  // above ok

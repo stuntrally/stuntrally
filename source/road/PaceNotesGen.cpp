@@ -28,6 +28,9 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 	Ogre::Timer ti;	
 
 	Destroy();
+	
+	if (road->getNumPoints() < 2)
+		return;
 
 	//  const, vis
 	const float u=0.125f,
@@ -434,8 +437,14 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			iStart = i;
 		//LogO("SS "+toStr(vPS[i].id));
 	}
-	iCur = iStart;
+	Reset();
 	#endif
 
 	LogO(String("::: Time PaceNotes Rebuild2: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+}
+
+void PaceNotes::Reset()
+{
+	iCur = iStart;
+	//iCur = (iStart +iDir+iAll)%iAll;
 }
