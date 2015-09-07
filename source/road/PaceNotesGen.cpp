@@ -361,10 +361,9 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			if (i > 0 && i < num-1 && dt > 0.001f)
 				vel = dist / dt;  // *3.6f
 
-			//if (vel < 20)  y *= vel / 20.f;  // y sc
-
 			//todo: ter jmp, bumps cast ray down to ter..
-			//mTerrain->getHeightAtWorldPosition
+			//Real yTer = mTerrain->getHeightAtWorldPosition(pos);
+			//LogO("yt "+fToStr(yTer));
 
 			
 			//  log  ----
@@ -388,14 +387,15 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			}
 			
 			//  pos marks . .
+			#ifdef SR_EDITOR  // ed
 			if (i%6==0)
 			{
 				//fr.brake  fr.steer
-				PaceNote o(1000,5, pos, useX,useX, 1,1,1,1,  // ADD dbg
+				PaceNote o(1000+i,5, pos, useX,useX, 1,1,1,1,  // ADD dbg
 					0.f, 0.f,  1.f*u, 1.f*u);
 				Create(o);  vPN.push_back(o);
 			}
-			
+			#endif
 			oldPos = pos;  oldTime = fr.time;
 		}
 	}
@@ -404,7 +404,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 	if (vJ.size() != vJe.size())
 		LogO("Pace jumps "+toStr(vJ.size())+" != "+toStr(vJe.size())+" lands");  //j
 	
-	size_t s = std::min(vJ.size(), vJe.size());
+	int s = std::min(vJ.size(), vJe.size());
 	for (i=0; i < s; ++i)
 	{
 		PaceNote& p = vPN[vJ[i]], pe = vPN[vJe[i]];
@@ -420,6 +420,31 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			" vel "+fToStr(p.vel*3.6f,0,3)+" len "+fToStr(len,0,3));  //j
 	}
 
+	//  move above fluids ~~
+	s = vPN.size();
+	for (i=0; i < s; ++i)
+	{
+		PaceNote& p = vPN[i];
+		float fa = 0.f;  // depth
+		const float up = 3.f;
+		for (int fi=0; fi < sc->fluids.size(); ++fi)
+		{
+			const FluidBox& fb = sc->fluids[fi];
+			if (fb.pos.y+up - p.pos.y > 0.f)  // dont check above
+			{
+				const float sizex = fb.size.x*0.5f, sizez = fb.size.z*0.5f;
+				//  check outside rect 2d
+				if (p.pos.x > fb.pos.x - sizex && p.pos.x < fb.pos.x + sizex &&
+					p.pos.z > fb.pos.z - sizez && p.pos.z < fb.pos.z + sizez)
+				{
+					float f = fb.pos.y+up - p.pos.y;
+					if (f > fa)  fa = f;
+				}
+			}
+		}
+		if (fa > 0.f)
+		{	p.pos.y += fa;  p.nd->setPosition(p.pos);  }
+	}
 
 	///:  only real signs
 	#ifndef SR_EDITOR  // game
