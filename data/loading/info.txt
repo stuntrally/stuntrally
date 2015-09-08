@@ -1,19 +1,39 @@
-loading number,  track,  car(s)
-	1	G2-Coast		ES
-	2	A6-Cannon		XZ,ES
-	3	J13-Tropic		N1
-	4	F12-HighPeaks	S1,ES
-	5	F7-blur3		3S
-	6	I13-Beauty		TC6
-	7	J20-JungleMaze	HR,LK4
-	8	O2-Mouse		N1,ES
-	9	0W11-Glacier	LK4
-	10	D15-CityWall	S8
-	11	I10-Treasure	TC6
-	12	S7-HighMadness	FM,N1,ES
-	13	S14-Refinery	S8,ES
-	14	I9-Web			XZ
-	15	R1-Mars			TW
-	16	V6-Crematoria	ES
-	17	X4-Pipeline		UV
-	18	T4-Scary		TC6
+number  track  vehicle(s)
+
+1  Grc2-Coast  BV
+2  Jng13-Tropic  N1
+3  For12-HighPeaks  LK4
+4  For4-OSquare  3S
+5  Jng20-JungleMaze  LK4
+6  Mos2-Mouse  FR4
+
+7  Atm3-Orange  SZ
+8  Isl13-Beauty  V1 V3
+9  Sur1-Surreal  S1
+10 Can6-Abyss  O
+11 Aus6-Cannon  TW
+
+12 Mrs4-Platforms  S1
+13 Atm7-Industrial  TU
+14 Vlc6-Crematoria  Y7
+15 Vlc12-LavaPools  Y7 ES
+16 Vlc5-Sad  Y7
+
+17 Spc2-SpaceMine  Y7
+18 Uni4-Pipeline  UV
+19 Cry3-BlueHell  S8 ES
+20 Aln2-Freefall  ES ES
+21 Sur2-GreenStar  V3
+22 Tox1-Radioactive  V2 Y7
+
+23 Mos5-Factory  FN ES S8
+24 Sav14-Refinery  TC6
+25 Sav12-Infinity  360
+26 Atm8-Ultima  XZ
+
+27 Des17-NileCity  TU ES
+28 Grc8-SlopeCity  BV
+29 Wnt11-Glacier  HR UV
+30 Isl5-Shore  OT
+31 Fin1-Lakes  S1
+32 Sav2-Frenzy  CT
