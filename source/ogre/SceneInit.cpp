@@ -50,6 +50,8 @@ void App::createScene()
 		scn->texLayD[i].SetName("layD"+si);
 		scn->texLayN[i].SetName("layN"+si);
 	}
+	
+	mLoadingBar->loadTex.Create(1920,1200,"LoadingTex");
 
 	//  tex fil
 	MaterialManager::getSingleton().setDefaultTextureFiltering(TFO_ANISOTROPIC);

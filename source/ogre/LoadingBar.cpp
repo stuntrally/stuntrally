@@ -10,6 +10,7 @@ using namespace Ogre;
 using namespace MyGUI;
 #include "CGame.h"
 #include "../vdrift/settings.h"
+#include "../vdrift/pathmanager.h"
 
 
 void LoadingBar::start( RenderWindow* window,
@@ -45,13 +46,18 @@ void LoadingBar::start( RenderWindow* window,
 		pApp->imgLoad->setVisible(false);
 		return;
 	}
+	
 	//  init random seed
 	srand(time(NULL));
-	unsigned int imgNumber;
-	imgNumber = rand() % (i-1);
+	unsigned int imgNumber = rand() % (i-1);
+	//  need 2,  not the same number
+	while (i > 2 && imgNumber == oldNumber)
+		imgNumber = rand() % (i-1);
+	oldNumber = imgNumber;
 
 	//  set the loading image
-	pApp->imgLoad->setImageTexture("loading" + toStr(imgNumber+1) + ".jpg");
+	loadTex.Load(PATHMANAGER::Data()+"/loading/loading" +toStr(imgNumber+1)+ ".jpg");
+	pApp->imgLoad->setImageTexture("LoadingTex");
 	pApp->imgLoad->setVisible(true);
 }
 

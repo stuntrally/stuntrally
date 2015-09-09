@@ -2,6 +2,7 @@
 #include <OgreString.h>
 #include <OgreResource.h>
 #include <OgreResourceGroupManager.h>
+#include "common/PreviewTex.h"
 
 namespace Ogre {  class RenderWindow;  }
 class BaseApp;
@@ -25,7 +26,7 @@ public:
 	LoadingBar(BaseApp* app)
 		:pApp(app), mWindow(0), bBackgroundImage(false)
 		,mInitProportion(0.f), mNumGroupsInit(1), mNumGroupsLoad(1)
-		,mBarMaxSizeX(0.f),mBarSizeY(0.f)
+		,mBarMaxSizeX(0.f),mBarSizeY(0.f), oldNumber(-1)
 	{  }
 	virtual ~LoadingBar()
 	{  }
@@ -49,6 +50,9 @@ public:
 	/** Hide the loading bar and stop listening. 
 	*/
 	void finish();
+
+	int oldNumber;  // var
+	PreviewTex loadTex;
 
 
 	// ResourceGroupListener callbacks
