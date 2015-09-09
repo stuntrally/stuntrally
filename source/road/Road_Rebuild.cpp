@@ -276,8 +276,9 @@ void SplineRoad::BuildSeg(
 					pm.pos  = vP + vN * h;  //par  + vw * 0.5f;
 					pm.pos2 = vP + vN * (h + 1.f) + vw * 0.5f;  // extra, info
 					
+					pm.onTer = DS.onTer && fPipe < 0.1f;
 					pm.loop = DL0.v0_Loop[seg];
-					pm.onpipe = onP;
+					pm.onPipe = onP;
 					bool no = mP[seg].notReal;
 					pm.jump = no? 0: DS.jfw2;  pm.jumpR = no? 0: DS.jfw1;
 

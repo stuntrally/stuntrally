@@ -226,11 +226,12 @@ public:  ///  pacenotes prepass data
 	{
 		Ogre::Vector3 pos, pos2;
 		float aa;
-		int used;  bool vis, notReal;
-		int loop;  bool jump,jumpR, onpipe;
+		int used;  bool vis, notReal, onTer;
+		int loop;  bool jump,jumpR, onPipe;
 		PaceM()
-			:used(-1), aa(0.f), vis(1), notReal(0)
-			,loop(0), jump(0),jumpR(0), onpipe(0)
+			:used(-1), aa(0.f)
+			,vis(1), notReal(0), onTer(1)
+			,loop(0), jump(0),jumpR(0), onPipe(0)
 		{	}
 	};
 	std::vector<PaceM> vPace;

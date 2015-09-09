@@ -68,6 +68,7 @@ bool FluidsXml::LoadXml(std::string file, std::map <std::string, int>* surf_map)
 		a = eFl->Attribute("fDamage");		if (a)  fp.fDamage = s2r(a);
 
 		a = eFl->Attribute("solid");		if (a)  fp.solid = s2i(a) > 0;
+		a = eFl->Attribute("deep");			if (a)  fp.deep = s2i(a) > 0;
 		a = eFl->Attribute("surf");
 		if (a)
 		{	std::string s(a);

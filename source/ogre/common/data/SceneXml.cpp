@@ -93,7 +93,7 @@ SGrassChannel::SGrassChannel()
 
 
 FluidBox::FluidBox()
-	:cobj(0), id(-1), idParticles(0), solid(false)
+	:cobj(0), id(-1), idParticles(0), solid(false), deep(false)
 	,pos(Vector3::ZERO), rot(Vector3::ZERO)
 	,size(Vector3::ZERO), tile(0.01,0.01)
 {	}
@@ -162,6 +162,7 @@ void Scene::UpdateFluidsId()
 		fluids[i].id = id;
 		fluids[i].idParticles = id == -1 ? -1    : pFluidsXml->fls[id].idParticles;
 		fluids[i].solid       = id == -1 ? false : pFluidsXml->fls[id].solid;
+		fluids[i].deep        = id == -1 ? false : pFluidsXml->fls[id].deep;
 		if (id == -1)
 			LogO("!Warning: Scene fluid name: " + fluids[i].name + " not found in xml!");
 	}

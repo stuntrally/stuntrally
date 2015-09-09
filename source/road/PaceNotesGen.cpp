@@ -130,7 +130,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 	}
 
 
-	//  start sign  ~~
+	///  start sign  ~~
 	if (ist==-1)
 		LogO("!! Pace start pos NOT found!");
 	else
@@ -310,7 +310,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			jump1 = jmp1;  jump1R = jmp1R;  
 
 			///~~~  On Pipe
-			if (p.onpipe)
+			if (p.onPipe)
 			{	PaceNote o(i,1, p.pos, signX,signX, 0.7,0.5,1,1,  // ADD
 					0.f, 0.f,  0.f*u, 2.f*u);
 				Create(o);  vPN.push_back(o);
@@ -336,18 +336,132 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 	#endif
 	
 	//  load
+	TrackGhost gho;
+	int num = 0;
+
 	string file = PATHMANAGER::TrkGhosts()+"/"+ track + sRev + ".gho";
 	if (!PATHMANAGER::FileExists(file))
-	{	LogO("Pace trk gho not found: "+file);/**/  }
+		LogO("Pace trk gho not found: "+file);/**/
 	else
-	{	LogO("---------  "+track+"  ---------");
-		TrackGhost gho;
-		gho.LoadFile(file);
+	{	gho.LoadFile(file);
+		num = gho.getNumFrames();
+	}
+	
+	if (num > 0)
+	{
+		Vector3 pos;
+		//  terrain height
+		float* terH = new float[num];
+		for (i=0; i < num; ++i)
+		{
+			const TrackFrame& fr = gho.getFrame0(i);
+			Axes::toOgre(pos, fr.pos);  // pos
+			Real yTer = mTerrain->getHeightAtWorldPosition(Vector3(pos.x,0.f,pos.z));
+			Real dTer = pos.y - yTer - 0.73f;  //par-
+			terH[i] = dTer;
+		}
 		
-		//  test
-		Vector3 pos,oldPos;  float oldTime = 0.f;
+		///~~~  terrain jump or bump
+		const float g = 0.7f;  //par gray
+		const float yH = 0.3f;  //par min ter h diff
+		const int ri = 30;  // max len
+
+		for (i=0; i < num; ++i)
+		{	int ip = (i-1+num)%num;  //prev
+
+			const TrackFrame& fr = gho.getFrame0(i);
+			Axes::toOgre(pos, fr.pos);  // pos
+			float aTer = TerUtil::GetAngleAt(mTerrain, pos.x,pos.z, 1.f);
+			//LogO(fToStr(aTer));
+			
+			if (terH[i] > yH && terH[ip] <= yH && aTer < 20.f)  // bump
+			{
+				//  find closest vPace
+				int id = -1, nn = road->vPace.size();
+				float dn = FLT_MAX;
+				for (int n=0; n < nn; ++n)
+				{
+					SplineRoad::PaceM& p = road->vPace[n];
+					float d = p.pos.squaredDistance(pos);
+					if (d < dn)
+					{	dn = d;  id = n;  }
+				}
+				bool onTer = true;
+				if (id==-1)  LogO("Pace ter jmp not found closest!");
+				else  onTer = road->vPace[id].onTer &&  // close too
+						road->vPace[(id+1)%nn].onTer && road->vPace[(id-1+nn)%nn].onTer;
+				
+				if (!onTer)  continue;  // only on terrain
+				
+				//  find how long and high
+				int r=1, rr=0, radd=0;  float hMax = 0.f;
+				bool ok = true;
+				while (ok && rr < ri)  // search next  ++
+				{
+					int ir = (i+r)%num;
+					ok = terH[ir] > yH;
+					if (ok)
+					{	++radd;
+						if (yH > hMax)  hMax = yH;
+						//Lsum += prv.distance(pp.pos);
+						//if (!dirR)  pos = pp.pos;  // back pos
+
+						#ifdef USED  // add used
+						if (ir%4==0)
+						{
+						const TrackFrame& fr = gho.getFrame0(ir);
+						Vector3 pp;  Axes::toOgre(pp, fr.pos);  // pos
+						//Real yTer = mTerrain->getHeightAtWorldPosition(Vector3(pos.x,0.f,pos.z));
+						PaceNote o(id,3, pp, useX,useX, g,g,g,useA,  // ADD dbg
+							0.f, 0.f,  0.f*u, 3.f*u);
+						Create(o);  vPN.push_back(o);
+						}
+						#endif
+					}
+					++rr;  ++r;
+				}
+				//LogO("TerJmp "+toStr(radd));
+				if (radd > 7)  //par min len
+				{
+					const TrackFrame& fr = gho.getFrame0(i);
+					Axes::toOgre(pos, fr.pos);  // pos
+
+					//  check if in mud, allow only water
+					float fa = 0.f;  // depth
+					const float up = 0.5f;
+					int fs = sc->fluids.size();
+					for (int fi=0; fi < fs; ++fi)
+					{
+						const FluidBox& fb = sc->fluids[fi];
+						if (fb.pos.y+up - pos.y > 0.f)  // dont check above
+						{
+							const float sizex = fb.size.x*0.5f, sizez = fb.size.z*0.5f;
+							//  check outside rect 2d
+							if (pos.x > fb.pos.x - sizex && pos.x < fb.pos.x + sizex &&
+								pos.z > fb.pos.z - sizez && pos.z < fb.pos.z + sizez)
+							{
+								float f = fb.pos.y+up - pos.y;
+								if (!fb.deep)  // only waters
+								if (f > fa)  fa = f;
+							}
+						}
+					}
+					if (fa == 0.f)
+					{
+						Real yTer = mTerrain->getHeightAtWorldPosition(Vector3(pos.x,0.f,pos.z));
+												pos.y = yTer + 3.f;
+						int n = radd > 15 ? 1 : 0;
+						PaceNote o(id,1, pos, signX,signX, g,g,g,1,  // ADD
+							0.f, 0.f,  n*u, 3.f*u);
+						Create(o);  vPN.push_back(o);
+					}
+				}
+			}
+		}
+
+		///~~~  vel for jumps
+		Vector3 oldPos;  float oldTime = 0.f;
 		Quaternion rot;  float vel = 0.f;
-		int num = gho.getNumFrames();
 
 		for (i=0; i < num; ++i)
 		{
@@ -362,21 +476,11 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			if (i > 0 && i < num-1 && dt > 0.001f)
 				vel = dist / dt;  // *3.6f
 
-			//todo: ter jmp, bumps cast ray down to ter..
-			//Real yTer = mTerrain->getHeightAtWorldPosition(pos);
-			//LogO("yt "+fToStr(yTer));
-
-			
 			//  log  ----
-			#if 0
-			LogO("i:"+ iToStr(i,4) +" t:"+ fToStr(fr.time,2,6)//+" dt: "+fToStr(dt)
-				+"  v:"+ fToStr(vel,0,4)
-				+"  b:"+ toStr(fr.brake)
+			/*LogO("i:"+ iToStr(i,4) +" t:"+ fToStr(fr.time,2,6)//+" dt: "+fToStr(dt)
+				+"  v:"+ fToStr(vel,0,4) +"  b:"+ toStr(fr.brake)
 				+"  s:"+ (fr.steer==0 ? " ---" : fToStr(fr.steer/127.f,1,4))
-				//+"  a:"+ fToStr(sa,1,4)+"  y:"+ fToStr(y,1,4)
-				+(jmp ? " !jd: "+fToStr(dist) : "")
-			);
-			#endif
+			);/**/
 			
 			//~~~  check all jumps for dist
 			for (int j=0; j < vJ.size(); ++j)
@@ -389,16 +493,16 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 			
 			//  pos marks . .
 			#ifdef SR_EDITOR  // ed
-			if (i%6==0)
+			if (i%6==0)  //par
 			{
-				//fr.brake  fr.steer
-				PaceNote o(1000+i,5, pos, useX,useX, 1,1,1,1,  // ADD dbg
+				PaceNote o(9000+i,5, pos, useX,useX, 0.5,1,1,1,  // ADD dbg
 					0.f, 0.f,  1.f*u, 1.f*u);
 				Create(o);  vPN.push_back(o);
 			}
 			#endif
 			oldPos = pos;  oldTime = fr.time;
 		}
+		delete[] terH;
 	}
 
 	///  upd Jumps vel  ~~~
@@ -446,6 +550,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 		if (fa > 0.f)
 		{	p.pos.y += fa;  p.nd->setPosition(p.pos);  }
 	}
+
 
 	///:  only real signs
 	#ifndef SR_EDITOR  // game

@@ -23,7 +23,8 @@ public:
 	float fDamage;  // damage per sec, per wheel (div by 4)
 
 	bool solid;  // if true will collide, rigid
-	int surf;  // surface id from name for solid
+	int surf;   // surface id from name for solid
+	bool deep;  // for pacenotes, true for water (submergable), all others false
 	
 	//  fluid fog
 	struct FlFog
