@@ -30,14 +30,14 @@
 	<rev name="Rocky"        normal="OUTDOORS_DEEPCANYON" 
 		descr="Some rocks and vegetation - longer reverb" /><!--OUTDOORS_DEEPCANYON` CASTLE_COURTYARD-->
 
-	<rev name="Canyon"       normal="ALLEY" 
-		descr="Valleys open rocks - medium echo" /><!--ALLEY` CHAPEL-->
+	<rev name="Canyon"       normal="STONECORRIDOR" 
+		descr="Valleys open rocks - medium echo" /><!--CASTLE_LONGPASSAGE ALLEY-->
 
 	<rev name="Mountains"    normal="WOODEN_HALL" 
 		descr="High mountains - long echoing" /><!--AUDITORIUM FACTORY_LARGEROOM` WOODEN_HALL-->
 
 	<rev name="MountainsClose"  normal="CASTLE_HALL" 
-		descr="High mountains close - high long close reverb" /><!--CASTLE_HALL CASTLE_LONGPASSAGE STONECORRIDOR-->
+		descr="High mountains close - high long close reverb" /><!--CASTLE_HALL STONECORRIDOR-->
 
 	<!--  special atmosphere  -->
 	<rev name="Crystals"     normal="ICEPALACE_LONGPASSAGE" 

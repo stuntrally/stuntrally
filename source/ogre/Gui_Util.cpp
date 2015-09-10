@@ -457,10 +457,12 @@ void CGui::btnNewGame(WP wp)
 	if (app->mWndGame->getVisible() && app->mWndTabsGame->getIndexSelected() < TAB_Champs  || app->mClient)
 		BackFromChs();  /// champ, back to single race
 	
-	string s = wp->getName();
-	s = s.substr(s.length()-1,1);
-	bool force = s=="3" || s=="4";
-	
+	bool force = false;
+	if (wp)
+	{	string s = wp->getName();
+		s = s.substr(s.length()-1,1);
+		bool force = s=="3" || s=="4";
+	}
 	app->NewGame(force);  app->isFocGui = false;  // off gui
 	app->mWndOpts->setVisible(app->isFocGui);
 	app->mWndRpl->setVisible(false);//
