@@ -17,7 +17,7 @@
 #include "../vdrift/pathmanager.h"
 #include <OgreTimer.h>
 #include <OgreSceneNode.h>
-//#include <OgreTerrain.h>
+#include <OgreTerrain.h>
 using namespace std;
 using namespace Ogre;
 
