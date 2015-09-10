@@ -449,7 +449,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 					if (fa == 0.f)
 					{
 						Real yTer = mTerrain->getHeightAtWorldPosition(Vector3(pos.x,0.f,pos.z));
-												pos.y = yTer + 3.f;
+						pos.y = yTer + 3.f;
 						int n = radd > 15 ? 1 : 0;
 						PaceNote o(id,1, pos, signX,signX, g,g,g,1,  // ADD
 							0.f, 0.f,  n*u, 3.f*u);
