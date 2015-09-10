@@ -94,7 +94,8 @@ public:
 	void CreateCar(), CreateRoad();
 	void CreateObjects(), DestroyObjects(bool clear), ResetObjects();
 
-	void NewGame();  void NewGameDoLoad();  bool IsVdrTrack();  bool newGameRpl;
+	void NewGame(bool force=false);
+	void NewGameDoLoad();  bool IsVdrTrack();  bool newGameRpl;
 
 	bool dstTrk;  // destroy track, false if same
 	Ogre::String oldTrack;  bool oldTrkUser;

@@ -427,7 +427,7 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 			pSet->gui.track_user = false;
 		}
 		iPerfTestStage = PT_StartWait;
-		NewGame();  return;
+		NewGame(shift);  return;
 	}
 
 	//  new game - fast (same track & cars)

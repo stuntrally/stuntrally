@@ -452,12 +452,16 @@ void CGui::changeTrack()
 }
 
 //  new game
-void CGui::btnNewGame(WP)
+void CGui::btnNewGame(WP wp)
 {
 	if (app->mWndGame->getVisible() && app->mWndTabsGame->getIndexSelected() < TAB_Champs  || app->mClient)
 		BackFromChs();  /// champ, back to single race
 	
-	app->NewGame();  app->isFocGui = false;  // off gui
+	string s = wp->getName();
+	s = s.substr(s.length()-1,1);
+	bool force = s=="3" || s=="4";
+	
+	app->NewGame(force);  app->isFocGui = false;  // off gui
 	app->mWndOpts->setVisible(app->isFocGui);
 	app->mWndRpl->setVisible(false);//
 	gcom->bnQuit->setVisible(app->isFocGui);

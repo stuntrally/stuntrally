@@ -174,7 +174,7 @@ void App::createScene()
 //---------------------------------------------------------------------------------------------------------------
 ///  New Game
 //---------------------------------------------------------------------------------------------------------------
-void App::NewGame()
+void App::NewGame(bool force)
 {
 	//  actual loading isn't done here
 	isFocGui = false;
@@ -206,7 +206,7 @@ void App::NewGame()
 	newGameRpl = false;
 
 	///<>  same track
-	dstTrk = oldTrack != pSet->game.track || oldTrkUser != pSet->gui.track_user;
+	dstTrk = force || oldTrack != pSet->game.track || oldTrkUser != pSet->gui.track_user;
 
 	///  check if track exist ..
 	if (!PATHMANAGER::FileExists(gcom->TrkDir()+"scene.xml"))
