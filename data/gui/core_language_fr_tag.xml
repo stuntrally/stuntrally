@@ -73,6 +73,7 @@
 	<Tag name="Group">Groupe</Tag>
 	<Tag name="ChampEndFinished">Vous avez fini ce championnat.</Tag>
 	<Tag name="Negative">Négatif (assombrir)</Tag>
+	<Tag name="InputRoadLoopType">cycle loop type (shift - back), keep same on both ends</Tag>
 	<Tag name="PickSetParam">Set parameters, marked with</Tag>
 	<Tag name="Hint-4">Dégâts</Tag>
 	<Tag name="Camera">Caméra</Tag>
@@ -189,6 +190,7 @@
 	<Tag name="BackMenu">Retour</Tag>
 	<Tag name="BasedOn">basé sur</Tag>
 	<Tag name="UnitKg">kg</Tag>
+	<Tag name="PaceNextVisible">Next shown</Tag>
 	<Tag name="NetLeaveGame">Quitter le jeu</Tag>
 	<Tag name="TipDustInt">Intensité des particules de poussière.</Tag>
 	<Tag name="CameraInfo">Informations de la caméra</Tag>
@@ -765,7 +767,7 @@
 	<Tag name="CarDesc_V2">Un autre vaisseau qui fait office d'aéroglisseur. Légèrement plus lourd et lent mais ne se retourne pas si facilement que cela.</Tag>
 	<Tag name="Pick">Sélectionner</Tag>
 	<Tag name="RoadPoint">Point de la route</Tag>
-	<Tag name="InputRoadLoopChk">7 - marquer le point de contrôle comme début/fin de boucle (pour le changement de caméra)</Tag>
+	<Tag name="InputRoadLoopChk">7   - change checkpoint as loop begin/end (for car camera change)</Tag>
 	<Tag name="ObjRocks">Roches</Tag>
 	<Tag name="ShortcutsInfo">Cliquez avec Alt pour accéder rapidement à un onglet (ou sous-onglet). Cliquez encore pour naviguer entre les sous-onglets (s'il y en a).</Tag>
 	<Tag name="AlignWidthMul">Multiplicateur de largeur</Tag>
@@ -974,6 +976,7 @@
 	<Tag name="TipModelPrev">Image d'aperçu du modèle.</Tag>
 	<Tag name="InputRoadEdit">R - mode édition de route</Tag>
 	<Tag name="jumps">sauts</Tag>
+	<Tag name="Road_NotReal">Not Real</Tag>
 	<Tag name="TBBest">Meilleur</Tag>
 	<Tag name="Trilinear">Trilinéaire</Tag>
 	<Tag name="Near">Proche</Tag>
@@ -1106,6 +1109,7 @@
 	<Tag name="InputPaintColor">C - Couleur de la peinture</Tag>
 	<Tag name="InputSubTabSpace">Space - cycle sub-tabs (shift - back)</Tag>
 	<Tag name="TipSurfType">Type de surface, détermine le son.</Tag>
+	<Tag name="InputRoadNotReal">shift-8   - toggle not real (only for decoration, or point move)</Tag>
 	<Tag name="NextStage">Continuation vers le stage suivant</Tag>
 	<Tag name="NetWaiting">Attente...</Tag>
 	<Tag name="Peers">Pairs</Tag>

@@ -73,6 +73,7 @@
 	<Tag name="Group">Group</Tag>
 	<Tag name="ChampEndFinished">Você concluiu esse campeonato.</Tag>
 	<Tag name="Negative">Negative (darken)</Tag>
+	<Tag name="InputRoadLoopType">cycle loop type (shift - back), keep same on both ends</Tag>
 	<Tag name="PickSetParam">Set parameters, marked with</Tag>
 	<Tag name="Hint-4">Dano</Tag>
 	<Tag name="Camera">Câmera</Tag>
@@ -189,6 +190,7 @@
 	<Tag name="BackMenu">Voltar</Tag>
 	<Tag name="BasedOn">baseado em</Tag>
 	<Tag name="UnitKg">Kg</Tag>
+	<Tag name="PaceNextVisible">Next shown</Tag>
 	<Tag name="NetLeaveGame">Sair do jogo</Tag>
 	<Tag name="TipDustInt">Intensidade das partículas de poeira.</Tag>
 	<Tag name="CameraInfo">Info. da câmera</Tag>
@@ -765,7 +767,7 @@
 	<Tag name="CarDesc_V2">Outra nave espacial flutuante. Ligeiramente mais pesada e mais lenta mas não desliza para os lados tão facilmente.</Tag>
 	<Tag name="Pick">Pick</Tag>
 	<Tag name="RoadPoint">Road Point</Tag>
-	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
+	<Tag name="InputRoadLoopChk">7   - change checkpoint as loop begin/end (for car camera change)</Tag>
 	<Tag name="ObjRocks">Rocks</Tag>
 	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
 	<Tag name="AlignWidthMul">Width multiply</Tag>
@@ -974,6 +976,7 @@
 	<Tag name="TipModelPrev">Model preview image.</Tag>
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
 	<Tag name="jumps">saltos</Tag>
+	<Tag name="Road_NotReal">Not Real</Tag>
 	<Tag name="TBBest">Melhor</Tag>
 	<Tag name="Trilinear">Trilinear</Tag>
 	<Tag name="Near">Perto</Tag>
@@ -1106,6 +1109,7 @@
 	<Tag name="InputPaintColor">C - Paint Color</Tag>
 	<Tag name="InputSubTabSpace">Space - cycle sub-tabs (shift - back)</Tag>
 	<Tag name="TipSurfType">Type of surface, determines sound.</Tag>
+	<Tag name="InputRoadNotReal">shift-8   - toggle not real (only for decoration, or point move)</Tag>
 	<Tag name="NextStage">Continuando para a próxima etapa</Tag>
 	<Tag name="NetWaiting">Esperando...</Tag>
 	<Tag name="Peers">Peers</Tag>

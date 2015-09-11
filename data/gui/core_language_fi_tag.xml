@@ -73,6 +73,7 @@
 	<Tag name="Group">Group</Tag>
 	<Tag name="ChampEndFinished">Olet suorittanut tämän mestaruuden loppuun.</Tag>
 	<Tag name="Negative">Negative (darken)</Tag>
+	<Tag name="InputRoadLoopType">cycle loop type (shift - back), keep same on both ends</Tag>
 	<Tag name="PickSetParam">Set parameters, marked with</Tag>
 	<Tag name="Hint-4">Damage</Tag>
 	<Tag name="Camera">Camera</Tag>
@@ -189,6 +190,7 @@
 	<Tag name="BackMenu">Takaisin</Tag>
 	<Tag name="BasedOn">pohjautuen</Tag>
 	<Tag name="UnitKg">kg</Tag>
+	<Tag name="PaceNextVisible">Next shown</Tag>
 	<Tag name="NetLeaveGame">Poistu pelistä</Tag>
 	<Tag name="TipDustInt">Pölyhiukkasten voimakkuus.</Tag>
 	<Tag name="CameraInfo">Kamera info</Tag>
@@ -765,7 +767,7 @@
 	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
 	<Tag name="Pick">Pick</Tag>
 	<Tag name="RoadPoint">Tiepiste</Tag>
-	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
+	<Tag name="InputRoadLoopChk">7   - change checkpoint as loop begin/end (for car camera change)</Tag>
 	<Tag name="ObjRocks">Rocks</Tag>
 	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
 	<Tag name="AlignWidthMul">Width multiply</Tag>
@@ -974,6 +976,7 @@
 	<Tag name="TipModelPrev">Mallin esikatselukuva.</Tag>
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
 	<Tag name="jumps">hypyt</Tag>
+	<Tag name="Road_NotReal">Not Real</Tag>
 	<Tag name="TBBest">Paras</Tag>
 	<Tag name="Trilinear">Trilinear</Tag>
 	<Tag name="Near">Near</Tag>
@@ -1106,6 +1109,7 @@
 	<Tag name="InputPaintColor">C - Maalin väri</Tag>
 	<Tag name="InputSubTabSpace">Space - cycle sub-tabs (shift - back)</Tag>
 	<Tag name="TipSurfType">Type of surface, determines sound.</Tag>
+	<Tag name="InputRoadNotReal">shift-8   - toggle not real (only for decoration, or point move)</Tag>
 	<Tag name="NextStage">Continuing to next stage</Tag>
 	<Tag name="NetWaiting">Odotetaan...</Tag>
 	<Tag name="Peers">Vertaiset</Tag>

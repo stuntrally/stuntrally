@@ -73,6 +73,7 @@
 	<Tag name="Group">Group</Tag>
 	<Tag name="ChampEndFinished">You have finished this championship.</Tag>
 	<Tag name="Negative">Negative (darken)</Tag>
+	<Tag name="InputRoadLoopType">cycle loop type (shift - back), keep same on both ends</Tag>
 	<Tag name="PickSetParam">Set parameters, marked with</Tag>
 	<Tag name="Hint-4">Damage</Tag>
 	<Tag name="Camera">Kamera</Tag>
@@ -189,6 +190,7 @@
 	<Tag name="BackMenu">Späť</Tag>
 	<Tag name="BasedOn">based on</Tag>
 	<Tag name="UnitKg">kg</Tag>
+	<Tag name="PaceNextVisible">Next shown</Tag>
 	<Tag name="NetLeaveGame">Leave game</Tag>
 	<Tag name="TipDustInt">Dust particles intensity.</Tag>
 	<Tag name="CameraInfo">Camera info</Tag>
@@ -765,7 +767,7 @@
 	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>
 	<Tag name="Pick">Vybrať</Tag>
 	<Tag name="RoadPoint">Road Point</Tag>
-	<Tag name="InputRoadLoopChk">7   - mark checkpoint as loop begin/end (for car camera change)</Tag>
+	<Tag name="InputRoadLoopChk">7   - change checkpoint as loop begin/end (for car camera change)</Tag>
 	<Tag name="ObjRocks">Skaly</Tag>
 	<Tag name="ShortcutsInfo">Press with alt to quick access gui tab (or sub-tab). Pressing again will cycle sub-tabs (if any).</Tag>
 	<Tag name="AlignWidthMul">Width multiply</Tag>
@@ -974,6 +976,7 @@
 	<Tag name="TipModelPrev">Model preview image.</Tag>
 	<Tag name="InputRoadEdit">R - edit road mode</Tag>
 	<Tag name="jumps">jumps</Tag>
+	<Tag name="Road_NotReal">Not Real</Tag>
 	<Tag name="TBBest">Najlepšie</Tag>
 	<Tag name="Trilinear">Trilineárna</Tag>
 	<Tag name="Near">Blízko</Tag>
@@ -1106,6 +1109,7 @@
 	<Tag name="InputPaintColor">C - Paint Color</Tag>
 	<Tag name="InputSubTabSpace">Space - cycle sub-tabs (shift - back)</Tag>
 	<Tag name="TipSurfType">Type of surface, determines sound.</Tag>
+	<Tag name="InputRoadNotReal">shift-8   - toggle not real (only for decoration, or point move)</Tag>
 	<Tag name="NextStage">Continuing to next stage</Tag>
 	<Tag name="NetWaiting">Čaká sa...</Tag>
 	<Tag name="Peers">Peerovia</Tag>
