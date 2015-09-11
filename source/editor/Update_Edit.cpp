@@ -185,9 +185,9 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 		rdVal[9]->setCaption( sp.chkR == 0.f ? "" : fToStr(sp.chkR,1,3)+"  "+ (sp.chk1st ? "#D0D0FF(1)":"") );
 
 		const static String sLoop[LoopTypes]={"","Loop Straight","Side Loop","Barrel Loop",
-			"Loop 2 in 1","Double Loops","Frenzy Loop","Ramp"};
+			"Loop 2 in 1","Double Loops","Frenzy Loop","Ramp"};  //todo: transl..
 		rdTxt[10]->setCaption(TR(sLoop[sp.loop]));
-		rdVal[10]->setCaption(!sp.notReal ? "" : "Not Real");
+		rdVal[10]->setCaption(!sp.notReal ? "" : TR("#{Road_NotReal}"));
 
 		//  status
 		if (road->vSel.size() > 0)  s = TR("#{Road_sel}")+": "+toStr(road->vSel.size());
