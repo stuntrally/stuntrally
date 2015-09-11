@@ -5,7 +5,8 @@
 #include "tinyxml2.h"
 #include <set>
 #include "../vdrift/pathmanager.h"
-
+#include "../../ReplayTrk.h"  // check
+#include "../../CHud.h"  // StrTime
 using namespace std;
 using namespace tinyxml2;
 using Ogre::uchar;
@@ -225,10 +226,21 @@ bool TracksXml::LoadIni(string file, bool check)
 			{
 				const TrackInfo& ti = trks[i];
 				const string& s = ti.name;
+				string file = PATHMANAGER::TrkGhosts()+"/"+ s + sRev + ".gho";
 				if (!ti.test && !ti.testC)
-				if (!PATHMANAGER::FileExists(PATHMANAGER::TrkGhosts()+"/"+ s + sRev + ".gho"))
-					if (r==1)	LogO("!Rev Missing trk gho for: " + s);
+				if (!PATHMANAGER::FileExists(file))
+				{	if (r==1)	LogO("!Rev Missing trk gho for: " + s);
 					else		LogO("! Missing trk gho for: " + s);
+				}else
+				{	//  check time  can take few sec
+					TrackGhost gho;
+					gho.LoadFile(file);
+					float tgh = gho.GetTimeLength();
+					float ti = times[s]*1.02f, td = tgh - ti;
+					if (fabs(td) > 20.f)
+						LogO("trk gho time diff big: "+s+" time: "+CHud::StrTime(tgh)+
+							" trk: "+CHud::StrTime(ti)+" d: "+fToStr(td,0,2));
+				}
 			}
 		}
 		LogO("");

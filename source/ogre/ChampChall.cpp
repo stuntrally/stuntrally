@@ -163,12 +163,12 @@ void CGui::Ch_XmlLoad()
 	
 	#if 0  /* test race pos,points */
 	float trk = 100.f;
-	LogO("Test Time "+GetTimeString(trk)+"   Pos   Points");
+	LogO("Test Time "+CHud::StrTime(trk)+"   Pos   Points");
 	for (int i=-5; i <= 20; ++i)
 	{
 		float points = 0.f, t = trk + i*1.f;
 		int pos = GetRacePos(t, trk, 1.0f, true, &points);
-		LogO("  "+GetTimeString(t)+"  "+iToStr(pos,2)+"  "+fToStr(points,2,5));
+		LogO("  "+CHud::StrTime(t)+"  "+iToStr(pos,2)+"  "+fToStr(points,2,5));
 	}
 	#endif
 	
