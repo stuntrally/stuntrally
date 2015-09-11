@@ -66,7 +66,7 @@ void CGui::ChallsListUpdate()
 			liChalls->setSubItemNameAt(3,l, StrChallCars(chl));
 			
 			liChalls->setSubItemNameAt(4,l, gcom->clrsDiff[std::min(8,ntrks*2/3+1)]+ iToStr(ntrks,3));
-			liChalls->setSubItemNameAt(5,l, gcom->clrsDiff[std::min(8,int(chl.time/3.f/60.f))]+ CHud::StrTime2(chl.time));
+			liChalls->setSubItemNameAt(5,l, gcom->clrsDiff[std::min(8,int(chl.time/3.f/60.f))]+ StrTime2(chl.time));
 			liChalls->setSubItemNameAt(6,l, ct == 0 || ct == ntrks ? "" :
 				clr+ fToStr(100.f * ct / ntrks,0,3)+" %");
 
@@ -303,7 +303,7 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 	if (trk.timeNeeded > 0.f)
 	{
 		pa = pt.time <= trk.timeNeeded;
-		LogO("]] TotTime: " + CHud::StrTime(pt.time) + "  Needed: " + CHud::StrTime(trk.timeNeeded) + "  Passed: " + (pa ? "yes":"no"));
+		LogO("]] TotTime: " + StrTime(pt.time) + "  Needed: " + StrTime(trk.timeNeeded) + "  Passed: " + (pa ? "yes":"no"));
 		passed &= pa;
 	}
 	if (trk.passPoints > 0.f)
@@ -387,8 +387,8 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 		pa = pc.totalTime <= ch.totalTime;
 		// for p <= pp ..
 
-		LogO("]] TotalTime: "+CHud::StrTime(pc.totalTime)+"  Needed: "+CHud::StrTime(ch.totalTime)+"  Passed: "+(pa ? "yes":"no"));
-		ss += TR("#D8C0FF#{TBTime}")+": "+CHud::StrTime(pc.totalTime)+"   /  "+CHud::StrTime(ch.totalTime) + sPass(pa) +"\n";
+		LogO("]] TotalTime: "+StrTime(pc.totalTime)+"  Needed: "+StrTime(ch.totalTime)+"  Passed: "+(pa ? "yes":"no"));
+		ss += TR("#D8C0FF#{TBTime}")+": "+StrTime(pc.totalTime)+"   /  "+StrTime(ch.totalTime) + sPass(pa) +"\n";
 		passed &= pa;
 	}
 
@@ -518,7 +518,7 @@ void CGui::ChallFillStageInfo(bool finished)
 		if (trk.timeNeeded > 0.f)
 		{
 			pa = pt.time <= trk.timeNeeded;
-			s += TR("#D8C0FF#{TBTime}: ") + CHud::StrTime(pt.time) + "  / " + CHud::StrTime(trk.timeNeeded) + sPass(pa) +"\n";
+			s += TR("#D8C0FF#{TBTime}: ") + StrTime(pt.time) + "  / " + StrTime(trk.timeNeeded) + sPass(pa) +"\n";
 			passed &= pa;
 		}
 		if (trk.passPoints > 0.f)
@@ -540,7 +540,7 @@ void CGui::ChallFillStageInfo(bool finished)
 	else
 	{	///  Pass needed  --------------
 		s += "#F0F060"+TR("#{Needed}") +"\n";
-		if (trk.timeNeeded > 0.f)	s += TR("  #D8C0FF#{TBTime}: ") + CHud::StrTime(trk.timeNeeded) +"\n";
+		if (trk.timeNeeded > 0.f)	s += TR("  #D8C0FF#{TBTime}: ") + StrTime(trk.timeNeeded) +"\n";
 		if (trk.passPoints > 0.f)	s += TR("  #D8C0FF#{TBPoints}: ") + fToStr(trk.passPoints,1) +"\n";
 		if (trk.passPos > 0)		s += TR("  #D8C0FF#{TBPosition}: ") + toStr(trk.passPos) +"\n";
 		if (app->scn->road)			s += "\n#A8B8C8"+ app->scn->road->sTxtDesc;
@@ -578,7 +578,7 @@ void CGui::UpdChallDetail(int id)
 
 	//s1 += "\n";  s2 += "\n";
 	clr = gcom->clrsDiff[std::min(8,int(ch.time/3.f/60.f))];
-	s1 += TR("#80F0E0#{Time} [#{TimeMS}.]\n"); s2 += "#C0FFE0"+clr+ CHud::StrTime2(ch.time)+"\n";
+	s1 += TR("#80F0E0#{Time} [#{TimeMS}.]\n"); s2 += "#C0FFE0"+clr+ StrTime2(ch.time)+"\n";
 
 	//  cars  --------
 	s1 += "\n";  s2 += "\n";
@@ -621,7 +621,7 @@ void CGui::UpdChallDetail(int id)
 											fToStr(ch.avgPos + ciAddPos[p] * ch.factor ,1,3)+"  ";
 									s2 += "\n";  }
 		if (ch.totalTime > 0.f){	s1 += TR("  #{TBTime}\n");
-									s2 += CHud::StrTime(ch.totalTime)+"\n";  }
+									s2 += StrTime(ch.totalTime)+"\n";  }
 	}
 	txtChP[1]->setCaption(s1);  valChP[1]->setCaption(s2);
 	
@@ -638,7 +638,7 @@ void CGui::UpdChallDetail(int id)
 			s1 += "#D8C0FF";   s2 += "#F0D8FF";
 			if (trk.passPoints > 0.f){	s1 += TR("  #{TBPoints}\n");    s2 += fToStr(trk.passPoints,2,5)+"\n";  }
 			if (trk.passPos > 0.f)  {	s1 += TR("  #{TBPosition}\n");  s2 += fToStr(trk.passPos,2,5)+"\n";  }
-			if (trk.timeNeeded > 0.f){	s1 += TR("  #{TBTime}\n");      s2 += CHud::StrTime(trk.timeNeeded)+"\n";  }
+			if (trk.timeNeeded > 0.f){	s1 += TR("  #{TBTime}\n");      s2 += StrTime(trk.timeNeeded)+"\n";  }
 	}	}
 	txtChP[0]->setCaption(s1);  valChP[0]->setCaption(s2);
 
@@ -655,7 +655,7 @@ void CGui::UpdChallDetail(int id)
 		s1 += "\n";  s2 += "\n";  clrP(ch.avgPoints > 0.f);
 		s1 += TR("  #{TBPoints}\n");    s2 += fToStr(pc.avgPoints,2,5)+"\n";  clrP(ch.avgPos > 0.f);
 		s1 += TR("  #{TBPosition}\n");  s2 += fToStr(pc.avgPos,2,5)+"\n";  clrP(ch.totalTime > 0.f);
-		s1 += TR("  #{TBTime}\n");      s2 += CHud::StrTime(pc.totalTime)+"\n";
+		s1 += TR("  #{TBTime}\n");      s2 += StrTime(pc.totalTime)+"\n";
 	}
 	txtChP[2]->setCaption(s1);  valChP[2]->setCaption(s2);
 

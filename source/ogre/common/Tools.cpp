@@ -433,7 +433,7 @@ void CGui::ToolGhostsConv()
 					{	float dist = (fr.pos - oldPos).MagnitudeSquared();
 						if (dist > 16.f)  //1.f small
 						{	
-							LogO("!Jump at "+CHud::StrTime2(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
+							LogO("!Jump at "+StrTime2(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
 							++jmp;
 					}	}
 					//  check vel at start
@@ -443,7 +443,7 @@ void CGui::ToolGhostsConv()
 						float vel = 3.6f * dist / (fr.time - oldTime);
 						bool bad = vel > 30;
 						if (bad)
-							LogO("!Vel at "+CHud::StrTime(fr.time)+" kmh "+fToStr(vel,0) + (bad ? "  BAD":""));
+							LogO("!Vel at "+StrTime(fr.time)+" kmh "+fToStr(vel,0) + (bad ? "  BAD":""));
 					}
 					oldPos = fr.pos;  oldTime = fr.time;
 				}
@@ -507,7 +507,7 @@ void CGui::ToolTestTrkGhosts()
 					{	float dist = (fr.pos - oldPos).MagnitudeSquared();
 						if (dist > 6.f*6.f)  //par
 						{	
-							LogO("!Jump at "+CHud::StrTime2(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
+							LogO("!Jump at "+StrTime2(fr.time)+"  d "+fToStr(sqrt(dist),0)+"m");
 							++jmp;
 					}	}
 					//  check vel at start
@@ -517,7 +517,7 @@ void CGui::ToolTestTrkGhosts()
 						float vel = 3.6f * dist / (fr.time - oldTime);
 						bool bad = vel > 30;
 						if (bad)
-							LogO("!Vel at "+CHud::StrTime(fr.time)+" kmh "+fToStr(vel,0) + (bad ? "  BAD":""));
+							LogO("!Vel at "+StrTime(fr.time)+" kmh "+fToStr(vel,0) + (bad ? "  BAD":""));
 					}
 					oldPos = fr.pos;  oldTime = fr.time;
 				}

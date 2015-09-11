@@ -195,7 +195,7 @@ void App::newPoses(float time)  // time only for camera update
 				{
 					int size = replay.GetNumFrames() * 232;  //par approx  sizeof(ReplayFrame);
 					std::string s = fToStr( float(size)/1000000.f, 2,5);
-					String ss = String( TR("#{RplRecTime}: ")) + CHud::StrTime(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
+					String ss = String( TR("#{RplRecTime}: ")) + StrTime(replay.GetTimeLength()) + TR("   #{RplSize}: ") + s + TR(" #{UnitMB}");
 					gui->valRplName2->setCaption(ss);
 				}
 			}
@@ -508,8 +508,8 @@ void App::updatePoses(float time)
 		double pos = pGame->timer.GetPlayerTime(0);
 		float len = replay.GetTimeLength();
 		gui->valRplPerc->setCaption(fToStr(pos/len*100.f, 1,4)+" %");
-		gui->valRplCur->setCaption(CHud::StrTime(pos));
-		gui->valRplLen->setCaption(CHud::StrTime(len));
+		gui->valRplCur->setCaption(StrTime(pos));
+		gui->valRplLen->setCaption(StrTime(len));
 
 		float v = pos/len;  gui->slRplPos->setValue(v);
 	}	

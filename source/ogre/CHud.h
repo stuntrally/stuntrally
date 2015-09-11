@@ -152,7 +152,6 @@ public:
 	Ogre::Vector3 projectPoint(const Ogre::Camera* cam, const Ogre::Vector3& pos);  // 2d xy, z - out info
 
 	//  string utils
-	static Ogre::String StrTime(float time), StrTime2(float time);  // 2=short
 	Ogre::String StrClr(Ogre::ColourValue c);
 
 	//  bullet debug text

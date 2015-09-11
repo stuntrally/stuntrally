@@ -88,36 +88,6 @@ ManualObject* CHud::Create2D(const String& mat, SceneManager* sceneMgr,
 }
 
 
-//  hud util
-String CHud::StrTime(float time)
-{
-	int min = (int) time / 60;
-	float secs = time - min*60;
-
-	if (time != 0.f)
-	{
-		String ss;
-		ss = toStr(min)+":"+fToStr(secs,2,5,'0');
-		return ss;
-	}else
-		return "-:--.--";
-}
-String CHud::StrTime2(float time)
-{
-	int min = (int) time / 60;
-	float secs = time - min*60;
-
-	if (time != 0.0)
-	{
-		String ss;
-		ss = toStr(min)+":"+fToStr(secs,0,2,'0');
-		return ss;
-	}else
-		return "-:--";
-}
-
-
-
 //  HUD utils
 //---------------------------------------------------------------------------------------------------------------
 void CHud::UpdMiniTer()

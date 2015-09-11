@@ -219,13 +219,13 @@ bool TracksXml::LoadIni(string file, bool check)
 		
 		LogO("))) Checking for all tracks ghosts");
 		nn = trks.size();
-		for (int r=0; r < 2; ++r)
+		for (i=0; i < nn; ++i)
 		{
-			string sRev = r==1 ? "_r" : "";
-			for (i=0; i < nn; ++i)
+			const TrackInfo& ti = trks[i];
+			const string& s = ti.name;
+			for (int r=0; r < 2; ++r)
 			{
-				const TrackInfo& ti = trks[i];
-				const string& s = ti.name;
+				string sRev = r==1 ? "_r" : "";
 				string file = PATHMANAGER::TrkGhosts()+"/"+ s + sRev + ".gho";
 				if (!ti.test && !ti.testC)
 				if (!PATHMANAGER::FileExists(file))
@@ -233,14 +233,15 @@ bool TracksXml::LoadIni(string file, bool check)
 					else		LogO("! Missing trk gho for: " + s);
 				}else
 				{	//  check time  can take few sec
-					TrackGhost gho;
-					gho.LoadFile(file);
+					TrackGhost gho;  gho.LoadFile(file, false);
 					float tgh = gho.GetTimeLength();
 					float ti = times[s]*1.02f, td = tgh - ti;
 					if (fabs(td) > 20.f)
-						LogO("trk gho time diff big: "+s+" time: "+CHud::StrTime(tgh)+
-							" trk: "+CHud::StrTime(ti)+" d: "+fToStr(td,0,2));
-				}
+					{	ss.str("");
+						ss << "time diff big: " << setw(19) << s+sRev;
+						ss << " time "+StrTime(tgh)+" trk "+StrTime(ti)+" d "+fToStr(td,0,3);
+						LogO(ss.str());
+				}	}
 			}
 		}
 		LogO("");

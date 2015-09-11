@@ -141,7 +141,7 @@ void CGui::listRplChng(List* li, size_t pos)
 		ss = String(TR("#{Vehicles}: "));
 		for (n=0; n < pp; ++n)  ss += rh.cars[n] + "  ";
 		ss += //(netw == 0 ? "" : "M") +  //TR("#{Multiplayer}")
-			"\n#C0D8F0" + TR("#{RplTime}: ") + CHud::StrTime(rpl.GetTimeLength()) +
+			"\n#C0D8F0" + TR("#{RplTime}: ") + StrTime(rpl.GetTimeLength()) +
 			"\n#90A0B0" + TR("#{Simulation}: ") + rh.sim_mode;
 
 		if (netw == 1)  // list nicks

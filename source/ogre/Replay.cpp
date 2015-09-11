@@ -253,7 +253,7 @@ bool Replay2::LoadFile(string file, bool onlyHdr)
 		rs(h.track)  rd(h.track_user);
 		String ss = ">- Load replay2  ";
 		ss += h.track+"  ";
-		ss += CHud::StrTime(h.time)+"  ";
+		ss += StrTime(h.time)+"  ";
 
 		rd(h.numPlayers);  s = h.numPlayers;
 		h.cars.clear();  h.cars.resize(s);

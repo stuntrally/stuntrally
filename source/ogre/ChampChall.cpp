@@ -158,17 +158,17 @@ void CGui::Ch_XmlLoad()
 			time += (*it).second;
 			++trks;
 	}	}
-	LogO("Total tracks: "+ toStr(trks) + ", total time: "+ CHud::StrTime2(time/60.f)+" h:m");
+	LogO("Total tracks: "+ toStr(trks) + ", total time: "+ StrTime2(time/60.f)+" h:m");
 
 	
 	#if 0  /* test race pos,points */
 	float trk = 100.f;
-	LogO("Test Time "+CHud::StrTime(trk)+"   Pos   Points");
+	LogO("Test Time "+StrTime(trk)+"   Pos   Points");
 	for (int i=-5; i <= 20; ++i)
 	{
 		float points = 0.f, t = trk + i*1.f;
 		int pos = GetRacePos(t, trk, 1.0f, true, &points);
-		LogO("  "+CHud::StrTime(t)+"  "+iToStr(pos,2)+"  "+fToStr(points,2,5));
+		LogO("  "+StrTime(t)+"  "+iToStr(pos,2)+"  "+fToStr(points,2,5));
 	}
 	#endif
 	
@@ -354,7 +354,7 @@ void CGui::StageListAdd(int n, String name, int laps, String progress)
 	liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
 	liStages->setSubItemNameAt(3,l, gcom->clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
 	liStages->setSubItemNameAt(4,l, "#60C0A0  "+toStr(laps));
-	liStages->setSubItemNameAt(5,l, "#80C0F0 "+CHud::StrTime2(time));
+	liStages->setSubItemNameAt(5,l, "#80C0F0 "+StrTime2(time));
 	liStages->setSubItemNameAt(6,l, progress);
 }
 
