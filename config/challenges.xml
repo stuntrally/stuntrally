@@ -246,7 +246,7 @@
 
 	<challenge name="Desert Visit" ver="2" difficulty="3" type="1" 
 			descr="Visit to desert, on sand dunes.">
-		<car names="UV|HR|LK4" />
+		<car names="UV|HR|LK4|O" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Des1-Dunes"        passPoints="9" />
@@ -270,7 +270,7 @@
 	<challenge name="Winter Sleep" ver="2" difficulty="2" type="1" 
 			descr="Winter rally, slippery snow tracks.">
 		<cartype names="Gravel" />
-		<car names="N1" />
+		<car names="N1|3S" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="Wnt1-Cross"     passPoints="9" />
@@ -282,7 +282,7 @@
 	<challenge name="Forest Lanscapes" ver="1" difficulty="2" type="1" 
 			descr="A trip on good looking forest tracks.">
 		<cartype names="Gravel" />
-		<car names="N1" />
+		<car names="N1|3S" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="For4-OSquare"      passPoints="9" />
@@ -308,7 +308,7 @@
 	<challenge name="Mossy Jungle" ver="2" difficulty="2" type="1" 
 			descr="Banked and mossy jungle tracks.">
 		<cartype names="Gravel|Terrain" />
-		<car names="N1|M3" />
+		<car names="N1|M3|3S" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Mos2-Mouse"      passPoints="9" />
@@ -371,7 +371,7 @@
 
 	<challenge name="Long endurance" ver="1" difficulty="3" type="2" 
 			descr="Very long tracks, need strong endurance skills and no mistakes while driving fast.">
-		<car names="ES|S1|XZ|SZ|360" />
+		<car names="ES|S1|XZ|SZ|360|Y7" />
 		<hud chkArrow="1" />
 		<pass avgPoints="10" />
 		<tracks>
@@ -452,6 +452,7 @@
 		<tracks>
 			<t name="Wnt9-IceFrenzy"   passPoints="9" />
 			<t name="Can7-RedWavy"     passPoints="9" />
+			<t name="Aus8-Cliff"       passPoints="8" />
 		</tracks>
 	</challenge>
 
@@ -462,6 +463,7 @@
 		<tracks>
 			<t name="Aus7-MiningCity"  passPoints="9" />
 			<t name="Oth1-FogCity"     passPoints="9" />
+			<t name="Spc2-SpaceMine"   passPoints="9" />
 		</tracks>
 	</challenge>
 
@@ -519,7 +521,7 @@
 
 	<challenge name="Ancient Chase" ver="2" difficulty="3" type="3" 
 			descr="Fast drive through 2 ancient cities. Sometimes narrow and with sharp turns.">
-		<car names="SZ|XZ" />
+		<car names="SZ|XZ|Y7|BV" />
 		<pass avgPoints="13" />
 		<tracks>
 			<t name="Des17-NileCity" passPoints="13.5" />
@@ -556,13 +558,14 @@
 		<tracks>
 			<t name="Jng14-Muddy"  laps="2" passPoints="10" />
 			<t name="Jng16-MudMad" laps="2" passPoints="10" />
+			<t name="Mud5-Mudflats" laps="1" passPoints="9" />
 		</tracks>
 	</challenge>
 
 
 	<challenge name="Max Banked" ver="1" difficulty="3" type="3" 
 			descr="Maximum banked terrain tracks. Very fast and with side turns.">
-		<car names="ES|S1|XZ|SZ" />
+		<car names="ES|S1|XZ|SZ|Y7" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Can2-CanyonRun" passPoints="9" />
@@ -574,7 +577,7 @@
 
 	<challenge name="Twisted Bridges" ver="1" difficulty="4" type="3" 
 			descr="Banked and twisted bridged roads. You get fast cars, but the key is to drive not too fast.">
-		<car names="XZ|SZ|360" />
+		<car names="XZ|SZ|360|Y7|CT" />
 		<pass avgPos="2" />
 		<tracks>
 			<t name="Isl6-Flooded"  laps="2" passPos="2" />
@@ -584,7 +587,7 @@
 
    <challenge name="Bridge Blaster" ver="1" difficulty="4" type="3"
          descr="Race the fastest cars on bridged tracks as fast as you can while avoiding the walls. Note: when driving those fast but low suspension cars, you need to brake before all highly banked turns to not damage them." >
-      <car names="360|XZ|SZ" />
+      <car names="360|XZ|SZ|Y7" />
       <sim boost="0" />
       <pass avgPoints="11.5" />
       <tracks>
@@ -632,7 +635,7 @@
 
 	<challenge name="Stunt Long" ver="1" difficulty="4" type="4" 
 			descr="Long stunt filled tracks.">
-		<car names="XZ|SZ" />
+		<car names="XZ|SZ|Y7|360" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Aus1-StuntPark"      passPoints="9" />
@@ -776,7 +779,7 @@
 
 	<challenge name="Expedition" ver="1" difficulty="3" type="5" 
 			descr="An expedition into other planets, originally driven with electic powered vehicle. Bumpy tracks.">
-		<car names="UV" />
+		<car names="UV|BV" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="Vlc4-Spikeland"  passPoints="10" />
@@ -790,7 +793,7 @@
 
 	<challenge name="Space Trip" ver="1" difficulty="4" type="5" 
 			descr="Extreme cars in interesting places outside earth.">
-		<car names="UV|TU|TW|ES" />
+		<car names="UV|TU|TW|ES|BV" />
 		<hud chkBeam="1" chkArrow="1" />
 		<pass avgPoints="10" />
 		<tracks>
@@ -804,7 +807,7 @@
 	<challenge name="Outer Stunts" ver="1" difficulty="6" type="5" 
 			descr="Great, very fast stunts on other planets. Need to use the rechargable boost to be faster.">
 		<sim boost="2" />
-		<car names="ES|S1|XZ|UV" />
+		<car names="ES|S1|XZ|UV|BV|Y7" />
 		<pass avgPoints="14" />
 		<tracks>
 			<t name="Mrs1-Mars"       passPoints="12" />
@@ -814,13 +817,14 @@
 		</tracks>
 	</challenge>
 
-	<challenge name="Alien Stunts" ver="1" difficulty="5" type="5" 
+	<challenge name="Alien Stunts Extreme" ver="1" difficulty="5" type="5" 
 			descr="The new outside earth stunt tracks. Continuation of Outer Stunts.">
 		<car names="ES|S1|S8|XZ|SZ" />
 		<pass avgPoints="12" />
 		<tracks>
 			<t name="Mrs4-Platforms"  passPoints="9" />
 			<t name="Aln2-Freefall"   passPoints="9" />
+			<t name="Cry3-BlueHell"   passPoints="9" />
 		</tracks>
 	</challenge>
 
@@ -844,6 +848,7 @@
 		<tracks>
 			<t name="Sur1-Surreal"    passPoints="9" />
 			<t name="Sur2-GreenStar"  passPoints="7" />
+			<t name="Sur3-Chaotic"    passPoints="8" />
 		</tracks>
 	</challenge>
 
@@ -851,7 +856,7 @@
 	<challenge name="Really Dangerous" ver="1" difficulty="7" type="5" 
 			descr="The very dangerous tracks. Driving on pipe, or with obstacles. When on pipe, drive slowly and stay on top, go lower only in turns.">
 		<sim boost="2" />
-		<car names="ES|S1|S8|N1" />
+		<car names="ES|S1|FN|N1" />
 		<pass avgPoints="14" />
 		<tracks>
 			<t name="Tox1-Radioactive"  passPoints="9" />

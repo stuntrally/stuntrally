@@ -174,6 +174,8 @@
 		<t name="Des15-CityWall"/>
 		<t name="Grc8-SlopeCity"/>
 		<t name="Des17-NileCity"/>
+		<t name="Sur3-Chaotic"/>
+		<t name="Spc2-SpaceMine"/>
 	</champ>
 
 	<champ name="Easy jumps" ver="4" difficulty="2" type="2" 
@@ -209,6 +211,7 @@
 		<t name="Jng16-MudMad"/>
 		<t name="Jng18-Tiny"/>
 		<t name="Mud3-Mudlake"/>
+		<t name="Mud5-Mudflats"/>
 	</champ>
 
 	<champ name="Mountain adventure" ver="5" difficulty="4" type="3" 
@@ -244,6 +247,7 @@
 		<t name="Can1-Hairpins"/>
 		<t name="Aus7-MiningCity"/>
 		<t name="Can7-RedWavy"/>
+		<t name="Aus8-Cliff"/>
 	</champ>
 
 	<champ name="Extreme weather" ver="2" difficulty="4" type="3" 
@@ -338,13 +342,14 @@
 		<t name="Uni5-PipeJumps"/>
 	</champ>
 
-	<champ name="Alien stunts" ver="2" difficulty="5" type="4" 
-			descr="New stunt tracks, also on alien planet.">
+	<champ name="Alien stunts" ver="2" difficulty="6" type="4" 
+			descr="New stunt tracks, also on alien planet, later quite difficult.">
 		<t name="Isl14-Ocean"/>
 		<t name="Aln1-AlienBase"/>
 		<t name="Des18-Shuttle"/>
 		<t name="Mrs4-Platforms"/>
 		<t name="Aln2-Freefall"/>
+		<t name="Cry3-BlueHell"/>
 	</champ>
 
 	<champ name="Insane stunts" ver="2" difficulty="6" type="4" 
@@ -511,6 +516,7 @@
 		<t name="Mud2-Bumps"/>
 		<t name="Mud3-Mudlake"/>
 		<t name="Mud4-Taiga"/>
+		<t name="Mud5-Mudflats"/>
 	</champ>
 	<champ name="Canyon" ver="1" difficulty="3" type="6" 
 			descr="Canyon championship.">
@@ -531,6 +537,7 @@
 		<t name="Aus5-TopTwist"/>
 		<t name="Aus6-Cannon"/>
 		<t name="Aus7-MiningCity"/>
+		<t name="Aus8-Cliff"/>
 	</champ>
 	<champ name="Greece" ver="1" difficulty="3" type="6" 
 			descr="Greece championship.">
@@ -603,11 +610,13 @@
 			descr="Crystals championship.">
 		<t name="Cry1-CrystalMoon"/>
 		<t name="Cry2-MagicFog"/>
+		<t name="Cry3-BlueHell"/>
 	</champ>
 	<champ name="Surreal" ver="1" difficulty="3" type="6" 
 			descr="Surreal championship.">
 		<t name="Sur1-Surreal"/>
 		<t name="Sur2-GreenStar"/>
+		<t name="Sur3-Chaotic"/>
 	</champ>
 	<champ name="Alien" ver="1" difficulty="5" type="6" 
 			descr="Alien championship.">
@@ -619,6 +628,7 @@
 		<t name="Oth1-FogCity"/>
 		<t name="Stn1-StoneQuarry"/>
 		<t name="Spc1-Minerals"/>
+		<t name="Spc2-SpaceMine"/>
 		<t name="Blk1-Darkness"/>
 	</champ>
 	
