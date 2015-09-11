@@ -29,8 +29,7 @@ Homepage:
 
 Releases:  (GNU/Linux binaries, Windows installer)
         https://sourceforge.net/projects/stuntrally/files/
-
-Sources:  (Git repositories)
+Sources:
         https://github.com/stuntrally/
 
 Forums:  (Report bugs, issues, etc):
@@ -46,7 +45,7 @@ Videos:  (gameplay and editor)
 
     Description
 
-The game features 167 tracks in 34 sceneries and 19 cars + 4 vehicles.
+The game features 172 tracks in 34 sceneries and 25 vehicles.
 Game modes include: Single Race, Tutorials, Championships, Challenges,
 Multiplayer and Split Screen. Also Replays and Ghost drive are present.
 
@@ -125,18 +124,6 @@ http://stuntrally.tuxfamily.org/wiki/doku.php?id=compile
 
     Help is welcomed
 
-Programmers
-    If you know C++, OGRE or shaders, and could
-    handle some of the [Roadmap] tasks or [Issues].
-
-Testers
-    If you are able to build from sources,
-    you can test and report bugs or suggestions.
-
-Artists
-    Editing meshes for game, uv unwrap, texturing etc.
-    If you can record/edit sounds for games.
-
 Track creators
     If you manage to create an interesting track,
     it could be released in future versions.
@@ -144,3 +131,15 @@ Track creators
 Translators
     If you want to help translating a language,
     check Wiki page [Localization].
+
+Testers
+    If you are able to build from sources,
+    you can test and report bugs or suggestions.
+
+Programmers
+    If you know C++, OGRE or shaders, and could
+    handle any of the [Roadmap] tasks.
+
+Artists
+    Editing meshes for game, uv unwrap, texturing etc.
+    If you can record/edit sounds for games.
