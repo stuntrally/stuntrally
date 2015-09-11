@@ -98,7 +98,7 @@ const TrackFrame& TrackGhost::getFrame0(int id)
 
 ///  Load
 //-------------------------------------------------------------------------------------------------
-bool TrackGhost::LoadFile(std::string file)
+bool TrackGhost::LoadFile(std::string file, bool bLog)
 {
 	std::ifstream fi(file.c_str(), std::ios::binary | std::ios::in);
 	if (!fi)  return false;
@@ -109,7 +109,7 @@ bool TrackGhost::LoadFile(std::string file)
 	fi.read(buf, ciTrkHdrSize);
 	memcpy(&header, buf, sizeof(TrackHeader));
 	
-	LogO(">- Load trk ghost --  file: "+file);
+	if (bLog)  LogO(">- Load trk ghost --  file: "+file);
 
 	Clear();
 	
@@ -124,22 +124,22 @@ bool TrackGhost::LoadFile(std::string file)
 		if (i > 0 && fr.time <= frames[i-1].time)
 		{
 			#ifdef LOG_RPL
-				LogO(">- Load trk ghost  BAD frame time  id:"+toStr(i)
+				if (bLog)  LogO(">- Load trk ghost  BAD frame time  id:"+toStr(i)
 					+"  t-1:"+fToStr(frames[i-1].time,5,7)+" >= t:"+fToStr(fr.time,5,7));
 			#endif
 		}else
 			frames.push_back(fr);
 		++i;
-		//LogO(toStr((float)fr.time) /*+ "  p " + toStr(fr.pos)*/);
+		//if (bLog)  LogO(toStr((float)fr.time) /*+ "  p " + toStr(fr.pos)*/);
 	}
     fi.close();
  
     #ifdef LOG_RPL
-		LogO(">- Load trk ghost   first: "+fToStr(frames[0].time,5,7)
+		if (bLog)  LogO(">- Load trk ghost   first: "+fToStr(frames[0].time,5,7)
 			+"  time: "+fToStr(GetTimeLength(),2,5)+"  frames: "+toStr(frames.size()));
 	#endif
 
-	LogO(Ogre::String("::: Time Load trk ghost: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	if (bLog)  LogO(Ogre::String("::: Time Load trk ghost: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
     return true;
 }
 

@@ -391,7 +391,7 @@ void CGui::ToolGhosts()
 void CGui::ToolGhostsConv()
 {
 	LogO("ALL ghosts Convert ---------");
-	Replay ghost;  TrackGhost trg;
+	Replay2 ghost;  TrackGhost trg;
 	for (int r=0; r < 2; ++r)
 	{
 		string sRev = r==1 ? "_r" : "";
@@ -416,15 +416,15 @@ void CGui::ToolGhostsConv()
 				
 				for (int i=0; i < num; ++i)
 				{
-					const ReplayFrame& fr = ghost.GetFrame0(i);
+					const ReplayFrame2& fr = ghost.GetFrame0(i);
 					TrackFrame tf;
 					tf.time = fr.time;
 					tf.pos = fr.pos;  tf.rot = fr.rot;
-					tf.brake = fr.braking > 0 ? 1 : 0;
+					tf.brake = fr.get(b_braking) > 0 ? 1 : 0;
 					tf.steer = fr.steer * 127.f;
 					//LogO(toStr(fr.braking)+ " st " +fToStr(fr.steer,2,5));
 
-					#define Nth 3
+					#define Nth 2  // old was 1/3 from 160, new 1/2 from 80
 					if (i % Nth == Nth-1)  /// write every n-th frame only
 						trg.AddFrame(tf);
 

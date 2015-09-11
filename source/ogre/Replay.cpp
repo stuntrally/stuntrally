@@ -573,5 +573,6 @@ void Replay2::DeleteFrames(int c, float fromTime)
 	if (frames[c].empty())  return;
 	while (!frames[c].empty() && frames[c][ frames[c].size()-1 ].time >= fromTime)
 		frames[c].pop_back();
+	header.time = fromTime;
 }
 

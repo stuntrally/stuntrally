@@ -186,8 +186,9 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
     fi.close();
 		
     #ifdef LOG_RPL
-		LogO(">- Load replay  plr: "+toStr(header.numPlayers)+"  t1st: "+fToStr(frames[0][0].time,5,7)+
-			"  time: "+fToStr(GetTimeLength(0),2,5)+"  frames: "+toStr(frames[0].size()));
+		bool empty = frames.empty() || frames[0].empty();
+		LogO(">- Load replay  plr: "+toStr(header.numPlayers)+"  t1st: "+fToStr(empty ? 0.f : frames[0][0].time,5,7)+
+			"  time: "+fToStr(GetTimeLength(0),2,5)+"  frames: "+toStr(empty ? 0 : frames[0].size()));
 	#endif
 
 	LogO(String("::: Time ReplayLoad: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");

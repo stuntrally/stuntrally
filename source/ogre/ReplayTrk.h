@@ -41,7 +41,7 @@ class TrackGhost
 public:
 	TrackGhost();
 
-	bool LoadFile(std::string file);
+	bool LoadFile(std::string file, bool bLog=true);
 	bool SaveFile(std::string file);
 
 	void AddFrame(const TrackFrame& frame);
