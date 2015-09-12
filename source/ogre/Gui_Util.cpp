@@ -117,9 +117,10 @@ void CGui::FillCarList()
 		{	String s = *i;
 			CarL c;  c.name = *i;  //c.pA = this;
 			int id = data->cars->carmap[*i];
-			c.ci = id==0 ? 0 : &data->cars->cars[id-1];
-			liCar.push_back(c);
-	}	}
+			if (id)
+			{	c.ci = &data->cars->cars[id-1];
+				liCar.push_back(c);
+	}	}	}
 }
 //-----------------------------------------------------------------------------------------------------------
 

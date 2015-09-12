@@ -44,8 +44,8 @@
 
 
 	<car id="BV"  crtver="2.6" speed="8.6" year="2381" type="Extreme"  easy="1.00" norm="1.04"  author="gakpoenya" />
-	<car id="U6"  crtver="2.6" speed="8.9" year="2120" type="Extreme"  easy="0.96" norm="1.00"  author="" />
-	<car id="U8"  crtver="2.6" speed="8.9" year="2123" type="Extreme"  easy="0.96" norm="1.00"  author="" />
+<!--<car id="U6"  crtver="2.6" speed="8.3" year="2120" type="Extreme"  easy="0.96" norm="1.00"  author="" />
+	<car id="U8"  crtver="2.6" speed="8.1" year="2123" type="Extreme"  easy="0.96" norm="1.00"  author="" />-->
 	
 	<car id="V2"  crtver="2.4" speed="9.4" year="2516" type="Spaceship" easy="1.07" norm="1.13"  car="0" author="speedypro" />
 	<car id="V1"  crtver="2.4" speed="9.6" year="2523" type="Spaceship" easy="1.04" norm="1.16"  car="0" author="benja" />
