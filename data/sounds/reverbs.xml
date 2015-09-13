@@ -30,7 +30,7 @@
 	<rev name="Rocky"        normal="OUTDOORS_DEEPCANYON" 
 		descr="Some rocks and vegetation - longer reverb" /><!--OUTDOORS_DEEPCANYON` CASTLE_COURTYARD-->
 
-	<rev name="Canyon"       normal="STONECORRIDOR" 
+	<rev name="Canyon"       normal="CASTLE_LONGPASSAGE" 
 		descr="Valleys open rocks - medium echo" /><!--CASTLE_LONGPASSAGE ALLEY-->
 
 	<rev name="Mountains"    normal="WOODEN_HALL" 
