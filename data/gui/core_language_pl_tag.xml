@@ -73,7 +73,7 @@
 	<Tag name="Group">Grupa</Tag>
 	<Tag name="ChampEndFinished">Ukończyłeś to mistrzostwo.</Tag>
 	<Tag name="Negative">Ujemne (pociemnia)</Tag>
-	<Tag name="InputRoadLoopType">cycle loop type (shift - back), keep same on both ends</Tag>
+	<Tag name="InputRoadLoopType">zmień typ pętli (shift - wstecz), ustaw oba końce tak samo</Tag>
 	<Tag name="PickSetParam">Ustaw parametry, oznaczone</Tag>
 	<Tag name="Hint-4">Uszkodzenia</Tag>
 	<Tag name="Camera">Kamera</Tag>
@@ -190,7 +190,7 @@
 	<Tag name="BackMenu">Wstecz</Tag>
 	<Tag name="BasedOn">na podstawie</Tag>
 	<Tag name="UnitKg">kg</Tag>
-	<Tag name="PaceNextVisible">Next shown</Tag>
+	<Tag name="PaceNextVisible">Widoczne następnych</Tag>
 	<Tag name="NetLeaveGame">Opuść grę</Tag>
 	<Tag name="TipDustInt">Intensywność cząstek kurzu.</Tag>
 	<Tag name="CameraInfo">Info kamery</Tag>
@@ -767,7 +767,7 @@
 	<Tag name="CarDesc_V2">Kolejny unoszący się statek. Trochę cięższy i wolniejszy, ale nie slizga się bokiem tak łatwo.</Tag>
 	<Tag name="Pick">Wybierz</Tag>
 	<Tag name="RoadPoint">Punkt drogi</Tag>
-	<Tag name="InputRoadLoopChk">7   - change checkpoint as loop begin/end (for car camera change)</Tag>
+	<Tag name="InputRoadLoopChk">7 - ustaw punkt kontrolny jako pocz./koniec pętli (do zmiany kamery)</Tag>
 	<Tag name="ObjRocks">Skały</Tag>
 	<Tag name="ShortcutsInfo">Naciśnij z alt by szybko przejść do zakładki (lub sub). Kolejne będzie przechodzić po sub-zakładkach (jeśli są).</Tag>
 	<Tag name="AlignWidthMul">Mnożnik szerokości</Tag>
@@ -976,7 +976,7 @@
 	<Tag name="TipModelPrev">Obraz podglądu modelu.</Tag>
 	<Tag name="InputRoadEdit">R - tryb edycji drogi</Tag>
 	<Tag name="jumps">skoki</Tag>
-	<Tag name="Road_NotReal">Not Real</Tag>
+	<Tag name="Road_NotReal">Nie Realny</Tag>
 	<Tag name="TBBest">Najlepszy</Tag>
 	<Tag name="Trilinear">Trójliniowe</Tag>
 	<Tag name="Near">Blisko</Tag>
@@ -1109,7 +1109,7 @@
 	<Tag name="InputPaintColor">C - maluj kolor</Tag>
 	<Tag name="InputSubTabSpace">Spacja - przejdź po pod-zakładkach (shift - wstecz)</Tag>
 	<Tag name="TipSurfType">Typ podłoża, wyznacza dźwięk.</Tag>
-	<Tag name="InputRoadNotReal">shift-8   - toggle not real (only for decoration, or point move)</Tag>
+	<Tag name="InputRoadNotReal">shift-8 - przełącz nie realny (tylko do dekoracji lub przemieszczenia)</Tag>
 	<Tag name="NextStage">Przejście do następnego etapu.</Tag>
 	<Tag name="NetWaiting">Oczekiwanie...</Tag>
 	<Tag name="Peers">Uczestników</Tag>

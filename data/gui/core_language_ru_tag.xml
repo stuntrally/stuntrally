@@ -73,7 +73,7 @@
 	<Tag name="Group">Группа</Tag>
 	<Tag name="ChampEndFinished">Вы закончили этот чемпионат.</Tag>
 	<Tag name="Negative">Отриц. (темнить)</Tag>
-	<Tag name="InputRoadLoopType">cycle loop type (shift - back), keep same on both ends</Tag>
+	<Tag name="InputRoadLoopType">выбор типа петли (Shift - назад), работает на 2 конца</Tag>
 	<Tag name="PickSetParam">Уст. параметры, по умол.</Tag>
 	<Tag name="Hint-4">Повреж.</Tag>
 	<Tag name="Camera">Камера</Tag>
@@ -190,7 +190,7 @@
 	<Tag name="BackMenu">Назад</Tag>
 	<Tag name="BasedOn">на основе</Tag>
 	<Tag name="UnitKg">кг</Tag>
-	<Tag name="PaceNextVisible">Next shown</Tag>
+	<Tag name="PaceNextVisible">Следующая</Tag>
 	<Tag name="NetLeaveGame">Покинуть игру</Tag>
 	<Tag name="TipDustInt">Интенсивность частиц пыли.</Tag>
 	<Tag name="CameraInfo">Камеры инфо</Tag>
@@ -767,7 +767,7 @@
 	<Tag name="CarDesc_V2">Ещё один парящий космический корабль. Немного тяжелее и медление, но не так легко уходит в сторону.</Tag>
 	<Tag name="Pick">Выбор</Tag>
 	<Tag name="RoadPoint">Точка дороги</Tag>
-	<Tag name="InputRoadLoopChk">7   - change checkpoint as loop begin/end (for car camera change)</Tag>
+	<Tag name="InputRoadLoopChk">7   - КТ как петля начало/конец (изменяет камеру авто)</Tag>
 	<Tag name="ObjRocks">Скалы</Tag>
 	<Tag name="ShortcutsInfo">Нажми с alt для доступа к gui вкладке (или подменю). Нажатие снова циклит подменю (если есть).</Tag>
 	<Tag name="AlignWidthMul">Увел. ширину</Tag>
@@ -976,7 +976,7 @@
 	<Tag name="TipModelPrev">Предварительный просмотр изображения модели.</Tag>
 	<Tag name="InputRoadEdit">R - ред. дорогу</Tag>
 	<Tag name="jumps">прыжки</Tag>
-	<Tag name="Road_NotReal">Not Real</Tag>
+	<Tag name="Road_NotReal">Нереальная</Tag>
 	<Tag name="TBBest">Лучш.</Tag>
 	<Tag name="Trilinear">Трилинейный</Tag>
 	<Tag name="Near">Близко</Tag>
@@ -1109,7 +1109,7 @@
 	<Tag name="InputPaintColor">C - цвет краски</Tag>
 	<Tag name="InputSubTabSpace">Space - вкладки ниже (shift - назад)</Tag>
 	<Tag name="TipSurfType">Тип поверхности, определяется звуком.</Tag>
-	<Tag name="InputRoadNotReal">shift-8   - toggle not real (only for decoration, or point move)</Tag>
+	<Tag name="InputRoadNotReal">Shift-8   - нереальная (только для украшения, или движения точки)</Tag>
 	<Tag name="NextStage">Этап завершен</Tag>
 	<Tag name="NetWaiting">Ожидание...</Tag>
 	<Tag name="Peers">Ровни</Tag>

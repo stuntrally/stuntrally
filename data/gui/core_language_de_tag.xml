@@ -767,7 +767,7 @@
 	<Tag name="CarDesc_V2">Ein weiteres schwebendes Raumschiff. Geringfügig schwerer und langsamer aber es geht nicht so leicht seitwärts.</Tag>
 	<Tag name="Pick">Auswählen</Tag>
 	<Tag name="RoadPoint">Straßenpunkt</Tag>
-	<Tag name="InputRoadLoopChk">7   - change checkpoint as loop begin/end (for car camera change)</Tag>
+	<Tag name="InputRoadLoopChk">7 - Wegp. als Loopingsanfang/-ende markieren (für Kamera)</Tag>
 	<Tag name="ObjRocks">Steine</Tag>
 	<Tag name="ShortcutsInfo">Mit Alt drücken für schnellen Zugriff auf Tab (oder Untertab). Nochmal drücken wird durchrotieren.</Tag>
 	<Tag name="AlignWidthMul">Breite multiplizieren</Tag>
@@ -976,7 +976,7 @@
 	<Tag name="TipModelPrev">Vorschaubild des Modells.</Tag>
 	<Tag name="InputRoadEdit">R - Straße bearbeiten</Tag>
 	<Tag name="jumps">Sprünge</Tag>
-	<Tag name="Road_NotReal">Not Real</Tag>
+	<Tag name="Road_NotReal">Nicht real</Tag>
 	<Tag name="TBBest">Beste</Tag>
 	<Tag name="Trilinear">Trilinear</Tag>
 	<Tag name="Near">Nah</Tag>
