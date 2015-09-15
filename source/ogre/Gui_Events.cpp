@@ -219,8 +219,8 @@ void CGui::comboRewind(CMB)
 	pSet->gui.rewind_type = val;
 }
 	
-void CGui::radKmh(WP wp){	Radio2(bRkmh, bRmph, true);   pSet->show_mph = false;  hud->Size();  app->scn->pace->UpdTxt();  }
-void CGui::radMph(WP wp){	Radio2(bRkmh, bRmph, false);  pSet->show_mph = true;   hud->Size();  app->scn->pace->UpdTxt();  }
+void CGui::radKmh(WP wp){	Radio2(bRkmh, bRmph, true);   pSet->show_mph = false;  hud->Size();  if (app->scn->pace) app->scn->pace->UpdTxt();  }
+void CGui::radMph(WP wp){	Radio2(bRkmh, bRmph, false);  pSet->show_mph = true;   hud->Size();  if (app->scn->pace) app->scn->pace->UpdTxt();  }
 
 void CGui::setSimMode(std::string mode)
 {
