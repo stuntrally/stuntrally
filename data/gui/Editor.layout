@@ -1587,9 +1587,9 @@
 							<UserString key="tip" value="#{TipReverse}"/>
 						</Widget>
 					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 754 478">
+					<!--<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#A0C080#{Generator}"/>
-					</Widget>
+					</Widget>-->
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
