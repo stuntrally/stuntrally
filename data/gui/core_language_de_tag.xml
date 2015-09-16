@@ -73,7 +73,7 @@
 	<Tag name="Group">Gruppe</Tag>
 	<Tag name="ChampEndFinished">Die Meisterschaft wurde erfolgreich beendet!</Tag>
 	<Tag name="Negative">Negativ (abdunkeln)</Tag>
-	<Tag name="InputRoadLoopType">cycle loop type (shift - back), keep same on both ends</Tag>
+	<Tag name="InputRoadLoopType">Loopingtyp wählen (Umschalt: zurück), an beiden Enden gleich halten</Tag>
 	<Tag name="PickSetParam">Param. mit f. Zeich. setzen:</Tag>
 	<Tag name="Hint-4">Schäden</Tag>
 	<Tag name="Camera">Kamera</Tag>
@@ -190,7 +190,7 @@
 	<Tag name="BackMenu">Zurück</Tag>
 	<Tag name="BasedOn">basiert auf</Tag>
 	<Tag name="UnitKg">kg</Tag>
-	<Tag name="PaceNextVisible">Next shown</Tag>
+	<Tag name="PaceNextVisible">Gezeigte nächste</Tag>
 	<Tag name="NetLeaveGame">Spiel verlassen</Tag>
 	<Tag name="TipDustInt">Intensität der Staubpartikel.</Tag>
 	<Tag name="CameraInfo">Kamerainfo</Tag>
@@ -1109,7 +1109,7 @@
 	<Tag name="InputPaintColor">C - Anstrichfarbe</Tag>
 	<Tag name="InputSubTabSpace">Leer - durch Untertabs blättern (Umschalt: zurück)</Tag>
 	<Tag name="TipSurfType">Typ der Oberfläche, bestimmt das Geräusch.</Tag>
-	<Tag name="InputRoadNotReal">shift-8   - toggle not real (only for decoration, or point move)</Tag>
+	<Tag name="InputRoadNotReal">Umschalt-8 – Unechte umschalten (nur für Deko bzw. Anpassung)</Tag>
 	<Tag name="NextStage">Nächste Etappe</Tag>
 	<Tag name="NetWaiting">Warten ...</Tag>
 	<Tag name="Peers">Peers</Tag>
