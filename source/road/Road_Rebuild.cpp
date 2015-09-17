@@ -265,9 +265,11 @@ void SplineRoad::BuildSeg(
 				if (i >= 0 && i < il)
 				{	//  add
 					PaceM pm;
-					bool onP = mP[seg].onPipe > 0 && (iDir > 0 ?	// end
-						mP[seg1].onPipe == 0 && i==il-1 || mP[seg0].onPipe == 0 && i==0 :
-						mP[seg0].onPipe == 0 && i==0    || mP[seg1].onPipe == 0 && i==il-1);
+					bool op = mP[seg].onPipe > 0;
+					bool onP = op && (iDir > 0 ?		// start
+						mP[seg1].onPipe == 0 && i==il-1 : mP[seg0].onPipe == 0 && i==0);
+					bool onPe = op && (iDir > 0 ?		// end
+						mP[seg0].onPipe == 0 && i==0    : mP[seg1].onPipe == 0 && i==il-1);
 					float h = 3.f;  // above
 					if (mP[seg].onPipe == 1 && mP[seg].idMtr >= 0 ||
 						mP[seg0].onPipe == 1 && mP[seg0].idMtr >= 0)
@@ -278,7 +280,7 @@ void SplineRoad::BuildSeg(
 					
 					pm.onTer = DS.onTer && fPipe < 0.1f;
 					pm.loop = DL0.v0_Loop[seg];
-					pm.onPipe = onP;
+					pm.onPipe = onP;  pm.onPipeE = onPe;
 					bool no = mP[seg].notReal;
 					pm.jump = no? 0: DS.jfw2;  pm.jumpR = no? 0: DS.jfw1;
 
