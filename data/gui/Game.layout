@@ -2990,11 +2990,11 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">
 						<Property key="Caption" value="#E0F8C0#{Pacenotes}"/>
-						<!--<Widget type="ImageBox" skin="ImageBox" position="620 140 80 80">
-							<Property key="ImageCoord" value="512 512 128 128"/>
-							<Property key="Alpha" value="0.7"/>
+						<Widget type="ImageBox" skin="ImageBox" position="32 130 72 72">
+							<Property key="ImageCoord" value="640 512 128 128"/>
+							<Property key="Alpha" value="0.3"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
-						</Widget>-->
+						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 56 184 24" name="ChkPace">
 							<Property key="Caption" value="#{Pacenotes} #789858 alt-F8"/>
 							<Property key="TextColour" value="0.8 1.0 0.6"/>
