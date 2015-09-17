@@ -343,7 +343,7 @@ void CGui::chkHudShow(Ck*)
 void CGui::chkArrow(Ck*)
 {
 	if (hud->arrow.nodeRot)
-		hud->arrow.nodeRot->setVisible(pSet->check_arrow && !app->bHideHudAid);
+		hud->arrow.nodeRot->setVisible(pSet->check_arrow && !app->bHideHudArr);
 }
 void CGui::chkBeam(Ck*)
 {

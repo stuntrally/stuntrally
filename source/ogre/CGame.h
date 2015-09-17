@@ -148,7 +148,9 @@ public:
 	PreviewTex prvStCh;  // champ,chall stage view
 
 	bool bHideHudBeam;  // hides beam when replay or no road
-	bool bHideHudAid;   // hides arrow,pacenotes when replay,splitscreen or no road
+	bool bHideHudArr;	// hides arrow when replay,splitscreen
+	bool bHideHudPace;  // hides pacenotes when same or deny by challenge
+	
 	bool bRplPlay,bRplPause, bRplRec, bRplWnd;  //  game
 	int carIdWin, iRplCarOfs, iRplSkip;
 

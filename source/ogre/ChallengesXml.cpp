@@ -20,7 +20,8 @@ Chall::Chall()  //  defaults
 	,sim_mode("normal")
 	,damage_type(2), boost_type(1), flip_type(2), rewind_type(1)
 	,dmg_lap(40)
-	,minimap(1), chk_arr(0), chk_beam(0), trk_ghost(1)
+	,minimap(1), chk_arr(0), chk_beam(0)
+	,trk_ghost(1), pacenotes(1)
 	,abs(0),tcs(0)
 	,avgPoints(-1.f), totalTime(-1.f), avgPos(-1.f)  // pass
 	,carChng(0), prizes(2), factor(1.f)
@@ -100,6 +101,7 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks, bool check)
 			a = eHud->Attribute("chkArrow");	if (a)  c.chk_arr = s2i(a) > 0;
 			a = eHud->Attribute("chkBeam");		if (a)  c.chk_beam = s2i(a) > 0;
 			a = eHud->Attribute("trkGhost");	if (a)  c.trk_ghost = s2i(a) > 0;
+			a = eHud->Attribute("pacenotes");	if (a)  c.pacenotes = s2i(a) > 0;
 		}
 		XMLElement* ePass = eCh->FirstChildElement("pass");
 		if (ePass)

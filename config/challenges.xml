@@ -38,9 +38,9 @@
 			//  *** Hud ***
 			//  not allowed when "0", "1" means user can choose
 			//  checkpoint arrow, checkpoint beam  (default: 0 deny)
-			//  minimap,  track's ghost  (default: 1 allow)
+			//  minimap,  track's ghost,  pacenotes  (default: 1 allow)
 
-		<hud minimap="1" chkArrow="1" chkBeam="1" trkGhost="1" />
+		<hud minimap="1" chkArrow="1" chkBeam="1" trkGhost="1" pacenotes="1" />
 		
 			//  *** Pass (win) conditions, for whole challenge ***
 			//  use many if desired  (one is good)
@@ -747,6 +747,7 @@
 	<challenge name="Horrible Weather" ver="1" difficulty="5" type="5" 
 			descr="Ice, sandstorm and heavy rain, this is definitely a challenge. Remember, on ice, push throttle only occasionally.">
 		<car names="3S|TC6|M3" />
+		<hud pacenotes="0" />
 		<pass avgPoints="14" factor="2" />
 		<tracks>
 			<t name="Wnt4-IceSlip"    passPoints="11" />

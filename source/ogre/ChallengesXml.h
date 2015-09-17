@@ -45,7 +45,8 @@ public:
 	int dmg_lap;  // dmg repair on lap
 
 	//  hud
-	bool minimap, chk_arr, chk_beam, trk_ghost;  // deny using it if false
+	bool minimap, chk_arr, chk_beam,
+		trk_ghost, pacenotes;  // deny using it if false
 	bool abs,tcs;  // deny if false
 	
 	//  pass  -1 means not needed, you can use one or more conditions
