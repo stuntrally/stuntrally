@@ -102,6 +102,7 @@ public:
 	int iDir;  // copy from road
 	int iCur;  // cur car pace id, for tracking
 	float carVel;
+	bool rewind;
 };
 
 

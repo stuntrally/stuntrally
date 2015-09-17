@@ -123,9 +123,10 @@ void PaceNotes::UpdVis(Vector3 carPos, bool hide)
 		//  Advance to next sign  ~ ~ ~
 		//        a    iCur   s-1  s=7
 		//  0  1  2  3  4  5  6   -id
+		int r = rewind ? 1 : 0;
 		bool vrng = iDir > 0 ?  // inside cur..cur+range with cycle
-			(i >= iCur && i <= iCur+rng || i < iCur+rng-iAll) :
-			(i <= iCur && i >= iCur-rng || i > iCur-rng+iAll);
+			(i >= iCur-r && i <= iCur+rng || i < iCur+rng-iAll) :
+			(i <= iCur+r && i >= iCur-rng || i > iCur-rng+iAll);
 		vis &= vrng;
 
 		if (vrng)
@@ -210,6 +211,7 @@ PaceNotes::PaceNotes(SETTINGS* pset) :pSet(pset)
 	,mSceneMgr(0),mCamera(0),mTerrain(0),mGui(0),mWindow(0)
 	,ii(0), iStart(0),iAll(1), iDir(1), iCur(0)
 	,carVel(140.f/3.6f)  // for ed
+	,rewind(0)
 {	}
 
 //  setup

@@ -423,6 +423,7 @@ bool App::frameStart(Real time)
 			Vector3 p = cm->pMainNode->getPosition();
 			float vel = cm->pCar->GetSpeedometer();
 			scn->pace->carVel = vel;
+			scn->pace->rewind = cm->pCar->bRewind;
 			scn->pace->UpdVis(p);
 		}
 		
