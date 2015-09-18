@@ -415,7 +415,7 @@ void CGui::chkEffUpdShd(Ck*)
 	app->scn->changeShadows();
 }
 
-void CGui::slBloom(SV*)
+void CGui::slEffUpd(SV*)
 {
 	if (bGI)  app->refreshCompositor();
 }

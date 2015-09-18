@@ -253,7 +253,7 @@ public:
 	SV svBloomInt, svBloomOrig;
 	SV svBlurIntens;  // motion blur
 	SV svDofFocus, svDofFar;  // depth of field
-	void slBloom(SV*);
+	void slEffUpd(SV*);
 	//  hdr
 	SV svHDRParam1, svHDRParam2, svHDRParam3;
 	SV svHDRBloomInt, svHDRBloomOrig, svHDRAdaptScale;
