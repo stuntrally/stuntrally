@@ -1529,6 +1529,11 @@
 					<Property key="Colour" value="0.98 1 0.95"/>
 					<Widget type="TabItem" skin="" position="2 24 754 478">
 						<Property key="Caption" value="#E0FF80#{View}"/>
+						<Widget type="ImageBox" skin="ImageBox" position="32 130 72 72">
+							<Property key="ImageCoord" value="640 512 128 128"/>
+							<Property key="Alpha" value="0.3"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="162 96 164 24">
 							<Property key="TextColour" value="0.9 0.9 0.7"/>
 							<Property key="Caption" value="#{ViewDist}"/>
