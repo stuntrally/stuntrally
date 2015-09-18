@@ -29,9 +29,9 @@ float4 motionblur_ps(
    float2 uv: TEXCOORD0,
    float3 ray : TEXCOORD1,
 
-   sampler2D scene : TEXUNIT0,
-   sampler2D depthTex : TEXUNIT1,
-   sampler2D maskTex : TEXUNIT2,
+   uniform sampler2D scene : TEXUNIT0,
+   uniform sampler2D depthTex : TEXUNIT1,
+   uniform sampler2D maskTex : TEXUNIT2,
     
    uniform float4x4 invViewMat,
    uniform float4x4 prevViewProjMat,
@@ -70,9 +70,9 @@ float4 motionblur_ps(
     for (int i = 1; i < nSamples; ++i) {
 
         // get offset in range [-0.5, 0.5]
-        vec2 offset = blurVec * (float(i) / float(nSamples - 1) - 0.5) * centerMask.w;
+        float2 offset = blurVec * (float(i) / float(nSamples - 1) - 0.5) * centerMask.w;
 
-        vec4 mask = tex2D(maskTex, uv + offset);
+        float4 mask = tex2D(maskTex, uv + offset);
 
         // sample & add to result
         // to prevent ghosting
