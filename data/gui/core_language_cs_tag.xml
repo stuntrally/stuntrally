@@ -40,7 +40,7 @@
 	<Tag name="Prize">Ocenění</Tag>
 	<Tag name="Hint-2text">Hold [Q] or [W] to flip over the car, when upside down or in jumps. Depending on settings, it may cost some fuel.</Tag>
 	<Tag name="TreeDens">Hustota stromů</Tag>
-	<Tag name="Vehicles">Vehicles</Tag>
+	<Tag name="Vehicles">Vozy</Tag>
 	<Tag name="TipVegetGroups">Vegetation model groups (recommended use 4-6), affects performance.</Tag>
 	<Tag name="TBPosition">Umístění</Tag>
 	<Tag name="Pipe">Roura</Tag>
@@ -51,7 +51,7 @@
 	<Tag name="NeedNewGame">* need New Game</Tag>
 	<Tag name="InputRoadAngZero">alt-shift-1  - zero angles</Tag>
 	<Tag name="InputRoadChkCtrl">with ctrl - force custom radius</Tag>
-	<Tag name="TipTrackImg">In game screenshot for selected track.</Tag>
+	<Tag name="TipTrackImg">Snímek ze hry pro vybranou trať.</Tag>
 	<Tag name="TerDeform">Deform</Tag>
 	<Tag name="TerLNoiseOnly">Only Noise</Tag>
 	<Tag name="InputValueChange">Each (mouse/key) move or value change with </Tag>
@@ -85,7 +85,7 @@
 	<Tag name="TipSliderReset">RMB on slider - reset to default value.</Tag>
 	<Tag name="HDRVignettingRadius">Vignetting Radius</Tag>
 	<Tag name="InputCamControl">W,S  A,D  Q,E - move   Arrows - rotate</Tag>
-	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
+	<Tag name="TipTrackMap">Malá mapa vybrané trati viděné shora.</Tag>
 	<Tag name="UnitRpm">rpm</Tag>
 	<Tag name="RenderSystem">Render System</Tag>
 	<Tag name="TerGenOfsY">Posun Y</Tag>
@@ -333,7 +333,7 @@
 	<Tag name="InputRoadCopySel">ctrl-Ins - copy selection   ctrl-Del - delete sel.</Tag>
 	<Tag name="TerGenFreq">Freq. zoom</Tag>
 	<Tag name="Road_Column">Sloupec</Tag>
-	<Tag name="TipNewGame">Start game on new track or Restart on current.</Tag>
+	<Tag name="TipNewGame">Začít závod na nové trati nebo spustit znovu nynější.</Tag>
 	<Tag name="ReflMode">Režim</Tag>
 	<Tag name="TipCopySource">Pick selected track for copy source, used in [Tools] tab.</Tag>
 	<Tag name="InputMapNextTab">Další karta</Tag>
@@ -366,7 +366,7 @@
 	<Tag name="CarType_Terrain">Terén</Tag>
 	<Tag name="InputObjectsRotReset">shift-2 - reset rotation</Tag>
 	<Tag name="Road_Length">Délka</Tag>
-	<Tag name="TipFogClr2">Fog end color when looking away from sun.</Tag>
+	<Tag name="TipFogClr2">Barva konce mlhy při pohledu pryč od slunce.</Tag>
 	<Tag name="MinimapAndSize">Minimap, size</Tag>
 	<Tag name="Checkpoint">Kontrolní bod</Tag>
 	<Tag name="Road_Snap">Přichytávání</Tag>
@@ -404,7 +404,7 @@
 	<Tag name="FogHeight">Výška</Tag>
 	<Tag name="difficulty">Obtížnost</Tag>
 	<Tag name="TrackInAir">In air</Tag>
-	<Tag name="TipReverse">Reverse track direction.</Tag>
+	<Tag name="TipReverse">Obrátit směr trati.</Tag>
 	<Tag name="SC_BlackDesert">BlackDesert</Tag>
 	<Tag name="RplVersion">Verze</Tag>
 	<Tag name="Stages">Etapy</Tag>
@@ -580,7 +580,7 @@
 	<Tag name="CopyTrackSourceSame">Source track and current track are the same.</Tag>
 	<Tag name="DisableEdit">Zakázat pro úpravy</Tag>
 	<Tag name="LS_TER">Nahrává se prostředí</Tag>
-	<Tag name="Vehicle">Vehicle</Tag>
+	<Tag name="Vehicle">Vůz</Tag>
 	<Tag name="Test">Zkouška</Tag>
 	<Tag name="Continue">Pokračovat</Tag>
 	<Tag name="TipDiffusePrev">Diffuse texture preview image.</Tag>
@@ -597,7 +597,7 @@
 	<Tag name="Brush_ShapeN-gon">N-gon</Tag>
 	<Tag name="Brush_CurrentH">Curr.H</Tag>
 	<Tag name="TipDiffuseTex">Diffuse texture (Specular in alpha).</Tag>
-	<Tag name="CarChange">Vehicle change</Tag>
+	<Tag name="CarChange">Změna vozu</Tag>
 	<Tag name="LTrFlDepth">max Depth in fluid</Tag>
 	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="InputRoadMat">-,=  - road/pipe material  (-1 hidden)</Tag>
@@ -676,7 +676,7 @@
 	<Tag name="TipTerrainDouble">Make terrain size double, leaving current heightmap part in center.</Tag>
 	<Tag name="InputRoadRMB">RMB (or Num +,-)</Tag>
 	<Tag name="UnitS">s</Tag>
-	<Tag name="TrackNotFound">Track not found !</Tag>
+	<Tag name="TrackNotFound">Trať nenalezena!</Tag>
 	<Tag name="InputMapThrottle">Throttle</Tag>
 	<Tag name="TBLap">Kolo</Tag>
 	<Tag name="Road_AngleBoth">Obě</Tag>
@@ -721,7 +721,7 @@
 	<Tag name="InputRoadPick">Space - pick one/none</Tag>
 	<Tag name="InputRoadAngSnap">5   - angles snap decrease (shift - increase)</Tag>
 	<Tag name="SC_Canyon">Kaňon</Tag>
-	<Tag name="TipTrkViewShort">Short list view.</Tag>
+	<Tag name="TipTrkViewShort">Zobrazení krátkého seznamu.</Tag>
 	<Tag name="TipSmokeInt">Smoke particles intensity.</Tag>
 	<Tag name="MessageBox_Ignore">Nevšímat si</Tag>
 	<Tag name="GraphicsAll_Impossible">Nemožné</Tag>
@@ -904,7 +904,7 @@
 	<Tag name="Length">Délka</Tag>
 	<Tag name="Specular">Specular</Tag>
 	<Tag name="HeightOffset">Posun výšky</Tag>
-	<Tag name="TutorEndFinished">You have finished this tutorial.</Tag>
+	<Tag name="TutorEndFinished">Dokončil jste tento návod.</Tag>
 	<Tag name="Amplitude">Rozkmit</Tag>
 	<Tag name="InputControllers">Controllers</Tag>
 	<Tag name="InputRoadModify">Změnit</Tag>
@@ -918,7 +918,7 @@
 	<Tag name="SREditorVersion">Stunt Rally - Track Editor - version</Tag>
 	<Tag name="InputRoadAfterPick">after picked, center at mouse</Tag>
 	<Tag name="Hint-1text">Don't accelerate all the time. Also don't forget to brake before turns, especially sharp ones. If you don't know the road yet, it's better to drive slowly.</Tag>
-	<Tag name="TipTrackDesc">Track description text.</Tag>
+	<Tag name="TipTrackDesc">Text s popisem trati.</Tag>
 	<Tag name="RplFileSize">Velikost souboru</Tag>
 	<Tag name="SC_GreeceWhite">Bílé Řecko</Tag>
 	<Tag name="SourceTrack">Zdrojová dráha</Tag>
@@ -949,7 +949,7 @@
 	<Tag name="Editor">Editor</Tag>
 	<Tag name="NotRecommended">Nedoporučeno</Tag>
 	<Tag name="TerrainBrush">Terrain brush</Tag>
-	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
+	<Tag name="TipTrkViewDetailed">Zobrazení podrobného seznamu.</Tag>
 	<Tag name="AndContributors">a přispěvatelů</Tag>
 	<Tag name="InputCameraTxt1">with shift - main cameras only</Tag>
 	<Tag name="Copy">Kopírovat</Tag>
@@ -1024,7 +1024,7 @@
 	<Tag name="TipImpDist">Far distance at which the 2d impostors dissapear.</Tag>
 	<Tag name="Normal">Normální</Tag>
 	<Tag name="InputMapGeneral">Obecné</Tag>
-	<Tag name="TipTrkTerImg">Minimap of selected track, view from top.</Tag>
+	<Tag name="TipTrkTerImg">Malá mapa vybrané trati viděné shora.</Tag>
 	<Tag name="LS_GAME">Nahrává se hra</Tag>
 	<Tag name="TerHeightMap">Terrain Heightmap</Tag>
 	<Tag name="long">Dlouze</Tag>
@@ -1117,7 +1117,7 @@
 	<Tag name="Reverse">Obrácené</Tag>
 	<Tag name="HeightMin">Height Min</Tag>
 	<Tag name="InputUpdate">F8 - update track</Tag>
-	<Tag name="TrackDifficulties">Various Track Difficulties</Tag>
+	<Tag name="TrackDifficulties">Různé obtížnosti trati.</Tag>
 	<Tag name="SC_Other">Jiné</Tag>
 	<Tag name="NetNew">Nová hra</Tag>
 	<Tag name="Gravity">Přitažlivost</Tag>

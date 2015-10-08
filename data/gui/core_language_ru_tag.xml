@@ -190,7 +190,7 @@
 	<Tag name="BackMenu">Назад</Tag>
 	<Tag name="BasedOn">на основе</Tag>
 	<Tag name="UnitKg">кг</Tag>
-	<Tag name="PaceNextVisible">Следующая</Tag>
+	<Tag name="PaceNextVisible">Показать</Tag>
 	<Tag name="NetLeaveGame">Покинуть игру</Tag>
 	<Tag name="TipDustInt">Интенсивность частиц пыли.</Tag>
 	<Tag name="CameraInfo">Камеры инфо</Tag>
