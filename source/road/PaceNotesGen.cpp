@@ -30,7 +30,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 
 	Destroy();
 	
-	if (road->getNumPoints() < 2)
+	if (road->getNumPoints() < 2 || !mTerrain)
 		return;
 
 	//  const, vis
@@ -349,7 +349,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 		num = gho.getNumFrames();
 	}
 	
-	if (num > 0)
+	if (num > 0 && mTerrain)
 	{
 		Vector3 pos;
 		//  terrain height
