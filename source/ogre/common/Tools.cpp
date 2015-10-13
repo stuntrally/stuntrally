@@ -214,6 +214,14 @@ void CGui::ToolSceneXml()
 		}
 		
 		///  road
+		int iLch = 0;
+		for (n=0; n < rd.mP.size(); ++n)
+			if (rd.mP[n].chkR > 0.f && rd.mP[n].loop > 0)
+				++iLch;
+		//LogO("Road: " + trk + "  Lch " + toStr(iLch));
+		if (iLch % 2 == 1)
+			LogO("Road: " + trk + " Not even loop chks count !  ");
+
 		for (n=0; n < MTRs; ++n)
 		{
 			String s = rd.sMtrRoad[n];
