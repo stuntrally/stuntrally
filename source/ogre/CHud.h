@@ -154,7 +154,9 @@ public:
 	//  string utils
 	Ogre::String StrClr(Ogre::ColourValue c);
 
+#ifndef BT_NO_PROFILE
 	//  bullet debug text
 	void bltDumpRecursive(class CProfileIterator* profileIterator, int spacing, std::stringstream& os);
 	void bltDumpAll(std::stringstream& os);
+#endif // BT_NO_PROFILE
 };
