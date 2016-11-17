@@ -205,7 +205,7 @@ bool MODEL_OBJ::Save(const std::string & strFileName, std::ostream & error_outpu
 	std::ofstream f(strFileName.c_str());
 	if (!f)
 	{
-		error_output << "Error opening file for writing: " << error_output << endl;
+		error_output << "Error opening file for writing: " << endl;
 		return false;
 	}
 	
