@@ -130,7 +130,7 @@ void CarModel::Load(int startId)
 
 	///  load config .car
 	string pathCar;
-	pApp->gui->GetCarPath(&pathCar, 0, 0, sDirname, pApp->mClient);  // force orig for newtorked games
+	pApp->gui->GetCarPath(&pathCar, 0, 0, sDirname, pApp->mClient.get() != 0);  // force orig for newtorked games
 	LoadConfig(pathCar);
 	
 	
