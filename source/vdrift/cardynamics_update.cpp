@@ -78,11 +78,16 @@ void CARDYNAMICS::UpdateBuoyancy()
 				body.q.Normalize();//
 			}
 			//LogO(fToStr(body.q.x,2,4)+" "+fToStr(body.q.y,2,4)+" "+fToStr(body.q.z,2,4)+" "+fToStr(body.q.w,2,4));
+
 			//  vel, ang vel
 			btVector3 v = chassis->getLinearVelocity();
 			btVector3 a = chassis->getAngularVelocity();
 			body.v.x = v.getX();  body.v.y = v.getY();  body.v.z = v.getZ();
-			body.omega.x = a.getX();  body.omega.y = a.getY();  body.omega.z = a.getZ();
+			if (vtype == V_Sphere)
+			{	body.omega.SetZero();  // no ang vel
+			}else
+			{	body.omega.x = a.getX();  body.omega.y = a.getY();  body.omega.z = a.getZ();
+			}
 			body.F.SetZero();  body.T.SetZero();
 			
 			//  damp from height vel

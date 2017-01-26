@@ -428,7 +428,7 @@ void CGui::ToolGhostsConv()
 					TrackFrame tf;
 					tf.time = fr.time;
 					tf.pos = fr.pos;  tf.rot = fr.rot;
-					tf.brake = fr.get(b_braking) > 0 ? 1 : 0;
+					tf.brake = fr.get(b_braking) ? 1 : 0;
 					tf.steer = fr.steer * 127.f;
 					//LogO(toStr(fr.braking)+ " st " +fToStr(fr.steer,2,5));
 
