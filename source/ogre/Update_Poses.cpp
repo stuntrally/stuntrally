@@ -418,7 +418,8 @@ void App::newPoses(float time)  // time only for camera update
 			{
 				Vector3 x,y,z;
 				carPoses[qn][c].camRot.ToAxes(x,y,z);
-				pGame->snd->setCamera(carPoses[qn][c].camPos, -z, y, Vector3::ZERO);
+				bool camCar = carM->fCam && carM->fCam->TypeCar();  // fix
+				pGame->snd->setCamera(carPoses[qn][c].camPos, camCar ? -y : -z, camCar ? -z : y, Vector3::ZERO);
 			}
 		}
 	}

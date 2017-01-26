@@ -87,6 +87,8 @@ public:
 	void Next(bool bPrev = false, bool bMainOnly = false);
 	void setCamera(int ang);
 	
+	bool TypeCar() {  return ca && ca->mType == CAM_Car;  }
+	
 	//  info text formats
 	Ogre::String sFmt_Follow, sFmt_Free, sFmt_ExtAng, sFmt_Arena, sFmt_Car;
 	void updFmtTxt();
