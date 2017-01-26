@@ -597,6 +597,7 @@ void CHud::Update(int carId, float time)
 	}
 
 
+#ifndef BT_NO_PROFILE
 	//  bullet profiling text  --------
 	static bool oldBltTxt = false;
 	if (ov[1].oU)
@@ -616,6 +617,7 @@ void CHud::Update(int carId, float time)
 			ov[1].oU->setCaption("");
 	}
 	oldBltTxt = pSet->bltProfilerTxt;
+#endif // BT_NO_PROFILE
 
 	
 	//  wheels slide, susp bars  --------

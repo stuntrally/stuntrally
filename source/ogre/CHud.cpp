@@ -6,7 +6,9 @@
 #include "common/data/SceneXml.h"
 #include "common/CScene.h"
 #include "../vdrift/settings.h"
+#ifndef BT_NO_PROFILE
 #include <LinearMath/btQuickprof.h>
+#endif // BT_NO_PROFILE
 #include <OgreManualObject.h>
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
@@ -151,7 +153,7 @@ void CHud::UpdDbgTxtClr()
 	}
 }
 
-
+#ifndef BT_NO_PROFILE
 ///  Bullet profiling text
 //--------------------------------------------------------------------------------------------------------------
 
@@ -214,3 +216,4 @@ void CHud::bltDumpAll(std::stringstream& os)
 
 	CProfileManager::Release_Iterator(profileIterator);
 }
+#endif // BT_NO_PROFILE
