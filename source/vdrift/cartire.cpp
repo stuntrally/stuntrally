@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "cartire.h"
 #include "cardefs.h"
+#include <cmath>
 //#include "../ogre/common/Def_Str.h"
 
 
@@ -114,7 +115,7 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 	alpha = -atan2(hub_velocity[1], denom) * 180.0/PI_d;
 
 	/*crash dyn obj--*/
-	if (isnan(alpha) || isnan(1.f/sigma_hat))
+	if (::isnan(alpha) || ::isnan(1.f/sigma_hat))
 	{
 		MATHVECTOR<Dbl,3> outvec(0, 0, 0);
 		return outvec;
