@@ -41,10 +41,8 @@ enum EPerfTest {PT_StartWait, PT_Accel, PT_Brake};
 const int Ncrashsounds = 12, Nwatersounds = 3;
 
 #ifdef _WIN32
-	static bool isnan(float number)  {  return (number != number);  }
-	static bool isnan(double number) {  return (number != number);  }
-#else
-	#define isnan(number)  std::isnan(number)
+static bool isnan(float number)  {  return (number != number);  }
+static bool isnan(double number) {  return (number != number);  }
 #endif
 
 const static char sCfgWh[MAX_WHEELS][4] = {"FL","FR","RL","RR","RL2","RR2","RL3","RR3"};  // .car config wheel names
