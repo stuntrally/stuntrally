@@ -827,10 +827,14 @@ void CARDYNAMICS::SimulateSphere(Dbl dt)
 			- hov.brakeForce * velMul * brake[0].GetBrakeFactor() * dmgE;
 	//if (rear)  f *= -1.f;
 
-	//  steer  rotate dir
+	float h = brake[0].GetHandbrakeFactor();
+
+	//  steer <> rotate dir
 	float pst = hov.steerForce;  //if (rear)  pst = -pst;
-		if (pipe)  pst *= hov.steerDampP;
-	sphereYaw += steerValue * dt * pst * PI_d/180.f;
+	if (pipe)  pst *= hov.steerDampP;
+
+	float hh = 1.f + 1.0f * sqrt(h);  // factor, faster steer with handbrake
+	sphereYaw += steerValue * hh * dt * pst * PI_d/180.f;
 	MATHVECTOR<Dbl,3> dir(cosf(sphereYaw), -sinf(sphereYaw), 0);
 
 	f *= body.GetMass() * -1.0;
@@ -840,13 +844,12 @@ void CARDYNAMICS::SimulateSphere(Dbl dt)
 
 	//  handbrake damping
 	btVector3 v = chassis->getLinearVelocity();
-	Dbl h = brake[0].GetHandbrakeFactor();
 	if (h > 0.01f)
 	{
-		chassis->applyCentralForce(v * h * -10);
+		chassis->applyCentralForce(v * h * -10.f);
 
 		btVector3 av = chassis->getAngularVelocity();
-		chassis->applyTorque(av * h * -10);
+		chassis->applyTorque(av * h * -10.f);
 	}
 
 	//  side damp --
