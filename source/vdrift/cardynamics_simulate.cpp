@@ -3,6 +3,7 @@
 #include "cardynamics.h"
 #include "tobullet.h"
 #include "../ogre/common/Def_Str.h"
+#include "isnan.h"
 
 
 //  set the steering angle,  left -1..1 right

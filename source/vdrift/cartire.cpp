@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "cartire.h"
 #include "cardefs.h"
-#include <cmath>
 //#include "../ogre/common/Def_Str.h"
+#include "isnan.h"
 
 
 void CARTIRE::FindSigmaHatAlphaHat(Dbl load, Dbl & output_sigmahat, Dbl & output_alphahat, int iterations)
