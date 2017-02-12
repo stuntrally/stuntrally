@@ -240,7 +240,9 @@ if (pSet->bTrees)
 		bool full = road->RebuildRoadInt();
 		
 		if (full && scn->pace)  // pace
-		{	road->RebuildRoadPace();
+		{
+			scn->pace->SetupTer(scn->terrain);
+			road->RebuildRoadPace();
 			scn->pace->Rebuild(road, scn->sc, pSet->trk_reverse);
 	}	}
 

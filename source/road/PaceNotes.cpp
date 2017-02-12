@@ -221,7 +221,10 @@ void PaceNotes::Setup(SceneManager* sceneMgr, Camera* camera,
 	mSceneMgr = sceneMgr;  mCamera = camera;
 	mTerrain = terrain;  mGui = gui;  mWindow = window;
 }
-
+void PaceNotes::SetupTer(Terrain* terrain)
+{
+	mTerrain = terrain;
+}
 
 ///  Load
 //------------------------------------------------------------------------------------------

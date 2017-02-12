@@ -61,6 +61,7 @@ public:
 	//  Setup, call this on Init
 	void Setup(Ogre::SceneManager* sceneMgr, Ogre::Camera* camera,
 		Ogre::Terrain* terrain, MyGUI::Gui* gui, Ogre::RenderWindow* window);
+	void SetupTer(Ogre::Terrain* terrain);
 
 	//  Rebuild
 	void Rebuild(SplineRoad* road, Scene* sc, bool reversed);
