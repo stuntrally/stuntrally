@@ -115,25 +115,25 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 	alpha = -atan2(hub_velocity[1], denom) * 180.0/PI_d;
 
 	/*crash dyn obj--*/
-	if (isnan(alpha) || isnan(1.f/sigma_hat))
+	if (std::isnan(alpha) || std::isnan(1.f/sigma_hat))
 	{
 		MATHVECTOR<Dbl,3> outvec(0, 0, 0);
 		return outvec;
 	}
-	assert(!isnan(alpha));
+	assert(!std::isnan(alpha));
 
 	Dbl gamma = current_camber * 180.0/PI_d;
 
 	//  beckman method for pre-combining longitudinal and lateral forces
-	Dbl s = sigma / sigma_hat;  assert(!isnan(s));
-	Dbl a = alpha / alpha_hat;  assert(!isnan(a));
+	Dbl s = sigma / sigma_hat;  assert(!std::isnan(s));
+	Dbl a = alpha / alpha_hat;  assert(!std::isnan(a));
 
 	Dbl rho = std::max( sqrt( s*s+a*a ), 0.0001);  //avoid divide by zero
-	assert(!isnan(rho));
+	assert(!std::isnan(rho));
 
 	Dbl max_Fx(0), max_Fy(0), max_Mz(0);
-	Dbl Fx = (s / rho) * Pacejka_Fx( rho*sigma_hat, Fz,        friction_coeff, max_Fx );  assert(!isnan(Fx));
-	Dbl Fy = (a / rho) * Pacejka_Fy( rho*alpha_hat, Fz, gamma, friction_coeff, max_Fy );  assert(!isnan(Fy));
+	Dbl Fx = (s / rho) * Pacejka_Fx( rho*sigma_hat, Fz,        friction_coeff, max_Fx );  assert(!std::isnan(Fx));
+	Dbl Fy = (a / rho) * Pacejka_Fy( rho*alpha_hat, Fz, gamma, friction_coeff, max_Fy );  assert(!std::isnan(Fy));
 	Dbl Mz = Pacejka_Mz( sigma, alpha, Fz, gamma, friction_coeff, max_Mz );
 
 	if (slips)  // out vis
@@ -159,8 +159,8 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 	{
 		//scale down forces to fit into the maximum
 		Dbl sc = maxforce / combforce;
-		Fx *= sc;  assert(!isnan(Fx));  max_Fx *= sc;  //vis only
-		Fy *= sc;  assert(!isnan(Fy));	max_Fy *= sc;
+		Fx *= sc;  assert(!std::isnan(Fx));  max_Fx *= sc;  //vis only
+		Fy *= sc;  assert(!std::isnan(Fy));	max_Fy *= sc;
 		//std::cout << "Limiting " << combforce << " to " << maxforce << std::endl;
 	}/**/
 
@@ -187,8 +187,8 @@ MATHVECTOR<Dbl,3> CARTIRE::GetForce(
 			Fx = Fx*scale;
 	}/**/
 
-	assert(!isnan(Fx));
-	assert(!isnan(Fy));
+	assert(!std::isnan(Fx));
+	assert(!std::isnan(Fy));
 
 	/*if ( hub_velocity.Magnitude () < 0.1 )
 	{
@@ -291,7 +291,7 @@ Dbl CARTIRE::Pacejka_Fy (Dbl alpha, Dbl Fz, Dbl gamma, Dbl friction_coeff, Dbl &
 
 	Dbl D = ( a[1]*Fz+a[2] ) *Fz*friction_coeff;
 	Dbl B = a[3]*sin ( 2.0*atan ( Fz/a[4] ) ) * ( 1.0-a[5]*std::abs ( gamma ) ) / ( a[0]* ( a[1]*Fz+a[2] ) *Fz );
-	assert(!isnan(B));
+	assert(!std::isnan(B));
 	Dbl E = a[6]*Fz+a[7];
 	Dbl S = alpha + a[8]*gamma+a[9]*Fz+a[10];
 	Dbl Sv = ( ( a[11]*Fz+a[12] ) *gamma + a[13] ) *Fz+a[14];
@@ -301,7 +301,7 @@ Dbl CARTIRE::Pacejka_Fy (Dbl alpha, Dbl Fz, Dbl gamma, Dbl friction_coeff, Dbl &
 
 	//LogO("Fy: "+fToStr(alpha,4,6)+" "+fToStr(Fz,4,6)+" "+fToStr(gamma,4,6)+" "+fToStr(friction_coeff,4,6)+" "+fToStr(maxforce_output,4,6));
 
-	assert(!isnan(Fy));
+	assert(!std::isnan(Fy));
 	return Fy;
 }
 
@@ -319,7 +319,7 @@ Dbl CARTIRE::Pacejka_Mz (Dbl sigma, Dbl alpha, Dbl Fz, Dbl gamma, Dbl friction_c
 
 	maxforce_output = D+Sv;
 
-	assert(!isnan(Mz));
+	assert(!std::isnan(Mz));
 	return Mz;
 }
 
