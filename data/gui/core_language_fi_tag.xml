@@ -111,7 +111,7 @@
 	<Tag name="DistToRoad">etäisyys tiehen</Tag>
 	<Tag name="TBPlace">. sija</Tag>
 	<Tag name="AngleMax">Maksimikulma</Tag>
-	<Tag name="objects">objektit (dynaamiset)</Tag>
+	<Tag name="MessageBox_Retry">Yritä uudelleen</Tag>
 	<Tag name="TipToggleTriplanar">Use for steep or mountain layers, max use is 2.</Tag>
 	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
 	<Tag name="TipTexTiling">Texture tiling length (less means more repeats).</Tag>
@@ -134,6 +134,7 @@
 	<Tag name="InputMapResetGame">Resetoi peli</Tag>
 	<Tag name="smoke">savu</Tag>
 	<Tag name="ConvertAllRpl">Convert All (smaller size)</Tag>
+	<Tag name="Hint-13text">By default simulation is in easy mode, for beginners. Don't forget to set it to normal if the game feels too easy.</Tag>
 	<Tag name="MouseCapture">Kaappaa hiiri</Tag>
 	<Tag name="TipMinimapScrnEditor">Minimap of selected track, view from top.</Tag>
 	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
@@ -213,7 +214,6 @@
 	<Tag name="InputBrushFilter">1,2  -  Filter frequency (kernel size)</Tag>
 	<Tag name="Video">Kuva</Tag>
 	<Tag name="TipBrushPick">shift-LMB - on Brushes, pick only shape (don't change mode).</Tag>
-	<Tag name="Hint-13text">By default simulation is in easy mode, for beginners. Don't forget to set it to normal if the game feels too easy.</Tag>
 	<Tag name="ViewStart">Näytä alku</Tag>
 	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
 	<Tag name="SSS_SpeedFactor">Speed Factor</Tag>
@@ -259,7 +259,6 @@
 	<Tag name="Brush_Offset">Siirtymä</Tag>
 	<Tag name="NetworkError">Network Error</Tag>
 	<Tag name="InputMain">Main</Tag>
-	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="Players">Pelaajat</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
 	<Tag name="MessageBox_No">Ei</Tag>
@@ -709,7 +708,7 @@
 	<Tag name="UnitMB">Mt</Tag>
 	<Tag name="RplTime">Aika</Tag>
 	<Tag name="SC_IslandDark">IslandDark</Tag>
-	<Tag name="MessageBox_Retry">Yritä uudelleen</Tag>
+	<Tag name="objects">objektit (dynaamiset)</Tag>
 	<Tag name="RplGhostOther">Other car ghost (when current unavailable)</Tag>
 	<Tag name="TipTerLHMin">Starting terrain height for layer.</Tag>
 	<Tag name="Yes">Kyllä</Tag>
@@ -1047,6 +1046,7 @@
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
 	<Tag name="TipRoadDist">How far from road will the model appear.</Tag>
+	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="InputStart">Aloita</Tag>
 	<Tag name="FramesPerSec">Frames per second</Tag>
 	<Tag name="ChampInfo2">Championships are usually long, have many tracks, but are easy to pass.</Tag>

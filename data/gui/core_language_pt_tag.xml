@@ -111,7 +111,7 @@
 	<Tag name="DistToRoad">dist. para estrada</Tag>
 	<Tag name="TBPlace">Colocação</Tag>
 	<Tag name="AngleMax">Ângulo máx.</Tag>
-	<Tag name="objects">objetos (dinâmicos)</Tag>
+	<Tag name="MessageBox_Retry">Tentar novamente</Tag>
 	<Tag name="TipToggleTriplanar">Use for steep or mountain layers, max use is 2.</Tag>
 	<Tag name="SleepMS">Sleep interval [milisec]</Tag>
 	<Tag name="TipTexTiling">Texture tiling length (less means more repeats).</Tag>
@@ -134,6 +134,7 @@
 	<Tag name="InputMapResetGame">Reiniciar jogo</Tag>
 	<Tag name="smoke">fumaça</Tag>
 	<Tag name="ConvertAllRpl">Convert All (smaller size)</Tag>
+	<Tag name="Hint-13text">Por padrão a simulação fica no modo fácil, para iniciantes. Não esqueça de mudar para o modo normal caso o jogo esteja muito fácil.</Tag>
 	<Tag name="MouseCapture">Capturar mouse</Tag>
 	<Tag name="TipMinimapScrnEditor">Minimapa da pista selecionada, vista do topo.</Tag>
 	<Tag name="TipTerNoiseOnly">Will ignore terrain angle and height ranges. Layer will only appear, if other layer's noise multiplier blends to this.</Tag>
@@ -213,7 +214,6 @@
 	<Tag name="InputBrushFilter">1,2  -  Filter frequency (kernel size)</Tag>
 	<Tag name="Video">Vídeo</Tag>
 	<Tag name="TipBrushPick">shift-LMB - on Brushes, pick only shape (don't change mode).</Tag>
-	<Tag name="Hint-13text">Por padrão a simulação fica no modo fácil, para iniciantes. Não esqueça de mudar para o modo normal caso o jogo esteja muito fácil.</Tag>
 	<Tag name="ViewStart">View Start</Tag>
 	<Tag name="TipToggleGrass">Enable or disable this grass layer.</Tag>
 	<Tag name="SSS_SpeedFactor">Fator de Velocidade</Tag>
@@ -259,7 +259,6 @@
 	<Tag name="Brush_Offset">Deslocamento</Tag>
 	<Tag name="NetworkError">Erro de rede</Tag>
 	<Tag name="InputMain">Principal</Tag>
-	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="Players">Jogadores</Tag>
 	<Tag name="Road_ChkR">ChkR</Tag>
 	<Tag name="MessageBox_No">Não</Tag>
@@ -709,7 +708,7 @@
 	<Tag name="UnitMB">mb</Tag>
 	<Tag name="RplTime">Tempo</Tag>
 	<Tag name="SC_IslandDark">IlhaEscura</Tag>
-	<Tag name="MessageBox_Retry">Tentar novamente</Tag>
+	<Tag name="objects">objetos (dinâmicos)</Tag>
 	<Tag name="RplGhostOther">Outro carro fantasma (quando o atual não estiver disponível)</Tag>
 	<Tag name="TipTerLHMin">Altura inicial do terreno para a camada.</Tag>
 	<Tag name="Yes">Sim</Tag>
@@ -1047,6 +1046,7 @@
 	<Tag name="BumpWavelen">Bump:  WaveLen</Tag>
 	<Tag name="GhostHideDist">Esconde fantasma se distância é menor que</Tag>
 	<Tag name="TipRoadDist">How far from road will the model appear.</Tag>
+	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="InputStart">Start</Tag>
 	<Tag name="FramesPerSec">Frames por segundo</Tag>
 	<Tag name="ChampInfo2">Campeonatos são geralmente longos, com muitas pistas, mas são fáceis de passar.</Tag>
