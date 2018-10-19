@@ -164,7 +164,7 @@ Vector3 PagedGeometry::_convertToLocal(const Vector3 &globalVec) const
 void PagedGeometry::setPageSize(Real size)
 {
 	if (!managerList.empty())
-		OGRE_EXCEPT(0, "PagedGeometry::setPageSize() cannot be called after detail levels have been added. Call removeDetailLevels() first.", "PagedGeometry::setPageSize()");
+		OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "PagedGeometry::setPageSize() cannot be called after detail levels have been added. Call removeDetailLevels() first.", "PagedGeometry::setPageSize()");
 
 	pageSize = size;
 }
@@ -172,7 +172,7 @@ void PagedGeometry::setPageSize(Real size)
 void PagedGeometry::setInfinite()
 {
 	if (!managerList.empty())
-		OGRE_EXCEPT(0, "PagedGeometry::setInfinite() cannot be called after detail levels have been added. Call removeDetailLevels() first.", "PagedGeometry::setInfinite()");
+		OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "PagedGeometry::setInfinite() cannot be called after detail levels have been added. Call removeDetailLevels() first.", "PagedGeometry::setInfinite()");
 
 	m_bounds = TBounds(0, 0, 0, 0);
 }
@@ -180,7 +180,7 @@ void PagedGeometry::setInfinite()
 void PagedGeometry::setBounds(TBounds bounds)
 {
 	if (!managerList.empty())
-		OGRE_EXCEPT(0, "PagedGeometry::setBounds() cannot be called after detail levels have been added. Call removeDetailLevels() first.", "PagedGeometry::setBounds()");
+		OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "PagedGeometry::setBounds() cannot be called after detail levels have been added. Call removeDetailLevels() first.", "PagedGeometry::setBounds()");
 	if (!Math::RealEqual(bounds.width(), bounds.height(), 0.01f))
 		OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Bounds must be square", "PagedGeometry::setBounds()");
 	if (bounds.width() <= 0 || bounds.height() <=0)
@@ -364,7 +364,7 @@ void PagedGeometry::_addDetailLevel(GeometryPageManager *mgr, Real maxRange, Rea
 
 	//Error check
 	if (maxRange <= minRange){
-		OGRE_EXCEPT(1, "Closer detail levels must be added before farther ones", "PagedGeometry::addDetailLevel()");
+		OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Closer detail levels must be added before farther ones", "PagedGeometry::addDetailLevel()");
 	}
 
 	//Setup the new manager

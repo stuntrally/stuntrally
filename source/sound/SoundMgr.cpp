@@ -4,6 +4,7 @@
 #include "SoundBase.h"
 #include "SoundBaseMgr.h"
 #include <OgreDataStream.h>
+#include <OgreException.h>
 using namespace Ogre;
 
 
