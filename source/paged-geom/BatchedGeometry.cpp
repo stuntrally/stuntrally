@@ -200,7 +200,7 @@ uint32 CountUsedVertices(IndexData *id, std::map<uint32, uint32> &ibmap)
          break;
 
       default:
-         throw new Ogre::Exception(0, "Unknown index buffer type", "Converter.cpp::CountVertices");
+         throw new Ogre::Exception(Exception::ERR_INVALIDPARAMS, "Unknown index buffer type", "Converter.cpp::CountVertices");
          break;
    }
 
@@ -545,7 +545,7 @@ void BatchedGeometry::SubBatch::addSubEntity(SubEntity *ent, const Vector3 &posi
       case VET_COLOUR_ABGR:
          break;
       default:
-         OGRE_EXCEPT(0, "Unknown RenderSystem color format", "BatchedGeometry::SubBatch::addSubMesh()");
+         OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Unknown RenderSystem color format", "BatchedGeometry::SubBatch::addSubMesh()");
          break;
       }
    }
