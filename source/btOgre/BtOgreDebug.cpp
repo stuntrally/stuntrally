@@ -11,6 +11,7 @@
 
 #include <math.h>
 
+#include <OgrePrerequisites.h>
 #include <OgreSceneNode.h>
 #include <OgreResourceGroupManager.h>
 #include <OgreMaterial.h>
@@ -38,7 +39,11 @@ DebugDrawer::DebugDrawer(Ogre::SceneNode *node, btDynamicsWorld *world) :
 	mat->setReceiveShadows(false);
 	mat->setLightingEnabled(false);
 	//mat->setSelfIllumination(1,1,1);
+#if defined(OGRE_VERSION) && OGRE_VERSION < 0x10A00
 	mLineDrawer->setMaterial("BtOgre/DebugLines");/**/  //crash debug..
+#else
+	mLineDrawer->setMaterial(mat);/**/  //crash debug..
+#endif
 	mLineDrawer->setVisibilityFlags(2/*RV_Hud*/);  // not in reflection
 }
 

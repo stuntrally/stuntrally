@@ -17,6 +17,7 @@
 #include "../../paged-geom/PagedGeometry.h"
 #include "../../paged-geom/GrassLoader.h"
 
+#include <OgrePrerequisites.h>
 #include <OgreTimer.h>
 #include <OgreTerrain.h>
 #include <OgreShadowCameraSetupLiSPSM.h>
@@ -163,8 +164,12 @@ void CScene::changeShadows()
 		
 		mSceneMgr->setShadowTextureSelfShadow(bDepth ? true : false);  //-?
 		mSceneMgr->setShadowCasterRenderBackFaces((bDepth && !bSoft) ? true : false);
-
+#if defined(OGRE_VERSION) && OGRE_VERSION < 0x10A00
 		mSceneMgr->setShadowTextureCasterMaterial(bDepth ? "shadowcaster_default" : "");
+#else
+		MaterialPtr shadowcast_mt = MaterialManager::getSingleton().getByName("shadowcaster_default");
+		if (bDepth)  mSceneMgr->setShadowTextureCasterMaterial(shadowcast_mt);
+#endif
 	}
 
 	mSceneMgr->setShadowColour(ColourValue(0,0,0,1));

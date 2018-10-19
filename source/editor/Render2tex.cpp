@@ -13,6 +13,7 @@
 #include <btBulletDynamicsCommon.h>
 #include <BulletCollision/CollisionDispatch/btCollisionWorld.h>
 
+#include <OgrePrerequisites.h>
 #include <OgreTimer.h>
 #include <OgreTerrain.h>
 #include <OgreRenderWindow.h>
@@ -78,7 +79,7 @@ void App::Rnd2TexSetup()
 		}
 		///  minimap  . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 		if (r.ndMini)  mSceneMgr->destroySceneNode(r.ndMini);
-		ResourcePtr mt = MaterialManager::getSingleton().getByName(sMtr);
+		MaterialPtr mt = MaterialManager::getSingleton().getByName(sMtr);
 		if (!mt.isNull())  mt->reload();
 
 		r.mini = new Rectangle2D(true);  // screen rect preview
@@ -88,7 +89,12 @@ void App::Rnd2TexSetup()
 		r.mini->setBoundingBox(aab);
 		r.ndMini = mSceneMgr->getRootSceneNode()->createChildSceneNode("Minimap"+si);
 		r.ndMini->attachObject(r.mini);	r.mini->setCastShadows(false);
+#if defined(OGRE_VERSION) && OGRE_VERSION < 0x10A00
 		r.mini->setMaterial(i == RTs+1 ? "BrushPrvMtr" : sMtr);
+#else
+		MaterialPtr brush_mt = MaterialManager::getSingleton().getByName("BrushPrvMtr");
+		r.mini->setMaterial(i == RTs+1 ? brush_mt : mt);
+#endif
 		r.mini->setRenderQueueGroup(RQG_Hud2);
 		r.mini->setVisibilityFlags(i == RTs ? RV_MaskPrvCam : RV_Hud);
 	}
