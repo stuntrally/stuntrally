@@ -83,17 +83,25 @@ list(APPEND LIBS ${Boost_LIBRARIES})
 
 # We can significantly reduce deps if only building master server
 if(BUILD_GAME OR BUILD_EDITOR)
-	find_package(OGRE REQUIRED QUIET)
+        find_package(OGRE REQUIRED QUIET)
         include_directories(${OGRE_INCLUDE_DIRS} ${OGRE_Terrain_INCLUDE_DIRS} ${OGRE_Paging_INCLUDE_DIRS})
         # Overlay moved to separate component in 1.9
         if (OGRE_VERSION_MAJOR GREATER 1 OR OGRE_VERSION_MINOR GREATER 8)
             include_directories(${OGRE_Overlay_INCLUDE_DIRS})
+        endif()
+        # Bites moved to separate component in 1.11
+        if (OGRE_VERSION_MAJOR GREATER 1 OR OGRE_VERSION_MINOR GREATER 10)
+            include_directories(${OGRE_Bites_INCLUDE_DIRS})
         endif()
         link_directories(${OGRE_LIBRARY_DIRS})
         list(APPEND LIBS ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Paging_LIBRARIES})
         # Overlay moved to separate component in 1.9
         if (OGRE_VERSION_MAJOR GREATER 1 OR OGRE_VERSION_MINOR GREATER 8)
             list(APPEND LIBS ${OGRE_Overlay_LIBRARIES})
+        endif()
+        # Bites moved to separate component in 1.11
+        if (OGRE_VERSION_MAJOR GREATER 1 OR OGRE_VERSION_MINOR GREATER 10)
+            list(APPEND LIBS ${OGRE_Bites_LIBRARIES})
         endif()
         add_definitions(-DOGRE_PLUGIN_DIR_REL="${OGRE_PLUGIN_DIR_REL}")
         add_definitions(-DOGRE_PLUGIN_DIR_DBG="${OGRE_PLUGIN_DIR_DBG}")
