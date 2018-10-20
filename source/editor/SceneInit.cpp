@@ -29,6 +29,7 @@
 #include <OgreViewport.h>
 #include <OgreMaterialManager.h>
 #include <OgreTextureManager.h>
+#include <OgreResourceGroupManager.h>
 #include <OgreSceneNode.h>
 #include "../ogre/common/MessageBox/MessageBox.h"
 #include "../ogre/common/Instancing.h"
@@ -174,10 +175,10 @@ void App::NewCommon(bool onlyTerVeget)
 	//world.Clear();
 	if (track)  track->Clear();
 
-	if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
+	if (resTrk != "")  ResourceGroupManager::getSingleton().removeResourceLocation(resTrk);
 	LogO("------  Loading track: "+pSet->gui.track);
 	resTrk = gcom->TrkDir() + "objects";
-	mRoot->addResourceLocation(resTrk, "FileSystem");
+	ResourceGroupManager::getSingleton().addResourceLocation(resTrk, "FileSystem");
 
 	MeshManager::getSingleton().unloadUnreferencedResources();
 	sh::Factory::getInstance().unloadUnreferencedMaterials();

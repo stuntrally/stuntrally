@@ -16,12 +16,12 @@
 #include "../road/Road.h"
 #include "../shiny/Main/Factory.hpp"
 #include "../network/gameclient.hpp"
-#include <OgreRoot.h>
 #include <OgreTerrain.h>
 #include <OgreEntity.h>
 #include <OgreManualObject.h>
 #include <OgreSubMesh.h>
 #include <OgreMaterialManager.h>
+#include <OgreResourceGroupManager.h>
 #include <OgreParticleSystem.h>
 #include <OgreParticleEmitter.h>
 #include <OgreParticleAffector.h>
@@ -401,8 +401,8 @@ void CarModel::Create()
 	//  Resource locations -----------------------------------------
 	/// Add a resource group for this car
 	ResourceGroupManager::getSingleton().createResourceGroup(resGrpId);
-	Root::getSingletonPtr()->addResourceLocation(sCars, "FileSystem", resGrpId);
-	Root::getSingletonPtr()->addResourceLocation(sCars + "/textures", "FileSystem", resGrpId);
+	ResourceGroupManager::getSingleton().addResourceLocation(sCars, "FileSystem", resGrpId);
+	ResourceGroupManager::getSingleton().addResourceLocation(sCars + "/textures", "FileSystem", resGrpId);
 		
 	SceneNode* ndRoot = mSceneMgr->getRootSceneNode();
 	pMainNode = ndRoot->createChildSceneNode();  ToDel(pMainNode);
