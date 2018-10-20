@@ -26,6 +26,8 @@
 #include <MyGUI_PointerManager.h>
 #include <OgreTerrainGroup.h>
 #include <OgreParticleSystem.h>
+#include <OgreResourceGroupManager.h>
+
 using namespace MyGUI;
 using namespace Ogre;
 
@@ -255,10 +257,10 @@ void App::LoadCleanUp()  // 1 first
 	// rem old track
 	if (dstTrk)
 	{
-		if (resTrk != "")  mRoot->removeResourceLocation(resTrk);
+		if (resTrk != "")  ResourceGroupManager::getSingleton().removeResourceLocation(resTrk);
 		LogO("------  Loading track: "+pSet->game.track);
 		resTrk = gcom->TrkDir() + "objects";
-		mRoot->addResourceLocation(resTrk, "FileSystem");
+		ResourceGroupManager::getSingleton().addResourceLocation(resTrk, "FileSystem");
 	}
 	
 	//  Delete all cars

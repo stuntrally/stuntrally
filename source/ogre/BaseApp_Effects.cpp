@@ -9,12 +9,13 @@
 #include "SplitScreen.h"
 //#include "HDRCompositor.h"
 
-#include <OgreRoot.h>
 #include <OgreCompositorManager.h>
 #include <OgreCompositionTargetPass.h>
 #include <OgreCompositionPass.h>
 #include <OgreTechnique.h>
 #include <OgreCompositor.h>
+#include <OgreResourceGroupManager.h>
+
 using namespace Ogre;
 
 
@@ -135,16 +136,16 @@ void BaseApp::recreateCompositor()
 	if (!ResourceGroupManager::getSingleton().resourceGroupExists("Effects"))
 	{
 		std::string sPath = PATHMANAGER::Data() + "/compositor";
-		mRoot->addResourceLocation(sPath, "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/gbuffer", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/bloom", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/hdr", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/ssao", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/softparticles", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/dof", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/godrays", "FileSystem", "Effects");
-		mRoot->addResourceLocation(sPath + "/filmgrain", "FileSystem", "Effects");
+		ResourceGroupManager::getSingleton().addResourceLocation(sPath, "FileSystem", "Effects");
+		ResourceGroupManager::getSingleton().addResourceLocation(sPath + "/gbuffer", "FileSystem", "Effects");
+		ResourceGroupManager::getSingleton().addResourceLocation(sPath + "/bloom", "FileSystem", "Effects");
+		ResourceGroupManager::getSingleton().addResourceLocation(sPath + "/hdr", "FileSystem", "Effects");
+		ResourceGroupManager::getSingleton().addResourceLocation(sPath + "/motionblur", "FileSystem", "Effects");
+		ResourceGroupManager::getSingleton().addResourceLocation(sPath + "/ssao", "FileSystem", "Effects");
+		ResourceGroupManager::getSingleton().addResourceLocation(sPath + "/softparticles", "FileSystem", "Effects");
+		ResourceGroupManager::getSingleton().addResourceLocation(sPath + "/dof", "FileSystem", "Effects");
+		ResourceGroupManager::getSingleton().addResourceLocation(sPath + "/godrays", "FileSystem", "Effects");
+		ResourceGroupManager::getSingleton().addResourceLocation(sPath + "/filmgrain", "FileSystem", "Effects");
 		ResourceGroupManager::getSingleton().initialiseResourceGroup("Effects");
 	}
 
