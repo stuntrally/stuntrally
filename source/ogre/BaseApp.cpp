@@ -86,8 +86,9 @@ void BaseApp::updateStats()
 				{
 					std::string textureName = c->getTechnique()->getTargetPass(j)->getOutputName();
 					rt = c->getRenderTarget(textureName);
-					tris += rt->getTriangleCount();
-					batch += rt->getBatchCount();
+					const RenderTarget::FrameStats& rt_stats = rt->getStatistics();
+					tris += rt_stats.triangleCount;
+					batch += rt_stats.batchCount;
 			}	}
 		}else
 		{

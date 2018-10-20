@@ -204,7 +204,7 @@ void SplitScr::preViewportUpdate(const RenderTargetViewportEvent& evt)
 
 		//  Update HUD for this car
 		pApp->hud->ShowVp(true);
-		pApp->hud->Update(carId, 1.f / mWindow->getLastFPS());
+		pApp->hud->Update(carId, 1.f / mWindow->getStatistics().lastFPS);
 
 		///  Set sky pos to camera  - TODO: fix, sky is center only for last player ...
 		//  idea: with compositor this needs separate sky nodes (own sky for each player) and showing 1 sky for 1 player
@@ -266,7 +266,7 @@ void SplitScr::preViewportUpdate(const RenderTargetViewportEvent& evt)
 	else
 	{
 		//  Gui viewport - hide stuff we don't want
-		pApp->hud->Update(-1, 1.f / mWindow->getLastFPS());
+		pApp->hud->Update(-1, 1.f / mWindow->getStatistics().lastFPS);
 		pApp->hud->ShowVp(false);
 		
 		// no mouse in key capture mode
