@@ -83,9 +83,6 @@ void App::createScene()  // once, init
 	
 	LogO(String("::: Time load xmls: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
-
-	postInit();  // material factory
-
 	//  gui  * * *
 	if (pSet->startInMain)
 		pSet->isMain = true;

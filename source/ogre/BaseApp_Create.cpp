@@ -386,9 +386,7 @@ bool BaseApp::setup()
 		LogO(String(":::: Time setup gui: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	createResourceListener();
-	loadResources();
 
-		LogO(String(":::: Time resources: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	LogO("*** createFrameListener ***");
 	createFrameListener();
@@ -415,6 +413,10 @@ bool BaseApp::setup()
 	postInit();
 
 		LogO(String(":::: Time post, mat factory: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
+
+	loadResources();
+
+		LogO(String(":::: Time resources: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();  
 
 	LogO(String(":::: Time setup total: ") + fToStr(ti2.getMilliseconds(),0,3) + " ms");
 	

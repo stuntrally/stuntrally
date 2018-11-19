@@ -304,6 +304,7 @@ bool BaseApp::setup()
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 	mSceneMgr->setFog(Ogre::FOG_NONE);
 
+    postInit();
 	loadResources();
 
 	baseInitGui();
