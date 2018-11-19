@@ -10,7 +10,7 @@ namespace sh
 	OgreTextureUnitState::OgreTextureUnitState (OgrePass* parent, const std::string& name)
 		: TextureUnitState()
 	{
-		mTextureUnitState = parent->getOgrePass()->createTextureUnitState("");
+		mTextureUnitState = parent->getOgrePass()->createTextureUnitState();
 		mTextureUnitState->setName(name);
 	}
 

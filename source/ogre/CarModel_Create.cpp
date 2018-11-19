@@ -645,8 +645,10 @@ void CarModel::Create()
 	//  this snippet makes sure the brake texture is pre-loaded.
 	//  since it is not used until you actually brake, we have to explicitely declare it
 	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
-	if (FileExists(rCar + "_body00_brake.png")) resMgr.declareResource(sDirname + "_body00_brake.png", "Texture", resGrpId);
-	if (FileExists(rCar + "_body00_add.png"))   resMgr.declareResource(sDirname + "_body00_add.png", "Texture", resGrpId);
+	if (FileExists(rCar + "_body00_brake.png") && !resMgr.resourceExists(resGrpId, sDirname + "_body00_brake.png"))
+		resMgr.declareResource(sDirname + "_body00_brake.png", "Texture", resGrpId);
+	if (FileExists(rCar + "_body00_add.png") && !resMgr.resourceExists(resGrpId, sDirname + "_body00_add.png"))
+		resMgr.declareResource(sDirname + "_body00_add.png", "Texture", resGrpId);
 	
 	//  now just preload the whole resource group
 	resMgr.initialiseResourceGroup(resGrpId);
