@@ -5,7 +5,7 @@
 //  Brush Presets data
 //---------------------------------------------------------------------------------------------------------------
 const App::BrushSet App::brSets[App::brSetsNum] = {
-//ED_MODE,curBr,  Size, Intens,  Pow, Freq,  Ofs, Oct, EBrShape, Filter, HSet,  Name
+	//ED_MODE,curBr,Size,Intens, Pow,  Freq,  Ofs, Oct, EBrShape,  Filter,HSet, newLine, Name
 //------  easy sinus
 	{ED_Deform,0,  16.f, 10.f,   2.f,  1.f,   0.f, 5,   BRS_Sinus,  -1.f,-0.01f, 0, "Small"},
 	{ED_Deform,0,  32.f, 20.f,   2.f,  1.f,   0.f, 5,   BRS_Sinus,  -1.f,-0.01f, 0, "Medium"},
