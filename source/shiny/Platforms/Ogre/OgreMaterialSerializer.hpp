@@ -1,7 +1,14 @@
 #ifndef SH_OGREMATERIALSERIALIZER_H
 #define SH_OGREMATERIALSERIALIZER_H
 
+#include <OgrePrerequisites.h>
+
+#if defined(OGRE_VERSION) && OGRE_VERSION > 0x10A00
+// MaterialSerializer was dropped in Ogre 1.11, we keep our own copy for now
+#include "OgreMainMaterialSerializer.h"
+#else
 #include <OgreMaterialSerializer.h>
+#endif
 
 namespace Ogre
 {

@@ -58,7 +58,12 @@ if (SHINY_BUILD_OGRE_PLATFORM)
         Platforms/Ogre/OgrePlatform.cpp
         Platforms/Ogre/OgreTextureUnitState.cpp
     )
-    file(GLOB OGRE_PLATFORM_SOURCE_FILES Platforms/Ogre/*.cpp)
+    if (OGRE_VERSION_MAJOR GREATER 1 OR OGRE_VERSION_MINOR GREATER 10)
+        set(OGRE_PLATFORM_SOURCE_FILES
+            ${OGRE_PLATFORM_SOURCE_FILES}
+            Platforms/Ogre/OgreMainMaterialSerializer.cpp
+        )
+    endif()
 
     add_definitions(-DBOOST_ALL_NO_LIB)
     add_library(${SHINY_OGREPLATFORM_LIBRARY} ${SHINY_LIBRARY_TYPE} ${OGRE_PLATFORM_SOURCE_FILES})
