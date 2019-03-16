@@ -10,6 +10,6 @@ for po in fpo:
 	p2 = po[0:2]
 	if p2 != 'en':
 		print('----  '+p2+'  '+po)
-		cmd = 'xml_po_parser.py '+tdir+'/'+po+' ../data/gui/core_language_'+p2+'_tag.xml'
+		cmd = 'python xml_po_parser.py '+tdir+'/'+po+' ../data/gui/core_language_'+p2+'_tag.xml'
 		#print(cmd)
 		os.system(cmd)

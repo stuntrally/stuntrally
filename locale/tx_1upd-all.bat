@@ -25,7 +25,7 @@ tx pull -a --minimum-perc=10
 echo.
 echo Converting .po to .xml
 
-xml_po_all.py
+python xml_po_all.py
 
 echo End.
 pause
