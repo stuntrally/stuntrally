@@ -26,8 +26,8 @@ msgstr \"\"\n\
 ignore_tags = ["GameVersion", "PageURL", "LANG_EN", "LANG_DE", "LANG_FI", "LANG_PL", "LANG_RO", "LANG_FR", "LANG_RU", "LANG_PT", "LANG_IT", "LANG_SK" ]
 
 def usage():
-	print "Usage: " + sys.argv[0] + " someFile.xml someFile.pot"
-	print "Usage: " + sys.argv[0] + " someFile.po someFile.xml"
+	print("Usage: " + sys.argv[0] + " someFile.xml someFile.pot")
+	print("Usage: " + sys.argv[0] + " someFile.po someFile.xml")
 
 if (len(sys.argv)) != 3:
 	usage()
@@ -35,9 +35,11 @@ if (len(sys.argv)) != 3:
 
 file1 = sys.argv[1]
 file2 = sys.argv[2]
+#print(file1)
+#print(file2)
 
-f1 = open(file1, 'r')
-f2 = open(file2, 'w')
+f1 = open(file1, 'r', encoding="utf8")
+f2 = open(file2, 'w', encoding="utf8")
 
 msgs = {}
 # msgs = {"foo":"bar", "asdf":"ghij"}
@@ -77,6 +79,7 @@ elif file1.endswith(".po") and file2.endswith(".xml"):
 	last = "msgstr"
 	# read po
 	for line in f1:
+		#print(line)
 		if line.strip().startswith("\""):
 			if last == "msgctxt":
 				#msgid += line.strip().split("\"")[1].replace("\\n", "\n")
@@ -102,7 +105,7 @@ elif file1.endswith(".po") and file2.endswith(".xml"):
 
 	# read english xml for fallback when untranslated
 	msgs_f = {}
-	f_f = open(os.path.join(os.path.dirname(file2), fallback_file))
+	f_f = open(os.path.join(os.path.dirname(file2), fallback_file), encoding="utf8")
 	for line in f_f:
 		if line.strip().startswith("<Tag name="):
 			msgid = line.split("=\"")[1].split("\"")[0]
