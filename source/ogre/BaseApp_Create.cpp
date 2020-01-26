@@ -353,6 +353,9 @@ bool BaseApp::setup()
 	}
 
 	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
+#if defined(OGRE_VERSION) && OGRE_VERSION >= 0x10B00
+    mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Codec_STBI" + D_SUFFIX);
+#endif
 
 	#ifdef _DEBUG
 	LogManager::getSingleton().setLogDetail(LL_BOREME);//
