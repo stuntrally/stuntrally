@@ -92,9 +92,9 @@ void CScene::CreateBlendTex()
 	
 	//  Blendmap rtt
 	blendRTex = texMgr.createManual( sBlend, rgDef, TEX_TYPE_2D,
-		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
+		size, size, 0, PF_BYTE_BGRA, TU_RENDERTARGET);
 	if (blendRTex.isNull())
-		LogO("Error: Can't create RGBA (Blendmap) RenderTarget!");
+		LogO("Error: Can't create BGRA (Blendmap) RenderTarget!");
 
 	//  rtt copy  (not needed)
 	//blMap = texMgr.createManual("blendmapT", rgDef, TEX_TYPE_2D,
