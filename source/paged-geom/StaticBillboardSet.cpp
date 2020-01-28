@@ -121,10 +121,11 @@ StaticBillboardSet::~StaticBillboardSet()
       //Remove billboard set
       mpSceneMgr->destroyBillboardSet(mpFallbackBillboardSet);
 
+    mpSceneNode->removeAllChildren();
    //Delete scene node
    if (mpSceneNode->getParent())
-      mpSceneNode->getParentSceneNode()->removeAndDestroyChild(mpSceneNode->getName());
-   else
+      mpSceneNode->getParentSceneNode()->removeChild(mpSceneNode);
+
       mpSceneNode->getCreator()->destroySceneNode(mpSceneNode);
 }
 
