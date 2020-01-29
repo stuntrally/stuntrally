@@ -24,6 +24,7 @@ SDLWindowHelper::SDLWindowHelper (SDL_Window* window, int w, int h,
 	if (!SDL_GetWindowWMInfo(mSDLWindow, &wmInfo))
 		throw std::runtime_error("Couldn't get WM Info!");
 
+    Ogre::String param = "externalWindowHandle";
 	Ogre::String winHandle;
 
 	switch (wmInfo.subsystem)
@@ -43,6 +44,7 @@ SDLWindowHelper::SDLWindowHelper (SDL_Window* window, int w, int h,
 		break;
 #else
 	case SDL_SYSWM_X11:
+        param = "parentWindowHandle";
 		winHandle = Ogre::StringConverter::toString((unsigned long)wmInfo.info.x11.window);
 		break;
 #endif
@@ -51,9 +53,7 @@ SDLWindowHelper::SDLWindowHelper (SDL_Window* window, int w, int h,
 		break;
 	}
 
-	/// \todo externalWindowHandle is deprecated according to the source code. Figure out a way to get parentWindowHandle
-	/// to work properly. On Linux/X11 it causes an occasional GLXBadDrawable error.
-	params.insert(std::make_pair("externalWindowHandle",  winHandle));
+	params.insert(std::make_pair(param,  winHandle));
 
 	mWindow = Ogre::Root::getSingleton().createRenderWindow(title, w, h, fullscreen, &params);
 }
