@@ -456,6 +456,15 @@ void BaseApp::setupResources()
 			ResourceGroupManager::getSingleton().addResourceLocation(
 				PATHMANAGER::Data() + "/" + archName, typeName, secName);
 	}	}
+
+#if defined(OGRE_VERSION) && OGRE_VERSION >= 0x10C00
+	// create stubs for Ogre 1.12 core shaders (unused by stuntrally)
+	auto& gpm = HighLevelGpuProgramManager::getSingleton();
+	for(auto name : {"PointLight", "DirLight", "PointLightFinite", "DirLightFinite"})
+	    gpm.createProgram("Ogre/ShadowExtrude"+String(name), "OgreInternal", "unified", GPT_VERTEX_PROGRAM);
+	gpm.createProgram("Ogre/ShadowBlendVP", "OgreInternal", "unified", GPT_VERTEX_PROGRAM);
+	gpm.createProgram("Ogre/ShadowBlendFP", "OgreInternal", "unified", GPT_FRAGMENT_PROGRAM);
+#endif
 }
 
 void BaseApp::createResourceListener()
