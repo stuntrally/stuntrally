@@ -27,6 +27,7 @@
 #include <MyGUI_FactoryManager.h>
 #include <MyGUI_ImageBox.h>
 #include <MyGUI_TextBox.h>
+#include <OgreWindowEventUtilities.h>
 
 namespace
 {
