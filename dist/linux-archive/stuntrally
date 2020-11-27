@@ -26,6 +26,18 @@ export OGRE_PLUGIN_DIR="$LIBPATH"
 
 if [ "$(uname -m)" = "x86_64" ]; then
 	"$BINPATH/stuntrally_x86_64" $*
+	ret=$?
+	if [ $ret -eq 139 ]; then
+		cat - <<EOHELP
+----------------------------
+This might be a known crash!
+You can try to rename (disable) libstdc++.so.6 with the command:
+
+mv $LIBPATH/libstdc++.so.6 $LIBPATH/libstdc++.so.6.disabled
+
+and call $0 again
+EOHELP
+	fi
 else
 	"$BINPATH/stuntrally_x86" $*
 fi
