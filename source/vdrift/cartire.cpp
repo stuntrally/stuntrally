@@ -280,7 +280,7 @@ Dbl CARTIRE::Pacejka_Fx (Dbl sigma, Dbl Fz, Dbl friction_coeff, Dbl & maxforce_o
 
 	maxforce_output = D;
 
-	assert(!std::isnan(Fx));
+	assert(!isnan(Fx));
 	return Fx;
 }
 

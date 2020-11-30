@@ -137,7 +137,8 @@ public:
 		float Size,Intens,Pow,Fq,NOf;
 		int Oct;  EBrShape shape;
 		float Filter,HSet;
-		char newLine;  Ogre::String name;
+		signed char newLine;
+		Ogre::String name;
 	};
 
 	const static int brSetsNum = 87;
