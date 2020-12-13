@@ -26,6 +26,8 @@
 #include <OgreViewport.h>
 #include <OgreMaterialManager.h>
 #include <OgreSceneNode.h>
+#include <OgreTechnique.h>
+#include <OgrePass.h>
 using namespace Ogre;
 
 
@@ -44,6 +46,7 @@ void App::Rnd2TexSetup()
 	xm1 = 1-sz/asp, ym1 = -1+sz, xm2 = 1.0, ym2 = -1.0;
 	AxisAlignedBox aab;  aab.setInfinite();
 	
+	TexturePtr texture[RTs];
 	for (int i=0; i < RTs+RTsAdd; ++i)
 	{
 		SRndTrg& r = rt[i];  bool full = i==3;
@@ -57,7 +60,7 @@ void App::Rnd2TexSetup()
 			
 			///  rnd to tex - same dim as Hmap	// after track load
 			Real fDim = scn->sc->td.fTerWorldSize;  // world dim  ..vdr
-			TexturePtr texture = TextureManager::getSingleton().createManual(
+			texture[i] = TextureManager::getSingleton().createManual(
 				sTex, rgDef, TEX_TYPE_2D,
 				dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
 				  
@@ -67,7 +70,7 @@ void App::Rnd2TexSetup()
 			r.cam->setAspectRatio(1.0);			if (!full)  r.cam->setProjectionType(PT_ORTHOGRAPHIC);
 			r.cam->setOrthoWindow(fDim,fDim);	//rt[i].rndCam->setPolygonMode(PM_WIREFRAME);
 
-			r.tex = texture->getBuffer()->getRenderTarget();
+			r.tex = texture[i]->getBuffer()->getRenderTarget();
 			r.tex->setAutoUpdated(false);	r.tex->addListener(this);
 			Viewport* rvp = r.tex->addViewport(r.cam);
 			rvp->setClearEveryFrame(true);   rvp->setBackgroundColour(ColourValue(0,0,0,0));
@@ -80,6 +83,15 @@ void App::Rnd2TexSetup()
 		///  minimap  . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 		if (r.ndMini)  mSceneMgr->destroySceneNode(r.ndMini);
 		MaterialPtr mt = MaterialManager::getSingleton().getByName(sMtr);
+	#if defined(OGRE_VERSION) && OGRE_VERSION >= 0x10A00
+		if (i == 3)
+		{	mt->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTexture(texture[0]);
+			mt->getTechnique(0)->getPass(0)->getTextureUnitState(1)->setTexture(texture[2]);
+		}else if (i < RTs)
+			mt->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTexture(texture[i]);
+		else if (i == RTs)
+			mt->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTexture(texture[3]);
+	#endif
 		if (!mt.isNull())  mt->reload();
 
 		r.mini = new Rectangle2D(true);  // screen rect preview
