@@ -256,10 +256,8 @@ void CScene::CreateTrees()
 					ImpostorTexture* it = new ImpostorTexture(&group, ent, true);  // only to renderTextures()
 					delete it;
 				}
-				if (resMgr.resourceExistsInAnyGroup(fpng))
 				try
 				{	TextureManager::getSingleton().load(fpng, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);  ///T png first
-					resMgr.declareResource(fpng, "Texture", "BinFolder");  // preload
 				}catch (Ogre::Exception&)
 				{	}
 			}
@@ -435,15 +433,6 @@ void CScene::CreateTrees()
 					++cntshp;
 				}
 				#endif
-			}
-		}
-		if (imp)
-		{
-			resMgr.initialiseResourceGroup("BinFolder");
-			try  {
-				resMgr.loadResourceGroup("BinFolder");
-			}catch (Ogre::Exception& e)  {  // does throw not found impostors png sometimes, why?
-				LogO(e.getFullDescription());
 			}
 		}
 		trees->update();

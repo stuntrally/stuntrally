@@ -151,7 +151,7 @@ void CScene::UpdateWeather(Camera* cam, float mul)
 	const Vector3& pos = cam->getPosition(), dir = cam->getDirection();
 	static Vector3 oldPos = Vector3::ZERO;
 
-	Vector3 vel = (pos-oldPos) * app->mWindow->getLastFPS();  oldPos = pos;
+	Vector3 vel = (pos-oldPos) * app->mWindow->getStatistics().lastFPS;  oldPos = pos;
 	Vector3 par = pos + dir * 12.f + vel * 0.6f;
 
 	if (pr && sc->rainEmit > 0)

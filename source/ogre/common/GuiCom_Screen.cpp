@@ -102,7 +102,7 @@ void CGuiCom::InitGuiScreenRes()
 		String modeSel = "";
 		std::vector<ScrRes> vRes;
 
-		const StringVector& videoModes = app->mRoot->getRenderSystem()->getConfigOptions()["Video Mode"].possibleValues;
+		const StringVector& videoModes = app->mRoot->getRenderSystem()->getConfigOptions().find("Video Mode")->second.possibleValues;
 		for (int i=0; i < videoModes.size(); ++i)
 		{
 			String mode = videoModes[i];

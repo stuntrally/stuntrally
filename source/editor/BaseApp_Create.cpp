@@ -27,6 +27,7 @@
 #include <MyGUI_FactoryManager.h>
 #include <MyGUI_ImageBox.h>
 #include <MyGUI_TextBox.h>
+#include <OgreWindowEventUtilities.h>
 
 namespace
 {
@@ -286,6 +287,9 @@ bool BaseApp::setup()
 	}
 
 	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
+#if defined(OGRE_VERSION) && OGRE_VERSION >= 0x10B00
+    mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Codec_STBI" + D_SUFFIX);
+#endif
 
 	setupResources();
 
@@ -304,6 +308,7 @@ bool BaseApp::setup()
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 	mSceneMgr->setFog(Ogre::FOG_NONE);
 
+    postInit();
 	loadResources();
 
 	baseInitGui();
@@ -344,6 +349,16 @@ void BaseApp::setupResources()
 				PATHMANAGER::Data() + "/" + archName, typeName, secName);
 		}
 	}
+
+#if defined(OGRE_VERSION) && OGRE_VERSION >= 0x10C00
+	using namespace Ogre;
+    // create stubs for Ogre 1.12 core shaders (unused by stuntrally)
+    auto& gpm = HighLevelGpuProgramManager::getSingleton();
+    for(auto name : {"PointLight", "DirLight", "PointLightFinite", "DirLightFinite"})
+        gpm.createProgram("Ogre/ShadowExtrude"+String(name), "OgreInternal", "unified", GPT_VERTEX_PROGRAM);
+    gpm.createProgram("Ogre/ShadowBlendVP", "OgreInternal", "unified", GPT_VERTEX_PROGRAM);
+    gpm.createProgram("Ogre/ShadowBlendFP", "OgreInternal", "unified", GPT_FRAGMENT_PROGRAM);
+#endif
 }
 
 void BaseApp::loadResources()

@@ -70,6 +70,10 @@ namespace sh
 
 	bool OgreMaterial::createConfiguration (const std::string& name, unsigned short lodIndex)
 	{
+		// drop dummy technique
+		if(mMaterial->getTechnique(0)->getNumPasses() == 0)
+			mMaterial->removeTechnique(0);
+
 		for (int i=0; i<mMaterial->getNumTechniques(); ++i)
 		{
 			if (mMaterial->getTechnique(i)->getSchemeName() == name && mMaterial->getTechnique(i)->getLodIndex() == lodIndex)

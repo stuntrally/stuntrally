@@ -198,7 +198,7 @@ void WindBatchedGeometry::WindSubBatch::build()
    }
 
 
-
+	std::vector<uchar> shadowBuf;
 	//For each queued mesh...
 	size_t indexOffset = 0;
    for (size_t iMesh = 0, meshCnt = m_queueMesh.size(); iMesh < meshCnt; ++iMesh)
@@ -232,7 +232,9 @@ void WindBatchedGeometry::WindSubBatch::build()
          {
 				//Lock the input buffer
 				const HardwareVertexBufferSharedPtr &sourceBuffer = sourceBinds->getBuffer(i);
-				uchar *sourceBase = static_cast<uchar*>(sourceBuffer->lock(HardwareBuffer::HBL_READ_ONLY));
+				shadowBuf.resize(sourceBuffer->getSizeInBytes());
+         		sourceBuffer->readData(0, sourceBuffer->getSizeInBytes(), shadowBuf.data());
+         		uchar *sourceBase = shadowBuf.data();
 
             size_t sourceVertexSize = sourceBuffer->getVertexSize();
             size_t destVertexSize   = vertDecl->getVertexSize(i);
@@ -336,7 +338,6 @@ void WindBatchedGeometry::WindSubBatch::build()
 
 				//Unlock the input buffer
 				vertexBuffers[i] = destBase;
-				sourceBuffer->unlock();
          }
          else
          {
@@ -366,66 +367,44 @@ void WindBatchedGeometry::WindSubBatch::build()
 		//Copy mesh index data into the index buffer
 		if (srcIndexType == HardwareIndexBuffer::IT_32BIT)
       {
-			//Lock the input buffer
-			uint32 *source = static_cast<uint32*>(sourceIndexData->indexBuffer->lock(
-				sourceIndexData->indexStart, sourceIndexData->indexCount, HardwareBuffer::HBL_READ_ONLY));
-			uint32 *sourceEnd = source + sourceIndexData->indexCount;
+			sourceIndexData->indexBuffer->readData(
+				sourceIndexData->indexStart * sizeof(uint32),
+				sourceIndexData->indexCount * sizeof(uint32), indexBuffer32);
+			uint32 *updateEnd = indexBuffer32 + sourceIndexData->indexCount;
 
-			//And copy it to the output buffer
-			while (source != sourceEnd) {
-				*indexBuffer32++ = static_cast<uint32>(*source++ + indexOffset);
-			}
-			
-			//Unlock the input buffer
-			sourceIndexData->indexBuffer->unlock();
-
-			//Increment the index offset
-			indexOffset += sourceVertexData->vertexCount;
+			// add indexOffset
+			while (indexBuffer32 != updateEnd)
+				*indexBuffer32++ += indexOffset;
 		}
       else
       {
 			if (destIndexType == HardwareIndexBuffer::IT_32BIT)
          {
 				//-- Convert 16 bit to 32 bit indices --
+				std::vector<uint16> tmp(sourceIndexData->indexCount);
 				//Lock the input buffer
-				uint16 *source = static_cast<uint16*>(sourceIndexData->indexBuffer->lock(
-					sourceIndexData->indexStart, sourceIndexData->indexCount, HardwareBuffer::HBL_READ_ONLY
-					));
-				uint16 *sourceEnd = source + sourceIndexData->indexCount;
-
-				//And copy it to the output buffer
-				while (source != sourceEnd) {
-					uint32 indx = *source++;
-					*indexBuffer32++ = (indx + indexOffset);
-				}
-
-				//Unlock the input buffer
-				sourceIndexData->indexBuffer->unlock();
-
-				//Increment the index offset
-				indexOffset += sourceVertexData->vertexCount;
-			}
-         else
-         {
-				//Lock the input buffer
-				uint16 *source = static_cast<uint16*>(sourceIndexData->indexBuffer->lock(
-					sourceIndexData->indexStart, sourceIndexData->indexCount, HardwareBuffer::HBL_READ_ONLY
-					));
+				sourceIndexData->indexBuffer->readData(sourceIndexData->indexStart*sizeof(uint16), tmp.size(), tmp.data());
+				uint16 *source = tmp.data();
 				uint16 *sourceEnd = source + sourceIndexData->indexCount;
 
 				//And copy it to the output buffer
 				while (source != sourceEnd)
-            {
-					*indexBuffer16++ = static_cast<uint16>(*source++ + indexOffset);
+					*indexBuffer32++ = (*source++ + indexOffset);
 				}
+         else
+         {
+			sourceIndexData->indexBuffer->readData(
+                sourceIndexData->indexStart * sizeof(uint16),
+                sourceIndexData->indexCount * sizeof(uint16), indexBuffer16);
+            uint16 *updateEnd = indexBuffer16 + sourceIndexData->indexCount;
 
-				//Unlock the input buffer
-				sourceIndexData->indexBuffer->unlock();
-
-				//Increment the index offset
-				indexOffset += sourceVertexData->vertexCount;
+            // add indexOffset
+            while (indexBuffer16 != updateEnd)
+               *indexBuffer16++ += indexOffset;
 			}
 		}
+		//Increment the index offset
+		indexOffset += sourceVertexData->vertexCount;
 	}
 
 	//Unlock buffers

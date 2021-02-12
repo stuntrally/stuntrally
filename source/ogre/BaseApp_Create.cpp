@@ -353,6 +353,9 @@ bool BaseApp::setup()
 	}
 
 	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
+#if defined(OGRE_VERSION) && OGRE_VERSION >= 0x10B00
+    mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Codec_STBI" + D_SUFFIX);
+#endif
 
 	#ifdef _DEBUG
 	LogManager::getSingleton().setLogDetail(LL_BOREME);//
@@ -386,9 +389,7 @@ bool BaseApp::setup()
 		LogO(String(":::: Time setup gui: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	createResourceListener();
-	loadResources();
 
-		LogO(String(":::: Time resources: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
 	LogO("*** createFrameListener ***");
 	createFrameListener();
@@ -415,6 +416,10 @@ bool BaseApp::setup()
 	postInit();
 
 		LogO(String(":::: Time post, mat factory: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
+
+	loadResources();
+
+		LogO(String(":::: Time resources: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();  
 
 	LogO(String(":::: Time setup total: ") + fToStr(ti2.getMilliseconds(),0,3) + " ms");
 	
@@ -451,6 +456,15 @@ void BaseApp::setupResources()
 			ResourceGroupManager::getSingleton().addResourceLocation(
 				PATHMANAGER::Data() + "/" + archName, typeName, secName);
 	}	}
+
+#if defined(OGRE_VERSION) && OGRE_VERSION >= 0x10C00
+	// create stubs for Ogre 1.12 core shaders (unused by stuntrally)
+	auto& gpm = HighLevelGpuProgramManager::getSingleton();
+	for(auto name : {"PointLight", "DirLight", "PointLightFinite", "DirLightFinite"})
+	    gpm.createProgram("Ogre/ShadowExtrude"+String(name), "OgreInternal", "unified", GPT_VERTEX_PROGRAM);
+	gpm.createProgram("Ogre/ShadowBlendVP", "OgreInternal", "unified", GPT_VERTEX_PROGRAM);
+	gpm.createProgram("Ogre/ShadowBlendFP", "OgreInternal", "unified", GPT_FRAGMENT_PROGRAM);
+#endif
 }
 
 void BaseApp::createResourceListener()

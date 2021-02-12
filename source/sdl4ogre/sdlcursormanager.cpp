@@ -90,7 +90,7 @@ namespace SFO
         std::vector<Ogre::uint32> data;
         data.resize(size_x*size_y);
         Ogre::PixelBox destImage(size_x, size_y, 1, tex->getFormat(), &data[0]);
-        Ogre::Image::Box srcBox(left, top, left+size_x, top+size_y);
+        Ogre::Box srcBox(left, top, left+size_x, top+size_y);
         tex->getBuffer()->blitToMemory(srcBox, destImage);
 
         SDL_Surface* surf = SDL_CreateRGBSurface(0,size_x,size_y,32,0xFF000000,0x00FF0000,0x0000FF00,0x000000FF);

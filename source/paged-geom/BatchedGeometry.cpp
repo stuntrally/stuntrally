@@ -176,9 +176,15 @@ uint32 CountUsedVertices(IndexData *id, std::map<uint32, uint32> &ibmap)
             uint16 *data = (uint16*)id->indexBuffer->lock(id->indexStart * sizeof(uint16), 
                id->indexCount * sizeof(uint16), HardwareBuffer::HBL_READ_ONLY);
 
-            for (i = 0; i < id->indexCount; ++i) {
+            for (i = 0; i < id->indexCount; i++) {
                uint16 index = data[i];
-               if (ibmap.find(index) == ibmap.end()) ibmap[index] = (uint32)(ibmap.size());
+               if (ibmap.find(index) == ibmap.end()) 
+	       {
+		    // use separate lines to avoid undefined compiler behavior.
+		    //   see: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0145r3.pdf?fbclid=IwAR2Wp4bQWvl0O9t7kBIXeiRsOxwxU8bttpes-gK71x_2j0ABtzGD5mcoF_c
+		    uint32 size = (uint32)(ibmap.size()); 
+		    ibmap[index] = size;
+	       }
             }
             count = (uint32)ibmap.size();
             id->indexBuffer->unlock();
@@ -190,9 +196,15 @@ uint32 CountUsedVertices(IndexData *id, std::map<uint32, uint32> &ibmap)
             uint32 *data = (uint32*)id->indexBuffer->lock(id->indexStart * sizeof(uint32), 
                id->indexCount * sizeof(uint32), HardwareBuffer::HBL_READ_ONLY);
 
-            for (i = 0; i < id->indexCount; ++i) {
+            for (i = 0; i < id->indexCount; i++) {
                uint32 index = data[i];
-               if (ibmap.find(index) == ibmap.end()) ibmap[index] = (uint32)(ibmap.size());
+               if (ibmap.find(index) == ibmap.end()) 
+	       {
+		    // use separate lines to avoid undefined compiler behavior.
+		    //   see: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0145r3.pdf?fbclid=IwAR2Wp4bQWvl0O9t7kBIXeiRsOxwxU8bttpes-gK71x_2j0ABtzGD5mcoF_c
+		    uint32 size = (uint32)(ibmap.size()); 
+		    ibmap[index] = size;
+	       }
             }
             count = (uint32)ibmap.size();
             id->indexBuffer->unlock();
@@ -369,8 +381,8 @@ void BatchedGeometry::clear()
    {
       m_pSceneNode->removeAllChildren();
       if (m_pSceneNode->getParent())
-         m_pSceneNode->getParentSceneNode()->removeAndDestroyChild(m_pSceneNode->getName());
-      else
+         m_pSceneNode->getParentSceneNode()->removeChild(m_pSceneNode);
+
          m_pSceneMgr->destroySceneNode(m_pSceneNode);
 
       m_pSceneNode = 0;
@@ -634,52 +646,42 @@ void BatchedGeometry::SubBatch::build()
 
       if (srcIndexType == HardwareIndexBuffer::IT_32BIT)
       {
-         //Lock the input buffer
-         uint32 *source = static_cast<uint32*>(sourceIndexData->indexBuffer->lock(
-            sourceIndexData->indexStart, sourceIndexData->indexCount, HardwareBuffer::HBL_READ_ONLY));
-         uint32 *sourceEnd = source + sourceIndexData->indexCount;
+         sourceIndexData->indexBuffer->readData(
+               sourceIndexData->indexStart * sizeof(uint32),
+               sourceIndexData->indexCount * sizeof(uint32), indexBuffer32);
+         uint32 *updateEnd = indexBuffer32 + sourceIndexData->indexCount;
 
-         //And copy it to the output buffer
-         while (source != sourceEnd)
-            *indexBuffer32++ = static_cast<uint32>(*source++ + indexOffset);
-
-         sourceIndexData->indexBuffer->unlock();                     // Unlock the input buffer
-         indexOffset += queuedMesh.subMesh->vertexData->vertexCount; // Increment the index offset
+         // add indexOffset
+         while (indexBuffer32 != updateEnd)
+            *indexBuffer32++ += indexOffset;
       }
       else
       {
          if (destIndexType == HardwareIndexBuffer::IT_32BIT)
          {
             //-- Convert 16 bit to 32 bit indices --
+            std::vector<uint16> tmp(sourceIndexData->indexCount);
             //Lock the input buffer
-            uint16 *source = static_cast<uint16*>(sourceIndexData->indexBuffer->lock(
-               sourceIndexData->indexStart, sourceIndexData->indexCount, HardwareBuffer::HBL_READ_ONLY));
+            sourceIndexData->indexBuffer->readData(sourceIndexData->indexStart*sizeof(uint16), tmp.size(), tmp.data());
+            uint16 *source = tmp.data();
             uint16 *sourceEnd = source + sourceIndexData->indexCount;
 
             //And copy it to the output buffer
             while (source != sourceEnd)
-            {
-               uint32 indx = *source++;
-               *indexBuffer32++ = (indx + indexOffset);
-            }
-
-            sourceIndexData->indexBuffer->unlock();                  // Unlock the input buffer
-            indexOffset += queuedMesh.subMesh->vertexData->vertexCount; // Increment the index offset
+               *indexBuffer32++ = (*source++ + indexOffset);
          }
          else
          {
-            //Lock the input buffer
-            uint16 *source = static_cast<uint16*>(sourceIndexData->indexBuffer->lock(
-               sourceIndexData->indexStart, sourceIndexData->indexCount, HardwareBuffer::HBL_READ_ONLY));
-            uint16 *sourceEnd = source + sourceIndexData->indexCount;
+            sourceIndexData->indexBuffer->readData(
+                sourceIndexData->indexStart * sizeof(uint16),
+                sourceIndexData->indexCount * sizeof(uint16), indexBuffer16);
+            uint16 *updateEnd = indexBuffer16 + sourceIndexData->indexCount;
 
-            //And copy it to the output buffer
-            while (source != sourceEnd)
-               *indexBuffer16++ = static_cast<uint16>(*source++ + indexOffset);
-
-            sourceIndexData->indexBuffer->unlock();                  // Unlock the input buffer
-            indexOffset += queuedMesh.subMesh->vertexData->vertexCount; // Increment the index offset
+            // add indexOffset
+            while (indexBuffer16 != updateEnd)
+               *indexBuffer16++ += indexOffset;
          }
+         indexOffset += queuedMesh.subMesh->vertexData->vertexCount; // Increment the index offset
       }
 
    }  // For each queued mesh
@@ -709,6 +711,8 @@ void BatchedGeometry::SubBatch::_buildIdentiryOrientation(const QueuedMesh &queu
    VertexBufferBinding *sourceBinds = sourceVertexData->vertexBufferBinding;
    VertexBufferBinding *destBinds = dstVertexData->vertexBufferBinding;
 
+   std::vector<uchar> shadowBuf;
+
    // For each vertex buffer
    for (unsigned short ibuffer = 0, bufCnt = destBinds->getBufferCount(); ibuffer < bufCnt; ++ibuffer)
    {
@@ -716,7 +720,11 @@ void BatchedGeometry::SubBatch::_buildIdentiryOrientation(const QueuedMesh &queu
       {
          //Lock the input buffer
          const HardwareVertexBufferSharedPtr &sourceBuffer = sourceBinds->getBuffer(ibuffer);
-         uchar *sourceBase = static_cast<uchar*>(sourceBuffer->lock(HardwareBuffer::HBL_READ_ONLY));
+
+         shadowBuf.resize(sourceBuffer->getSizeInBytes());
+         sourceBuffer->readData(0, sourceBuffer->getSizeInBytes(), shadowBuf.data());
+         uchar *sourceBase = shadowBuf.data();
+
          uchar *destBase = vertexBuffers[ibuffer]; //Get the locked output buffer
 
          const VertexDeclaration::VertexElementList &elems = vertexBufferElements[ibuffer];
@@ -786,7 +794,6 @@ void BatchedGeometry::SubBatch::_buildIdentiryOrientation(const QueuedMesh &queu
          }
 
          vertexBuffers[ibuffer] = destBase;
-         sourceBuffer->unlock(); // unlock the input buffer
       }
       else
       {
@@ -833,6 +840,8 @@ void BatchedGeometry::SubBatch::_buildFullTransform(const QueuedMesh &queuedMesh
    VertexBufferBinding *sourceBinds = sourceVertexData->vertexBufferBinding;
    VertexBufferBinding *destBinds = dstVertexData->vertexBufferBinding;
 
+   std::vector<uchar> shadowBuf;
+
    // For each vertex buffer
    for (unsigned short ibuffer = 0, bufCnt = destBinds->getBufferCount(); ibuffer < bufCnt; ++ibuffer)
    {
@@ -840,7 +849,9 @@ void BatchedGeometry::SubBatch::_buildFullTransform(const QueuedMesh &queuedMesh
       {
          //Lock the input buffer
          const HardwareVertexBufferSharedPtr &sourceBuffer = sourceBinds->getBuffer(ibuffer);
-         uchar *sourceBase = static_cast<uchar*>(sourceBuffer->lock(HardwareBuffer::HBL_READ_ONLY));
+         shadowBuf.resize(sourceBuffer->getSizeInBytes());
+         sourceBuffer->readData(0, sourceBuffer->getSizeInBytes(), shadowBuf.data());
+         uchar *sourceBase = shadowBuf.data();
 
          //Get the locked output buffer
          uchar *destBase = vertexBuffers[ibuffer];

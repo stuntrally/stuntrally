@@ -9,6 +9,7 @@
 #else
 	#include "../CGame.h"
 #endif
+#include <OgrePrerequisites.h>
 #include <OgreRoot.h>
 #include <OgreTimer.h>
 #include <OgreTerrain.h>
@@ -17,6 +18,7 @@
 #include <OgreRectangle2D.h>
 #include <OgreViewport.h>
 #include <OgreSceneNode.h>
+#include <OgreMaterialManager.h>
 #include <OgreTextureManager.h>
 #include <OgreRenderTexture.h>
 #include "../../shiny/Main/Factory.hpp"
@@ -50,7 +52,12 @@ void CScene::RenderToTex::Setup(Root* rt, String sName, TexturePtr pTex, String 
 	rect = new Rectangle2D(true);   rect->setCorners(-1,1,1,-1);
 	AxisAlignedBox aab;  aab.setInfinite();
 	rect->setBoundingBox(aab);  rect->setCastShadows(false);
-	rect->setMaterial( sMtr );
+#if defined(OGRE_VERSION) && OGRE_VERSION < 0x10A00
+	rect->setMaterial(sMtr);
+#else
+	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr);
+	rect->setMaterial(mtr);
+#endif
 
 	nd = scm->getRootSceneNode()->createChildSceneNode(sName+"N");
 	nd->attachObject(rect);
@@ -85,9 +92,9 @@ void CScene::CreateBlendTex()
 	
 	//  Blendmap rtt
 	blendRTex = texMgr.createManual( sBlend, rgDef, TEX_TYPE_2D,
-		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
+		size, size, 0, PF_BYTE_BGRA, TU_RENDERTARGET);
 	if (blendRTex.isNull())
-		LogO("Error: Can't create RGBA (Blendmap) RenderTarget!");
+		LogO("Error: Can't create BGRA (Blendmap) RenderTarget!");
 
 	//  rtt copy  (not needed)
 	//blMap = texMgr.createManual("blendmapT", rgDef, TEX_TYPE_2D,
@@ -124,8 +131,8 @@ void CScene::UpdBlendmap()
 	pt->lock(HardwareBuffer::HBL_DISCARD);
 
 	const PixelBox& pb = pt->getCurrentLock();
-	float* pD = static_cast<float*>(pb.data);
-	size_t aD = pb.getRowSkip() * PixelUtil::getNumElemBytes(pb.format);
+	float* pD = reinterpret_cast<float*>(pb.data);
+	size_t aD = pb.getRowSkip();
 	 
 	register size_t j,i,a=0;
 	for (j = 0; j < size; ++j)
