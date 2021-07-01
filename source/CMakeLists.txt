@@ -1,34 +1,61 @@
-cmake_minimum_required(VERSION 2.8)
-
-# Linux prefers lower-case exe names
-if(WIN32 OR APPLE)
-	set(GAME_EXE StuntRally)
-	set(EDITOR_EXE SR-Editor)
-	set(SERVER_EXE SR-MasterServer)
-else()
-	set(GAME_EXE stuntrally)
-	set(EDITOR_EXE sr-editor)
-	set(SERVER_EXE sr-masterserver)
-endif()
-
 # Search include files from all source sub directories
 include_directories(btOgre ogre ogre/common paged-geom road tinyxml sound vdrift)
 
+add_library(common INTERFACE)
+if(WIN32)
+  target_compile_definitions(common INTERFACE
+		NOMINMAX
+		WIN32_LEAN_AND_MEAN
+		WINVER=0x0A00
+		_WIN32_WINNT=0x0A00)
+endif()
+
+target_precompile_headers(common INTERFACE
+	<algorithm>
+	<cassert>
+	<cmath>
+	<deque>
+	<list>
+	<map>
+	<set>
+	<string>
+	<unordered_map>
+	<vector>
+
+	<iomanip>
+	<iostream>
+	<ostream>
+	<sstream>
+	<fstream>
+	
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<math.h>
+	
+	<SDL.h>
+	<vorbis/vorbisfile.h>
+	<Ogre.h>
+	
+	<btBulletDynamicsCommon.h>)
+
+if(WIN32)
+  target_precompile_headers(common INTERFACE <windows.h>)
+endif()
+
+target_link_libraries(common INTERFACE clientext)
 
 # Compile our libraries  ------
 if (BUILD_GAME OR BUILD_EDITOR)
-
-	foreach(ourlib  oics tinyxml paged-geom btOgre)
-		add_subdirectory(${ourlib})
-		list(APPEND OURLIBS ${ourlib})
-	endforeach()
+	add_subdirectory(btOgre)
+	add_subdirectory(oics)
+	add_subdirectory(paged-geom)
+	add_subdirectory(tinyxml)
+	add_subdirectory(sdl4ogre)
+	set(CORE_LIBS btOgre oics pagedgeom tinyxml sdl4ogre)
 
 	add_subdirectory(shiny)
-	list(APPEND OURLIBS "shiny")
-	list(APPEND OURLIBS "shiny.OgrePlatform")
-
-	add_subdirectory(sdl4ogre)
-	list(APPEND OURLIBS "sdl4ogre")
+	target_link_libraries(common INTERFACE ${SHINY_LIBRARIES})
 endif()
 
 
@@ -67,13 +94,16 @@ if (BUILD_GAME)
 	source_group(xml_gui ../data/*/core*.xml)
 	source_group(mat ../data/materials/*.*)
 
-	if (MSVC)
-		add_executable(${GAME_EXE} WIN32 ${GAME_SOURCES})
-	else (MSVC)
-		add_executable(${GAME_EXE} ${GAME_SOURCES})
-	endif(MSVC)
-	target_link_libraries(${GAME_EXE} ${OURLIBS} ${LIBS})
-	install(TARGETS ${GAME_EXE} DESTINATION bin)
+	add_executable(stuntrally ${GAME_SOURCES})
+	if(MSVC)
+		set_target_properties(stuntrally PROPERTIES WIN32_EXECUTABLE ON)
+	endif()
+	if(WIN32 OR APPLE)
+    set_target_properties(stuntrally PROPERTIES OUTPUT_NAME StuntRally)
+	endif()
+	target_include_directories(stuntrally PRIVATE ${OPENAL_INCLUDE_DIR} ${ENet_INCLUDE_DIRS})
+	target_link_libraries(stuntrally PRIVATE common clientext ${OPENAL_LIBRARY} ${ENet_LIBRARIES} ${CORE_LIBS})
+	install(TARGETS stuntrally DESTINATION bin)
 endif()
 
 
@@ -113,50 +143,26 @@ if (BUILD_EDITOR)
 	source_group(editor_gui editor/gui*)
 	source_group(vdrift vdrift/*)
 
-	add_executable(${EDITOR_EXE} ${EDITOR_SOURCES})
-	set_target_properties(${EDITOR_EXE} PROPERTIES COMPILE_FLAGS "-DSR_EDITOR")
-	target_link_libraries(${EDITOR_EXE} ${OURLIBS} ${LIBS})
-	install(TARGETS ${EDITOR_EXE} DESTINATION bin)
+	add_executable(sr-editor ${EDITOR_SOURCES})
+	target_compile_definitions(sr-editor PRIVATE -DSR_EDITOR)
+	target_link_libraries(sr-editor PRIVATE common clientext ${CORE_LIBS})
+	if(MSVC)
+		set_target_properties(sr-editor PROPERTIES WIN32_EXECUTABLE ON)
+	endif()
+	if(WIN32 OR APPLE)
+    set_target_properties(sr-editor PROPERTIES OUTPUT_NAME SR-Editor)
+	endif()
+	install(TARGETS sr-editor DESTINATION bin)
 endif()
 
 
 # Master server
 if (BUILD_MASTER_SERVER)
-	file(GLOB SERVER_SOURCES network/master-server/main.cpp) # Glob .cpp files needed for the server
-	add_executable(${SERVER_EXE} ${SERVER_SOURCES})
-	target_link_libraries(${SERVER_EXE} ${SERVER_LIBS})
-	install(TARGETS ${SERVER_EXE} DESTINATION bin)
+	add_executable(sr-masterserver network/master-server/main.cpp)
+	target_include_directories(sr-masterserver PRIVATE ${ENet_INCLUDE_DIRS})
+	target_link_libraries(sr-masterserver PRIVATE common clientext ${ENet_LIBRARIES})
+	if(WIN32 OR APPLE)
+    set_target_properties(sr-editor PROPERTIES OUTPUT_NAME SR-MasterServer)
+	endif()
+	install(TARGETS sr-masterserver DESTINATION bin)
 endif()
-
-
-if (MSVC)
-	file(GLOB GAME_SOURCES
-		btOgre/*.cpp
-		editor/*.cpp
-		ogre/*.cpp
-		ogre/common/*.cpp
-		paged-geom/*.cpp
-		road/*.cpp
-		vdrift/*.cpp
-		sound/*.cpp
-	)
-
-	foreach( src_file ${GAME_SOURCES} )
-		set_source_files_properties(
-			${src_file}
-			PROPERTIES
-			COMPILE_FLAGS "/Yupch.h"
-		)
-	endforeach( src_file ${GAME_SOURCES} )
-
-	set_source_files_properties(editor/pch.cpp
-		PROPERTIES
-		COMPILE_FLAGS "/Ycpch.h"
-	)
-
-	set_source_files_properties(ogre/pch.cpp
-		PROPERTIES
-		COMPILE_FLAGS "/Ycpch.h"
-	)
-endif (MSVC)
-

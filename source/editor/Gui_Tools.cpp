@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/GuiCom.h"

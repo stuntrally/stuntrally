@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "MaterialInstanceTextureUnit.hpp"
 
 namespace sh

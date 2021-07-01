@@ -7,9 +7,9 @@
 #include "MyGUI_OgreTexture.h"
 #include "MyGUI_LogManager.h"
 #include "MyGUI_OgrePlatform.h"
-#include "MyGUI_LastHeader.h"
 
 #include <OgrePlatform.h>
+#include <OgreWindowEventUtilities.h>
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 
@@ -42,9 +42,14 @@ namespace MyGUI
 
 		/** @see RenderManager::getViewSize */
 		virtual const IntSize& getViewSize() const;
+    void setViewSize(int w, int h) override {}
+    void registerShader(
+    			const std::string& _shaderName,
+			const std::string& _vertexProgramFile,
+			const std::string& _fragmentProgramFile) override {}
 
 		/** @see RenderManager::getVertexFormat */
-		virtual VertexColourType getVertexFormat();
+		virtual VertexColourType getVertexFormat() const override;
 
 		/** @see RenderManager::createVertexBuffer */
 		virtual IVertexBuffer* createVertexBuffer();
@@ -70,7 +75,7 @@ namespace MyGUI
 		virtual void doRender(IVertexBuffer* _buffer, ITexture* _texture, size_t _count);
 
 		/** @see IRenderTarget::getInfo */
-		virtual const RenderTargetInfo& getInfo();
+		virtual const RenderTargetInfo& getInfo() const override;
 
 		void setRenderSystem(Ogre::RenderSystem* _render);
 		Ogre::RenderSystem* getRenderSystem();

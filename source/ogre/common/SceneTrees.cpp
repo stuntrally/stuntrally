@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "Def_Str.h"
 #include "RenderConst.h"
 #include "data/CData.h"
@@ -19,16 +19,16 @@
 	#include "../../btOgre/BtOgreGP.h"
 #endif
 #include "../../vdrift/pathmanager.h"
-#include "../../paged-geom/GrassLoader.h"
-#include "../../paged-geom/BatchPage.h"
-#include "../../paged-geom/WindBatchPage.h"
-#include "../../paged-geom/ImpostorPage.h"
-#include "../../paged-geom/TreeLoader2D.h"
-#include "../../paged-geom/MersenneTwister.h"
+#include "GrassLoader.h"
+#include "BatchPage.h"
+#include "WindBatchPage.h"
+#include "ImpostorPage.h"
+#include "TreeLoader2D.h"
 #include <boost/filesystem.hpp>
 #include <OgreTimer.h>
 #include <OgreTerrain.h>
 #include <OgreSubMesh.h>
+#include <random>
 using namespace Ogre;
 
 
@@ -212,8 +212,9 @@ void CScene::CreateTrees()
 		int r = imgRoadSize, cntr = 0, cntshp = 0, txy = sc->td.iVertsX*sc->td.iVertsY-1;
 
 		//  set random seed  /// todo: seed in scene.xml and in editor gui...
-		MTRand rnd((MTRand::uint32)1213);
-		#define getTerPos()		(rnd.rand()-0.5) * sc->td.fTerWorldSize
+		std::mt19937 rnd(1213);
+		#define rnd0to1() (float(rnd())/float(std::numeric_limits<std::mt19937::result_type>::max()-1))
+		#define getTerPos()		(rnd0to1()-0.5) * sc->td.fTerWorldSize
 
 		//  Tree Layers
 		for (size_t l=0; l < sc->pgLayers.size(); ++l)
@@ -250,12 +251,12 @@ void CScene::CreateTrees()
 
 			if (imp && found)  /// preload impostor textures
 			{
-				if (!resMgr.resourceExistsInAnyGroup(fpng))
+				/*if (!resMgr.resourceExistsInAnyGroup(fpng))
 				{
 					ImpostorPage group(app->mSceneMgr, trees);
 					ImpostorTexture* it = new ImpostorTexture(&group, ent, true);  // only to renderTextures()
 					delete it;
-				}
+				}*/
 				try
 				{	TextureManager::getSingleton().load(fpng, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);  ///T png first
 				}catch (Ogre::Exception&)
@@ -277,9 +278,9 @@ void CScene::CreateTrees()
 					pos.z = -100 +(ii / 12) * 10;  pos.x = -100 +(ii % 12) * 10;
 					Real scl = pg.minScale;
 				#else
-					yaw = Degree(rnd.rand(360.0));
+					yaw = Degree(rnd0to1() * 360.0);
 					pos.x = getTerPos();  pos.z = getTerPos();
-					Real scl = rnd.rand() * (pg.maxScale-pg.minScale) + pg.minScale;
+					Real scl = rnd0to1() * (pg.maxScale-pg.minScale) + pg.minScale;
 				#endif
 				pos0 = pos;  // store original place
 				bool add = true;
@@ -304,7 +305,7 @@ void CScene::CreateTrees()
 						d = c + pg.maxRdist+1;  // not less than c
 
 					//  find dist to road
-					register int ii,jj, rr, rmin = 3000;  //d
+					int ii,jj, rr, rmin = 3000;  //d
 					for (jj = -d; jj <= d; ++jj)
 					for (ii = -d; ii <= d; ++ii)
 					{

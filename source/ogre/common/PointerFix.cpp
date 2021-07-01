@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "PointerFix.h"
 
 #include <MyGUI_PointerManager.h>

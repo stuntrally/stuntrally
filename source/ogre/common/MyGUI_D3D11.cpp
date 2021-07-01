@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+﻿
 #include "MyGUI_Prerequest.h"
 #include "MyGUI_OgreDataManager.h"
 #include "MyGUI_OgreRenderManager.h"
@@ -451,12 +451,12 @@ namespace MyGUI
 		return mViewSize;
 	}
 
-	VertexColourType OgreD3D11RenderManager::getVertexFormat()
+	VertexColourType OgreD3D11RenderManager::getVertexFormat() const
 	{
 		return mVertexFormat;
 	}
 
-	const RenderTargetInfo& OgreD3D11RenderManager::getInfo()
+	const RenderTargetInfo& OgreD3D11RenderManager::getInfo() const
 	{
 		return mInfo;
 	}

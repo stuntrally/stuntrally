@@ -18,7 +18,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include <OgrePrerequisites.h>
 #include <OgreRoot.h>
 #include <OgreRenderSystem.h>
-#include <OgreVector3.h>
+#include <OgreVector.h>
 #include <OgreMesh.h>
 #include <OgreMaterial.h>
 #include <OgreBillboard.h>

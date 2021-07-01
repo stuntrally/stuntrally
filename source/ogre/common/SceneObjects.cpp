@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "RenderConst.h"
 #include "Def_Str.h"
 #include "../common/data/SceneXml.h"
@@ -21,8 +21,8 @@
 #include <BulletDynamics/Dynamics/btRigidBody.h>
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include <LinearMath/btSerializer.h>
-#include <BulletFileLoader/btBulletFile.h>
-#include <BulletWorldImporter/btBulletWorldImporter.h>
+#include <btBulletFile.h>
+#include <btBulletWorldImporter.h>
 
 #include <OgreManualObject.h>
 #include <OgreMeshManager.h>

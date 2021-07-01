@@ -1,6 +1,6 @@
 #pragma once
 #include "../ogre/common/Gui_Def.h"
-#include <OgreVector3.h>
+#include <Ogre.h>
 #include <OgreString.h>
 #include <OgreFrameListener.h>
 #include "../sdl4ogre/events.h"

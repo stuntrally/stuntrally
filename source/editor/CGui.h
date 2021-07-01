@@ -6,7 +6,6 @@
 #include "../ogre/common/SliderValue.h"
 
 #include <OgreCommon.h>
-#include <OgreVector3.h>
 #include <OgreString.h>
 
 #include <MyGUI_Types.h>

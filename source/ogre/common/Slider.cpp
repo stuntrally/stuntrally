@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "MyGUI_Precompiled.h"
 #include "Slider.h"
 #include "MyGUI_InputManager.h"

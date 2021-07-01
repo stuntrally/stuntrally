@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
@@ -12,7 +11,7 @@
 #include "../vdrift/game.h"
 #include "../road/Road.h"
 #include "SplitScreen.h"
-#include "../paged-geom/PagedGeometry.h"
+#include "PagedGeometry.h"
 #include "common/WaterRTT.h"
 #include "common/MultiList2.h"
 #include "common/Gui_Popup.h"

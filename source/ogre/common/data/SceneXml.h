@@ -1,8 +1,6 @@
 #pragma once
 #include <OgreCommon.h>
-#include <OgreVector2.h>
-#include <OgreVector3.h>
-#include <OgreVector4.h>
+#include <Ogre.h>
 #include <OgreColourValue.h>
 #include <OgreQuaternion.h>
 #include "../../../vdrift/mathvector.h"

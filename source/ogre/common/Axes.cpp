@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "Axes.h"
 #include "../../vdrift/dbl.h"
 using namespace Ogre;

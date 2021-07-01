@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include <MyGUI_Prerequest.h>
 #include "MessageBox.h"
 #include "MessageBoxStyle.h"

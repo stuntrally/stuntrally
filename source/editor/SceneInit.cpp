@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/data/CData.h"
 #include "../ogre/common/ShapeData.h"
@@ -9,7 +9,7 @@
 #include "CGui.h"
 #include "../road/Road.h"
 #include "../road/PaceNotes.h"
-#include "../paged-geom/PagedGeometry.h"
+#include "PagedGeometry.h"
 #include "../vdrift/pathmanager.h"
 #include "../ogre/common/RenderConst.h"
 #include "btBulletCollisionCommon.h"

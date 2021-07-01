@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include <stdexcept>
 
 #include "OgrePass.hpp"

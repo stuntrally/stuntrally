@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "Query.hpp"
 
 #include "../Main/Factory.hpp"

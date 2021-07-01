@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "Replay.h"
 #include "common/Def_Str.h"
 #include <OgreTimer.h>

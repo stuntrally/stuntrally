@@ -1,4 +1,4 @@
-#include "pch.h"
+
 
 #include <math.h>
 //#include <algorithm>

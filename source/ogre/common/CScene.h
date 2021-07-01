@@ -1,7 +1,7 @@
 #pragma once
 #include "PreviewTex.h"
-#include <OgreVector3.h>
-#include <OgreVector4.h>
+#include <OgreVector.h>
+#include <Ogre.h>
 #include <OgreString.h>
 #include <OgreTexture.h>
 #include <OgreShadowCameraSetup.h>

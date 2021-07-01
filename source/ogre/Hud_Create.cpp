@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "common/Def_Str.h"
 #include "common/data/SceneXml.h"
 #include "common/CScene.h"
@@ -44,7 +43,7 @@ void CHud::Size()
 		Hud& h = hud[c];
 		const SplitScr::VPDims& dim = app->mSplitMgr->mDims[c];
 		//  gauges
-		Real xcRpm,ycRpm,xcRpmL, xcVel,ycVel, ygMax, xBFuel;  // -1..1
+		Real xcRpm = 0.f,ycRpm = 0.f,xcRpmL = 0.f, xcVel = 0.f,ycVel = 0.f, ygMax = 0.f, xBFuel = 0.f;  // -1..1
 		if (h.ndGauges)
 		{
 			Real sc = pSet->size_gauges * dim.avgsize;

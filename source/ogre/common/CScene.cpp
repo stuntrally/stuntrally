@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "CScene.h"
 #include "data/CData.h"
 #include "data/SceneXml.h"

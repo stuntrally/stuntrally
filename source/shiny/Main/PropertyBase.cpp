@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "PropertyBase.hpp"
 
 #include <vector>

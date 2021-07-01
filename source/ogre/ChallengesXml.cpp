@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "common/Def_Str.h"
 #include "common/data/TracksXml.h"
 #include "ChallengesXml.h"

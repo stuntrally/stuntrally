@@ -1,4 +1,4 @@
-#include "pch.h"
+
  //#include "vld.h" // mem leaks +
 #include "../ogre/common/Def_Str.h"
 #include "settings.h"
@@ -77,11 +77,11 @@ void LoadDefaultSet(SETTINGS* settings, string setFile)
 
 	try
 	{
-		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-			pApp->Run( settings->ogre_dialog || lpCmdLine[0]!=0 );
-		#else
+		//#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		//	pApp->Run( settings->ogre_dialog || lpCmdLine[0]!=0 );
+		//#else
 			pApp->Run( settings->ogre_dialog );
-		#endif
+		//#endif
 	}
 	catch (Ogre::Exception& e)
 	{

@@ -151,7 +151,7 @@ public:
 	int barSizeX, barSizeY;
 
 	
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	#if 0//OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	MyGUI::OgreD3D11Platform* mPlatform;
 	#else
 	MyGUI::OgrePlatform* mPlatform;

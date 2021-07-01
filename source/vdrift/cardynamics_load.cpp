@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "par.h"
 #include "cardynamics.h"
 #include "collision_world.h"

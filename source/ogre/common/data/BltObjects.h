@@ -3,7 +3,7 @@
 #include <string>
 #include <map>
 
-#include <OgreVector3.h>
+#include <OgreVector.h>
 
 
 enum eBLTshape {  BLT_None=0, BLT_Sphere, BLT_CapsZ, BLT_Mesh, BLT_ALL };

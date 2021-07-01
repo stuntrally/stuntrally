@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "ShaderSet.hpp"
 
 #include <fstream>

@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/data/CData.h"
@@ -9,7 +9,7 @@
 #include "../ogre/common/CScene.h"
 #include "../ogre/common/Axes.h"
 #include "../road/Road.h"
-#include "../paged-geom/PagedGeometry.h"
+#include "PagedGeometry.h"
 #include "../ogre/common/WaterRTT.h"
 #include "../ogre/common/RenderBoxScene.h"
 #include "settings.h"

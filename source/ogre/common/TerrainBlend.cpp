@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "../common/RenderConst.h"
 #include "../common/Def_Str.h"
 #include "../common/data/SceneXml.h"
@@ -22,7 +22,7 @@
 #include <OgreTextureManager.h>
 #include <OgreRenderTexture.h>
 #include "../../shiny/Main/Factory.hpp"
-#include "../../paged-geom/GrassLoader.h"
+#include "GrassLoader.h"
 using namespace Ogre;
 
 
@@ -134,7 +134,7 @@ void CScene::UpdBlendmap()
 	float* pD = reinterpret_cast<float*>(pb.data);
 	size_t aD = pb.getRowSkip();
 	 
-	register size_t j,i,a=0;
+	size_t j,i,a=0;
 	for (j = 0; j < size; ++j)
 	{
 		for (i = 0; i < size; ++i)
@@ -198,10 +198,10 @@ void App::GetTerMtrIds()
 	//RenderTexture* pTex = pt->getRenderTarget();
 	//pTex->copyContentsToMemory(pb, RenderTarget::FB_AUTO);
 
-	register size_t aa = pb.getRowSkip() * PixelUtil::getNumElemBytes(pb.format);
-	register uint8* p = pd, v, h;
-	register size_t j,i,a=0;
-	register char mtr;
+	size_t aa = pb.getRowSkip() * PixelUtil::getNumElemBytes(pb.format);
+	uint8* p = pd, v, h;
+	size_t j,i,a=0;
+	char mtr;
 	for (j = 0; j < size; ++j)
 	{
 		for (i = 0; i < size; ++i)

@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "par.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/data/SceneXml.h"

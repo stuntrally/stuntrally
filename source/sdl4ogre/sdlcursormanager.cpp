@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "sdlcursormanager.hpp"
 
 #include <OgreHardwarePixelBuffer.h>

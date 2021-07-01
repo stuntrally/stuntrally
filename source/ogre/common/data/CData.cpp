@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "CData.h"
 #include "../vdrift/pathmanager.h"
 #include "../Def_Str.h"

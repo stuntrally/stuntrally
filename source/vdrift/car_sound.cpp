@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "par.h"
 #include "car.h"
 #include "cardefs.h"

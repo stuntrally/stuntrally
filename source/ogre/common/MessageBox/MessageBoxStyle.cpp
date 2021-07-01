@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "MessageBoxStyle.h"
 #include "MyGUI_Macros.h"
 

@@ -1,5 +1,5 @@
 #pragma once
-#include <OgreVector3.h>
+#include <OgreVector.h>
 
 namespace Ogre {  class Terrain;  class SceneNode;  }
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
-//#include <OgreVector3.h>
+#include <OgreVector.h>
 
 const static int ciTrkHdrSize = 32;
 

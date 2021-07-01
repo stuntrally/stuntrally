@@ -383,7 +383,7 @@ protected:
 	}
 
 	//This will only be used when IMPOSTOR_FILE_SAVE is set to 0
-	std::auto_ptr<ImpostorTextureResourceLoader> loader;
+	std::unique_ptr<ImpostorTextureResourceLoader> loader;
 };
 
 

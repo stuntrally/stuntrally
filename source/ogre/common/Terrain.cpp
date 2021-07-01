@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "../common/Def_Str.h"
 #include "../common/RenderConst.h"
 #include "../common/ShapeData.h"

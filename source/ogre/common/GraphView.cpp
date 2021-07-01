@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "GraphView.h"
 #include "RenderConst.h"
 #include "Def_Str.h"

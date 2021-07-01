@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "Def_Str.h"
 #include "RenderConst.h"
 #include "Instancing.h"

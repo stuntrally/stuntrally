@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "OgreTextureUnitState.hpp"
 
 #include "OgrePass.hpp"

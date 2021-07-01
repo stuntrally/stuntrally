@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "../ogre/common/Def_Str.h"
 #include "settings.h"
 #include "BaseApp.h"
@@ -258,7 +258,7 @@ bool BaseApp::setup()
 
 	if (pSet->rendersystem == "Default")
 	{
-		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+		#if 0// OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		pSet->rendersystem = "Direct3D9 Rendering Subsystem";
 		#else
 		pSet->rendersystem = "OpenGL Rendering Subsystem";
@@ -266,29 +266,23 @@ bool BaseApp::setup()
 	}
 	//LogManager::getSingleton().setLogDetail(LL_BOREME);  //-
 
-	#ifdef _DEBUG
-	#define D_SUFFIX "_d"
-	#else
-	#define D_SUFFIX ""
-	#endif
-
 	//  when show ogre dialog is on, load both rendersystems so user can select
 	if (pSet->ogre_dialog)
 	{
-		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
+		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL");
 		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+		//mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9");
 		#endif
 	}else{
 		if (pSet->rendersystem == "OpenGL Rendering Subsystem")
-			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL" + D_SUFFIX);
-		else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
-			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9" + D_SUFFIX);
+			mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_GL");
+		//else if (pSet->rendersystem == "Direct3D9 Rendering Subsystem")
+		//	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/RenderSystem_Direct3D9");
 	}
 
-	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
+	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_ParticleFX");
 #if defined(OGRE_VERSION) && OGRE_VERSION >= 0x10B00
-    mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Codec_STBI" + D_SUFFIX);
+    mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Codec_STBI");
 #endif
 
 	setupResources();

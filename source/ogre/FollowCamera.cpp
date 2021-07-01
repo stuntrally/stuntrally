@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "../vdrift/par.h"
 #include "common/Def_Str.h"
 #include "FollowCamera.h"

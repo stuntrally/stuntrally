@@ -1,9 +1,9 @@
 #pragma once
 #include <OgreVector3.h>
 #include <OgreString.h>
-#include <AL/al.h>
-#include <AL/alc.h>
-#include <AL/efx.h>
+#include <al.h>
+#include <alc.h>
+#include <efx.h>
 class SoundBase;  struct REVERB_PRESET;
 
 //#define REVERB_BROWSER  // _tool_  keys 1,2: change prev,next reverb preset

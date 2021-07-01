@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/Gui_Def.h"
 #include "settings.h"
@@ -251,7 +251,7 @@ void CGui::btnTerrainDouble(WP)
 	for (int i=0; i < si; ++i)  hfData[i] = 0.f;  // clear out
 	
 	//  resize
-	register int i,j,x,y,a;
+	int i,j,x,y,a;
 	for (j=0; j < newSize; ++j)
 	{
 		y = scale * j;
@@ -288,7 +288,7 @@ void CGui::btnTerrainMove(WP)
 	float* hfData = new float[si];
 	
 	//  resize
-	register int i,j,a,aa;
+	int i,j,a,aa;
 	for (j=0; j < newSize; ++j)
 	{
 		a = j * newSize;

@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"

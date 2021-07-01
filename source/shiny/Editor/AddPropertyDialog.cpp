@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "AddPropertyDialog.hpp"
 #include "ui_addpropertydialog.h"
 

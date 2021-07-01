@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "RenderConst.h"
 #include "Def_Str.h"
 #include "data/SceneXml.h"

@@ -8,7 +8,6 @@
 #include "../ogre/common/PreviewTex.h"
 
 #include <OgreCommon.h>
-#include <OgreVector3.h>
 #include <OgreString.h>
 #include <OgreRenderTargetListener.h>
 #include <OgreShadowCameraSetup.h>

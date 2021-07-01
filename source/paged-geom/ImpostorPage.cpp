@@ -12,7 +12,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 //ImpostorPage.cpp
 //ImposterPage is an extension to PagedGeometry which displays entities as imposters.
 //-------------------------------------------------------------------------------------
-#include "pch.h"
+
 #include <OgreRoot.h>
 #include <OgreTimer.h>
 #include <OgreCamera.h>
@@ -388,7 +388,7 @@ unsigned long ImpostorTexture::GUID = 0;
 //Do not use this constructor yourself - instead, call getTexture()
 //to get/create an ImpostorTexture for an Entity.
 ImpostorTexture::ImpostorTexture(ImpostorPage *group, Entity *entity, bool onlyToRender) :
-	loader(0), bOnlyToRender(onlyToRender)
+	loader(nullptr), bOnlyToRender(onlyToRender)
 {
 	//Store scene manager and entity
 	ImpostorTexture::sceneMgr = group->getParentPagedGeometry()->getSceneManager();

@@ -100,15 +100,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include <limits> // numeric_limits<>
 #include <memory>
 
-#include <OgreRoot.h>
-#include <OgrePrerequisites.h>
-#include <OgreRenderSystem.h>
-#include <OgreEntity.h>
-#include <OgreCommon.h>
-#include <OgreCamera.h>
-#include <OgreVector3.h>
-#include <OgreTimer.h>
-#include <OgreMesh.h>
+#include <Ogre.h>
 
 namespace Forests {
 

@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "rigidbody.h"
 #include "unittest.h"
 #include "../ogre/common/Def_Str.h"

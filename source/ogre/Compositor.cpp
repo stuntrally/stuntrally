@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "Compositor.h"
 #include "CGame.h"
 #include "SplitScreen.h"

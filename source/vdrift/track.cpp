@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "par.h"
 #include "track.h"
 
@@ -17,7 +17,6 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-using namespace std;
 
 
 TRACK::TRACK() 
@@ -34,10 +33,10 @@ TRACK::~TRACK()
 }
 
 bool TRACK::DeferredLoad(
-	const string & trackpath,
+	const std::string & trackpath,
 	bool reverse,
 	int anisotropy,
-	const string & texsize,
+	const std::string & texsize,
 	bool dynamicshadowsenabled,
 	bool doagressivecombining)
 {
@@ -68,7 +67,7 @@ bool TRACK::ContinueDeferredLoad()
 	if (Loaded())
 		return true;
 
-	pair <bool,bool> loadstatus = ContinueObjectLoad();
+	std::pair <bool,bool> loadstatus = ContinueObjectLoad();
 	if (loadstatus.first)
 		return false;
 
@@ -98,7 +97,7 @@ void TRACK::Clear()
 }
 
 bool TRACK::BeginObjectLoad(
-	const string & trackpath,
+	const std::string & trackpath,
 	int anisotropy,
 	bool dynamicshadowsenabled,
 	bool doagressivecombining)
@@ -112,16 +111,16 @@ bool TRACK::BeginObjectLoad(
 	return true;
 }
 
-pair <bool,bool> TRACK::ContinueObjectLoad()
+std::pair <bool,bool> TRACK::ContinueObjectLoad()
 {
 	assert(objload.get());
 	return objload->ContinueObjectLoad(this, model_library, texture_library, objects, texture_size);
 }
 
-bool TRACK::LoadObjects(const string & trackpath, int anisotropy)
+bool TRACK::LoadObjects(const std::string & trackpath, int anisotropy)
 {
 	BeginObjectLoad(trackpath, anisotropy, false, false);
-	pair <bool,bool> loadstatus = ContinueObjectLoad();
+	std::pair <bool,bool> loadstatus = ContinueObjectLoad();
 
 	while (!loadstatus.first && loadstatus.second)
 		loadstatus = ContinueObjectLoad();
@@ -129,11 +128,11 @@ bool TRACK::LoadObjects(const string & trackpath, int anisotropy)
 	return !loadstatus.first;
 }
 
-bool TRACK::LoadRoads(const string & trackpath, bool reverse)
+bool TRACK::LoadRoads(const std::string & trackpath, bool reverse)
 {
 	ClearRoads();
 
-	ifstream trackfile;
+	std::ifstream trackfile;
 	trackfile.open((trackpath + "/roads.trk").c_str());
 	if (!trackfile)
 	{
@@ -147,11 +146,11 @@ bool TRACK::LoadRoads(const string & trackpath, bool reverse)
 	for (int i = 0; i < numroads && trackfile; ++i)
 	{
 		roads.push_back(ROADSTRIP());
-		roads.back().ReadFrom(trackfile, cerr);
+		roads.back().ReadFrom(trackfile, std::cerr);
 	}
 
 	if (reverse)
-		for_each(roads.begin(), roads.end(), mem_fun_ref(&ROADSTRIP::Reverse));
+		for_each(roads.begin(), roads.end(), std::mem_fn(&ROADSTRIP::Reverse));
 
 	return true;
 }
@@ -164,7 +163,7 @@ bool TRACK::CastRay(
 	MATHVECTOR<float,3> & normal) const
 {
 	bool col = false;
-	for (list <ROADSTRIP>::const_iterator i = roads.begin(); i != roads.end(); ++i)
+	for (std::list <ROADSTRIP>::const_iterator i = roads.begin(); i != roads.end(); ++i)
 	{
 		MATHVECTOR<float,3> coltri, colnorm;
 		const BEZIER * colbez = NULL;
@@ -185,10 +184,10 @@ bool TRACK::CastRay(
 
 optional <const BEZIER *> ROADSTRIP::FindBezierAtOffset(const BEZIER * bezier, int offset) const
 {
-	list <ROADPATCH>::const_iterator it = patches.end(); //this iterator will hold the found ROADPATCH
+	std::list <ROADPATCH>::const_iterator it = patches.end(); //this iterator will hold the found ROADPATCH
 
 	//search for the roadpatch containing the bezier and store an iterator to it in "it"
-	for (list <ROADPATCH>::const_iterator i = patches.begin(); i != patches.end(); ++i)
+	for (std::list <ROADPATCH>::const_iterator i = patches.begin(); i != patches.end(); ++i)
 	{
 		if (&i->GetPatch() == bezier)
 		{
@@ -208,7 +207,7 @@ optional <const BEZIER *> ROADSTRIP::FindBezierAtOffset(const BEZIER * bezier, i
 			if (curoffset < 0)
 			{
 				//why is this so difficult?  all i'm trying to do is make the iterator loop around
-				list <ROADPATCH>::const_reverse_iterator rit(it);
+				std::list <ROADPATCH>::const_reverse_iterator rit(it);
 				if (rit == patches.rend())
 					rit = patches.rbegin();
 				++rit;

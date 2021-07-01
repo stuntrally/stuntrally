@@ -1,4 +1,4 @@
-#include "pch.h"
+
 /*
 www.sourceforge.net/projects/tinyxml
 Original file by Yves Berquin.
@@ -24,7 +24,7 @@ distribution.
 */
 
 /*
- * THIS FILE WAS ALTERED BY Tyge Løvset, 7. April 2005.
+ * THIS FILE WAS ALTERED BY Tyge Lï¿½vset, 7. April 2005.
  */
 
 

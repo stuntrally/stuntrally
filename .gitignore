@@ -8,6 +8,7 @@ build*
 Debug*
 Release*
 bin
+lib
 
 CMakeLists.txt.user*
 
@@ -17,9 +18,13 @@ CMakeLists.txt.user*
 *.exe
 
 #-- vs crap
+.vs
 *.ncb
 *.suo
 *.user
+
+#-- vscode
+.vscode
 
 *.lnk
 StuntRally*.*

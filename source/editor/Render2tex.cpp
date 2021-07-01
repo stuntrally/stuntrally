@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/GuiCom.h"
@@ -155,7 +155,7 @@ void App::SaveGrassDens()
 
 	const int f = std::max(0, scn->sc->grDensSmooth);
 	float sum = 0.f;
-	register int v,i,j,x,y, a,b,d,m;
+	int v,i,j,x,y, a,b,d,m;
 
 	//  gauss kernel for smoothing
 	int *mask = new int[(f*2+1)*(f*2+1)];  m = 0;
@@ -263,8 +263,8 @@ void App::SaveWaterDepth()
 	int w = 1024, h = w;  float fh = h-1, fw = w-1;
 	using Ogre::uint;
 	uint *wd = new uint[w*h];   // water depth
-	register int x,y,a,i,ia,id;
-	register float fa,fd;
+	int x,y,a,i,ia,id;
+	float fa,fd;
 	
 	///  write to img  -----------
 	//  get ter height to fluid height difference for below
@@ -375,8 +375,8 @@ void App::AlignTerToRoad()
 
 	const float ws = scn->sc->td.fTerWorldSize;
 	const float Len = 400;  // max ray length
-	register int x,y,a;
-	register float v,k, fx,fz, wx,wz;
+	int x,y,a;
+	float v,k, fx,fz, wx,wz;
 	
 	///  ray casts  -----------
 	for (y = 0; y < h; ++y) {  a = y*w;
@@ -403,7 +403,7 @@ void App::AlignTerToRoad()
 		const int f = std::ceil(fv);
 		const unsigned int fs = (f*2+1)*(f*2+1);
 		float ff = 0.f;
-		register int i,j,m,d,b;
+		int i,j,m,d,b;
 
 		//  gauss kernel for smoothing
 		float *mask = new float[fs];  m = 0;

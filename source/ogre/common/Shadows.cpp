@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "../common/Def_Str.h"
 #include "../common/RenderConst.h"
 #include "../common/data/SceneXml.h"
@@ -14,8 +14,8 @@
 	#include "../../road/Road.h"
 	#include "../SplitScreen.h"
 #endif
-#include "../../paged-geom/PagedGeometry.h"
-#include "../../paged-geom/GrassLoader.h"
+#include "PagedGeometry.h"
+#include "GrassLoader.h"
 
 #include <OgrePrerequisites.h>
 #include <OgreTimer.h>

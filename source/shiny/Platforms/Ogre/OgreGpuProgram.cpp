@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include <stdexcept>
 #include <iostream>
 
@@ -8,7 +8,7 @@
 
 #include <OgreHighLevelGpuProgramManager.h>
 #include <OgreGpuProgramManager.h>
-#include <OgreVector4.h>
+#include <Ogre.h>
 
 namespace sh
 {

@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "settings_com.h"
 #include "Def_Str.h"
 #include <stdio.h>

@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "Def_Str.h"
 #include "TerrainMaterial.h"
 #include "CScene.h"

@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "OgreMaterialSerializer.hpp"
 
 #include <OgrePass.h>

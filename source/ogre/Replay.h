@@ -1,7 +1,7 @@
 #pragma once
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
-#include <OgreVector3.h>
+#include <OgreVector.h>
 #include "half.hpp"
 #include <OgrePrerequisites.h>  //
 using Ogre::uchar;

@@ -1,0 +1,4 @@
+add_definitions(-DMYGUI_OGRE_PLATFORM)
+#add_definitions(-DMYGUI_DONT_USE_OBSOLETE)
+add_subdirectory(MyGUIEngine)
+add_subdirectory(OgrePlatform)

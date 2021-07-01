@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "CApp.h"
 #include "CGui.h"
 #include "../ogre/common/CScene.h"

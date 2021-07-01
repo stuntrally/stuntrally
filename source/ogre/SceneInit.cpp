@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "common/Def_Str.h"
 #include "common/RenderConst.h"
 #include "common/data/CData.h"
@@ -18,7 +17,7 @@
 #include "SplitScreen.h"
 #include "common/GraphView.h"
 #include "../network/gameclient.hpp"
-#include "../paged-geom/PagedGeometry.h"
+#include "PagedGeometry.h"
 #include "../shiny/Main/Factory.hpp"
 #include <boost/thread.hpp>
 #include <MyGUI_OgrePlatform.h>

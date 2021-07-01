@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "common/Def_Str.h"
 #include "common/Gui_Def.h"
 #include "common/data/CData.h"

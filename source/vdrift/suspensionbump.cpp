@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "suspensionbump.h"
 
 SUSPENSIONBUMPDETECTION::SUSPENSIONBUMPDETECTION()
