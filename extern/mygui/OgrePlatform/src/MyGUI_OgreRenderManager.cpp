@@ -405,12 +405,12 @@ namespace MyGUI
 		return mViewSize;
 	}
 
-	VertexColourType OgreRenderManager::getVertexFormat() const
+	VertexColourType OgreRenderManager::getVertexFormat()
 	{
 		return mVertexFormat;
 	}
 
-	const RenderTargetInfo& OgreRenderManager::getInfo() const
+	const RenderTargetInfo& OgreRenderManager::getInfo()
 	{
 		return mInfo;
 	}

@@ -60,6 +60,7 @@ if(BUILD_GAME OR BUILD_EDITOR)
 	find_package(Bullet REQUIRED)
 	find_package(OGG REQUIRED)
 	find_package(VorbisFile REQUIRED)
+	find_package(MyGUI REQUIRED)
 
 	add_subdirectory(extern/BulletFileLoader)
 	add_subdirectory(extern/BulletWorldImporter)
@@ -68,13 +69,13 @@ if(BUILD_GAME OR BUILD_EDITOR)
 	add_definitions(-DOGRE_PLUGIN_DIR_REL="${OGRE_PLUGIN_DIR}")
 
 	add_library(clientext INTERFACE)
-	target_include_directories(clientext INTERFACE ${OGRE_INCLUDE_DIRS} ${BULLET_INCLUDE_DIRS} ${OGG_INCLUDE_DIRS} ${VorbisFile_INCLUDE_DIRS})
+	target_include_directories(clientext INTERFACE ${MYGUI_INCLUDE_DIRS} ${OGRE_INCLUDE_DIRS} ${BULLET_INCLUDE_DIRS} ${OGG_INCLUDE_DIRS} ${VorbisFile_INCLUDE_DIRS})
 	target_link_libraries(clientext INTERFACE
 	  BulletFileLoader
 		BulletWorldImporter
 		SDL2::SDL2
-		MyGUIEngine
-		MyGUI.OgrePlatform
+		${MYGUI_LIBRARIES}
+		MyGUI_OgrePlatform_Extern
 		${OGRE_LIBRARIES}
 		${BULLET_LIBRARIES}
 		${OGG_LIBRARIES}

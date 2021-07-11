@@ -21,7 +21,7 @@
 #include "../shiny/Main/Factory.hpp"
 #include <boost/thread.hpp>
 #include <MyGUI_OgrePlatform.h>
-#include "common/MyGUI_D3D11.h"
+//#include "common/MyGUI_D3D11.h"
 #include <MyGUI_PointerManager.h>
 #include <OgreTerrainGroup.h>
 #include <OgreParticleSystem.h>

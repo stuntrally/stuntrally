@@ -16,13 +16,14 @@
 #include <OgreOverlayElement.h>
 #include <OgreOverlayManager.h>
 #include <OgreTimer.h>
-#include "../ogre/common/MyGUI_D3D11.h"
+//#include "../ogre/common/MyGUI_D3D11.h"
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include "../sdl4ogre/sdlcursormanager.hpp"
 #include "../sdl4ogre/sdlwindowhelper.hpp"
 #include "../ogre/common/PointerFix.h"
 #include <MyGUI_PointerManager.h>
 #include <MyGUI_Gui.h>
+#include <MyGUI_OgrePlatform.h>
 #include <MyGUI_InputManager.h>
 #include <MyGUI_FactoryManager.h>
 #include <MyGUI_ImageBox.h>
@@ -466,7 +467,7 @@ void BaseApp::baseInitGui()
 {
 	using namespace MyGUI;
 	//  Gui
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	#if 0//OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 	mPlatform = new OgreD3D11Platform();
 	#else
 	mPlatform = new OgrePlatform();

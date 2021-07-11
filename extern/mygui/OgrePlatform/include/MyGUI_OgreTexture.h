@@ -40,20 +40,20 @@ namespace MyGUI
 
 		void* lock(TextureUsage _access) override;
 		void unlock() override;
-		bool isLocked() const override;
+		bool isLocked() override;
 
-		int getWidth() const override;
-		int getHeight() const override;
+		int getWidth() override;
+		int getHeight() override;
 
-		PixelFormat getFormat() const override
+		PixelFormat getFormat() override
 		{
 			return mOriginalFormat;
 		}
-		TextureUsage getUsage() const override
+		TextureUsage getUsage() override
 		{
 			return mOriginalUsage;
 		}
-		size_t getNumElemBytes() const override
+		size_t getNumElemBytes() override
 		{
 			return mNumElemBytes;
 		}

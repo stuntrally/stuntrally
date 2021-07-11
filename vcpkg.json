@@ -10,6 +10,7 @@
     "freetype",
     "libogg",
     "libvorbis",
+    "mygui",
     "ogre",
     "openal-soft"
   ]

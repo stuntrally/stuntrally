@@ -23,7 +23,7 @@
 
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
-#include "common/MyGUI_D3D11.h"
+//#include "common/MyGUI_D3D11.h"
 
 #include <OgreRoot.h>
 #include <OgreCompositorManager.h>

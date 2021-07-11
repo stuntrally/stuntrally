@@ -43,7 +43,7 @@ namespace MyGUI
 		mIsInitialise = false;
 	}
 
-	IDataStream* OgreDataManager::getData(const std::string& _name) const
+	IDataStream* OgreDataManager::getData(const std::string& _name)
 	{
 		try
 		{
@@ -65,7 +65,7 @@ namespace MyGUI
 		delete _data;
 	}
 
-	bool OgreDataManager::isDataExist(const std::string& _name) const
+	bool OgreDataManager::isDataExist(const std::string& _name)
 	{
 		if (mAllGroups)
 			return Ogre::ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(_name);
@@ -73,7 +73,7 @@ namespace MyGUI
 			return Ogre::ResourceGroupManager::getSingleton().resourceExists(mGroup, _name);
 	}
 
-	const VectorString& OgreDataManager::getDataListNames(const std::string& _pattern) const
+	const VectorString& OgreDataManager::getDataListNames(const std::string& _pattern)
 	{
 		return getDataListNames(_pattern, false);
 	}
@@ -138,7 +138,7 @@ namespace MyGUI
 		return result;
 	}
 
-	const std::string& OgreDataManager::getDataPath(const std::string& _name) const
+	const std::string& OgreDataManager::getDataPath(const std::string& _name)
 	{
 		static std::string result;
 		result.clear();

@@ -70,7 +70,7 @@ namespace MyGUI
 		mNeedVertexCount = _count;
 	}
 
-	size_t OgreVertexBuffer::getVertexCount() const
+	size_t OgreVertexBuffer::getVertexCount()
 	{
 		return mNeedVertexCount;
 	}

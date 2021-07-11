@@ -1,4 +1,4 @@
-add_library(MyGUI.OgrePlatform STATIC
+add_library(MyGUI_OgrePlatform_Extern STATIC
 	include/MyGUI_OgreDataManager.h
 	include/MyGUI_OgreDataStream.h
 	include/MyGUI_OgreDiagnostic.h
@@ -14,6 +14,6 @@ add_library(MyGUI.OgrePlatform STATIC
 	src/MyGUI_OgreTexture.cpp
 	src/MyGUI_OgreVertexBuffer.cpp)
 
-target_include_directories(MyGUI.OgrePlatform PRIVATE ./include ${OGRE_INCLUDE_DIRS})
-target_include_directories(MyGUI.OgrePlatform PUBLIC ./include)
-target_link_libraries(MyGUI.OgrePlatform PRIVATE MyGUIEngine ${OGRE_LIBRARIES})
+target_include_directories(MyGUI_OgrePlatform_Extern PRIVATE ./include ${OGRE_INCLUDE_DIRS} ${MYGUI_INCLUDE_DIRS})
+target_include_directories(MyGUI_OgrePlatform_Extern PUBLIC ./include)
+target_link_libraries(MyGUI_OgrePlatform_Extern PRIVATE ${OGRE_LIBRARIES} ${MYGUI_LIBRARIES})

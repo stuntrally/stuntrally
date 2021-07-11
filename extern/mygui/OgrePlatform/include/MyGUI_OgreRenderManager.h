@@ -44,7 +44,7 @@ namespace MyGUI
 		const IntSize& getViewSize() const override;
 
 		/** @see RenderManager::getVertexFormat */
-		VertexColourType getVertexFormat() const override;
+		VertexColourType getVertexFormat() override;
 
 		/** @see RenderManager::createVertexBuffer */
 		IVertexBuffer* createVertexBuffer() override;
@@ -70,7 +70,7 @@ namespace MyGUI
 		void doRender(IVertexBuffer* _buffer, ITexture* _texture, size_t _count) override;
 
 		/** @see IRenderTarget::getInfo */
-		const RenderTargetInfo& getInfo() const override;
+		const RenderTargetInfo& getInfo() override;
 
 		void setRenderSystem(Ogre::RenderSystem* _render);
 		Ogre::RenderSystem* getRenderSystem() const;
