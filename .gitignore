@@ -21,6 +21,9 @@ CMakeLists.txt.user*
 *.suo
 *.user
 
+#-- vs & vscode
+.vs*
+
 *.lnk
 StuntRally*.*
 SR?Editor*.*

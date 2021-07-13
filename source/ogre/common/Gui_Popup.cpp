@@ -5,7 +5,6 @@
 
 #include <MyGUI_Gui.h>
 #include <MyGUI_OgrePlatform.h>
-#include "MyGUI_D3D11.h"
 #include <MyGUI_Window.h>
 #include <MyGUI_TextBox.h>
 #include <MyGUI_EditBox.h>

@@ -79,6 +79,31 @@ IF (WIN32) #Windows
         SET(MYGUI_LIB_DIR ${OGRESOURCE}/lib)
         SET(MYGUI_LIBRARIES debug Debug/MyGUIEngine_d optimized Release/MyGUIEngine)
     ENDIF (OGRESOURCE)
+		IF (VCPKG_TOOLCHAIN)
+				# The MyGUIConfig.cmake file isn't installed by vcpkg and
+				# find_path() has trouble finding MyGUI.h for some reason, so
+				# manually specify the required paths here. This doesn't do
+				# much detection, so if MyGUI was not installed, configuration
+				# might proceed as normal, but the build will fail.
+				message(STATUS "Using MyGUI from vcpkg")
+				add_library(MyGUIStaticLinkage INTERFACE)
+				target_compile_definitions(MyGUIStaticLinkage INTERFACE MYGUI_STATIC)
+				find_package(Freetype REQUIRED QUIET)
+				target_link_libraries(MyGUIStaticLinkage INTERFACE Freetype::Freetype)
+				find_library(MYGUI_LIBRARIES_REL NAMES MyGUIEngineStatic)
+				if(MYGUI_LIBRARIES_REL)
+					set(MYGUI_LIBRARIES_REL optimized ${MYGUI_LIBRARIES_REL})
+				endif()
+				find_library(MYGUI_LIBRARIES_DBG NAMES MyGUIEngineStatic_d)
+				if(MYGUI_LIBRARIES_DBG)
+					set(MYGUI_LIBRARIES_DBG debug ${MYGUI_LIBRARIES_DBG})
+				endif()
+				target_link_libraries(MyGUIStaticLinkage INTERFACE ${MYGUI_LIBRARIES_REL} ${MYGUI_LIBRARIES_DBG})
+				set(MYGUI_INCLUDE_DIRS "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include/MYGUI")
+				# MYGUI_LIB_DIR is handled by above library, so just put anything here
+				set(MYGUI_LIB_DIR ${CMAKE_BINARY_DIR})
+				set(MYGUI_LIBRARIES MyGUIStaticLinkage)
+		ENDIF (VCPKG_TOOLCHAIN)
 ELSE (WIN32) #Unix
     CMAKE_MINIMUM_REQUIRED(VERSION 2.4.7 FATAL_ERROR)
     FIND_PACKAGE(PkgConfig)
@@ -97,7 +122,9 @@ ELSE (WIN32) #Unix
 ENDIF (WIN32)
 
 #Do some preparation
-SEPARATE_ARGUMENTS(MYGUI_INCLUDE_DIRS)
+IF (NOT VCPKG_TOOLCHAIN)
+	SEPARATE_ARGUMENTS(MYGUI_INCLUDE_DIRS)
+ENDIF (NOT VCPKG_TOOLCHAIN)
 SEPARATE_ARGUMENTS(MYGUI_LIBRARIES)
 SEPARATE_ARGUMENTS(MYGUI_PLATFORM_LIBRARIES)
 
