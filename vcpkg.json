@@ -1,0 +1,20 @@
+{
+  "name": "stuntrally",
+  "version-string": "2.6.2",
+  "dependencies": [
+    "boost-system",
+    "boost-filesystem",
+    "boost-wave",
+    "bullet3",
+    "enet",
+    "freetype",
+    "libogg",
+    "libvorbis",
+    "mygui",
+    {
+      "name": "ogre",
+      "features": ["d3d9"]
+    },
+    "openal-soft"
+  ]
+}

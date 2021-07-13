@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 2.8)
-
 # Linux prefers lower-case exe names
 if(WIN32 OR APPLE)
 	set(GAME_EXE StuntRally)
@@ -12,13 +10,20 @@ else()
 endif()
 
 # Search include files from all source sub directories
-include_directories(btOgre ogre ogre/common paged-geom road tinyxml sound vdrift)
+include_directories(./ btOgre ogre ogre/common paged-geom road tinyxml sound vdrift)
 
 
 # Compile our libraries  ------
 if (BUILD_GAME OR BUILD_EDITOR)
+	if(VCPKG_TOOLCHAIN)
+		add_subdirectory(mygui-ogre)
+		include_directories(mygui-ogre)
+		list(APPEND OURLIBS MyGUI_OgrePlatform_Local)
+		message(STATUS "help: ${OGRE_INCLUDE_DIRS}/Bites")
+		include_directories("${OGRE_INCLUDE_DIRS}/Bites" "${OGRE_INCLUDE_DIRS}/Overlay" "${OGRE_INCLUDE_DIRS}/Paging" "${OGRE_INCLUDE_DIRS}/Terrain")
+	endif()
 
-	foreach(ourlib  oics tinyxml paged-geom btOgre)
+	foreach(ourlib  oics tinyxml paged-geom btOgre BulletFileLoader BulletWorldImporter)
 		add_subdirectory(${ourlib})
 		list(APPEND OURLIBS ${ourlib})
 	endforeach()

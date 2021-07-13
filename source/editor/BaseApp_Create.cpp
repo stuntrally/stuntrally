@@ -16,7 +16,6 @@
 #include <OgreOverlayElement.h>
 #include <OgreOverlayManager.h>
 #include <OgreTimer.h>
-#include "../ogre/common/MyGUI_D3D11.h"
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include "../sdl4ogre/sdlcursormanager.hpp"
 #include "../sdl4ogre/sdlwindowhelper.hpp"
@@ -266,7 +265,7 @@ bool BaseApp::setup()
 	}
 	//LogManager::getSingleton().setLogDetail(LL_BOREME);  //-
 
-	#ifdef _DEBUG
+	#if 0 //def _DEBUG
 	#define D_SUFFIX "_d"
 	#else
 	#define D_SUFFIX ""
@@ -472,11 +471,7 @@ void BaseApp::baseInitGui()
 {
 	using namespace MyGUI;
 	//  Gui
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	mPlatform = new OgreD3D11Platform();
-	#else
 	mPlatform = new OgrePlatform();
-	#endif
 
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
 	mGui = new Gui();
