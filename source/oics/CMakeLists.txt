@@ -13,4 +13,4 @@ set(OICS_SOURCE_FILES
 
 add_library(${OICS_LIBRARY} STATIC ${OICS_SOURCE_FILES})
 
-link_directories(${CMAKE_CURRENT_BINARY_DIR})
+target_link_libraries(${OICS_LIBRARY} ${LIBS})

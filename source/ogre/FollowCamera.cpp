@@ -4,7 +4,7 @@
 #include "FollowCamera.h"
 #include "../settings.h"
 
-#include "../tinyxml/tinyxml2.h"
+#include "tinyxml2.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/mathvector.h"
 // ray cast

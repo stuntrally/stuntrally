@@ -155,12 +155,8 @@ public:
 	Txt txLoadBig =0, txLoad =0;
 	int barSizeX =0, barSizeY =0;
 
-	
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	MyGUI::OgreD3D11Platform* mPlatform =0;
-	#else
-	MyGUI::OgrePlatform* mPlatform =0;
-	#endif
+
+	MyGUI::OgrePlatform* mPlatform;
 	
 	///  main menu  // pSet->inMenu
 	WP mWndMainPanels[ciMainBtns] ={0,}, mWndRacePanels[ciRaceBtns] ={0,};
