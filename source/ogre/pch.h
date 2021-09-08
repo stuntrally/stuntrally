@@ -1,8 +1,6 @@
 #ifndef __PCH_H__
 #define __PCH_H__
 
-//  this is the precompiled header file for VS, only for Windows build
-#ifdef _MSC_VER
 // include file for project specific include files that are used frequently, but are changed infrequently
 
 ///  std
@@ -64,5 +62,4 @@
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
 
-#endif
 #endif

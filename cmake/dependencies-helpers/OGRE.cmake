@@ -10,4 +10,10 @@ if (${_PREFIX}USE_OGRE STREQUAL "SYSTEM")
                 INTERFACE_INCLUDE_DIRECTORIES "${OGRE_INCLUDE_DIRS}"
                 )
     endif ()
+
+    add_compile_definitions(OGRE_PLUGIN_DIR_REL="${OGRE_PLUGIN_DIR_REL}")
+    add_compile_definitions(OGRE_PLUGIN_DIR_DBG="${OGRE_PLUGIN_DIR_DBG}")
+else()
+    add_compile_definitions(OGRE_PLUGIN_DIR_REL=".")
+    add_compile_definitions(OGRE_PLUGIN_DIR_DBG=".")
 endif ()

@@ -12,7 +12,6 @@ endif ()
 # Search include files from all source sub directories
 include_directories(btOgre ogre ogre/common paged-geom road sound vdrift)
 
-
 # Compile our libraries  ------
 if (BUILD_GAME OR BUILD_EDITOR)
 
@@ -65,21 +64,12 @@ if (BUILD_GAME)
     source_group(xml_gui ../data/*/core*.xml)
     source_group(mat ../data/materials/*.*)
 
-    if (MSVC)
-        add_executable(${GAME_EXE} WIN32 ${GAME_SOURCES})
-    else (MSVC)
-        add_executable(${GAME_EXE} ${GAME_SOURCES})
-    endif (MSVC)
+    add_executable(${GAME_EXE} WIN32 ${GAME_SOURCES})
     target_link_libraries(${GAME_EXE} ${OURLIBS})
     target_link_libraries(${GAME_EXE} ${LIBS})
     install(TARGETS ${GAME_EXE} DESTINATION bin)
 
-    if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.16")
-        message(STATUS "Using precompiled headers")
-        target_precompile_headers(${GAME_EXE} PRIVATE ogre/pch.h)
-    else ()
-        message(STATUS "Not using precompiled headers")
-    endif ()
+    target_precompile_headers(${GAME_EXE} PRIVATE ogre/pch.h)
 endif ()
 
 
@@ -119,17 +109,12 @@ if (BUILD_EDITOR)
     source_group(editor_gui editor/gui*)
     source_group(vdrift vdrift/*)
 
-    add_executable(${EDITOR_EXE} ${EDITOR_SOURCES})
+    add_executable(${EDITOR_EXE} WIN32 ${EDITOR_SOURCES})
     set_target_properties(${EDITOR_EXE} PROPERTIES COMPILE_FLAGS "-DSR_EDITOR")
     target_link_libraries(${EDITOR_EXE} ${OURLIBS})
     target_link_libraries(${EDITOR_EXE} ${LIBS})
     install(TARGETS ${EDITOR_EXE} DESTINATION bin)
-    if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.16")
-        message(STATUS "Using precompiled headers")
-        target_precompile_headers(${EDITOR_EXE} PRIVATE editor/pch.h)
-    else ()
-        message(STATUS "Not using precompiled headers")
-    endif ()
+    target_precompile_headers(${EDITOR_EXE} PRIVATE editor/pch.h)
 endif ()
 
 

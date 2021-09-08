@@ -84,4 +84,14 @@ if(BULLET_FOUND)
    _BULLET_APPEND_LIBRARIES(BULLET_LIBRARIES BULLET_DYNAMICS_LIBRARY)
    _BULLET_APPEND_LIBRARIES(BULLET_LIBRARIES BULLET_COLLISION_LIBRARY)
    _BULLET_APPEND_LIBRARIES(BULLET_LIBRARIES BULLET_MATH_LIBRARY)
+
+   if (NOT TARGET Bullet::Bullet)
+        message(STATUS "Adding Bullet::Bullet target")
+        add_library(Bullet::Bullet INTERFACE IMPORTED)
+        set_target_properties(
+               Bullet::Bullet PROPERTIES
+                INTERFACE_LINK_LIBRARIES "${BULLET_LIBRARIES}"
+                INTERFACE_INCLUDE_DIRECTORIES "${BULLET_INCLUDE_DIR}"
+         )
+    endif ()
 endif()

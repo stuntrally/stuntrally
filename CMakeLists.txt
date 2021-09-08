@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 # Include path for additional CMake library finding scripts
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/" ${CMAKE_MODULE_PATH})
 
 include(CMakeDependentOption)
 include(Macros)

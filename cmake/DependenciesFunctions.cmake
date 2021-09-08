@@ -3,7 +3,8 @@ include(conan)
 include(FindPkgConfig)
 
 if (USE_PACKAGE_MANAGER)
-    conan_add_remote(NAME rigs-of-rods-deps-V2
+    conan_add_remote(
+        NAME rigs-of-rods-deps-V2
             URL https://artifactory.anotherfoxguy.com/artifactory/api/conan/rigs-of-rods
             VERIFY_SSL True
             )
@@ -94,11 +95,12 @@ function(add_external_lib package conan_package_name)
         string(APPEND option_desc ", OFF")
     endif ()
 
-    cmd_option(${option_name}
-            "Use ${option_name_base} library [${option_desc}]"
-            "${default}"
-            STRINGS ${sysopt} "CONAN" ${reqopt}
-            )
+    cmd_option(
+        ${option_name}
+        "Use ${option_name_base} library [${option_desc}]"
+        "${default}"
+        STRINGS ${sysopt} "CONAN" ${reqopt}
+    )
     # Early bail out
     if (${option_name} STREQUAL "OFF")
 
@@ -138,7 +140,8 @@ function(add_external_lib package conan_package_name)
         endif ()
 
         if (ARG_FIND_PACKAGE OR NOT PKG_CONFIG_FOUND)
-            if (ARG_REQUIRED)
+            
+            if (ARG_REQUIRED AND ${_PREFIX}FORCE_SYSTEM_DEPENDENCIES)
                 list(APPEND find_package_options REQUIRED)
             endif ()
 
@@ -151,7 +154,7 @@ function(add_external_lib package conan_package_name)
         endif ()
 
         if (system_only)
-            if (ARG_REQUIRED)
+            if (ARG_REQUIRED AND ${_PREFIX}FORCE_SYSTEM_DEPENDENCIES)
                 message(FATAL_ERROR "Failed to find the required system package ${package}")
             endif ()
 
@@ -186,10 +189,12 @@ function(add_external_lib package conan_package_name)
         list(APPEND CONAN_ONLY_DEBUG_RELEASE ${package})
     endif ()
 
-    lift_var(CONAN_REQUIRES
+    lift_var(
+        CONAN_REQUIRES
             CONAN_PACKAGE_OPTIONS
             CONAN_RESOLVE_LIST
-            CONAN_ONLY_DEBUG_RELEASE)
+            CONAN_ONLY_DEBUG_RELEASE
+            )
 
     message(STATUS "Adding Conan dependency ${package}")
 endfunction()
@@ -249,7 +254,8 @@ function(_conan_install build_type)
         SETTINGS ${settings}
     ")
 
-    conan_cmake_install(PATH_OR_REFERENCE .
+    conan_cmake_install(
+        PATH_OR_REFERENCE .
             BUILD missing
             SETTINGS ${settings}
             )

@@ -1,4 +1,5 @@
 include(DependenciesFunctions)
+set(CMAKE_THREAD_PREFER_PTHREAD YES)
 find_package(Threads REQUIRED)
 
 # Some pkg-config files are broken, that is why they are commented out
@@ -7,7 +8,6 @@ add_external_lib(
         Boost
         boost/1.76.0
         REQUIRED
-        PKG_CONFIG "boost >= 1.7"
         FIND_PACKAGE_OPTIONS COMPONENTS system thread filesystem wave
         # Remove unused boost stuff
         CONAN_OPTIONS
@@ -44,20 +44,21 @@ add_external_lib(
 )
 
 add_external_lib(
-        Bullet
+        BULLET
         bullet3/3.17
-        PKG_CONFIG "bullet >= 3.1"
-        FIND_PACKAGE_OPTIONS CONFIG
+        REQUIRED
+        FIND_PACKAGE
         CONAN_OPTIONS bullet3:extras=True
+        INTERFACE_NAME Bullet::Bullet
 )
 
 add_external_lib(
         SDL2
         sdl/2.0.14
+        REQUIRED
         PKG_CONFIG "sdl2 >= 2.0"
         FIND_PACKAGE_OPTIONS CONFIG
         CONAN_OPTIONS sdl:sdl2main=False
-
 )
 
 add_external_lib(
@@ -80,7 +81,7 @@ add_external_lib(
         VorbisFile
         vorbis/1.3.7
         REQUIRED
-        PKG_CONFIG "vorbis >= 1.2"
+        PKG_CONFIG "vorbis >= 1.2, vorbisfile >= 1.2"
         FIND_PACKAGE
 )
 
@@ -117,15 +118,17 @@ add_external_lib(
 
 
 set(LIBS Boost::Boost
+        Threads::Threads
         OGRE::OGRE
         Bullet::Bullet
         SDL2::SDL2
         MyGUI::MyGUI
-        OGG::OGG
         VorbisFile::VorbisFile
+        OGG::OGG
         OpenAL::OpenAL
         ENet::ENet
         tinyxml::tinyxml
-        tinyxml2::tinyxml2)
+        tinyxml2::tinyxml2
+)
 
 set(SERVER_LIBS Boost::Boost ENet::ENet)
