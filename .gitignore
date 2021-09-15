@@ -9,8 +9,8 @@ sr.log
 #!*/core_language_en_tag.xml
 
 #--  build
-*build
-build*
+/*build/
+/build/*
 Debug*
 Release*
 bin
