@@ -29,6 +29,14 @@ if (BUILD_GAME OR BUILD_EDITOR)
 endif ()
 
 
+macro(install_os_depend itemname)
+    if(WIN32)
+        install(TARGETS ${itemname} DESTINATION .)
+    else() 
+        install(TARGETS ${itemname} DESTINATION bin)
+    endif()
+endmacro()
+
 # Game executable  ------
 if (BUILD_GAME)
 
@@ -67,7 +75,7 @@ if (BUILD_GAME)
     add_executable(${GAME_EXE} WIN32 ${GAME_SOURCES})
     target_link_libraries(${GAME_EXE} ${OURLIBS})
     target_link_libraries(${GAME_EXE} ${LIBS})
-    install(TARGETS ${GAME_EXE} DESTINATION bin)
+    install_os_depend(${GAME_EXE})
 
     target_precompile_headers(${GAME_EXE} PRIVATE ogre/pch.h)
 endif ()
@@ -113,7 +121,7 @@ if (BUILD_EDITOR)
     set_target_properties(${EDITOR_EXE} PROPERTIES COMPILE_FLAGS "-DSR_EDITOR")
     target_link_libraries(${EDITOR_EXE} ${OURLIBS})
     target_link_libraries(${EDITOR_EXE} ${LIBS})
-    install(TARGETS ${EDITOR_EXE} DESTINATION bin)
+    install_os_depend(${EDITOR_EXE})
     target_precompile_headers(${EDITOR_EXE} PRIVATE editor/pch.h)
 endif ()
 
@@ -123,7 +131,7 @@ if (BUILD_MASTER_SERVER)
     file(GLOB SERVER_SOURCES network/master-server/main.cpp) # Glob .cpp files needed for the server
     add_executable(${SERVER_EXE} ${SERVER_SOURCES})
     target_link_libraries(${SERVER_EXE} ${SERVER_LIBS})
-    install(TARGETS ${SERVER_EXE} DESTINATION bin)
+    install_os_depend(${SERVER_EXE})
 endif ()
 
 # Transl tool

@@ -26,6 +26,7 @@ jobs:
                   pkg-config \
                   ninja-build \
                   nvidia-cg-toolkit \
+                  libsdl2-dev \
                   libfreetype6-dev \
                   libfreeimage-dev \
                   libzzip-dev \
@@ -36,27 +37,23 @@ jobs:
                   libxt-dev \
                   libxaw7-dev \
                   libxrandr-dev \
-                  libopenjp2-7-dev
+                  libopenjp2-7-dev \
+                  libbullet-dev \
+                  libbullet-extras-dev
 
         shell: bash
 
       - name: Configure
-        run: cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=redist .
+        run: |
+          mkdir build && cd build
+          cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DSR_LIB_PREFERENCE=SYSTEM ..
         shell: bash
 
       - name: Build
-        run: ninja install
+        run: |
+          cd build
+          ninja
         shell: bash
-
-      - name: Copy *.so files
-        run: cmake -P ./dist/copy_libs.cmake
-        shell: bash
-
-      - name: Upload redist folder
-        uses: actions/upload-artifact@v2
-        with:
-          name: stuntrally-linux
-          path: redist
 
       - name: Clean Conan pkgs
         run: conan remove "*" -fsb
@@ -64,7 +61,7 @@ jobs:
 
   build-msvc:
     name: Windows build
-    runs-on: windows-2016
+    runs-on: windows-latest
     env:
       DXSDK_DIR: C:\apps\Microsoft DirectX SDK\
       BUILD_TOOLS_PATH: C:\apps\build-tools\
@@ -88,25 +85,35 @@ jobs:
       - name: Cache conan packages
         uses: actions/cache@v2.1.6
         with:
-          key: conan-root-${{ hashFiles('cmake/DependenciesConfig.cmake') }}
+          key: conan-${{ hashFiles('cmake/DependenciesConfig.cmake') }}
           path: ~/.conan
 
+      - name: Cache conan packages
+        uses: actions/cache@v2.1.6
+        with:
+          key: conan-short_path-${{ hashFiles('cmake/DependenciesConfig.cmake') }}
+          path: C:/.conan/
+      
       - name: Enable Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1.9.0
 
       - name: Configure
-        run: cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=redist .
+        run: | 
+          mkdir build && cd build
+          cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=redist ..
         shell: cmd
 
       - name: Build
-        run: ninja install
+        run: |
+          cd build
+          ninja install
         shell: cmd
 
       - name: Upload redist folder
         uses: actions/upload-artifact@v2
         with:
           name: stuntrally-win
-          path: redist
+          path: build/redist
 
       - name: Clean Conan pkgs
         run: conan remove "*" -fsb
