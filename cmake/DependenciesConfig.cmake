@@ -73,7 +73,7 @@ add_external_lib(
         ENet
         enet/1.3.17
         REQUIRED
-        PKG_CONFIG "ENet >= 1.2"
+        PKG_CONFIG "libenet >= 1.2"
         FIND_PACKAGE
 )
 
@@ -89,7 +89,7 @@ add_external_lib(
         tinyxml2
         tinyxml2/8.0.0
         REQUIRED
-        PKG_CONFIG "tinyxml2 >= 7"
+        PKG_CONFIG "tinyxml2 >= 6"
         FIND_PACKAGE
 )
 

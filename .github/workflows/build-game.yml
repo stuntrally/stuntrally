@@ -39,7 +39,14 @@ jobs:
                   libxrandr-dev \
                   libopenjp2-7-dev \
                   libbullet-dev \
-                  libbullet-extras-dev
+                  libbullet-extras-dev \
+                  libtinyxml-dev \
+                  libtinyxml2-dev  \
+                  libenet-dev \
+                  libboost-system-dev \
+                  libboost-thread-dev \
+                  libboost-system-dev \
+                  libboost-wave-dev
 
         shell: bash
 
