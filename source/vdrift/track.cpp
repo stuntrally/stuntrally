@@ -183,7 +183,7 @@ bool TRACK::CastRay(
 	return col;
 }
 
-optional <const BEZIER *> ROADSTRIP::FindBezierAtOffset(const BEZIER * bezier, int offset) const
+::optional <const BEZIER *> ROADSTRIP::FindBezierAtOffset(const BEZIER * bezier, int offset) const
 {
 	list <ROADPATCH>::const_iterator it = patches.end(); //this iterator will hold the found ROADPATCH
 
@@ -198,7 +198,7 @@ optional <const BEZIER *> ROADSTRIP::FindBezierAtOffset(const BEZIER * bezier, i
 	}
 
 	if (it == patches.end())
-		return optional <const BEZIER *>(); //return nothing
+		return ::optional <const BEZIER *>(); //return nothing
 	else
 	{
 		//now do the offset
@@ -231,6 +231,6 @@ optional <const BEZIER *> ROADSTRIP::FindBezierAtOffset(const BEZIER * bezier, i
 		}
 
 		assert(it != patches.end());
-		return optional <const BEZIER *>(&it->GetPatch());
+		return ::optional <const BEZIER *>(&it->GetPatch());
 	}
 }
