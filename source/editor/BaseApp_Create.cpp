@@ -28,6 +28,11 @@
 #include <MyGUI_ImageBox.h>
 #include <MyGUI_TextBox.h>
 #include <OgreWindowEventUtilities.h>
+#include <OgreCamera.h>
+#include <OgreHighLevelGpuProgramManager.h>
+#include <OgreRoot.h>
+#include <OgreSceneManager.h>
+#include <OgreTextureManager.h>
 
 namespace
 {

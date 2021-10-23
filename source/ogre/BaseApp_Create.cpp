@@ -31,6 +31,14 @@
 #include <OgreTimer.h>
 #include "Compositor.h"
 
+#include <OgreCompositorManager.h>
+#include <OgreConfigFile.h>
+#include <OgreHighLevelGpuProgramManager.h>
+#include <OgreRoot.h>
+#include <OgreSceneManager.h>
+#include <OgreTextureManager.h>
+#include <OgreViewport.h>
+
 #include "../shiny/Main/Factory.hpp"
 #include "../shiny/Platforms/Ogre/OgrePlatform.hpp"
 

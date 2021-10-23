@@ -27,6 +27,8 @@
 #include <OgreTerrainGroup.h>
 #include <OgreParticleSystem.h>
 #include <OgreResourceGroupManager.h>
+#include <OgreMeshManager.h>
+#include <OgreTextureManager.h>
 
 using namespace MyGUI;
 using namespace Ogre;

@@ -399,6 +399,8 @@ macro(ogre_find_component COMPONENT HEADER)
   endif()
 endmacro()
 
+# look for Bites component
+ogre_find_component(Bites OgreWindowEventUtilities.h)
 # look for Paging component
 ogre_find_component(Paging OgrePaging.h)
 # look for Terrain component
@@ -411,6 +413,7 @@ ogre_find_component(RTShaderSystem OgreRTShaderSystem.h)
 ogre_find_component(Volume OgreVolumePrerequisites.h)
 # look for Overlay component
 ogre_find_component(Overlay OgreOverlaySystem.h)
+
 
 #########################################################
 # Find Ogre plugins

@@ -10,6 +10,11 @@
 
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
+#include <OgreCompositionTargetPass.h>
+#include <OgreCompositorChain.h>
+#include <OgreCompositorManager.h>
+#include <OgreMeshManager.h>
+#include <OgreTextureManager.h>
 using namespace Ogre;
 
 #include "../sdl4ogre/sdlinputwrapper.hpp"
