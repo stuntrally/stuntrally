@@ -15,6 +15,9 @@
 #include <unistd.h>  // for daemon()
 #endif
 
+// Fix error define in windows header
+#undef ERROR
+
 #define VERSIONSTRING "0.7.1"
 
 //  How many seconds without update until a game becomes zombie

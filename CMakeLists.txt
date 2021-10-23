@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.16)
 # Include path for additional CMake library finding scripts
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/" ${CMAKE_MODULE_PATH})
 
+if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.22")
+    cmake_policy(SET CMP0127 OLD)
+endif ()
+
 include(CMakeDependentOption)
 include(Macros)
 include(FeatureSummary)

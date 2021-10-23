@@ -46,7 +46,7 @@ jobs:
       - name: Configure
         run: |
           mkdir build && cd build
-          cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DSR_LIB_PREFERENCE=SYSTEM ..
+          cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DSR_LIB_PREFERENCE=SYSTEM -DBUILD_MASTER_SERVER=ON ..
         shell: bash
 
       - name: Build
@@ -100,7 +100,7 @@ jobs:
       - name: Configure
         run: | 
           mkdir build && cd build
-          cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=redist ..
+          cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=redist -DBUILD_MASTER_SERVER=ON ..
         shell: cmd
 
       - name: Build
