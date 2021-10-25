@@ -25,7 +25,7 @@ add_external_lib(
         bullet3/3.17
         REQUIRED
         FIND_PACKAGE
-        CONAN_OPTIONS bullet3:extras=True
+        CONAN_OPTIONS bullet3:extras=True bullet3:network_support=True
         INTERFACE_NAME Bullet::Bullet
 )
 
