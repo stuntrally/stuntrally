@@ -5,5 +5,5 @@
 	static bool isnan(double number) {  return (number != number);  }
 #else  // gcc, c++11
 	#include <cmath>
-	#define isnan(f)  std::isnan(f)
+	using std::isnan;
 #endif
