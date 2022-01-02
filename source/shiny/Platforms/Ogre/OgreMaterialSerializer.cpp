@@ -4,12 +4,11 @@
 #include <OgrePass.h>
 
 #include <OgreStringConverter.h>
-#include <OgreLodStrategyManager.h>
-#include <OgreDistanceLodStrategy.h>
 #include <OgreLogManager.h>
 
 namespace Ogre
 {
+    template <typename T> class MapIterator;
     /** Struct for holding the script context while parsing. */
     struct MaterialScriptContext 
     {
@@ -19,6 +18,9 @@ namespace Ogre
         AliasTextureNamePairList textureAliases;
     };
 }
+
+#include <OgreLodStrategyManager.h>
+#include <OgreDistanceLodStrategy.h>
 
 //-----------------------------------------------------------------------
 // Internal parser methods

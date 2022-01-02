@@ -160,7 +160,7 @@ void SplitScr::Align()
 	// Create gui viewport if not already existing
 	if (!mGuiViewport)
 	{
-		mGuiSceneMgr = Root::getSingleton().createSceneManager(ST_GENERIC);
+		mGuiSceneMgr = Root::getSingleton().createSceneManager("DefaultSceneManager");
 		Camera* guiCam = mGuiSceneMgr->createCamera("GuiCam1");
 		mGuiViewport = mWindow->addViewport(guiCam, 100);
 		mGuiViewport->setVisibilityMask(RV_Hud);

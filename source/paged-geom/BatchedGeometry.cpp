@@ -551,9 +551,11 @@ void BatchedGeometry::SubBatch::addSubEntity(SubEntity *ent, const Vector3 &posi
       VertexElementType format = Root::getSingleton().getRenderSystem()->getColourVertexElementType();
       switch (format)
       {
+#if OGRE_VERSION_MAJOR < 13
       case VET_COLOUR_ARGB:
          std::swap(newMesh.color.r, newMesh.color.b);
          break;
+#endif
       case VET_COLOUR_ABGR:
          break;
       default:

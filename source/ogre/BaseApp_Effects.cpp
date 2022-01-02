@@ -128,7 +128,12 @@ void BaseApp::recreateCompositor()
 
 	if (!pSet->all_effects)  // disable compositor
 	{
-		refreshCompositor();
+		try {
+			refreshCompositor();
+		}
+		catch (InvalidParametersException& e) {
+			// ignore missing compositors
+		}
 		return;
 	}
 

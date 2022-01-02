@@ -1,5 +1,6 @@
 #include "pch.h"
 #include <stdexcept>
+#include <sstream>
 
 #include "OgrePass.hpp"
 
