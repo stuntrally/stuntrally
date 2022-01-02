@@ -583,7 +583,7 @@ void BatchedGeometry::SubBatch::build()
 
    //Allocate the index buffer
    m_pIndexData->indexBuffer = HardwareBufferManager::getSingleton().createIndexBuffer(
-      destIndexType, m_pIndexData->indexCount, HardwareBuffer::HBU_STATIC_WRITE_ONLY);
+      destIndexType, m_pIndexData->indexCount, HardwareBuffer::HBU_STATIC_WRITE_ONLY, true);
 
    //Lock the index buffer
    uint32 *indexBuffer32;
@@ -603,7 +603,7 @@ void BatchedGeometry::SubBatch::build()
    for (Ogre::ushort i = 0; i < vertBinding->getBufferCount(); ++i)
    {
       HardwareVertexBufferSharedPtr buffer = HardwareBufferManager::getSingleton().createVertexBuffer(
-         vertDecl->getVertexSize(i), m_pVertexData->vertexCount, HardwareBuffer::HBU_STATIC_WRITE_ONLY);
+         vertDecl->getVertexSize(i), m_pVertexData->vertexCount, HardwareBuffer::HBU_STATIC_WRITE_ONLY, true);
       vertBinding->setBinding(i, buffer);
 
       vertexBuffers.push_back(static_cast<uchar*>(buffer->lock(HardwareBuffer::HBL_DISCARD)));
@@ -619,7 +619,7 @@ void BatchedGeometry::SubBatch::build()
          vertDecl->addElement(i, 0, VET_COLOUR, VES_DIFFUSE);
 
          HardwareVertexBufferSharedPtr buffer = HardwareBufferManager::getSingleton().createVertexBuffer(
-            vertDecl->getVertexSize(i), m_pVertexData->vertexCount, HardwareBuffer::HBU_STATIC_WRITE_ONLY);
+            vertDecl->getVertexSize(i), m_pVertexData->vertexCount, HardwareBuffer::HBU_STATIC_WRITE_ONLY, true);
          vertBinding->setBinding(i, buffer);
 
          vertexBuffers.push_back(static_cast<uchar*>(buffer->lock(HardwareBuffer::HBL_DISCARD)));
