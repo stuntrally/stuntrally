@@ -87,7 +87,7 @@ void CScene::CreateBltFluids()
 		//tr.setRotation(btQuaternion(0, 0, fb.rot.x*PI_d/180.f));
 
 		btCollisionShape* bshp = 0;
-		btScalar t = sc->td.fTerWorldSize*0.5f;  // not bigger than terrain
+		float t = sc->td.fTerWorldSize*0.5f;  // not bigger than terrain
 		bshp = new btBoxShape(btVector3(std::min(t, fb.size.x*0.5f), std::min(t, fb.size.z*0.5f), fb.size.y*0.5f));
 
 		//  solid surf
