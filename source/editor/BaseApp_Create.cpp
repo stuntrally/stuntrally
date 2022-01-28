@@ -296,7 +296,7 @@ bool BaseApp::setup()
 	if (!configure())
 		return false;
 
-	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/Ogre::ST_EXTERIOR_FAR/**/);
+	mSceneMgr = mRoot->createSceneManager("DefaultSceneManager");
 
 	#if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0) 
 	Ogre::OverlaySystem* pOverlaySystem = new Ogre::OverlaySystem();

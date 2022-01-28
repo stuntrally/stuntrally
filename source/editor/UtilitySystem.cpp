@@ -8,6 +8,11 @@
 #ifndef _WIN32
 #include <dirent.h>
 #endif
+
+#if OGRE_VERSION_MAJOR >= 13
+#include <OgreDeprecated.h>
+#endif
+
 using namespace Ogre;
 
 

@@ -29,7 +29,7 @@ using namespace Ogre;
 //  common rtt setup
 void CScene::RenderToTex::Setup(Root* rt, String sName, TexturePtr pTex, String sMtr)
 {
-	if (!scm)  scm = rt->createSceneManager(ST_GENERIC);  // once-
+	if (!scm)  scm = rt->createSceneManager("DefaultSceneManager");  // once-
 	//  destroy old
 	if (cam)  scm->destroyCamera(cam);
 	if (nd)  scm->destroySceneNode(nd);

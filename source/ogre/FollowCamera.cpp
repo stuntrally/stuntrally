@@ -18,6 +18,10 @@
 #include <OgreSceneNode.h>
 #include <OgreTerrainGroup.h>
 
+#if OGRE_VERSION_MAJOR >= 13
+#include <OgreDeprecated.h>
+#endif
+
 #include <MyGUI.h>
 using namespace Ogre;
 using namespace tinyxml2;
