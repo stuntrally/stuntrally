@@ -4,6 +4,7 @@
 #include <OgreMaterialManager.h>
 #include <OgreTechnique.h>
 #include <stdexcept>
+#include <sstream>
 
 #include "OgrePass.hpp"
 #include "OgreMaterialSerializer.hpp"

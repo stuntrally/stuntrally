@@ -211,7 +211,7 @@ void StaticBillboardSet::build()
 
       //Populate a new vertex buffer
       HardwareVertexBufferSharedPtr vbuf = HardwareBufferManager::getSingleton().createVertexBuffer(
-         offset, pSubMesh->vertexData->vertexCount, HardwareBuffer::HBU_STATIC_WRITE_ONLY, false);
+         offset, pSubMesh->vertexData->vertexCount, HardwareBuffer::HBU_STATIC_WRITE_ONLY, true);
       float* pReal = static_cast<float*>(vbuf->lock(HardwareBuffer::HBL_DISCARD));
 
       float minX = (float)Math::POS_INFINITY, minY = (float)Math::POS_INFINITY, minZ = (float)Math::POS_INFINITY;
@@ -316,7 +316,7 @@ void StaticBillboardSet::build()
          assert(pSubMesh->indexData->indexCount <= std::numeric_limits<Ogre::uint16>::max() && "To many indices. Use 32 bit indices");
          Ogre::HardwareIndexBufferSharedPtr &ptrIndBuf = pSubMesh->indexData->indexBuffer;
          ptrIndBuf = HardwareBufferManager::getSingleton().createIndexBuffer(HardwareIndexBuffer::IT_16BIT,
-            pSubMesh->indexData->indexCount, HardwareBuffer::HBU_STATIC_WRITE_ONLY, false);
+            pSubMesh->indexData->indexCount, HardwareBuffer::HBU_STATIC_WRITE_ONLY, true);
 
          Ogre::uint16 *pIBuf = static_cast < Ogre::uint16* > (ptrIndBuf->lock(HardwareBuffer::HBL_DISCARD));
          for (Ogre::uint16 i = 0; i < billboardCount; ++i)
@@ -342,10 +342,9 @@ void StaticBillboardSet::build()
          mPtrMesh->_setBoundingSphereRadius(temp.length() * 0.5f);
 
          // Loading mesh
-         Ogre::LoggingLevel logLev = LogManager::getSingleton().getDefaultLog()->getLogDetail();
          LogManager::getSingleton().setLogDetail(LL_LOW);
          mPtrMesh->load();
-         LogManager::getSingleton().setLogDetail(logLev);
+         LogManager::getSingleton().setLogDetail(LL_NORMAL);
       }
 
       // Create an entity for the mesh

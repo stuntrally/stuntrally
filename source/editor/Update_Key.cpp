@@ -16,6 +16,7 @@
 #include <OgreTerrain.h>
 #include <OgreSceneNode.h>
 #include <OgreRenderTexture.h>
+#include <OgreEntity.h>
 #include <MyGUI.h>
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include <BulletCollision/CollisionDispatch/btCollisionObject.h>

@@ -10,7 +10,7 @@ namespace wraps
 	
 	void RenderBoxScene::createScene()
 	{
-		mScene = Root::getSingleton().createSceneManager(ST_GENERIC, MyGUI::utility::toString(this, "_SceneManagerRenderBox"));
+		mScene = Root::getSingleton().createSceneManager("DefaultSceneManager", MyGUI::utility::toString(this, "_SceneManagerRenderBox"));
 
 		mNode = mScene->getRootSceneNode()->createChildSceneNode();
 

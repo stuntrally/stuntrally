@@ -367,7 +367,7 @@ bool BaseApp::setup()
 		return false;
 
 
-	mSceneMgr = mRoot->createSceneManager(/*ST_GENERIC/**/ST_EXTERIOR_FAR/**/);
+	mSceneMgr = mRoot->createSceneManager("DefaultSceneManager");
 
 	#if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0) 
 	OverlaySystem* pOverlaySystem = new OverlaySystem();

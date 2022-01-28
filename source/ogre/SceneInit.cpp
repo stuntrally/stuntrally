@@ -461,7 +461,11 @@ void App::LoadScene()  // 3
 	scn->UpdateWaterRTT(mSplitMgr->mCameras.front());
 
 	/// generate materials
-	refreshCompositor();
+	try {
+		refreshCompositor();
+	} catch (InvalidParametersException &e) {
+		// ignore missing compositors
+	}
 
 	//  fluids
 	if (dstTrk)
