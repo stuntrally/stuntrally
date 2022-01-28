@@ -20,10 +20,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 #include <OgreTextureManager.h>
 #include <OgreRenderTexture.h>
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_LINUX
-// linux memory fix
 #include <memory>
-#endif
 
 //The number of angle increments around the yaw axis to render impostor "snapshots" of trees
 #define IMPOSTOR_YAW_ANGLES 4 ///T
@@ -383,7 +380,7 @@ protected:
 	}
 
 	//This will only be used when IMPOSTOR_FILE_SAVE is set to 0
-	std::auto_ptr<ImpostorTextureResourceLoader> loader;
+	std::unique_ptr<ImpostorTextureResourceLoader> loader;
 };
 
 

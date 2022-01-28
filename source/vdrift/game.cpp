@@ -68,7 +68,7 @@ void GAME::Start(list <string> & args)
 
 	//initialize force feedback
 	#ifdef ENABLE_FORCE_FEEDBACK
-		forcefeedback.reset(new FORCEFEEDBACK(settings->ff_device, cerr, cout));
+		forcefeedback = make_unique<FORCEFEEDBACK>(settings->ff_device, cerr, cout);
 		ff_update_time = 0;
 	#endif
 	

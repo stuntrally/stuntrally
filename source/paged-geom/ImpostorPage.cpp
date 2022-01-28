@@ -388,7 +388,7 @@ unsigned long ImpostorTexture::GUID = 0;
 //Do not use this constructor yourself - instead, call getTexture()
 //to get/create an ImpostorTexture for an Entity.
 ImpostorTexture::ImpostorTexture(ImpostorPage *group, Entity *entity, bool onlyToRender) :
-	loader(0), bOnlyToRender(onlyToRender)
+	bOnlyToRender(onlyToRender)
 {
 	//Store scene manager and entity
 	ImpostorTexture::sceneMgr = group->getParentPagedGeometry()->getSceneManager();
@@ -516,7 +516,7 @@ void ImpostorTexture::renderTextures(bool force)
 #else
 	TexturePtr renderTexture(texture);
 	//if we're not using a file image we need to set up a resource loader, so that the texture is regenerated if it's ever unloaded (such as switching between fullscreen and the desktop in win32)
-	loader = std::auto_ptr<ImpostorTextureResourceLoader>(new ImpostorTextureResourceLoader(*this));
+	loader = std::make_unique<ImpostorTextureResourceLoader>(*this);
 #endif
 	RenderTexture *renderTarget;
 	Camera *renderCamera;

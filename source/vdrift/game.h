@@ -110,7 +110,7 @@ public:
 	bool LoadSusp();
 	
 #ifdef ENABLE_FORCE_FEEDBACK
-	std::auto_ptr <FORCEFEEDBACK> forcefeedback;
+	std::unique_ptr <FORCEFEEDBACK> forcefeedback;
 	double ff_update_time;
 #endif
 };

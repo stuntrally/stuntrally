@@ -103,8 +103,8 @@ bool TRACK::BeginObjectLoad(
 	bool dynamicshadowsenabled,
 	bool doagressivecombining)
 {
-	objload.reset(new OBJECTLOADER(trackpath, anisotropy, dynamicshadowsenabled,
-		true, doagressivecombining));
+	objload = make_unique<OBJECTLOADER>(trackpath, anisotropy, dynamicshadowsenabled,
+		true, doagressivecombining);
 
 	if (!objload->BeginObjectLoad())
 		return false;

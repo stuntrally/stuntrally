@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------
 
     Stunt Rally - game based on VDrift and OGRE, with Track Editor
-    Copyright (C) 2010-2021  Crystal Hammer and contributors
+    Copyright (C) 2010-2022  Crystal Hammer and contributors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -93,9 +93,8 @@ All settings and logs are saved to user folder (see [Paths]).
 Be sure you've read [Read before posting] topic first:
 http://forum.freegamedev.net/viewtopic.php?f=78&t=3814
 
-If that didn't help, report on
-IRC: #stuntrally on freenode,
-or create a topic on Forum [SR Bugs & Help].
+Then create a topic on Forum [SR Bugs & Help].
+IRC is not used: #stuntrally on freenode.
 
     Editor
 

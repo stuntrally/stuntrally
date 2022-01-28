@@ -112,7 +112,7 @@ private:
 		//SCENENODE & sceneroot,
 		int anisotropy);
 	
-	std::auto_ptr <OBJECTLOADER> objload;
+	std::unique_ptr <OBJECTLOADER> objload;
 	
 	///returns false on error
 	bool BeginObjectLoad(
