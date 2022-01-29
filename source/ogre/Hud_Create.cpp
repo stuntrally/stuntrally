@@ -255,7 +255,7 @@ void CHud::Create()
 
 		///  GUI
 		//  gear  text  -----------
-		h.parent = app->mGui->createWidget<Widget>("",0,0,2560,1600,Align::Left,"Back","main"+s);
+		h.parent = app->mGui->createWidget<Widget>("",0,0,pSet->windowx,pSet->windowy,Align::Left,"Back","main"+s);
 
 		if (cm->vtype == V_Car)
 		{
