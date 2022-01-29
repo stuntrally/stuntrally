@@ -478,7 +478,7 @@ void CGui::evBtnNetDirect(WP)
 	popup->Show(newDelegate(this, &CGui::evBtnNetDirectClose),
 		TR("#{NetDirectConnect}"), true,
 		TR("#{NetAddress}"), TR("#{NetPort}"), TR("#{NetPassword}"), "",
-		"localhost", toStr(protocol::DEFAULT_PORT), "","",
+		pSet->connect_address, toStr(pSet->connect_port), "","",
 		TR("#{MessageBox_Ok}"), TR("#{MessageBox_Cancel}"), "", "");
 }
 
@@ -487,6 +487,8 @@ void CGui::evBtnNetDirectClose()
 	popup->Hide();
 	if (popup->btnResult != 0)  return;
 
+	pSet->connect_address = popup->edit0;
+	pSet->connect_port = s2i(popup->edit1);
 	join(popup->edit0, popup->edit1, popup->edit2);  // host, port, password
 }
 
