@@ -22,7 +22,8 @@
  *
  * This class is thread-safe.
  */
-class P2PGameClient: public net::NetworkListener {
+class P2PGameClient: public net::NetworkListener
+{
 public:
 	enum State { DISCONNECTED, LOBBY, GAME };
 
@@ -111,12 +112,15 @@ private:
 
 	GameClientCallback* m_callback;
 	net::NetworkObject m_client;
+	
 	PeerMap m_peers;
 	protocol::CarStates m_receivedCarStates;
 	State m_state;
+	
 	boost::thread m_senderThread;
 	mutable boost::mutex m_mutex;
 	boost::condition m_cond;
+	
 	PeerInfo m_playerInfo;
 	protocol::GameInfo m_game;
 	protocol::CarStatePackage m_carState;

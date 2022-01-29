@@ -26,7 +26,8 @@
  *
  * This class is thread-safe.
  */
-class MasterClient: public net::NetworkListener {
+class MasterClient: public net::NetworkListener
+{
 public:
 	MasterClient(MasterClientCallback* callback = NULL, int updateInterval = 2000);
 
@@ -69,12 +70,16 @@ private:
 	MasterClientCallback* m_callback;
 	boost::thread m_gameInfoSenderThread;
 	mutable boost::mutex m_mutex;
+	
 	boost::condition m_cond;
 	net::NetworkObject m_client;
+	
 	protocol::GameList m_games;
 	protocol::GameInfo m_game;
+	
 	std::string m_password;
 	MyGUI::UString m_error;
+	
 	int m_updateInterval;
 	bool m_sendUpdates;
 	volatile bool m_connectionOk;

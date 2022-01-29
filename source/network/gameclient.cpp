@@ -8,8 +8,10 @@
 
 
 P2PGameClient::P2PGameClient(GameClientCallback* callback, int port)
-	: m_callback(callback), m_client(*this, port), m_state(DISCONNECTED),
-	m_mutex(), m_cond(), m_playerInfo(), m_game(), m_carState()
+	: m_callback(callback)
+	, m_client(*this, port), m_state(DISCONNECTED)
+	, m_mutex(), m_cond()
+	, m_playerInfo(), m_game(), m_carState()
 {
 	std::srand(time(0));  // randomize, based on current time
 	m_playerInfo.random_id = std::rand(); // Client id is based on this
@@ -74,7 +76,7 @@ void P2PGameClient::startLobby()
 	{
 		LogO("== Netw startLobby  WRONG already");
 		return;
-	} else
+	}else
 		m_state = LOBBY;
 
 	if (!m_senderThread.joinable())
@@ -108,7 +110,7 @@ void P2PGameClient::startGame(bool broadcast)
 				if (pi.peer_id != 0)
 					m_client.disconnect(pi.peer_id, true);
 				m_peers.erase(it++);
-			} else
+			}else
 				++it;
 		}
 		m_playerInfo.loaded = false;
@@ -121,7 +123,7 @@ void P2PGameClient::startGame(bool broadcast)
 	{
 		LogO("== Netw startGame broadcast");
 		m_client.broadcast(char(protocol::START_GAME) + std::string(" "), net::PACKET_RELIABLE);
-	} else
+	}else
 		LogO("== Netw startGame !broadcast");
 }
 
@@ -170,6 +172,7 @@ void P2PGameClient::returnToLobby(bool broadcast)
 	m_state = LOBBY;
 	m_playerInfo.loaded = false;
 	m_playerInfo.ready = false;
+
 	for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it)
 		it->second.loaded = false;
 	if (broadcast)
@@ -178,8 +181,8 @@ void P2PGameClient::returnToLobby(bool broadcast)
 
 void P2PGameClient::senderThread()
 {
-	do {
-		boost::mutex::scoped_lock lock(m_mutex);
+	do
+	{	boost::mutex::scoped_lock lock(m_mutex);
 		if (m_state == LOBBY)
 		{
 			// Broadcast local player's meta info
@@ -223,7 +226,8 @@ void P2PGameClient::senderThread()
 		{	//LogO("== Netw DISCONNECTED");
 			break;
 		}
-	} while (true);
+	}
+	while (true);
 }
 
 void P2PGameClient::setLocalCarState(protocol::CarStatePackage const& cs)
@@ -269,10 +273,13 @@ void P2PGameClient::recountPeersAndAssignIds(bool validate)
 	m_playerInfo.address = m_client.getAddress();
 	m_playerInfo.peers = 0;
 	m_playerInfo.id = -1;
+	
 	typedef std::map<int32_t, PeerInfo*> IDSorter;
 	IDSorter idsorter;
 	idsorter[m_playerInfo.random_id] = &m_playerInfo;
-	for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it) {
+
+	for (PeerMap::iterator it = m_peers.begin(); it != m_peers.end(); ++it)
+	{
 		if (it->second.connection == PeerInfo::CONNECTED
 			&& !it->second.name.empty()
 			&& it->second.authenticated)
@@ -349,6 +356,7 @@ void P2PGameClient::disconnectEvent(net::NetworkTraffic const& e)
 		m_callback->peerDisconnected(picopy);
 }
 
+
 void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 {
 	if (e.packet_length <= 0 || !e.packet_data)
@@ -384,8 +392,8 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			pi.authenticated = true;
 			pi.ping = e.ping;
 			LogO("== Netw HANDSHAKE  ok");
-			break;
-		}
+		}	break;
+
 		case protocol::PEER_ADDRESS:
 		{
 			if (m_state != LOBBY)
@@ -396,8 +404,8 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			boost::mutex::scoped_lock lock(m_mutex);
 			m_peers[pap.address.str()].address = pap.address;
 			m_peers[e.peer_address.str()].ping = e.ping;
-			break;
-		}
+		}	break;
+
 		case protocol::TEXT_MESSAGE:
 		{
 			std::string msg((const char*)e.packet_data, e.packet_length);
@@ -412,10 +420,10 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				PeerInfo picopy = pi;
 				lock.unlock();  // Mutex unlocked in callback to avoid dead-locks
 				m_callback->peerMessage(picopy, msg);
-			} else
+			}else
 				LogO("== Netw TEXT_MESSAGE  !callback");
-			break;
-		}
+		}	break;
+
 		case protocol::PLAYER_INFO:
 		{
 			LogO("== Netw PLAYER_INFO  start");
@@ -450,10 +458,10 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 					m_callback->peerConnected(picopy);
 				else	// Callback regardless if the info changed in order to give ping updates
 					m_callback->peerInfo(picopy);
-			} else
+			}else
 				LogO("== Netw START_GAME  !callback");
-			break;
-		}
+		}	break;
+
 		case protocol::START_GAME:
 		{
 			LogO("== Netw START_GAME  start");
@@ -468,10 +476,10 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				lock.unlock(); // Mutex unlocked in callback to avoid dead-locks
 				m_callback->peerState(picopy, e.packet_data[0]);
 				LogO("== Netw START_GAME  end");
-			} else
+			}else
 				LogO("== Netw START_GAME  WRONG !callback");
-			break;
-		}
+		}	break;
+
 		case protocol::START_COUNTDOWN:
 		{
 			LogO("== Netw START_COUNTDOWN  start");
@@ -499,10 +507,10 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 					m_callback->startRace();
 				}
 				LogO("== Netw START_COUNTDOWN  end");
-			} else
+			}else
 				LogO("== Netw START_COUNTDOWN  WRONG !callback");
-			break;
-		}
+		}	break;
+
 		case protocol::CAR_UPDATE:
 		{
 			if (m_state != GAME)
@@ -519,8 +527,8 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				break;
 			}
 			m_receivedCarStates[pi.id] = csp;
-			break;
-		}
+		}	break;
+
 		case protocol::GAME_STATUS:
 		{
 			if (m_state != LOBBY || !m_callback)
@@ -529,8 +537,8 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			}
 			protocol::GameInfo game = *reinterpret_cast<protocol::GameInfo const*>(e.packet_data);
 			m_callback->gameInfo(game);
-			break;
-		}
+		}	break;
+
 		case protocol::TIME_INFO:
 		{
 			if (m_state != GAME || !m_callback)
@@ -543,18 +551,16 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 			ClientID id = m_peers[e.peer_address.str()].id;
 			lock.unlock();  // Mutex unlocked in callback to avoid dead-locks
 			m_callback->timeInfo(id, time.lap, time.time);
-			break;
-		}
+		}	break;
+
 		case protocol::RETURN_LOBBY:
 		{
 			returnToLobby(false);
 			m_callback->returnToLobby();
-			break;
-		}
+		}	break;
+
 		default:
-		{
 			LogO("== Netw  Received unknown packet type: "+toStr((int)e.packet_data[0]));
 			break;
-		}
 	}
 }

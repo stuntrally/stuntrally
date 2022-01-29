@@ -28,7 +28,8 @@ struct MasterClientCallback {
  * Inherit and implement this to get events about arriving peer
  * info. Pass the implementation instance to the P2PGameClient.
  */
-struct GameClientCallback {
+struct GameClientCallback
+{
 	/// Called when there is a new connection
 	/// @param peer the new peer
 	virtual void peerConnected(PeerInfo peer) {}
