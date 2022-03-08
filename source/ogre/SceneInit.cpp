@@ -297,7 +297,6 @@ void App::LoadCleanUp()  // 1 first
 		mSceneMgr->destroyAllManualObjects();
 		mSceneMgr->destroyAllEntities();
 		mSceneMgr->destroyAllStaticGeometry();
-		scn->vdrTrack = 0;
 		//mSceneMgr->destroyAllParticleSystems();
 		mSceneMgr->destroyAllRibbonTrails();
 		mSplitMgr->mGuiSceneMgr->destroyAllManualObjects(); // !?..
@@ -338,10 +337,8 @@ void App::LoadGame()  // 2
 	//  need to know sc->asphalt before vdrift car load
 	if (dstTrk)
 	{
-		bool vdr = IsVdrTrack();
 		scn->sc->pGame = pGame;
-		scn->sc->LoadXml(gcom->TrkDir()+"scene.xml", !vdr/*for asphalt*/);
-		scn->sc->vdr = vdr;
+		scn->sc->LoadXml(gcom->TrkDir()+"scene.xml");
 		pGame->track.asphalt = scn->sc->asphalt;  //*
 		pGame->track.sDefaultTire = scn->sc->asphalt ? "asphalt" : "gravel";  //*
 		if (scn->sc->denyReversed)
@@ -587,11 +584,6 @@ void App::LoadTerrain()  // 5
 		carModels[c]->terrain = scn->terrain;
 	
 	sh::Factory::getInstance().setTextureAlias("CubeReflection", "ReflectionCube");
-
-
-	if (dstTrk)
-	if (scn->sc->vdr)  // vdrift track
-		CreateVdrTrack(pSet->game.track, &pGame->track);
 }
 
 void App::LoadRoad()  // 6

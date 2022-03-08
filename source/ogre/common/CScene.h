@@ -62,9 +62,6 @@ public:
 	PaceNotes* pace;
 	void DestroyRoad(), DestroyPace();
 
-	//  vdrift track
-	Ogre::StaticGeometry* vdrTrack;
-
 	
 	//  Vegetation
 	Forests::PagedGeometry *trees, *grass;

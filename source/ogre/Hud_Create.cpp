@@ -233,13 +233,10 @@ void CHud::Create()
 		
 		float fHudSize = pSet->size_minimap * app->mSplitMgr->mDims[c].avgsize;
 		h.ndMap = rt->createChildSceneNode();
-		if (!sc->vdr)
-		{	asp = 1.f;  //_temp
-			ManualObject* m = Create2D(sMat,scm,1, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud1);  h.moMap = m;
-			h.ndMap->attachObject(m);
-			//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
-		}else
-			h.ndMap->attachObject(CreateVdrMinimap());
+		asp = 1.f;  //_temp
+		ManualObject* m = Create2D(sMat,scm,1, true,true, 1.f,Vector2(1,1), RV_Hud,RQG_Hud1);  h.moMap = m;
+		h.ndMap->attachObject(m);
+		//asp = float(mWindow->getWidth())/float(mWindow->getHeight());
 		h.ndMap->setVisible(false/*pSet->trackmap*/);
 
 	

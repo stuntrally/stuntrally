@@ -228,13 +228,6 @@ void CScene::changeShadows()
 	UpdPSSMMaterials();
 
 
-	//  rebuild static geom after materials change
-	if (vdrTrack)
-	{
-		vdrTrack->destroy();
-		vdrTrack->build();
-	}
-
 	LogO(String("::: Time Shadows: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
 

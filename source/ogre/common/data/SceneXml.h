@@ -314,7 +314,6 @@ public:
 	
 	//  Terrain
 	bool ter;  // has terrain
-	bool vdr;  // vdrift track
 	TerData td;
 
 	

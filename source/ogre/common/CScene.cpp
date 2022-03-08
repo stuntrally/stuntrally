@@ -18,7 +18,6 @@ CScene::CScene(App* app1)
 	,horizon(0), mHorizonGroup(0), mHorizonGlobals(0)
 	,mWaterRTT(0)
 	,road(0), pace(0)
-	,vdrTrack(0)
 {
 	data = new CData();
 	sc = new Scene();

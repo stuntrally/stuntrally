@@ -195,12 +195,6 @@ void App::SaveGrassDens()
 
 	LogO(String("::: Time road dens: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
-	if (!IsVdrTrack())  // vdr trk no grass, only previews
-	{
-		Image im;  // for trees, before grass angle and height
-		im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
-		im.save(gcom->TrkDir()+"objects/roadDensity.png");
-	}
 	delete[] rd;  delete[] gd;  delete[] mask;
 
 	//  road, terrain  ----------------

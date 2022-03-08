@@ -229,13 +229,6 @@ public:
 	class btCollisionObject* trackObject;
 	class btTriangleIndexVertexArray* trackMesh;
 
-	bool IsVdrTrack();
-	bool LoadTrackVdr(const std::string & trackname);
-	void CreateVdrTrack(std::string strack, class TRACK* pTrack),
-		CreateVdrTrackBlt(), DestroyVdrTrackBlt();
-	static Ogre::ManualObject* CreateModel(Ogre::SceneManager* sceneMgr, const Ogre::String& mat,
-		class VERTEXARRAY* a, Ogre::Vector3 vPofs, bool flip, bool track=false, const Ogre::String& name="");
-
 	//  surfaces
 	std::vector <TRACKSURFACE> surfaces;  // all
 	std::map <std::string, int> surf_map;  // name to surface id

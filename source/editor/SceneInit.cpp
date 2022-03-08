@@ -159,7 +159,6 @@ void App::NewCommon(bool onlyTerVeget)
 
 	mSceneMgr->destroyAllStaticGeometry();
 	mStaticGeom = 0;
-	DestroyVdrTrackBlt();
 	
 	if (!onlyTerVeget)
 	{
@@ -201,8 +200,6 @@ void App::LoadTrackEv()
 
 	// load scene
 	scn->sc->LoadXml(gcom->TrkDir()+"scene.xml");
-	scn->sc->vdr = IsVdrTrack();
-	if (scn->sc->vdr)  scn->sc->ter = false;
 	
 	//  water RTT recreate
 	scn->UpdateWaterRTT(mCamera);
@@ -225,16 +222,6 @@ void App::LoadTrackEv()
 
 	bNewHmap = false;/**/
 	scn->CreateTerrain(bNewHmap, scn->sc->ter);
-
-	if (track)
-	if (scn->sc->vdr)  // vdrift track
-	{
-		if (!LoadTrackVdr(pSet->gui.track))
-			LogO("Error during track loading: " + pSet->gui.track);
-		
-		CreateVdrTrack(pSet->gui.track, track);
-		CreateVdrTrackBlt();
-	}
 
 
 	//  road ~
@@ -385,9 +372,8 @@ void App::SaveTrackEv()
 
 	scn->sc->SaveXml(dir+"scene.xml");
 
-	bool vdr = IsVdrTrack();
-	/*if (!vdr)*/  SaveGrassDens();
-	if (!vdr)  SaveWaterDepth();  //?-
+	SaveGrassDens();
+	SaveWaterDepth();
 
 	gui->Delete(gui->getHMapNew());
 	gui->Status("#{Saved}", 1,0.6,0.2);
@@ -466,33 +452,6 @@ void App::TerCircleUpd()
 }
 
 
-//  vdrift track load
-//-------------------------------------------------------------------------------------
-bool App::LoadTrackVdr(const std::string & trackname)
-{
-	if (!track->DeferredLoad(
-		(pSet->gui.track_user ? PATHMANAGER::TracksUser() : PATHMANAGER::Tracks()) + "/" + trackname,
-		false/*trackreverse*/,
-		/**/0, "large", true, false))
-	{
-		LogO("Error loading vdrift track: "+trackname);
-		return false;
-	}
-	bool success = true;
-	while (!track->Loaded() && success)
-	{
-		success = track->ContinueDeferredLoad();
-	}
-
-	if (!success)
-	{
-		LogO("Error loading vdrift track: "+trackname);
-		return false;
-	}
-	return true;
-}
-
-
 //---------------------------------------------------------------------------------------------------------------
 ///  Bullet world
 //---------------------------------------------------------------------------------------------------------------
@@ -528,9 +487,6 @@ void App::BltWorldDestroy()
 //  Clear - delete bullet pointers
 void App::BltClear()
 {
-	//track = NULL;
-	DestroyVdrTrackBlt();
-	
 	if (world)
 	for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
