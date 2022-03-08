@@ -13,6 +13,9 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <shlobj.h>
+#else
+#include <sys/types.h>
+#include <dirent.h>
 #endif
 
 // Should come from CMake
