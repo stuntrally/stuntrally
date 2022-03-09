@@ -307,6 +307,7 @@ bool CarsXml::LoadXml(string file)
 	{
 		CarInfo c;
 		a = eCar->Attribute("id");		if (a)  c.id = string(a);
+		a = eCar->Attribute("name");	if (a)  c.name = string(a);
 		a = eCar->Attribute("type");	if (a)  c.type = string(a);
 		a = eCar->Attribute("car");		if (a)  c.car = s2i(a) > 0;
 

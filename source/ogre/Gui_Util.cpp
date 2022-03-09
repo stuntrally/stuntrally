@@ -100,10 +100,11 @@ void CGui::AddCarL(string name, const CarInfo* ci)
 	String clr = data->cars->colormap[ci->type];  if (clr.length() != 7)  clr = "#C0D0E0";
 	
 	li->addItem(clr+ name);  int l = li->getItemCount()-1; //, y = ci->year%100;
-	li->setSubItemNameAt(1,l, gcom->clrsDiff[std::min(8, (int)(ci->speed*0.9f))]+ fToStr(ci->speed,1,3));
-	//li->setSubItemNameAt(2,l, clr+ "\'"+toStr(y/10)+toStr(y%10));
-	li->setSubItemNameAt(2,l, clr+ toStr(ci->year));
-	li->setSubItemNameAt(3,l, clr+ TR("#{CarType_"+ci->type+"}"));
+	li->setSubItemNameAt(1,l, clr+ ci->name);
+	li->setSubItemNameAt(2,l, gcom->clrsDiff[std::min(8, (int)(ci->speed*0.9f))]+ fToStr(ci->speed,1,3));
+	//li->setSubItemNameAt(3,l, clr+ "\'"+toStr(y/10)+toStr(y%10));
+	li->setSubItemNameAt(3,l, clr+ toStr(ci->year));
+	li->setSubItemNameAt(4,l, clr+ TR("#{CarType_"+ci->type+"}"));
 }
 
 void CGui::FillCarList()

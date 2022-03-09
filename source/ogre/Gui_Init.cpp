@@ -638,9 +638,10 @@ void CGui::InitGui()
 	///  cars list
 	//------------------------------------------------------------------------
 	Tbi carTab = fTbi("TabCar");
-	Mli2 li = carTab->createWidget<MultiList2>("MultiListBox",16,48,200,110, Align::Left | Align::VStretch);
+	Mli2 li = carTab->createWidget<MultiList2>("MultiListBox",16,48,600,110, Align::Left | Align::VStretch);
 	li->setColour(Colour(0.7,0.85,1.0));
 	li->removeAllColumns();  int n=0;
+	li->addColumn("#BBA8A8""Id", colCar[n++]);  // +TR("#{ID}")
 	li->addColumn("#BBA8A8"+TR("#{Name}"), colCar[n++]);
 	li->addColumn("#C0B0A0""*"/*TR("#{CarSpeed}")*/, colCar[n++]);
 	li->addColumn("#B0B8C0"+TR("#{CarYear}"), colCar[n++]);

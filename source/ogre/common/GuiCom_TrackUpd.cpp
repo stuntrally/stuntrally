@@ -350,8 +350,8 @@ void CGuiCom::updTrkListDim()
 
 	for (c=0; c < cnt; ++c)
 	{
-		float wf = float(app->gui->colCar[c]) / sum * 0.23/*width*/ * wi.width * 0.97/*frame*/;
-		int w = c==cnt-1 ? (full ? 18 : 36) : (full || c < 2 || c==cnt-1 ? wf : 0);
+		float wf = float(app->gui->colCar[c]) / sum * 0.37/*width*/ * wi.width * 0.97/*frame*/;
+		int w = c==cnt-1 ? (full ? 18 : 36) : (full || c < 3 || c==cnt-1 ? wf : 0);
 		app->gui->carList->setColumnWidthAt(c, w);
 		sw += w;
 	}

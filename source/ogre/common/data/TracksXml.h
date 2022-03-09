@@ -95,7 +95,8 @@ public:
 class CarInfo
 {
 public:
-	std::string id, type, author;
+	std::string id, name;  // id = cars/subdir, name = animal nick
+	std::string type, author;
 	bool car;
 
 	float speed;

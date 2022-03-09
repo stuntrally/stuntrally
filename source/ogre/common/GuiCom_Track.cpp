@@ -55,7 +55,7 @@ const String CGuiCom::clrsLong[10] =  // long
 const int wi = 17;            // id name nm   N  scn ver
 const int CGuiCom::colTrk[32] = {40, 90, 80, 25, 70, 25, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 24};
 #ifndef SR_EDITOR
-const int CGui::colCar[16] = {34, 27, 37, 52, 24};  // car
+const int CGui::colCar[16] = {34, 80, 27, 37, 52, 24};  // car
 const int CGui::colCh [16] = {16, 200, 120, 50, 80, 80, 60, 40};  // champs
 const int CGui::colChL[16] = {16, 180, 90, 100, 50, 60, 60, 60, 50};  // challs
 const int CGui::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
