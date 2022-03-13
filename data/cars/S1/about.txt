@@ -1,6 +1,6 @@
 Car from Super Racing
  
 Model name UPG15000
-http://sourceforge.net/projects/superracing/
+https://sourceforge.net/projects/superracing/
 
 Import and settings by CryHam.

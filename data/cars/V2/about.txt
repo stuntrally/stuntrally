@@ -1,8 +1,6 @@
-Small Space Fighter
 
 Author: speedypro
 License: CC-BY
+https://www.blendswap.com/blends/view/73855
 
-http://www.blendswap.com/blends/view/73855
-
-Import and settings by CryHam.
+Import and settings by CryHam

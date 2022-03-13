@@ -1,7 +1,6 @@
-Car from blendswap
 
-Model by thiagohenrinrique
+Author: thiagohenrinrique
 License: CC-BY
-http://www.blendswap.com/blends/view/66599
+https://www.blendswap.com/blends/view/66599
 	
 Import, interior, settings by CryHam

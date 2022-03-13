@@ -1,8 +1,6 @@
-Spaceship
 
 Author: benja
 License: CC-0
-
-http://www.blendswap.com/blends/view/66541
+https://www.blendswap.com/blends/view/66541
 
 Import and settings by CryHam.

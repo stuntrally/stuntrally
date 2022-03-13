@@ -1,8 +1,6 @@
-SpaceShip
 
 Author: jumahsafarty
 License: CC-BY
+https://www.blendswap.com/blends/view/72790
 
-http://www.blendswap.com/blends/view/72790
-
-Import and settings by CryHam.
+Import and settings by CryHam

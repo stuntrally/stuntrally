@@ -1,7 +1,6 @@
-Car from blendswap
 
-Model by Neubi
+Author: Neubi
 License: CC Zero
-http://www.blendswap.com/blends/view/19869
+https://www.blendswap.com/blends/view/19869
 	
 Import, settings and interior by CryHam

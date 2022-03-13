@@ -1,7 +1,6 @@
-Car from blendswap
 
-Model by hasapeta
+Author: hasapeta
 License: CC-BY
-http://www.blendswap.com/blends/view/74455
+https://www.blendswap.com/blends/view/74455
 
 Import and settings by CryHam

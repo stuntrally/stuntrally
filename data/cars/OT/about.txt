@@ -1,7 +1,6 @@
-Car from blendswap
 
-Model by irokrhus
+Author: irokrhus
 License: CC Zero
-http://www.blendswap.com/blends/view/66103
+https://www.blendswap.com/blends/view/66103
 	
 UV unwrap, import, settings by CryHam

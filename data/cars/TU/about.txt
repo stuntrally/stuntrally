@@ -1,7 +1,6 @@
-Car from blendswap
 
 Authors: carlospanganiban, Chris Kuhn (KuhnIndustries)
 License: CC-BY
-http://www.blendswap.com/blends/view/51751
+https://www.blendswap.com/blends/view/51751
 
-fixes for game, unwrapping, import and settings by CryHam
+Fixes for game, unwrapping, import and settings by CryHam
