@@ -495,8 +495,8 @@ void BaseApp::LoadingOn()
 void BaseApp::LoadingOff()
 {
 	// Turn On  full rendering
-	mSplitMgr->SetBackground(ColourValue(0.5,0.65,0.8));
-	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));
+	mSplitMgr->SetBackground(ColourValue(0.2,0.3,0.4));
+	mSplitMgr->mGuiViewport->setBackgroundColour(ColourValue(0.2,0.3,0.4));
 	mSceneMgr->clearSpecialCaseRenderQueues();
 	mSceneMgr->setSpecialCaseRenderQueueMode(SceneManager::SCRQM_EXCLUDE);
 	mLoadingBar->finish();
