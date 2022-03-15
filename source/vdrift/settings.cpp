@@ -174,9 +174,6 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "video_eff.hdr_bloomint", hdrBloomint);	Param(c,w, "video_eff.hdr_bloomorig", hdrBloomorig);
 	Param(c,w, "video_eff.hdr_adaptationScale", hdrAdaptationScale);
 	Param(c,w, "video_eff.hdr_vignettingRadius", vignRadius);  Param(c,w, "video_eff.hdr_vignettingDarkness", vignDarkness);
-	
-	// not in gui-
-	Param(c,w, "misc.boostFromExhaust", boostFromExhaust);
 }
 
 SETTINGS::SETTINGS()   ///  Defaults
@@ -254,7 +251,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,hdrBloomint(0.81), hdrBloomorig(0.34), hdrAdaptationScale(0.51)
 	,vignRadius(2.85), vignDarkness(0.34)
 	//  not in gui
-	,boostFromExhaust(0), net_local_plr(-1)
+	,net_local_plr(-1)
 {
 	//  car setup  (update in game-default.cfg)
 	abs[0] = 0;  abs[1] = 0;

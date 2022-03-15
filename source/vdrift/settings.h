@@ -168,7 +168,7 @@ public:
 	int master_server_port, local_port, connect_port;
 
 	// not in gui
-	bool boostFromExhaust;  int net_local_plr;
+	int net_local_plr;
 
 	
 //------------------------------------------

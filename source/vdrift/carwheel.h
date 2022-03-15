@@ -12,6 +12,7 @@ private:
 	// constants
 	MATHVECTOR<Dbl,3> extended_position;	///< the position of the wheel when the suspension is fully extended (zero g)
 	Dbl roll_height;	///< how far off the road lateral forces are applied to the chassis
+	Dbl steer_max;      ///< max steering angle, for > 4 wheels
 	Dbl mass;			///< the mass of the wheel
 	ROTATIONALFRAME rotation;	///< a simulation of wheel rotation.  this contains the wheel orientation, angular velocity, angular acceleration, and inertia tensor
 
@@ -57,7 +58,7 @@ public:
 	//default constructor makes an S2000-like car
 	CARWHEEL()
 		:roll_height(0.9), mass(18.1), inertia_cache(10.0)
-		,steer_angle(0.), fluidRes(0.)
+		,steer_angle(0.), steer_max(0.), fluidRes(0.)
 		,radius(0.3), feedback(0.), camber_deg(0.), angvel(0.)
 		,rolling_res_lin(1.3e-2), rolling_res_quad(6.5e-6)
 	{	SetInertia(10.0);	}
@@ -95,6 +96,9 @@ public:
 
 	void SetRollHeight (const Dbl& value)	{	roll_height = value;	}
 	Dbl GetRollHeight() const				{	return roll_height;		}
+
+	void SetSteerMax (const Dbl& value)	{	steer_max = value;	}
+	Dbl GetSteerMax() const				{	return steer_max;		}
 
 	void SetMass (const Dbl& value)	{	mass = value;	}
 	Dbl GetMass() const				{	return mass;	}
