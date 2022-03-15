@@ -10,6 +10,7 @@ Artist:		yughues (OpenGameArt user)
 License:	CC0 (Public Domain)
 Date:		12/23/2011
 
+
 Model:		fern.mesh
 Url: 		http://opengameart.org/content/fern-v21-double-sided-pack
 Artist:		yughues (OpenGameArt user)
@@ -21,6 +22,7 @@ Url:		http://opengameart.org/content/fern-pack
 Artist:		yughues (OpenGameArt user)
 License:	CC0 (Public Domain)
 Date:		02/05/2012
+
 
 Model:		jungle_tree.mesh
 License: 	CC0 (Public domain)
@@ -34,6 +36,26 @@ Artist:		yughues (OpenGameArt user)
 License:	CC0 (Public Domain)
 Date:		02/05/2012
 
+Model:		plant_tropical.mesh
+Url:		http://opengameart.org/content/tropical-plant-02-0
+Artist:		yughues (OpenGameArt user)
+License:	CC0 (Public Domain)
+Date:		19/04/2012
+
+
+9 Models:	pine1_full.mesh  pine2_tall_full  pine3_fat_full  and _half, _norm variants
+Model:		cactus.mesh
+Url:		http://opengameart.org/content/freebies-mundo-commissions
+Artist:		yughues (OpenGameArt user)
+License:	CC0 (Public Domain)
+Date:		18/08/2012
+
+5 Models:	rock_n1 - n5.mesh
+Url:		http://opengameart.org/content/rocks-0
+Artist:		yughues (OpenGameArt user)
+License:	CC0 (Public Domain)
+Date:		29/08/2012
+
 Model:		rock.mesh
 Url:		http://www.blendswap.com/blends/landscapes/toddmcintosh_nature_rocks2/
 Artist:		tmcintosh (blendswap user)
@@ -41,20 +63,3 @@ License:	CC-BY
 Date:		02/08/2012
 Notes:		Texture by yughues (OpenGameArt user) [under CC0]
 
-Model:		plant_tropical.mesh
-Url:		http://opengameart.org/content/tropical-plant-02-0
-Artist:		yughues (OpenGameArt user)
-License:	CC0 (Public Domain)
-Date:		19/04/2012
-
-Model:		cactus.mesh
-Url:		http://opengameart.org/content/freebies-mundo-commissions
-Artist:		yughues (OpenGameArt user)
-License:	CC0 (Public Domain)
-Date:		18/08/2012
-
-Models:		rock_n1 - n5.mesh
-Url:		http://opengameart.org/content/rocks-0
-Artist:		yughues (OpenGameArt user)
-License:	CC0 (Public Domain)
-Date:		29/08/2012

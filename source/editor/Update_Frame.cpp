@@ -106,22 +106,6 @@ bool App::frameEnded(const FrameEvent& evt)
 		bool setpos = edMode >= ED_Road || !brLockPos,
 			hide = !(edMode == ED_Road && bEdit());
 		road->Pick(mCamera, mx, my,  setpos, edMode == ED_Road, hide);
-
-		if (scn->sc->vdr)  // blt ray hit
-		{
-			Ray ray = mCamera->getCameraToViewportRay(mx,my);
-			const Vector3& pos = mCamera->getDerivedPosition(), dir = ray.getDirection();
-			btVector3 from(pos.x,-pos.z,pos.y), to(dir.x,-dir.z,dir.y);  to = from + to*10000.f;
-			btCollisionWorld::ClosestRayResultCallback rayRes(from, to);
-
-			world->rayTest(from, to, rayRes);
-
-			if (rayRes.hasHit())
-				road->posHit = Vector3(rayRes.m_hitPointWorld.getX(),rayRes.m_hitPointWorld.getZ(),-rayRes.m_hitPointWorld.getY());
-			else
-				road->posHit = Vector3::ZERO;
-			road->ndHit->setPosition(road->posHit);
-		}
 	}
 
 	editMouse();  // edit
