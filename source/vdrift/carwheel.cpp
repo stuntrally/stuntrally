@@ -8,6 +8,7 @@ void CARWHEEL::DebugPrint(std::ostream & out)
 	//out << "---Wheel---" << std::endl;
 	//out << "Speed: " << fToStr(GetRPM(), 1,4) << std::endl;
 	out << "Steer  " << fToStr(steer_angle, 1,5) << std::endl;
+	//out << "SteerMax " << fToStr(steer_max, 1,5) << std::endl;
 	out << "Camber " << fToStr(camber_deg, 1,5)  << std::endl;
 	//out << "Slide|ratio:" << fToStr(slips.slideratio, 2,5) << std::endl;
 	//out << "Slip-angle:" << fToStr(slips.slipratio, 2,6) << std::endl;

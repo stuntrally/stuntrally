@@ -112,7 +112,7 @@ void CARDYNAMICS::GetWPosStr(int i, int numWheels, WHEEL_POSITION& wl, WHEEL_POS
 	{	if (i==0){	wl = FRONT_LEFT;  wr = FRONT_RIGHT;  pos = "front";  } else
 		if (i==1){	wl = REAR_LEFT;   wr = REAR_RIGHT;   pos = "rear";   } else
 		if (i==2){	wl = REAR2_LEFT;  wr = REAR2_RIGHT;  pos = "rear2";  } else
-		if (i==3){	wl = REAR3_LEFT;  wr = REAR3_RIGHT;  pos = "rear2";/*3*/  }
+		if (i==3){	wl = REAR3_LEFT;  wr = REAR3_RIGHT;  pos = "rear3";  }
 	}
 }
 
@@ -254,60 +254,78 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 
 	SetDrive(drivetype);
 
-	float final_drive, a, a_tq(0), a_tq_dec(0);
+	float final, a, a_tq(0), a_tq_dec(0);
 	///  new 3 sets
 	if (drivetype == "AWD" &&
 		c.GetParam("diff-center.final-drive", a))
 	{
 		c.GetParamE("diff-rear.anti-slip", a);
-		c.GetParam("diff-rear.torque", a_tq);  c.GetParam("diff-rear.torque-dec", a_tq_dec);
-		diff_rear.SetFinalDrive(1.0);  diff_rear.SetAntiSlip(a, a_tq, a_tq_dec);
+		c.GetParam("diff-rear.torque", a_tq);
+		c.GetParam("diff-rear.torque-dec", a_tq_dec);
+		diff_rear.SetFinalDrive(1.0);
+		diff_rear.SetAntiSlip(a, a_tq, a_tq_dec);
 
 		c.GetParamE("diff-front.anti-slip", a);
-		c.GetParam("diff-front.torque", a_tq);  c.GetParam("diff-front.torque-dec", a_tq_dec);
-		diff_front.SetFinalDrive(1.0);  diff_front.SetAntiSlip(a, a_tq, a_tq_dec);
+		c.GetParam("diff-front.torque", a_tq);
+		c.GetParam("diff-front.torque-dec", a_tq_dec);
+		diff_front.SetFinalDrive(1.0);
+		diff_front.SetAntiSlip(a, a_tq, a_tq_dec);
 
-		c.GetParamE("diff-center.final-drive", final_drive);
+		c.GetParamE("diff-center.final-drive", final);
 		c.GetParamE("diff-center.anti-slip", a);
-		c.GetParam("diff-center.torque", a_tq);  c.GetParam("diff-center.torque-dec", a_tq_dec);
-		diff_center.SetFinalDrive(final_drive);  diff_center.SetAntiSlip(a, a_tq, a_tq_dec);
+		c.GetParam("diff-center.torque", a_tq);
+		c.GetParam("diff-center.torque-dec", a_tq_dec);
+		diff_center.SetFinalDrive(final);
+		diff_center.SetAntiSlip(a, a_tq, a_tq_dec);
 	}
 	else  // old 1 for all
 	{
-		if (!c.GetParamE("differential.final-drive", final_drive))  return false;
+		if (!c.GetParamE("differential.final-drive", final))  return false;
 		if (!c.GetParamE("differential.anti-slip", a))  return false;
 		c.GetParam("differential.torque", a_tq);
 		c.GetParam("differential.torque-dec", a_tq_dec);
 
 		if (drivetype == "RWD")
 		{
-			diff_rear.SetFinalDrive(final_drive);
-			diff_rear.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_rear.SetFinalDrive(final);		diff_rear.SetAntiSlip(a, a_tq, a_tq_dec);
 		}
 		else if (drivetype == "FWD")
 		{
-			diff_front.SetFinalDrive(final_drive);
-			diff_front.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_front.SetFinalDrive(final);	diff_front.SetAntiSlip(a, a_tq, a_tq_dec);
 		}
 		else if (drivetype == "AWD")
 		{
-			diff_rear.SetFinalDrive(1.0);
-			diff_rear.SetAntiSlip(a, a_tq, a_tq_dec);
-
-			diff_front.SetFinalDrive(1.0);
-			diff_front.SetAntiSlip(a, a_tq, a_tq_dec);
-
-			diff_center.SetFinalDrive(final_drive);
-			diff_center.SetAntiSlip(a, a_tq, a_tq_dec);
-		}else
+			diff_rear.SetFinalDrive(1.0);		diff_rear.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_front.SetFinalDrive(1.0);		diff_front.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_center.SetFinalDrive(final);	diff_center.SetAntiSlip(a, a_tq, a_tq_dec);
+		}
+		else if (drivetype == "6WD")
+		{
+			diff_front.SetFinalDrive(1.0);		diff_front.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_rear.SetFinalDrive(1.0);		diff_rear.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_center.SetFinalDrive(1.0);		diff_center.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_rear2.SetFinalDrive(1.0);		diff_rear2.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_center2.SetFinalDrive(final);	diff_center2.SetAntiSlip(a, a_tq, a_tq_dec);
+		}
+		else if (drivetype == "8WD")
+		{
+			diff_front.SetFinalDrive(1.0);		diff_front.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_rear.SetFinalDrive(1.0);		diff_rear.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_center.SetFinalDrive(1.0);		diff_center.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_rear2.SetFinalDrive(1.0);		diff_rear2.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_rear3.SetFinalDrive(1.0);		diff_rear3.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_center2.SetFinalDrive(1.0);	diff_center2.SetAntiSlip(a, a_tq, a_tq_dec);
+			diff_center3.SetFinalDrive(final);	diff_center3.SetAntiSlip(a, a_tq, a_tq_dec);
+		}
+		else
 		{	LogO(".car Error: Unknown drive type: "+drive);
 			return false;
 		}
 	}
 
-	//load the brake
-	{	int ii = std::max(2, numWheels/2);
-		for (int i = 0; i < ii; ++i)
+	//load the brake  (broad the lake)
+	{	int axles = std::max(2, numWheels/2);
+		for (int i = 0; i < axles; ++i)
 		{
 			WHEEL_POSITION wl, wr;  string pos;
 			GetWPosStr(i, numWheels, wl, wr, pos);
@@ -448,7 +466,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 			string sPos = sCfgWh[i];
 			WHEEL_POSITION wp = WHEEL_POSITION(i);
 
-			float roll_h, mass;
+			float roll_h, mass, steer;
 			float pos[3];  MATHVECTOR<Dbl,3> vec;
 
 			if (!c.GetParamE("wheel-"+sPos+".mass", mass))  return false;
@@ -456,6 +474,12 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 
 			if (!c.GetParamE("wheel-"+sPos+".roll-height", roll_h))  return false;
 			wheel[wp].SetRollHeight(roll_h);
+
+			if (numWheels == 4)  // cars default
+				wheel[wp].SetSteerMax(i < REAR_LEFT ? 1.0 : 0.0);
+			//  6,8 wheels  have custom
+			if (c.GetParamE("wheel-"+sPos+".steer", steer))
+				wheel[wp].SetSteerMax(steer);
 
 			if (!c.GetParamE("wheel-"+sPos+".position", pos))  return false;
 			if (version == 2)  ConvertV2to1(pos[0],pos[1],pos[2]);
@@ -485,8 +509,8 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		float val;
 		bool both = c.GetParam("tire-both.radius", val);
 
-		int ii = std::max(2, numWheels/2);
-		for (int i = 0; i < ii; ++i)
+		int axles = std::max(2, numWheels/2);
+		for (int i = 0; i < axles; ++i)
 		{
 			WHEEL_POSITION wl, wr;  string pos;
 			GetWPosStr(i, numWheels, wl, wr, pos);
@@ -729,7 +753,7 @@ void CARDYNAMICS::Init(
 		for (i=0; i < numSph; ++i)
 			pos[i] += origin;
 		chassisShape = new btMultiSphereShape(pos, rad, numSph);
-		chassisShape->setMargin(0.02f);
+		chassisShape->setMargin(0.02f);  //par?
 	}
 
 
@@ -751,7 +775,7 @@ void CARDYNAMICS::Init(
 
 	///  chasis^
 	chassis = world.AddRigidBody(info, true, pSet->game.collis_cars);  rigids.push_back(chassis);
-	//TODO: update this when car rewinds..
+	//TODO: update this when car rewinds.. so they don't collide and "explode"
 	//chassis->getBroadphaseProxy()->m_collisionFilterMask = 0; //setCollisionFilterMask();
 	chassis->setActivationState(DISABLE_DEACTIVATION);
 	chassis->setUserPointer(new ShapeData(ST_Car, this, 0));  ///~~
@@ -771,7 +795,7 @@ void CARDYNAMICS::Init(
 			wheelpos[2] += coll_flTrig_H;
 
 			btSphereShape* whSph = new btSphereShape(whR);
-			//btCylinderShapeX* whSph = new btCylinderShapeX(btVector3(whR,whR,whR));//todo..
+			//btCylinderShapeX* whSph = new btCylinderShapeX(btVector3(whR,whR,whR)); /todo..
 			whTrigs = new btRigidBody(0.001f, 0, whSph);
 			
 			whTrigs->setUserPointer(new ShapeData(ST_Wheel, this, 0, w));  ///~~

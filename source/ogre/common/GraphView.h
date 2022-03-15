@@ -64,7 +64,9 @@ protected:
 	Ogre::SceneManager* mSceneMgr;  // for creating
 	Ogre::RenderWindow* mWindow;    // gui resolution-
 	MyGUI::Gui* mGui;			    // for text only
-	const static MyGUI::Colour graphClr[5+8+8];  // text colors
+
+	const static int iGraphClrs = 5+8+8;
+	const static MyGUI::Colour graphClr[iGraphClrs];  // text colors
 	
 	Ogre::ManualObject* moLine, *moBack, *moGrid;  //graph line, background, grid	
 	Ogre::SceneNode* node;

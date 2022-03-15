@@ -191,7 +191,7 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 
 		//  body
 		{
-			//out << "---Body---" << endl;  // L| front+back-  W_ left-right+  H/ up+down-
+			//out << "___ Body ___" << endl;  // L| front+back-  W_ left-right+  H/ up+down-
 			out << "com: W right+ " << -center_of_mass[1] << " L front+ " << center_of_mass[0] << " H up+ " << center_of_mass[2] << endl;
 			out.precision(0);
 			out << "mass: " << body.GetMass();
@@ -243,15 +243,29 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 
 		if (cnt > 5)
 		{
-			out << "---Differential---\n";
+			out << "___ Differential ___\n";
 			if (drive == RWD)  {
 				out << " rear\n";		diff_rear.DebugPrint(out);	}
 			else if (drive == FWD)  {
 				out << " front\n";		diff_front.DebugPrint(out);	}
-			else if (drive == AWD)  {
+			else if (drive == AWD) {
 				out << " center\n";		diff_center.DebugPrint(out);
 				out << " front\n";		diff_front.DebugPrint(out);
 				out << " rear\n";		diff_rear.DebugPrint(out);	}
+			else if (drive == WD6) {
+				out << " 1 front\n";	diff_front.DebugPrint(out);
+				out << " 2 rear\n";		diff_rear.DebugPrint(out);
+				out << " 3 rear2\n";	diff_rear2.DebugPrint(out);
+				out << " 12 center\n";	diff_center.DebugPrint(out);
+				out << " center2\n";	diff_center2.DebugPrint(out);  }
+			else if (drive == WD8) {
+				out << " 1 front\n";	diff_front.DebugPrint(out);
+				out << " 2 rear\n";		diff_rear.DebugPrint(out);
+				out << " 3 rear2\n";	diff_rear2.DebugPrint(out);
+				out << " 4 rear3\n";	diff_rear3.DebugPrint(out);
+				out << " 12 center\n";	diff_center.DebugPrint(out);
+				out << " 34 center2\n";	diff_center2.DebugPrint(out);
+				out << " center3\n";	diff_center3.DebugPrint(out);  }
 			out << endl;
 		}
 	}
@@ -262,13 +276,13 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 		out << "\n\n\n\n";
 		if (cnt > 4)
 		{
-			out << "---Brake---\n";
+			out << "___ Brake ___n";
 			for (w=0; w < numWheels; ++w)
 			{	out << sWh[w] << endl;	brake[w].DebugPrint(out);  }
 		}
 		if (cnt > 7)
 		{
-			out << "\n---Suspension---\n";
+			out << "\n___ Suspension ___\n";
 			for (w=0; w < numWheels; ++w)
 			{	out << sWh[w] << endl;	suspension[w].DebugPrint(out);  }
 		}
@@ -277,7 +291,7 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 	if (p3)
 		if (cnt > 6)
 		{
-			out << "---Wheel---\n";
+			out << "___Wheel___\n";
 			for (w=0; w < numWheels; ++w)
 			{	out << sWh[w] << endl;	wheel[w].DebugPrint(out);  }
 		}
@@ -285,7 +299,7 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 	if (p4)
 		if (cnt > 0)
 		{
-			out << "---Aerodynamic---\n";
+			out << "___Aerodynamic___\n";
 			Dbl down = GetAerodynamicDownforceCoefficient();
 			Dbl drag = GetAeordynamicDragCoefficient();
 			out << "down: " << fToStr(down,2,5) << "  drag: " << fToStr(drag,2,4) << endl;

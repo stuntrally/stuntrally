@@ -42,14 +42,15 @@ public:
 		anti_slip_torque_decel_factor = astdf;
 	}
 	
-	Dbl CalculateDriveshaftSpeed(Dbl new_side1_speed, Dbl new_side2_speed)
+	//  Driveshaft
+	Dbl CalcSpeed(Dbl new_side1_speed, Dbl new_side2_speed)
 	{
 		side1_speed = new_side1_speed;
 		side2_speed = new_side2_speed;
 		return final_drive * (side1_speed + side2_speed) * 0.5;
 	}
 	
-	Dbl GetDriveshaftSpeed(Dbl new_side1_speed, Dbl new_side2_speed) const
+	Dbl GetSpeed(Dbl new_side1_speed, Dbl new_side2_speed) const
 	{
 		return final_drive * (side1_speed + side2_speed) * 0.5;
 	}

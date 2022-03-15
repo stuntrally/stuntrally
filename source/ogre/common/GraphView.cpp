@@ -22,7 +22,7 @@ GraphView::GraphView(SceneManager* pSceneMgr, RenderWindow* pWindow, MyGUI::Gui*
 {  }
 
 //  same as in graph1..5 materials
-const Colour GraphView::graphClr[5+8+8] = {
+const Colour GraphView::graphClr[GraphView::iGraphClrs] = {
 	Colour(0.0, 1.0, 1.0),
 	Colour(0.0, 1.0, 0.0),
 	Colour(1.0, 1.0, 0.0),
@@ -164,7 +164,7 @@ void GraphView::CreateTitle(String title, char clr, float posX, char alignY, int
 		txt->setTextShadowColour(Colour::Black);  }
 
 	txt->setFontHeight(fontHeight);
-	txt->setTextColour(graphClr[clr]);
+	txt->setTextColour(graphClr[clr % iGraphClrs]);
 	txt->setCaption(title);
 	txt->setVisible(true);
 }

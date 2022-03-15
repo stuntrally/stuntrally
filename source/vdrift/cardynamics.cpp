@@ -322,6 +322,8 @@ void CARDYNAMICS::SetDrive(const std::string & newdrive)
 		 if (newdrive == "RWD")  drive = RWD;
 	else if (newdrive == "FWD")  drive = FWD;
 	else if (newdrive == "AWD")  drive = AWD;
+	else if (newdrive == "6WD")  drive = WD6;
+	else if (newdrive == "8WD")  drive = WD8;
 	else  assert(0);
 }
 

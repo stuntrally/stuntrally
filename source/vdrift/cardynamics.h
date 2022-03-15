@@ -215,11 +215,12 @@ public:
 	CARENGINE engine;
 	CARCLUTCH clutch;
 	CARTRANSMISSION transmission;
-	CARDIFFERENTIAL diff_front, diff_rear, diff_center;
+	CARDIFFERENTIAL diff_front, diff_rear, diff_center,
+			diff_rear2, diff_rear3, diff_center2, diff_center3;  // 6, 8 wheels
 	std::vector <CARBRAKE> brake;
 	std::vector <CARWHEEL> wheel;
 	
-	enum { FWD = 3, RWD = 12, AWD = 15 } drive;
+	enum { FWD = 3, RWD = 12, AWD = 15, WD6 = 25 , WD8 = 35 } drive;
 	Dbl driveshaft_rpm, tacho_rpm;  float engine_vol_mul;
 
 	bool autoclutch, autoshift, autorear, shifted;

@@ -40,6 +40,8 @@ enum EPerfTest {PT_StartWait, PT_Accel, PT_Brake};
 
 const int Ncrashsounds = 12, Nwatersounds = 3;
 
-const static char sCfgWh[MAX_WHEELS][4] = {"FL","FR","RL","RR","RL2","RR2","RL3","RR3"};  // .car config wheel names
+const static char sCfgWh[MAX_WHEELS][4] = {
+	"FL","FR","RL","RR",  // .car config wheel names
+	"RL2","RR2","RL3","RR3"};  // for 6, 8
 
 const int PAR_BOOST = 2, PAR_THRUST = 4;  // max particles for boost and spc thrusters

@@ -305,8 +305,8 @@ void CarModel::LoadConfig(const string & pathCar)
 	float val;
 	bool both = cf.GetParam("tire-both.radius", val);
 
-	int ii = std::max(2, numWheels/2);
-	for (i=0; i < ii; ++i)
+	int axles = std::max(2, numWheels/2);
+	for (i=0; i < axles; ++i)
 	{
 		WHEEL_POSITION wl, wr;  string pos;
 		CARDYNAMICS::GetWPosStr(i, numWheels, wl, wr, pos);
@@ -546,7 +546,7 @@ void CarModel::Create()
 			if (!parBoost[i])
 			{	parBoost[i] = mSceneMgr->createParticleSystem("Boost"+si, sBoostParName);  ToDel(parBoost[i]);
 				parBoost[i]->setVisibilityFlags(RV_Particles);
-				if (!pSet->boostFromExhaust || !manualExhaustPos)
+				if (!manualExhaustPos)
 				{
 					// no exhaust pos in car file, guess from bounding box
 					Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
