@@ -8,6 +8,7 @@ build*
 Debug*
 Release*
 bin
+lib
 
 CMakeLists.txt.user*
 
@@ -22,8 +23,11 @@ CMakeLists.txt.user*
 *.user
 
 *.lnk
+#-- binaries
 StuntRally*.*
 SR?Editor*.*
+stuntrally*
+sr-editor*
 
 #--  transl
 locale/translation*

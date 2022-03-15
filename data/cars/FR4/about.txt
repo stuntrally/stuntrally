@@ -1,7 +1,6 @@
-Car from blendswap
 
-Model by computergeekman
+Author: computergeekman
 License: CC-BY-SA
-http://www.blendswap.com/blends/view/46446
+https://www.blendswap.com/blends/view/46446
 	
 Import, interior, unwrap and settings by CryHam
