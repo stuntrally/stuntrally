@@ -157,11 +157,12 @@
 		//  grass
 #if GRASS_WIND
 		float4 opos = shMatrixMult(world, position);
-		float oldposx = position.x;
-		if (uv0.y == 0.0f)
+		float2 oldpos = position.xz;
+		if (uv0.y == 0.0f)  // top
 		{
-			float offset = sin(grassTimer + oldposx * grassFrequency);
-			position += grassDirection * offset;
+			float offset1 = sin(grassTimer + oldpos.x * 2.427 * grassFrequency) * sin(grassTimer + oldpos.y * 3.427 * grassFrequency);
+			float offset2 = cos(grassTimer + oldpos.y * 2.534 * grassFrequency) * cos(grassTimer + oldpos.x * 3.534 * grassFrequency);
+			position += grassDirection * offset1 + grassDirection.zyxw * offset2;
 			
    			#if 1
 			///()  grass deform under car
