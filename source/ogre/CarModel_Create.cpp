@@ -546,7 +546,7 @@ void CarModel::Create()
 			if (!parBoost[i])
 			{	parBoost[i] = mSceneMgr->createParticleSystem("Boost"+si, sBoostParName);  ToDel(parBoost[i]);
 				parBoost[i]->setVisibilityFlags(RV_Particles);
-				if (!manualExhaustPos)
+				if (1)  // || !manualExhaustPos)
 				{
 					// no exhaust pos in car file, guess from bounding box
 					Vector3 bsize = (bodyBox.getMaximum() - bodyBox.getMinimum())*0.5,
