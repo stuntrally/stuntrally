@@ -13,9 +13,10 @@ add_external_lib(
 
 add_external_lib(
         OGRE
-        ogre3d/1.11.6.1@anotherfoxguy/stable
+        ogre3d/13.3.3@anotherfoxguy/stable
         REQUIRED
         CONAN_PKG_NAME OGRE
+        CONAN_OPTIONS ogre3d:nodeless_positioning=True ogre3d:resourcemanager_strict=off
         # PKG_CONFIG "OGRE = 1.11.6"
         FIND_PACKAGE_OPTIONS CONFIG COMPONENTS Bites Overlay Paging RTShaderSystem MeshLodGenerator Terrain
 )
@@ -40,7 +41,7 @@ add_external_lib(
 
 add_external_lib(
         MyGUI
-        mygui/3.4.0@anotherfoxguy/stable
+        mygui/3.4.1@anotherfoxguy/stable
         REQUIRED
         # PKG_CONFIG "MYGUI = 3.4.0"
         FIND_PACKAGE
