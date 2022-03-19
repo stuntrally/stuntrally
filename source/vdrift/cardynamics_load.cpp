@@ -142,7 +142,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 	}
 	float temp_vec3[3];
 
-	//load the engine
+	//load engine
 	{
 		float mass, rpm_limit, inertia, friction,
 			start_rpm, stall_rpm, fuel_consumption;
@@ -203,7 +203,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		}
 		engine.SetTorqueCurve(rpm_limit, torques);
 
-		//load the clutch
+		//load clutch
 		{
 			float mul;  //max_torque = sliding * radius * area * max_pressure;
 			if (!c.GetParamE("clutch.max-torque-mul", mul))  return false;
@@ -220,7 +220,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 			engine_vol_mul = mul;
 	}
 
-	//load the transmission
+	//load transmission
 	{
 		float time = 0;
 		float ratio;
@@ -243,7 +243,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		}
 	}
 
-	//load the differential(s)
+	//load differential(s)
 	string drivetype;
 	if (!c.GetParamE("drive", drivetype))  return false;
 
@@ -323,7 +323,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		}
 	}
 
-	//load the brake  (broad the lake)
+	//load brake  (broad lake)
 	{	int axles = std::max(2, numWheels/2);
 		for (int i = 0; i < axles; ++i)
 		{
@@ -352,7 +352,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		}
 	}
 
-	//load the fuel tank
+	//load fuel tank
 	{
 		float pos[3];
 		MATHVECTOR<double,3> position;
@@ -374,7 +374,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		//AddMassParticle(fuel_density*volume, position);
 	}
 
-	//load the suspension
+	//load suspension
 	{
 		for (int i = 0; i < numWheels/2; ++i)
 		{
@@ -459,7 +459,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		}
 	}
 
-	//load the wheels
+	//load wheels
 	{
 		for (int i = 0; i < numWheels; ++i)
 		{
@@ -504,7 +504,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 			if (i < numWheels)	wheel[i].SetInertia(rear);
 	}
 
-	//load the tire parameters
+	//load tire parameters
 	{
 		float val;
 		bool both = c.GetParam("tire-both.radius", val);
@@ -528,7 +528,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		}
 	}
 
-	//load the mass-only particles
+	//load mass-only particles
 	{
 		MATHVECTOR<double,3> position;
 		float pos[3], mass;
@@ -567,7 +567,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		}
 	}
 
-	//load the max steering angle
+	//load max steering angle
 	{
 		float maxangle = 26.f;
 		if (!c.GetParamE("steering.max-angle", maxangle))  return false;
@@ -588,7 +588,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		a=0.f;  c.GetParam("rot_drag.yaw2", a);	 rot_coef[3] = a;
 	}
 
-	//load the driver
+	//load driver
 	{
 		float mass;
 		float pos[3];
@@ -601,7 +601,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		AddMassParticle(mass, position);
 	}
 
-	//load the aerodynamics
+	//load aerodynamics
 	{
 		float drag_area, drag_c, lift_area, lift_c, lift_eff;
 		float pos[3];

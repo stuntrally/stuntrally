@@ -1,7 +1,14 @@
-Bike from blendswap
 
-Model by gakpoenya
+Bike model - SR vehicle BV
+Author: gakpoenya
 License: CC-BY
-http://www.blendswap.com/blends/view/60751
+https://www.blendswap.com/blends/view/60751
 
-Import and settings by CryHam
+Modified model for 3 axles by CryHam
+
+Rear tires from - SR vehicle TU
+Authors: carlospanganiban, Chris Kuhn (KuhnIndustries)
+License: CC-BY
+https://www.blendswap.com/blends/view/51751
+
+Import, settings and code for 6 wheeled by CryHam

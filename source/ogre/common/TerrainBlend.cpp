@@ -158,12 +158,14 @@ void CScene::UpdBlendmap()
 		//b->blit(pt);
 
 		//  test  save
-		//Image im;
-		//heightTex->convertToImage(im);
-		//im.save(PATHMANAGER::DataUser()+ "/../hmap.png");
+		#if 0
+		Image im;
+		heightTex->convertToImage(im);
+		im.save(PATHMANAGER::DataUser()+ "/../hmap.png");
 
-		//angleRTT.rnd->writeContentsToFile(PATHMANAGER::DataUser()+ "/../angle.png");
-		//blendRTT.rnd->writeContentsToFile(PATHMANAGER::DataUser()+ "/../blend.jpg");
+		angleRTT.rnd->writeContentsToFile(PATHMANAGER::DataUser()+ "/../angle.png");
+		blendRTT.rnd->writeContentsToFile(PATHMANAGER::DataUser()+ "/../blend.png");
+		#endif
 	}
 	else
 		LogO("Error: Didn't update blendmap !");

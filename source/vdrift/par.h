@@ -1,6 +1,6 @@
 #pragma once
 
-//  for car prv screens
+//  for making vehicle preview screens, see info in cameras.xml
 //#define CAR_PRV
 
 ///  const game params  -------

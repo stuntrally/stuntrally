@@ -133,10 +133,14 @@ void CScene::CreateTrees()
 	#else
 	Camera* cam = app->mCamera;
 	#endif
+	#ifdef CAR_PRV
+	fTrees = 1.0f;
+	fGrass = 1.0f;
+	#endif
 	
 	if (fGrass > 0.f)
 	{
-		grass = new PagedGeometry(cam, sc->grPage);  //30
+		grass = new PagedGeometry(cam, sc->grPage);
 		
 		// create dir if not exist
 		boost::filesystem::create_directory(sCache);

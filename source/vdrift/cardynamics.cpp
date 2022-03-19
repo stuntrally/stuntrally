@@ -22,7 +22,7 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::GetWheelPosition(WHEEL_POSITION wp, Dbl displacem
 QUATERNION<Dbl> CARDYNAMICS::GetWheelOrientation(WHEEL_POSITION wp) const
 {
 	QUATERNION<Dbl> siderot;
-	if(wp == FRONT_RIGHT || wp == REAR_RIGHT)
+	if(wp == FRONT_RIGHT || wp == REAR_RIGHT || wp == REAR2_RIGHT || wp == REAR3_RIGHT)
 	{
 		siderot.Rotate(PI_d, 0, 0, 1);
 	}
