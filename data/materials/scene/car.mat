@@ -94,7 +94,7 @@ material HI_glass
 {
 	parent car_glass
 	diffuseMap HI_glass.png
-	normalMap HI_desert_mntn_n.jpg
+	//? normalMap HI_desert_mntn_n.jpg
 	//ambient 1.0 1.0 1.0
 	//diffuse 1.0 1.0 1.0
 	env_alpha 1.0  1.0 1.0  1.0
@@ -108,6 +108,11 @@ material HI_wheel
 {
 	parent car_wheel
 	diffuseMap HI_wheel.png
+	reflMap HI_wheel_refl.png
+	specMap HI_wheel_refl.png
+	specular 1.0 1.0 1.0 24
+	env_map true
+	refl_amount 0.1
 }
 
 
