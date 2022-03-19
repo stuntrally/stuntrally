@@ -25,8 +25,8 @@
 
 	<car id="S8"  name="Squirrel"    crtver="2.0" speed="6.0" year="2008" type="Gravel"   easy="0.96" norm="1.00"  author="lubomircenovsky" />
 	<car id="S1"  name="Snake-"      crtver="1.8" speed="6.1" year="2005" type="Gravel"   easy="0.98" norm="1.005" author="(Super Racing)" />
-	<car id="ES"  name="Fox"         crtver="1.2" speed="6.2" year="2006" type="Gravel"   easy="1.00" norm="1.01"  author="VeTi" />
-	<car id="HI"  name="Hyena"       crtver="2.7" speed="6.1" year="2014" type="Gravel"   easy="1.00" norm="1.01"  author="ANDREO12" />
+	<car id="ES"  name="Fox"         crtver="1.2" speed="6.1" year="2006" type="Gravel"   easy="1.00" norm="1.01"  author="VeTi" />
+	<car id="HI"  name="Hyena"       crtver="2.7" speed="6.2" year="2014" type="Gravel"   easy="1.00" norm="1.01"  author="ANDREO12" />
 
 
 	<car id="TW"  name="Gorilla"     crtver="2.1" speed="7.0" year="2011" type="Extreme"  easy="0.93" norm="0.94"  author="irokrhus" />
@@ -38,7 +38,7 @@
 
 
 	<car id="BV"  name="Gazelle"     crtver="2.6" speed="8.6" year="2381" type="Extreme"  easy="1.01" norm="1.04"  author="gakpoenya" />
-    <car id="U6"  name="Beetle"      crtver="2.7" speed="8.7" year="2120" type="Extreme"  easy="0.96" norm="1.00"  author="gakpoenya, carlospanganiban, CryHam" />
+    <car id="U6"  name="Beetle"      crtver="2.7" speed="8.7" year="2412" type="Extreme"  easy="0.90" norm="0.98"  author="gakpoenya, carlospanganiban, CryHam" />
     <car id="U8"  name="Caterpillar" crtver="2.7" speed="8.1" year="2123" type="Extreme"  easy="0.96" norm="1.00"  author="todo.." />
 
 	<car id="V2"  name="Swan"       crtver="2.4" speed="9.4" year="2516" type="Spaceship" easy="1.00" norm="1.13"  car="0" author="speedypro" />
