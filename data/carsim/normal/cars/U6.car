@@ -62,19 +62,19 @@ stall-rpm = 50
 fuel-consumption = 0e-9
 friction = 130
 torque-val-mul = 1.40
-torque-curve-00 = 1000, 1000
-torque-curve-01 = 2000, 1000
-torque-curve-02 = 3000, 1000
-torque-curve-03 = 4000, 1000
-torque-curve-04 = 5000, 1000
+torque-curve-00 = 1000, 1140
+torque-curve-01 = 2000, 1120
+torque-curve-02 = 3000, 1110
+torque-curve-03 = 4000, 1100
+torque-curve-04 = 5000, 1050
 torque-curve-05 = 6000, 1000
-torque-curve-06 = 7000, 1000
-torque-curve-07 = 8000, 1000
-torque-curve-08 = 9000, 1000
-real-pow-tq-mul = 1.8
+torque-curve-06 = 7000, 900
+torque-curve-07 = 8000, 800
+torque-curve-08 = 9000, 700
+real-pow-tq-mul = 1.1
 
 [ clutch ]
-max-torque-mul = 1.3
+max-torque-mul = 1.7
 
 #  gearbox
 #---------------------------
