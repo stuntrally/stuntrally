@@ -189,12 +189,17 @@ void App::newPerfTest(float time)
 				//  save car _stats.xml
 				//------------------------------------------------
 				{
-					std::string path, pathUser, pathUserDir;
-					bool forceOrig = /*1 ||*/ scn->sc->asphalt;
-					bool user = gui->GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], forceOrig);
-					path = pathUserDir + pCar->pCarM->sDirname + "_stats.xml";
+					std::string path, pathUser, pathUserDir, file;
+					bool orig = 0;  //1;  // save in sr data/
+					bool user = gui->GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], orig || scn->sc->asphalt);
+					file = pCar->pCarM->sDirname + "_stats.xml";
+					if (orig)
+						path = PATHMANAGER::CarSim() + "/" + pSet->game.sim_mode + "/cars/" + file;
+					else
+						path = pathUserDir + file;
 					
-					PATHMANAGER::CreateDir(pathUserDir);
+					if (!orig)
+						PATHMANAGER::CreateDir(pathUserDir);
 
 					TiXmlDocument xml;	TiXmlElement root("perf");
 					std::string s;

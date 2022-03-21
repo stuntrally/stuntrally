@@ -365,13 +365,28 @@ void CHud::Update(int carId, float time)
 	///  gear, vel texts  -----------------------------
 	if (h.txGear)
 	{
+		const static int gearCnt = 12;
+		const static Colour gearClr[gearCnt] = {
+			Colour(0.3f, 1.0f, 1.f),  // R
+			Colour(0.3f, 1.0f, 0.3f),  // N
+			Colour(1.0f, 0.2f, 0.2f),  // 1
+			Colour(1.0f, 0.4f, 0.2f),
+			Colour(1.0f, 0.6f, 0.2f),
+			Colour(1.0f, 0.8f, 0.2f),  // 4
+			Colour(0.9f, 0.9f, 0.2f),
+			Colour(0.9f, 0.9f, 0.9f),  // 6
+			Colour(0.7f, 0.7f, 1.0f),
+			Colour(0.7f, 0.5f, 1.0f),  // 8
+			Colour(0.6f, 0.4f, 1.0f),
+			Colour(0.5f, 0.5f, 1.0f)};
 		float cl = clutch*0.8f + 0.2f;
-		if (gear == -1)
-		{	h.txGear->setCaption("R");  h.txGear->setTextColour(Colour(0.3,1,1,cl));  }
+		if (gear < 0)
+			h.txGear->setCaption("R");
 		else if (gear == 0)
-		{	h.txGear->setCaption("N");  h.txGear->setTextColour(Colour(0.3,1,0.3,cl));  }
-		else if (gear > 0)
-		{	h.txGear->setCaption(toStr(gear));  h.txGear->setTextColour(Colour(1,1-gear*0.1,0.2,cl));  }
+			h.txGear->setCaption("N");
+		else
+			h.txGear->setCaption(toStr(gear));
+		h.txGear->setTextColour(gearClr[std::max(0, std::min(gearCnt-1, gear+1))]);
 	}
 	if (h.txVel && pCar)
 	{
