@@ -370,7 +370,7 @@ void CHud::Update(int carId, float time)
 		{	h.txGear->setCaption("R");  h.txGear->setTextColour(Colour(0.3,1,1,cl));  }
 		else if (gear == 0)
 		{	h.txGear->setCaption("N");  h.txGear->setTextColour(Colour(0.3,1,0.3,cl));  }
-		else if (gear > 0 && gear < 8)
+		else if (gear > 0)
 		{	h.txGear->setCaption(toStr(gear));  h.txGear->setTextColour(Colour(1,1-gear*0.1,0.2,cl));  }
 	}
 	if (h.txVel && pCar)

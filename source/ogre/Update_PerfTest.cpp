@@ -151,7 +151,9 @@ void App::newPerfTest(float time)
 				Dbl bhpPerTon = maxPwr / (pCar->GetMass() * 0.001);
 
 				//  com ratio
-				Dbl whf = cd.wheel[0].GetExtendedPosition()[0], whr = cd.wheel[cd.numWheels==2?1:2].GetExtendedPosition()[0];
+				int nWhR = cd.numWheels - 1; // cd.numWheels==2 ? 1 : 2;
+				Dbl whf = cd.wheel[0].GetExtendedPosition()[0],
+					whr = cd.wheel[nWhR].GetExtendedPosition()[0];
 				float comFrontPercent = (com[0]+whf) / (whf-whr)*100.f;
 				MATRIX3 <Dbl> inertia = cd.body.GetInertiaConst();
 				float inert[3];  inert[0] = inertia[0];  inert[1] = inertia[4];  inert[2] = inertia[8];  
@@ -188,7 +190,8 @@ void App::newPerfTest(float time)
 				//------------------------------------------------
 				{
 					std::string path, pathUser, pathUserDir;
-					bool user = gui->GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], scn->sc->asphalt);
+					bool forceOrig = /*1 ||*/ scn->sc->asphalt;
+					bool user = gui->GetCarPath(&path, &pathUser, &pathUserDir, pSet->game.car[0], forceOrig);
 					path = pathUserDir + pCar->pCarM->sDirname + "_stats.xml";
 					
 					PATHMANAGER::CreateDir(pathUserDir);
