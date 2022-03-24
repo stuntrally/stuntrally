@@ -20,10 +20,9 @@
 
     <car id="U8"  name="Caterpillar" crtver="2.7" speed="3.0" year="2123" type="Slow"     easy="0.77" norm="0.85"  author="stundif" />
 	<car id="UV"  name="Bear"        crtver="2.1" speed="4.0" year="2008" type="Extreme"  easy="0.87" norm="0.965" author="greyoxide" />
+	<car id="MO"  name="Rhino"       crtver="2.7" speed="4.0" year="2008" type="Extreme"  easy="0.87" norm="0.965" author="aleksandr.yatsenco" />
 
-	<car id="N1"  name="Moose-"      crtver="2.0" speed="5.0" year="1999" type="Racing"   easy="0.96" norm="1.015" author="(Super Racing)" />
 	<car id="FN"  name="Coyote"      crtver="2.4" speed="5.5" year="2000" type="Gravel"   easy="1.00" norm="1.005" author="Neubi" />
-
 	<car id="S8"  name="Squirrel"    crtver="2.0" speed="6.0" year="2008" type="Gravel"   easy="0.96" norm="1.00"  author="lubomircenovsky" />
 	<car id="S1"  name="Snake-"      crtver="1.8" speed="6.1" year="2005" type="Gravel"   easy="0.98" norm="1.005" author="(Super Racing)" />
 	<car id="ES"  name="Fox"         crtver="1.2" speed="6.1" year="2006" type="Gravel"   easy="1.00" norm="1.01"  author="VeTi" />
@@ -35,7 +34,9 @@
 
 	<car id="SZ"  name="Tiger"       crtver="2.4" speed="8.0" year="1996" type="Gravel"   easy="0.97" norm="1.03"  author="cobe571" />
 	<car id="XZ"  name="Wolf"        crtver="2.0" speed="8.4" year="2007" type="Asphalt"  easy="1.02" norm="1.04"  author="Neubi" />
-<!--<car id="SX"  name="Jaguar"      crtver="2.0" speed="8.4" year="2017" type="Asphalt"  easy="1.02" norm="1.04"  author="todo.." />-->
+<!--<car id="SX"  name="Jaguar"      crtver="2.0" speed="8.4" year="2017" type="Asphalt"  easy="1.02" norm="1.04"  author="todo.." />
+
+	<car id="Y3"  name="Cheetah"     crtver="2.6" speed="8.8" year="2013" type="Asphalt"  easy="1.06" norm="1.05"  author="todo.." />-->
 	<car id="Y7"  name="Leopard"     crtver="2.6" speed="8.8" year="2013" type="Asphalt"  easy="1.06" norm="1.05"  author="hasapeta" />
 
 
