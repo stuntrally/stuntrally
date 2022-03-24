@@ -577,7 +577,7 @@ void CARDYNAMICS::UpdateWheelContacts()
 		COLLISION_CONTACT & wheelContact = wheel_contact[WHEEL_POSITION(i)];
 		MATHVECTOR<float,3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
 		raystart = raystart - raydir * wheel[i].GetRadius();  //*!
-		float raylen = 1.5f;  // !par
+		float raylen = wheel[i].GetRayLength();
 		
 		world->CastRay( raystart, raydir, raylen, chassis, wheelContact, this,i, !pSet->game.collis_cars, false );
 	}

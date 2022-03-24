@@ -521,10 +521,14 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 			wheel[wl].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
 			wheel[wr].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
 
-			float radius;
+			float radius, ray_len;
 			if (!c.GetParamE("tire-"+pos+".radius", radius))  return false;
 			wheel[wl].SetRadius(radius);
 			wheel[wr].SetRadius(radius);
+			
+			if (c.GetParamE("tire-"+pos+".ray-length", ray_len))
+			{	wheel[wl].SetRayLength(ray_len);
+				wheel[wr].SetRayLength(ray_len);  }
 		}
 	}
 

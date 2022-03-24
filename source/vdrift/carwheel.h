@@ -24,6 +24,7 @@ private:
 	Dbl inertia_cache;
 	Dbl steer_angle;	///<negative values cause steering to the left
 	Dbl radius;		///< the total radius of the tire
+	Dbl ray_len;	///< distance to cast ray
 	Dbl feedback;	///< the force feedback effect value
 
 	//for info only
@@ -59,7 +60,8 @@ public:
 	CARWHEEL()
 		:roll_height(0.9), mass(18.1), inertia_cache(10.0)
 		,steer_angle(0.), steer_max(0.), fluidRes(0.)
-		,radius(0.3), feedback(0.), camber_deg(0.), angvel(0.)
+		,radius(0.3), ray_len(1.5)
+		,feedback(0.), camber_deg(0.), angvel(0.)
 		,rolling_res_lin(1.3e-2), rolling_res_quad(6.5e-6)
 	{	SetInertia(10.0);	}
 	
@@ -94,11 +96,14 @@ public:
 	void SetRadius (const Dbl& value)	{	radius = value;		}
 	Dbl GetRadius() const				{	return radius;		}
 
+	void SetRayLength (const Dbl& value)	{	ray_len = value;	}
+	Dbl GetRayLength() const				{	return ray_len;		}
+
 	void SetRollHeight (const Dbl& value)	{	roll_height = value;	}
 	Dbl GetRollHeight() const				{	return roll_height;		}
 
 	void SetSteerMax (const Dbl& value)	{	steer_max = value;	}
-	Dbl GetSteerMax() const				{	return steer_max;		}
+	Dbl GetSteerMax() const				{	return steer_max;	}
 
 	void SetMass (const Dbl& value)	{	mass = value;	}
 	Dbl GetMass() const				{	return mass;	}
