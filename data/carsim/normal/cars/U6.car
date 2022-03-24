@@ -72,9 +72,10 @@ torque-curve-06 = 7000, 900
 torque-curve-07 = 8000, 800
 torque-curve-08 = 9000, 700
 real-pow-tq-mul = 1.1
+sound-vol-mul = 2.2
 
 [ clutch ]
-max-torque-mul = 1.7
+max-torque-mul = 4.7
 
 #  gearbox
 #---------------------------

@@ -81,6 +81,7 @@ torque-curve-07 = 7000, 628
 torque-curve-08 = 8000, 556
 torque-curve-09 = 9000, 476
 real-pow-tq-mul = 1.2
+sound-vol-mul = 0.8
 
 [ clutch ]
 max-torque-mul = 1.3

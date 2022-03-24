@@ -741,7 +741,6 @@ material U6_interior
 	fresnel true
 	fresnelScaleBiasPower 0.6 0.15 4
 }
-
 material U6_wheel
 {
 	parent car_base
@@ -754,4 +753,80 @@ material U6_wheel
 	env_map true
 	fresnel true
 	fresnelScaleBiasPower 0.7 0.15 4
+}
+
+//  U8  -------------------------------
+material car_body_U8
+{
+	parent car_body
+	reflMap U8_refl.png
+	specMap U8_refl.png
+	cull_hardware none
+    twoside_diffuse true
+}
+material U8_glass
+{
+	parent car_glass
+	diffuseMap U8_glass.png
+	//cull_hardware none
+    //twoside_diffuse true
+}
+material U8_interior
+{
+	parent car_base
+	diffuseMap U8_interior.png
+	specMap U8_interior_spec.png
+	ambient 0.5 0.5 0.5
+	diffuse 0.6 0.6 0.6
+	specular 1 1 1  4
+	env_map false
+}
+material U8_wheel
+{
+	parent car_base
+	diffuseMap U8_wheel.png
+	specMap U8_wheel_refl.png
+	reflMap U8_wheel_refl.png
+	//ambient 0.5 0.5 0.5
+	//diffuse 0.7 0.7 0.7
+	specular 1 1 1 16
+	env_map true
+	fresnel true
+	fresnelScaleBiasPower 0.7 0.15 4
+}
+
+
+//  MO  -------------------------------
+material car_body_MO
+{
+	parent car_body
+	specMap MO_body00_red.png
+	//reflMap MO_body00_red.png
+	ambient 0.9 0.9 0.9
+	cull_hardware none
+    //twoside_diffuse true
+}
+material MO_interior
+{
+	parent car_base
+	diffuseMap MO_interior.png
+	//specMap U8_interior_spec.png
+	ambient 1 1 1
+	diffuse 0.8 0.8 0.8
+	specular 0.5 0.5 0.5  16
+	env_map false
+}
+material MO_wheel
+{
+	parent car_base
+	diffuseMap MO_wheel.png
+	normalMap MO_wheel_norm.png
+	//specMap MO_wheel_spec.png
+	//reflMap MO_wheel_refl.png
+	ambient 1 1 1
+	diffuse 0.9 0.9 0.9
+	specular 0.2 0.2 0.2  4
+	env_map false
+	//fresnel true
+	//fresnelScaleBiasPower 0.7 0.15 4
 }

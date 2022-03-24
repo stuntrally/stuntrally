@@ -12,42 +12,43 @@
 	<!--global multipliers for car factors, magic - see App::GetRacePos-->
 	<global easy="0.94" norm="0.95" magic="0.010"/>
 
-	<car id="OT"  name="Turtle"      crtver="2.1" speed="0.4" year="1965" type="Slow"     easy="0.66" norm="0.67"  author="irokrhus" />
+	<!-- ver - created in sr version-->
+	<car id="OT"  name="Turtle"      ver="2.1" speed="0.4" year="1965" type="Slow"     easy="0.66" norm="0.67"  author="irokrhus" />
 
-	<car id="FR4" name="Elephant"    crtver="2.1" speed="1.8" year="1986" type="Terrain"  easy="0.86" norm="0.90"  author="computergeekman" />
-	<car id="HR"  name="Aligator"    crtver="2.1" speed="2.4" year="1996" type="Terrain"  easy="0.88" norm="0.93"  author="thiagohenrinrique" />
-	<car id="LK4" name="Bison"       crtver="2.0" speed="2.7" year="2008" type="Terrain"  easy="0.89" norm="0.94"  author="clarabox" />
+	<car id="FR4" name="Elephant"    ver="2.1" speed="1.8" year="1986" type="Terrain"  easy="0.86" norm="0.90"  author="computergeekman" />
+	<car id="HR"  name="Aligator"    ver="2.1" speed="2.4" year="1996" type="Terrain"  easy="0.88" norm="0.93"  author="thiagohenrinrique" />
+	<car id="LK4" name="Bison"       ver="2.0" speed="2.7" year="2008" type="Terrain"  easy="0.89" norm="0.94"  author="clarabox" />
 
-    <car id="U8"  name="Caterpillar" crtver="2.7" speed="3.0" year="2123" type="Slow"     easy="0.77" norm="0.85"  author="stundif" />
-	<car id="UV"  name="Bear"        crtver="2.1" speed="4.0" year="2008" type="Extreme"  easy="0.87" norm="0.965" author="greyoxide" />
-	<car id="MO"  name="Rhino"       crtver="2.7" speed="4.0" year="2008" type="Extreme"  easy="0.87" norm="0.965" author="aleksandr.yatsenco" />
+    <car id="U8"  name="Caterpillar" ver="2.7" speed="3.0" year="2123" type="Slow"     easy="0.77" norm="0.85"  author="stundif" />
+	<car id="MO"  name="Rhino"       ver="2.7" speed="4.0" year="2005" type="Extreme"  easy="0.87" norm="0.965" author="aleksandr.yatsenco" />
+	<car id="UV"  name="Bear"        ver="2.1" speed="4.0" year="2008" type="Extreme"  easy="0.87" norm="0.965" author="greyoxide" />
 
-	<car id="FN"  name="Coyote"      crtver="2.4" speed="5.5" year="2000" type="Gravel"   easy="1.00" norm="1.005" author="Neubi" />
-	<car id="S8"  name="Squirrel"    crtver="2.0" speed="6.0" year="2008" type="Gravel"   easy="0.96" norm="1.00"  author="lubomircenovsky" />
-	<car id="S1"  name="Snake-"      crtver="1.8" speed="6.1" year="2005" type="Gravel"   easy="0.98" norm="1.005" author="(Super Racing)" />
-	<car id="ES"  name="Fox"         crtver="1.2" speed="6.1" year="2006" type="Gravel"   easy="1.00" norm="1.01"  author="VeTi" />
-	<car id="HI"  name="Hyena"       crtver="2.7" speed="6.2" year="2014" type="Gravel"   easy="1.00" norm="1.01"  author="ANDREO12" />
-
-
-	<car id="TW"  name="Gorilla"     crtver="2.1" speed="7.0" year="2011" type="Extreme"  easy="0.93" norm="0.94"  author="irokrhus" />
-	<car id="TU"  name="Lizard"      crtver="2.4" speed="7.3" year="2012" type="Extreme"  easy="0.96" norm="0.99"  author="carlospanganiban" />
-
-	<car id="SZ"  name="Tiger"       crtver="2.4" speed="8.0" year="1996" type="Gravel"   easy="0.97" norm="1.03"  author="cobe571" />
-	<car id="XZ"  name="Wolf"        crtver="2.0" speed="8.4" year="2007" type="Asphalt"  easy="1.02" norm="1.04"  author="Neubi" />
-<!--<car id="SX"  name="Jaguar"      crtver="2.0" speed="8.4" year="2017" type="Asphalt"  easy="1.02" norm="1.04"  author="todo.." />
-
-	<car id="Y3"  name="Cheetah"     crtver="2.6" speed="8.8" year="2013" type="Asphalt"  easy="1.06" norm="1.05"  author="todo.." />-->
-	<car id="Y7"  name="Leopard"     crtver="2.6" speed="8.8" year="2013" type="Asphalt"  easy="1.06" norm="1.05"  author="hasapeta" />
+	<car id="FN"  name="Coyote"      ver="2.4" speed="5.5" year="2000" type="Gravel"   easy="1.00" norm="1.005" author="Neubi" />
+	<car id="S8"  name="Squirrel"    ver="2.0" speed="6.0" year="2008" type="Gravel"   easy="0.96" norm="1.00"  author="lubomircenovsky" />
+	<car id="S1"  name="Snake-"      ver="1.8" speed="6.1" year="2005" type="Gravel"   easy="0.98" norm="1.005" author="(Super Racing)" />
+	<car id="ES"  name="Fox"         ver="1.2" speed="6.1" year="2006" type="Gravel"   easy="1.00" norm="1.01"  author="VeTi" />
+	<car id="HI"  name="Hyena"       ver="2.7" speed="6.2" year="2014" type="Gravel"   easy="1.00" norm="1.01"  author="ANDREO12" />
 
 
-	<car id="BV"  name="Gazelle"     crtver="2.6" speed="8.6" year="2381" type="Extreme"  easy="1.01" norm="1.04"  author="gakpoenya" />
-    <car id="U6"  name="Beetle"      crtver="2.7" speed="9.0" year="2412" type="Extreme"  easy="0.90" norm="0.98"  author="gakpoenya, carlospanganiban, CryHam" />
+	<car id="TW"  name="Gorilla"     ver="2.1" speed="7.0" year="2011" type="Extreme"  easy="0.93" norm="0.94"  author="irokrhus" />
+	<car id="TU"  name="Lizard"      ver="2.4" speed="7.3" year="2012" type="Extreme"  easy="0.96" norm="0.99"  author="carlospanganiban" />
 
-	<car id="V2"  name="Swan"       crtver="2.4" speed="9.4" year="2516" type="Spaceship" easy="1.00" norm="1.13"  car="0" author="speedypro" />
-	<car id="V1"  name="Duck"       crtver="2.4" speed="9.6" year="2523" type="Spaceship" easy="1.04" norm="1.16"  car="0" author="benja" />
-	<car id="V3"  name="Hawk"       crtver="2.4" speed="9.8" year="2548" type="Spaceship" easy="1.10" norm="1.20"  car="0" author="jumahsafarty" />
+	<car id="SZ"  name="Tiger"       ver="2.4" speed="8.0" year="1996" type="Gravel"   easy="0.97" norm="1.03"  author="cobe571" />
+	<car id="XZ"  name="Wolf"        ver="2.0" speed="8.4" year="2007" type="Asphalt"  easy="1.02" norm="1.04"  author="Neubi" />
+<!--<car id="SX"  name="Jaguar"      ver="2.0" speed="8.4" year="2017" type="Asphalt"  easy="1.02" norm="1.04"  author="todo.." />
 
-	<car id="O"   name="Rabbit"     crtver="2.4" speed="10.2" year="2785" type="Other"    easy="1.10" norm="1.17"  car="0" author="cryham" />
+	<car id="Y3"  name="Cheetah"     ver="2.6" speed="8.8" year="2013" type="Asphalt"  easy="1.06" norm="1.05"  author="todo.." />-->
+	<car id="Y7"  name="Leopard"     ver="2.6" speed="8.8" year="2013" type="Asphalt"  easy="1.06" norm="1.05"  author="hasapeta" />
+
+
+	<car id="BV"  name="Gazelle"     ver="2.6" speed="8.6" year="2381" type="Extreme"  easy="1.01" norm="1.04"  author="gakpoenya" />
+    <car id="U6"  name="Beetle"      ver="2.7" speed="9.0" year="2412" type="Extreme"  easy="0.90" norm="0.98"  author="gakpoenya, carlospanganiban, CryHam" />
+
+	<car id="V2"  name="Swan"        ver="2.4" speed="9.4" year="2516" type="Spaceship" easy="1.00" norm="1.13"  car="0" author="speedypro" />
+	<car id="V1"  name="Duck"        ver="2.4" speed="9.6" year="2523" type="Spaceship" easy="1.04" norm="1.16"  car="0" author="benja" />
+	<car id="V3"  name="Hawk"        ver="2.4" speed="9.8" year="2548" type="Spaceship" easy="1.10" norm="1.20"  car="0" author="jumahsafarty" />
+
+	<car id="O"   name="Rabbit"      ver="2.4" speed="10.2" year="2785" type="Other"    easy="1.10" norm="1.17"  car="0" author="cryham" />
 
 	<!--easy and norm are the car time multipliers for simultation modes
 		less means bigger track time (more points, easier to qualify)
