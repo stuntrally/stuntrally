@@ -18,6 +18,7 @@ private:
 
 	Dbl rolling_res_lin;	///< linear rolling resistance on a hard surface
 	Dbl rolling_res_quad;	///< quadratic rolling resistance on a hard surface
+	Dbl friction;  //<* extra coeff for bigger tires
 	
 	// variables
 	//Dbl additional_inertia;
@@ -60,7 +61,7 @@ public:
 	CARWHEEL()
 		:roll_height(0.9), mass(18.1), inertia_cache(10.0)
 		,steer_angle(0.), steer_max(0.), fluidRes(0.)
-		,radius(0.3), ray_len(1.5)
+		,radius(0.3), ray_len(1.5), friction(1.0)
 		,feedback(0.), camber_deg(0.), angvel(0.)
 		,rolling_res_lin(1.3e-2), rolling_res_quad(6.5e-6)
 	{	SetInertia(10.0);	}
@@ -98,6 +99,9 @@ public:
 
 	void SetRayLength (const Dbl& value)	{	ray_len = value;	}
 	Dbl GetRayLength() const				{	return ray_len;		}
+
+	void SetFriction (const Dbl& value)	{	friction = value;	}
+	Dbl GetFriction() const				{	return friction;		}
 
 	void SetRollHeight (const Dbl& value)	{	roll_height = value;	}
 	Dbl GetRollHeight() const				{	return roll_height;		}

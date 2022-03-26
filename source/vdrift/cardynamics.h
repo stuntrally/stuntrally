@@ -88,7 +88,7 @@ public:
 	float coll_posLfront, coll_posLback, coll_friction;
 	float coll_FrWmul, coll_FrHmul, coll_TopWmul,
 		coll_TopFr, coll_TopMid, coll_TopBack,
-		coll_TopFrHm, coll_TopMidHm, coll_TopBackHm;
+		coll_TopFrHm, coll_TopMidHm, coll_TopBackHm, coll_FrontWm;
 	
 // damage
 	// changed in CAR::UpdateSounds from bullet hit info

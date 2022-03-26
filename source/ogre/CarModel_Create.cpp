@@ -668,7 +668,8 @@ void CarModel::RecreateMaterials()
 	
 	// if specialised car material (e.g. car_body_FM) exists, use this one instead of e.g. car_body
 	// useful macro for choosing between these 2 variants
-	#define chooseMat(s)  MaterialManager::getSingleton().resourceExists("car"+String(s) + "_"+sDirname) ? "car"+String(s) + "_"+sDirname : "car"+String(s)
+	#define chooseMat(s)  MaterialManager::getSingleton().resourceExists( \
+		"car"+String(s) + "_"+sDirname) ? "car"+String(s) + "_"+sDirname : "car"+String(s)
 
 	//  ghost car has no interior, particles, trails and uses same material for all meshes
 	if (!ghost)

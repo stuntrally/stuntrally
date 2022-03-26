@@ -521,7 +521,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 			wheel[wl].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
 			wheel[wr].SetRollingResistance(rolling_resistance[0], rolling_resistance[1]);
 
-			float radius, ray_len;
+			float radius, ray_len, friction;
 			if (!c.GetParamE("tire-"+pos+".radius", radius))  return false;
 			wheel[wl].SetRadius(radius);
 			wheel[wr].SetRadius(radius);
@@ -529,6 +529,10 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 			if (c.GetParamE("tire-"+pos+".ray-length", ray_len))
 			{	wheel[wl].SetRayLength(ray_len);
 				wheel[wr].SetRayLength(ray_len);  }
+			
+			if (c.GetParamE("tire-"+pos+".friction", friction))
+			{	wheel[wl].SetFriction(friction);
+				wheel[wr].SetFriction(friction);  }
 		}
 	}
 
@@ -735,24 +739,24 @@ void CARDYNAMICS::Init(
 		btScalar r2 = r * coll_R2m;
 		btScalar l1 = coll_posLfront, l2 = coll_posLback, l1m = l1*0.5, l2m = l2*0.5;
 		float ww = vtype == V_Spaceship ? coll_FrWmul : 1.f;
-		float wt = coll_TopWmul * ww;
+		float wt = coll_TopWmul * ww, wf = coll_FrontWm;
 
-		rad[i] = r2;  pos[i] = btVector3( l1 , -w*ww, -h*coll_FrHmul);  ++i;  // front
-		rad[i] = r2;  pos[i] = btVector3( l1 ,  w*ww, -h*coll_FrHmul);  ++i;
-		rad[i] = r;   pos[i] = btVector3( l1m, -w*ww, -h*coll_FrHmul);  ++i;  // front near
-		rad[i] = r;   pos[i] = btVector3( l1m,  w*ww, -h*coll_FrHmul);  ++i;
+		rad[i] = r2;  pos[i] = btVector3( l1 , -w*ww*wf, -h*coll_FrHmul);  ++i;  // front
+		rad[i] = r2;  pos[i] = btVector3( l1 ,  w*ww*wf, -h*coll_FrHmul);  ++i;
+		rad[i] = r;   pos[i] = btVector3( l1m, -w*ww,    -h*coll_FrHmul);  ++i;  // front near
+		rad[i] = r;   pos[i] = btVector3( l1m,  w*ww,    -h*coll_FrHmul);  ++i;
 		
 		rad[i] = r;   pos[i] = btVector3( l2m, -w,    -h);  ++i;  // rear near
 		rad[i] = r;   pos[i] = btVector3( l2m,  w,    -h);  ++i;
 		rad[i] = r2;  pos[i] = btVector3( l2 , -w,    -h);  ++i;  // rear
 		rad[i] = r2;  pos[i] = btVector3( l2 ,  w,    -h);  ++i;
 		
-		rad[i] = r2;  pos[i] = btVector3( coll_TopFr,  -w*wt, h*coll_TopFrHm  );  ++i;  // top
-		rad[i] = r2;  pos[i] = btVector3( coll_TopFr,   w*wt, h*coll_TopFrHm  );  ++i;
-		rad[i] = r2;  pos[i] = btVector3( coll_TopMid, -w*wt, h*coll_TopMidHm );  ++i;
-		rad[i] = r2;  pos[i] = btVector3( coll_TopMid,  w*wt, h*coll_TopMidHm );  ++i;
-		rad[i] = r2;  pos[i] = btVector3( coll_TopBack,-w*wt, h*coll_TopBackHm);  ++i;  // top rear
-		rad[i] = r2;  pos[i] = btVector3( coll_TopBack, w*wt, h*coll_TopBackHm);  ++i;
+		rad[i] = r2;  pos[i] = btVector3( coll_TopFr,  -w*wt*wf, h*coll_TopFrHm  );  ++i;  // top
+		rad[i] = r2;  pos[i] = btVector3( coll_TopFr,   w*wt*wf, h*coll_TopFrHm  );  ++i;
+		rad[i] = r2;  pos[i] = btVector3( coll_TopMid, -w*wt,    h*coll_TopMidHm );  ++i;
+		rad[i] = r2;  pos[i] = btVector3( coll_TopMid,  w*wt,    h*coll_TopMidHm );  ++i;
+		rad[i] = r2;  pos[i] = btVector3( coll_TopBack,-w*wt,    h*coll_TopBackHm);  ++i;  // top rear
+		rad[i] = r2;  pos[i] = btVector3( coll_TopBack, w*wt,    h*coll_TopBackHm);  ++i;
 
 		for (i=0; i < numSph; ++i)
 			pos[i] += origin;

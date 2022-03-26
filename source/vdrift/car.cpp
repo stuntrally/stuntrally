@@ -108,6 +108,8 @@ bool CAR::Load(class App* pApp1,
 	cd.coll_TopFrHm  = 0.2f;  cf.GetParam("collision.TopFrHm",  cd.coll_TopFrHm);
 	cd.coll_TopMidHm = 0.4f;  cf.GetParam("collision.TopMidHm", cd.coll_TopMidHm);
 	cd.coll_TopBackHm= 0.2f;  cf.GetParam("collision.TopBackHm",cd.coll_TopBackHm);
+	//  Front w mul
+	cd.coll_FrontWm  = 1.0f;  cf.GetParam("collision.FrontWm",  cd.coll_FrontWm);
 
 	cd.coll_friction = 0.4f;  cf.GetParam("collision.friction",  cd.coll_friction);
 	cd.coll_flTrig_H = 0.f;   cf.GetParam("collision.fluidTrigH",cd.coll_flTrig_H);

@@ -154,7 +154,7 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::UpdateSuspension(int i, Dbl dt)
 MATHVECTOR<Dbl,3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, const QUATERNION<Dbl> & wheel_space)
 {
 	//  aplies tire friction  to car, returns friction in world space
-	CARWHEEL & wheel = this->wheel[WHEEL_POSITION(i)];
+	CARWHEEL& wheel = this->wheel[WHEEL_POSITION(i)];
 	const COLLISION_CONTACT & wheel_contact = this->wheel_contact[WHEEL_POSITION(i)];
 	const TRACKSURFACE & surface = wheel_contact.GetSurface();
 	const CARTIRE* tire = surface.tire;  // this->tire[WHEEL_POSITION(i)];
@@ -184,12 +184,12 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, con
 
 	//  friction force in tire space
 	//Dbl friction_coeff = tire.GetTread() * surface.friction + (1.0 - tire.GetTread()) * surface.frictionNonTread;
-	Dbl friction_coeff = surface.friction;
+	Dbl friction_coeff = surface.friction;// * wheel.GetFriction();
 	//Dbl roll_friction_coeff = surface.rollResistanceCoefficient;
 	MATHVECTOR<Dbl,3> friction_force(0);
 	if (friction_coeff > 0)
 		friction_force = tire->GetForce(
-			normal_force, friction_coeff, //roll_friction_coeff,
+			normal_force /* wheel.GetFriction()*/, friction_coeff, //roll_friction_coeff,
 			hub_velocity, patch_speed, camber_rad, &wheel.slips);
 
 	///  multipliers x,y test
@@ -545,7 +545,7 @@ Dbl CARDYNAMICS::GetSpeedMPS() const
 //  Gearbox, Clutch
 //---------------------------------------------------------------------------------------------------------------------------
 
-void CARDYNAMICS::ShiftGear(int value)  // GiftShare
+void CARDYNAMICS::ShiftGear(int value)  // Gift Share
 {
 	if (transmission.GetGear() != value && shifted)
 	{
