@@ -19,8 +19,8 @@
 	<car id="HR"  name="Aligator"    ver="2.1" speed="2.4" year="1996" type="Terrain"  easy="0.88" norm="0.93"  author="thiagohenrinrique" />
 	<car id="LK4" name="Bison"       ver="2.0" speed="2.7" year="2008" type="Terrain"  easy="0.89" norm="0.94"  author="clarabox" />
 
-    <car id="U8"  name="Caterpillar" ver="2.7" speed="3.0" year="2123" type="Slow"     easy="0.77" norm="0.85"  author="stundif" />
-	<car id="MO"  name="Rhino"       ver="2.7" speed="4.0" year="2005" type="Extreme"  easy="0.87" norm="0.965" author="aleksandr.yatsenco" />
+    <car id="U8"  name="Caterpillar" ver="2.7" speed="3.0" year="2123" type="Slow"     easy="0.80" norm="0.885" author="stundif" />
+	<car id="MO"  name="Rhino"       ver="2.7" speed="3.5" year="2005" type="Extreme"  easy="0.77" norm="0.85"  author="aleksandr.yatsenco" />
 	<car id="UV"  name="Bear"        ver="2.1" speed="4.0" year="2008" type="Extreme"  easy="0.87" norm="0.965" author="greyoxide" />
 
 	<car id="FN"  name="Coyote"      ver="2.4" speed="5.5" year="2000" type="Gravel"   easy="1.00" norm="1.005" author="Neubi" />
@@ -41,8 +41,9 @@
 	<car id="Y7"  name="Leopard"     ver="2.6" speed="8.8" year="2013" type="Asphalt"  easy="1.06" norm="1.05"  author="hasapeta" />
 
 
+	<car id="3B"  name="Scorpion"    ver="2.7" speed="8.5" year="2773" type="Extreme"  easy="1.00" norm="1.025" author="Valery Kharitonov" />
 	<car id="BV"  name="Gazelle"     ver="2.6" speed="8.6" year="2381" type="Extreme"  easy="1.01" norm="1.04"  author="gakpoenya" />
-    <car id="U6"  name="Beetle"      ver="2.7" speed="9.0" year="2412" type="Extreme"  easy="0.90" norm="0.98"  author="gakpoenya, carlospanganiban, CryHam" />
+    <car id="U6"  name="Beetle"      ver="2.7" speed="9.0" year="2412" type="Extreme"  easy="1.01" norm="1.04"  author="gakpoenya, carlospanganiban, CryHam" />
 
 	<car id="V2"  name="Swan"        ver="2.4" speed="9.4" year="2516" type="Spaceship" easy="1.00" norm="1.13"  car="0" author="speedypro" />
 	<car id="V1"  name="Duck"        ver="2.4" speed="9.6" year="2523" type="Spaceship" easy="1.04" norm="1.16"  car="0" author="benja" />

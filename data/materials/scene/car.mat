@@ -762,14 +762,12 @@ material car_body_U8
 	reflMap U8_refl.png
 	specMap U8_refl.png
 	cull_hardware none
-    twoside_diffuse true
+    //twoside_diffuse true
 }
 material U8_glass
 {
 	parent car_glass
 	diffuseMap U8_glass.png
-	//cull_hardware none
-    //twoside_diffuse true
 }
 material U8_interior
 {
@@ -801,7 +799,6 @@ material car_body_MO
 {
 	parent car_body
 	specMap MO_body00_red.png
-	//reflMap MO_body00_red.png
 	ambient 0.9 0.9 0.9
 	cull_hardware none
     //twoside_diffuse true
@@ -810,7 +807,6 @@ material MO_interior
 {
 	parent car_base
 	diffuseMap MO_interior.png
-	//specMap U8_interior_spec.png
 	ambient 1 1 1
 	diffuse 0.8 0.8 0.8
 	specular 0.5 0.5 0.5  16
@@ -821,12 +817,39 @@ material MO_wheel
 	parent car_base
 	diffuseMap MO_wheel.png
 	normalMap MO_wheel_norm.png
-	//specMap MO_wheel_spec.png
-	//reflMap MO_wheel_refl.png
 	ambient 1 1 1
 	diffuse 0.9 0.9 0.9
 	specular 0.2 0.2 0.2  4
 	env_map false
-	//fresnel true
-	//fresnelScaleBiasPower 0.7 0.15 4
+}
+
+//  3B  -------------------------------
+material 3B_body
+{
+	parent car_body
+	normalMap 3B_norm.jpg
+	specMap 3B_spec.png
+    specMap_rgb true
+	specular 1 1 1  8
+}
+
+material 3B_interior
+{
+	parent car_body
+	diffuseMap 3B_body00_red.png
+	normalMap 3B_norm.jpg
+	specMap 3B_spec.png
+    specMap_rgb true
+	diffuse 0.6 0.6 0.6
+	specular 1 1 1  8
+}
+
+material 3B_wheel
+{
+	parent car_body
+	diffuseMap 3B_wheel.jpg
+	normalMap 3B_norm.jpg
+	ambient 0.4 0.4 0.4
+	diffuse 0.3 0.3 0.3
+	specular 0.6 0.6 0.6  2.5
 }
