@@ -1430,7 +1430,6 @@
 	<Tag name="CarDesc_FR4">Quite old, heavy, broad and slow. Good for terrain but not with the best suspension. Isn't suited for faster or stunt tracks.</Tag>
 	<Tag name="CarDesc_HR">Very heavy and slow car, best for terrain and bumps, easy to drive. But useless on fast and stunt tracks.</Tag>
 	<Tag name="CarDesc_LK4">Slow and heavy car. Can handle bumps well. Is stable and easy to drive. But isn't suited for faster tracks.</Tag>
-	<Tag name="CarDesc_MO">Huge and heavy monster truck. Does terrain and jumps very well. But due to size, it has problems in everything narrow, even bridges.</Tag>
 
 	<Tag name="CarDesc_ES">Best rally car in game, great driving experience on all tracks. A bit high though.</Tag>
 	<Tag name="CarDesc_FN">Another good rally car, suited for all tracks. Is not that long and thus easier to steer.</Tag>
@@ -1442,7 +1441,10 @@
 	<Tag name="CarDesc_TU">Very futuristic and fast vehicle. Not suited for narrow roads, jumps or mud.</Tag>
 
 	<Tag name="CarDesc_UV">This big wheeled utility vehicle is powered by 4 electic engines. Suited for nearly all tracks, except when narrow. Great for exploring other planets. But has bad aerodynamics and gets stuck in mud.</Tag>
-	<Tag name="CarDesc_U8">Big and heavy exploration vehicle with 8 wheel drive. Great on all planets for whole team. Obviously not for stunts.</Tag>
+	<Tag name="CarDesc_MO">Huge and heavy monster truck. Does terrain and jumps very well. But due to size, it has problems in everything narrow, even bridges.</Tag>
+	<Tag name="CarDesc_U8">Big and heavy exploration vehicle with 8 wheel drive. Great on all planets for whole team.</Tag>
+
+	<Tag name="CarDesc_3B">Very fast, futuristic racing vehicle. Uses 3 stabilized spheres to drive. Not the best for bridges, mud or pipes.</Tag>
 	<Tag name="CarDesc_BV">Big extreme bike with advanced electric engine. Extremely fast and light. Also great for exploring other planets. Doesn't handle bad jump landings and bumps.</Tag>
 	<Tag name="CarDesc_U6">Extremely fast, 6 wheels driving with advanced electric engine. Great for racing on all planets. Quite heavy but agile. Caution: it can spin wheels easily, it has 1 gear only.</Tag>
 

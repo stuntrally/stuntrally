@@ -51,5 +51,5 @@
 	<rev name="UnidentMntn" normal="CHAPEL" 
 		descr="custom Unidentified, Mountains - long close reverb" />
 	
-	<!-- See SoundBaseMgrUtil :328  InitReverMap()  for more names -->
+	<!-- See SoundBaseMgrUtil :328  InitReverbMap()  for more names -->
 </reverbs>
