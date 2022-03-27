@@ -65,7 +65,8 @@ void App::Rnd2TexSetup()
 				dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
 				  
 			r.cam = mSceneMgr->createCamera(sCam);  // up
-			r.cam->setPosition(Vector3(0,1000,0/*-300..*/));  r.cam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
+			r.cam->setPosition(Vector3(0,1500,0));  //par- max height
+			r.cam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
 			r.cam->setNearClipDistance(0.5);	r.cam->setFarClipDistance(50000);
 			r.cam->setAspectRatio(1.0);			if (!full)  r.cam->setProjectionType(PT_ORTHOGRAPHIC);
 			r.cam->setOrthoWindow(fDim,fDim);	//rt[i].rndCam->setPolygonMode(PM_WIREFRAME);
@@ -200,7 +201,7 @@ void App::SaveGrassDens()
 	//  road, terrain  ----------------
 	int u = pSet->allow_save ? pSet->gui.track_user : 1;
 	rt[0].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/road.png");
-	rt[2].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/terrain.jpg");
+	rt[2].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/terrain.png");
 
 	LogO(String("::: Time save prv : ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
