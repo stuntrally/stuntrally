@@ -136,7 +136,7 @@ bool SoundBaseMgr::Init(std::string snd_device, bool reverb1)
 
 	//  slot is what plays an effect on sources that connect to it
 	alGenAuxiliaryEffectSlots(1, &slot);
-	InitReverMap();
+	InitReverbMap();
 	
 	//SetReverb("MOUNTAINS");
 	return true;

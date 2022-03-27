@@ -39,7 +39,7 @@ public:
 
 	bool reverb;
 	std::string sReverb;  // info
-	void InitReverMap();
+	void InitReverbMap();
 	std::map <std::string, int> mapReverbs;
 	ALuint LoadEffect(const REVERB_PRESET* reverb);
 

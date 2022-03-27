@@ -36,8 +36,7 @@ struct SParams
 	,camBncF, camBncFo, camBncFof
 	,camBncFHit,camBncFHitY
 	,camBncSpring, camBncDamp
-	,camBncScale, camBncMass
-	;
+	,camBncScale, camBncMass;
 
 //  take back time in rewind (for track's ghosts)
 	bool backTime;

@@ -41,6 +41,8 @@ void SplineRoad::Defaults()
 	g_LenDim0 = 1.f;  g_iWidthDiv0 = 8;  g_P_iw_mul = 4;  g_P_il_mul = 1;
 	g_SkirtLen = 1.f;  g_SkirtH = 0.12f;  g_Height = 0.1f;
 	g_MergeLen = 180.f;  bMerge = false;  g_LodPntLen = 10.f;
+	g_VisDist = 1000.f;  g_VisBehind = 800.f;
+	
 	g_ColNSides = 4; g_ColRadius = 2.f;
 
 	iDir = -1;  vStBoxDim = Vector3(1.5f, 5,12);  // /long |height -width
@@ -77,7 +79,7 @@ void SplineRoad::ToggleMerge()
 void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 {
 	st.iVis = 0;  st.iTris = 0;
-	const Real fDist[LODs+1] = {-800/*!temp -120*/, 40, 80, 140, 1000};
+	const Real fDist[LODs+1] = {-g_VisBehind/*-800 !temp -120*/, 40, 80, 140, g_VisDist};
 	
 	const Plane& pl = mCamera->getFrustumPlane(FRUSTUM_PLANE_NEAR);
 	for (size_t seg = 0; seg < vSegs.size(); ++seg)
@@ -209,6 +211,9 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		a = n->Attribute("merge");		if (a)  bMerge  = s2i(a) > 0;  // is always 1
 		a = n->Attribute("mergeLen");	if (a)  g_MergeLen = s2r(a);
 		a = n->Attribute("lodPntLen");	if (a)  g_LodPntLen = s2r(a);
+		
+		a = n->Attribute("visDist");	if (a)  g_VisDist = s2r(a);
+		a = n->Attribute("visBehind");	if (a)  g_VisBehind = s2r(a);
 	}
 	int iP1 = 0;
 	n = root->FirstChildElement("geom");	if (n)  {
@@ -326,6 +331,9 @@ bool SplineRoad::SaveFile(String fname)
 		mrg.SetAttribute("merge",		"1");  // always 1 for game, 0 set in editor
 		mrg.SetAttribute("mergeLen",	toStrC( g_MergeLen ));
 		mrg.SetAttribute("lodPntLen",	toStrC( g_LodPntLen ));
+
+		mrg.SetAttribute("visDist",		toStrC( g_VisDist ));
+		mrg.SetAttribute("visBehind",	toStrC( g_VisBehind ));
 	root.InsertEndChild(mrg);
 
 	int num = getNumPoints();

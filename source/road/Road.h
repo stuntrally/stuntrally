@@ -308,6 +308,9 @@ public:
 	Ogre::Real g_MergeLen;     // length below which segments are merged
 	Ogre::Real g_LodPntLen;    // length between LOD points
 
+	Ogre::Real g_VisDist;      // max visible distance
+	Ogre::Real g_VisBehind;    // distance visible behind, meh
+
 	int  g_ColNSides;          // column regular polygon sides
 	Ogre::Real g_ColRadius;    // column radius
 	Ogre::Real g_P_il_mul, g_P_iw_mul;   // length,width steps multipliers for pipe

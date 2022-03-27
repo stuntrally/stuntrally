@@ -320,7 +320,7 @@ ALuint SoundBaseMgr::LoadEffect(const REVERB_PRESET* r)
 
 //  Util all reverb presets
 //-----------------------------------------------------------------------------------
-void SoundBaseMgr::InitReverMap()
+void SoundBaseMgr::InitReverbMap()
 {
 	#define REV(a)  mapReverbs[#a] = RVB_##a +1;
 
