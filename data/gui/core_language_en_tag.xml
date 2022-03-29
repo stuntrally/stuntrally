@@ -1445,6 +1445,7 @@
 	<Tag name="CarDesc_U8">Big and heavy exploration vehicle with 8 wheel drive. Great on all planets for whole team.</Tag>
 
 	<Tag name="CarDesc_3B">Very fast, futuristic racing vehicle. Uses 3 stabilized spheres to drive. Not the best for bridges, mud or pipes.</Tag>
+	<Tag name="CarDesc_BE">Normal size bike. Light and fast.</Tag>
 	<Tag name="CarDesc_BV">Big extreme bike with advanced electric engine. Extremely fast and light. Also great for exploring other planets. Doesn't handle bad jump landings and bumps.</Tag>
 	<Tag name="CarDesc_U6">Extremely fast, 6 wheels driving with advanced electric engine. Great for racing on all planets. Quite heavy but agile. Caution: it can spin wheels easily, it has 1 gear only.</Tag>
 
