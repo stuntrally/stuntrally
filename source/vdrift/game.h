@@ -10,7 +10,6 @@
 #include "carcontrolmap_local.h"
 #include "cartire.h"
 #include "tracksurface.h"
-#include "track.h"
 #include "timer.h"
 #include "forcefeedback.h"
 //#include "../sound/SoundMgr.h"
@@ -53,7 +52,6 @@ public:
 	bool NewGameDoLoadMisc(float pre_time);  // timer,etc
 	
 	
-	bool LoadTrack(const std::string& trackname);
 	CAR* LoadCar(const std::string& pathCar, const std::string& carname,
 		const MATHVECTOR<float,3>& start_pos, const QUATERNION<float>& start_rot,
 		bool islocal, bool isRemote/*=false*/, int idCar);
@@ -74,7 +72,6 @@ public:
 
 	//  cars  ---
 	SETTINGS* settings;
-	TRACK track;
 
 	std::vector<CAR*> cars;
 	std::pair <CAR*, CARCONTROLMAP_LOCAL> controls;

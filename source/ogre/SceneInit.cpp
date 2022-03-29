@@ -339,8 +339,8 @@ void App::LoadGame()  // 2
 	{
 		scn->sc->pGame = pGame;
 		scn->sc->LoadXml(gcom->TrkDir()+"scene.xml");
-		pGame->track.asphalt = scn->sc->asphalt;  //*
-		pGame->track.sDefaultTire = scn->sc->asphalt ? "asphalt" : "gravel";  //*
+		// pGame->track.asphalt = scn->sc->asphalt;  //*
+		// pGame->track.sDefaultTire = scn->sc->asphalt ? "asphalt" : "gravel";  //*
 		if (scn->sc->denyReversed)
 			pSet->game.trackreverse = false;
 

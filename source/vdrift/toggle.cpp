@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "toggle.h"
-#include "unittest.h"
 
 using std::endl;
 
@@ -40,32 +39,4 @@ bool TOGGLE::GetImpulse() const
 void TOGGLE::Tick()
 {
 	laststate = state;
-}
-
-QT_TEST(toggle_test)
-{
-	TOGGLE t;
-	t.Clear();
-	QT_CHECK(!t.GetState() && !t.GetImpulse() && !t.GetImpulseRising() && !t.GetImpulseFalling());
-	t.Tick();
-	QT_CHECK(!t.GetState() && !t.GetImpulse() && !t.GetImpulseRising() && !t.GetImpulseFalling());
-	t.Set(false);
-	t.Tick();
-	QT_CHECK(!t.GetState() && !t.GetImpulse() && !t.GetImpulseRising() && !t.GetImpulseFalling());
-	t.Set(true);
-	QT_CHECK(t.GetState() && t.GetImpulse() && t.GetImpulseRising() && !t.GetImpulseFalling());
-	t.Tick();
-	QT_CHECK(t.GetState() && !t.GetImpulse() && !t.GetImpulseRising() && !t.GetImpulseFalling());
-	t.Tick();
-	QT_CHECK(t.GetState() && !t.GetImpulse() && !t.GetImpulseRising() && !t.GetImpulseFalling());
-	t.Set(false);
-	QT_CHECK(!t.GetState() && t.GetImpulse() && !t.GetImpulseRising() && t.GetImpulseFalling());
-	t.Tick();
-	QT_CHECK(!t.GetState() && !t.GetImpulse() && !t.GetImpulseRising() && !t.GetImpulseFalling());
-	t.Tick();
-	QT_CHECK(!t.GetState() && !t.GetImpulse() && !t.GetImpulseRising() && !t.GetImpulseFalling());
-	t.Set(true);
-	t.Tick();
-	t.Clear();
-	QT_CHECK(!t.GetState() && !t.GetImpulse() && !t.GetImpulseRising() && !t.GetImpulseFalling());
 }

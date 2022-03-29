@@ -158,7 +158,6 @@ void App::NewCommon(bool onlyTerVeget)
 		scn->DestroyWeather();
 
 	mSceneMgr->destroyAllStaticGeometry();
-	mStaticGeom = 0;
 	
 	if (!onlyTerVeget)
 	{
@@ -169,7 +168,6 @@ void App::NewCommon(bool onlyTerVeget)
 	scn->DestroyTerrain();
 		
 	//world.Clear();
-	if (track)  track->Clear();
 
 	if (resTrk != "")  ResourceGroupManager::getSingleton().removeResourceLocation(resTrk);
 	LogO("------  Loading track: "+pSet->gui.track);

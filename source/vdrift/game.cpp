@@ -2,7 +2,6 @@
 #include "game.h"
 #include "car.h"
 #include "unittest.h"
-#include "joepack.h"
 #include "matrix4.h"
 #include "configfile.h"
 #include "cardefs.h"
@@ -40,7 +39,6 @@ GAME::GAME(SETTINGS* pSettings)
 	,tire_ref_id(0), reloadSimNeed(0),reloadSimDone(0)
 	,snd(0)
 {
-	track.pGame = this;
 	controls.first = NULL;
 	//  sim settings
 	collision.fixedTimestep = 1.0 / pSettings->blt_fq;
@@ -137,7 +135,7 @@ bool GAME::LoadAllSurfaces()
 		string tireFile;
 		if (!param.GetParam(*section + "." + "Tire", tireFile))
 		{
-			tireFile = track.sDefaultTire;  // default surface if not found
+			tireFile = "gravel";  // default surface if not found
 			LogO("Surface: Warning: Tire file not found, using default: "+tireFile);
 		}
 		id = tires_map[tireFile]-1;
@@ -377,7 +375,6 @@ void GAME::End()
 	settings->Save(PATHMANAGER::SettingsFile());
 
 	collision.Clear();
-	track.Clear();
 }
 
 
@@ -453,7 +450,7 @@ void GAME::Tick(double deltat)
 //----------------------------------------------------------------------------------------------------------------------------
 void GAME::AdvanceGameLogic(double dt)
 {
-	if (track.Loaded())
+	//if (track.Loaded())
 	{
 		if (pause && controls.first)
 			snd->setPaused(true);
@@ -527,8 +524,8 @@ void GAME::UpdateCarInputs(CAR & car)
 
 bool GAME::NewGameDoLoadTrack()
 {
-	if (!LoadTrack(settings->game.track))
-		LogO("Error during track loading: "+settings->game.track);
+	// if (!LoadTrack(settings->game.track))
+	// 	LogO("Error during track loading: "+settings->game.track);
 
 	return true;
 }
@@ -554,8 +551,8 @@ void GAME::LeaveGame(bool dstTrk)
 {
 	controls.first = NULL;
 
-	if (dstTrk)
-		track.Unload();
+	// if (dstTrk)
+		// track.Unload();
 
 	//  cars
 	bool hadCars = !cars.empty();
@@ -611,38 +608,6 @@ CAR* GAME::LoadCar(const string & pathCar, const string & carname,
 		}
 	}
 	return car;
-}
-
-bool GAME::LoadTrack(const string & trackname)
-{
-	//load the track
-	if (!track.DeferredLoad(
-		(settings->game.track_user ? PATHMANAGER::TracksUser() : PATHMANAGER::Tracks()) + "/" + trackname,
-		settings->game.trackreverse,
-		/**/0, "large", true, false))
-	{
-		LogO("Error loading track: "+trackname);
-		return false;
-	}
-	bool success = true;
-	int count = 0;
-	while (!track.Loaded() && success)
-	{
-		success = track.ContinueDeferredLoad();
-		count++;
-	}
-
-	if (!success)
-	{
-		LogO("Error loading track (deferred): "+trackname);
-		return false;
-	}
-
-	//setup track collision
-	collision.SetTrack(&track);
-	//collision.DebugPrint(std::cerr);
-
-	return true;
 }
 
 bool SortStringPairBySecond (const pair<string,string> & first, const pair<string,string> & second)
@@ -787,6 +752,6 @@ void GAME::UpdateTimer()
 float GAME::GetSteerRange() const
 {
 	float range = settings->steer_sim[settings->gui.sim_mode == "easy" ? 0 : 1];
-	range *= settings->steer_range[track.asphalt];
+	range *= settings->steer_range[/*track.asphalt*/0];
 	return range;
 }

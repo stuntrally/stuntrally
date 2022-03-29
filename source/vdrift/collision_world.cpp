@@ -7,8 +7,6 @@
 #include "collision_world.h"
 #include "tobullet.h"
 #include "collision_contact.h"
-#include "model.h"
-#include "track.h"
 #include "cardynamics.h"
 //#include "car.h"//
 #include "game.h"  //
@@ -207,7 +205,6 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 ///  ctor bullet world
 COLLISION_WORLD::COLLISION_WORLD() : pApp(0),
 	config(0), dispatcher(0), broadphase(0), solver(0), world(0), cdOld(0), 
-	track(NULL), trackObject(NULL), trackMesh(NULL),
 	fixedTimestep(1.0/60.0), maxSubsteps(7)  // default, set from settings
 {
 	config = new btDefaultCollisionConfiguration();
@@ -249,15 +246,6 @@ void COLLISION_WORLD::DebugDrawScene()
 {
 }
 
-btCollisionObject* COLLISION_WORLD::AddCollisionObject(const MODEL& model)
-{
-	btCollisionObject* col = new btCollisionObject();
-	btCollisionShape* shape = AddMeshShape(model);
-	col->setCollisionShape(shape);
-	world->addCollisionObject(col);
-	return col;
-}
-
 btRigidBody* COLLISION_WORLD::AddRigidBody(const btRigidBody::btRigidBodyConstructionInfo & info,
 	bool car, bool bCarsCollis)
 {
@@ -270,93 +258,6 @@ btRigidBody* COLLISION_WORLD::AddRigidBody(const btRigidBody::btRigidBodyConstru
 	else	  world->addRigidBody(body);
 	shapes.push_back(shape);
 	return body;
-}
-
-void COLLISION_WORLD::SetTrack(TRACK* t)
-{
-	assert(t);
-	
-	// remove old track
-	if(track)
-	{
-		world->removeCollisionObject(trackObject);
-		
-		delete trackObject->getCollisionShape();
-		trackObject->setCollisionShape(NULL);
-		
-		delete trackObject;
-		trackObject = NULL;
-		
-		delete trackMesh;
-		trackMesh = NULL;
-	}
-	
-	// setup new track
-	track = t;
-	trackMesh = new btTriangleIndexVertexArray();
-	//trackSurface.resize(0);
-	const std::list<TRACK_OBJECT> & objects = track->GetTrackObjects();
-	for(std::list<TRACK_OBJECT>::const_iterator ob = objects.begin(); ob != objects.end(); ++ob)
-	{
-		if(ob->HasSurface())
-		{
-			MODEL& model = *ob->GetModel();
-			btIndexedMesh mesh = GetIndexedMesh(model);
-			trackMesh->addIndexedMesh(mesh);
-			//const TRACKSURFACE* surface = ob->GetSurface();
-			//trackSurface.push_back(surface);
-		}
-	}
-	
-	//  no objs track
-	/*if (trackSurface.size()==0)
-	{
-		static TRACKSURFACE surface;
-		trackSurface.push_back(&surface);
-	}
-	else*/  ///
-	if (!objects.empty())
-	{
-		// can not use QuantizedAabbCompression because of the track size
-		btCollisionShape* trackShape = new btBvhTriangleMeshShape(trackMesh, false);
-		trackObject = new btCollisionObject();
-		trackObject->setCollisionShape(trackShape);
-		trackObject->setUserPointer(NULL);
-		
-		world->addCollisionObject(trackObject);
-	}
-}
-
-btIndexedMesh COLLISION_WORLD::GetIndexedMesh(const MODEL & model)
-{
-	const float* vertices;  int vcount;
-	const int* faces;  int fcount;
-	model.GetVertexArray().GetVertices(vertices, vcount);
-	model.GetVertexArray().GetFaces(faces, fcount);
-	
-	assert(fcount % 3 == 0); //Face count is not a multiple of 3
-	
-	btIndexedMesh mesh;
-	mesh.m_numTriangles = fcount / 3;
-	mesh.m_triangleIndexBase = (const unsigned char*)faces;
-	mesh.m_triangleIndexStride = sizeof(int) * 3;
-	mesh.m_numVertices = vcount;
-	mesh.m_vertexBase = (const unsigned char*)vertices;
-	mesh.m_vertexStride = sizeof(float) * 3;
-	mesh.m_vertexType = PHY_FLOAT;
-	return mesh;
-}
-
-btCollisionShape* COLLISION_WORLD::AddMeshShape(const MODEL & model)
-{
-	btTriangleIndexVertexArray* mesh = new btTriangleIndexVertexArray();
-	mesh->addIndexedMesh(GetIndexedMesh(model));
-	btCollisionShape * shape = new btBvhTriangleMeshShape(mesh, true);
-	
-	meshes.push_back(mesh);
-	shapes.push_back(shape);
-	
-	return shape;
 }
 
 
@@ -453,7 +354,7 @@ bool COLLISION_WORLD::CastRay(
 	//  data to set
 	MATHVECTOR<float,3> pos, norm;  float dist;
 	const TRACKSURFACE* surf = TRACKSURFACE::None();
-	const btCollisionObject* col = NULL;  const BEZIER* bzr = NULL;
+	const btCollisionObject* col = NULL;
 	
 	world->rayTest(from, to, res);
 
@@ -543,54 +444,15 @@ bool COLLISION_WORLD::CastRay(
 				if (cd)
 				{	cd->iWhOnRoad[w] = 0;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 1;  }
 
-				/*void* ptr = col->getUserPointer();
-				if (ptr != NULL)
-				{
-					const TRACK_OBJECT* const obj = reinterpret_cast <const TRACK_OBJECT* const> (ptr);
-					assert(obj);
-					surf = obj->GetSurface();
-				}
-				else  // track geometry
-				{
-					int shapeId = res.m_shapeId;
-					//assert(shapeId >= 0 && shapeId < trackSurface.size());
-					if (shapeId >= trackSurface.size() || shapeId < 0)  shapeId = 0;  //crash hf-
-					if (trackSurface.size() > 0)
-						surf = 0;//trackSurface[shapeId];
-				}*/
-			}
-		}
-		
-		//  track bezierpatch collision
-		if (track != NULL)
-		{
-			MATHVECTOR<float,3> bs_pos(origin[1], origin[2], origin[0]);  //bezierspace
-			MATHVECTOR<float,3> bs_dir(direction[1], direction[2], direction[0]);
-			MATHVECTOR<float,3> colpos, colnorm;
-			const BEZIER* colpatch = NULL;
-			bool bezierHit = track->CastRay(bs_pos, bs_dir, length, colpos, colpatch, colnorm);
-			if (bezierHit)
-			{
-				pos = MATHVECTOR<float,3> (colpos[2], colpos[0], colpos[1]);
-				norm = MATHVECTOR<float,3> (colnorm[2], colnorm[0], colnorm[1]);
-				dist = (colpos - bs_pos).Magnitude();
-				//surf = 0;//track->GetRoadSurface();
-				bzr = colpatch;  col = NULL;
-
-				int id = td.layerRoad[0].surfId;
-				surf = &pApp->pGame->surfaces[id];
-
-				if (cd)
-				{	cd->iWhOnRoad[w] = 1;   cd->whRoadMtr[w] = 0;  cd->whTerMtr[w] = 0;  }
 			}
 		}
 
-		contact.Set(pos, norm, dist, surf, bzr, col);
+		contact.Set(pos, norm, dist, surf, col);
 		return true;
 	}
 	
 	//  should only happen on vehicle rollover
-	contact.Set(origin + direction * length, -direction, length, surf, bzr, col);
+	contact.Set(origin + direction * length, -direction, length, surf, col);
 	return false;
 }
 ///-------------------------------------------------------------------------------------------------------------------------------
@@ -606,17 +468,6 @@ void COLLISION_WORLD::DebugPrint(std::ostream & out)
 void COLLISION_WORLD::Clear()
 {
 	cdOld = NULL;
-	track = NULL;
-	if (trackObject)
-	{
-		delete trackObject->getCollisionShape();
-		trackObject = NULL;
-	}
-	if (trackMesh)
-	{
-		delete trackMesh;
-		trackMesh = NULL;
-	}
 	//trackSurface.resize(0);
 
 	// remove constraint before deleting rigid body

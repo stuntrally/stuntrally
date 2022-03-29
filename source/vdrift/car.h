@@ -1,13 +1,10 @@
 #pragma once
 #include "dbl.h"
 #include "cardynamics.h"
-#include "model_joe03.h"
-
 #include "cardefs.h"
 #include "suspensionbump.h"
 #include "crashdetection.h"
 
-class BEZIER;
 namespace protocol {  struct CarStatePackage;  }
 class Sound;
 
@@ -92,11 +89,6 @@ public:
 	}
 
 	std::string GetCarType() const	{	return cartype;	}
-	const BEZIER * GetCurPatch(unsigned int wheel) const
-	{
-		//assert (wheel < 4);
-		return dynamics.GetWheelContact(WHEEL_POSITION(wheel)).GetPatch();
-	}
 
 	float GetLastSteer() const	{	return last_steer;	}
 	float GetSpeed() const	{		return dynamics.GetSpeed();	}
@@ -197,8 +189,6 @@ public:
 	std::string cartype;
 	class SETTINGS* pSet;  // for sound vol
 
-	std::vector<const BEZIER*> curpatch; //the last bezier patch that each wheel hit
-	
 	float mz_nominalmax;  // the nominal maximum Mz force, used to scale force feedback
 
 	void UpdateSounds(float dt);

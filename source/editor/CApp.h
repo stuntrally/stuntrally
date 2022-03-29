@@ -3,7 +3,6 @@
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
 #include "../vdrift/tracksurface.h"
-#include "../vdrift/track.h"
 #include "../ogre/common/data/SceneXml.h"  //Object-
 #include "../ogre/common/PreviewTex.h"
 
@@ -221,17 +220,9 @@ public:
 	std::vector<Object> vObjCopy;  // copied objects
 
 
-
-	//-  vdrift track
-	TRACK* track;
-	Ogre::StaticGeometry* mStaticGeom;
-
-	class btCollisionObject* trackObject;
-	class btTriangleIndexVertexArray* trackMesh;
-
 	//  surfaces
 	std::vector <TRACKSURFACE> surfaces;  // all
 	std::map <std::string, int> surf_map;  // name to surface id
 	bool LoadAllSurfaces();
-	
+
 };

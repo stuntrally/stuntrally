@@ -3,7 +3,6 @@
 #include "common/CScene.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/mathvector.h"
-#include "../vdrift/track.h"
 #include "../vdrift/game.h"
 #include "common/data/SceneXml.h"
 #include "common/RenderConst.h"

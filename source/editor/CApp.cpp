@@ -13,7 +13,6 @@
 #include "../ogre/common/WaterRTT.h"
 #include "../ogre/common/RenderBoxScene.h"
 #include "settings.h"
-#include "../vdrift/track.h"
 #include "../shiny/Main/Factory.hpp"
 #include "../shiny/Platforms/Ogre/OgrePlatform.hpp"
 #include "../shiny/Platforms/Ogre/OgreMaterial.hpp"
@@ -33,10 +32,9 @@ App::App(SETTINGS* pSet1)
 	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
 	,iFlCur(0), bRecreateFluids(0)
 	
-	,bTerUpdBlend(0), track(0)
+	,bTerUpdBlend(0)
 	,world(0), config(0), dispatcher(0), broadphase(0), solver(0)  //blt
-	,trackObject(0), trackMesh(0)
-	,mStaticGeom(0), mTimer(0.f), bUpdTerPrv(0)
+	,mTimer(0.f), bUpdTerPrv(0)
 	//  objs
 	,iObjCur(-1), iObjTNew(0), iObjLast(0)
 	,objSim(0), objEd(EO_Move)
@@ -71,8 +69,6 @@ App::App(SETTINGS* pSet1)
 	gui->sc = scn->sc;
 	gui->scn = scn;
 	gui->data = scn->data;
-	
-	track = new TRACK();  //!
 }
 
 const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise", "Noise2", "N-gon" };  // static
@@ -105,7 +101,6 @@ App::~App()
 
 	BltWorldDestroy();
 	
-	delete track;  //!
 	delete[] pBrFmask;  pBrFmask = 0;
 
 	delete[] mBrushData;

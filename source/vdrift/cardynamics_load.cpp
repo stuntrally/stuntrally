@@ -4,7 +4,7 @@
 #include "collision_world.h"
 #include "game.h"  // tire params map
 #include "tobullet.h"
-#include "model.h"
+#include "aabb.h"
 #include "settings.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/ShapeData.h"

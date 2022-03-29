@@ -5,8 +5,6 @@
 
 template <class T, unsigned int dim> class MATHVECTOR;
 class COLLISION_CONTACT;
-class MODEL;
-class TRACK;
 class TRACKSURFACE;
 
 
@@ -43,14 +41,9 @@ public:
 
 	class App* pApp;  //for blend mtr
 	
-	btCollisionObject* AddCollisionObject(const MODEL & model);
-	
 	btRigidBody* AddRigidBody(const btRigidBody::btRigidBodyConstructionInfo & info,
 		bool car = false, bool bCarsCollis = false);
 
-	// add track to collision world (unloads previous track)
-	void SetTrack(TRACK* t);
-	
 	// cast ray into collision world, returns first hit, caster is excluded fom hits
 	bool CastRay(
 		const MATHVECTOR<float,3> & position, const MATHVECTOR<float,3> & direction, const float length,
@@ -85,11 +78,4 @@ public:
 	btAlignedObjectArray<btActionInterface*> actions;
 	btAlignedObjectArray<btTypedConstraint*> constraints;
 	btAlignedObjectArray<btTriangleIndexVertexArray*> meshes;
-	
-	TRACK* track;
-	btCollisionObject* trackObject;
-	btTriangleIndexVertexArray* trackMesh;
-	
-	btCollisionShape* AddMeshShape(const MODEL & model);
-	btIndexedMesh GetIndexedMesh(const MODEL & model);
 };

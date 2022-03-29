@@ -38,7 +38,7 @@ CAR::CAR()
 void CAR::SetNumWheels(int n)
 {
 	numWheels = n;
-	suspbump.resize(n);  curpatch.resize(n);
+	suspbump.resize(n);
 	sounds.SetNumWheels(n);
 }
 

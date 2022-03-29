@@ -5,13 +5,11 @@
 #include <iostream>
 
 #include "mathvector.h"
-#include "joeserialize.h"
 
 
 template <typename T>
 class QUATERNION
 {
-friend class joeserialize::Serializer;
 private:
 	T v[4];  //x y z w
 	
@@ -354,99 +352,7 @@ public:
 		return qout;
 	}
 	
-	bool Serialize(joeserialize::Serializer & s)
-	{
-		if (!s.Serialize("x",v[0])) return false;
-		if (!s.Serialize("y",v[1])) return false;
-		if (!s.Serialize("z",v[2])) return false;
-		if (!s.Serialize("w",v[3])) return false;
-		return true;
-	}
-	
-	/*///assuming the eye is at the given coordinates, set the orientation to look at center
-	void LookAt(T eyex, 
-			T eyey, 
-			T eyez, 
-			T centerx, 
-			T centery, 
-			T centerz, 
-			T upx, 
-			T upy, 
-			T upz)
-	{
-		MATHVECTOR<T,3> forward(centerx-eyex, centery-eyey, centerz-eyez);
-		MATHVECTOR<T,3> up(upx, upy, upz);
 
-		forward = forward.Normalize();
-		MATHVECTOR<T,3> side = (forward.cross(up)).Normalize();
-		up = side.cross(forward);
-
-		T m[16];
-		for (int i = 0; i < 16; ++i)
-			m[i] = 0;
-		m[15] = 1;
-
-		// 0  1  2  3
-		// 4  5  6  7
-		// 8  9 10 11
-		//12 13 14 15
-		
-		m[0] = side[0];
-		m[4] = side[1];
-		m[8] = side[2];
-
-		m[1] = up[0];
-		m[5] = up[1];
-		m[9] = up[2];
-
-		m[2] = -forward[0];
-		m[6] = -forward[1];
-		m[10] = -forward[2];
-
-		SetMatrix4(m);
-	}
-	
-	///set the orientation to the orientation specified in the given 4x4 matrix
-	template <typename T2>
-	void SetMatrix4(T2 mat)
-	{
-		T S;
-	
-		T t = 1 + mat[0] + mat[5] + mat[10];
-		if ( t > 0.00000001 )
-		{
-			S = sqrt(t) * 2;
-			v[0] = ( mat[9] - mat[6] ) / S;
-			v[1] = ( mat[2] - mat[8] ) / S;
-			v[2] = ( mat[4] - mat[1] ) / S;
-			v[3] = 0.25 * S;
-		}
-		else
-		{
-		if ( mat[0] > mat[5] && mat[0] > mat[10] )  {       // Column 0: 
-			S  = sqrt( 1.0 + mat[0] - mat[5] - mat[10] ) * 2;
-			v[0] = 0.25 * S;
-			v[1] = (mat[4] + mat[1] ) / S;
-			v[2] = (mat[2] + mat[8] ) / S;
-			v[3] = (mat[9] - mat[6] ) / S;
-		} else if ( mat[5] > mat[10] ) {                    // Column 1: 
-			S  = sqrt( 1.0 + mat[5] - mat[0] - mat[10] ) * 2;
-			v[0] = (mat[4] + mat[1] ) / S;
-			v[1] = 0.25 * S;
-			v[2] = (mat[9] + mat[6] ) / S;
-			v[3] = (mat[2] - mat[8] ) / S;
-		} else {                                            // Column 2:
-			S  = sqrt( 1.0 + mat[10] - mat[0] - mat[5] ) * 2;
-			v[0] = (mat[2] + mat[8] ) / S;
-			v[1] = (mat[9] + mat[6] ) / S;
-			v[2] = 0.25 * S;
-			v[3] = (mat[4] - mat[1] ) / S;
-		}
-		}
-	
-		Normalize();
-		// *this = -*this;
-	}*/
 };
 
 template <typename T>
