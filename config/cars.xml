@@ -43,6 +43,7 @@
 
 	<car id="3B"  name="Scorpion"    ver="2.7" speed="8.5" year="2773" type="Extreme"  easy="1.00" norm="1.025" author="Valery Kharitonov" />
 	<car id="BV"  name="Gazelle"     ver="2.6" speed="8.6" year="2381" type="Extreme"  easy="1.01" norm="1.04"  author="gakpoenya" />
+	<car id="BE"  name="Buffalo"     ver="2.7" speed="8.6" year="2334" type="Extreme"  easy="1.01" norm="1.04"  author="TooManyDemons" />
     <car id="U6"  name="Beetle"      ver="2.7" speed="9.0" year="2412" type="Extreme"  easy="1.01" norm="1.04"  author="gakpoenya, carlospanganiban, CryHam" />
 
 	<car id="V2"  name="Swan"        ver="2.4" speed="9.4" year="2516" type="Spaceship" easy="1.00" norm="1.13"  car="0" author="speedypro" />
