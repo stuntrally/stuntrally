@@ -184,7 +184,7 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::ApplyTireForce(int i, const Dbl normal_force, con
 
 	//  friction force in tire space
 	//Dbl friction_coeff = tire.GetTread() * surface.friction + (1.0 - tire.GetTread()) * surface.frictionNonTread;
-	Dbl friction_coeff = surface.friction;// * wheel.GetFriction();
+	Dbl friction_coeff = surface.friction * wheel.GetFriction();
 	//Dbl roll_friction_coeff = surface.rollResistanceCoefficient;
 	MATHVECTOR<Dbl,3> friction_force(0);
 	if (friction_coeff > 0)
@@ -287,12 +287,13 @@ void CARDYNAMICS::ApplyWheelTorque(Dbl dt, Dbl drive_torque, int i, MATHVECTOR<D
 
 void CARDYNAMICS::InterpolateWheelContacts(Dbl dt)
 {
-	MATHVECTOR<float,3> raydir = GetDownVector();
+	MATHVECTOR<Dbl,3> raydir = GetDownVector();
 	for (int i = 0; i < numWheels; ++i)
 	{
-		MATHVECTOR<float,3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
+		MATHVECTOR<Dbl,3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
 		raystart = raystart - raydir * wheel[i].GetRadius();
-		GetWheelContact(WHEEL_POSITION(i)).CastRay(raystart, raydir, gPar.raylen);
+		
+		GetWheelContact(WHEEL_POSITION(i)).CastRay(raystart, raydir, wheel[i].GetRayLength());
 	}
 }
 

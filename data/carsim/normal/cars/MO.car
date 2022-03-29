@@ -26,7 +26,7 @@ exhaust-mirror-second = 0
 #  collision shape params
 #---------------------------
 [ collision ]
-com_ofs_H = 0.45
+com_ofs_H = 0.2
 radius = 0.40
 width = 1.5
 height = 1.2
@@ -45,7 +45,7 @@ offsetL = 0.0
 offsetW = 0.0
 offsetH = 0.8
 start-offsetY = 1.45
-fluidTrigH = -0.1
+fluidTrigH = 0.4
 friction = 0.4
 
 
@@ -94,7 +94,7 @@ shift-delay = 0.14
 
 [ differential ]
 final-drive = 16.0
-anti-slip = 600.0
+anti-slip = 1600.0
 
 [ fuel-tank ]
 position = 0.0, -0.3, -0.56 
@@ -132,7 +132,8 @@ factors-file = first
 #---------------------------
 [ tire-both ]
 radius = 0.84
-ray-length = 2.5
+ray-length = 3.5
+friction = 1.8
 rolling-resistance = 121.3e-2, 6.5e-5
 rotational-inertia = 226.5
 tread = 0.0
@@ -154,7 +155,7 @@ max-pressure = 2.6e6
 bias = 0.45
 radius = 0.2
 area = 0.1
-handbrake = 3.1
+handbrake = 5.1
 
 
 [ driver ]
@@ -192,7 +193,7 @@ efficiency = 0.94
 #---------------------------
 [ wheel-FR ]
 position = 1.35, 1.6, -0.95
-roll-height = 0.95
+roll-height = 0.9
 mass = 250
 restitution = 0.0
 
@@ -202,7 +203,7 @@ hinge = -3.70, 1.1, -0.43
 
 [ wheel-FL ]
 position = -1.35, 1.6, -0.95
-roll-height = 0.95
+roll-height = 0.9
 mass = 250
 restitution = 0.0
 

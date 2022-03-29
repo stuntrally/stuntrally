@@ -36,6 +36,7 @@ height = 0.2
 posLfront = 1.75
 posLrear = -3.10
 
+FrontWm = 1.5
 FrWmul  = 0.2
 FrHmul  = 1.0
 TopWmul = 0.8
@@ -154,6 +155,7 @@ factors-file = first
 #---------------------------
 [ tire-front ]
 radius = 0.39
+friction = 1.3
 rolling-resistance = 12.3e-2, 6.5e-5
 rotational-inertia = 12.5
 tread = 0.0
@@ -161,6 +163,7 @@ width-trail = 0.4
 
 [ tire-rear ]
 radius = 0.52
+friction = 1.3
 rolling-resistance = 12.3e-2, 6.5e-5
 rotational-inertia = 22.5
 tread = 0.0
@@ -172,14 +175,14 @@ width-trail = 0.6
 [ brakes-front ]
 friction = 0.93
 max-pressure = 5.2e6
-bias = 0.55
+bias = 0.50
 radius = 0.18
 area = 0.024
 
 [ brakes-rear ]
 friction = 0.93
 max-pressure = 5.2e6
-bias = 0.45
+bias = 0.50
 radius = 0.18
 area = 0.024
 handbrake = 5.1

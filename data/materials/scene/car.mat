@@ -828,22 +828,20 @@ material 3B_body
 {
 	parent car_body
 	normalMap 3B_norm.jpg
-	specMap 3B_spec.png
+	specMap 3B_spec.jpg
     specMap_rgb true
 	specular 1 1 1  8
 }
-
 material 3B_interior
 {
 	parent car_body
 	diffuseMap 3B_body00_red.png
 	normalMap 3B_norm.jpg
-	specMap 3B_spec.png
+	specMap 3B_spec.jpg
     specMap_rgb true
 	diffuse 0.6 0.6 0.6
 	specular 1 1 1  8
 }
-
 material 3B_wheel
 {
 	parent car_body
@@ -852,4 +850,40 @@ material 3B_wheel
 	ambient 0.4 0.4 0.4
 	diffuse 0.3 0.3 0.3
 	specular 0.6 0.6 0.6  2.5
+}
+
+
+//  BE  -------------------------------
+material BE_body
+{
+	parent car_body
+	carPaintMap body00_red.png
+	normalMap BE_norm.jpg
+	specular 1 1 1  8
+}
+material BE_body_noclr
+{
+	parent car_body
+	diffuseMap BE_body00_red.png
+	normalMap BE_norm.jpg
+	ambient 0.5 0.5 0.5
+	diffuse 0.5 0.5 0.5
+	specular 1 1 1  16
+}
+material BE_interior
+{
+	parent car_body
+	diffuseMap BE_interior.jpg
+	normalMap BE_interior_norm.jpg
+	//diffuse 0.6 0.6 0.6
+	specular 1 1 1  2.5
+}
+material BE_wheel
+{
+	parent car_body
+	diffuseMap BE_wheel.jpg
+	normalMap BE_wheel_norm.jpg
+	ambient 1 1 1
+	diffuse 0.6 0.6 0.6
+	specular 0.2 0.2 0.2  4
 }

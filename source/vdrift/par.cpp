@@ -7,8 +7,6 @@ SParams::SParams()
 /// _Tool_  go back time rewind  (1 for making best ghosts),  saves ghost always
 	backTime = 0;  //0 !in release
 
-//  SIM
-	raylen = 1.5f;  // wheel ray cast length
 //  GAME
 	rewindSpeed = 5.f;  // 5 secs in 1 sec
 	rewindCooldown = 1.f;  // 1 sec

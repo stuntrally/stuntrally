@@ -7,10 +7,8 @@
 struct SParams
 {
 	float
-//  SIM
-	 raylen
 //  GAME
-	,rewindSpeed
+	 rewindSpeed
 	,rewindCooldown  // time in sec
 
 //  damage factors

@@ -133,6 +133,7 @@ factors-file = first
 #---------------------------
 [ tire-front ]
 radius = 0.35
+friction = 1.2
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 5
 tread = 0.0
@@ -140,6 +141,7 @@ width-trail = 0.3
 
 [ tire-rear ]
 radius = 0.48
+friction = 1.35
 rolling-resistance = 1.3e-2, 6.5e-6
 rotational-inertia = 6
 tread = 0.0
