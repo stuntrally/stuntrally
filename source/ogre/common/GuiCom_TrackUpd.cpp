@@ -219,9 +219,11 @@ void CGuiCom::trkListNext(int rel)
 	//  tracks
 	if (pSet->inMenu == WND_Track && app->mWndTabsTrack->getIndexSelected() == 1)
 	{
-		size_t cnt = trkList->getItemCount();
+		int cnt = (int)trkList->getItemCount();
 		if (cnt == 0)  return;
-		int i = std::max(0, std::min((int)cnt-1, (int)trkList->getIndexSelected()+rel ));
+		//int i = std::max(0, std::min((int)cnt-1, (int)trkList->getIndexSelected()+rel ));
+		int i = (int)trkList->getIndexSelected();
+		i = (i + rel + cnt) % cnt;  // cycle
 		trkList->setIndexSelected(i);
 		trkList->beginToItemAt(std::max(0, i-11));  // center
 		listTrackChng(trkList,i);
@@ -279,7 +281,7 @@ void CGuiCom::ChangeTrackView()
 
 	if (!imgPrv[0])  return;
 	imgPrv[0]->setVisible(!full);   imgTrkIco1->setVisible(full);
-	trkDesc[0]->setVisible(!full);	imgTrkIco2->setVisible(full);
+	trkDesc[0]->setVisible(!full);  imgTrkIco2->setVisible(full);
 
 	ChkUpd_Col();
 	updTrkListDim();  // change size, columns
@@ -329,18 +331,20 @@ void CGuiCom::updTrkListDim()
 		sw += w;
 		if (c == 6)  wico = w;
 		if (c < 6)   xico1 += w;
-		if (c < 10)  xico2 += w;
+		if (c < 17)  xico2 += w;
 	}
 
 	int xt = 0.018*wi.width, yt = 0.06*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
 	trkList->setCoord(xt, yt, sw + 8/*frame*/, 0.70/*height*/*wi.height);
-	imgTrkIco1->setCoord(xt + xico1+2, yico, 4*wico, wico);
-	imgTrkIco2->setCoord(xt + xico2+2, yico, 8*wico, wico);
+	
+	imgTrkIco1->setCoord(xt + xico1+2, yico, 11*wico, wico);
+	imgTrkIco2->setCoord(xt + xico2+wico*3/4, yico, 2*wico, wico);
 	#ifndef SR_EDITOR
 	bool hid = app->gui->panNetTrack && app->gui->panNetTrack->getVisible();
 	if (!hid)
 	#endif
 		trkList->setVisible(true);
+
 
 	//  car list
 	//-------------------------------
@@ -349,7 +353,6 @@ void CGuiCom::updTrkListDim()
 
 	sum = 0;  sw = 0;  cnt = app->gui->carList->getColumnCount();
 	for (c=0; c < cnt; ++c)  sum += app->gui->colCar[c];
-
 	for (c=0; c < cnt; ++c)
 	{
 		float wf = float(app->gui->colCar[c]) / sum * 0.37/*width*/ * wi.width * 0.97/*frame*/;

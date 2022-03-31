@@ -34,7 +34,7 @@ CGuiCom::CGuiCom(App* app1)
 	,mToolTip(0), mToolTipTxt(0)
 	,bnQuit(0)
 	,trkList(0), imgTrkIco1(0),imgTrkIco2(0)
-	, bListTrackU(0)
+	,bListTrackU(0)
 	,edTrkFind(0), resList(0)
 	,txtTracksFAll(0), txtTracksFCur(0)
 {
@@ -397,7 +397,7 @@ void CGuiCom::InitMainMenu()
 	for (int i=0; i < cntMain; ++i)
 	{
 		const String s = toStr(i);
-		app->mWndMainPanels[i] = fWP("PanMenu"+s);
+		app->mWndMainPanels[i] = fWP("PanMenu"+s);  // todo: +1
 		BtnC("BtnMenu"+s, btnMainMenu);  app->mWndMainBtns[i] = btn;
 	}
 
@@ -461,7 +461,7 @@ void CGuiCom::CreateFonts()
 
 	const int cnt = 3;
 	string names[cnt] = {"font.small","font.normal","font.big"};
-	float sizes[cnt] = {26.f, 30.f, 34.f};  // par
+	float sizes[cnt] = {28.f, 33.f, 38.f};  // par
 	
 	String inf;
 	for (int i=0; i < cnt; ++i)

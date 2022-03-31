@@ -616,9 +616,11 @@ void CGui::btnNetEndClose(WP)
 //  next/prev in list by key
 int CGui::LNext(Mli2 lp, int rel, int ofs)
 {
-	size_t cnt = lp->getItemCount();
+	int cnt = (int)lp->getItemCount();
 	if (cnt==0)  return 0;
-	int i = std::max(0, std::min((int)cnt-1, (int)lp->getIndexSelected()+rel ));
+	int i = (int)lp->getIndexSelected();
+	//int i = std::max(0, std::min((int)cnt-1, i+rel ));
+	i = (i + rel + cnt) % cnt;  // cycle
 	lp->setIndexSelected(i);
 	lp->beginToItemAt(std::max(0, i-ofs));  // center
 	return i;

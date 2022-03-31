@@ -150,7 +150,7 @@ float CGuiCom::GetGuiMargin(int wy)
 	const int yN = 7;
 	const Real yw[yN] = {400.f, 600.f, 720.f, 768.f, 960.f, 1024.f, 1050.f};
 	//  how much empty space for screen y size, 0 = full window
-	const Real yf[yN] = {0.0f,  0.0f,  0.05f, 0.1f,  0.15f,  0.2f,  0.22f};
+	const Real yf[yN] = {0.0f,  0.0f,  0.05f, 0.1f,  0.1f,  0.f,  0.1f};
 	float ym = 0.f;
 	for (int i=0; i < yN; ++i)
 		if (wy >= yw[i]-10)  ym = yf[i];
