@@ -61,8 +61,8 @@ bool TrkSort(const TrkL& t1, const TrkL& t2)
 			else if (TrkL::idSort==14){  if (t1.ti->pipes    != t2.ti->pipes)     return t1.ti->pipes    < t2.ti->pipes;     }
 			else if (TrkL::idSort==15){  if (t1.ti->banked   != t2.ti->banked)    return t1.ti->banked   < t2.ti->banked;    }
 			else if (TrkL::idSort==16){  if (t1.ti->frenzy   != t2.ti->frenzy)    return t1.ti->frenzy   < t2.ti->frenzy;    }
-			else if (TrkL::idSort==17){  if (t1.ti->longn    != t2.ti->longn)     return t1.ti->longn    < t2.ti->longn;     }
-			//else if (TrkL::idSort==18){  if (t1.ti->sum      != t2.ti->sum)       return t1.ti->sum      < t2.ti->sum;       }
+			else if (TrkL::idSort==17){  if (t1.ti->sum      != t2.ti->sum)       return t1.ti->sum      < t2.ti->sum;       }
+			else if (TrkL::idSort==18){  if (t1.ti->longn    != t2.ti->longn)     return t1.ti->longn    < t2.ti->longn;     }
 		}else
 		if (TrkL::idSort == 3)  // n
 			if (t1.ti->n != t2.ti->n)  return t1.ti->n < t2.ti->n;
@@ -95,7 +95,7 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 		int ii = 0, si = -1;  bool bFound = false;
 
 		//  sort
-		TrkL::idSort = min(17, (int)trkList->mSortColumnIndex);
+		TrkL::idSort = min(18, (int)trkList->mSortColumnIndex);
 
 		std::list<TrkL> liTrk2 = liTrk;  // copy
 		liTrk2.sort(TrkSort);
@@ -125,7 +125,8 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 				ti->pipes    >= pSet->col_fil[0][9]  && ti->pipes    <= pSet->col_fil[1][9]  &&
 				ti->banked   >= pSet->col_fil[0][10] && ti->banked   <= pSet->col_fil[1][10] &&
 				ti->frenzy   >= pSet->col_fil[0][11] && ti->frenzy   <= pSet->col_fil[1][11] &&
-				ti->longn    >= pSet->col_fil[0][12] && ti->longn    <= pSet->col_fil[1][12])
+				ti->sum      >= pSet->col_fil[0][12] && ti->sum      <= pSet->col_fil[1][12] &&
+				ti->longn    >= pSet->col_fil[0][13] && ti->longn    <= pSet->col_fil[1][13])
 			{
 				AddTrkL(name, 0, (*i).ti);
 				if (!pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
@@ -314,7 +315,8 @@ void CGuiCom::updTrkListDim()
 	bool full = pSet->tracks_view;  int fi = full?1:0;
 
 	int c, sum = 0, cnt = trkList->getColumnCount();
-	for (c=0; c < cnt-1; ++c)  if (pSet->colVis[1][c])  sum += colTrk[c];
+	for (c=0; c < cnt-1; ++c)
+		if (pSet->colVisDef[1][c])  sum += colTrk[c];
 
 	const IntCoord& wi = app->mWndOpts->getCoord();
 	int sw = 0, xico1 = 0, xico2 = 0, wico = 0;

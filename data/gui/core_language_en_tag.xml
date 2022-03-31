@@ -325,6 +325,7 @@
 	<Tag name="banked">banked</Tag>
 	<Tag name="frenzy">frenzy (curly road)</Tag>
 	<Tag name="long">long</Tag>
+	<Tag name="sum">sum</Tag>
 	<Tag name="difficulty">difficulty</Tag>
 	<Tag name="rating">rating</Tag>
 	<Tag name="objects">objects (dynamic)</Tag>
@@ -836,8 +837,8 @@
 	<Tag name="BasedOn">based on</Tag>
 	<Tag name="AndUsing">and using</Tag>
 	<Tag name="ProjectPage">project&apos;s page:</Tag>
-	<Tag name="PageURL">http://stuntrally.tuxfamily.org/</Tag>
-	<Tag name="GameVersion">2.6</Tag>
+	<Tag name="PageURL">https://stuntrally.tuxfamily.org/</Tag>
+	<Tag name="GameVersion">2.7</Tag>
 		
 	
 	

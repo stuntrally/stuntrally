@@ -117,12 +117,12 @@ public:
 	bool needSort(Mli2 li);
 
 	Img imgPrv[2], imgMini[2], imgTer[2];  // view,  mini: road, terrain
-	Img imgTrkIco1, imgTrkIco2, imgMiniPos[2];
+	Img imgTrkIco1,imgTrkIco2, imgMiniPos[2];
 	MyGUI::RotatingSkin* imgMiniRot[2];
 
 
 	//  st - road stats,dim  inf - tracks.ini ratings
-	const static int StTrk = 14, InfTrk = 12;
+	const static int StTrk = 14, InfTrk = 13;
 	Txt stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
 	Img imStTrk[2][4], imInfTrk[2][InfTrk];
 
@@ -144,8 +144,8 @@ public:
 	Txt txtTracksFAll, txtTracksFCur;
 
 	//  const list column widths
-	const static int colTrk[32];
-	const static Ogre::String clrsDiff[9], clrsRating[6], clrsLong[10];
+	const static int colTrk[33], iClrsLong = 11;
+	const static Ogre::String clrsDiff[9], clrsRating[7], clrsLong[iClrsLong], clrsSum[10];
 
 
 	//  track find

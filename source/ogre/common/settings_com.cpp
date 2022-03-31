@@ -140,17 +140,17 @@ SETcom::SETcom()   ///  Defaults
 
 	int i,v;
 	for (v=0; v < 2; ++v)
-	{	for (i=0; i < COL_FIL; ++i)  col_fil[v][i] = colFil[v][i];
-		for (i=0; i < COL_VIS; ++i)  col_vis[v][i] = colVis[v][i];
+	{	for (i=0; i < COL_FIL; ++i)  col_fil[v][i] = colFilDef[v][i];
+		for (i=0; i < COL_VIS; ++i)  col_vis[v][i] = colVisDef[v][i];
 	}
 }
 
 	//  tracks list columns  --
-const bool SETcom::colVis[2][COL_VIS] =
-	{{0,0,1, 0,0,0, 1,1, 0,0,0,0,0,0,0,0,0,0},
-	 {1,0,1, 1,1,1, 1,1, 1,1,1,1,1,1,1,1,1,1}};
+const bool SETcom::colVisDef[2][COL_VIS] =
+	{{0,0,1, 0,0,0, 1,1, 0,0,0,0,0,0,0,0,0,0,0},
+	 {1,0,1, 1,1,1, 1,1, 1,1,1,1,1,1,1,1,1,1,1}};
 	
-const char SETcom::colFil[2][COL_FIL] =
-	{{01, 0,0, 0,0,0,0,0,0,0,0,0,0},
-	 {26, 6,5, 4,3,5,5,4,5,4,5,5,9}};
+const char SETcom::colFilDef[2][COL_FIL] =
+	{{01, 0,0, 0,0,0,0,0,0,0,0,0,0,0},
+	 {27, 6,6, 4,3,5,5,4,5,4,5,5,24,24}};
 	///^ up in next ver, also in *default.cfg

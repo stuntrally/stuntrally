@@ -44,16 +44,18 @@ using namespace std;
 //  track difficulties colors from value
 const String CGuiCom::clrsDiff[9] =  // difficulty
 	{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040", "#FF7090"};
-const String CGuiCom::clrsRating[6] =  // rating
-	{"#808080", "#606060", "#7090A0", "#60C8D8", "#A0D0F0", "#E0F0FF"};
-const String CGuiCom::clrsLong[10] =  // long
-	{"#E0D0D0", "#E8C0C0", "#F0B0B0", "#F8A0A0", "#FF9090", "#FF8080", "#F07070", "#F06060", "#E04040", "#D03030"};
+const String CGuiCom::clrsRating[7] =  // rating
+	{"#808080", "#606060", "#7090A0", "#60C8D8", "#A0D0F0", "#D0E0FF", "#FCFEFF"};
+const String CGuiCom::clrsLong[CGuiCom::iClrsLong] =  // long
+	{"#E0D0D0", "#E8C0C0", "#F0B0B0", "#F8A0A0", "#FF9090", "#FF8080", "#F07070", "#F06060", "#E04040", "#D03030", "#D01818"};
+const String CGuiCom::clrsSum[10] =  // long
+	{"#D0D0E0", "#C0C0E8", "#B0B0F0", "#A0A0F8", "#9090FF", "#8080F0", "#A070F0", "#A050FF", "#C080E0", "#C060C0"};
 
 
 //  * * * *  CONST  * * * *
 //  column widths in MultiList2,  track detailed
-const int wi = 17;            // id name nm   N  scn ver
-const int CGuiCom::colTrk[32] = {40, 90, 80, 25, 70, 25, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 24};
+const int wi = 15;            // id name nm   N  scn ver
+const int CGuiCom::colTrk[33] = {40, 90, 80, 25, 76, 25, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 22, 22, 24};
 #ifndef SR_EDITOR
 const int CGui::colCar[16] = {34, 80, 27, 37, 52, 24};  // car
 const int CGui::colCh [16] = {16, 200, 120, 50, 80, 80, 60, 40};  // champs
@@ -133,7 +135,7 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	li->setSubItemNameAt(6,l, toS(clrsDiff[ti->diff], ti->diff));
 	li->setSubItemNameAt(7,l, toS(clrsRating[ti->rating], ti->rating));
 	
-	//todo: rateuser drivenlaps
+	//todo: rateuser* drivenlaps-
 	li->setSubItemNameAt(8,l, toS("#D070A0",ti->objects));
 	li->setSubItemNameAt(9,l, toS("#C09060",ti->obstacles));
 	li->setSubItemNameAt(10,l,toS("#80C0FF",ti->fluids));
@@ -143,7 +145,8 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	li->setSubItemNameAt(14,l,toS("#FFFF00",ti->pipes));
 	li->setSubItemNameAt(15,l,toS("#C0C0C0",ti->banked));
 	li->setSubItemNameAt(16,l,toS("#C080FF",ti->frenzy));
-	li->setSubItemNameAt(17,l,toS(clrsLong[ti->longn], ti->longn));
+	li->setSubItemNameAt(17,l,toS(clrsSum[std::min(9, ti->sum/2)], ti->sum));
+	li->setSubItemNameAt(18,l,toS(clrsLong[std::min(iClrsLong-1, ti->longn)], ti->longn));
 	//li->setSubItemNameAt(18,l,clrsDiff[std::min(8, 5*ti->sum/10)]+" "+toStr(ti->sum));
 }
 
@@ -190,7 +193,7 @@ void CGuiCom::GuiInitTrack()
 	ButtonPtr btn;
 	BtnC("TrkView1", btnTrkView1);  imgTrkIco1 = fImg("TrkView2icons1");
 	BtnC("TrkView2", btnTrkView2);  imgTrkIco2 = fImg("TrkView2icons2");
-	BtnC("TrkFilter", btnTrkFilter);
+	BtnC("TrkFilter", btnTrkFilter);  BtnC("TrkFilterClose", btnTrkFilter);
 	SV* sv;  Ck* ck;
 	ck= &ckTrkFilter;  ck->Init("TracksFilter", &pSet->tracks_filter);  CevC(TrkFilter);
 	txtTracksFAll = fTxt("TracksFAll");
@@ -218,8 +221,8 @@ void CGuiCom::GuiInitTrack()
 	li->addColumn("#FFFF00""P", colTrk[c++]);   // Pipes
 	li->addColumn("#C0C0C0""b", colTrk[c++]);   //  banked
 	li->addColumn("#C080FF""f", colTrk[c++]);   //  frenzy
+	li->addColumn("#C0C0F0""E", colTrk[c++]);   //  sum
 	li->addColumn("#FFA0A0""l", colTrk[c++]);	// longn
-	//li->addColumn("#9060FF""E", colTrk[c++]);	// sigma
 	li->addColumn(" ", colTrk[c++]);
 	
 	//  columns, filters  ---
@@ -230,7 +233,7 @@ void CGuiCom::GuiInitTrack()
 	//ChkUpd_Col();
 	for (i=0; i < COL_FIL; ++i)
 	{	string si = toStr(i);
-		int a = pSet->colFil[0][i], b = pSet->colFil[1][i];
+		int a = pSet->colFilDef[0][i], b = pSet->colFilDef[1][i];
 		sv= &svTrkFilMin[i];  sv->Init("min"+si, &pSet->col_fil[0][i], a,b);  sv->DefaultI(a);  SevC(TrkFil);
 		sv= &svTrkFilMax[i];  sv->Init("max"+si, &pSet->col_fil[1][i], a,b);  sv->DefaultI(b);  SevC(TrkFil);
 	}
@@ -427,13 +430,20 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 		inf(5, ti.banked,4);  inf(6, ti.frenzy,4);
 		inf(7, ti.obstacles,3);  inf(8, ti.objects,3);
 
-		infTrk[ch][11]->setCaption(clrsLong[ti.longn] + str0(ti.longn));
-		a = ti.longn / 9.f;
-		imInfTrk[ch][11]->setAlpha(a);  infTrk[ch][11]->setAlpha(0.5f + 0.5f * a);
+		//  long, sum
+		infTrk[ch][11]->setCaption(clrsLong[std::min(iClrsLong-1, ti.longn)] + str0(ti.longn));
+		a = 0.5f + 0.5f * std::min(1.f, ti.longn / 24.f);
+		imInfTrk[ch][11]->setAlpha(a);  infTrk[ch][11]->setAlpha(a);
+
+		infTrk[ch][12]->setCaption(clrsSum[std::min(9, ti.sum)] + str0(ti.sum));
+		a = 0.5f + 0.5f * std::min(1.f, ti.sum / 24.f);
+		imInfTrk[ch][12]->setAlpha(a*0.7f);  infTrk[ch][12]->setAlpha(a);
+
+		//  diff, rate
 		  infTrk[ch][9]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
 		imInfTrk[ch][9]->setAlpha(0.2f + 0.8f * ti.diff / 6.f);
 		  infTrk[ch][10]->setCaption(ti.rating==0 ? "" : (clrsRating[ti.rating] + toStr(ti.rating)));
-		imInfTrk[ch][10]->setAlpha(0.2f + 0.8f * ti.rating / 5.f);
+		imInfTrk[ch][10]->setAlpha(0.2f + 0.8f * ti.rating / 6.f);
 
 		#ifndef SR_EDITOR
 		if (app->gui->txTrackAuthor)

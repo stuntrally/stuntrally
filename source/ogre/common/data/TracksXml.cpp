@@ -150,9 +150,8 @@ bool TracksXml::LoadIni(string file, bool check)
 			{	scns.insert(scenery);
 				++scn_trks[scenery];
 			}
-			//  sigma rating
-			t.sum = t.objects+ t.obstacles+  t.fluids+ t.bumps+
-				 t.jumps+ t.loops+ t.pipes+  t.banked+ t.frenzy+  t.longn/3;
+			t.sum = t.objects +t.obstacles + t.fluids +t.bumps +
+				 t.jumps +t.loops +t.pipes + t.banked +t.frenzy;
 
 			string shrt;  //-  name short  (without prefix)
 			size_t p = t.name.find("-");

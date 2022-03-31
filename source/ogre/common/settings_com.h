@@ -49,14 +49,14 @@ public:
 	int tracks_view, tracks_sort;
 	bool tracks_sortup, tracks_filter;
 
-	#define COL_VIS 18
-	#define COL_FIL 13
+	#define COL_VIS 19
+	#define COL_FIL 14
 	
 	bool col_vis[2][COL_VIS];  // visible columns for track views
 	int  col_fil[2][COL_FIL];  // filtering range for columns 0min-1max
 
-	const static bool colVis[2][COL_VIS];
-	const static char colFil[2][COL_FIL];
+	const static bool colVisDef[2][COL_VIS];
+	const static char colFilDef[2][COL_FIL];
 	
 
 //------------------------------------------
