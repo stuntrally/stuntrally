@@ -227,15 +227,6 @@ function(_conan_install build_type)
 
     conan_cmake_autodetect(settings BUILD_TYPE ${build_type})
 
-    if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-        list(APPEND settings "os.version=${CMAKE_OSX_DEPLOYMENT_TARGET}")
-        if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-            list(APPEND settings "arch=x86_64")
-        else ()
-            list(APPEND settings "arch=x86")
-        endif ()
-    endif ()
-
     if (build_type MATCHES "MinSizeRel|RelWithDebInfo")
         message(STATUS "Release only libraries: ${CONAN_ONLY_DEBUG_RELEASE}")
 

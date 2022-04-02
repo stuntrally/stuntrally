@@ -9,6 +9,7 @@
 #include <ctime>
 #include <fstream>
 #include <boost/algorithm/string/replace.hpp>
+#include <fstream>
 #include "../enet-wrapper.hpp"
 #include "../protocol.hpp"
 #ifdef __linux

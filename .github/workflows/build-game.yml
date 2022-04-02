@@ -68,7 +68,7 @@ jobs:
 
   build-msvc:
     name: Windows build
-    runs-on: windows-latest
+    runs-on: windows-2019
     env:
       DXSDK_DIR: C:\apps\Microsoft DirectX SDK\
       BUILD_TOOLS_PATH: C:\apps\build-tools\
@@ -82,11 +82,8 @@ jobs:
       - name: Install Microsoft DirectX SDK and Build tools
         shell: cmake -P {0}
         run: |
-          file(MAKE_DIRECTORY $ENV{DXSDK_DIR})
-          file(DOWNLOAD http://prdownloads.sourceforge.net/rigs-of-rods/DirectX-SDK.zip "$ENV{TMP}/DirectX.zip" SHOW_PROGRESS)
-          execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf "$ENV{TMP}/DirectX.zip" WORKING_DIRECTORY "$ENV{DXSDK_DIR}")
           file(MAKE_DIRECTORY $ENV{BUILD_TOOLS_PATH})
-          file(DOWNLOAD http://prdownloads.sourceforge.net/rigs-of-rods/build-tools.zip "$ENV{TMP}/build-tools.zip" SHOW_PROGRESS)
+          file(DOWNLOAD https://cdn.anotherfoxguy.com/build-tools.zip "$ENV{TMP}/build-tools.zip" SHOW_PROGRESS)
           execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf "$ENV{TMP}/build-tools.zip" WORKING_DIRECTORY "$ENV{BUILD_TOOLS_PATH}")
 
       - name: Cache conan packages
