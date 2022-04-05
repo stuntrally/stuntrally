@@ -65,7 +65,7 @@ void App::Rnd2TexSetup()
 				dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
 				  
 			r.cam = mSceneMgr->createCamera(sCam);  // up
-			r.cam->setPosition(Vector3(0,1500,0));  //par- max height
+			r.cam->setPosition(Vector3(0,500,0));  //par- max height
 			r.cam->setOrientation(Quaternion(0.5,-0.5,0.5,0.5));
 			r.cam->setNearClipDistance(0.5);	r.cam->setFarClipDistance(50000);
 			r.cam->setAspectRatio(1.0);			if (!full)  r.cam->setProjectionType(PT_ORTHOGRAPHIC);
@@ -193,6 +193,10 @@ void App::SaveGrassDens()
 	for (y=h-f-1; y < h; ++y)	for (x=0; x < w; ++x)	gd[y*w+x] = v;  // - down
 	for (x = 0;  x <= f; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | left
 	for (x=w-f-1; x < w; ++x)	for (y=0; y < h; ++y)	gd[y*w+x] = v;  // | right
+
+	Image im;  // for trees, before grass angle and height
+	im.loadDynamicImage((uchar*)gd, w,h,1, PF_BYTE_RGBA);
+	im.save(gcom->TrkDir()+"objects/roadDensity.png");
 
 	LogO(String("::: Time road dens: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
