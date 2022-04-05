@@ -394,6 +394,20 @@ void SplineEdit::ChgMtrId(int rel)   ///  Mtr Id
 	Move(Vector3::ZERO);
 }
 
+void SplineEdit::ChgWallId(int rel)   ///  Wall Id
+{
+	if (!vSel.empty()) {  // sel
+		for (std::set<int>::const_iterator it = vSel.begin(); it != vSel.end(); ++it)
+			mP[*it].idWall = std::max(-1, std::min(MTRs-1, mP[*it].idWall + rel));
+		bSelChng = true;	return;  }
+
+	if (iChosen == -1)  {  // one
+			newP.idWall = std::max(-1, std::min(MTRs-1, newP.idWall + rel));  return;  }
+	mP[iChosen].idWall  = std::max(-1, std::min(MTRs-1, mP[iChosen].idWall + rel));
+
+	Move(Vector3::ZERO);
+}
+
 void SplineEdit::ChgAngType(int rel)   ///  Ang Type
 {
 	if (!vSel.empty()) {  // sel
@@ -480,6 +494,17 @@ void SplineRoad::Insert(eIns ins)
 	}
 	else  // middle
 	{
+		if (ins == INS_CurPre)  // divide
+		{
+			SplinePoint p1 = mP[iChosen];
+			SplinePoint p2 = mP[(iChosen+1) % getNumPoints()];
+			pt = p1;
+			pt.pos   += (p2.pos   - p1.pos  ) * 0.5f;  // in middle
+			pt.aRoll += (p2.aRoll - p1.aRoll) * 0.5f;
+			pt.aYaw  += (p2.aYaw  - p1.aYaw ) * 0.5f;
+			pt.width += (p2.width - p1.width) * 0.5f;
+			pt.pipe  += (p2.pipe  - p1.pipe ) * 0.5f;
+		}
 		mP.insert(mP.begin()+iChosen+1, pt);
 		vSegs.insert(vSegs.begin()+iChosen+1, rs);
 		if (ins == INS_Cur)  // INS_CurPre

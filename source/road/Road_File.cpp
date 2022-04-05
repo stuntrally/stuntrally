@@ -79,7 +79,7 @@ void SplineRoad::ToggleMerge()
 void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 {
 	st.iVis = 0;  st.iTris = 0;
-	const Real fDist[LODs+1] = {-g_VisBehind/*-800 !temp -120*/, 40, 80, 140, g_VisDist};
+	const Real fDist[LODs+1] = {-g_VisBehind, 40, 80, 140, g_VisDist};  //par gui bias..
 	
 	const Plane& pl = mCamera->getFrustumPlane(FRUSTUM_PLANE_NEAR);
 	for (size_t seg = 0; seg < vSegs.size(); ++seg)
@@ -257,6 +257,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 
 		a = n->Attribute("pipe");	newP.pipe = !a ? 0.f : std::max(0.f, std::min(1.f, s2r(a)));
 		a = n->Attribute("mtr");	newP.idMtr = !a ? 0 : std::max(-1, std::min(MTRs-1, s2i(a)));
+		a = n->Attribute("wall");	newP.idWall = !a ? 0 : std::max(-1, std::min(MTRs-1, s2i(a)));
 		a = n->Attribute("not");	newP.notReal = !a ? 0 : (s2i(a) > 0);
 		
 		a = n->Attribute("chkR");	newP.chkR = !a ? 0.f : s2r(a);
@@ -393,6 +394,8 @@ bool SplineRoad::SaveFile(String fname)
 
 			if (mP[i].idMtr != 0)
 				p.SetAttribute("mtr", toStrC( mP[i].idMtr ));
+			if (mP[i].idWall != 0)
+				p.SetAttribute("wall", toStrC( mP[i].idWall ));
 
 			if (mP[i].notReal)
 				p.SetAttribute("not", "1");

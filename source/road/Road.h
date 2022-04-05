@@ -240,7 +240,7 @@ private:
 	struct DataSeg  // for segment
 	{
 		int seg,seg1,seg0;
-		int mtrId;
+		int mtrId, wallId;
 		bool onTer;
 		bool pipe;
 		bool hasBlend;

@@ -101,6 +101,7 @@ void SplineRoad::BuildSeg(
 	//  material
 	int mid = mP[seg].idMtr;
 	DS.mtrId = max(0,mid);
+	DS.wallId = mP[seg].idWall;
 	DS.pipe = isPipe(seg);
 	rs.sMtrRd = DS.pipe ? sMtrPipe[DS.mtrId]
 						: (sMtrRoad[DS.mtrId] + (DS.onTer ? "_ter" :""));
@@ -340,7 +341,7 @@ void SplineRoad::BuildSeg(
 			Real uv = 0.f;  // tc
 			bool onP = mP[seg].onPipe==2;
 
-			if (!DS.onTer)
+			if (!DS.onTer && DS.wallId >= 0)
 			if (i >= 0 && i <= il)  // length +1
 			{
 				++DLM.iLmrgW;

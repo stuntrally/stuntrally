@@ -326,9 +326,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			case key(0):
 				if (ctrl)  {   road->Set1stChk();  break;  }
-			case key(EQUALS):  road->ChgMtrId(1);  break;
+			case key(EQUALS):
+				if (ctrl)  road->ChgWallId(1);
+				else       road->ChgMtrId(1);  break;
 			case key(9):
-			case key(MINUS):   road->ChgMtrId(-1);  break;
+			case key(MINUS):
+				if (ctrl)  road->ChgWallId(-1);
+				else       road->ChgMtrId(-1);  break;
 
 			case key(1):  if (alt)
 						if (shift)	road->AngZero();

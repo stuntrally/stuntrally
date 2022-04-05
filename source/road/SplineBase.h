@@ -44,7 +44,8 @@ public:
 
 	//  next
 	Ogre::Real pipe;    // pipe amount 0..1
-	int idMtr;    // material id road/pipe
+	int idMtr;    // material id road/pipe, -1 hidden
+	int idWall;   // wall (todo: material id) -1 hidden
 	
 	Ogre::Real chkR;    // checkpoint sphere radius (0-none)
 	bool chk1st;  // 1st checkpoint (1), just once on road
@@ -165,6 +166,7 @@ public:
 	//  modify road point  ----
 	void ToggleOnTerrain(), ToggleColumn();
 	void ChgMtrId(int rel);  // next
+	void ChgWallId(int rel);  // next
 	void ChgAngType(int rel), AngZero();
 
 	void ToggleOnPipe(bool old=false);  // extras
