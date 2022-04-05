@@ -112,7 +112,7 @@ void PaceNotes::UpdVis(Vector3 carPos, bool hide)
 #ifndef SR_EDITOR
 	//  game  ----
 	const int rng = pSet->pace_next;  // vis next count
-	const Real radiusA = 9.f*9.f;  //par pace sphere radius
+	const Real radiusA = 15.f*15.f;  //par pace sphere radius
 
 	s = vPS.size();
 	for (i=0; i < s; ++i)

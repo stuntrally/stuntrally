@@ -152,15 +152,18 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 	std::vector<int> vJ,vJe;  // id for vPN
 
 
-///  ~~~  Auto Gen. turn signs  ~~~
+///  ~~~  Auto Gen. add signs  ~~~
 	int i,n, n1=1;
 	for (n=nn-1; n >= n1; --n)  // all levels, 0 fake
 	for (i=0; i < ii; ++i)     // all road points
 	{
+		SplineRoad::PaceM& p = road->vPace[i];
+		if (p.notReal)
+			continue;
+
 		const PNote& PD = arPN[nn-1-n][0];  // dbg
 		ColourValue c;  c.setHSB(PD.h, PD.s, PD.v);
 		
-		SplineRoad::PaceM& p = road->vPace[i];
 		if (fabs(p.aa) > angN[n]*angMul && p.used < 0)
 		{
 			///  Get Neighbors  ~~~
