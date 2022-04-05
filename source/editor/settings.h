@@ -3,7 +3,7 @@
 #include "../ogre/common/settings_com.h"
 
 
-#define SET_VER  2600  // 2.6
+#define SET_VER  2700  // 2.7
 
 
 class SETTINGS : public SETcom
@@ -11,7 +11,7 @@ class SETTINGS : public SETcom
 public:
 ///  params
 //------------------------------------------
-	int version;  // file version
+	int version;  // file version =
 	
 	//  show
 	bool trackmap, brush_prv;  int num_mini;

@@ -3,7 +3,7 @@
 #include "../ogre/common/settings_com.h"
 
 
-#define SET_VER  2600  // 2.6
+#define SET_VER  2700  // 2.7
 
 
 enum eGraphType  {
@@ -35,7 +35,7 @@ class SETTINGS : public SETcom
 {
 public:
 //------------------------------------------
-	int version;  // file version
+	int version;  // file version =
 
 	//  show
 	bool show_gauges, show_digits,

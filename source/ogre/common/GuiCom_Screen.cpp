@@ -186,7 +186,7 @@ void CGuiCom::ResizeOptWnd()
 
 	//  ed mode, status  ._
 	#ifdef SR_EDITOR
-	IntCoord ic(0.f, wy - 0.07*wy, 0.06*wy, 0.06*wy);
+	IntCoord ic(0.f, wy - 0.06*wy, 0.06*wy, 0.06*wy);
 	if (app->gui->imgCam)
 	{	app->gui->imgCam->setCoord(ic);  app->gui->imgEdit->setCoord(ic);  app->gui->imgGui->setCoord(ic);  }
 	if (app->gui->panStatus)

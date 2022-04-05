@@ -1,27 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-	<Widget type="ImageBox" skin="ImageBox" position="1 2000 64 64" align="Bottom" layer="Back" name="modeCam">
+	<Widget type="ImageBox" skin="ImageBox" position="1 2000 64 64" align="Left Bottom" layer="Back" name="modeCam">
 		<Property key="ImageCoord" value="0 512 128 128"/>
 		<Property key="Colour" value="0.7 0.85 1"/>
 		<Property key="Alpha" value="0.9"/>
 		<Property key="ImageTexture" value="gui_icons.png"/>
 		<Property key="Visible" value="false"/>
 	</Widget>
-	<Widget type="ImageBox" skin="ImageBox" position="1 2100 64 64" align="Bottom" layer="Back" name="modeEdit">
+	<Widget type="ImageBox" skin="ImageBox" position="1 2100 64 64" align="Left Bottom" layer="Back" name="modeEdit">
 		<Property key="ImageCoord" value="0 896 128 128"/>
 		<Property key="Colour" value="0.6 1 0.6"/>
 		<Property key="Alpha" value="0.9"/>
 		<Property key="ImageTexture" value="gui_icons.png"/>
 		<Property key="Visible" value="false"/>
 	</Widget>
-	<Widget type="ImageBox" skin="ImageBox" position="1 2200 64 64" align="Bottom" layer="Back" name="modeGui">
+	<Widget type="ImageBox" skin="ImageBox" position="1 2200 64 64" align="Left Bottom" layer="Back" name="modeGui">
 		<Property key="ImageCoord" value="256 640 128 128"/>
 		<Property key="Colour" value="0.9 0.88 0.75"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="ImageTexture" value="gui_icons.png"/>
 		<Property key="Visible" value="false"/>
 	</Widget>
-	<Widget type="Widget" skin="PanelSkin" position="88 2300 320 40" align="Center" layer="Back" name="panStatus">
+	<Widget type="Widget" skin="PanelSkin" position="88 2300 320 40" align="Left Bottom" layer="Back" name="panStatus">
 		<Property key="Colour" value="0.7 0.85 1.0"/>
 		<Property key="Alpha" value="0.9"/>
 		<Property key="Visible" value="false"/>
