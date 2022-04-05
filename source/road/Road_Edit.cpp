@@ -494,15 +494,15 @@ void SplineRoad::Insert(eIns ins)
 	}
 	else  // middle
 	{
-		if (ins == INS_CurPre)  // divide
+		if (ins == INS_CurPre)  // divide in middle
 		{
 			SplinePoint p1 = mP[iChosen];
-			SplinePoint p2 = mP[(iChosen+1) % getNumPoints()];
+			SplinePoint p2 = mP[getNext(iChosen)];
 			pt = p1;
-			pt.pos   += (p2.pos   - p1.pos  ) * 0.5f;  // in middle
+			pt.pos   =  interpolate(iChosen, 0.5f);
+			pt.width =  interpWidth(iChosen, 0.5f);
 			pt.aRoll += (p2.aRoll - p1.aRoll) * 0.5f;
 			pt.aYaw  += (p2.aYaw  - p1.aYaw ) * 0.5f;
-			pt.width += (p2.width - p1.width) * 0.5f;
 			pt.pipe  += (p2.pipe  - p1.pipe ) * 0.5f;
 		}
 		mP.insert(mP.begin()+iChosen+1, pt);
