@@ -52,6 +52,7 @@
 	<Tag name="Challenge">Challenge</Tag>
 
 	<Tag name="ReplaysMenu">Replays</Tag>
+	<Tag name="Donations">Donations</Tag>
 	<Tag name="Options">Options</Tag>
 	<Tag name="Quit">Quit</Tag>
 	<Tag name="BackMenu">Back</Tag>
