@@ -1,14 +1,16 @@
 cmake_minimum_required(VERSION 2.8)
 
 # Linux prefers lower-case exe names
-if(WIN32 OR APPLE)
+if (WIN32 OR APPLE)
 	set(GAME_EXE StuntRally)
 	set(EDITOR_EXE SR-Editor)
 	set(SERVER_EXE SR-MasterServer)
+	set(TRANSL_EXE SR-Translator)
 else()
 	set(GAME_EXE stuntrally)
 	set(EDITOR_EXE sr-editor)
 	set(SERVER_EXE sr-masterserver)
+	set(TRANSL_EXE sr-translator)
 endif()
 
 # Search include files from all source sub directories
@@ -71,7 +73,7 @@ if (BUILD_GAME)
 		add_executable(${GAME_EXE} WIN32 ${GAME_SOURCES})
 	else (MSVC)
 		add_executable(${GAME_EXE} ${GAME_SOURCES})
-	endif(MSVC)
+	endif (MSVC)
 	target_link_libraries(${GAME_EXE} ${OURLIBS} ${LIBS})
 	install(TARGETS ${GAME_EXE} DESTINATION bin)
 endif()
@@ -126,6 +128,15 @@ if (BUILD_MASTER_SERVER)
 	add_executable(${SERVER_EXE} ${SERVER_SOURCES})
 	target_link_libraries(${SERVER_EXE} ${SERVER_LIBS})
 	install(TARGETS ${SERVER_EXE} DESTINATION bin)
+endif()
+
+# Transl tool
+if (BUILD_TRANSL_TOOL)
+	file(GLOB TRANSL_SOURCES transl/main.cpp) # Glob .cpp files needed for the translations tool
+	add_executable(${TRANSL_EXE} ${TRANSL_SOURCES})
+	#target_link_libraries(${TRANSL_EXE} ${TRANSL_LIBS})
+	target_link_libraries(${TRANSL_EXE} "boost_filesystem" "boost_system")
+	install(TARGETS ${TRANSL_EXE} DESTINATION bin)
 endif()
 
 

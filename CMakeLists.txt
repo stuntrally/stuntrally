@@ -1,14 +1,11 @@
 project(StuntRally CXX C)
 cmake_minimum_required(VERSION 2.8)
 
-# Allow disabling game building
+# Allows disabling building of components
 option(BUILD_GAME             "Build the game binary."    ON)
-
-# Allow disabling editor building
 option(BUILD_EDITOR           "Build the track editor."   ON)
-
-# Allow disabling master server building
-option(BUILD_MASTER_SERVER    "Build the master server."  OFF)
+option(BUILD_MASTER_SERVER    "Build the game list master server."  OFF)
+option(BUILD_TRANSL_TOOL      "Build the tool for translation updating, it creates .pot"  ON)
 
 
 # Avoid source tree pollution
@@ -81,7 +78,7 @@ link_directories(${Boost_LIBRARY_DIRS})
 list(APPEND LIBS ${Boost_LIBRARIES})
 
 
-# We can significantly reduce deps if only building master server
+# We can significantly reduce deps if only building master server or transl tools
 if(BUILD_GAME OR BUILD_EDITOR)
     find_package(OGRE QUIET CONFIG) # first try 1.10+ style
     if(${OGRE_FOUND})
@@ -154,6 +151,9 @@ endif()
 
 # Server dependencies
 list(APPEND SERVER_LIBS ${ENet_LIBRARIES} ${Boost_LIBRARIES})
+
+# Transl dependencies ?
+list(APPEND TRANSL_LIBS ${Boost_LIBRARIES})
 
 
 # Subdirectories

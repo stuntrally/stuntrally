@@ -1,7 +1,7 @@
 #include "pch.h"
 
 using namespace std;
-using namespace boost::filesystem;
+namespace bfs = boost::filesystem;
 typedef vector<string> vecstr;
 
 ///---- INFO
@@ -87,7 +87,7 @@ void TrimClr(string& s)
 //-------------------------------------------------------
 bool GetFiles(string path, vecstr& v)
 {
-	directory_iterator it(path), end_it;
+	bfs::directory_iterator it(path), end_it;
 	if (it == end_it)
 	{
 		cout << "! Empty dir:" << path << endl;
@@ -99,7 +99,7 @@ bool GetFiles(string path, vecstr& v)
 		string name = (*it).path().filename().string();
 		//if (name != "." && name != "..")
 		{
-			bool isDir = is_directory(it->status());
+			bool isDir = bfs::is_directory(it->status());
 			if (!isDir)  // file
 			{
 				if (!found(name,".h"))  //  headers don't have transl
@@ -203,7 +203,7 @@ string Transl(const string& _line)
 	while (replace);
 
 	//  remove spaces  (web display issue)
-	str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
+	str.erase(remove_if(str.begin(), str.end(), ::isspace), str.end());
 
 	//  replace spaces with _
 	//for (int i=0; i < str.length(); ++i)
@@ -221,8 +221,7 @@ int main(int argc, char* argv[])
 #endif
 {
 	///  ----  [Setup]  ----
-	// TODO: get exe path  // start in sr/proj dir or sr/bin etc.
-	string path = "../";
+	string path = "../";  // data subdir location
 	string px = "data/gui/core_language_en_tag.xml";
 	string pot = "sr.pot";  // output file  // TODO: save in user dir?
 	
@@ -239,6 +238,24 @@ int main(int argc, char* argv[])
 
 
 	cout << "*** Start ***" << endl;
+
+	//  get date, time
+    time_t now = time(nullptr);
+    tm ti = *localtime(&now);
+	stringstream dt;
+	dt << put_time(&ti, "%Y-%m-%d %H:%M");
+
+	//  get timezone
+	tm utc = *gmtime(&now);  utc.tm_isdst = -1;
+	time_t ut = mktime(&utc);
+	long z = (now - ut) / 60;  // in sec
+	dt << (z > 0 ? "+" : "-");
+	dt.width(2);  dt.fill('0');  dt << z / 60;
+	dt.width(2);  dt.fill('0');  dt << z % 60;
+    
+	cout << endl << "Date: " << dt.str() << endl;
+	log(endl << "Date: " << dt.str());
+
 
 	const int si = 1020;  // max file line len
 	char s[si+4];  // temp buf
@@ -321,7 +338,7 @@ int main(int argc, char* argv[])
 	}	}
 	fi.close();
 
-	cout << "Tags Count: " << tags.size()
+	cout << endl << "Tags Count: " << tags.size()
 		<< "   Input: " << inp << "  Tips: " << tip << "  _: " << und
 		<< "  Normal: " << tags.size()-inp-tip-und  << endl << endl;
 	if (tags.size()==0)
@@ -647,16 +664,18 @@ int main(int argc, char* argv[])
 	ofstream of;
 	of.open(pot.c_str(), ios_base::out);
 	stringstream oe, ol;
-	
+
+	//  header
 	of << "# Stunt Rally translation.\n";
-	of << "# .pot template by CryHam, 2014.\n";
+	of << "# .pot template by SR-Translator tool, 2022-04-09.\n";  // last tool update
 	of << "#\n";
 	of << "#, fuzzy\n";
 	of << "msgid \"\"\n";
 	of << "msgstr \"\"\n";
 	of << "\"Project-Id-Version: PACKAGE VERSION\\n\"\n";
 	of << "\"Report-Msgid-Bugs-To: \\n\"\n";
-	of << "\"POT-Creation-Date: 2014-08-10 10:00+0200\\n\"\n";  // TODO: get date here
+	//of << "\"POT-Creation-Date: 2022-01-01 00:00+0200\\n\"\n";
+	of << "\"POT-Creation-Date: " << dt.str() << "\\n\"\n";
 	of << "\"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n\"\n";
 	of << "\"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n\"\n";
 	of << "\"Language-Team: LANGUAGE <LL@li.org>\\n\"\n";

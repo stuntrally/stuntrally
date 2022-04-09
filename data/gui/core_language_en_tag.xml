@@ -325,7 +325,7 @@
 	<Tag name="banked">banked</Tag>
 	<Tag name="frenzy">frenzy (curly road)</Tag>
 	<Tag name="long">long</Tag>
-	<Tag name="sum">sum</Tag>
+	<Tag name="sum">sum (of difficulties)</Tag>
 	<Tag name="difficulty">difficulty</Tag>
 	<Tag name="rating">rating</Tag>
 	<Tag name="objects">objects (dynamic)</Tag>

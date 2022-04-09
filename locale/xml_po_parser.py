@@ -1,6 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
-import sys, time, os
+import sys, time, os, io
 
 fallback_file = "core_language_en_tag.xml"
 
@@ -38,8 +38,8 @@ file2 = sys.argv[2]
 #print(file1)
 #print(file2)
 
-f1 = open(file1, 'r', encoding="utf8")
-f2 = open(file2, 'w', encoding="utf8")
+f1 = io.open(file1, 'r', encoding="utf8")
+f2 = io.open(file2, 'w', encoding="utf8")
 
 msgs = {}
 # msgs = {"foo":"bar", "asdf":"ghij"}
@@ -105,7 +105,7 @@ elif file1.endswith(".po") and file2.endswith(".xml"):
 
 	# read english xml for fallback when untranslated
 	msgs_f = {}
-	f_f = open(os.path.join(os.path.dirname(file2), fallback_file), encoding="utf8")
+	f_f = io.open(os.path.join(os.path.dirname(file2), fallback_file), encoding="utf8")
 	for line in f_f:
 		if line.strip().startswith("<Tag name="):
 			msgid = line.split("=\"")[1].split("\"")[0]
