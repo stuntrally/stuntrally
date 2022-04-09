@@ -88,6 +88,7 @@ void CarModel::Defaults()
 		driver_view[i] = 0.f;  hood_view[i] = 0.f;
 		interiorOffset[i] = 0.f;  boostOffset[i] = 0.f;  exhaustPos[i] = 0.f;
 	}
+	camDist = 1.f;
 	for (i=0; i < PAR_THRUST; ++i)
 	{
 		for (w=0; w<3; ++w)  thrusterOfs[i][w] = 0.f;
@@ -131,7 +132,7 @@ void CarModel::Load(int startId)
 	string pathCar;
 	pApp->gui->GetCarPath(&pathCar, 0, 0, sDirname, pApp->mClient.get() != 0);  // force orig for newtorked games
 	LoadConfig(pathCar);
-	
+
 	
 	///  Create CAR (dynamic)
 	if (!isGhost())  // ghost has pCar, dont create
@@ -139,7 +140,8 @@ void CarModel::Load(int startId)
 		if (startId == -1)  startId = iIndex;
 		if (pSet->game.start_order == 1)
 		{	//  reverse start order
-			int numCars = pApp->mClient ? pApp->mClient->getPeerCount()+1 : pSet->game.local_players;  // networked or splitscreen
+			int numCars = pApp->mClient ? pApp->mClient->getPeerCount()+1  // networked
+										: pSet->game.local_players;  // splitscreen
 			startId = numCars-1 - startId;
 		}
 		int i = pSet->game.collis_cars ? startId : 0;  // offset when cars collide
@@ -299,6 +301,8 @@ void CarModel::LoadConfig(const string & pathCar)
 	cf.GetParamE("driver.hood-position", pos);
 	hood_view[0]=pos[1]; hood_view[1]=-pos[0]; hood_view[2]=pos[2];
 
+	cf.GetParam("driver.dist", camDist);
+
 
 	//  tire params
 	float val;
@@ -418,13 +422,14 @@ void CarModel::Create()
 		for (std::vector<CameraAngle*>::iterator it=fCam->mCameraAngles.begin();
 			it!=fCam->mCameraAngles.end(); ++it)
 		{
+			(*it)->mDist *= camDist;
 			if ((*it)->mName == "Car driver")
 				(*it)->mOffset = Vector3(driver_view[0], driver_view[2], -driver_view[1]);
 			else if ((*it)->mName == "Car bonnet")
 				(*it)->mOffset = Vector3(hood_view[0], hood_view[2], -hood_view[1]);
 		}
 	}
-			
+	
 	CreateReflection();
 	
 
@@ -531,13 +536,14 @@ void CarModel::Create()
 		//  Particles
 		//-------------------------------------------------
 		///  world hit sparks
-		if (!parHit)  {
-			parHit = mSceneMgr->createParticleSystem("Hit" + strI, "Sparks");  ToDel(parHit);
+		if (!parHit)
+		{	parHit = mSceneMgr->createParticleSystem("Hit" + strI, "Sparks");  ToDel(parHit);
 			parHit->setVisibilityFlags(RV_Particles);
 			SceneNode* np = ndRoot->createChildSceneNode();  ToDel(np);
 			np->attachObject(parHit);
-			parHit->getEmitter(0)->setEmissionRate(0);  }
-
+			parHit->getEmitter(0)->setEmissionRate(0);
+		}
+		
 		///  boost emitters  ------------------------
 		for (int i=0; i < PAR_BOOST; ++i)
 		{
@@ -578,10 +584,13 @@ void CarModel::Create()
 		///  spaceship thrusters ^  ------------------------
 		for (int w=0; w < PAR_THRUST; ++w)
 		if (!sThrusterPar[w].empty())
-		{	int i2 = thrusterSizeZ[w] > 0.f ? 2 : 1;
+		{
+			int i2 = thrusterSizeZ[w] > 0.f ? 2 : 1;
 			for (int i=0; i < i2; ++i)
-			{	int ii = w*2+i;
+			{
+				int ii = w*2+i;
 				String si = strI + "_" +toStr(ii);
+				
 				if (!parThrust[ii])
 				{	parThrust[ii] = mSceneMgr->createParticleSystem("Thrust"+si, sThrusterPar[w]);  ToDel(parThrust[ii]);
 					parThrust[ii]->setVisibilityFlags(RV_Particles);

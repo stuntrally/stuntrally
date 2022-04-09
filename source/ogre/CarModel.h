@@ -116,7 +116,8 @@ public:
 	FollowCamera* fCam;
 	int iCamFluid;  // id to fluids[], -1 none
 	float fCamFl;  // factor, close to surface
-	
+	float camDist;  // mul from .car
+
 	//  Main node
 	Ogre::SceneNode* pMainNode, *ndSph;
 	Ogre::Vector3 posSph[2];
