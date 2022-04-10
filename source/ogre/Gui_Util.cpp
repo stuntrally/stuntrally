@@ -502,14 +502,29 @@ void CGui::toggleGui(bool toggle)
 		loadReadme = false;
 		Ed ed = fEd("Readme");
 		if (ed)
-		{	string path = PATHMANAGER::Data()+"/../Readme.txt";
+		{	string path = PATHMANAGER::Data()+"/../Readme.md";
 			std::ifstream fi(path.c_str());
 			if (fi.good())
 			{	String text = "", s;
 				while (getline(fi,s))
+				{
+					s = StringUtil::replaceAll(s, "#", "##");
 					text += s + "\n";
-
-				text = StringUtil::replaceAll(text, "#", "##");
+				}
+				ed->setCaption(UString(text));
+				ed->setVScrollPosition(0);
+		}	}
+		ed = fEd("Contributing");
+		if (ed)
+		{	string path = PATHMANAGER::Data()+"/../Contributing.md";
+			std::ifstream fi(path.c_str());
+			if (fi.good())
+			{	String text = "", s;
+				while (getline(fi,s))
+				{
+					s = StringUtil::replaceAll(s, "#", "##");
+					text += s + "\n";
+				}
 				ed->setCaption(UString(text));
 				ed->setVScrollPosition(0);
 	}	}	}
@@ -719,4 +734,28 @@ void CGui::GuiUpdate()
 		(totalConvCur!=totalConv || totalConv==0 ? "" :
 		"#F0F0A0""ratio:  "+ fToStr(100.f* float(totalConvNew)/float(totalConv), 1,4) +" %") );
 	}
+}
+
+
+//  open urls
+//.......................................................................................
+void CGui::btnWebsite(WP)
+{
+	gcom->OpenBrowserUrl("https://stuntrally.tuxfamily.org/");
+}
+void CGui::btnWiki(WP)
+{
+	gcom->OpenBrowserUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=features");
+}
+void CGui::btnForum(WP)
+{
+	gcom->OpenBrowserUrl("https://forum.freegamedev.net/viewforum.php?f=77");
+}
+void CGui::btnTransl(WP)
+{
+	gcom->OpenBrowserUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=features");
+}
+void CGui::btnDonations(WP)
+{
+	gcom->OpenBrowserUrl("https://cryham.tuxfamily.org/donate/");
 }

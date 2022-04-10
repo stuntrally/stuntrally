@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-	<Widget type="Window" skin="WindowC" position="1768 156 500 670" align="Center" layer="Overlapped" name="MainMenuWnd">
+	<Widget type="Window" skin="WindowC" position="1768 156 500 620" align="Center" layer="Overlapped" name="MainMenuWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="Caption" value="Stunt Rally"/>
 		<Property key="Alpha" value="0.7"/>
@@ -38,11 +38,6 @@
 			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
 		<Widget type="ImageBox" skin="ImageBox" position="32 484 56 56">
-			<Property key="ImageCoord" value="640 640 128 128"/>
-			<Property key="Alpha" value="1.0"/>
-			<Property key="ImageTexture" value="gui_icons.png"/>
-		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="32 556 56 56">
 			<Property key="ImageCoord" value="0 768 128 128"/>
 			<Property key="Alpha" value="1.0"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
@@ -127,18 +122,6 @@
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="108 492 304 50" name="BtnMenu6">
-			<Property key="Caption" value="#{Donations}"/>
-			<Property key="Colour" value="0.8 0.6 1"/>
-			<Property key="TextColour" value="0.8 0.6 1"/>
-			<Property key="InheritsAlpha" value="false"/>
-			<Property key="FontName" value="font.big"/>
-		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="92 552 336 72" name="PanMenu7">
-			<Property key="Colour" value="0.7 0.7 1"/>
-			<Property key="Alpha" value="0.7"/>
-			<Property key="InheritsAlpha" value="false"/>
-		</Widget>
-		<Widget type="Button" skin="Button" position="108 564 304 50" name="BtnMenu7">
 			<Property key="Caption" value="#{Options}"/>
 			<Property key="Colour" value="0.7 0.7 1"/>
 			<Property key="TextColour" value="0.8 0.8 1"/>
@@ -2502,21 +2485,57 @@
 				<Property key="Colour" value="1 0.6 0.2"/>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
-				<Property key="Caption" value="#80C0FF#{Help}"/>
+				<Property key="Caption" value="#C080FF#{Support}"/>
 				<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
-					<Property key="ImageCoord" value="0 640 128 128"/>
+					<Property key="ImageCoord" value="640 640 128 128"/>
 					<Property key="Alpha" value="0.6"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxStretch" position="32 16 600 360" name="QuickHelpText">
+				<Widget type="TextBox" skin="TextBox" position="32 16 600 60">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
 					<Property key="VisibleHScroll" value="false"/>
 					<Property key="VisibleVScroll" value="true"/>
 					<Property key="MaxTextLength" value="8000"/>
-					<Property key="TextColour" value="0.86 0.94 1.0"/>
-					<Property key="Colour" value="0.5 0.66 0.8"/>
+					<Property key="TextColour" value="0.94 0.86 1.0"/>
+					<Property key="Colour" value="0.66 0.5 0.8"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="132 150 300 28">
+					<Property key="Caption" value="#{Links}"/>
+					<Property key="TextAlign" value="Left"/>
+					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<Property key="Colour" value="0.8 0.9 1.0"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="132 200 300 28" name="OpenWebsite">
+					<Property key="Caption" value="#{Website}"/>
+					<Property key="TextAlign" value="Left"/>
+					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<Property key="Colour" value="0.8 0.9 1.0"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="132 250 300 28" name="OpenWiki">
+					<Property key="Caption" value="#{Wiki}"/>
+					<Property key="TextAlign" value="Left"/>
+					<Property key="TextColour" value="0.9 0.9 0.9"/>
+					<Property key="Colour" value="0.9 0.9 0.9"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="132 300 300 28" name="OpenForum">
+					<Property key="Caption" value="#{Forum}"/>
+					<Property key="TextAlign" value="Left"/>
+					<Property key="TextColour" value="0.5 0.7 1.0"/>
+					<Property key="Colour" value="0.5 0.7 1.0"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="132 350 300 28" name="OpenTransl">
+					<Property key="Caption" value="#{Transl}"/>
+					<Property key="TextAlign" value="Left"/>
+					<Property key="TextColour" value="0.7 0.9 1.0"/>
+					<Property key="Colour" value="0.7 0.9 1.0"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="132 400 300 28" name="OpenDonations">
+					<Property key="Caption" value="#{Donations}"/>
+					<Property key="TextAlign" value="Left"/>
+					<Property key="TextColour" value="0.9 0.7 1.0"/>
+					<Property key="Colour" value="0.9 0.7 1.0"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 513 180 24">
 					<Property key="Caption" value="#{Language}"/>
@@ -2532,6 +2551,24 @@
 					<Property key="ImageCoord" value="512 991 128 32"/>
 					<Property key="Alpha" value="0.5"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 562">
+				<Property key="Caption" value="#80C0FF#{Help}"/>
+				<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
+					<Property key="ImageCoord" value="0 640 128 128"/>
+					<Property key="Alpha" value="0.6"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+				</Widget>
+				<Widget type="EditBox" skin="EditBoxStretch" position="32 16 600 360" name="QuickHelpText">
+					<Property key="ReadOnly" value="true"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="true"/>
+					<Property key="VisibleHScroll" value="false"/>
+					<Property key="VisibleVScroll" value="true"/>
+					<Property key="MaxTextLength" value="8000"/>
+					<Property key="TextColour" value="0.86 0.94 1.0"/>
+					<Property key="Colour" value="0.5 0.66 0.8"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 406 600 24">
 					<Property key="Caption" value="#{UserDir}"/>
@@ -2564,6 +2601,24 @@
 					<Property key="MaxTextLength" value="8000"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<Property key="Colour" value="0.5 0.6 0.7"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 562">
+				<Property key="Caption" value="#F0E8DC#{Contributing}"/>
+				<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
+					<Property key="ImageCoord" value="256 768 128 128"/>
+					<Property key="Alpha" value="0.6"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+				</Widget>
+				<Widget type="EditBox" skin="EditBoxStretch" position="32 16 600 480" name="Contributing">
+					<Property key="ReadOnly" value="true"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="true"/>
+					<Property key="VisibleHScroll" value="false"/>
+					<Property key="VisibleVScroll" value="true"/>
+					<Property key="MaxTextLength" value="8000"/>
+					<Property key="TextColour" value="0.8 0.8 1.0"/>
+					<Property key="Colour" value="0.5 0.5 0.7"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">

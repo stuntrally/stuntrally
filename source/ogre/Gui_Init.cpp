@@ -826,6 +826,14 @@ void CGui::InitGui()
 	liNetEnd = li;
 
 
+	//  open url btns  -------------
+	Btn("OpenWebsite", btnWebsite);
+	Btn("OpenWiki", btnWiki);
+	Btn("OpenForum", btnForum);
+	Btn("OpenTransl", btnTransl);
+	Btn("OpenDonations", btnDonations);
+
+
 	bGI = true;  // gui inited, gui events can now save vals
 
 	LogO(String("::: Time Init Gui: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");

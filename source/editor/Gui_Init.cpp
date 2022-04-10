@@ -879,7 +879,7 @@ void CGui::InitGui()
 	viewBox->setBackgroundColour(Colour(0.32,0.35,0.37,0.7));
 	viewBox->setAutoRotation(true);
 	viewBox->setMouseRotation(true);
-	
+
 
 	bGI = true;  // gui inited, gui events can now save vals
 

@@ -161,10 +161,10 @@ public:
 	WP mWndMainPanels[ciMainBtns];
 	Btn mWndMainBtns[ciMainBtns];
 
-	Wnd mWndMain, mWndGame,mWndReplays,mWndHelp,mWndOpts,  // menu, windows
+	Wnd mWndMain, mWndGame,mWndReplays, mWndHelp,mWndOpts,  // menu, windows
 		mWndWelcome, mWndRpl, mWndNetEnd, mWndTweak, mWndTrkFilt,  // rpl controls, netw, tools
 		mWndChampStage,mWndChampEnd, mWndChallStage,mWndChallEnd;
-	Tab mWndTabsGame,mWndTabsOpts,mWndTabsHelp,mWndTabsRpl;  // main tabs on windows
+	Tab mWndTabsGame,mWndTabsRpl, mWndTabsHelp,mWndTabsOpts;  // main tabs on windows
 	
 	//MyGUI::VectorWidgetPtr
 	std::vector<WP> vwGui;  // all widgets to destroy

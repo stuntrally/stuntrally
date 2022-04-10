@@ -518,4 +518,11 @@ public:
 	Ed edNetGameName,   edNetPassword;   void evEdNetGameName(Ed),   evEdNetPassword(Ed);
 	Ed edNetNick,       edNetLocalPort;  void evEdNetNick(Ed),       evEdNetLocalPort(Ed);
 	Ed edNetServerPort, edNetServerIP;   void evEdNetServerPort(Ed), evEdNetServerIP(Ed);
+
+	//  open url
+	void btnWebsite(WP);
+	void btnWiki(WP);
+	void btnForum(WP);
+	void btnTransl(WP);
+	void btnDonations(WP);
 };

@@ -168,5 +168,7 @@ public:
 	CK(VidFullscr);  CK(VidVSync);
 	void btnResChng(WP);
 	void comboGraphicsAll(CMB), comboRenderSystem(CMB);
-		
+
+	//  util
+	void OpenBrowserUrl(std::string url);
 };

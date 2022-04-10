@@ -397,7 +397,7 @@ void CGuiCom::InitMainMenu()
 	for (int i=0; i < cntMain; ++i)
 	{
 		const String s = toStr(i);
-		app->mWndMainPanels[i] = fWP("PanMenu"+s);  // todo: +1
+		app->mWndMainPanels[i] = fWP("PanMenu"+s);
 		BtnC("BtnMenu"+s, btnMainMenu);  app->mWndMainBtns[i] = btn;
 	}
 
@@ -532,4 +532,17 @@ void CGuiCom::CreateFonts()
 	}
 
 	LogO("-- Font sizes:  "+inf);
+}
+
+
+//  util
+void CGuiCom::OpenBrowserUrl(std::string url)
+{
+#ifdef WIN32
+	string cmd = "system ";
+#else
+	string cmd = "xdg-open ";
+#endif
+	string s = cmd + url;
+	system(s.c_str());
 }
