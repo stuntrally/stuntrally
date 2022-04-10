@@ -1,24 +1,24 @@
 Model:		gum_tree.mesh
-Url:		http://www.opengameart.org/content/gum-tree
+Url:		https://www.opengameart.org/content/gum-tree
 Artist:		lattice (OpenGameArt user)
 License:	CC-BY 3.0
 Date:		04/11/2010
 
 Model:		palm2.mesh
-Url: 		http://opengameart.org/content/palm-tree-v2
+Url: 		https://opengameart.org/content/palm-tree-v2
 Artist:		yughues (OpenGameArt user)
 License:	CC0 (Public Domain)
 Date:		12/23/2011
 
 
 Model:		fern.mesh
-Url: 		http://opengameart.org/content/fern-v21-double-sided-pack
+Url: 		https://opengameart.org/content/fern-v21-double-sided-pack
 Artist:		yughues (OpenGameArt user)
 License:	CC0 (Public Domain)
 Date:		02/04/2012
 
 Model:		fern2.mesh
-Url:		http://opengameart.org/content/fern-pack
+Url:		https://opengameart.org/content/fern-pack
 Artist:		yughues (OpenGameArt user)
 License:	CC0 (Public Domain)
 Date:		02/05/2012
@@ -26,18 +26,18 @@ Date:		02/05/2012
 
 Model:		jungle_tree.mesh
 License: 	CC0 (Public domain)
-Link: 		http://www.blendswap.com/blends/plants/bge-tree/
+Link: 		https://www.blendswap.com/blends/plants/bge-tree/
 Notes:		Bark texture by OpenGameArt user yughues, licensed CC0
 			low-polying, baked textures & normals in blender by scrawl
 
 Model:		palm_plant.mesh
-Url:		http://opengameart.org/content/palm-plant
+Url:		https://opengameart.org/content/palm-plant
 Artist:		yughues (OpenGameArt user)
 License:	CC0 (Public Domain)
 Date:		02/05/2012
 
 Model:		plant_tropical.mesh
-Url:		http://opengameart.org/content/tropical-plant-02-0
+Url:		https://opengameart.org/content/tropical-plant-02-0
 Artist:		yughues (OpenGameArt user)
 License:	CC0 (Public Domain)
 Date:		19/04/2012
@@ -45,19 +45,19 @@ Date:		19/04/2012
 
 9 Models:	pine1_full.mesh  pine2_tall_full  pine3_fat_full  and _half, _norm variants
 Model:		cactus.mesh
-Url:		http://opengameart.org/content/freebies-mundo-commissions
+Url:		https://opengameart.org/content/freebies-mundo-commissions
 Artist:		yughues (OpenGameArt user)
 License:	CC0 (Public Domain)
 Date:		18/08/2012
 
 5 Models:	rock_n1 - n5.mesh
-Url:		http://opengameart.org/content/rocks-0
+Url:		https://opengameart.org/content/rocks-0
 Artist:		yughues (OpenGameArt user)
 License:	CC0 (Public Domain)
 Date:		29/08/2012
 
 Model:		rock.mesh
-Url:		http://www.blendswap.com/blends/landscapes/toddmcintosh_nature_rocks2/
+Url:		https://www.blendswap.com/blends/landscapes/toddmcintosh_nature_rocks2/
 Artist:		tmcintosh (blendswap user)
 License:	CC-BY
 Date:		02/08/2012

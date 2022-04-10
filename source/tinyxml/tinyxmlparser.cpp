@@ -51,7 +51,7 @@ TiXmlBase::Entity TiXmlBase::entity[ NUM_ENTITY ] =
 };
 
 // Bunch of unicode info at:
-//		http://www.unicode.org/faq/utf_bom.html
+//		https://www.unicode.org/faq/utf_bom.html
 // Including the basic of this table, which determines the #bytes in the
 // sequence from the lead byte. 1 placed for invalid sequences --
 // although the result will be junk, pass it through as much as possible.

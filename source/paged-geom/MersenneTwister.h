@@ -9,7 +9,7 @@
 // are far greater.  The generator is also fast; it avoids multiplication and
 // division, and it benefits from caches and pipelines.  For more information
 // see the inventors' web page at
-// http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
+// https://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
 
 // Reference
 // M. Matsumoto and T. Nishimura, "Mersenne Twister: A 623-Dimensionally

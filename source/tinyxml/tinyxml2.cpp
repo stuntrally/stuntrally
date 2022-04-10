@@ -39,7 +39,7 @@ static const char SINGLE_QUOTE			= '\'';
 static const char DOUBLE_QUOTE			= '\"';
 
 // Bunch of unicode info at:
-//		http://www.unicode.org/faq/utf_bom.html
+//		https://www.unicode.org/faq/utf_bom.html
 //	ef bb bf (Microsoft "lead bytes") - designates UTF-8
 
 static const unsigned char TIXML_UTF_LEAD_0 = 0xefU;

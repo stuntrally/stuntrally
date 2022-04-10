@@ -3,7 +3,7 @@ The new trees made using SnappyTree (web generator tool).
 Author: Crystal Hammer
 
 License: CC-BY-SA
-http://creativecommons.org/licenses/by-sa/3.0/
+https://creativecommons.org/licenses/by-sa/3.0/
 
 
 Applies to all meshes starting with tree*.mesh (no . in name).
@@ -16,9 +16,9 @@ Textures used:
 Branches textures pack 01, 02, 03
 Author: yughues
 License: CC0
-http://opengameart.org/content/branches-textures-pack-01
-http://opengameart.org/content/branches-textures-pack-02
-http://opengameart.org/content/branches-textures-pack-03
+https://opengameart.org/content/branches-textures-pack-01
+https://opengameart.org/content/branches-textures-pack-02
+https://opengameart.org/content/branches-textures-pack-03
 
 Edited to have different colors, all are now: twig*.png
 
@@ -27,12 +27,12 @@ Edited to have different colors, all are now: twig*.png
 5 Tiling Bark Textures
 Author: bart
 License: CC-BY 3.0
-http://opengameart.org/content/5-tiling-bark-textures
+https://opengameart.org/content/5-tiling-bark-textures
 
 Edited to 512x512, all are now: trunk?m.png
 
 Tilling Texture Pack 22, 30
 Author: yughues
 License: CC0
-http://opengameart.org/content/tilling-texture-pack-22
-http://opengameart.org/content/tilling-textures-pack-30
+https://opengameart.org/content/tilling-texture-pack-22
+https://opengameart.org/content/tilling-textures-pack-30

@@ -77,7 +77,7 @@ namespace ICS
 		return ss >> result ? true : false;
 	}
 
-	// from http://www.cplusplus.com/forum/articles/9645/
+	// from https://www.cplusplus.com/forum/articles/9645/
 	template <typename T>
 	std::string ToString ( T value )
 	{
@@ -86,7 +86,7 @@ namespace ICS
 		return ss.str();
 	}
 
-	// from http://www.cplusplus.com/forum/articles/9645/
+	// from https://www.cplusplus.com/forum/articles/9645/
 	template <typename T>
 	T FromString ( const std::string &Text )//Text not by const reference so that the function can be used with a 
 	{											//character array as argument

@@ -14,9 +14,9 @@ public:
 	unsigned int GetHash(T & val) const {assert(0);return 0;} //no hash function specified for this type
 };
 
-//DJB hash from http://www.partow.net/programming/hashfunctions/
+//DJB hash from https://www.partow.net/programming/hashfunctions/
 //very simple, excellent performance
-//the one at http://burtleburtle.net/bob/c/lookup3.c sounds good, but seems much slower
+//the one at https://burtleburtle.net/bob/c/lookup3.c sounds good, but seems much slower
 template <>
 class hasher <std::string>
 {

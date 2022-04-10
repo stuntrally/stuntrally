@@ -5,7 +5,7 @@ from
 Dim's enviromental and architectural textures
 Author: Dim
 License(s): CC-BY 3.0
-http://opengameart.org/content/dims-enviromental-and-architectural-textures
+https://opengameart.org/content/dims-enviromental-and-architectural-textures
 
 
 100_1450_seamless = concrete1w
@@ -14,7 +14,7 @@ from
 Seamless textures
 Author: arikel
 License(s): CC0
-http://opengameart.org/content/seamless-textures
+https://opengameart.org/content/seamless-textures
 
 
 old road based on VDrift asphalt

@@ -8,7 +8,7 @@ Prerequisites
 	- If you can't spare, say 5GB of RAM, you need to install Ubuntu (this guide uses "live" version and does not cover installing the OS, but it's relatively simple)
 	- If you at any point get an error about full disk space in the VM, then you have allocated too little RAM for the machine
 2. VirtualBox https://www.virtualbox.org/
-3. Ubuntu desktop disk image(s) for desired distro http://releases.ubuntu.com/
+3. Ubuntu desktop disk image(s) for desired distro https://releases.ubuntu.com/
 	- Earliest with packaged Ogre 1.8 is Ubuntu 12.10
 
 Setup

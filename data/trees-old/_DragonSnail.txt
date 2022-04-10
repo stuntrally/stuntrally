@@ -3,7 +3,7 @@ Artifex Terra 3D, DragonSnail Model License 1.0
 All models, textures and material files in this folder / archive
 are part of the model pack coming with Artifex Terra 3D
 - Easy and sophisticated Terrain Editor & Painter -
-Free download at: http://www.artifexterra3d.com
+Free download at: https://www.artifexterra3d.com
 
 The free modelpack is consisting of the following mesh-files:
 hang.bridge.01.mesh, highlanderhouse.01.mesh, plant.02.mesh,
@@ -12,8 +12,8 @@ tree.05.mesh, tree.07.mesh, tree.09.mesh including texture and
 sample .material files.
 
 Copyright (c) 2008, 2009 
-Karolina Sefyrin alias DragonSnail (http://www.dragonsnail.com) - 3D modeling / texturing
-Thomas Gradl alias Nauk (http://www.artifexterra3d.com)
+Karolina Sefyrin alias DragonSnail (https://www.dragonsnail.com) - 3D modeling / texturing
+Thomas Gradl alias Nauk (https://www.artifexterra3d.com)
 
 The modelpack is free of charge and can be used and redistributed for any purpose, 
 as long as this copyright and credit notice is unmodified passed along with it and

@@ -1,8 +1,8 @@
 /************************************************************************
 * QuickProf                                                             *
-* http://quickprof.sourceforge.net                                      *
+* https://quickprof.sourceforge.net                                      *
 * Copyright (C) 2006-2008                                               *
-* Tyler Streeter (http://www.tylerstreeter.net)                         *
+* Tyler Streeter (https://www.tylerstreeter.net)                         *
 *                                                                       *
 * This library is free software; you can redistribute it and/or         *
 * modify it under the terms of EITHER:                                  *
@@ -23,7 +23,7 @@
 * more details.                                                         *
 ************************************************************************/
 
-// Please visit the project website (http://quickprof.sourceforge.net) 
+// Please visit the project website (https://quickprof.sourceforge.net) 
 // for usage instructions.
 
 #pragma once
@@ -80,7 +80,7 @@ namespace quickprof
 	};
 
 	/// A cross-platform clock class inspired by the Timer classes in 
-	/// Ogre (http://www.ogre3d.org).
+	/// Ogre (https://www.ogre3d.org).
 	class Clock
 	{
 	public:

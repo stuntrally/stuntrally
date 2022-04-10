@@ -1,6 +1,6 @@
 #pragma once
 
-// From Performous (http://performous.org) under GPLv2 or later
+// From Performous (https://performous.org) under GPLv2 or later
 
 #include <boost/thread/xtime.hpp>
 #include <cmath>

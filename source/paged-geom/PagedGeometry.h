@@ -31,7 +31,7 @@ for that).
 
 
 \section B What is PagedGeometry?
-The PagedGeometry engine is an add-on to the <a href="http://www.ogre3d.org">OGRE
+The PagedGeometry engine is an add-on to the <a href="https://www.ogre3d.org">OGRE
 Graphics Engine</a>, which provides highly optimized methods for rendering massive amounts
 of small meshes covering a possibly infinite area. This is especially well suited for dense
 forests and outdoor scenes, with millions of trees, bushes, grass, rocks, etc., etc.
@@ -63,11 +63,11 @@ about a certain function or class.
 
 <ul>
 <li><b>John Judnich</b> - <i>Programming / design / documentation</i></li>
-<li><b><a href="http://sjcomp.com">Alexander Shyrokov</a></b> (aka. sj) - <i>Testing / co-design</i></li>
-<li><b><a href="http://www.pop-3d.com">Tuan Kuranes</a></b> - <i>Imposter image render technique</i></li>
+<li><b><a href="https://sjcomp.com">Alexander Shyrokov</a></b> (aka. sj) - <i>Testing / co-design</i></li>
+<li><b><a href="https://www.pop-3d.com">Tuan Kuranes</a></b> - <i>Imposter image render technique</i></li>
 <li><b></b> (Falagard) - <i>Camera-facing billboard vertex shader</i></li>
-<li><b><a href="http://www.wendigostudios.com/">Wendigo Studios</a></b> - <i>Tree animation code & various patches/improvements</i></li>
-<li><b><a href="http://www.thomasfischer.biz/">Thomas Fischer</a></b> - <i>Maintainer from Jun/2009</i></li>
+<li><b><a href="https://www.wendigostudios.com/">Wendigo Studios</a></b> - <i>Tree animation code & various patches/improvements</i></li>
+<li><b><a href="https://www.thomasfischer.biz/">Thomas Fischer</a></b> - <i>Maintainer from Jun/2009</i></li>
 </ul>
 
 

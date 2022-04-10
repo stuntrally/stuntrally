@@ -181,7 +181,7 @@ uint32 CountUsedVertices(IndexData *id, std::map<uint32, uint32> &ibmap)
                if (ibmap.find(index) == ibmap.end()) 
 	       {
 		    // use separate lines to avoid undefined compiler behavior.
-		    //   see: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0145r3.pdf?fbclid=IwAR2Wp4bQWvl0O9t7kBIXeiRsOxwxU8bttpes-gK71x_2j0ABtzGD5mcoF_c
+		    //   see: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0145r3.pdf?fbclid=IwAR2Wp4bQWvl0O9t7kBIXeiRsOxwxU8bttpes-gK71x_2j0ABtzGD5mcoF_c
 		    uint32 size = (uint32)(ibmap.size()); 
 		    ibmap[index] = size;
 	       }
@@ -201,7 +201,7 @@ uint32 CountUsedVertices(IndexData *id, std::map<uint32, uint32> &ibmap)
                if (ibmap.find(index) == ibmap.end()) 
 	       {
 		    // use separate lines to avoid undefined compiler behavior.
-		    //   see: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0145r3.pdf?fbclid=IwAR2Wp4bQWvl0O9t7kBIXeiRsOxwxU8bttpes-gK71x_2j0ABtzGD5mcoF_c
+		    //   see: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0145r3.pdf?fbclid=IwAR2Wp4bQWvl0O9t7kBIXeiRsOxwxU8bttpes-gK71x_2j0ABtzGD5mcoF_c
 		    uint32 size = (uint32)(ibmap.size()); 
 		    ibmap[index] = size;
 	       }

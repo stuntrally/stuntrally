@@ -18,7 +18,7 @@
 	GNU Lesser General Public License for more details.
 
 	You should have received a copy of the GNU Lesser General Public License
-	along with MyGUI.  If not, see <http://www.gnu.org/licenses/>.
+	along with MyGUI.  If not, see <https://www.gnu.org/licenses/>.
 */
 #pragma once
 #include "MyGUI_Prerequest.h"

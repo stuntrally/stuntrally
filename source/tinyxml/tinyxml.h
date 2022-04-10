@@ -724,8 +724,8 @@ public:
 
 		The interface has been based on ideas from:
 
-		- http://www.saxproject.org/
-		- http://c2.com/cgi/wiki?HierarchicalVisitorPattern 
+		- https://www.saxproject.org/
+		- https://c2.com/cgi/wiki?HierarchicalVisitorPattern 
 
 		Which are both good references for "visiting".
 

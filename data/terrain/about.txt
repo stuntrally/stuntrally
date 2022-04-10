@@ -13,8 +13,8 @@ A big thank you for your work man, you are the best.
 From archives: "Free tiling textures pack" 1..55
 License: CC-0 (Public Domain)
 
-http://nobiax.deviantart.com
-http://opengameart.org/users/yughues
+https://nobiax.deviantart.com
+https://opengameart.org/users/yughues
 
 
 ------ Edited by CryHam
@@ -92,7 +92,7 @@ From archives: "50 free textures"  2, 3
 Author: rubberduck
 License(s): CC-0
 
-http://opengameart.org/content/50-free-textures -2 -3
+https://opengameart.org/content/50-free-textures -2 -3
 
 024 ground_cracksv  ground_cracksy
 062 adesert_stone
@@ -109,6 +109,6 @@ snow_mud    from desert_mud and snow_1
 Author: Mysteryem (Submitted by qubodup)
 mysteryemwarzone2100textures
 License(s):  GPL 2.0   GPL 3.0   CC-BY-SA 3.0
-http://opengameart.org/content/29-grounds-and-walls-and-water-1024x1024
+https://opengameart.org/content/29-grounds-and-walls-and-water-1024x1024
 
 snow_mntn  from violetRocks

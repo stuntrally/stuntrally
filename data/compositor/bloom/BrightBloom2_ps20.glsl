@@ -6,7 +6,7 @@
 //   Color += Grayscale( f(Color) ) + 0.6
 //
 // Special thanks to ATI for their great HLSL2GLSL utility
-//     http://sourceforge.net/projects/hlsl2glsl
+//     https://sourceforge.net/projects/hlsl2glsl
 //-------------------------------
 
 uniform sampler2D RT;

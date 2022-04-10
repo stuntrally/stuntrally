@@ -12,7 +12,7 @@ namespace sh
 
 	/**
 	 * @brief The base class of loaders that read Ogre style script files to get configuration and settings.
-	 * Heavily inspired by: http://www.ogre3d.org/tikiwiki/All-purpose+script+parser
+	 * Heavily inspired by: https://www.ogre3d.org/tikiwiki/All-purpose+script+parser
 	 * ( "Non-ogre version")
 	 */
 	class ScriptLoader

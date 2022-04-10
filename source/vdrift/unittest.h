@@ -1,8 +1,8 @@
 /************************************************************************
 * QuickTest                                                             *
-* http://quicktest.sourceforge.net                                      *
+* https://quicktest.sourceforge.net                                      *
 * Copyright (C) 2005-2008                                               *
-* Tyler Streeter (http://www.tylerstreeter.net)                         *
+* Tyler Streeter (https://www.tylerstreeter.net)                         *
 *                                                                       *
 * This library is free software; you can redistribute it and/or         *
 * modify it under the terms of EITHER:                                  *
@@ -20,13 +20,13 @@
 * license-LGPL.txt and license-BSD.txt for more details.                *
 ************************************************************************/ 
 
-// Please visit the project website (http://quicktest.sourceforge.net) 
+// Please visit the project website (https://quicktest.sourceforge.net) 
 // for usage instructions.
 
 // Credits: 
 // Thanks to Noel Llopis for his helpful comparison of various C++ unit 
 // testing frameworks and ideas for an ideal simple testing framework: 
-// http://www.gamesfromwithin.com/articles/0412/000061.html  Thanks to 
+// https://www.gamesfromwithin.com/articles/0412/000061.html  Thanks to 
 // Michael Feathers for developing CppUnitLite.  Many of the macros in 
 // Quicktest were modeled after those in CppUnitLite.
 
