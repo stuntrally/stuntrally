@@ -46,7 +46,11 @@ public:
 	void CreateWeather(), DestroyWeather();
 	void UpdateWeather(Ogre::Camera* cam, float mul = 1.f);
 
-			
+
+	//  Emitters
+	void CreateEmitters(), DestroyEmitters();
+
+
 	//  Fluids  water, mud
 	std::vector<Ogre::String/*MeshPtr*/> vFlSMesh;
 	std::vector<Ogre::Entity*> vFlEnt;

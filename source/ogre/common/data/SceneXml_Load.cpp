@@ -472,7 +472,26 @@ bool Scene::LoadXml(String file, bool bTer)
 			objects.push_back(o);
 			u = u->NextSiblingElement("o");
 	}	}
-	
+
+	///  emitters
+	e = root->FirstChildElement("emitters");
+	if (e)
+	{	u = e->FirstChildElement("e");
+		while (u)
+		{
+			SEmitter p;
+			a = u->Attribute("name");	if (a)  p.name = string(a);
+
+			a = u->Attribute("pos");	if (a)  p.pos = s2v(a);
+			a = u->Attribute("size");	if (a)  p.size = s2v(a);
+			a = u->Attribute("up");		if (a)  p.up = s2v(a);
+			a = u->Attribute("rot");	if (a)  p.rot = s2r(a);
+			a = u->Attribute("rate");	if (a)  p.rate = s2r(a);
+
+			emitters.push_back(p);
+			u = u->NextSiblingElement("e");
+	}	}
+
 	UpdateFluidsId();
 
 	UpdateSurfId();

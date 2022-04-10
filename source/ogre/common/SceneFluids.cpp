@@ -18,6 +18,7 @@
 #endif
 #include <BulletCollision/CollisionDispatch/btCollisionObject.h>
 #include <BulletCollision/CollisionShapes/btBoxShape.h>
+#include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 #include <OgreManualObject.h>
 #include <OgreMeshManager.h>
 #include <OgreMaterialManager.h>
@@ -26,9 +27,51 @@
 #include <OgreSceneNode.h>
 #include <OgreMesh.h>
 #include <OgreTimer.h>
+#include <OgreParticleSystem.h>
+#include <OgreParticleEmitter.h>
+//#include <OgreBoxEmitter.h>
 #include "../shiny/Main/Factory.hpp"
 using namespace Ogre;
 
+
+
+///  create particles  ------------------------
+void CScene::CreateEmitters()
+{
+	SceneNode* rt = app->mSceneMgr->getRootSceneNode();
+	for (int i=0; i < sc->emitters.size(); ++i)
+	{
+		String n = "PE_" +toStr(i);
+		SEmitter& em = sc->emitters[i];
+		if (em.name.empty())  continue;
+
+		ParticleSystem* ps = app->mSceneMgr->createParticleSystem(n, em.name);  //ToDel(ps);
+		ps->setVisibilityFlags(RV_Particles);
+		ps->setRenderQueueGroup(RQG_CarParticles);
+
+		SceneNode* nd = rt->createChildSceneNode(em.pos);  //ToDel(nb);
+		nd->attachObject(ps);
+		ps->getEmitter(0)->setEmissionRate(em.rate);
+		// BoxEmitter* b = (BoxEmitter*)ps->getEmitter(0);
+		// b->SetWidth(em.size.x);
+		// b->SetHeight(em.size.y);
+		// b->SetDepth(em.size.z);
+		ps->getEmitter(0)->setUp(em.up);
+
+		em.nd = nd;  em.par = ps;
+	}
+}
+
+void CScene::DestroyEmitters()
+{
+	for (int i=0; i < sc->emitters.size(); ++i)
+	{
+		SEmitter& em = sc->emitters[i];
+		if (em.par) {  app->mSceneMgr->destroyParticleSystem(em.par);  em.par = 0;  }
+		if (em.nd)  {  app->mSceneMgr->destroySceneNode(em.nd);  em.nd = 0;  }
+	}
+	sc->emitters.clear();
+}
 
 
 ///  create Fluid areas  . . . . . . . 
@@ -86,15 +129,58 @@ void CScene::CreateBltFluids()
 		btTransform tr;  tr.setIdentity();  tr.setOrigin(pc);
 		//tr.setRotation(btQuaternion(0, 0, fb.rot.x*PI_d/180.f));
 
-		btCollisionShape* bshp = 0;
+		btCollisionObject* bco = 0;
 		float t = sc->td.fTerWorldSize*0.5f;  // not bigger than terrain
-		bshp = new btBoxShape(btVector3(std::min(t, fb.size.x*0.5f), std::min(t, fb.size.z*0.5f), fb.size.y*0.5f));
+		btScalar sx = std::min(t, fb.size.x*0.5f), sy = std::min(t, fb.size.z*0.5f), sz = fb.size.y*0.5f;
+		
+	if (0 && fp.solid)
+	{
+		const int size = 16;
+		float* hfHeight = new float[size*size];
+		int a = 0;
+		for (int y=0; y<size; ++y)
+		for (int x=0; x<size; ++x)
+			hfHeight[a++] = 0.f;
+		btHeightfieldTerrainShape* hfShape = new btHeightfieldTerrainShape(
+			size, size, hfHeight, 1.f,
+			-13.f,13.f, 2, PHY_FLOAT,false);  //par- max height
+		
+		hfShape->setUseDiamondSubdivision(true);
+
+		btVector3 scl(sx, sy, sz);
+		hfShape->setLocalScaling(scl);
+		
+		size_t id = SU_Fluid;  if (fp.solid)  id += fp.surf;
+		hfShape->setUserPointer((void*)id);
+
+		bco = new btCollisionObject();
+		bco->setActivationState(DISABLE_SIMULATION);
+		bco->setCollisionShape(hfShape);  bco->setWorldTransform(tr);
+		bco->setFriction(0.9);   //+
+		bco->setRestitution(0.0);  //bco->setHitFraction(0.1f);
+		bco->setCollisionFlags(bco->getCollisionFlags() |
+			btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
+	
+		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
+		#ifndef SR_EDITOR
+			app->pGame->collision.world->addCollisionObject(bco);
+			app->pGame->collision.shapes.push_back(hfShape);
+			fb.cobj = bco;
+		#else
+			app->world->addCollisionObject(bco);
+		#endif
+
+	}else{
+
+		btCollisionShape* bshp = 0;
+		bshp = new btBoxShape(btVector3(sx,sy,sz));
 
 		//  solid surf
 		size_t id = SU_Fluid;  if (fp.solid)  id += fp.surf;
 		bshp->setUserPointer((void*)id);
+		bshp->setMargin(0.1f); //
 
-		btCollisionObject* bco = new btCollisionObject();
+		bco = new btCollisionObject();
 		bco->setActivationState(DISABLE_SIMULATION);
 		bco->setCollisionShape(bshp);	bco->setWorldTransform(tr);
 
@@ -104,9 +190,10 @@ void CScene::CreateBltFluids()
 		else  // solid
 		{	bco->setCollisionFlags(bco->getCollisionFlags() |
 				btCollisionObject::CF_STATIC_OBJECT);
-			bco->setFriction(0.6f);  bco->setRestitution(0.f);  //par?..
+			// bco->setF
+			bco->setFriction(0.6f);  bco->setRestitution(0.5f);  //par?..
 		}
-		
+
 		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
 		#ifndef SR_EDITOR
 			app->pGame->collision.world->addCollisionObject(bco);
@@ -115,6 +202,8 @@ void CScene::CreateBltFluids()
 		#else
 			app->world->addCollisionObject(bco);
 		#endif
+	}
+		
 	}
 	#ifdef SR_EDITOR
 	app->UpdObjPick();

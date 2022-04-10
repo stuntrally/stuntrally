@@ -511,10 +511,7 @@ public:
 	Ed edNetNick,       edNetLocalPort;  void evEdNetNick(Ed),       evEdNetLocalPort(Ed);
 	Ed edNetServerPort, edNetServerIP;   void evEdNetServerPort(Ed), evEdNetServerIP(Ed);
 
-	//  open url
-	void btnWebsite(WP);
-	void btnWiki(WP);
-	void btnForum(WP);
-	void btnTransl(WP);
-	void btnDonations(WP);
+	//  open urls
+	void btnWelcome(WP), btnWebsite(WP), btnWiki(WP);
+	void btnForum(WP), btnTransl(WP), btnDonations(WP);
 };

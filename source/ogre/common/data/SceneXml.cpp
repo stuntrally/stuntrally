@@ -62,8 +62,7 @@ void Scene::Default()
 
 	camPos = Vector3(10.f,20.f,10.f);  camDir = Vector3(0.f,-0.3f,1.f);
 
-	fluids.clear();  //
-	objects.clear();  //
+	fluids.clear();  objects.clear();  emitters.clear();  //
 }
 
 PagedLayer::PagedLayer()
@@ -102,6 +101,12 @@ Object::Object()
 	:nd(0),ent(0),ms(0),co(0),rb(0), dyn(false)
 	,pos(0,0,0),rot(0,-1,0,0), tr1(0)
 	,scale(Vector3::UNIT_SCALE)
+{	}
+
+SEmitter::SEmitter()
+	:name(""), pos(0,0,0), size(1,1,1), up(0,1,0)
+	,rot(0.f), rate(10.f)
+	,nd(0), par(0)
 {	}
 
 

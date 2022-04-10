@@ -510,7 +510,7 @@ void CGui::toggleGui(bool toggle)
 				String text = "", s;
 				while (getline(fi,s))
 				{
-					s = StringUtil::replaceAll(s, "#", "##");
+					s = StringUtil::replaceAll(s, "#", "");
 					s = StringUtil::replaceAll(s, "**", "");
 					text += s + "\n";
 				}
@@ -722,6 +722,10 @@ void CGui::GuiUpdate()
 
 //  open urls
 //.......................................................................................
+void CGui::btnWelcome(WP)
+{
+	app->mWndWelcome->setVisible(true);
+}
 void CGui::btnWebsite(WP)
 {
 	gcom->OpenBrowserUrl("https://stuntrally.tuxfamily.org/");

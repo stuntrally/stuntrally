@@ -284,6 +284,7 @@ void App::LoadCleanUp()  // 1 first
 	{
 		scn->DestroyTrees();
 		scn->DestroyWeather();
+		scn->DestroyEmitters();
 		
 		scn->DestroyTerrain();
 		scn->DestroyRoad();
@@ -481,6 +482,10 @@ void App::LoadScene()  // 3
 	//  weather
 	if (dstTrk)
 		scn->CreateWeather();
+
+	if (dstTrk)
+		scn->CreateEmitters();
+	
 		
 	//  checkpoint arrow
 	bool deny = gui->pChall && !gui->pChall->chk_arr;

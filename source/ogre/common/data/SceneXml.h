@@ -8,7 +8,7 @@
 #include "../../../vdrift/mathvector.h"
 #include "../../../vdrift/quaternion.h"
 
-namespace Ogre {  class SceneNode;  class Entity;  }
+namespace Ogre {  class SceneNode;  class Entity;  class ParticleSystem;  }
 namespace Forests {  class GrassLayer;  }
 
 
@@ -265,6 +265,20 @@ public:
 };
 
 
+class SEmitter  // particles
+{
+public:
+	std::string name;  // particle_system
+	Ogre::Vector3 pos, size, up;
+	float rot;
+	float rate;
+
+	Ogre::SceneNode* nd;  // ogre
+	Ogre::ParticleSystem* par;
+	SEmitter();
+};
+
+
 ///  Scene setup xml
 //  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 class Scene
@@ -344,7 +358,11 @@ public:
 	
 	//  Objects
 	std::vector<Object> objects;
-	
+
+	//  Emitters
+	std::vector<SEmitter> emitters;
+
+
 	//  base track (new from) for info
 	std::string baseTrk;
 	int secEdited;  // time in seconds of track editing for info
