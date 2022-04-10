@@ -349,14 +349,6 @@ public:
 	void btnRplBackDn(WP,int,int,MyGUI::MouseButton), btnRplBackUp(WP,int,int,MyGUI::MouseButton);
 	void btnRplFwdDn(WP,int,int, MyGUI::MouseButton), btnRplFwdUp(WP,int,int, MyGUI::MouseButton);
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
-
-	//  tools, convert
-	void btnRenameOldTrk(WP), btnConvertAllRpl(WP);
-	bool bConvertRpl;
-	boost::thread mThrConvert;  void ThreadConvert();
-	Txt txtConvert;
-	int iConvCur,iConvAll,iConvFiles, iConvPathCur,iConvPathAll;  // files, dirs
-	boost::uintmax_t totalConv,totalConvCur,totalConvNew;  // size
 	
 
 	//  Game
@@ -489,7 +481,7 @@ public:
 
 	///  multiplayer gui  --------------------
 	Tab tabsNet;
-	WP  panNetServer, panNetGame, panNetTrack;
+	WP  panNetServer,panNetServer2, panNetGame, panNetTrack;
 	Mli listServers, listPlayers;
 	int iColLock, iColHost, iColPort;  // ids of columns in listServers
 

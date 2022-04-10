@@ -1114,7 +1114,7 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
-				<Property key="Caption" value="#90A0A0#{Setup}"/>
+				<Property key="Caption" value="#A0B0B0#{Setup}"/>
 				<Widget type="TabControl" skin="TabControl" position="16 16 752 504" align="Default" layer="Back" name="SubTab">
 					<Property key="InheritsAlpha" value="false"/>
 					<Property key="Colour" value="0.75 0.83 0.9"/>
@@ -1252,7 +1252,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 746 476" name="TabTrack">
-						<Property key="Caption" value="#904060#{Other}"/>
+						<Property key="Caption" value="#406090#{Other}"/>
 						<Widget type="Button" skin="CheckBox" position="32 88 300 24" name="CarABS">
 							<Property key="Caption" value="#{ABS}"/>
 							<Property key="TextColour" value="0.8 0.8 0.6"/>
@@ -1264,7 +1264,7 @@
 							<UserString key="tip" value="#{TipTCS}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="32 40 388 24">
-							<Property key="Caption" value="#D09040#{NotRecommended}"/>
+							<Property key="Caption" value="#D06040#{NotRecommended}"/>
 						</Widget>
 					</Widget>
 				</Widget>
@@ -1521,28 +1521,11 @@
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 738 469">
-						<Property key="Caption" value="#FFFF40#{NetServer}"/>
+						<Property key="Caption" value="#FFC040#{NetDirectConnect}"/>
 						<Widget type="ImageBox" skin="ImageBox" position="660 2 56 56">
 							<Property key="ImageCoord" value="640 0 128 128"/>
 							<Property key="Alpha" value="0.6"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
-						</Widget>
-						<Widget type="MultiListBox" skin="MultiListBox" position="20 80 696 292" name="MListServers">
-							<Property key="Colour" value="0.7 1 0.7"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 22 224 24">
-							<Property key="Caption" value="#{NetGamesAvail}"/>
-							<Property key="TextColour" value="0.9 0.9 0.6"/>
-						</Widget>
-						<Widget type="Button" skin="Button" position="20 406 164 40" name="btnNetRefresh">
-							<Property key="Caption" value="#{NetRefreshList}"/>
-							<Property key="Colour" value="0.4 0.5 0.3"/>
-							<Property key="TextColour" value="0.4 0.5 0.3"/>
-						</Widget>
-						<Widget type="Button" skin="Button" position="198 406 164 40" name="btnNetJoin">
-							<Property key="Caption" value="#{NetJoinGame}"/>
-							<Property key="Colour" value="0.4 0.4 0.2"/>
-							<Property key="TextColour" value="0.4 0.4 0.2"/>
 						</Widget>
 						<Widget type="Button" skin="Button" position="552 406 164 40" name="btnNetCreate">
 							<Property key="Caption" value="#{NetCreateGame}"/>
@@ -1616,7 +1599,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 469">
-						<Property key="Caption" value="#A0B0F0#{NetSettings}"/>
+						<Property key="Caption" value="#D0D070#{NetSettings}"/>
 						<Widget type="TextBox" skin="TextBox" position="20 28 156 24">
 							<Property key="Caption" value="#{NetNickname}"/>
 							<Property key="TextColour" value="0.6 0.9 1.0"/>
@@ -1624,14 +1607,6 @@
 						<Widget type="TextBox" skin="TextBox" position="20 66 156 24">
 							<Property key="Caption" value="#{NetLocalPort}"/>
 							<Property key="TextColour" value="0.2 1.0 1.0"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 120 156 24">
-							<Property key="Caption" value="#{NetMasterIp}"/>
-							<Property key="TextColour" value="0.6 0.6 0.8"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 158 156 24">
-							<Property key="Caption" value="#{NetMasterPort}"/>
-							<Property key="TextColour" value="0.6 0.6 1.0"/>
 						</Widget>
 						<Widget type="EditBox" skin="EditBox" position="180 24 136 24" name="edNetNick">
 							<Property key="Colour" value="0.6 0.9 1"/>
@@ -1642,16 +1617,7 @@
 							<Property key="Colour" value="0.4 1 1"/>
 							<Property key="TextColour" value="0.5 1 1.0"/>
 						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="180 116 136 26" name="edNetServerIP">
-							<Property key="Colour" value="0.8 0.8 1"/>
-							<Property key="TextColour" value="0.8 0.8 1"/>
-							<Property key="Caption" value="127.0.0.1"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="180 154 136 24" name="edNetServerPort">
-							<Property key="Colour" value="0.7 0.7 1"/>
-							<Property key="TextColour" value="0.7 0.7 1"/>
-						</Widget>
-						<Widget type="EditBox" skin="WordWrapEmpty" position="332 28 388 64" name="RouterTip">
+						<Widget type="EditBox" skin="WordWrapEmpty" position="20 128 588 64" name="RouterTip">
 							<Property key="ReadOnly" value="true"/>
 							<Property key="MultiLine" value="true"/>
 							<Property key="WordWrap" value="true"/>
@@ -1659,6 +1625,64 @@
 							<Property key="VisibleVScroll" value="true"/>
 							<Property key="TextColour" value="0.8 0.6 0.45"/>
 							<Property key="Caption" value="#{NetRouterTip}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 320 156 24">
+							<Property key="Caption" value="#{NetMasterIp}"/>
+							<Property key="TextColour" value="0.6 0.6 0.8"/>
+							<Property key="Alpha" value="0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 358 156 24">
+							<Property key="Caption" value="#{NetMasterPort}"/>
+							<Property key="TextColour" value="0.6 0.6 1.0"/>
+							<Property key="Alpha" value="0.7"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 316 136 26" name="edNetServerIP">
+							<Property key="Colour" value="0.8 0.8 1"/>
+							<Property key="TextColour" value="0.8 0.8 1"/>
+							<Property key="Caption" value="127.0.0.1"/>
+							<Property key="Alpha" value="0.7"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 354 136 24" name="edNetServerPort">
+							<Property key="Colour" value="0.7 0.7 1"/>
+							<Property key="TextColour" value="0.7 0.7 1"/>
+							<Property key="Alpha" value="0.7"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 738 469">
+						<Property key="Caption" value="#604040#{NetServer}"/>
+						<Widget type="ImageBox" skin="ImageBox" position="660 2 56 56">
+							<Property key="ImageCoord" value="640 0 128 128"/>
+							<Property key="Alpha" value="0.6"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="20 2 340 340">
+							<Property key="ImageCoord" value="256 394 128 128"/>
+							<Property key="Alpha" value="0.15"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 42 124 24">
+							<Property key="Caption" value="#{NetGamesAvail}"/>
+							<Property key="TextColour" value="0.5 0.5 0.4"/>
+						</Widget>
+						<Widget type="MultiListBox" skin="MultiListBox" position="20 80 646 96" name="MListServers">
+							<Property key="Colour" value="0.7 1 0.7"/>
+							<Property key="Alpha" value="0.7"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="20 206 164 40" name="btnNetRefresh">
+							<Property key="Caption" value="#{NetRefreshList}"/>
+							<Property key="Colour" value="0.4 0.5 0.3"/>
+							<Property key="TextColour" value="0.4 0.5 0.3"/>
+							<Property key="Alpha" value="0.7"/>
+						</Widget>
+						<Widget type="Button" skin="Button" position="198 206 164 40" name="btnNetJoin">
+							<Property key="Caption" value="#{NetJoinGame}"/>
+							<Property key="Colour" value="0.4 0.4 0.2"/>
+							<Property key="TextColour" value="0.4 0.4 0.2"/>
+							<Property key="Alpha" value="0.7"/>
+						</Widget>
+						<Widget type="Widget" skin="PanelSkin" position="0 0 800 500" layer="Popup" name="panelNetServer2">
+							<Property key="Colour" value="0.8 0.96 1"/>
+							<Property key="Alpha" value="0.8"/>
 						</Widget>
 					</Widget>
 				</Widget>
@@ -2438,37 +2462,6 @@
 				</Widget>
 				<Widget type="Slider" skin="Slider" position="92 480 240 18" name="GhoHideDistTrk"/>
 			</Widget>
-			<Widget type="TabItem" skin="" position="2 24 794 562">
-				<Property key="Caption" value="#C0B0A0#{Tools}"/>
-				<Widget type="ImageBox" skin="ImageBox" position="660 48 64 64">
-					<Property key="ImageCoord" value="0 768 128 128"/>
-					<Property key="Alpha" value="0.6"/>
-					<Property key="ImageTexture" value="gui_icons.png"/>
-					<Property key="Colour" value="1 0.85 0.7"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="32 60 300 28" name="RenameOldTrk">
-					<Property key="Caption" value="2.5 #{RenameAllOld}"/>
-					<Property key="TextAlign" value="Left"/>
-					<Property key="TextColour" value="1 0.8 0.8"/>
-					<Property key="Colour" value="1 0.8 0.8"/>
-					<Property key="Alpha" value="0.8"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 140 400 24">
-					<Property key="Caption" value="#{ToolsTime}"/>
-					<Property key="TextColour" value="0.9 0.8 0.8"/>
-					<Property key="Alpha" value="0.9"/>
-				</Widget>
-				<Widget type="Button" skin="Button" position="32 170 300 28" name="ConvertAllRpl">
-					<Property key="Caption" value="2.6 #{ConvertAllRpl}"/>
-					<Property key="TextAlign" value="Left"/>
-					<Property key="TextColour" value="0.9 0.7 0.8"/>
-					<Property key="Colour" value="0.9 0.7 0.8"/>
-					<Property key="Alpha" value="0.8"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 210 400 140" name="TxtConvert">
-					<Property key="TextColour" value="0.96 0.9 0.9"/>
-				</Widget>
-			</Widget>
 		</Widget>
 	</Widget>
 	<Widget type="Window" skin="WindowC" position="844 696 800 600" align="Center" layer="Overlapped" name="HelpWnd">
@@ -2491,6 +2484,11 @@
 					<Property key="Alpha" value="0.6"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="660 2 56 56">
+					<Property key="ImageCoord" value="640 0 128 128"/>
+					<Property key="Alpha" value="0.6"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 16 600 60">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
@@ -2501,37 +2499,43 @@
 					<Property key="TextColour" value="0.94 0.86 1.0"/>
 					<Property key="Colour" value="0.66 0.5 0.8"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="132 150 300 28">
-					<Property key="Caption" value="#{Links}"/>
+				<Widget type="TextBox" skin="TextBox" position="32 30 300 28">
+					<Property key="Caption" value="#{LinksToWeb}"/>
 					<Property key="TextAlign" value="Left"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<Property key="Colour" value="0.8 0.9 1.0"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="132 200 300 28" name="OpenWebsite">
+				<Widget type="Button" skin="Button" position="32 100 300 28" name="OpenWebsite">
 					<Property key="Caption" value="#{Website}"/>
 					<Property key="TextAlign" value="Left"/>
-					<Property key="TextColour" value="0.8 0.9 1.0"/>
-					<Property key="Colour" value="0.8 0.9 1.0"/>
+					<Property key="TextColour" value="1.0 1.0 1.0"/>
+					<Property key="Colour" value="1.0 1.0 1.0"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="132 250 300 28" name="OpenWiki">
-					<Property key="Caption" value="#{Wiki}"/>
+				<Widget type="Button" skin="Button" position="32 150 300 28" name="OpenWiki">
+					<Property key="Caption" value="#{DocumentationWiki}"/>
 					<Property key="TextAlign" value="Left"/>
-					<Property key="TextColour" value="0.9 0.9 0.9"/>
-					<Property key="Colour" value="0.9 0.9 0.9"/>
+					<Property key="TextColour" value="0.9 0.9 0.7"/>
+					<Property key="Colour" value="0.9 0.9 0.7"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="132 300 300 28" name="OpenForum">
+				<Widget type="Button" skin="Button" position="32 250 300 28" name="OpenForum">
 					<Property key="Caption" value="#{Forum}"/>
 					<Property key="TextAlign" value="Left"/>
 					<Property key="TextColour" value="0.5 0.7 1.0"/>
 					<Property key="Colour" value="0.5 0.7 1.0"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="132 350 300 28" name="OpenTransl">
-					<Property key="Caption" value="#{Transl}"/>
+				<Widget type="Button" skin="Button" position="432 200 300 28" name="OpenTransl">
+					<Property key="Caption" value="#{Translations}"/>
 					<Property key="TextAlign" value="Left"/>
-					<Property key="TextColour" value="0.7 0.9 1.0"/>
-					<Property key="Colour" value="0.7 0.9 1.0"/>
+					<Property key="TextColour" value="0.7 1.0 0.7"/>
+					<Property key="Colour" value="0.7 0.9 0.7"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="132 400 300 28" name="OpenDonations">
+				<Widget type="Button" skin="Button" position="432 250 300 28" name="OpenSources">
+					<Property key="Caption" value="#{Sources}"/>
+					<Property key="TextAlign" value="Left"/>
+					<Property key="TextColour" value="0.7 0.9 0.9"/>
+					<Property key="Colour" value="0.7 0.9 0.9"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="32 350 300 28" name="OpenDonations">
 					<Property key="Caption" value="#{Donations}"/>
 					<Property key="TextAlign" value="Left"/>
 					<Property key="TextColour" value="0.9 0.7 1.0"/>
@@ -2604,10 +2608,15 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
-				<Property key="Caption" value="#F0E8DC#{Contributing}"/>
+				<Property key="Caption" value="#C0F0C0#{Contributing}"/>
 				<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
-					<Property key="ImageCoord" value="256 768 128 128"/>
-					<Property key="Alpha" value="0.6"/>
+					<Property key="ImageCoord" value="256 640 128 128"/>
+					<Property key="Alpha" value="0.5"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="660 48 64 64">
+					<Property key="ImageCoord" value="256 256 128 128"/>
+					<Property key="Alpha" value="0.5"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
 				<Widget type="EditBox" skin="EditBoxStretch" position="32 16 600 480" name="Contributing">
@@ -2617,8 +2626,8 @@
 					<Property key="VisibleHScroll" value="false"/>
 					<Property key="VisibleVScroll" value="true"/>
 					<Property key="MaxTextLength" value="8000"/>
-					<Property key="TextColour" value="0.8 0.8 1.0"/>
-					<Property key="Colour" value="0.5 0.5 0.7"/>
+					<Property key="TextColour" value="0.85 0.85 0.9"/>
+					<Property key="Colour" value="0.6 0.65 0.65"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
@@ -2636,9 +2645,10 @@
 					<Property key="TextColour" value="0.7 0.86 1"/>
 					<Property key="TextAlign" value="Right Top"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="520 248 160 24">
+				<Widget type="TextBox" skin="TextBox" position="520 248 180 24">
 					<Property key="Caption" value="#{AndContributors}"/>
 					<Property key="TextColour" value="0.7 0.86 1"/>
+					<Property key="FontName" value="font.big"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="172 416 150 24">
 					<Property key="Caption" value="#{BasedOn}"/>
@@ -2651,11 +2661,11 @@
 				<Widget type="ImageBox" skin="ImageBox" position="274 208 256 256">
 					<Property key="ImageTexture" value="_ch-logo.png"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="14 434 376 94">
+				<Widget type="ImageBox" skin="ImageBox" position="528 440 370 86">
 					<Property key="ImageTexture" value="vdrift-logo.png"/>
 					<UserString key="tip" value="vdrift.net"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="528 440 256 128">
+				<Widget type="ImageBox" skin="ImageBox" position="44 440 256 128">
 					<Property key="ImageTexture" value="ogre-logo.png"/>
 					<UserString key="tip" value="www.ogre3d.org"/>
 				</Widget>
@@ -3841,46 +3851,6 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
-				<Property key="Caption" value="#60A0FF#{Settings}"/>
-				<Widget type="TextBox" skin="TextBox" position="32 32 252 24">
-					<Property key="TextColour" value="0.68 0.74 0.8"/>
-					<Property key="Caption" value="#{Startup}"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="StartInMain">
-					<Property key="TextColour" value="0.6 0.7 0.8"/>
-					<Property key="Caption" value="#{StartInMain}"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 94 256 24" name="AutoStart">
-					<Property key="TextColour" value="0.7 0.8 0.9"/>
-					<Property key="Caption" value="#{AutoLoad}"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 126 256 24" name="EscQuits">
-					<Property key="TextColour" value="0.7 0.8 0.9"/>
-					<Property key="Caption" value="#{EscQuit}"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 158 256 24" name="OgreDialog">
-					<Property key="TextColour" value="0.4 0.5 0.6"/>
-					<Property key="Caption" value="#{OgreDialog}"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 222 256 24" name="MouseCapture">
-					<Property key="TextColour" value="0.6 0.7 0.8"/>
-					<Property key="Caption" value="#{MouseCapture}"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="32 254 256 24" name="ScreenPng">
-					<Property key="TextColour" value="0.55 0.6 0.65"/>
-					<Property key="Caption" value="#{ScreenshotPng}"/>
-				</Widget>
-
-				<Widget type="Button" skin="CheckBox" position="362 62 256 24" name="MultiThread">
-					<Property key="TextColour" value="0.7 0.89 1.0"/>
-					<Property key="Caption" value="#{MultiThread} *"/>
-				</Widget>
-				<Widget type="Button" skin="CheckBox" position="362 94 300 24" name="ShowPictures">
-					<Property key="TextColour" value="0.5 0.6 0.7"/>
-					<Property key="Caption" value="#{ShowPictures} *"/>
-				</Widget>
-			</Widget>
-			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#B090E0#{Sound}"/>
 				<Widget type="TabControl" skin="TabControl" position="16 15 744 500" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
@@ -4033,6 +4003,46 @@
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
 					</Widget>
+				</Widget>
+			</Widget>			
+			<Widget type="TabItem" skin="" position="2 24 794 562">
+				<Property key="Caption" value="#60A0FF#{Settings}"/>
+				<Widget type="TextBox" skin="TextBox" position="32 32 252 24">
+					<Property key="TextColour" value="0.68 0.74 0.8"/>
+					<Property key="Caption" value="#{Startup}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 62 256 24" name="StartInMain">
+					<Property key="TextColour" value="0.6 0.7 0.8"/>
+					<Property key="Caption" value="#{StartInMain}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 94 256 24" name="AutoStart">
+					<Property key="TextColour" value="0.7 0.8 0.9"/>
+					<Property key="Caption" value="#{AutoLoad}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 126 256 24" name="EscQuits">
+					<Property key="TextColour" value="0.7 0.8 0.9"/>
+					<Property key="Caption" value="#{EscQuit}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 158 256 24" name="OgreDialog">
+					<Property key="TextColour" value="0.4 0.5 0.6"/>
+					<Property key="Caption" value="#{OgreDialog}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 222 256 24" name="MouseCapture">
+					<Property key="TextColour" value="0.6 0.7 0.8"/>
+					<Property key="Caption" value="#{MouseCapture}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 254 256 24" name="ScreenPng">
+					<Property key="TextColour" value="0.55 0.6 0.65"/>
+					<Property key="Caption" value="#{ScreenshotPng}"/>
+				</Widget>
+
+				<Widget type="Button" skin="CheckBox" position="362 62 256 24" name="MultiThread">
+					<Property key="TextColour" value="0.7 0.89 1.0"/>
+					<Property key="Caption" value="#{MultiThread} *"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="362 94 300 24" name="ShowPictures">
+					<Property key="TextColour" value="0.5 0.6 0.7"/>
+					<Property key="Caption" value="#{ShowPictures} *"/>
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">

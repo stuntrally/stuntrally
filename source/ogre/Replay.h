@@ -165,8 +165,6 @@ public:
 	void CopyFrom(const Replay2& rpl);
 	void DeleteFrames(int carNum, float fromTime);
 
-	static bool fixOldTrkName(std::string& trk);  // old
-
 	ReplayHeader2 header;
 private:
 	typedef std::vector<ReplayFrame2> Frames;  // 1 player
@@ -288,8 +286,6 @@ public:
 	void Clear();  // call this after header.numPlayers change
 	void CopyFrom(const Replay& rpl);
 	void DeleteFrames(int carNum, double fromTime);
-
-	static bool fixOldTrkName(std::string& trk);  // old
 
 	ReplayHeader header;
 	//ReplayHeader2 header;

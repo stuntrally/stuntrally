@@ -122,26 +122,8 @@ bool Replay::LoadFile(std::string file, bool onlyHdr)
 	if (!header.track_user)  // ver below 2.5
 	{
 		std::string trk = header.track;
-		fixOldTrkName(trk);
 		strcpy(header.track, trk.c_str());
 	}
-
-    #ifdef LOG_RPL
-		//if (!onlyHdr)
-		//	LogO(">- Load replay --  file: "+file+"  players:"+toStr(header.numPlayers));
-		if (!onlyHdr)  
-		for (int p=0; p < header.numPlayers; ++p)
-		{
-			if (p==0)  {
-				//LogO(String(">- Load replay  nick:")+header.nicks[p]+"  car:"+header.car);
-			}else{
-				// versions below 8 had wrong nicks and cars in header for more than 1 player
-				if (strlen(header.cars[p]) < 2)
-					strcpy(header.cars[p], "3S");
-				//LogO(String(">- Load replay  nick:")+header.nicks[p]+"  car:"+String(&header.cars[0][p]));
-			}
-		}
-	#endif
 	
 	//  clear
 	Clear();

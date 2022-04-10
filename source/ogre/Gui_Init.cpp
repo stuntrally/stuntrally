@@ -414,8 +414,6 @@ void CGui::InitGui()
 	//  replays  ------------------------------------------------------------
 	Btn("RplLoad",   btnRplLoad);    Btn("RplSave",   btnRplSave);
 	Btn("RplDelete", btnRplDelete);  Btn("RplRename", btnRplRename);
-	Btn("RenameOldTrk", btnRenameOldTrk);  Btn("ConvertAllRpl", btnConvertAllRpl);
-	txtConvert = fTxt("TxtConvert");
 	//  settings
 	ck= &ckRplAutoRec;		ck->Init("RplChkAutoRec",	&app->bRplRec);
 	ck= &ckRplBestOnly;		ck->Init("RplChkBestOnly",	&pSet->rpl_bestonly);
@@ -543,7 +541,8 @@ void CGui::InitGui()
 	Btn("btnNetLeave", evBtnNetLeave);	btnNetLeave = btn;
 
 	//  panels to hide tabs
-	panNetServer = fWP("panelNetServer");  panNetServer->setVisible(false);
+	panNetServer  = fWP("panelNetServer");   panNetServer->setVisible(false);
+	panNetServer2 = fWP("panelNetServer2");  panNetServer2->setVisible(false);
 	panNetGame = fWP("panelNetGame");      panNetGame->setVisible(true);
 
 	//  chat

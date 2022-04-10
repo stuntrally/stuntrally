@@ -39,15 +39,13 @@ CGui::CGui(App* app1)
 	,edRplName(0), edRplDesc(0)
 	,rbRplCur(0), rbRplAll(0)
 	, bRplBack(0),bRplFwd(0)
-	,bConvertRpl(0),iConvCur(0),iConvAll(0),iConvFiles(0),iConvPathCur(0),iConvPathAll(0)
-	, mThrConvert(),txtConvert(0), totalConv(0),totalConvCur(0),totalConvNew(0)
 	//  gui multiplayer
 	,netGuiMutex(), netGameInfo()
 	,bUpdChat(false), iChatMove(0)
 	,bRebuildPlayerList(0), bRebuildGameList(0), bUpdateGameInfo(0)
 	,bStartGame(0), bStartedGame(0)
 	,tabsNet(0)
-	,panNetServer(0), panNetGame(0), panNetTrack(0)
+	,panNetServer(0),panNetServer2(0), panNetGame(0), panNetTrack(0)
 	,listServers(0), listPlayers(0)
 	,edNetChat(0), liNetEnd(0)
 	,btnNetRefresh(0), btnNetJoin(0), btnNetCreate(0), btnNetDirect(0)
@@ -110,6 +108,4 @@ CGui::CGui(App* app1)
 
 CGui::~CGui()
 {
-	if (mThrConvert.joinable())
-		mThrConvert.join();
 }

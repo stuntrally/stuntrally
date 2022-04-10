@@ -381,11 +381,14 @@ void CGui::join(string host, string port, string password)
 
 	tabsNet->setIndexSelected(1);
 	panNetServer->setVisible(true);  panNetGame->setVisible(false);
+	panNetServer2->setVisible(true);
 	panNetTrack->setVisible(true);   gcom->trkList->setVisible(false);
 }
 
 void CGui::evBtnNetRefresh(WP)
 {
+	if (pSet->master_server_address.empty())
+		return;
 	app->mMasterClient.reset(new MasterClient(this));
 	app->mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
 	// The actual refresh will be requested automatically when the connection is made
@@ -443,7 +446,8 @@ void CGui::evBtnNetCreate(WP)
 		if (!app->mMasterClient)
 		{
 			app->mMasterClient.reset(new MasterClient(this));
-			app->mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
+			if (!pSet->master_server_address.empty())
+				app->mMasterClient->connect(pSet->master_server_address, pSet->master_server_port);
 		}
 		uploadGameInfo();
 		updateGameInfoGUI();
@@ -453,6 +457,7 @@ void CGui::evBtnNetCreate(WP)
 
 		tabsNet->setIndexSelected(1);
 		panNetServer->setVisible(true);  panNetGame->setVisible(false);
+		panNetServer2->setVisible(true);
 		panNetTrack->setVisible(false);  gcom->trkList->setVisible(true);
 
 		boost::mutex::scoped_lock lock(netGuiMutex);
@@ -470,6 +475,7 @@ void CGui::evBtnNetLeave(WP)
 
 	tabsNet->setIndexSelected(0);
 	panNetServer->setVisible(false);  panNetGame->setVisible(true);
+	panNetServer2->setVisible(false);
 	panNetTrack->setVisible(false);   gcom->trkList->setVisible(true);
 }
 

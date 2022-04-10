@@ -172,7 +172,7 @@ BaseApp::BaseApp()
 	,isFocGui(0),isFocRpl(0)
 
 	,mGui(0), mPlatform(0)
-	,mWndTabsGame(0),mWndTabsOpts(0),mWndTabsHelp(0),mWndTabsRpl(0)
+	,mWndTabsGame(0),mWndTabsRpl(0),mWndTabsHelp(0),mWndTabsOpts(0)
 	,mWndMain(0),mWndGame(0),mWndReplays(0),mWndHelp(0),mWndOpts(0)
 	,mWndWelcome(0), mWndRpl(0), mWndNetEnd(0), mWndTweak(0), mWndTrkFilt(0)
 	,mWndChampStage(0),mWndChampEnd(0), mWndChallStage(0),mWndChallEnd(0)

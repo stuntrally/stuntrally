@@ -500,34 +500,34 @@ void CGui::toggleGui(bool toggle)
 	if (app->mWndHelp->getVisible() && loadReadme)
 	{
 		loadReadme = false;
-		Ed ed = fEd("Readme");
-		if (ed)
-		{	string path = PATHMANAGER::Data()+"/../Readme.md";
+		Ed ed;  string path;
+		
+		auto ReadMd = [&]()
+		{
 			std::ifstream fi(path.c_str());
 			if (fi.good())
-			{	String text = "", s;
+			{
+				String text = "", s;
 				while (getline(fi,s))
 				{
 					s = StringUtil::replaceAll(s, "#", "##");
+					s = StringUtil::replaceAll(s, "**", "");
 					text += s + "\n";
 				}
 				ed->setCaption(UString(text));
 				ed->setVScrollPosition(0);
-		}	}
+		}	};
+		
+		ed = fEd("Readme");
+		if (ed)
+		{	path = PATHMANAGER::Data()+"/../Readme.md";
+			ReadMd();
+		}
 		ed = fEd("Contributing");
 		if (ed)
-		{	string path = PATHMANAGER::Data()+"/../Contributing.md";
-			std::ifstream fi(path.c_str());
-			if (fi.good())
-			{	String text = "", s;
-				while (getline(fi,s))
-				{
-					s = StringUtil::replaceAll(s, "#", "##");
-					text += s + "\n";
-				}
-				ed->setCaption(UString(text));
-				ed->setVScrollPosition(0);
-	}	}	}
+		{	path = PATHMANAGER::Data()+"/../Contributing.md";
+			ReadMd();
+	}	}
 
 	///  update track tab, for champs wnd
 	bool game = pSet->inMenu == MNU_Single, champ = pSet->inMenu == MNU_Champ,
@@ -716,23 +716,6 @@ void CGui::GuiUpdate()
 
 		FillTweakLists();
 		btnTweakTireLoad(0);  // load back
-	}
-	
-	
-	///  rpl convert tool
-	if (bConvertRpl)
-	{	boost::this_thread::sleep(boost::posix_time::milliseconds(50));
-
-		txtConvert->setCaption(
-		"#C0C0FF""Path: "+ iToStr(iConvPathCur+1,1) +" / "+ iToStr(iConvPathAll,1) +"\n"+
-		"#A0D0FF""Files: "+ iToStr(iConvCur+1,4) +" / "+ iToStr(iConvAll,4) +"  : "+ iToStr(iConvFiles,4) +"\n"+
-		(totalConv == 0 ? "" :
-		"#A0F0F0""Progress: "+ fToStr(100.f* float(totalConvCur)/float(totalConv), 2,5) +" %\n")+
-		"#A0C0E0""Sizes\n"+
-		"#F0A0A0""old:    "+ fToStr( float(totalConv)/1000000.f, 2,5) +" MiB\n"+
-		"#A0F0A0""new:  "+ fToStr( float(totalConvNew)/1000000.f, 2,5) +" MiB\n"+
-		(totalConvCur!=totalConv || totalConv==0 ? "" :
-		"#F0F0A0""ratio:  "+ fToStr(100.f* float(totalConvNew)/float(totalConv), 1,4) +" %") );
 	}
 }
 

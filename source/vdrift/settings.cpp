@@ -217,7 +217,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,loadingbackground(true), show_welcome(true)
 	//  network
 	,nickname("Player"), netGameName("Default Game")
-	,master_server_address("localhost")
+	,master_server_address("")
 	,master_server_port(protocol::DEFAULT_PORT)
 	,local_port(protocol::DEFAULT_PORT)
 	,connect_address("localhost")

@@ -52,12 +52,22 @@
 	<Tag name="Challenge">Challenge</Tag>
 
 	<Tag name="ReplaysMenu">Replays</Tag>
-	<Tag name="Donations">Donations</Tag>
 	<Tag name="Options">Options</Tag>
 	<Tag name="Quit">Quit</Tag>
 	<Tag name="BackMenu">Back</Tag>
+
 	<Tag name="Help">Help</Tag>
 	<Tag name="Readme">Readme</Tag>
+	<Tag name="Support">Support</Tag>
+	<Tag name="Contributing">Contributing</Tag>
+
+	<Tag name="LinksToWeb">Links to websites:</Tag>
+	<Tag name="Website">Website</Tag>
+	<Tag name="DocumentationWiki">Documentation (Wiki)</Tag>
+	<Tag name="Forum">Forum</Tag>
+	<Tag name="Sources">Sources</Tag>
+	<Tag name="Translations">Translations</Tag>
+	<Tag name="Donations">Donations</Tag>
 
 
 	<!--  MAIN  Championship  buttons  -->
@@ -1501,7 +1511,7 @@
 	<!--  Game  User Path  -->
 	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
 	<!--  MAIN  Game  Quick Help  (@ is used for new line)  -->
-	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@http://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@http://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.@</Tag>
+	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@https://code.google.com/p/vdrift-ogre/wiki/Running##Controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@https://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.@</Tag>
 	<!--  TIP  Slider  -->
 	<Tag name="TipSliderReset">RMB on slider - reset to default value.</Tag>
 
