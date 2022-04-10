@@ -1,6 +1,16 @@
-#--  sr data
-data/ghosts/original
-data/tracks
+#--  transl
+locale/translation*
+#.tx
+#/*
+tx
+*.pot
+sr.log
+#*.xml
+#core_lang*
+data/gui/core_language_*_tag.xml
+!*/core_language_en_tag.xml
+#source/ogre/BaseApp_Create.cpp
+#source/editor/BaseApp_Create.cpp
 
 #--  build
 *build
@@ -9,7 +19,6 @@ Debug*
 Release*
 bin
 lib
-
 CMakeLists.txt.user*
 
 #-- win bin
@@ -29,8 +38,10 @@ SR?Editor*.*
 stuntrally*
 sr-editor*
 
-#--  transl
-locale/translation*
-.tx
-*.pot
-sr.log
+#--  sr data
+data/ghosts/original
+data/tracks
+data/car*/
+#data
+#.vscode
+#tracks.ini

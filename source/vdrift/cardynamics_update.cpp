@@ -576,7 +576,7 @@ void CARDYNAMICS::UpdateWheelContacts()
 	{
 		COLLISION_CONTACT & wheelContact = wheel_contact[WHEEL_POSITION(i)];
 		MATHVECTOR<float,3> raystart = LocalToWorld(wheel[i].GetExtendedPosition());
-		raystart = raystart - raydir * wheel[i].GetRadius();  //*!
+		raystart = raystart - raydir * wheel[i].GetRadius();// *0.5;  //*?!
 		float raylen = wheel[i].GetRayLength();
 		
 		world->CastRay( raystart, raydir, raylen, chassis, wheelContact, this,i, !pSet->game.collis_cars, false );
@@ -608,8 +608,8 @@ void CARDYNAMICS::UpdateMass()
 	center_of_mass = center_of_mass + fuel_tank.GetPosition() * fuel_tank.GetMass();
 
 	body.SetMass(total_mass);
-	cam_body.SetMass(total_mass * gPar.camBncMass);
-	fBncMass = 1350.0 / total_mass;
+	cam_body.SetMass(1350/*total_mass/**/ * gPar.camBncMass);
+	fBncMass = 1350;//1.0; //1350.0 / total_mass;
 
 	center_of_mass = center_of_mass * (1.0 / total_mass);
 	

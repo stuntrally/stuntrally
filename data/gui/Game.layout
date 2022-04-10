@@ -1527,12 +1527,12 @@
 							<Property key="Alpha" value="0.6"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="552 406 164 40" name="btnNetCreate">
+						<Widget type="Button" skin="Button" position="352 206 164 40" name="btnNetCreate">
 							<Property key="Caption" value="#{NetCreateGame}"/>
 							<Property key="Colour" value="0.6 1 1"/>
 							<Property key="TextColour" value="0.5 1 1"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="374 406 164 40" name="btnNetDirect">
+						<Widget type="Button" skin="Button" position="174 206 164 40" name="btnNetDirect">
 							<Property key="Colour" value="1 0.8 0.5"/>
 							<Property key="TextColour" value="1 0.8 0.5"/>
 							<Property key="Caption" value="#{NetDirectConnect}"/>
@@ -1657,7 +1657,7 @@
 						</Widget>
 						<Widget type="ImageBox" skin="ImageBox" position="20 2 340 340">
 							<Property key="ImageCoord" value="256 394 128 128"/>
-							<Property key="Alpha" value="0.15"/>
+							<Property key="Alpha" value="0.1"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="20 42 124 24">
@@ -2478,14 +2478,14 @@
 				<Property key="Colour" value="1 0.6 0.2"/>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
-				<Property key="Caption" value="#C080FF#{Support}"/>
-				<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
-					<Property key="ImageCoord" value="640 640 128 128"/>
+				<Property key="Caption" value="#A0C0FF#{Support}"/>
+				<Widget type="ImageBox" skin="ImageBox" position="356 106 56 56">
+					<Property key="ImageCoord" value="640 0 128 128"/>
 					<Property key="Alpha" value="0.6"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="660 2 56 56">
-					<Property key="ImageCoord" value="640 0 128 128"/>
+				<Widget type="ImageBox" skin="ImageBox" position="356 286 56 56">
+					<Property key="ImageCoord" value="640 640 128 128"/>
 					<Property key="Alpha" value="0.6"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
@@ -2505,37 +2505,43 @@
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<Property key="Colour" value="0.8 0.9 1.0"/>
 				</Widget>
+				<Widget type="Button" skin="Button" position="432 30 300 28" name="OpenWelcome">
+					<Property key="Caption" value="#C0E0FF#{HintKey}: #{WelcomeTo}"/>
+					<Property key="TextAlign" value="Left"/>
+					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<Property key="Colour" value="0.8 0.9 1.0"/>
+				</Widget>
 				<Widget type="Button" skin="Button" position="32 100 300 28" name="OpenWebsite">
-					<Property key="Caption" value="#{Website}"/>
+					<Property key="Caption" value="#{Homepage}"/>
 					<Property key="TextAlign" value="Left"/>
 					<Property key="TextColour" value="1.0 1.0 1.0"/>
 					<Property key="Colour" value="1.0 1.0 1.0"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="32 150 300 28" name="OpenWiki">
+				<Widget type="Button" skin="Button" position="32 140 300 28" name="OpenWiki">
 					<Property key="Caption" value="#{DocumentationWiki}"/>
 					<Property key="TextAlign" value="Left"/>
 					<Property key="TextColour" value="0.9 0.9 0.7"/>
 					<Property key="Colour" value="0.9 0.9 0.7"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="32 250 300 28" name="OpenForum">
+				<Widget type="Button" skin="Button" position="32 220 300 28" name="OpenForum">
 					<Property key="Caption" value="#{Forum}"/>
 					<Property key="TextAlign" value="Left"/>
 					<Property key="TextColour" value="0.5 0.7 1.0"/>
 					<Property key="Colour" value="0.5 0.7 1.0"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="432 200 300 28" name="OpenTransl">
+				<Widget type="Button" skin="Button" position="432 140 300 28" name="OpenTransl">
 					<Property key="Caption" value="#{Translations}"/>
 					<Property key="TextAlign" value="Left"/>
 					<Property key="TextColour" value="0.7 1.0 0.7"/>
 					<Property key="Colour" value="0.7 0.9 0.7"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="432 250 300 28" name="OpenSources">
+				<Widget type="Button" skin="Button" position="432 220 300 28" name="OpenSources">
 					<Property key="Caption" value="#{Sources}"/>
 					<Property key="TextAlign" value="Left"/>
 					<Property key="TextColour" value="0.7 0.9 0.9"/>
 					<Property key="Colour" value="0.7 0.9 0.9"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="32 350 300 28" name="OpenDonations">
+				<Widget type="Button" skin="Button" position="32 300 300 28" name="OpenDonations">
 					<Property key="Caption" value="#{Donations}"/>
 					<Property key="TextAlign" value="Left"/>
 					<Property key="TextColour" value="0.9 0.7 1.0"/>
@@ -2614,7 +2620,7 @@
 					<Property key="Alpha" value="0.5"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="660 48 64 64">
+				<Widget type="ImageBox" skin="ImageBox" position="660 48 72 72">
 					<Property key="ImageCoord" value="256 256 128 128"/>
 					<Property key="Alpha" value="0.5"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
@@ -2644,30 +2650,38 @@
 					<Property key="Caption" value="#{GameBy}"/>
 					<Property key="TextColour" value="0.7 0.86 1"/>
 					<Property key="TextAlign" value="Right Top"/>
+					<Property key="FontName" value="font.big"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="520 248 180 24">
 					<Property key="Caption" value="#{AndContributors}"/>
 					<Property key="TextColour" value="0.7 0.86 1"/>
 					<Property key="FontName" value="font.big"/>
+					<Property key="FontName" value="font.big"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="172 416 150 24">
+				<Widget type="TextBox" skin="TextBox" position="142 416 150 24">
 					<Property key="Caption" value="#{BasedOn}"/>
-					<Property key="TextColour" value="0.85 0.85 0.85"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="594 416 150 24">
-					<Property key="Caption" value="#{AndUsing}"/>
 					<Property key="TextColour" value="0.8 1 0.8"/>
+					<Property key="FontName" value="font.big"/>
+					<Property key="Alpha" value="0.7"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="574 416 150 24">
+					<Property key="Caption" value="#{AndUsing}"/>
+					<Property key="TextColour" value="0.85 0.85 0.85"/>
+					<Property key="FontName" value="font.big"/>
+					<Property key="Alpha" value="0.7"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="274 208 256 256">
 					<Property key="ImageTexture" value="_ch-logo.png"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="528 440 370 86">
+				<Widget type="ImageBox" skin="ImageBox" position="408 440 370 86">
 					<Property key="ImageTexture" value="vdrift-logo.png"/>
 					<UserString key="tip" value="vdrift.net"/>
+					<Property key="Alpha" value="0.6"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="44 440 256 128">
 					<Property key="ImageTexture" value="ogre-logo.png"/>
 					<UserString key="tip" value="www.ogre3d.org"/>
+					<Property key="Alpha" value="0.5"/>
 				</Widget>
 			</Widget>
 		</Widget>

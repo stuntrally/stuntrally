@@ -9,6 +9,7 @@ Even smaller things count like:
 - Sharing an honest opinion, or idea on Forum.
 - Constructive discussion about features, etc.
 - Improving a translation to a language.
+- Spreading info about Stunt Rally on internet.
 
 
 Below is a list (in no order, just my favorite 2 first)
@@ -18,12 +19,12 @@ of bigger focused contributions:
 ## Programmers
 
 If you know C++, newest [OGRE](https://forums.ogre3d.org/viewforum.php?f=25) (2 and up) or shaders,  
-and preferably could handle some of the [Roadmap] tasks.  
+and preferably could handle some of the [Roadmap](https://stuntrally.tuxfamily.org/wiki/doku.php?id=roadmap) tasks.  
 Own ideas could also go into SR, just need some discussion first.  
-Most ideas are already in Mantis, [Tasks](https://stuntrally.tuxfamily.org/mantis/view_all_bug_page.php). Sort by P (priority): 1 is most important, higher are less so.
+Most ideas are already in [Tasks](https://stuntrally.tuxfamily.org/mantis/view_all_bug_page.php). Sorted by P (priority): 1 is most important, higher are less so.
 
-Small changes can go through [pull requests](https://github.com/stuntrally/stuntrally/pulls).  
-For those with more time and effort, commits to main branch will be possbile.
+Medium changes can go through [pull requests](https://github.com/stuntrally/stuntrally/pulls).  
+For those with more time and effort, commits to main branch will be possible.
 
 There is no style guide (yet), I simply recommend following my own.  
 A quick info: it is not random, it's quite specifically formatted to how I want it to be (in my files).
@@ -31,7 +32,7 @@ A quick info: it is not random, it's quite specifically formatted to how I want 
 ------------------------
 ## Track creators
 
-If you manage to create an interesting track, it can be released in future versions.  
+If you manage to create an interesting track, it can be included in future versions.  
 Tracks are shared on [this forum](https://forum.freegamedev.net/viewforum.php?f=80).  
 If needed I usually finish them and improve FPS (performance), may change something.  
 Tracks are licensed GPLv3 by default.
@@ -39,9 +40,9 @@ Tracks are licensed GPLv3 by default.
 ------------------------
 ## Testers
 
-If you found a bugs please report it, info [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=troubleshooting).  
+If you found a bug please report it, info [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=troubleshooting).  
 Even better if you're able to build from sources.  
-If so, then honests, constructive opinions or suggestions (e.g. about my latest changes) are welcome, on Forum.
+If so, then also honest, constructive opinions or suggestions (e.g. about my latest changes) are welcome, on Forum.
 
 ## Packagers
 

@@ -361,6 +361,34 @@ material roadSandMagic_ter
 	normalMap normal_2.png
 }
 
+//  Mirror  ----
+material roadMagicMirror
+{
+	parent road
+	ambient 0.24 0.18 0.76
+	diffuse 0.32 0.42 0.92
+	specular 0.3 0.6 1.0  16 //x4
+	diffuseMap roadSandSet.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.45
+	bump_scale 0.3
+	//specMap roadAsphalt_spec2.jpg
+}
+material roadMagicMirror_ter
+{
+	parent road_terrain
+	ambient 0.24 0.18 0.76
+	diffuse 0.32 0.42 0.92
+	specular 0.3 0.6 1.0  16 //x4
+	diffuseMap roadSandSet.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.3
+	bump_scale 0.3
+	normalMap normal_2.png
+}
+
 //  Crystals
 material roadCrystal
 {

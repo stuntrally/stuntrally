@@ -22,7 +22,7 @@
 
 ------------------------------------------------------------------------------
 
-# Links
+## Links
 
 [Stunt Rally Homepage](https://stuntrally.tuxfamily.org/) - Download links, Documentation wiki, track & vehicle browsers etc.  
 [Forums](https://forum.freegamedev.net/viewforum.php?f=77) - Discussions, tracks, Issues, etc.  
@@ -33,7 +33,7 @@
 
 ------------------------------------------------------------------------------
 
-# Description
+## Description
 
 Stunt Rally features 182 tracks in 35 sceneries and 24 vehicles.  
 Game modes include:
@@ -45,14 +45,14 @@ The Track Editor allows creating and modifying tracks.
 Both run on GNU/Linux and Windows.  
 
 The game has a **rally** style of driving, mostly on gravel (like Richard Burns Rally),  
-with possible **stunt** elements (jumps, loops, pipes) and generates roads from 3D spline.  
+with possible **stunt** elements (jumps, loops, pipes) and generated roads from 3D spline.  
 It also features few Sci-Fi vehicles and planets.
 
 Full features list on [our Wiki](https://stuntrally.tuxfamily.org/wiki/doku.php?id=features). Page about Multiplayer [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=multiplayer).
 
 ------------------------------------------------------------------------------
 
-# Hardware requirements
+### Hardware requirements
 
 The recommended minimum hardware is:  
 * CPU: with 2 cores, above 2.4GHz,  
@@ -63,7 +63,7 @@ Integrated GPUs and old laptops don't handle the game well or at all.
 
 ------------------------------------------------------------------------------
 
-# Game
+## Game
 
 Localized help for new users, is on the Welcome screen, shown at game start.  
 Or press Ctrl-F1 to show it. It also has game related Hints.  
@@ -75,14 +75,14 @@ Open Options tab Input, to see or reassign keys, or configure a game controller.
 
 Have fun 😀
 
-## Throubleshooting
+### Troubleshooting
 
 If you have problems running, read Wiki page [Running](https://stuntrally.tuxfamily.org/wiki/doku.php?id=running).  
 All settings and logs are saved to user folder, see [Paths](https://stuntrally.tuxfamily.org/wiki/doku.php?id=paths).
 
 ------------------------------------------------------------------------------
 
-# Editor
+## Editor
 
 In editor - F1 (or tilde) key shows/hides GUI, Tab key switches between Camera and Edit modes.  
 Press Ctrl-F1 to read what can be edited and how.  
@@ -90,13 +90,13 @@ Press Ctrl-F1 to read what can be edited and how.
 There is no undo, so use F5 to reload last track state, and F4 to save it (often).  
 After each save, track can be tested in game.
 
-## Tutorial
+### Tutorial
 
 Editor Tutorial page with more info and videos [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=editor)
 
 ------------------------------------------------------------------------------
 
-# Feedback
+## Feedback
 
 Before reporting bugs and issues. Be sure to [Read before posting](https://forum.freegamedev.net/viewtopic.php?f=78&t=3814) topic first ;)
 
@@ -107,12 +107,12 @@ IRC is *not* used now: #stuntrally on freenode.
 
 ------------------------------------------------------------------------------
 
-# Building from sources
+## Building from sources
 
 For newest sources and how to compile them see page [Compiling](https://stuntrally.tuxfamily.org/wiki/doku.php?id=compile).
 
 ------------------------------------------------------------------------------
 
-# Contributing
+## Contributing
 
 If you'd like to contribute, please check [Contributing.md](https://github.com/stuntrally/stuntrally/blob/master/Contributing.md)

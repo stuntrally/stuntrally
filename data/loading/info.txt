@@ -1,19 +1,19 @@
 number  track  vehicle(s)
 
 1  Grc2-Coast  BV
-2  Jng13-Tropic  N1
+2  Jng13-Tropic  N1  - renew..
 3  For12-HighPeaks  LK4
-4  For4-OSquare  3S
+4  For4-OSquare  3S  -
 5  Jng20-JungleMaze  LK4
 6  Mos2-Mouse  FR4
 
 7  Atm3-Orange  SZ
 8  Isl13-Beauty  V1 V3
-9  Sur1-Surreal  S1
+9  Sur1-Surreal  S1  -
 10 Can6-Abyss  O
 11 Aus6-Cannon  TW
 
-12 Mrs4-Platforms  S1
+12 Mrs4-Platforms  S1  -
 13 Atm7-Industrial  TU
 14 Vlc6-Crematoria  Y7
 15 Vlc12-LavaPools  Y7 ES
@@ -27,13 +27,13 @@ number  track  vehicle(s)
 22 Tox1-Radioactive  V2 Y7
 
 23 Mos5-Factory  FN ES S8
-24 Sav14-Refinery  TC6
-25 Sav12-Infinity  360
+24 Sav14-Refinery  TC6  -
+25 Sav12-Infinity  360  -
 26 Atm8-Ultima  XZ
 
 27 Des17-NileCity  TU ES
 28 Grc8-SlopeCity  BV
 29 Wnt11-Glacier  HR UV
 30 Isl5-Shore  OT
-31 Fin1-Lakes  S1
-32 Sav2-Frenzy  CT
+31 Fin1-Lakes  S1  -
+32 Sav2-Frenzy  CT  -
