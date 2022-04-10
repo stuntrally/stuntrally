@@ -8,7 +8,7 @@
 # $ENETDIR is an environment variable used for finding enet.
 #
 #  Borrowed from The Mana World
-#  http://themanaworld.org/
+#  https://themanaworld.org/
 #
 # Several changes and additions by Fabian 'x3n' Landau
 # Lots of simplifications by Adrian Friedli

@@ -1,6 +1,7 @@
 #include "core.h"
 
-// Inspired by Blender GLSL Water by martinsh ( http://devlog-martinsh.blogspot.de/2012/07/waterundewater-shader-wip.html )
+// Inspired by Blender GLSL Water by martinsh
+// https://devlog-martinsh.blogspot.de/2012/07/waterundewater-shader-wip.html
 
 
 #define SHADOWS @shGlobalSettingBool(shadows_pssm) && @shPropertyBool(receives_shadows)
