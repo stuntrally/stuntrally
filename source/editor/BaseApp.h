@@ -4,8 +4,8 @@
 #include <OgreString.h>
 #include <OgreFrameListener.h>
 #include "../sdl4ogre/events.h"
-namespace SFO  {  class InputWrapper;  class SDLCursorManager;  }
 struct SDL_Window;
+namespace SFO  {  class InputWrapper;  class SDLCursorManager;  }
 namespace MyGUI{  class OgreD3D11Platform;  class OgrePlatform;  }
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;
 	class Viewport;  class Camera;  class Overlay;  class OverlayElement;  }
@@ -15,7 +15,7 @@ class SplineRoad;  class SETTINGS;
 enum ED_MODE
 {
 	ED_Deform=0, ED_Smooth, ED_Height, ED_Filter, /*ED_Paint,*/
-	ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_Objects, ED_Rivers, ED_ALL
+	ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_Objects, ED_Emitters, ED_Rivers, ED_ALL
 };
 enum WND_Types
 {	WND_Track=0, WND_Edit, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu
@@ -122,7 +122,8 @@ protected:
 	#endif
 	Wnd mWndBrush, mWndCam, mWndStart,  // tool windows
 		mWndRoadCur, mWndRoadStats,
-		mWndFluids, mWndObjects, mWndRivers;
+		mWndFluids, mWndObjects,
+		mWndEmitters, mWndRivers;
 
 	//MyGUI::VectorWidgetPtr
 	std::vector<WP> vwGui;  // all widgets to destroy

@@ -3,8 +3,10 @@
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
+#include "../sdl4ogre/sdlinputwrapper.hpp"
 #include <boost/filesystem.hpp>
 #include <Ogre.h>
+#include <MyGUI_TextBox.h>
 #ifndef _WIN32
 #include <dirent.h>
 #endif
@@ -41,8 +43,8 @@ void CGui::GetMaterials(String filename, bool clear, String type)
 					{
 						if (skipFirst)
 						{	skipFirst = false;
-							continue;	}
-						
+							continue;
+						}
 						std::string match = (*it);
 						StringUtil::trim(match);
 						if (!match.empty())
@@ -201,4 +203,60 @@ void App::UpdWndTitle()
 	if (pSet->gui.track_user)  s += "  *user*";
 
 	SDL_SetWindowTitle(mSDLWindow, s.c_str());
+}
+
+
+//  key,mb info  ==================
+void App::UpdKeyBar(Real dt)
+{
+	// TODO: This is definitely not bullet-proof.
+	const int Kmax = SDL_SCANCODE_SLEEP;  // last key
+	static float tkey[Kmax+1] = {0.f,};  // key delay time
+	int i;
+	static bool first=true;
+	if (first)
+	{	first=false;
+		for (i=Kmax; i > 0; --i)  tkey[i] = 0.f;
+	}
+	String ss = "   ";
+	//  pressed
+	for (i=Kmax; i > 0; --i)
+		if (mInputWrapper->isKeyDown(SDL_Scancode(i)))
+			tkey[i] = 0.2f;  // min time to display
+
+	//  modif
+	const static int
+		lc = SDL_SCANCODE_LCTRL,  rc = SDL_SCANCODE_RCTRL,
+		la = SDL_SCANCODE_LALT,   ra = SDL_SCANCODE_RALT,
+		ls = SDL_SCANCODE_LSHIFT, rs = SDL_SCANCODE_RSHIFT;
+
+	if (tkey[lc] > 0.f || tkey[rc] > 0.f)	ss += "#D0F0D0Ctrl  ";
+	if (tkey[la] > 0.f || tkey[ra] > 0.f)	ss += "#D0F0D0Alt  ";
+	if (tkey[ls] > 0.f || tkey[rs] > 0.f)	ss += "#D0F0D0Shift  ";
+
+	//  mouse buttons
+	if (mbLeft)  ss += "#C0FFFFLMB  ";
+	if (mbRight)  ss += "#C0FFFFRMB  ";
+	if (mbMiddle)  ss += "#C0FFFFMMB  ";
+
+	//  all
+	for (i=Kmax; i > 0; --i)
+	{
+		if (tkey[i] > 0.f)
+		{	tkey[i] -= dt;  //dec time
+			if (i!=lc && i!=la && i!=ls && i!=rc && i!=ra && i!=rs)
+			{
+				String s = String(SDL_GetKeyName(SDL_GetKeyFromScancode(static_cast<SDL_Scancode>(i))));
+				s = StringUtil::replaceAll(s, "Keypad", "#FFFFC0Num ");
+				ss += "#FFFFFF" + s + "  ";
+			}
+	}	}
+	
+	//  mouse wheel
+	static int mzd = 0;
+	if (mz > 0)  mzd = 30;
+	if (mz < 0)  mzd = -30;
+	if (mzd > 0)  {  ss += "#D0D8FFWheel up";  --mzd;  }
+	if (mzd < 0)  {  ss += "#D0D8FFWheel down";  ++mzd;  }
+	txInput->setCaption(ss);
 }

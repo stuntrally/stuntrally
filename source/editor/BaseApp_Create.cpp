@@ -168,9 +168,11 @@ BaseApp::BaseApp()
 	,mWndMain(0), mWndTrack(0),mWndEdit(0),mWndHelp(0),mWndOpts(0)
 	,mWndTrkFilt(0), mWndPick(0)
 	,mWndTabsTrack(0),mWndTabsEdit(0),mWndTabsHelp(0),mWndTabsOpts(0)
+	
 	,mWndBrush(0), mWndCam(0), mWndStart(0)
 	,mWndRoadCur(0), mWndRoadStats(0)
-	,mWndFluids(0), mWndObjects(0), mWndRivers(0)
+	,mWndFluids(0), mWndObjects(0)
+	,mWndEmitters(0), mWndRivers(0)
 {
 }
 
@@ -267,7 +269,7 @@ bool BaseApp::setup()
 	//LogManager::getSingleton().setLogDetail(LL_BOREME);  //-
 
 	#ifdef _DEBUG
-	#define D_SUFFIX "_d"
+	#define D_SUFFIX ""  // "_d"
 	#else
 	#define D_SUFFIX ""
 	#endif

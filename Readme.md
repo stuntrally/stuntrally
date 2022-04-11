@@ -98,7 +98,7 @@ Editor Tutorial page with more info and videos [here](https://stuntrally.tuxfami
 
 ## Feedback
 
-Before reporting bugs and issues. Be sure to [Read before posting](https://forum.freegamedev.net/viewtopic.php?f=78&t=3814) topic first ;)
+Before reporting bugs or issues, be sure to [Read before posting](https://forum.freegamedev.net/viewtopic.php?f=78&t=3814) topic first ;)
 
 Then create a topic on Forum [SR Bugs & Help](https://forum.freegamedev.net/viewforum.php?f=78)  
 or a [new issue on github](https://github.com/stuntrally/stuntrally/issues/new) (if not present).  

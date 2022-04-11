@@ -74,8 +74,12 @@ public:
 	virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 	virtual bool frameEnded(const Ogre::FrameEvent& evt);
 
-	void processMouse(double dt);
-	Ogre::Vector3 vNew;	void editMouse();
+	void processMouse(double dt), UpdKeyBar(Ogre::Real dt);
+	Ogre::Vector3 vNew;
+	//  Edit all  :
+	void EditMouse(),  MouseRoad(), MouseStart(), MouseFluids(), MouseObjects();
+	void KeyTxtRoad(Ogre::Real q), KeyTxtTerrain(Ogre::Real q), KeyTxtStart(Ogre::Real q);
+	void KeyTxtFluids(Ogre::Real q), KeyTxtObjects();
 	
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 

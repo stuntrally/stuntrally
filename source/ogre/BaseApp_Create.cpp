@@ -333,7 +333,7 @@ bool BaseApp::setup()
 	}
 
 	#ifdef _DEBUG
-	#define D_SUFFIX "_d"
+	#define D_SUFFIX ""  // "_d"
 	#else
 	#define D_SUFFIX ""
 	#endif

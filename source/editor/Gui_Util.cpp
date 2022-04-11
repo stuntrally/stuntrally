@@ -128,33 +128,38 @@ void App::UpdEditWnds()
 	{	if (edMode == ED_Deform)
 		{	mWndBrush->setCaption(TR("#{TerDeform}"));
 			mWndBrush->setColour(Colour(0.5f, 0.9f, 0.3f));
-			mWndBrush->setVisible(true);  }
+			mWndBrush->setVisible(true);
+		}
 		else if (edMode == ED_Filter)
 		{	mWndBrush->setCaption(TR("#{TerFilter}"));
 			mWndBrush->setColour(Colour(0.5f, 0.75f, 1.0f));
-			mWndBrush->setVisible(true);  }
+			mWndBrush->setVisible(true);  
+		}
 		else if (edMode == ED_Smooth)
 		{	mWndBrush->setCaption(TR("#{TerSmooth}"));
 			mWndBrush->setColour(Colour(0.3f, 0.8f, 0.8f));
-			mWndBrush->setVisible(true);  }
+			mWndBrush->setVisible(true);
+		}
 		else if (edMode == ED_Height)
 		{	mWndBrush->setCaption(TR("#{TerHeight}"));
 			mWndBrush->setColour(Colour(0.7f, 1.0f, 0.7f));
-			mWndBrush->setVisible(true);  }
-		else
+			mWndBrush->setVisible(true);
+		}else
 			mWndBrush->setVisible(false);
 	}
-	if (mWndRoadCur) mWndRoadCur->setVisible(edMode == ED_Road);
-	if (mWndCam)     mWndCam->setVisible(edMode == ED_PrvCam);
+	if (mWndRoadCur)  mWndRoadCur->setVisible(edMode == ED_Road);
+	if (mWndCam)      mWndCam->setVisible(edMode == ED_PrvCam);
 	
-	if (mWndStart)   mWndStart->setVisible(edMode == ED_Start);
+	if (mWndStart)    mWndStart->setVisible(edMode == ED_Start);
 
-	if (mWndFluids)  mWndFluids->setVisible(edMode == ED_Fluids);
+	if (mWndFluids)   mWndFluids->setVisible(edMode == ED_Fluids);
 	UpdFluidBox();
 
-	if (mWndObjects) mWndObjects->setVisible(edMode == ED_Objects);
+	if (mWndObjects)  mWndObjects->setVisible(edMode == ED_Objects);
 
-	if (mWndRivers)  mWndRivers->setVisible(edMode == ED_Rivers);
+	if (mWndEmitters) mWndEmitters->setVisible(edMode == ED_Emitters);
+
+	if (mWndRivers)   mWndRivers->setVisible(edMode == ED_Rivers);
 
 	UpdStartPos();  // StBox visible
 	UpdVisGui();  //br prv..
