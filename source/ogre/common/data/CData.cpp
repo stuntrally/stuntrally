@@ -9,6 +9,7 @@ using Ogre::String;
 #include "TracksXml.h"
 #ifdef SR_EDITOR
 #include "SceneXml.h"
+#include "PresetsXml.h"
 #else
 #include "../../ChampsXml.h"
 #include "../../ChallengesXml.h"

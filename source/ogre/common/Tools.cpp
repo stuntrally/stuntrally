@@ -5,6 +5,7 @@
 #include "../common/data/CData.h"
 #include "../common/data/TracksXml.h"
 #include "../common/data/BltObjects.h"
+#include "../common/data/PresetsXml.h"
 #include "../vdrift/pathmanager.h"
 #include "../../road/Road.h"
 #ifndef SR_EDITOR

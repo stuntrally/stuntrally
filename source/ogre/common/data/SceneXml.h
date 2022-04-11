@@ -139,94 +139,6 @@ public:
 };
 
 
-//  Presets
-//  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-///----  Sky
-struct PSky
-{
-	Ogre::String mtr, clr;
-	float ldYaw, ldPitch;  // sun dir
-	PSky();
-};
-
-///----  Terrain layer
-struct PTer
-{
-	Ogre::String texFile, texNorm, sc;
-	std::string surfName, scn;
-	float tiling;  bool triplanar;
-
-	float dust, mud, dustS;
-	SColor tclr;  // trail
-
-	float angMin,angMax;
-	float dmg;
-	PTer();
-};
-
-///----  Road
-struct PRoad
-{
-	Ogre::String mtr, sc;
-	std::string surfName, scn;
-
-	float dust, mud, dustS;
-	SColor tclr;
-	PRoad();
-};
-
-///----  Grass
-struct PGrass
-{
-	Ogre::String mtr, clr, sc;  // material, colormap
-	std::string scn;
-	float minSx,minSy, maxSx,maxSy;  // sizes
-	PGrass();
-};
-
-///----  Veget model
-struct PVeget
-{
-	Ogre::String sc;
-	std::string name, scn;
-	float minScale, maxScale;
-	float windFx, windFy;
-
-	int addRdist;  // road dist
-	float maxTerAng;  // terrain
-	float maxDepth;  // in fluid
-	PVeget();
-};
-
-///  Presets xml  with common params setup
-class Presets
-{
-public:
-	std::vector<PSky> sky;
-	std::map<std::string, int> isky;
-	const PSky* GetSky(std::string mtr);
-	
-	std::vector<PTer> ter;
-	std::map<std::string, int> iter;
-	const PTer* GetTer(std::string tex);
-	
-	std::vector<PRoad> rd;
-	std::map<std::string, int> ird;
-	const PRoad* GetRoad(std::string mtr);
-	
-	std::vector<PGrass> gr;
-	std::map<std::string, int> igr;
-	const PGrass* GetGrass(std::string mtr);
-	
-	std::vector<PVeget> veg;
-	std::map<std::string, int> iveg;
-	const PVeget* GetVeget(std::string mesh);
-
-	bool LoadXml(std::string file);
-};
-
-
 class FluidBox		/// fluid box shape - water, mud, etc.
 {
 public:
@@ -265,7 +177,7 @@ public:
 };
 
 
-class SEmitter  // particles
+class SEmitter		// particles
 {
 public:
 	std::string name;  // particle_system
@@ -284,19 +196,24 @@ public:
 class Scene
 {
 public:
+
 	//  car start pos
 	MATHVECTOR <float,3> startPos;
 	QUATERNION <float>   startRot;
 	std::pair <MATHVECTOR<float,3>, QUATERNION<float> > GetStart(int index);
 
-	//  sky
+	//  preview cam
+	Ogre::Vector3 camPos,camDir;
+
+
+	//  Sky  ()
 	Ogre::String skyMtr;  float skyYaw;
 	int  rainEmit,rain2Emit;  Ogre::String rainName,rain2Name;
-	//  light
+	//  Light
 	float ldPitch, ldYaw;  // sun dir angles
 	SColor lAmb,lDiff,lSpec;
 
-	//  fog
+	//  Fog
 	float fogStart, fogEnd;  // lin range
 	SColor fogClr,fogClr2;  // 2colors sun-away  .a = intensity
 
@@ -314,7 +231,8 @@ public:
 	float damageMul;  // reduce car damage in loops
 	float gravity;  // 9.81
 	
-	//  sound
+
+	//  sound  <)
 	std::string sAmbient, sReverbs;  void UpdRevSet();
 	struct RevSet  // copy from ReverbSet, name = sReverbs, from base if ""
 	{	std::string descr,
@@ -326,12 +244,12 @@ public:
 	//  particle types
 	Ogre::String  sParDust, sParMud, sParSmoke;
 	
-	//  Terrain
+	///  Terrain  ----
 	bool ter;  // has terrain
 	TerData td;
 
 	
-	//  Vegetation params
+	///  Vegetation params  --------
 	float densTrees, densGrass;  int grDensSmooth;
 	float grPage, grDist;
 	float trPage, trDist, trDistImp;
@@ -349,26 +267,23 @@ public:
 	void UpdPgLayers();
 
 	
-	//  preview cam
-	Ogre::Vector3 camPos,camDir;
-	
-	//  Fluids
+	//  Fluids  ~~~
 	std::vector<FluidBox> fluids;
 	class FluidsXml* pFluidsXml;  //! set this after Load
 	
-	//  Objects
+	//  Objects  []o
 	std::vector<Object> objects;
 
-	//  Emitters
+	//  Emitters  ::
 	std::vector<SEmitter> emitters;
 
 
 	//  base track (new from) for info
 	std::string baseTrk;
-	int secEdited;  // time in seconds of track editing for info
+	int secEdited;  // time in seconds of track editing
 
 	
-	//  methods
+	//  Main methods  ----
 	Scene();  void Default();
 	void UpdateFluidsId(), UpdateSurfId();
 

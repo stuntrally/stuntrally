@@ -27,51 +27,9 @@
 #include <OgreSceneNode.h>
 #include <OgreMesh.h>
 #include <OgreTimer.h>
-#include <OgreParticleSystem.h>
-#include <OgreParticleEmitter.h>
-//#include <OgreBoxEmitter.h>
 #include "../shiny/Main/Factory.hpp"
 using namespace Ogre;
 
-
-
-///  create particles  ------------------------
-void CScene::CreateEmitters()
-{
-	SceneNode* rt = app->mSceneMgr->getRootSceneNode();
-	for (int i=0; i < sc->emitters.size(); ++i)
-	{
-		String n = "PE_" +toStr(i);
-		SEmitter& em = sc->emitters[i];
-		if (em.name.empty())  continue;
-
-		ParticleSystem* ps = app->mSceneMgr->createParticleSystem(n, em.name);  //ToDel(ps);
-		ps->setVisibilityFlags(RV_Particles);
-		ps->setRenderQueueGroup(RQG_CarParticles);
-
-		SceneNode* nd = rt->createChildSceneNode(em.pos);  //ToDel(nb);
-		nd->attachObject(ps);
-		ps->getEmitter(0)->setEmissionRate(em.rate);
-		// BoxEmitter* b = (BoxEmitter*)ps->getEmitter(0);
-		// b->SetWidth(em.size.x);
-		// b->SetHeight(em.size.y);
-		// b->SetDepth(em.size.z);
-		ps->getEmitter(0)->setUp(em.up);
-
-		em.nd = nd;  em.par = ps;
-	}
-}
-
-void CScene::DestroyEmitters()
-{
-	for (int i=0; i < sc->emitters.size(); ++i)
-	{
-		SEmitter& em = sc->emitters[i];
-		if (em.par) {  app->mSceneMgr->destroyParticleSystem(em.par);  em.par = 0;  }
-		if (em.nd)  {  app->mSceneMgr->destroySceneNode(em.nd);  em.nd = 0;  }
-	}
-	sc->emitters.clear();
-}
 
 
 ///  create Fluid areas  . . . . . . . 

@@ -5,6 +5,7 @@
 #include "CGui.h"
 #include "../ogre/common/CScene.h"
 #include "../ogre/common/data/CData.h"
+#include "../ogre/common/data/PresetsXml.h"
 #include "../road/Road.h"
 #include <fstream>
 #include "../ogre/common/Gui_Def.h"

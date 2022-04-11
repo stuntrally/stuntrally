@@ -108,7 +108,7 @@ bool App::frameEnded(const FrameEvent& evt)
 		road->Pick(mCamera, mx, my,  setpos, edMode == ED_Road, hide);
 	}
 
-	editMouse();  // edit
+	EditMouse();  // edit
 
 
 	///<>  Ter upd	- - -

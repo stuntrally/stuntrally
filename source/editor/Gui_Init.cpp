@@ -4,6 +4,7 @@
 #include "../ogre/common/GuiCom.h"
 #include "../ogre/common/data/CData.h"
 #include "../ogre/common/data/TracksXml.h"
+#include "../ogre/common/data/PresetsXml.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
