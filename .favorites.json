@@ -1,0 +1,26 @@
+[
+    {
+        "type": "Directory",
+        "name": "config",
+        "parent_id": null,
+        "workspaceRoot": "/home/ch/_sr/0",
+        "workspacePath": "config",
+        "id": "R0usxSLQJPF5td6D"
+    },
+    {
+        "type": "Directory",
+        "name": "gui",
+        "parent_id": null,
+        "workspaceRoot": "/home/ch/_sr/0/data",
+        "workspacePath": "gui",
+        "id": "R3usxSLQJPF4td6D"
+    },
+    {
+        "type": "Directory",
+        "name": ".config",
+        "parent_id": null,
+        "workspaceRoot": "/home/ch/.config/",
+        "workspacePath": "stuntrally",
+        "id": "R1usxSLQJPF6td6D"
+    }
+]
