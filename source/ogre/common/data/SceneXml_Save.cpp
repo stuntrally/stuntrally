@@ -300,6 +300,24 @@ bool Scene::SaveXml(String file)
 	root.InsertEndChild(objs);
 
 
+	TiXmlElement emts("emitters");
+		for (i=0; i < emitters.size(); ++i)
+		{
+			const SEmitter* e = &emitters[i];
+			TiXmlElement oe("e");
+			oe.SetAttribute("name",		e->name.c_str() );
+
+			oe.SetAttribute("pos",	toStrC(e->pos));
+			oe.SetAttribute("sc",	toStrC(e->size));
+			oe.SetAttribute("up",	toStrC(e->up));
+			oe.SetAttribute("rot",	toStrC(e->rot));
+			oe.SetAttribute("rate",	toStrC(e->rate));
+
+			emts.InsertEndChild(oe);
+		}
+	root.InsertEndChild(emts);
+
+
 	xml.InsertEndChild(root);
 	return xml.SaveFile(file.c_str());
 }

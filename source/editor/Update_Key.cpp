@@ -576,6 +576,41 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		}
 	}
 
+	//  Emitters  : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : :
+	if (edMode == ED_Emitters)
+	{	int emts = scn->sc->emitters.size();
+		switch (skey)
+		{
+			//  ins
+			case key(INSERT):  case key(KP_0):
+			if (road && road->bHitTer)
+			{
+				SEmitter em;  em.name = "CraterFire";
+				em.pos = road->posHit;
+				em.size = Vector3(2.f, 2.f, 1.f);
+				em.rate = 10.f;
+				scn->sc->emitters.push_back(em);
+				iEmtCur = scn->sc->emitters.size()-1;
+				bRecreateEmitters = true;
+			}	break;
+
+			//  prev,next
+			case key(PAGEUP):  case key(KP_9):
+				if (emts > 0) {  iEmtCur = (iEmtCur-1+emts)%emts;  }  UpdEmtPick();  break;
+			case key(PAGEDOWN):	case key(KP_3):
+				if (emts > 0) {  iEmtCur = (iEmtCur+1)%emts;       }  UpdEmtPick();  break;
+
+			//  del
+			case key(DELETE):  case key(KP_PERIOD):
+			case key(KP_5):
+				if (emts == 1)	scn->sc->emitters.clear();
+				else			scn->sc->emitters.erase(scn->sc->emitters.begin() + iEmtCur);
+				iEmtCur = std::max(0, std::min(iEmtCur, (int)scn->sc->emitters.size()-1));
+				bRecreateEmitters = true;
+				break;
+		}
+	}
+
 	//  Rivers  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	if (edMode == ED_Rivers)
 	{
@@ -651,7 +686,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		//  road
 		case key(R):  if (bEdit()){  SetEdMode(ED_Road);	UpdEditWnds();  }	break;
 		case key(B):  if (road)  {  road->UpdPointsH();  road->Rebuild(true);  }  break;
-		case key(T):  if (mWndRoadStats)  mWndRoadStats->setVisible(!mWndRoadStats->getVisible());  break;
+		case key(T):  if (edMode == ED_Road && mWndRoadStats)
+						mWndRoadStats->setVisible(!mWndRoadStats->getVisible());  break;
 		case key(M):  if (edMode == ED_Road && road)  road->ToggleMerge();  break;
 
 		//  start pos
@@ -668,7 +704,10 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		//  objects
 		case key(C):  if (edMode == ED_Objects)  {  objSim = !objSim;  ToggleObjSim();  }  break;
 		case key(X):  if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
-		
+
+		//  emitters
+		case key(P):  if (bEdit()){  SetEdMode(ED_Emitters);  UpdEditWnds();  }   break;
+
 		//  rivers
 		///case key(A):	if (bEdit()){  SetEdMode(ED_Rivers);  UpdEditWnds();  }	break;
 	}

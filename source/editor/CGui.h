@@ -69,12 +69,14 @@ public:
 	//  tool windows texts
 	const static int MAX_TXT=12,
 		BR_TXT=9, RD_TXT=12, RDS_TXT=11,  //  brush, road, road stats
-		ST_TXT=6, FL_TXT=6, OBJ_TXT=6, RI_TXT=6;  //  start, fluids, objects,
+		ST_TXT=6, FL_TXT=6, OBJ_TXT=6,  //  start, fluids, objects
+		EMT_TXT=6, RI_TXT=6;  //  emitters, rivers-
 
 	Txt	brTxt[BR_TXT], brVal[BR_TXT], brKey[BR_TXT],
 		rdTxt[RD_TXT], rdVal[RD_TXT], rdKey[RD_TXT],
 		rdTxtSt[RDS_TXT], rdValSt[RDS_TXT],
-		stTxt[ST_TXT], flTxt[FL_TXT], objTxt[OBJ_TXT], riTxt[RI_TXT];
+		stTxt[ST_TXT], flTxt[FL_TXT], objTxt[OBJ_TXT],
+		emtTxt[EMT_TXT], riTxt[RI_TXT];
 	WP objPan;
 	Img brImg;  Tab wndTabs;
 

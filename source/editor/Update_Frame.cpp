@@ -322,7 +322,15 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 		scn->CreateFluids();
 		UpdFluidBox();
 	}
-	
+
+	if (bRecreateEmitters)
+	{	bRecreateEmitters = false;
+
+		scn->DestroyEmitters(false);
+		scn->CreateEmitters();
+		//UpdEmtBox();
+	}
+
 	
 	//--  3d view upd  (is global in window)
 	static bool oldVis = false;

@@ -131,6 +131,7 @@ void CScene::CreateWeather()
 		app->mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
 		pr->setRenderQueueGroup(RQG_Weather);
 		pr->getEmitter(0)->setEmissionRate(0);
+		pr->_update(2.f);  // emit, started 2 sec ago
 	}
 	if (!pr2 && !sc->rain2Name.empty())
 	{	pr2 = app->mSceneMgr->createParticleSystem("Rain2", sc->rain2Name);
@@ -138,6 +139,7 @@ void CScene::CreateWeather()
 		app->mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
 		pr2->setRenderQueueGroup(RQG_Weather);
 		pr2->getEmitter(0)->setEmissionRate(0);
+		pr2->_update(2.f);
 	}
 }
 void CScene::DestroyWeather()

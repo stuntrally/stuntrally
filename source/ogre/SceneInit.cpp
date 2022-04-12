@@ -284,7 +284,7 @@ void App::LoadCleanUp()  // 1 first
 	{
 		scn->DestroyTrees();
 		scn->DestroyWeather();
-		scn->DestroyEmitters();
+		scn->DestroyEmitters(true);
 		
 		scn->DestroyTerrain();
 		scn->DestroyRoad();

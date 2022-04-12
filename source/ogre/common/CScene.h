@@ -48,7 +48,7 @@ public:
 
 
 	//  Emitters
-	void CreateEmitters(), DestroyEmitters();
+	void CreateEmitters(), DestroyEmitters(bool clear);
 
 
 	//  Fluids  water, mud

@@ -49,23 +49,27 @@ void CGui::InitGui()
 	app->vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
 
 
-	//  wnds
+	//  wnds main
 	app->mWndMain = fWnd("MainMenuWnd");
 	app->mWndTrack = fWnd("TrackWnd");  app->mWndEdit = fWnd("EditorWnd");
 	app->mWndOpts = fWnd("OptionsWnd"); app->mWndHelp = fWnd("HelpWnd");
+	
 	app->mWndPick = fWnd("PickWnd");
 	app->mWndTrkFilt = fWnd("TrackFilterWnd");
 
+	//  wnds ed
 	app->mWndCam =   fWnd("CamWnd");    app->mWndCam->setPosition(0,64);
 	app->mWndStart = fWnd("StartWnd");  app->mWndStart->setPosition(0,64);
 	app->mWndBrush = fWnd("BrushWnd");  app->mWndBrush->setPosition(0,64);
 
 	app->mWndRoadCur =   fWnd("RoadCur");    app->mWndRoadCur->setPosition(0,40);
-	app->mWndRoadStats = fWnd("RoadStats");  app->mWndRoadStats->setPosition(0,338);
+	app->mWndRoadStats = fWnd("RoadStats");  app->mWndRoadStats->setPosition(0,358);
 
-	app->mWndFluids = fWnd("FluidsWnd");   app->mWndFluids->setPosition(0,64);
-	app->mWndObjects= fWnd("ObjectsWnd");  app->mWndObjects->setPosition(0,64);
-	app->mWndRivers = fWnd("RiversWnd");   app->mWndRivers->setPosition(0,64);
+	app->mWndFluids =   fWnd("FluidsWnd");   app->mWndFluids->setPosition(0,64);
+	app->mWndObjects =  fWnd("ObjectsWnd");  app->mWndObjects->setPosition(0,64);
+	
+	app->mWndEmitters = fWnd("EmittersWnd"); app->mWndEmitters->setPosition(0,64);
+	app->mWndRivers =   fWnd("RiversWnd");   app->mWndRivers->setPosition(0,64);
 
 
 	//  for find defines
@@ -145,7 +149,8 @@ void CGui::InitGui()
 		if (i<RD_TXT){  rdTxt[i] = fTxt("rdTxt"+s);  rdVal[i] = fTxt("rdVal"+s);  rdKey[i] = fTxt("rdKey"+s);  }
 		if (i<RDS_TXT){ rdTxtSt[i] = fTxt("rdTxtSt"+s);  rdValSt[i] = fTxt("rdValSt"+s);  }
 		if (i<ST_TXT)   stTxt[i] = fTxt("stTxt"+s);    if (i<FL_TXT)  flTxt[i] = fTxt("flTxt"+s);
-		if (i<OBJ_TXT)  objTxt[i]= fTxt("objTxt"+s);   if (i<RI_TXT)  riTxt[i] = fTxt("riTxt"+s);
+		if (i<OBJ_TXT)  objTxt[i]= fTxt("objTxt"+s);
+		if (i<EMT_TXT)  emtTxt[i]= fTxt("emtTxt"+s);   if (i<RI_TXT)  riTxt[i] = fTxt("riTxt"+s);
 	}
 
 

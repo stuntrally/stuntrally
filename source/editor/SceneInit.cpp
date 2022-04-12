@@ -163,6 +163,7 @@ void App::NewCommon(bool onlyTerVeget)
 	{
 		DestroyObjects(true);
 		scn->DestroyFluids();
+		scn->DestroyEmitters(true);
 	}
 		
 	scn->DestroyTerrain();
@@ -190,7 +191,7 @@ void App::LoadTrackEv()
 {
 	Ogre::Timer ti;
 	NewCommon(false);  // full destroy
-	iObjCur = -1;
+	iObjCur = -1;  iEmtCur = -1;
 
 	scn->DestroyRoad();
 	scn->DestroyPace();
@@ -209,6 +210,8 @@ void App::LoadTrackEv()
 	scn->CreateFluids();
 
 	scn->CreateWeather();
+
+	scn->CreateEmitters();
 
 
 	//  set sky tex name for water
@@ -239,7 +242,7 @@ void App::LoadTrackEv()
 	
 	
 	CreateObjects();
-
+	
 	if (pSet->bTrees && scn->sc->ter)
 		scn->CreateTrees();  // trees after objects so they aren't inside them
 

@@ -47,7 +47,7 @@ Object::Object()
 
 SEmitter::SEmitter()
 	:name(""), pos(0,0,0), size(1,1,1), up(0,1,0), rot(0.f)
-	,rate(0.f), stat(false), upd(0.f)
+	,rate(0.f), stat(false), upd(2.f)
 	,nd(0), par(0)
 {	}
 

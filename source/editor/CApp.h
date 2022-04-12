@@ -79,7 +79,7 @@ public:
 	//  Edit all  :
 	void EditMouse(),  MouseRoad(), MouseStart(), MouseFluids(), MouseObjects();
 	void KeyTxtRoad(Ogre::Real q), KeyTxtTerrain(Ogre::Real q), KeyTxtStart(Ogre::Real q);
-	void KeyTxtFluids(Ogre::Real q), KeyTxtObjects();
+	void KeyTxtFluids(Ogre::Real q), KeyTxtObjects(), KeyTxtEmitters();
 	
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
@@ -194,10 +194,10 @@ public:
 	int iSnap;  Ogre::Real angSnap;
 
 
-	//  car start
+	//  car start, etc
 	void UpdStartPos();
-	Ogre::SceneNode* ndCar,*ndStBox,*ndFluidBox,*ndObjBox;
-	Ogre::Entity*  entCar,*entStBox,*entFluidBox,*entObjBox;
+	Ogre::SceneNode* ndCar,*ndStBox, *ndFluidBox,*ndObjBox, *ndEmtBox;
+	Ogre::Entity*  entCar,*entStBox, *entFluidBox,*entObjBox,*entEmtBox;
 	void togPrvCam();
 
 
@@ -222,6 +222,14 @@ public:
 	Object objNew;  //Object*..
 
 	std::vector<Object> vObjCopy;  // copied objects
+
+
+	//  [Emitters]  ----
+	ED_OBJ emtEd;  // edit mode
+	int iEmtCur;  // picked id
+	SEmitter emtNew;
+	void UpdEmtPick();
+	bool bRecreateEmitters;
 
 
 	//  surfaces

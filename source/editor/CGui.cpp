@@ -83,6 +83,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	for (i=0; i<ST_TXT; ++i)  stTxt[i]=0;
 	for (i=0; i<FL_TXT; ++i)  flTxt[i]=0;
 	for (i=0; i<OBJ_TXT;++i)  objTxt[i]=0;
+	for (i=0; i<EMT_TXT;++i)  emtTxt[i]=0;
 	for (i=0; i<RI_TXT; ++i)  riTxt[i]=0;
 	
 	for (i=0; i < 4; ++i)  {  btnRoad[i]=0;  cmbPipeMtr[i]=0;  }
