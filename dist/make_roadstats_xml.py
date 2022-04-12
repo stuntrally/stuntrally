@@ -6,12 +6,12 @@ def get_dirs(dir):
 	return [name for name in os.listdir(dir) if os.path.isdir(os.path.join(dir, name))]
 
 pre = '..';  # path
-tdir = pre+'/data/tracks';
+tdir = pre+'/data/tracks'
 trks = get_dirs(tdir)
 #print(trks)
 
 stats = open('roadstats.xml','w')  # out file
-stats.write('<roadstats>\n');
+stats.write('<roadstats>\n')
 
 map = {'': 0}  # result map
 r = re.compile('[ ,:=\n]+')
@@ -42,7 +42,7 @@ for t in trks:
 		xNew = xNew.replace('onPipe=','op=').replace('onTer=','ot=').replace('pipes=','p=')
 		#print(xNew)
 		print(t)
-		stats.write(xNew+'\n');
+		stats.write(xNew+'\n')
 
-stats.write('</roadstats>');
-stats.close();
+stats.write('</roadstats>')
+stats.close()

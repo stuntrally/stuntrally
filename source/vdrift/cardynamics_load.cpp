@@ -851,8 +851,8 @@ void CARDYNAMICS::Init(
 			poly->length = 1.0f;  //  approx. length-?
 			poly->volume = ComputeVolume(*poly);
 
-			//body_mass = 1900.0f * 2.688;  //poly->volume;  // car density
-			body_mass = 1350 / chassisMass;
+			body_mass = 1900.0f * 2.688;  //poly->volume;  // car density
+			// body_mass = 1350 / chassisMass;
 			body_inertia = (4.0f * body_mass / 12.0f) * btVector3(hy*hz, hx*hz, hx*hy);
 		}
 	}
