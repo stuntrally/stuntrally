@@ -55,7 +55,7 @@ void CGui::GetMaterials(String filename, bool clear, String type)
 						}
 					}
 			}	}
-		}catch (Ogre::Exception &e)
+		}catch (Exception &e)
 		{
 			std::stringstream msg;
 			msg << "Exception: FILE: " << __FILE__ << " LINE: " << __LINE__ << " DESC: " << e.getFullDescription() << std::endl;
@@ -99,7 +99,7 @@ void CGui::GetMaterialsMat(String filename, bool clear, String type)
 						}
 					}
 			}	}
-		}catch (Ogre::Exception &e)
+		}catch (Exception &e)
 		{
 			std::stringstream msg;
 			msg << "Exception: FILE: " << __FILE__ << " LINE: " << __LINE__ << " DESC: " << e.getFullDescription() << std::endl;

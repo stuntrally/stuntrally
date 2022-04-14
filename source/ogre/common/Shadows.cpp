@@ -208,11 +208,10 @@ void CScene::changeShadows()
 		
 		// destroy container if exists
 		try
-		{
-			if (debugPanel = static_cast<OverlayContainer*>(mgr.getOverlayElement("Ogre/DebugTexPanel" + toStr(i))))
+		{	if (debugPanel = static_cast<OverlayContainer*>(mgr.getOverlayElement("Ogre/DebugTexPanel" + toStr(i))))
 				mgr.destroyOverlayElement(debugPanel);
-		}
-		catch (Ogre::Exception&) {}
+		}catch (Exception&)
+		{	}
 		
 		debugPanel = (OverlayContainer*)
 			(OverlayManager::getSingleton().createOverlayElement("Panel", "Ogre/DebugTexPanel" + StringConverter::toString(i)));

@@ -126,7 +126,12 @@ void CScene::UpdFog(bool bForce)
 void CScene::CreateWeather()
 {
 	if (!pr && !sc->rainName.empty())
-	{	pr = app->mSceneMgr->createParticleSystem("Rain", sc->rainName);
+	{	try
+		{	pr = app->mSceneMgr->createParticleSystem("Rain", sc->rainName);
+		}catch (Exception& ex)
+		{	LogO("Warning: particle_system: " + sc->rainName + " doesn't exist");
+			return;
+		}
 		pr->setVisibilityFlags(RV_Particles);
 		app->mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr);
 		pr->setRenderQueueGroup(RQG_Weather);
@@ -134,7 +139,12 @@ void CScene::CreateWeather()
 		pr->_update(2.f);  // emit, started 2 sec ago
 	}
 	if (!pr2 && !sc->rain2Name.empty())
-	{	pr2 = app->mSceneMgr->createParticleSystem("Rain2", sc->rain2Name);
+	{	try
+		{	pr2 = app->mSceneMgr->createParticleSystem("Rain2", sc->rain2Name);
+		}catch (Exception& ex)
+		{	LogO("Warning: particle_system: " + sc->rainName + " doesn't exist");
+			return;
+		}
 		pr2->setVisibilityFlags(RV_Particles);
 		app->mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(pr2);
 		pr2->setRenderQueueGroup(RQG_Weather);

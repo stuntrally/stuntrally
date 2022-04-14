@@ -20,7 +20,6 @@ material Mud
 	parent Base_particle
 	diffuseMap mud.png
     alpha_rejection greater 64
-    scene_blend alpha_blend
     soft_particles true
 }
 
@@ -28,7 +27,6 @@ material Dust
 {
 	parent Base_particle
 	diffuseMap dust.png
-	scene_blend alpha_blend
 	soft_particles true
 }
 
@@ -36,7 +34,6 @@ material Smoke
 {
 	parent Base_particle
 	diffuseMap smoke.png
-	scene_blend alpha_blend
 	soft_particles true
 }
 
@@ -44,7 +41,6 @@ material MarsDust
 {
 	parent Base_particle
 	diffuseMap dust.png
-	scene_blend alpha_blend
 	soft_particles true
 }
 

@@ -30,23 +30,35 @@ void CScene::CreateEmitters()
 		SEmitter& em = sc->emitters[i];
 		if (em.name.empty())  continue;
 
-		ParticleSystem* ps = app->mSceneMgr->createParticleSystem(n, em.name);  //ToDel(ps);
+		ParticleSystem* ps;
+		try
+		{	ps = app->mSceneMgr->createParticleSystem(n, em.name);  //ToDel(ps);
+		}
+		catch (Exception& ex)
+		{
+			LogO("Warning: emitter particle system: " + em.name + " doesn't exist");
+			continue;
+		}
 		ps->setVisibilityFlags(RV_Particles);
 		ps->setRenderQueueGroup(RQG_CarParticles);
 
 		SceneNode* nd = rt->createChildSceneNode(em.pos);  //ToDel(nb);
 		nd->attachObject(ps);
-		ps->getEmitter(0)->setEmissionRate(em.rate);
-		ps->getEmitter(0)->setParameter("width",  toStr(em.size.x));
-		ps->getEmitter(0)->setParameter("height", toStr(em.size.y));
-		ps->getEmitter(0)->setParameter("depth",  toStr(em.size.z));
-		ps->getEmitter(0)->setUp(em.up);
-		ps->_update(em.upd);  //  started already 2 sec ago
-		if (em.stat)
-			ps->setSpeedFactor(0.f);  // static
+		em.nd = nd;  em.ps = ps;
 
-		em.nd = nd;  em.par = ps;
+		em.UpdEmitter();
+		ps->_update(em.upd);  //  started already 2 sec ago
+		ps->setSpeedFactor(em.stat ? 0.f : 1.f);  // static
 	}
+}
+
+void SEmitter::UpdEmitter()
+{
+	if (!ps)  return;
+	ps->getEmitter(0)->setParameter("width",  toStr(size.x));
+	ps->getEmitter(0)->setParameter("height", toStr(size.z));
+	ps->getEmitter(0)->setParameter("depth",  toStr(size.y));  // h
+	ps->getEmitter(0)->setEmissionRate(rate);
 }
 
 void CScene::DestroyEmitters(bool clear)
@@ -54,33 +66,42 @@ void CScene::DestroyEmitters(bool clear)
 	for (int i=0; i < sc->emitters.size(); ++i)
 	{
 		SEmitter& em = sc->emitters[i];
-		if (em.par) {  app->mSceneMgr->destroyParticleSystem(em.par);  em.par = 0;  }
-		if (em.nd)  {  app->mSceneMgr->destroySceneNode(em.nd);  em.nd = 0;  }
+		if (em.ps) {  app->mSceneMgr->destroyParticleSystem(em.ps);  em.ps = 0;  }
+		if (em.nd) {  app->mSceneMgr->destroySceneNode(em.nd);  em.nd = 0;  }
 	}
 	if (clear)
 		sc->emitters.clear();
 }
 
 
-//  Pick
 //-------------------------------------------------------------------------------------------------------
-
 #ifdef SR_EDITOR
-void App::UpdEmtPick()
+void App::UpdEmtBox()
 {
 	int emts = scn->sc->emitters.size();
-	bool vis = edMode == ED_Emitters && !bMoveCam && emts > 0 && iEmtCur >= 0;
+	bool vis = edMode == ED_Emitters && emts > 0 && !bMoveCam;
 	if (emts > 0)
-		iEmtCur = std::min(iEmtCur, emts-1);
+		iEmtCur = std::max(0, std::min(iEmtCur, emts-1));
 
 	if (!ndEmtBox)  return;
 	ndEmtBox->setVisible(vis);
 	if (!vis)  return;
 	
-	const SEmitter& e = scn->sc->emitters[iEmtCur];
+	const SEmitter& em = scn->sc->emitters[iEmtCur];
+	ndEmtBox->setPosition(em.pos);
+	//ndEmtBox->setOrientation(Quaternion(Degree(em.rot), em.up));
+	ndEmtBox->setScale(em.size);
+}
 
-	ndEmtBox->setPosition(e.pos);
-	//ndEmtBox->setOrientation(rotO);
-	ndEmtBox->setScale(e.size);
+void App::SetEmtType(int rel)
+{
+	int emtAll = vEmtNames.size();
+	if (emtAll <= 0)  return;
+	iEmtNew = (iEmtNew + rel + emtAll) % emtAll;
+	
+	int emts = scn->sc->emitters.size();
+	if (emts <= 0)  return;
+	SEmitter& em = scn->sc->emitters[iEmtCur];
+	em.name = vEmtNames[iEmtNew];
 }
 #endif

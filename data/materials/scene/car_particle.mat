@@ -9,6 +9,7 @@ material Base_particle
     diffuse 0 0 0 1
     emissive 1 1 1
     diffuse_address_mode clamp
+    scene_blend alpha_blend
 }
 
 

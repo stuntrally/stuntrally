@@ -160,6 +160,8 @@ public:
 	bool stat;  // static for, e.g. clouds
 
 	Ogre::SceneNode* nd;  // ogre
-	Ogre::ParticleSystem* par;
+	Ogre::ParticleSystem* ps;
+	
 	SEmitter();
+	void UpdEmitter();
 };

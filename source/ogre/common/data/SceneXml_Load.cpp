@@ -384,10 +384,11 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = u->Attribute("name");	if (a)  p.name = string(a);
 
 			a = u->Attribute("pos");	if (a)  p.pos = s2v(a);
-			a = u->Attribute("size");	if (a)  p.size = s2v(a);
+			a = u->Attribute("sc");		if (a)  p.size = s2v(a);
 			a = u->Attribute("up");		if (a)  p.up = s2v(a);
 			a = u->Attribute("rot");	if (a)  p.rot = s2r(a);
 			a = u->Attribute("rate");	if (a)  p.rate = s2r(a);
+			a = u->Attribute("st");		if (a)  p.stat = s2i(a);
 
 			emitters.push_back(p);
 			u = u->NextSiblingElement("e");

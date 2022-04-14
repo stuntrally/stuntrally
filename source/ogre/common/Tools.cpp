@@ -469,7 +469,7 @@ void CGui::ToolGhostsConv()
 		//  check missing
 		for (int i=0; i < data->tracks->trks.size(); ++i)
 		{	string track = data->tracks->trks[i].name;
-			if (track.substr(0,4) == "Test" && track.substr(0,5) != "TestC")  continue;
+			if (track.substr(0,4) == "Test" /*&& track.substr(0,5) != "TestC"*/)  continue;
 			
 			string fsave = PATHMANAGER::TrkGhosts()+"/"+ track + sRev + ".gho";
 			if (!PATHMANAGER::FileExists(fsave))

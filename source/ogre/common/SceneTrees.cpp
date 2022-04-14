@@ -262,7 +262,7 @@ void CScene::CreateTrees()
 				}
 				try
 				{	TextureManager::getSingleton().load(fpng, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);  ///T png first
-				}catch (Ogre::Exception&)
+				}catch (Exception&)
 				{	}
 			}
 

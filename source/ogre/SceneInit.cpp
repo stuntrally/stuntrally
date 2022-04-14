@@ -740,7 +740,7 @@ void App::LoadMisc()  // 9 last
 				)))
 				mgr.destroyOverlayElement(debugPanel);
 		}
-		catch (Ogre::Exception&) {}
+		catch (Exception&) {}
 		debugPanel = (OverlayContainer*)
 			(OverlayManager::getSingleton().createOverlayElement("Panel", "Ogre/DebugTexPanel" + StringConverter::toString(i)));
 		debugPanel->_setPosition(0.67, i*0.33);
