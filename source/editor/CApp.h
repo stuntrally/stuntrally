@@ -77,9 +77,9 @@ public:
 	void processMouse(double dt), UpdKeyBar(Ogre::Real dt);
 	Ogre::Vector3 vNew;
 	//  Edit all  :
-	void EditMouse(),  MouseRoad(), MouseStart(), MouseFluids(), MouseObjects();
+	void EditMouse(),  MouseRoad(), MouseStart(), MouseFluids(), MouseEmitters(), MouseObjects();
 	void KeyTxtRoad(Ogre::Real q), KeyTxtTerrain(Ogre::Real q), KeyTxtStart(Ogre::Real q);
-	void KeyTxtFluids(Ogre::Real q), KeyTxtObjects(), KeyTxtEmitters();
+	void KeyTxtFluids(Ogre::Real q), KeyTxtObjects(), KeyTxtEmitters(Ogre::Real q);
 	
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
@@ -96,14 +96,15 @@ public:
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::Real s, bool dyn=false);
 	Ogre::Real asp, xm1,ym1,xm2,ym2;
 
-	const static int RTs = 4, RTsAdd = 2;
+	enum ERnd2Tex
+	{	RT_Road=0, RT_Grass, RT_Terrain, RT_View, RT_Last, RT_Brush, RT_ALL  };
 	struct SRndTrg
 	{
-		Ogre::Camera* cam;  Ogre::RenderTexture* tex;
-		Ogre::Rectangle2D* mini;	Ogre::SceneNode* ndMini;
-		SRndTrg() : cam(0),tex(0),mini(0),ndMini(0) {  }
-	};
-	SRndTrg rt[RTs+RTsAdd];
+		Ogre::Camera* cam = 0;
+		Ogre::RenderTexture* tex = 0;
+		Ogre::Rectangle2D* mini = 0;
+		Ogre::SceneNode* ndMini = 0;
+	} rt[RT_ALL];
 
 	void Rnd2TexSetup(), UpdMiniVis();
 	virtual void preRenderTargetUpdate(const Ogre::RenderTargetEvent &evt);
@@ -194,8 +195,10 @@ public:
 	int iSnap;  Ogre::Real angSnap;
 
 
-	//  car start, etc
+	//  box cursors  car start, fluids, objects, emitters
 	void UpdStartPos();
+	void CreateBox(Ogre::SceneNode*& nd, Ogre::Entity*& ent, Ogre::String sMat, Ogre::String sMesh, int x=0);
+
 	Ogre::SceneNode* ndCar,*ndStBox, *ndFluidBox,*ndObjBox, *ndEmtBox;
 	Ogre::Entity*  entCar,*entStBox, *entFluidBox,*entObjBox,*entEmtBox;
 	void togPrvCam();
@@ -228,7 +231,12 @@ public:
 	ED_OBJ emtEd;  // edit mode
 	int iEmtCur;  // picked id
 	SEmitter emtNew;
-	void UpdEmtPick();
+	
+	int iEmtNew;  // id for vEmtNames
+	std::vector<std::string> vEmtNames;
+	void SetEmtType(int rel);
+
+	void UpdEmtBox();
 	bool bRecreateEmitters;
 
 

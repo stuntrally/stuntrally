@@ -266,7 +266,10 @@ void CGuiCom::FillTrackLists()
 	PATHMANAGER::DirList(pathTrk[0], liTracks);
 	PATHMANAGER::DirList(pathTrk[1], liTracksUser);  //name duplicates
 	if (liTracks.size() == 0)
+	{
 		LogO("Error: NO tracks !!!  in data/tracks/  crashing.");
+		exit(-1);
+	}
 
 	//  original
 	strlist::iterator i;

@@ -44,7 +44,7 @@ App::App(SETTINGS* pSet1)
 	,inst(0)
 	//  emts
 	,ndEmtBox(0),entEmtBox(0)
-	,iEmtCur(-1), emtEd(EO_Move), bRecreateEmitters(0)
+	,iEmtCur(-1),iEmtNew(0), emtEd(EO_Move), bRecreateEmitters(0)
 {
 	pSet = pSet1;
 	Axes::Init();

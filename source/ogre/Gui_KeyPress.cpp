@@ -109,8 +109,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			 case key(E):	gui->GuiShortcut(MNU_Options, TABo_Graphics,2);	return true;  // E -Effects
 
 			case key(T):	gui->GuiShortcut(MNU_Options, TABo_Settings);	return true;  // T Settings
-			case key(P):	gui->GuiShortcut(MNU_Options, TABo_Sound);	return true;  // P Sound
-			case key(O):	gui->GuiShortcut(MNU_Options, TABo_Tweak);  return true;  // O Tweak
+			case key(O):	gui->GuiShortcut(MNU_Options, TABo_Sound);	return true;  // O Sound
+			case key(K):	gui->GuiShortcut(MNU_Options, TABo_Tweak);  return true;  // K Tweak
 		}
 
 

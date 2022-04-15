@@ -158,6 +158,7 @@ void App::UpdEditWnds()
 	if (mWndObjects)  mWndObjects->setVisible(edMode == ED_Objects);
 
 	if (mWndEmitters) mWndEmitters->setVisible(edMode == ED_Emitters);
+	UpdEmtBox();
 
 	if (mWndRivers)   mWndRivers->setVisible(edMode == ED_Rivers);
 
@@ -266,7 +267,7 @@ void App::togPrvCam()
 	{
 		SetEdMode(edModeOld);
 		mViewport->setVisibilityMask(RV_MaskAll);
-		rt[RTs].ndMini->setVisible(false);
+		rt[RT_Last].ndMini->setVisible(false);
 		ndCar->setVisible(true);
 
 		scn->UpdateWaterRTT(mCamera);
@@ -285,10 +286,10 @@ void App::togPrvCam()
 		SetEdMode(ED_PrvCam);
 		bMoveCam = true;  UpdVisGui();
 		mViewport->setVisibilityMask(RV_MaskPrvCam);
-		rt[RTs].ndMini->setVisible(true);
+		rt[RT_Last].ndMini->setVisible(true);
 		ndCar->setVisible(false);
 
-		scn->UpdateWaterRTT(rt[3].cam);
+		scn->UpdateWaterRTT(rt[RT_View].cam);
 		scn->UpdFog(true);  // on fog, veget, weather
 		if (!pSet->bTrees)  {  bTrGrUpd = true;  oldV = true;  }
 		oldI = pSet->bWeather;  pSet->bWeather = false;

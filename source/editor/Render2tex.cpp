@@ -36,9 +36,9 @@ using namespace Ogre;
 void App::Rnd2TexSetup()
 {
 	///  RT:  0 road minimap,  1 road for grass,  2 terrain minimap,  3 track preview full
-	const uint32 visMask[RTs] =
+	const uint32 visMask[RT_Last] =
 		{ RV_Road, RV_Road+RV_Objects, RV_Terrain+RV_Objects, RV_MaskAll-RV_Hud };
-	const int dim[RTs] =  //1025: sc->td.iVertsX
+	const int dim[RT_Last] =  //1025: sc->td.iVertsX
 		{ 1024, 1025, 1024, 1024 };
 		
 	asp = float(mWindow->getWidth())/float(mWindow->getHeight());
@@ -46,12 +46,12 @@ void App::Rnd2TexSetup()
 	xm1 = 1-sz/asp, ym1 = -1+sz, xm2 = 1.0, ym2 = -1.0;
 	AxisAlignedBox aab;  aab.setInfinite();
 	
-	TexturePtr texture[RTs];
-	for (int i=0; i < RTs+RTsAdd; ++i)
+	TexturePtr texture[RT_Last];
+	for (int i=0; i < RT_ALL; ++i)
 	{
-		SRndTrg& r = rt[i];  bool full = i==3;
-		String si = toStr(i), sMtr = /*i==3 ? "road_mini_add" :*/ "road_mini_"+si;
-		if (i < RTs)
+		SRndTrg& r = rt[i];  bool full = i==RT_View;
+		String si = toStr(i), sMtr = "road_mini_"+si;
+		if (i < RT_Last)
 		{
 			String sTex = "RttTex"+si, sCam = "RttCam"+si;
 
@@ -59,10 +59,10 @@ void App::Rnd2TexSetup()
 			mSceneMgr->destroyCamera(sCam);  // dont destroy old - const tex sizes opt..
 			
 			///  rnd to tex - same dim as Hmap	// after track load
-			Real fDim = scn->sc->td.fTerWorldSize;  // world dim  ..vdr
+			Real fDim = scn->sc->td.fTerWorldSize;  // world dim
 			texture[i] = TextureManager::getSingleton().createManual(
-				sTex, rgDef, TEX_TYPE_2D,
-				dim[i], dim[i], 0, PF_R8G8B8A8, TU_RENDERTARGET);
+				sTex, rgDef, TEX_TYPE_2D, dim[i], dim[i], 0,
+				i == RT_View || i == RT_Terrain ? PF_R8G8B8 : PF_R8G8B8A8, TU_RENDERTARGET);
 				  
 			r.cam = mSceneMgr->createCamera(sCam);  // up
 			r.cam->setPosition(Vector3(0,1500,0));  //par- max height
@@ -79,37 +79,37 @@ void App::Rnd2TexSetup()
 			rvp->setVisibilityMask(visMask[i]);
 			rvp->setShadowsEnabled(false);
 
-			if (i != 3)  rvp->setMaterialScheme("reflection");
+			if (i != RT_View)  rvp->setMaterialScheme("reflection");
 		}
 		///  minimap  . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 		if (r.ndMini)  mSceneMgr->destroySceneNode(r.ndMini);
 		MaterialPtr mt = MaterialManager::getSingleton().getByName(sMtr);
 	#if defined(OGRE_VERSION) && OGRE_VERSION >= 0x10A00
-		if (i == 3)
+		if (i == RT_View)
 		{	mt->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTexture(texture[0]);
 			mt->getTechnique(0)->getPass(0)->getTextureUnitState(1)->setTexture(texture[2]);
-		}else if (i < RTs)
+		}else if (i < RT_Last)
 			mt->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTexture(texture[i]);
-		else if (i == RTs)
+		else if (i == RT_Last)
 			mt->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTexture(texture[3]);
 	#endif
 		if (!mt.isNull())  mt->reload();
 
 		r.mini = new Rectangle2D(true);  // screen rect preview
-		if (i == RTs)  r.mini->setCorners(-1/asp, 1, 1/asp, -1);  // fullscr,square
+		if (i == RT_Last)  r.mini->setCorners(-1/asp, 1, 1/asp, -1);  // fullscr,square
 		else  r.mini->setCorners(xm1, ym1, xm2, ym2);  //+i*sz*all
 
 		r.mini->setBoundingBox(aab);
 		r.ndMini = mSceneMgr->getRootSceneNode()->createChildSceneNode("Minimap"+si);
 		r.ndMini->attachObject(r.mini);	r.mini->setCastShadows(false);
 #if defined(OGRE_VERSION) && OGRE_VERSION < 0x10A00
-		r.mini->setMaterial(i == RTs+1 ? "BrushPrvMtr" : sMtr);
+		r.mini->setMaterial(i == RT_Brush ? "BrushPrvMtr" : sMtr);
 #else
 		MaterialPtr brush_mt = MaterialManager::getSingleton().getByName("BrushPrvMtr");
-		r.mini->setMaterial(i == RTs+1 ? brush_mt : mt);
+		r.mini->setMaterial(i == RT_Brush ? brush_mt : mt);
 #endif
 		r.mini->setRenderQueueGroup(RQG_Hud2);
-		r.mini->setVisibilityFlags(i == RTs ? RV_MaskPrvCam : RV_Hud);
+		r.mini->setVisibilityFlags(i == RT_Last ? RV_MaskPrvCam : RV_Hud);
 	}
 
 	//  pos dot on minimap  . . . . . . . .
@@ -129,7 +129,7 @@ void App::Rnd2TexSetup()
 
 void App::UpdMiniVis()
 {
-	for (int i=0; i < RTs+RTsAdd; ++i)
+	for (int i=0; i < RT_ALL; ++i)
 		if (rt[i].ndMini)
 			rt[i].ndMini->setVisible(pSet->trackmap && (i == pSet->num_mini));
 }
@@ -141,18 +141,18 @@ void App::SaveGrassDens()
 {
 	Ogre::Timer ti;
 
-	for (int i=0; i < RTs-1; ++i)  //-1 preview camera manual
+	for (int i=0; i < RT_View; ++i)  //-1 preview camera manual
 	{
 		if (!rt[i].tex)  return;
 		rt[i].tex->update();  // all have to exist
 	}
 
-	int w = rt[1].tex->getWidth(), h = rt[1].tex->getHeight();
+	int w = rt[RT_Grass].tex->getWidth(), h = rt[RT_Grass].tex->getHeight();
 	using Ogre::uint;
 	uint *rd = new uint[w*h];   // road render
 	uint *gd = new uint[w*h];   // grass dens
 	PixelBox pb_rd(w,h,1, PF_BYTE_RGBA, rd);
-	rt[1].tex->copyContentsToMemory(pb_rd, RenderTarget::FB_FRONT);
+	rt[RT_Grass].tex->copyContentsToMemory(pb_rd, RenderTarget::FB_FRONT);
 
 	const int f = std::max(0, scn->sc->grDensSmooth);
 	float sum = 0.f;
@@ -203,9 +203,10 @@ void App::SaveGrassDens()
 	delete[] rd;  delete[] gd;  delete[] mask;
 
 	//  road, terrain  ----------------
-	int u = pSet->allow_save ? pSet->gui.track_user : 1;
-	rt[0].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/road.png");
-	rt[2].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/terrain.png");
+	int user = pSet->allow_save ? pSet->gui.track_user : 1;
+	auto path = gcom->pathTrk[user] + pSet->gui.track;
+	rt[RT_Road   ].tex->writeContentsToFile(path + "/preview/road.png");
+	rt[RT_Terrain].tex->writeContentsToFile(path + "/preview/terrain.jpg");
 
 	LogO(String("::: Time save prv : ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
@@ -220,8 +221,8 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 	
 	if (num == 3)  // full
 	{
-		rt[3].cam->setPosition(mCamera->getPosition());
-		rt[3].cam->setDirection(mCamera->getDirection());
+		rt[RT_View].cam->setPosition(mCamera->getPosition());
+		rt[RT_View].cam->setDirection(mCamera->getDirection());
 	}
 	else if (scn->road)
 		scn->road->SetForRnd(num == 0 ? "render_clr" : "render_grass");

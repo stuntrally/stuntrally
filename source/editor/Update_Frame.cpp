@@ -235,13 +235,13 @@ if (pSet->bTrees)
 	{
 		scn->sc->camPos = mCamera->getPosition();
 		scn->sc->camDir = mCamera->getDirection();
-		if (rt[RTs-1].tex)
-			rt[RTs-1].tex->update();
+		if (rt[RT_View].tex)
+			rt[RT_View].tex->update();
 	}else{
 		static int ri = 0;
 		if (ri >= pSet->mini_skip)
 		{	ri = 0;
-			for (int i=0; i < RTs-1/**/; ++i)
+			for (int i=0; i < RT_View; ++i)
 				if (rt[i].tex)
 					rt[i].tex->update();
 		}	ri++;
@@ -328,7 +328,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 
 		scn->DestroyEmitters(false);
 		scn->CreateEmitters();
-		//UpdEmtBox();
+		UpdEmtBox();
 	}
 
 	

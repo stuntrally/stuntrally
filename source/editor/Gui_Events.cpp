@@ -355,7 +355,7 @@ void CGui::slSizeMinimap(SV*)
 	Real sz = pSet->size_minimap;  //int all = 0;
 	app->asp = float(app->mWindow->getWidth()) / float(app->mWindow->getHeight());
 	app->xm1 = 1-sz/app->asp;  app->ym1 = -1+sz;  app->xm2 = 1.0;  app->ym2 = -1.0;
-	for (int i=0; i < app->RTs+1; ++i)  if (i != app->RTs)
+	for (int i=0; i < app->RT_Brush; ++i)  if (i != app->RT_Last)
 		if (app->rt[i].mini)
 			app->rt[i].mini->setCorners(app->xm1, app->ym1, app->xm2, app->ym2);
 }

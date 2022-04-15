@@ -11,50 +11,37 @@
 using namespace Ogre;
 
 
+void App::CreateBox(SceneNode*& nd, Entity*& ent, String sMat, String sMesh, int x)
+{
+	if (nd)  return;
+	MaterialPtr mtr;
+	bool e = sMat.empty();
+	if (!e)
+	{	mtr = MaterialManager::getSingleton().getByName(sMat);
+		if (mtr.isNull())  return;
+	}
+	nd = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	ent = mSceneMgr->createEntity(sMesh);
+	ent->setVisibilityFlags(RV_Hud);  nd->setPosition(Vector3(x,0,0));
+		ent->setCastShadows(false);  if (!e)  ent->setMaterial(mtr);
+		ent->setRenderQueueGroup(RQG_CarGhost);  // after road
+	nd->attachObject(ent);
+	nd->setVisible(false);
+}
+
+
 void App::UpdStartPos()
 {
-	if (!ndCar)
-	{ 	//  car for start pos
- 		ndCar = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-		entCar = mSceneMgr->createEntity("car.mesh");
-		entCar->setVisibilityFlags(RV_Hud);
-		ndCar->attachObject(entCar);
-	}
-	if (!ndStBox)
-	{ 	//  start pos box
-		MaterialPtr mtr = MaterialManager::getSingleton().getByName("start_box");
-		if (!mtr.isNull())
- 		{	ndStBox = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-			entStBox = mSceneMgr->createEntity("cube.mesh");
-			entStBox->setVisibilityFlags(RV_Hud);  ndStBox->setPosition(Vector3(20000,0,0));
-				entStBox->setCastShadows(true);  //`
-				entStBox->setMaterial(mtr);  entStBox->setRenderQueueGroup(RQG_CarGlass);  // after road
-			ndStBox->attachObject(entStBox);
-	}	}
-	if (!ndFluidBox)
-	{ 	//  fluid edit box
-		MaterialPtr mtr = MaterialManager::getSingleton().getByName("fluid_box");
-		if (!mtr.isNull())
- 		{	ndFluidBox = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-			entFluidBox = mSceneMgr->createEntity("box_fluids.mesh");
-			entFluidBox->setVisibilityFlags(RV_Hud);  ndFluidBox->setPosition(Vector3(0,0,0));
-				entFluidBox->setCastShadows(false);  //`
-				entFluidBox->setMaterial(mtr);  entFluidBox->setRenderQueueGroup(RQG_CarGlass);
-			ndFluidBox->attachObject(entFluidBox);
-			ndFluidBox->setVisible(false);
-	}	}
-	if (!ndObjBox)
-	{ 	//  picked object box
-		MaterialPtr mtr = MaterialManager::getSingleton().getByName("object_box");
-		if (!mtr.isNull())
- 		{	ndObjBox = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-			entObjBox = mSceneMgr->createEntity("box_obj.mesh");
-			entObjBox->setVisibilityFlags(RV_Hud);  ndObjBox->setPosition(Vector3(0,0,0));
-				entObjBox->setCastShadows(false);  //`
-				entObjBox->setMaterial(mtr);  entObjBox->setRenderQueueGroup(RQG_CarGlass);
-			ndObjBox->attachObject(entObjBox);
-			ndObjBox->setVisible(false);
-	}	}
+	CreateBox(ndCar, entCar, "", "car.mesh");
+	
+	CreateBox(ndStBox, entStBox, "start_box", "cube.mesh", 20000);
+
+	CreateBox(ndFluidBox, entFluidBox, "fluid_box", "box_fluids.mesh");
+
+	CreateBox(ndObjBox, entObjBox, "object_box", "box_obj.mesh");
+
+	CreateBox(ndEmtBox, entEmtBox, "emitter_box", "box_obj.mesh");
+
 
 	Vector3 p1 = Axes::toOgre(scn->sc->startPos);
 	Quaternion q1 = Axes::toOgre(scn->sc->startRot);

@@ -145,12 +145,12 @@ SETcom::SETcom()   ///  Defaults
 	}
 }
 
-	//  tracks list columns  --
+//  tracks list columns  --
 const bool SETcom::colVisDef[2][COL_VIS] =
 	{{0,0,1, 0,0,0, 1,1, 0,0,0,0,0,0,0,0,0,0,0},
 	 {1,0,1, 1,1,1, 1,1, 1,1,1,1,1,1,1,1,1,1,1}};
 	
 const char SETcom::colFilDef[2][COL_FIL] =
 	{{01, 0,0, 0,0,0,0,0,0,0,0,0,0,0},
-	 {27, 6,6, 4,3,5,5,4,5,4,5,5,24,24}};
+	 {27, 6,6, 4,3,5,5,4,5,4,5,5,25,24}};
 	///^ up in next ver, also in *default.cfg
