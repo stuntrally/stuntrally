@@ -41,13 +41,11 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	{
 		switch (skey)
 		{
-			case key(ESCAPE):  // exit
-			case key(F7):  togPrvCam();  break;
+			case key(ESCAPE):  case key(F7):  togPrvCam();  break;  // exit
 
-			case key(KP_ENTER):
-			case key(RETURN):  // save screen
+			case key(KP_ENTER):  case key(RETURN):  // save screen
 			{	int u = pSet->allow_save ? pSet->gui.track_user : 1;
-				rt[RTs-1].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/view.jpg");
+				rt[RT_View].tex->writeContentsToFile(gcom->pathTrk[u] + pSet->gui.track + "/preview/view.jpg");
 				gcom->listTrackChng(gcom->trkList,0);  // upd gui img
 				gui->Status("#{Saved}", 1,1,0);
 			}	break;
@@ -75,8 +73,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			pSet->inMenu = (pSet->inMenu+1)%WND_ALL;
 			gui->toggleGui(false);  return true;
 
-		case key(KP_ENTER):
-		case key(RETURN):
+		case key(KP_ENTER):  case key(RETURN):
 			pSet->isMain = false;
 			gui->toggleGui(false);  return true;
 		}
@@ -132,8 +129,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				mShutDown = true;
 			}	return true;
 
-		case key(F1):
-		case key(GRAVE):
+		case key(F1):  case key(GRAVE):
 			if (ctrl)  // context help (show for cur mode)
 			{
 				if (bMoveCam)		 gui->GuiShortcut(WND_Help, 1, 0);
@@ -175,17 +171,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 
 		//  prev num tab (layers,grasses,models)
-		case key(1):
-   			if (alt && !bRoad)  {  gui->NumTabNext(-1);  return true;  }
-			break;
+		case key(1):  if (alt && !bRoad)  {  gui->NumTabNext(-1);  return true;  }  break;
 		//  next num tab
-		case key(2):
-   			if (alt && !bRoad)  {  gui->NumTabNext(1);  return true;  }
-			break;
+		case key(2):  if (alt && !bRoad)  {  gui->NumTabNext( 1);  return true;  }  break;
 
 		case key(F2):  // +-rt num
    			if (shift)
-   			{	pSet->num_mini = (pSet->num_mini - 1 + RTs+2) % (RTs+2);  UpdMiniVis();  }
+   			{	pSet->num_mini = (pSet->num_mini - 1 + RT_ALL) % RT_ALL;  UpdMiniVis();  }
    			else
    			if (bGuiFocus && tab && !pSet->isMain)
    				if (alt)  // prev gui subtab
@@ -202,7 +194,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 		case key(F3):  // tabs,sub
    			if (shift)
-   			{	pSet->num_mini = (pSet->num_mini + 1) % (RTs+2);  UpdMiniVis();  }
+   			{	pSet->num_mini = (pSet->num_mini + 1) % RT_ALL;  UpdMiniVis();  }
    			else
    			if (bGuiFocus && tab && !pSet->isMain)
    				if (alt)  // next gui subtab
@@ -223,8 +215,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					sub->setIndexSelected( (sub->getIndexSelected() + (shift ? -1 : 1) + num) % num );  }
 			break;
    			
-		case key(KP_ENTER):
-		case key(RETURN):  // load track
+		case key(KP_ENTER):  case key(RETURN):  // load track
 			if (bGuiFocus)
 			if (mWndTabsTrack->getIndexSelected() == 1 && !pSet->isMain && pSet->inMenu == WND_Track)
 				gui->btnNewGame(0);
@@ -577,28 +568,37 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	}
 
 	//  Emitters  : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : :
-	if (edMode == ED_Emitters)
+	if (edMode == ED_Emitters && !bGuiFocus)
 	{	int emts = scn->sc->emitters.size();
 		switch (skey)
 		{
+			//  prev,next
+			case key(PAGEUP):  case key(KP_9):
+				if (emts > 0) {  iEmtCur = (iEmtCur-1+emts)%emts;  }  UpdEmtBox();  break;
+			case key(PAGEDOWN):	case key(KP_3):
+				if (emts > 0) {  iEmtCur = (iEmtCur+1)%emts;       }  UpdEmtBox();  break;
+
+			case key(1):  emtEd = EO_Move;    break;
+			case key(2):  emtEd = EO_Rotate;  break;
+			case key(3):  emtEd = EO_Scale;   break;
+
+			//  prev,next type
+			case key(9):  case key(MINUS):   SetEmtType(-1);  bRecreateEmitters = true;  break;
+			case key(0):  case key(EQUALS):  SetEmtType( 1);  bRecreateEmitters = true;  break;
+
+			case key(KP_ENTER):  case key(RETURN):
+				scn->sc->emitters[iEmtCur].stat = !scn->sc->emitters[iEmtCur].stat;
+				bRecreateEmitters = true;  break;
+
 			//  ins
 			case key(INSERT):  case key(KP_0):
 			if (road && road->bHitTer)
 			{
-				SEmitter em;  em.name = "CraterFire";
-				em.pos = road->posHit;
-				em.size = Vector3(2.f, 2.f, 1.f);
-				em.rate = 10.f;
-				scn->sc->emitters.push_back(em);
-				iEmtCur = scn->sc->emitters.size()-1;
+				SEmitter em;  em.name = "AcidVapor1";
+				em.pos = road->posHit;  em.size = Vector3(2.f, 1.f, 2.f);  em.rate = 10.f;
+				scn->sc->emitters.push_back(em);  iEmtCur = scn->sc->emitters.size()-1;
 				bRecreateEmitters = true;
 			}	break;
-
-			//  prev,next
-			case key(PAGEUP):  case key(KP_9):
-				if (emts > 0) {  iEmtCur = (iEmtCur-1+emts)%emts;  }  UpdEmtPick();  break;
-			case key(PAGEDOWN):	case key(KP_3):
-				if (emts > 0) {  iEmtCur = (iEmtCur+1)%emts;       }  UpdEmtPick();  break;
 
 			//  del
 			case key(DELETE):  case key(KP_PERIOD):
@@ -706,7 +706,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(X):  if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
 
 		//  emitters
-		case key(P):  if (bEdit()){  SetEdMode(ED_Emitters);  UpdEditWnds();  }   break;
+		case key(A):  if (bEdit()){  SetEdMode(ED_Emitters);  UpdEditWnds();  }   break;
 
 		//  rivers
 		///case key(A):	if (bEdit()){  SetEdMode(ED_Rivers);  UpdEditWnds();  }	break;

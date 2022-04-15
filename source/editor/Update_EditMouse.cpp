@@ -43,6 +43,9 @@ void App::EditMouse()
 	if (edMode == ED_Start /*&&	vStartPos.size() >= 4 && vStartRot.size() >= 4*/)
 		MouseStart();
 
+	if (edMode == ED_Emitters && !scn->sc->emitters.empty())
+		MouseEmitters();
+	
 	if (edMode == ED_Fluids && !scn->sc->fluids.empty())
 		MouseFluids();
 
@@ -189,6 +192,57 @@ void App::MouseFluids()
 			bRecreateFluids = true;  //
 		}
 	}
+}
+
+
+///  edit Emitters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+void App::MouseEmitters()
+{
+	SEmitter& em = scn->sc->emitters[iEmtCur];
+	const Real fMove(0.5f), fRot(1.5f);  //par speed
+	if (emtEd == EO_Move)
+	{
+		if (mbLeft)	// move on xz
+		{
+			Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();
+			Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
+			Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
+			em.pos += vm;
+			em.nd->setPosition(em.pos);  UpdEmtBox();
+		}
+		else if (mbRight)  // move y
+		{
+			Real ym = -vNew.y * fMove * moveMul;
+			em.pos.y += ym;
+			em.nd->setPosition(em.pos);  UpdEmtBox();
+		}
+		else if (mbMiddle)  // rot yaw
+		{
+			Real xm = vNew.x * fRot * moveMul;
+			em.rot += xm;
+			//em.nd->setOrientation(Quaternion(Degree(em.rot.x), em.up));
+		}
+	}else if(emtEd == EO_Scale)
+	{
+		if (mbLeft)  // size xz
+		{
+			Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();  vx.x = fabs(vx.x);  vx.z = fabs(vx.z);
+			Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();  vz.x = fabs(vz.x);  vz.z = fabs(vz.z);
+			Vector3 vm = (vNew.y * vz + vNew.x * vx) * fMove * moveMul;
+			em.size += vm;
+			if (em.size.x < 0.f)  em.size.x = 0.f;
+			if (em.size.z < 0.f)  em.size.z = 0.f;
+			em.UpdEmitter();  UpdEmtBox();
+		}
+		else if (mbRight)  // size y
+		{
+			float vm = -vNew.y * fMove * moveMul;
+			em.size.y += vm;
+			if (em.size.y < 0.f)  em.size.y = 0.f;
+			em.UpdEmitter();  UpdEmtBox();
+		}
+	}
+	//else if(emtEd == EO_Rotate)
 }
 
 

@@ -1,5 +1,5 @@
 //  Sparks hit
-particle_system  Sparks
+particle_system Sparks
 {
 	quota           1000
 	material		Particles/Spark
@@ -11,11 +11,11 @@ particle_system  Sparks
 	emitter Box
 	{
 		angle	30
-		colour_range_start  1 1.0 0
-		colour_range_end    1 0.6 0
-		velocity	2
+		colour_range_start  1 0.8 0.2
+		colour_range_end    1 0.5 0.0
+		velocity	3
 		velocity_min	1
-		velocity_max	4
+		velocity_max	6
 		time_to_live       0.6
 		time_to_live_min   0.3
 		time_to_live_max   1.4
@@ -30,12 +30,13 @@ particle_system  Sparks
 	}
 	affector ColourFader
 	{
-		red	   -0.18
-		green  -0.45
+		red	  -0.18
+		green -0.45
+		blue  -0.75
 	}
 	affector DirectionRandomiser
 	{
-		randomness  1
+		randomness  5
 	}
 }
 

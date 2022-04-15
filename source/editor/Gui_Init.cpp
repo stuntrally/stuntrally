@@ -558,6 +558,12 @@ void CGui::InitGui()
 		cmbRain1->addItem(s);  cmbRain2->addItem(s);
 	}	
 
+	//---------------------  Emitters  ---------------------
+	GetMaterials("emitters.particle", true, "particle_system");
+	app->vEmtNames.clear();
+	for (u=0; u < vsMaterials.size(); ++u)
+		app->vEmtNames.push_back(vsMaterials[u]);
+
 
 	//---------------------  Terrain  ---------------------
 	Cmb(cmbTexNorm, "TexNormal", comboTexNorm);  cmbTexNorm->addItem("flat_n.png");

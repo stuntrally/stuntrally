@@ -2,19 +2,79 @@ material RainDrop
 {
     parent Base_particle
     diffuseMap droplet.png
-    scene_blend alpha_blend
 }
-
 material RainDropLong
 {
     parent Base_particle
     diffuseMap droplet-long.png
-    scene_blend alpha_blend
 }
 
 material SnowFlake
 {
     parent Base_particle
     diffuseMap snow.png
-    scene_blend alpha_blend
+}
+
+
+//  Cloud  oOoOOoOoo
+material Cloud1
+{
+    parent Base_particle
+    diffuseMap cloud1.png
+}
+material Cloud2
+{
+    parent Base_particle
+    diffuseMap cloud2.png
+}
+material Cloud3
+{
+    parent Base_particle
+    diffuseMap cloud3.png
+}
+material Cloud4
+{
+    parent Base_particle
+    diffuseMap cloud4.png
+}
+material Cloud5
+{
+    parent Base_particle
+    diffuseMap cloud5.png
+}
+
+
+//  Fire  ~ ~~ ~~ ~  
+material Fire1
+{
+    parent Base_particle
+    scene_blend add
+    fog_en false
+	alpha_rejection none
+    diffuseMap fire1.png
+}
+material Fire2
+{
+    parent Base_particle
+    scene_blend add
+    fog_en false
+	alpha_rejection none
+    diffuseMap fire2.png
+}
+material Fire3
+{
+    parent Base_particle
+    scene_blend add
+    fog_en false
+	alpha_rejection none
+    diffuseMap fire3.png
+}
+
+material Lava1
+{
+    parent Base_particle
+    scene_blend add
+    fog_en false
+	alpha_rejection none
+    diffuseMap lava1.png
 }

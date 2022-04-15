@@ -5,6 +5,8 @@
         "*.glsl": "c",
         "*.material": "json",
         "*.compositor": "json",
+        "*.particle": "c",
+        "*.mat": "c",
         "*.car": "ini",
         "*.ini": "ruby",
         "random": "cpp",

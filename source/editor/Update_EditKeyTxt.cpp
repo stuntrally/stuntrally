@@ -14,6 +14,8 @@
 #include <OgreManualObject.h>
 #include <OgreOverlay.h>
 #include <OgreOverlayElement.h>
+#include <OgreParticleSystem.h>
+#include <OgreParticleEmitter.h>
 #include <MyGUI_InputManager.h>
 #include <MyGUI_Widget.h>
 #include <MyGUI_TextBox.h>
@@ -328,26 +330,32 @@ void App::KeyTxtObjects()
 
 ///  Emitters
 //----------------------------------------------------------------
-void App::KeyTxtEmitters()
+void App::KeyTxtEmitters(Real q)
 {
 	Txt *emtTxt = gui->emtTxt;
 	int emts = scn->sc->emitters.size();
 	bool bNew = iEmtCur == -1;
-	const SEmitter& e = bNew || scn->sc->emitters.empty() ? emtNew : scn->sc->emitters[iEmtCur];
+	SEmitter& e = bNew || scn->sc->emitters.empty() ? emtNew : scn->sc->emitters[iEmtCur];
+	
 	UString s = bNew
 		? UString("#80FF80")+TR("#{Road_New}")+"#B0D0B0     "
 		: UString("#A0D0FF")+TR("#{Road_Cur}")+"#B0B0D0     ";
 	s = s + (bNew ? "-" : toStr(iEmtCur+1)+" / "+toStr(emts));
 	emtTxt[0]->setCaption(s);
-	emtTxt[1]->setCaption(/*bNew ? vObjNames[iObjTNew] :*/ e.name);
+	emtTxt[1]->setCaption(/*bNew ? vObjNames[iEmtTNew] :*/ e.name);
 	emtTxt[2]->setCaption(String(emtEd==EO_Move  ?"#60FF60":"")+ TR("#{Obj_Pos}  ") +fToStr(e.pos.x,1,4)+" "+fToStr(e.pos.y,1,4)+" "+fToStr(e.pos.z,1,4));
 	emtTxt[3]->setCaption(String(emtEd==EO_Rotate?"#FFA0A0":"")+ TR("#{Obj_Rot}  y ") +fToStr(e.rot/*e.up.x*/,0,3) );
 	emtTxt[4]->setCaption(String(emtEd==EO_Scale ?"#60F0FF":"")+ TR("#{scale}  ") +fToStr(e.size.x,2,4)+" "+fToStr(e.size.y,2,4)+" "+fToStr(e.size.z,2,4));
-	emtTxt[5]->setCaption("Rate: "+fToStr(e.rate,0,3) );  //..
+	emtTxt[5]->setCaption(TR("#{Density}: ") +fToStr(e.rate,0,3) );
+	emtTxt[6]->setCaption(TR("#{Count}: ")+ toStr(e.ps ? e.ps->getNumParticles() : 0) + (e.stat ? "  Static" : ""));
+
+	if (!bEdit())  return;
+	if (isKey(LEFTBRACKET) ||isKey(O)){  e.rate  *= 1.f - 0.04f*q;  e.ps->getEmitter(0)->setEmissionRate(e.rate);  }
+	if (isKey(RIGHTBRACKET)||isKey(P)){  e.rate  *= 1.f + 0.04f*q;  e.ps->getEmitter(0)->setEmissionRate(e.rate);  }
 
 	//  edit
-	if (mz != 0 && bEdit())  // wheel prev/next
+	if (mz != 0)  // wheel prev/next
 	{
-		if (emts > 0)  {  iEmtCur = (iEmtCur-mz+emts)%emts;  UpdEmtPick();  }
+		if (emts > 0)  {  iEmtCur = (iEmtCur-mz+emts)%emts;  UpdEmtBox();  }
 	}
 }

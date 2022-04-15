@@ -45,10 +45,3 @@ material flare1
     fog_en false
     diffuseMap flare1.png
 }
-
-material flare2
-{
-    parent Base_particle
-    scene_blend alpha_blend
-    diffuseMap flare2.png
-}
