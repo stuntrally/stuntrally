@@ -27,6 +27,7 @@ CMakeLists.txt.user*
 *.exe
 
 #-- vs crap
+.cache
 *.ncb
 *.suo
 *.user
