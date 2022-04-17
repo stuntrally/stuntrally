@@ -2932,18 +2932,15 @@
 						<Widget type="TextBox" skin="TextBox" position="20 296 200 24">
 							<Property key="Caption" value="#FFA050 R  #{Replay}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 332 200 24">
+						<Widget type="TextBox" skin="TextBox" position="20 342 200 24">
 							<Property key="Caption" value="#60D060 #{InputFocusFind}"/>
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="252 72 200 24">
 							<Property key="Caption" value="#C0E0FF S  #{Screen}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="252 184 200 24">
-							<Property key="Caption" value="#B0B0FF A  #{Graphics}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="264 208 200 24">
-							<Property key="Caption" value="#E0C080 E  #{Effects}"/>
+						<Widget type="TextBox" skin="TextBox" position="252 96 200 24">
+							<Property key="Caption" value="#FFFF60 I  #{Input}"/>
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="252 128 200 24">
@@ -2952,18 +2949,23 @@
 						<Widget type="TextBox" skin="TextBox" position="264 152 200 24">
 							<Property key="Caption" value="#60F8F8 M  #{Minimap}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="252 296 200 24">
-							<Property key="Caption" value="#C0A0E0 O  #{Tweak}"/>
+
+						<Widget type="TextBox" skin="TextBox" position="252 184 200 24">
+							<Property key="Caption" value="#B0B0FF A  #{Graphics}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="264 208 200 24">
+							<Property key="Caption" value="#E0C080 E  #{Effects}"/>
 						</Widget>
 
 						<Widget type="TextBox" skin="TextBox" position="252 240 200 24">
-							<Property key="Caption" value="#60A0FF T  #{Settings}"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="252 96 200 24">
-							<Property key="Caption" value="#FFFF60 I  #{Input}"/>
+							<Property key="Caption" value="#B090E0 O  #{Sound}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="252 264 200 24">
-							<Property key="Caption" value="#B090E0 P  #{Sound}"/>
+							<Property key="Caption" value="#60A0FF T  #{Settings}"/>
+
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="252 296 200 24">
+							<Property key="Caption" value="#C0A0E0 K  #{Tweak}"/>
 						</Widget>
 					</Widget>
 				</Widget>

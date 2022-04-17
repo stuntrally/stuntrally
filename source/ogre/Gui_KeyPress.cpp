@@ -82,7 +82,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	}
 
 	//  shortcut keys for gui access (alt-Q,C,S,G,V,.. )
-	if (alt)
+	if (alt && !shift)
 		switch (skey)
 		{
 			case key(Z):  // alt-Z Tweak (alt-shift-Z save&reload)
@@ -114,20 +114,32 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		}
 
 
-	//>--  dev shortcuts, alt-shift numbers, start test track
+	//>--  dev shortcuts, alt-shift - start test tracks
 	if (pSet->dev_keys && alt && shift && !mClient)
 	{
 		string t;
 		switch (skey)
 		{
-			case key(1): t = "Test1-Flat";  break;
-			case key(2): t = "TestC9-jumps";  break;
-			case key(3): t = "TestC4-ow";  break;
-			case key(4): t = "Test7-FluidsSmall";  break;
-			case key(5): t = "TestC6-temp";  break;
-			case key(6): t = "TestC8-align";  break;
-			case key(7): t = "Test10-FlatPerf";  break;
-		}
+			case key(1):  t = "Test2-Asphalt";  break;
+			case key(2):  t = "TestC9-jumps";  break;
+			case key(3):  t = "Test3-Bumps";  break;
+			case key(4):  t = "TestC4-ow";  break;
+			case key(5):  t = "TestC7-oc";  break;
+			case key(6):  t = "TestC6-temp";  break;
+			case key(7):  t = "Test10-FlatPerf";  break;
+			
+			case key(Q):  t = "Test6-Fluids";  break;
+			case key(W):  t = "Test4-TerrainBig";  break;
+			case key(E):  t = "TestC8-align";  break;
+			case key(R):  t = "Test12-Snow";  break;
+
+			case key(A):  t = "Test1-Flat";  break;
+			case key(S):  t = "Test7-FluidsSmall";  break;
+			case key(D):  t = "Test3-Bumps";  break;
+
+			case key(X):  t = "Test8-Objects";  break;
+			case key(C):  t = "TestC10-pace";  break;
+		} 
 		if (!t.empty())
 		{
 			gui->BackFromChs();
