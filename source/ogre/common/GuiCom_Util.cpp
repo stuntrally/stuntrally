@@ -208,8 +208,8 @@ void CGuiCom::doSizeGUI(EnumeratorWidgetPtr widgets)
 				relSize = IntSize(app->mWindow->getWidth(), app->mWindow->getHeight());
 			else
 			{	WP window = fWP(relativeTo);
-				relSize = window->getSize();  }
-			
+				relSize = window->getSize();
+			}
 			//  retrieve original size & pos
 			IntPoint origPos;  IntSize origSize;
 			origPos.left = s2i(wp->getUserString("origPosX"));
@@ -354,7 +354,7 @@ void CGuiCom::GuiInitLang()
 	ComboBoxPtr combo = fCmb("Lang");
 	if (!combo)  return;
 	combo->eventComboChangePosition += newDelegate(this, &CGuiCom::comboLanguage);
-	for (std::map<string, UString>::const_iterator it = languages.begin();
+	for (auto it = languages.cbegin();
 		it != languages.end(); ++it)
 	{
 		combo->addItem(it->second);
@@ -368,7 +368,7 @@ void CGuiCom::comboLanguage(ComboBox* wp, size_t val)
 	if (val == ITEM_NONE)  return;
 	UString sel = wp->getItemNameAt(val);
 	
-	for (std::map<string, UString>::const_iterator it = languages.begin();
+	for (auto it = languages.cbegin();
 		it != languages.end(); ++it)
 	{
 		if (it->second == sel)
@@ -472,7 +472,8 @@ void CGuiCom::CreateFonts()
 			mgr.removeByName(name);
 
 		//  setup font				   // par
-		float size = sizes[i] * (1.f - 1.5f * (GetGuiMargin(2000) - GetGuiMargin(pSet->windowy)));
+		float size = sizes[i];  // less for low screen res
+		size *= max(0.55f, min(1.2f, (pSet->windowy - 600.f) / 600.f));
 		inf += name+"  "+fToStr(size,1,3)+"  ";
 
 		//  create
@@ -488,8 +489,8 @@ void CGuiCom::CreateFonts()
 
 		//  char ranges
 		if (bfont)
-		{	const std::vector<pair<Char, Char> >& vv = bfont->getCodePointRanges();
-			for (std::vector<pair<Char, Char> >::const_iterator it = vv.begin(); it != vv.end(); ++it)
+		{	const auto& vv = bfont->getCodePointRanges();
+			for (auto it = vv.cbegin(); it != vv.cend(); ++it)
 			if ((*it).first > 10 && (*it).first < 10000)
 			{	//LogO("aa "+toStr((*it).first)+" "+toStr((*it).second));
 				font->addCodePointRange((*it).first, (*it).second);  }
@@ -513,8 +514,8 @@ void CGuiCom::CreateFonts()
 		xml::ElementPtr codes = root->createChild("Codes"), c;
 		//  char ranges
 		if (bfont)
-		{	const std::vector<pair<Char, Char> >& vv = bfont->getCodePointRanges();
-			for (std::vector<pair<Char, Char> >::const_iterator it = vv.begin(); it != vv.end(); ++it)
+		{	const auto& vv = bfont->getCodePointRanges();
+			for (auto it = vv.cbegin(); it != vv.cend(); ++it)
 			if ((*it).first > 10 && (*it).first < 10000)
 			{
 				c = codes->createChild("Code");
@@ -536,7 +537,7 @@ void CGuiCom::CreateFonts()
 
 
 //  util
-void CGuiCom::OpenBrowserUrl(std::string url)
+void CGuiCom::OpenBrowserUrl(string url)
 {
 #ifdef WIN32
 	string cmd = "system ";

@@ -478,7 +478,7 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 			if (numWheels == 4)  // cars default
 				wheel[wp].SetSteerMax(i < REAR_LEFT ? 1.0 : 0.0);
 			//  6,8 wheels  have custom
-			if (c.GetParamE("wheel-"+sPos+".steer", steer))
+			if (c.GetParam("wheel-"+sPos+".steer", steer))
 				wheel[wp].SetSteerMax(steer);
 
 			if (!c.GetParamE("wheel-"+sPos+".position", pos))  return false;

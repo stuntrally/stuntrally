@@ -135,12 +135,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				if (bMoveCam)		 gui->GuiShortcut(WND_Help, 1, 0);
 				else switch (edMode)
 				{	case ED_Smooth: case ED_Height: case ED_Filter:
-					case ED_Deform:  gui->GuiShortcut(WND_Help, 1, 3);  break;
-					case ED_Road:    gui->GuiShortcut(WND_Help, 1, 5);  break;
-					case ED_Start:   gui->GuiShortcut(WND_Help, 1, 6);  break;
-					case ED_Fluids:  gui->GuiShortcut(WND_Help, 1, 7);  break;
-					case ED_Objects: gui->GuiShortcut(WND_Help, 1, 8);  break;
-					default:		 gui->GuiShortcut(WND_Help, 1, 0);  break;
+					case ED_Deform:   gui->GuiShortcut(WND_Help, 1, 3);  break;
+					case ED_Road:     gui->GuiShortcut(WND_Help, 1, 5);  break;
+					case ED_Start:    gui->GuiShortcut(WND_Help, 1, 6);  break;
+					case ED_Fluids:   gui->GuiShortcut(WND_Help, 1, 7);  break;
+					case ED_Objects:  gui->GuiShortcut(WND_Help, 1, 8);  break;
+					case ED_Emitters: gui->GuiShortcut(WND_Help, 1, 9);  break;
+					default:		  gui->GuiShortcut(WND_Help, 1, 0);  break;
 			}	}
 			else	//  Gui mode, Options
 				gui->toggleGui(true);

@@ -236,7 +236,7 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 		if (cnt > 3)
 		{
 			engine.DebugPrint(out);  out << endl;
-			//fuel_tank.DebugPrint(out);  out << endl;  //mass 8- for 3S,ES,FM
+			//fuel_tank.DebugPrint(out);  out << endl;  //mass 8- for ES,
 			clutch.DebugPrint(out);  out << endl;
 			transmission.DebugPrint(out);	out << endl;
 		}

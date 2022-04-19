@@ -139,7 +139,7 @@ radius = 0.38
 rolling-resistance = 1.3e-2, 16.5e-6
 rotational-inertia = 2.2
 tread = 0.0
-friction = 1.5
+friction = 1.1
 width-trail = 0.27
 
 
