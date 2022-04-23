@@ -77,7 +77,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 
 	int i;  // tool texts
 	for (i=0; i<BR_TXT; ++i){  brTxt[i]=0;  brVal[i]=0;  brKey[i]=0;  }
-	for (i=0; i<RD_TXT; ++i){  rdTxt[i]=0;  rdVal[i]=0;  rdKey[i]=0;  }
+	for (i=0; i<RD_TXT; ++i){  rdTxt[i]=0;  rdVal[i]=0;  rdKey[i]=0;  rdImg[i]=0;  }
 	for (i=0; i<RDS_TXT;++i){  rdTxtSt[i]=0;  rdValSt[i]=0;  }
 
 	for (i=0; i<ST_TXT; ++i)  stTxt[i]=0;

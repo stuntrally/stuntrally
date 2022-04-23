@@ -1067,6 +1067,7 @@
 	<Tag name="Road">Road</Tag>
 	<Tag name="Pipe">Pipe</Tag>
 	<Tag name="Wall">Wall</Tag>
+	<Tag name="Hidden">Hidden</Tag>
 	<Tag name="Column">Column</Tag>
 	<Tag name="Advanced">Advanced</Tag>
 	

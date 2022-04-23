@@ -146,8 +146,9 @@ void CGui::InitGui()
 	for (i=0; i<MAX_TXT; ++i)
 	{	String s = toStr(i);
 		if (i<BR_TXT){  brTxt[i] = fTxt("brTxt"+s);  brVal[i] = fTxt("brVal"+s);  brKey[i] = fTxt("brKey"+s);  }
-		if (i<RD_TXT){  rdTxt[i] = fTxt("rdTxt"+s);  rdVal[i] = fTxt("rdVal"+s);  rdKey[i] = fTxt("rdKey"+s);  }
+		if (i<RD_TXT){  rdTxt[i] = fTxt("rdTxt"+s);  rdVal[i] = fTxt("rdVal"+s);  rdKey[i] = fTxt("rdKey"+s);  rdImg[i] = fImg("rdImg"+s);  }
 		if (i<RDS_TXT){ rdTxtSt[i] = fTxt("rdTxtSt"+s);  rdValSt[i] = fTxt("rdValSt"+s);  }
+
 		if (i<ST_TXT)   stTxt[i] = fTxt("stTxt"+s);    if (i<FL_TXT)  flTxt[i] = fTxt("flTxt"+s);
 		if (i<OBJ_TXT)  objTxt[i]= fTxt("objTxt"+s);
 		if (i<EMT_TXT)  emtTxt[i]= fTxt("emtTxt"+s);   if (i<RI_TXT)  riTxt[i] = fTxt("riTxt"+s);
@@ -748,7 +749,8 @@ void CGui::InitGui()
 		String c = s.clr;
 		lp->addItem(c, 0);  l = lp->getItemCount()-1;
 
-		lp->setSubItemNameAt(1,l, c+ s.mtr.substr(4, s.mtr.length()));  // no sky/
+		//lp->setSubItemNameAt(1,l, c+ s.mtr.substr(4, s.mtr.length()));  // no sky/
+		lp->setSubItemNameAt(1,l, c+ s.mtr);
 		lp->setSubItemNameAt(2,l, c+ fToStr( s.ldPitch, 0,2));
 	}
 

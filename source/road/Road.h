@@ -30,7 +30,7 @@ class btTriangleMesh;
 
 #define  LODs  4
 #define  MTRs  4
-#define  LoopTypes  8  // for pace notes
+#define  LoopTypes  9  // for pace notes
 
 
 struct RoadSeg
@@ -98,7 +98,7 @@ public:
 
 
 	//  other
-	const Ogre::String& getMtrStr(int seg);
+	const Ogre::String& getMtrStr(int seg);  const Ogre::String& getWallMtrStr(int seg);
 	bool isPipe(int seg);
 	
 

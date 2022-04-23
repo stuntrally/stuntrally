@@ -449,7 +449,7 @@ bool SplineRoad::isPipe(int seg)
 //  info text only
 const String& SplineRoad::getMtrStr(int seg)
 {
-	static String sHid = "Hidden";
+	static String sHid = TR("#{Hidden}");
 	if (seg < 0)  // new
 	{
 		int i = newP.idMtr;
@@ -459,6 +459,19 @@ const String& SplineRoad::getMtrStr(int seg)
 	int i = mP[seg].idMtr;
 	if (i==-1)  return sHid;
 	return !isPipe(seg) ? sMtrRoad[i] : sMtrPipe[i];
+}
+const String& SplineRoad::getWallMtrStr(int seg)
+{
+	static String sHid = TR("#{Hidden}");
+	if (seg < 0)  // new
+	{
+		int i = newP.idWall;
+		if (i==-1)  return sHid;
+		return newP.pipe == 0.f ? sMtrWall : sMtrWallPipe;
+	}
+	int i = mP[seg].idWall;
+	if (i==-1)  return sHid;
+	return !isPipe(seg) ? sMtrWall : sMtrWallPipe;  //todo: more [i]..
 }
 
 void SplineRoad::SetMtrPipe(int i, String sMtr)

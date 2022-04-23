@@ -37,20 +37,24 @@ void App::KeyTxtRoad(Real q)
 	std::string s;
 	Txt *rdTxt = gui->rdTxt, *rdVal = gui->rdVal, *rdKey = gui->rdKey,
 		*rdTxtSt = gui->rdTxtSt, *rdValSt = gui->rdValSt;
+	Img *rdImg = gui->rdImg;
 
 	static bool first = true;
 	if (first)  // once, static text
 	{	first = false;
-														rdKey[0]->setCaption("Home");
+														rdKey[0]->setCaption("+ - Home");
 		rdTxt[1]->setCaption(TR("#{Road_Width}"));		rdKey[1]->setCaption("/ *");
 		rdTxt[2]->setCaption(TR("#{Road_Roll}"));		rdKey[2]->setCaption("1 2");
 		rdTxt[3]->setCaption(TR("#{Road_Yaw}"));		rdKey[3]->setCaption("3 4");
 														rdKey[4]->setCaption(TR("#{InputRoadAngType}"));
 		rdTxt[5]->setCaption(TR("#{Road_Snap}"));		rdKey[5]->setCaption("5");
-		rdTxt[6]->setCaption(TR("#{Road_Pipe}"));		rdKey[6]->setCaption("O P");//[ ]
+		rdTxt[6]->setCaption(TR("#{Road_Pipe}"));		rdKey[6]->setCaption("O P#E07030 8");//[ ]
 		rdTxt[7]->setCaption(TR("#{Road_Column}"));		rdKey[7]->setCaption("End");
 														rdKey[8]->setCaption("9 0");//- =
 		rdTxt[9]->setCaption(TR("#{Road_ChkR}"));		rdKey[9]->setCaption("K L");
+														rdKey[10]->setCaption("#80E0E0       7");
+														//rdKey[11]->setCaption("#C060E0 sh-8");
+		rdTxt[12]->setCaption(TR("#{Wall}"));	rdKey[12]->setCaption("ctrl 9 0");
 	}
 
 	rdTxt[0]->setCaption(TR(sp.onTer ? "#{Road_OnTerrain}" : "#{Road_Height}"));
@@ -62,21 +66,26 @@ void App::KeyTxtRoad(Real q)
 	rdTxt[4]->setCaption(toStr(sp.aType)+" "+TR("#{Road_Angle"+csAngType[sp.aType]+"}"));
 	rdVal[5]->setCaption(fToStr(angSnap,0,1));
 													// .old, mark
-	rdTxt[6]->setCaption(sp.onPipe ? (sp.onPipe==1 ?".":"")+ TR("#{Road_OnPipe}") : TR("#{Road_Pipe}"));
+	rdImg[6]->setVisible(!sp.onPipe);  rdImg[7]->setVisible(sp.onPipe);
+	rdTxt[6]->setCaption(sp.onPipe ? TR("#{Road_OnPipe}") : TR("#{Road_Pipe}"));
 	rdTxt[6]->setTextColour(sp.onPipe ? MyGUI::Colour(1.0,0.45,0.2) : MyGUI::Colour(0.86,0.86,0));
 	rdVal[6]->setCaption(sp.pipe==0.f ? "" : fToStr(sp.pipe,2,4));
 	
-	rdTxt[7]->setVisible(!sp.onTer);	rdKey[7]->setVisible(!sp.onTer);
-	rdVal[7]->setCaption(sp.onTer ? "" : toStr(sp.cols));
-	
+	bool vis = !sp.onTer && !sp.isnt();
+	rdTxt[7]->setVisible(vis);	rdVal[7]->setVisible(vis);  rdKey[7]->setVisible(vis);
+	rdVal[7]->setCaption(sp.onTer ? "" : toStr(sp.cols));  // column
+
+	rdTxt[12]->setVisible(vis);  rdKey[12]->setVisible(vis);  
+	rdTxt[12]->setCaption(toStr(sp.idWall)+" "+road->getWallMtrStr(ic));  // wall mtr
 	rdTxt[8]->setCaption(toStr(sp.idMtr)+" "+road->getMtrStr(ic));  // mtr
 
 	rdVal[9]->setCaption( sp.chkR == 0.f ? "" : fToStr(sp.chkR,1,3)+"  "+ (sp.chk1st ? "#D0D0FF(1)":"") );
 
 	const static String sLoop[LoopTypes]={"","Loop Straight","Side Loop","Barrel Loop",
-		"Loop 2 in 1","Double Loops","Frenzy Loop","Ramp"};  //todo: transl..
+		"Loop 2 in 1","Double Loops","Frenzy Loop","Ramp","View Only"};  //todo: transl?
 	rdTxt[10]->setCaption(TR(sLoop[sp.loop]));
 	rdVal[10]->setCaption(!sp.notReal ? "" : TR("#{Road_NotReal}"));
+	rdImg[10]->setVisible(!sp.notReal);  rdImg[11]->setVisible(sp.notReal);
 
 	//  status
 	if (road->vSel.size() > 0)  s = TR("#{Road_sel}")+": "+toStr(road->vSel.size());
