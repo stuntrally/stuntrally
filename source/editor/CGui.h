@@ -272,6 +272,7 @@ public:
 	SV svRdTcMul,svRdTcMulW, svRdTcMulP,svRdTcMulPW, svRdTcMulC;
 	SV svRdLenDim,svRdWidthSteps, svRdPwsM,svRdPlsM;
 	SV svRdMergeLen,svRdLodPLen, svRdColN,svRdColR;
+	SV svRdVisDist,svRdVisBehind;
 	void SldUpd_Road();
 	Ed edRdSkirtLen,edRdSkirtH, edRdHeightOfs;
 	void editRoad(Ed);

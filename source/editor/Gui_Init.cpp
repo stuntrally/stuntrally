@@ -465,9 +465,12 @@ void CGui::InitGui()
 	sv= &svRdPwsM;		sv->Init("RdPwsM",		&f, 1.f, 8.f, 1.5f, 1,3);  sv->DefaultF(4.f);
 
 	sv= &svRdColN;		sv->Init("RdColN",		&i, 3,16, 1.5f);  sv->DefaultI(4);
-	sv= &svRdColR;		sv->Init("RdColR",		&f, 1.0f, 6.f, 1.5f, 2,4);  sv->DefaultF(2.f);
-	sv= &svRdMergeLen;	sv->Init("RdMergeLen",	&f, 40.f, 2000.f, 2.f, 0,2);  sv->DefaultF(400.f);
-	sv= &svRdLodPLen;	sv->Init("RdLodPLen",	&f, 10.f, 160.f, 2.f, 0,2);  sv->DefaultF(20.f);
+	sv= &svRdColR;		sv->Init("RdColR",		&f, 1.0f, 8.f, 1.5f, 2,4);  sv->DefaultF(2.f);
+
+	sv= &svRdMergeLen;	sv->Init("RdMergeLen",	&f, 60.f, 2400.f, 2.f, 0,3);  sv->DefaultF(800.f);
+	sv= &svRdLodPLen;	sv->Init("RdLodPLen",	&f, 10.f, 200.f, 2.f, 0,2);  sv->DefaultF(30.f);
+	sv= &svRdVisDist;	sv->Init("RdVisDist",	&f, 100.f, 2400.f, 2.f, 0,3);  sv->DefaultF(600.f);
+	sv= &svRdVisBehind;	sv->Init("RdVisBehind",	&f, 100.f, 2400.f, 2.f, 0,3);  sv->DefaultF(600.f);
 	SldUpd_Road();
 	
 	Ed(RdHeightOfs, editRoad);

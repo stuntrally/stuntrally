@@ -296,10 +296,13 @@ void CGui::SldUpd_Road()
 	svRdTcMul.UpdF(&r.g_tcMul);       svRdTcMulW.UpdF(&r.g_tcMulW);
 	svRdTcMulP.UpdF(&r.g_tcMulP);     svRdTcMulPW.UpdF(&r.g_tcMulPW);
 	svRdTcMulC.UpdF(&r.g_tcMulC);
+
 	svRdLenDim.UpdF(&r.g_LenDim0);    svRdWidthSteps.UpdI(&r.g_iWidthDiv0);
 	svRdPwsM.UpdF(&r.g_P_iw_mul);     svRdPlsM.UpdF(&r.g_P_il_mul);
-	svRdMergeLen.UpdF(&r.g_MergeLen); svRdLodPLen.UpdF(&r.g_LodPntLen);
 	svRdColN.UpdI(&r.g_ColNSides);    svRdColR.UpdF(&r.g_ColRadius);
+
+	svRdMergeLen.UpdF(&r.g_MergeLen); svRdLodPLen.UpdF(&r.g_LodPntLen);
+	svRdVisDist.UpdF(&r.g_VisDist);   svRdVisBehind.UpdF(&r.g_VisBehind);
 }
 
 

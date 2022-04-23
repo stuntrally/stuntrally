@@ -32,8 +32,10 @@ using namespace MyGUI;
 void App::KeyTxtRoad(Real q)
 {
 	SplineRoad* road = scn->road;
-	int ic = road->iChosen;  bool bCur = ic >= 0;
-	SplinePoint& sp = bCur ? road->getPoint(ic) : road->newP;
+	int ic = road->iChosen;  bool bCur = ic >= 0, notEmpty = scn->road->getNumPoints() > 1;
+	bool ok = bCur && notEmpty;
+	SplinePoint& sp = ok ? road->getPoint(ic) : road->newP;
+	
 	std::string s;
 	Txt *rdTxt = gui->rdTxt, *rdVal = gui->rdVal, *rdKey = gui->rdKey,
 		*rdTxtSt = gui->rdTxtSt, *rdValSt = gui->rdValSt;
@@ -57,6 +59,8 @@ void App::KeyTxtRoad(Real q)
 		rdTxt[12]->setCaption(TR("#{Wall}"));	rdKey[12]->setCaption("ctrl 9 0");
 	}
 
+	bool ter = !ok ? false : !(!sp.onTer || !road->getPoint(road->getNext(ic)).onTer);
+
 	rdTxt[0]->setCaption(TR(sp.onTer ? "#{Road_OnTerrain}" : "#{Road_Height}"));
 	rdVal[0]->setCaption(sp.onTer ? "" : fToStr(sp.pos.y,1,3));
 
@@ -71,9 +75,9 @@ void App::KeyTxtRoad(Real q)
 	rdTxt[6]->setTextColour(sp.onPipe ? MyGUI::Colour(1.0,0.45,0.2) : MyGUI::Colour(0.86,0.86,0));
 	rdVal[6]->setCaption(sp.pipe==0.f ? "" : fToStr(sp.pipe,2,4));
 	
-	bool vis = !sp.onTer && !sp.isnt();
+	bool vis = !ter && !sp.isnt();
 	rdTxt[7]->setVisible(vis);	rdVal[7]->setVisible(vis);  rdKey[7]->setVisible(vis);
-	rdVal[7]->setCaption(sp.onTer ? "" : toStr(sp.cols));  // column
+	rdVal[7]->setCaption(ter ? "" : toStr(sp.cols));  // column
 
 	rdTxt[12]->setVisible(vis);  rdKey[12]->setVisible(vis);  
 	rdTxt[12]->setCaption(toStr(sp.idWall)+" "+road->getWallMtrStr(ic));  // wall mtr

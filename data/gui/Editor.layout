@@ -121,23 +121,23 @@
 			<UserString key="NotSized" value="1"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="1520 672 186 120" layer="Back" name="CamWnd">
+	<Widget type="Window" skin="WindowC" position="1520 672 204 120" layer="Back" name="CamWnd">
 		<Property key="Caption" value="#{PreviewCam}"/>
 		<Property key="Colour" value="0.7 0.85 1.0"/>
 		<Property key="Alpha" value="0.5"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="TextBox" skin="TextBoxS" position="4 0 180 20" name="cam0">
+		<Widget type="TextBox" skin="TextBoxS" position="4 0 200 30" name="cam0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="F7 - #{Leave}"/>
 			<Property key="TextColour" value="0.8 0.9 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBoxS" position="4 30 180 20" name="cam1">
+		<Widget type="TextBox" skin="TextBoxS" position="4 30 200 30" name="cam1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="#{EnterSave}"/>
 			<Property key="TextColour" value="0.66 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBoxS" position="34 50 180 20" name="cam2">
+		<Widget type="TextBox" skin="TextBoxS" position="34 50 200 30" name="cam2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="#{Screenshot}"/>
 			<Property key="TextColour" value="0.66 0.86 1.0"/>
@@ -299,33 +299,33 @@
 			<Property key="TextColour" value="0.76 0.9 1.0"/>
 		</Widget>
 	</Widget>
-	<Widget type="Window" skin="WindowC" position="828 676 226 170" layer="Back" name="FluidsWnd">
+	<Widget type="Window" skin="WindowC" position="828 676 236 170" layer="Back" name="FluidsWnd">
 		<Property key="Caption" value="#{Fluids}"/>
 		<Property key="Colour" value="0.3 0.5 0.9"/>
 		<Property key="Alpha" value="0.6"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="TextBox" skin="TextBoxS" position="4 0 220 20" name="flTxt0">
+		<Widget type="TextBox" skin="TextBoxS" position="4 0 230 20" name="flTxt0">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBoxS" position="4 20 220 20" name="flTxt1">
+		<Widget type="TextBox" skin="TextBoxS" position="4 20 230 20" name="flTxt1">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.8 0.9 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBoxS" position="4 50 220 20" name="flTxt2">
+		<Widget type="TextBox" skin="TextBoxS" position="4 50 230 20" name="flTxt2">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.75 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBoxS" position="4 70 220 20" name="flTxt3">
+		<Widget type="TextBox" skin="TextBoxS" position="4 70 230 20" name="flTxt3">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.75 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBoxS" position="4 90 220 20" name="flTxt4">
+		<Widget type="TextBox" skin="TextBoxS" position="4 90 230 20" name="flTxt4">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBoxS" position="4 110 220 20" name="flTxt5">
+		<Widget type="TextBox" skin="TextBoxS" position="4 110 230 20" name="flTxt5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
@@ -446,7 +446,7 @@
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
 
-		<Widget type="Widget" skin="WhiteSkin" position="0 0 250 49"><!--height,width-->
+		<Widget type="Widget" skin="WhiteSkin" position="0 0 250 49">  <!--height,width-->
 			<Property key="Colour" value="0.1 0.3 0.2"/>
 			<Property key="Alpha" value="0.5"/>
 		</Widget>
@@ -489,7 +489,7 @@
 			<Property key="TextColour" value="0.5 1.0 0.9"/>
 		</Widget>
 
-		<Widget type="Widget" skin="WhiteSkin" position="0 47 250 93"><!--angles,type,snap-->
+		<Widget type="Widget" skin="WhiteSkin" position="0 47 250 93">  <!--angles,type,snap-->
 			<Property key="Colour" value="0.4 0.2 0.1"/>
 			<Property key="Alpha" value="0.4"/>
 		</Widget>
@@ -602,7 +602,7 @@
 			<Property key="TextColour" value="0.86 0.86 0.0"/>
 		</Widget>
 
-		<Widget type="ImageBox" skin="ImageBox" position="0 146 32 20" name="rdImg7"><!--column-->
+		<Widget type="ImageBox" skin="ImageBox" position="0 146 32 20" name="rdImg7">  <!--column-->
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageTexture" value="track_icons.png"/>
 			<Property key="ImageCoord" value="160 40 32 20"/>
@@ -623,7 +623,7 @@
 			<Property key="FontHeight" value="16"/>
 		</Widget>
 
-		<Widget type="ImageBox" skin="ImageBox" position="0 189 32 20" name="rdImg12"><!--wall-->
+		<Widget type="ImageBox" skin="ImageBox" position="0 189 32 20" name="rdImg12">  <!--wall-->
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageTexture" value="track_icons.png"/>
 			<Property key="ImageCoord" value="32 4 32 20"/>
@@ -697,6 +697,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageTexture" value="track_icons.png"/>
 			<Property key="ImageCoord" value="224 4 32 32"/>
+			<Property key="Alpha" value="0.7"/>
 		</Widget>
 		<Widget type="TextBox" skin="TextBoxS" position="34 270 170 25" name="rdTxt10">
 			<Property key="InheritsAlpha" value="false"/>
@@ -4179,30 +4180,7 @@
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 746 468">
-						<Property key="Caption" value="#C09090#{Detail}"/>
-
-						<Widget type="TextBox" skin="TextBox" position="36 32 312 24">
-							<Property key="Caption" value="#{MergeLength}"/>
-							<Property key="TextColour" value="0.4 0.9 0.4"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="36 56 48 24" name="RdMergeLenEdit">
-							<Property key="Colour" value="0.4 0.9 0.4"/>
-							<Property key="TextColour" value="0.4 0.9 0.4"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="96 59 256 18" name="RdMergeLen">
-							<Property key="Colour" value="0.4 0.9 0.4"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="36 98 312 24">
-							<Property key="Caption" value="#{LODPointsDist}"/>
-							<Property key="TextColour" value="0.4 0.9 0.4"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="36 122 48 24" name="RdLodPLenEdit">
-							<Property key="Colour" value="0.4 0.8 0.4"/>
-							<Property key="TextColour" value="0.4 0.8 0.4"/>
-						</Widget>
-						<Widget type="Slider" skin="Slider" position="96 125 256 18" name="RdLodPLen">
-							<Property key="Colour" value="0.4 0.8 0.4"/>
-						</Widget>
+						<Property key="Caption" value="#B09070#{Detail}"/>
 
 						<Widget type="TextBox" skin="TextBox" position="36 204 188 24">
 							<Property key="Caption" value="#{Road}"/>
@@ -4285,6 +4263,54 @@
 						<Widget type="EditBox" skin="EditBox" position="620 96 48 24" name="RdSkirtH">
 							<Property key="Colour" value="0.5 0.7 0.9"/>
 							<Property key="TextColour" value="0.5 0.7 0.9"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 746 468">
+						<Property key="Caption" value="#80B070#{Advanced}"/>
+						<Widget type="TextBox" skin="TextBox" position="36 32 312 24">
+							<Property key="Caption" value="#{MergeLength}"/>
+							<Property key="TextColour" value="0.6 1.0 0.6"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="36 56 48 24" name="RdMergeLenEdit">
+							<Property key="Colour" value="0.6 0.9 0.6"/>
+							<Property key="TextColour" value="0.6 0.9 0.6"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="96 59 456 18" name="RdMergeLen">
+							<Property key="Colour" value="0.6 0.9 0.6"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="36 98 312 24">
+							<Property key="Caption" value="#{LODPointsDist}"/>
+							<Property key="TextColour" value="0.4 0.9 0.4"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="36 122 48 24" name="RdLodPLenEdit">
+							<Property key="Colour" value="0.4 0.8 0.4"/>
+							<Property key="TextColour" value="0.4 0.8 0.4"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="96 125 456 18" name="RdLodPLen">
+							<Property key="Colour" value="0.4 0.8 0.4"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="36 232 312 24">
+							<Property key="Caption" value="#{ViewDist}"/>
+							<Property key="TextColour" value="0.6 0.9 0.4"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="36 256 48 24" name="RdVisDistEdit">
+							<Property key="Colour" value="0.6 0.9 0.4"/>
+							<Property key="TextColour" value="0.6 0.9 0.4"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="96 259 456 18" name="RdVisDist">
+							<Property key="Colour" value="0.6 0.9 0.4"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="36 298 312 24">
+							<Property key="Caption" value="#{ViewDist} - #{Reverse}"/>
+							<Property key="TextColour" value="0.6 0.9 0.4"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="36 322 48 24" name="RdVisBehindEdit">
+							<Property key="Colour" value="0.4 0.8 0.4"/>
+							<Property key="TextColour" value="0.6 0.8 0.4"/>
+						</Widget>
+						<Widget type="Slider" skin="Slider" position="96 325 456 18" name="RdVisBehind">
+							<Property key="Colour" value="0.6 0.8 0.4"/>
 						</Widget>
 					</Widget>
 				</Widget>
