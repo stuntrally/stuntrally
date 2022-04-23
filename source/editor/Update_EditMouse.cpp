@@ -3,6 +3,7 @@
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/GuiCom.h"
 #include "../ogre/common/CScene.h"
+#include "../ogre/common/Axes.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -61,21 +62,23 @@ void App::EditMouse()
 ///  edit Road  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 void App::MouseRoad()
 {
-	const Real fMove(5.0f), fRot(10.f);  //par speed
+	const Real fMove(0.03f), fRot(10.f);  //par speed
 	SplineRoad* road = scn->road;
+	const Real d = road->iChosen == -1 ? 30.f * fMove :
+		mCamera->getRealPosition().distance(road->getPos(road->iChosen)) * fMove;
 
 	if (!alt)
 	{
 		if (mbLeft)    // move on xz
 		{	Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();
 			Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
-			road->Move((vNew.x * vx - vNew.y * vz) * fMove * moveMul);
+			road->Move((vNew.x * vx - vNew.y * vz) * d * moveMul);
 		}else
 		if (mbRight)   // height
-			road->Move(-vNew.y * Vector3::UNIT_Y * fMove * moveMul);
+			road->Move(-vNew.y * Vector3::UNIT_Y * d * moveMul);
 		else
 		if (mbMiddle)  // width
-			road->AddWidth(vNew.x * fMove * 0.2f * moveMul);
+			road->AddWidth(vNew.x * 1.f * moveMul);
 	}else
 	{	//  alt
 		if (mbLeft)    // rot pitch
@@ -89,7 +92,8 @@ void App::MouseRoad()
 ///  edit Start pos	 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 void App::MouseStart()
 {
-	const Real fMove(0.5f), fRot(0.05f);  //par speed
+	const Real fMove(0.02f), fRot(0.05f);  //par speed
+	const Real d = mCamera->getRealPosition().distance(Axes::toOgre(scn->sc->startPos)) * fMove;
 	if (!alt)
 	{
 		if (mbLeft)
@@ -106,7 +110,7 @@ void App::MouseStart()
 			{
 				Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();
 				Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
-				Vector3 vm = (-vNew.y * vx - vNew.x * vz) * fMove * moveMul;
+				Vector3 vm = (-vNew.y * vx - vNew.x * vz) * d * moveMul;
 				scn->sc->startPos[0] += vm.z;
 				scn->sc->startPos[1] += vm.x;
 			}
@@ -114,7 +118,7 @@ void App::MouseStart()
 		}
 		else if (mbRight)
 		{
-			Real ym = -vNew.y * fMove * moveMul;
+			Real ym = -vNew.y * d * moveMul;
 			scn->sc->startPos[2] += ym;  UpdStartPos();
 		}
 	}else  //  alt
@@ -148,20 +152,21 @@ void App::MouseStart()
 void App::MouseFluids()
 {
 	FluidBox& fb = scn->sc->fluids[iFlCur];
-	const Real fMove(0.5f), fRot(1.5f);  //par speed
+	const Real fMove(0.02f), fRot(1.5f);  //par speed
+	const Real d = mCamera->getRealPosition().distance(fb.pos) * fMove;
 	if (!alt)
 	{
 		if (mbLeft)	// move on xz
 		{
 			Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();
 			Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
-			Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
+			Vector3 vm = (-vNew.y * vz + vNew.x * vx) * d * moveMul;
 			fb.pos += vm;
 			scn->vFlNd[iFlCur]->setPosition(fb.pos);  UpdFluidBox();
 		}
 		else if (mbRight)  // move y
 		{
-			Real ym = -vNew.y * fMove * moveMul;
+			Real ym = -vNew.y * d * moveMul;
 			fb.pos.y += ym;
 			scn->vFlNd[iFlCur]->setPosition(fb.pos);  UpdFluidBox();
 		}
@@ -178,7 +183,7 @@ void App::MouseFluids()
 		{
 			Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();  vx.x = fabs(vx.x);  vx.z = fabs(vx.z);
 			Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();  vz.x = fabs(vz.x);  vz.z = fabs(vz.z);
-			Vector3 vm = (vNew.y * vz + vNew.x * vx) * fMove * moveMul;
+			Vector3 vm = (vNew.y * vz + vNew.x * vx) * d * moveMul;
 			fb.size += vm;
 			if (fb.size.x < 0.2f)  fb.size.x = 0.2f;
 			if (fb.size.z < 0.2f)  fb.size.z = 0.2f;
@@ -186,7 +191,7 @@ void App::MouseFluids()
 		}
 		else if (mbRight)  // size y
 		{
-			float vm = -vNew.y * fMove * moveMul;
+			float vm = -vNew.y * d * moveMul;
 			fb.size.y += vm;
 			if (fb.size.y < 0.2f)  fb.size.y = 0.2f;
 			bRecreateFluids = true;  //
@@ -199,20 +204,21 @@ void App::MouseFluids()
 void App::MouseEmitters()
 {
 	SEmitter& em = scn->sc->emitters[iEmtCur];
-	const Real fMove(0.5f), fRot(1.5f);  //par speed
+	const Real fMove(0.02f), fRot(1.5f);  //par speed
+	const Real d = mCamera->getRealPosition().distance(em.pos) * fMove;
 	if (emtEd == EO_Move)
 	{
 		if (mbLeft)	// move on xz
 		{
 			Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();
 			Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
-			Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
+			Vector3 vm = (-vNew.y * vz + vNew.x * vx) * d * moveMul;
 			em.pos += vm;
 			em.nd->setPosition(em.pos);  UpdEmtBox();
 		}
 		else if (mbRight)  // move y
 		{
-			Real ym = -vNew.y * fMove * moveMul;
+			Real ym = -vNew.y * d * moveMul;
 			em.pos.y += ym;
 			em.nd->setPosition(em.pos);  UpdEmtBox();
 		}
@@ -228,7 +234,7 @@ void App::MouseEmitters()
 		{
 			Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();  vx.x = fabs(vx.x);  vx.z = fabs(vx.z);
 			Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();  vz.x = fabs(vz.x);  vz.z = fabs(vz.z);
-			Vector3 vm = (vNew.y * vz + vNew.x * vx) * fMove * moveMul;
+			Vector3 vm = (vNew.y * vz + vNew.x * vx) * d * moveMul;
 			em.size += vm;
 			if (em.size.x < 0.f)  em.size.x = 0.f;
 			if (em.size.z < 0.f)  em.size.z = 0.f;
@@ -236,7 +242,7 @@ void App::MouseEmitters()
 		}
 		else if (mbRight)  // size y
 		{
-			float vm = -vNew.y * fMove * moveMul;
+			float vm = -vNew.y * d * moveMul;
 			em.size.y += vm;
 			if (em.size.y < 0.f)  em.size.y = 0.f;
 			em.UpdEmitter();  UpdEmtBox();
@@ -249,7 +255,7 @@ void App::MouseEmitters()
 ///  edit Objects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 void App::MouseObjects()
 {
-	const Real fMove(0.5f), fRot(1.5f), fScale(0.02f);  //par speed
+	const Real fMove(0.02f), fRot(1.5f), fScale(0.02f);  //par speed
 	bool upd = false, sel = !vObjSel.empty();
 
 	//  rotate/scale selected
@@ -272,6 +278,7 @@ void App::MouseObjects()
 	{
 		Object& o = i == -1 ? objNew : scn->sc->objects[i];
 		bool upd1 = false;
+		const Real d = mCamera->getRealPosition().distance(Axes::toOgre(o.pos)) * fMove;
 
 		switch (objEd)
 		{
@@ -281,13 +288,13 @@ void App::MouseObjects()
 				{
 					Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();
 					Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
-					Vector3 vm = (-vNew.y * vz + vNew.x * vx) * fMove * moveMul;
+					Vector3 vm = (-vNew.y * vz + vNew.x * vx) * d * moveMul;
 					o.pos[0] += vm.x;  o.pos[1] -= vm.z;  // todo: for selection ..
 					o.SetFromBlt();	 upd1 = true;
 				}
 				else if (mbRight)  // move y
 				{
-					Real ym = -vNew.y * fMove * moveMul;
+					Real ym = -vNew.y * d * moveMul;
 					o.pos[2] += ym;
 					o.SetFromBlt();	 upd1 = true;
 				}
@@ -315,7 +322,7 @@ void App::MouseObjects()
 
 			case EO_Scale:
 			{
-				float vm = (vNew.y - vNew.x) * fMove * moveMul;
+				float vm = (vNew.y - vNew.x) * d * moveMul;
 				float sc = 1.f - vm * fScale;
 		
 				if (sel)  // scale selected
