@@ -79,13 +79,13 @@ material start_box
 	specular 0.1 0.1 0.15 32
 }
 
-material CarBodyEd
+material body_realtime
 {
 	parent base
-	diffuseMap body_dyn.png
-	ambient 1.2 1.0 0.8
+	diffuseMap car_body_ed.png
+	ambient 1.0 1.0 1.0
 	diffuse 1.0 1.0 1.0
-	specular 0.7 0.7 0.7 32
+	specular 0.7 0.7 0.7 64
 	cull_hardware none
     receives_shadows false
 }
