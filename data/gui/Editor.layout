@@ -4812,9 +4812,9 @@
 				<Widget type="TextBox" skin="TextBox" position="16 524 304 20">
 					<Property key="Caption" value="#{SREditorVersion} #{GameVersion}"/>
 					<Property key="TextColour" value="0.6 0.7 0.8"/>
-					<Property key="Alpha" value="0.5"/>
+					<Property key="Alpha" value="0.6"/>
 				</Widget>
-				<Widget type="TabControl" skin="TabControl" position="16 15 744 460" name="SubTab">
+				<Widget type="TabControl" skin="TabControl" position="16 15 744 500" name="SubTab">
 					<Property key="Colour" value="0.73 0.88 1"/>
 					<Property key="SmoothShow" value="false"/>
 					<Widget type="TabItem" skin="" position="2 24 738 432">
@@ -5003,8 +5003,8 @@
 							<Property key="Static" value="true"/>
 							<Property key="ReadOnly" value="true"/>
 						</Widget>
-						<Widget type="ScrollView" skin="ScrollViewEmpty" position="30 50 700 398" name="TweakView">
-							<Property key="CanvasSize" value="1020 1200"/>
+						<Widget type="ScrollView" skin="ScrollViewEmpty" position="30 50 700 558" name="TweakView">
+							<Property key="CanvasSize" value="1100 1800"/>
 						</Widget>
 					</Widget>
 				</Widget>

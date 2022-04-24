@@ -89,7 +89,7 @@ void CGui::CreateGUITweakMtr()
 			y += 8;
 		}
 	}
-	view->setCanvasSize(1100, y+500);  //?..
+	view->setCanvasSize(1300, y+1000);  //par-
 	view->setCanvasAlign(Align::Default);
 
 	gcom->doSizeGUI(view->getEnumerator());

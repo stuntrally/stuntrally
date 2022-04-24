@@ -136,6 +136,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(A):  t = "Test1-Flat";  break;
 			case key(S):  t = "Test7-FluidsSmall";  break;
 			case key(D):  t = "Test3-Bumps";  break;
+			case key(F):  t = "TestC6-temp";  break;
 
 			case key(X):  t = "Test8-Objects";  break;
 			case key(C):  t = "TestC10-pace";  break;
