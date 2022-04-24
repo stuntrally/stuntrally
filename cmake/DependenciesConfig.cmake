@@ -32,7 +32,7 @@ add_external_lib(
 
 add_external_lib(
         SDL2
-        sdl/2.0.14
+        sdl/2.0.20
         REQUIRED
         PKG_CONFIG "sdl2 >= 2.0"
         FIND_PACKAGE_OPTIONS CONFIG

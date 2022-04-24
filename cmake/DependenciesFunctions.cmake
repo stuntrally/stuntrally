@@ -209,6 +209,10 @@ function(_conan_install build_type)
             IMPORTS "lib, *.dll -> ${RUNTIME_OUTPUT_DIRECTORY} @ keep_path=False"
             IMPORTS "lib, *.dylib -> ${RUNTIME_OUTPUT_DIRECTORY} @ keep_path=False"
             IMPORTS "lib, *.so* -> ${RUNTIME_OUTPUT_DIRECTORY} @ keep_path=False"
+            IMPORTS "bin, *.dll -> redist @ keep_path=False"
+            IMPORTS "lib, *.dll -> redist @ keep_path=False"
+            IMPORTS "lib, *.dylib -> $redist @ keep_path=False"
+            IMPORTS "lib, *.so* -> redist @ keep_path=False"
             OPTIONS ${CONAN_PACKAGE_OPTIONS}
     )
 

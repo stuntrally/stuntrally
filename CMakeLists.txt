@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.16)
 # Include path for additional CMake library finding scripts
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/" ${CMAKE_MODULE_PATH})
 
+# Add a sensible build type default and warning because empty means no optimization and no debug info.
+set(CMAKE_CONFIGURATION_TYPES "Debug" "Release" CACHE STRING "Configuration types")
+
 if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.22")
     cmake_policy(SET CMP0127 OLD)
 endif ()
@@ -42,9 +45,6 @@ option(${_PREFIX}FORCE_SYSTEM_DEPENDENCIES "Force the use of system packages")
 if (CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
     message(FATAL_ERROR "In-source builds are not permitted. Make a separate folder for building:\nmkdir build; cd build; cmake ..\nBefore that, remove the files already created:\nrm -rf CMakeCache.txt CMakeFiles")
 endif (CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
-
-# Add a sensible build type default and warning because empty means no optimization and no debug info.
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 
 
 # Set default compile flags for GCC
