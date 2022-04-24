@@ -20,10 +20,10 @@ void LoadDefaultSet(SETTINGS* settings, string setFile)
 
 
 //  . . . . . . . . . .  MAIN  . . . . . . . . . .
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow)
-#else
+#if defined(main) || OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 	int main(int argc, char* argv[])
+#else
+	int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow)
 #endif
 {
 	setlocale(LC_NUMERIC, "C");
@@ -77,10 +77,10 @@ void LoadDefaultSet(SETTINGS* settings, string setFile)
 
 	try
 	{
-		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-			pApp->Run( settings->ogre_dialog || lpCmdLine[0]!=0 );
-		#else
+		#if defined(main) || OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 			pApp->Run( settings->ogre_dialog );
+		#else
+			pApp->Run( settings->ogre_dialog || lpCmdLine[0]!=0 );
 		#endif
 	}
 	catch (Ogre::Exception& e)

@@ -1,0 +1,22 @@
+{
+  "name": "stuntrally",
+  "version": "2.6.2",
+  "description": "Racing game with track editor based on VDrift and OGRE",
+  "dependencies": [
+    "boost-system",
+    "boost-filesystem",
+    "boost-wave",
+    "bullet3",
+    "enet",
+    "freetype",
+    "libogg",
+    "libvorbis",
+    "mygui",
+    {
+      "name": "ogre",
+      "features": ["d3d9"]
+    },
+    "openal-soft"
+  ],
+  "builtin-baseline": "2ac61f87f69f0484b8044f95ab274038fbaf7bdd"
+}

@@ -32,6 +32,9 @@ CMakeLists.txt.user*
 *.suo
 *.user
 
+#-- vs & vscode
+.vs*
+
 *.lnk
 #-- binaries
 StuntRally*.*
