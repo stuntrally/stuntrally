@@ -15,14 +15,11 @@ include(FeatureSummary)
 
 project(StuntRally CXX C)
 
-# Allow disabling game building
-option(BUILD_GAME "Build the game binary." ON)
-
-# Allow disabling editor building
-option(BUILD_EDITOR "Build the track editor." ON)
-
-# Allow disabling master server building
-option(BUILD_MASTER_SERVER "Build the master server." OFF)
+# Allows disabling building of components
+option(BUILD_GAME             "Build the game binary."    ON)
+option(BUILD_EDITOR           "Build the track editor."   ON)
+option(BUILD_MASTER_SERVER    "Build the game list master server."  OFF)
+option(BUILD_TRANSL_TOOL      "Build the tool for translation updating, it creates .pot"  ON)
 
 set(_PREFIX "SR_")
 

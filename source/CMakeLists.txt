@@ -3,11 +3,13 @@ if (WIN32 OR APPLE)
     set(GAME_EXE StuntRally)
     set(EDITOR_EXE SR-Editor)
     set(SERVER_EXE SR-MasterServer)
-else ()
+    set(TRANSL_EXE SR-Translator)
+else()
     set(GAME_EXE stuntrally)
     set(EDITOR_EXE sr-editor)
     set(SERVER_EXE sr-masterserver)
-endif ()
+    set(TRANSL_EXE sr-translator)
+endif()
 
 # Search include files from all source sub directories
 include_directories(btOgre ogre ogre/common paged-geom road sound vdrift)
@@ -138,9 +140,9 @@ endif ()
 if (BUILD_TRANSL_TOOL)
 	file(GLOB TRANSL_SOURCES transl/main.cpp) # Glob .cpp files needed for the translations tool
 	add_executable(${TRANSL_EXE} ${TRANSL_SOURCES})
-	#target_link_libraries(${TRANSL_EXE} ${TRANSL_LIBS})
-	target_link_libraries(${TRANSL_EXE} "boost_filesystem" "boost_system")
+	target_link_libraries(${TRANSL_EXE} Boost::Boost)
 	install(TARGETS ${TRANSL_EXE} DESTINATION bin)
+    target_precompile_headers(${TRANSL_EXE} PRIVATE transl/pch.h)
 endif()
 
 
