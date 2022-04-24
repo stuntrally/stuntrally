@@ -34,6 +34,7 @@
 #include "../ogre/common/MessageBox/MessageBox.h"
 #include "../ogre/common/Instancing.h"
 using namespace Ogre;
+using namespace std;
 
 
 //  Create Scene
@@ -193,7 +194,7 @@ void App::LoadTrackEv()
 	NewCommon(false);  // full destroy
 	iObjCur = -1;  iEmtCur = -1;
 
-	scn->DestroyRoad();
+	scn->DestroyRoads();
 	scn->DestroyPace();
 	
 
@@ -226,9 +227,8 @@ void App::LoadTrackEv()
 
 
 	//  road ~
-	scn->road = new SplineRoad(this);
-	scn->road->Setup("sphere.mesh", pSet->road_sphr, scn->terrain, mSceneMgr, mCamera);
-	scn->road->LoadFile(gcom->TrkDir()+"road.xml");
+	CreateRoads();
+
 	scn->UpdPSSMMaterials();
 	
 	//  pace ~ ~
@@ -257,11 +257,12 @@ void App::LoadTrackEv()
 	//UpdStartPos();
 	UpdEditWnds();  //
 
-	try {
-	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");
-	if (!tex.isNull())
-		tex->reload();
-	} catch(...) {  }
+	try
+	{	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");
+		if (!tex.isNull())
+			tex->reload();
+	}catch(...)
+	{	}
 
 	gui->Status("#{Loaded}", 0.5,0.7,1.0);
 	
@@ -269,6 +270,26 @@ void App::LoadTrackEv()
 		gui->WarningsCheck(scn->sc, scn->road);
 
 	LogO(String("::: Time Load Track: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+}
+
+
+void App::CreateRoads()
+{
+	strlist lr;  string path = gcom->TrkDir();
+	PATHMANAGER::DirList(path, lr, "xml");
+	
+	for (auto fname:lr)
+	if (StringUtil::startsWith(fname,"road"))
+	{
+		int id = scn->roads.size();
+		LogO("~~~ Creating road " + toStr(id) + " from: " + fname);
+		scn->road = new SplineRoad(this);
+		scn->road->Setup("sphere.mesh", pSet->road_sphr, scn->terrain, mSceneMgr, mCamera, id);
+		scn->road->LoadFile(path + fname);
+		scn->roads.push_back(scn->road);
+	}
+	scn->rdCur = 0;
+	scn->road = scn->roads[scn->rdCur];
 }
 
 
@@ -290,8 +311,11 @@ void App::UpdateTrackEv()
 	scn->CreateTerrain(bNewHmap,true,false);/**/
 
 	//  road ~
-	scn->road->mTerrain = scn->terrain;
-	scn->road->Rebuild(true);
+	for (auto r:scn->roads)
+	{
+		r->mTerrain = scn->terrain;
+		r->Rebuild(true);
+	}
 	scn->UpdPSSMMaterials();
 
 	//CreateObjects();
@@ -357,7 +381,6 @@ void App::SaveTrackEv()
 	gui->CreateDir(dir);
 	gui->CreateDir(dir+"/objects");
 
-	//  todo: save only what changed ...
 	if (scn->terrain)
 	{	float *fHmap = scn->terrain->getHeightData();
 		int size = scn->sc->td.iVertsX * scn->sc->td.iVertsY * sizeof(float);
@@ -368,8 +391,13 @@ void App::SaveTrackEv()
 		of.write((const char*)fHmap, size);
 		of.close();
 	}
-	if (scn->road)
-		scn->road->SaveFile(dir+"road.xml");
+
+	int i = 0;  // all roads
+	for (auto r:scn->roads)
+	{
+		auto si = i==0 ? "" : toStr(i+1);  ++i;
+		r->SaveFile(dir+ "road"+si+".xml");
+	}
 
 	scn->sc->SaveXml(dir+"scene.xml");
 
@@ -430,7 +458,7 @@ void App::TerCircleUpd()
 	static ED_MODE edOld = ED_ALL;
 	if (edOld != edMode)
 	{	edOld = edMode;
-		switch(edMode)
+		switch (edMode)
 		{
 		case ED_Deform: moTerC->setMaterialName(0, "circle_deform");  break;
 		case ED_Filter: moTerC->setMaterialName(0, "circle_filter");  break;

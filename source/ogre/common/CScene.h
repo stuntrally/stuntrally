@@ -62,9 +62,11 @@ public:
 
 
 	//  Road
-	SplineRoad* road;
-	PaceNotes* pace;
-	void DestroyRoad(), DestroyPace();
+	int rdCur = 0;  // cur
+	std::vector<SplineRoad*> roads;
+	SplineRoad* road = 0;
+	PaceNotes* pace = 0;
+	void DestroyRoads(), DestroyPace();
 
 	
 	//  Vegetation

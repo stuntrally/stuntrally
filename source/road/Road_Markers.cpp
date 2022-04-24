@@ -13,7 +13,7 @@ using namespace Ogre;
 //  Setup
 //---------------------------------------------------------------------------------------------------------------
 SplineMarkEd::SplineMarkEd()
-	:mSceneMgr(0),mCamera(0)
+	:mSceneMgr(0),mCamera(0), idRd(0)
 	,ndSel(0), ndChosen(0), ndRot(0), ndHit(0), ndChk(0)
 	,entSel(0), entChs(0), entRot(0), entHit(0), entChk(0)
 	,lastNdSel(-2),lastNdChosen(-2)
@@ -30,20 +30,21 @@ void SplineMarkEd::createMarker(String name, String mat, Entity*& ent, SceneNode
 
 void SplineMarkEd::Setup(
 	String sMarkerMeshFile, Real scale,
-	Terrain* terrain, SceneManager* sceneMgr, Camera* camera)
+	Terrain* terrain, SceneManager* sceneMgr, Camera* camera, int idx)
 {
+	idRd = idx;
 	sMarkerMesh = sMarkerMeshFile;
 	fMarkerScale = scale;
 	mTerrain = terrain;  mSceneMgr = sceneMgr;  mCamera = camera;
 	
 	if (sMarkerMesh == "")  return;
 
-	String name;
-	createMarker("sphereSel",   "sphere_sel",   entSel, ndSel);
-	createMarker("sphereChosen","sphere_chosen",entChs, ndChosen);
-	createMarker("sphereHit",   "sphere_hit",   entHit, ndHit);
-	createMarker("sphereRot",   "sphere_rot",   entRot, ndRot);
-	createMarker("sphereCheck", "sphere_check", entChk, ndChk);
+	String name, si = toStr(idRd);
+	createMarker(si+"sphereSel",   "sphere_sel",   entSel, ndSel);
+	createMarker(si+"sphereChosen","sphere_chosen",entChs, ndChosen);
+	createMarker(si+"sphereHit",   "sphere_hit",   entHit, ndHit);
+	createMarker(si+"sphereRot",   "sphere_rot",   entRot, ndRot);
+	createMarker(si+"sphereCheck", "sphere_check", entChk, ndChk);
 
 	ndHit->setScale(/*fMarkerScale **/ fScHit * Vector3::UNIT_SCALE);
 	ndRot->setScale(fMarkerScale * fScRot * Vector3::UNIT_SCALE);

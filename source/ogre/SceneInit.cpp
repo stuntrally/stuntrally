@@ -30,6 +30,7 @@
 
 using namespace MyGUI;
 using namespace Ogre;
+using namespace std;
 
 
 //  Create Scene
@@ -287,7 +288,7 @@ void App::LoadCleanUp()  // 1 first
 		scn->DestroyEmitters(true);
 		
 		scn->DestroyTerrain();
-		scn->DestroyRoad();
+		scn->DestroyRoads();
 	}
 
 	///  destroy all
@@ -593,7 +594,7 @@ void App::LoadTerrain()  // 5
 
 void App::LoadRoad()  // 6
 {
-	CreateRoad();   // dstTrk inside
+	CreateRoads();   // dstTrk inside
 		
 	if (hud->arrow.nodeRot)
 		hud->arrow.nodeRot->setVisible(pSet->check_arrow && !bHideHudArr);
@@ -818,7 +819,7 @@ void App::NewGameDoLoad()
 ///  Road  * * * * * * * 
 //---------------------------------------------------------------------------------------------------------------
 
-void App::CreateRoad()
+void App::CreateRoads()
 {
 	///  road  ~ ~ ~
 	SplineRoad*& road = scn->road;
@@ -827,13 +828,8 @@ void App::CreateRoad()
 	//  road
 	if (dstTrk)
 	{
-		scn->DestroyRoad();//
-
-		road = new SplineRoad(pGame);  // sphere.mesh
-		road->Setup("", 0.7,  scn->terrain, mSceneMgr, cam);
-		
-		String sr = gcom->TrkDir()+"road.xml";
-		road->LoadFile(gcom->TrkDir()+"road.xml");
+		scn->DestroyRoads();
+		CreateRoadsInt();
 	}else
 		road->mCamera = cam;  // upd
 
@@ -859,9 +855,10 @@ void App::CreateRoad()
 		road->bCastShadow = pSet->shadow_type >= Sh_Depth;
 		road->bRoadWFullCol = pSet->gui.collis_roadw;
 
-		road->RebuildRoadInt();
-		road->SetChecks();  // 2nd, upd
-	}
+		for (auto r:scn->roads)
+		{	r->RebuildRoadInt();
+			r->SetChecks();  // 2nd, upd
+	}	}
 	
 
 	//  pace ~ ~
@@ -870,4 +867,27 @@ void App::CreateRoad()
 		road->RebuildRoadPace();  //todo: load only..
 		scn->pace->Rebuild(road, scn->sc, pSet->game.trackreverse);
 	}
+}
+
+
+void App::CreateRoadsInt()
+{
+	Camera* cam = *mSplitMgr->mCameras.begin();
+
+	strlist lr;  string path = gcom->TrkDir();
+	PATHMANAGER::DirList(path, lr, "xml");
+	
+	for (auto fname:lr)
+	if (StringUtil::startsWith(fname,"road"))
+	{
+		int id = scn->roads.size();
+		LogO("~~~ Creating road " + toStr(id) + " from: " + fname);
+		scn->road = new SplineRoad(pGame);
+		scn->road->Setup("", 0.7, scn->terrain, mSceneMgr, cam, id);
+		scn->road->LoadFile(path + fname);
+		scn->roads.push_back(scn->road);
+	}
+
+	scn->rdCur = 0;
+	scn->road = scn->roads[scn->rdCur];
 }

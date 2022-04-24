@@ -1,3 +1,4 @@
+#include "pathmanager.h"
 #include "pch.h"
 #include "CScene.h"
 #include "data/CData.h"
@@ -26,7 +27,8 @@ CScene::CScene(App* app1)
 
 CScene::~CScene()
 {
-	delete road;  delete pace;
+	//?DestroyRoad();
+	delete pace;
 
 	OGRE_DELETE mHorizonGroup;
 	OGRE_DELETE mHorizonGlobals;
@@ -38,13 +40,15 @@ CScene::~CScene()
 	delete data;
 }
 
-
-void CScene::DestroyRoad()
+void CScene::DestroyRoads()
 {
-	if (!road)  return;
-	road->Destroy();
-	delete road;  road = 0;
+	for (auto r:roads)
+		r->Destroy();
+	roads.clear();
+	rdCur = 0;
+	road = 0;
 }
+
 void CScene::DestroyPace()
 {
 	if (!pace)  return;
@@ -57,7 +61,7 @@ void CScene::destroyScene()
 {
 	mWaterRTT->destroy();
 
-	DestroyRoad();  DestroyPace();
+	DestroyRoads();  DestroyPace();
 	DestroyTrees();
 	DestroyWeather();
 

@@ -410,7 +410,8 @@ bool App::frameStart(Real time)
 				if (roadUpdTm > 0.1f)  // interval [sec]
 				{
 					roadUpdTm = 0.f;
-					scn->road->UpdLodVis(pSet->road_dist);
+					for (auto r:scn->roads)
+						r->UpdLodVis(pSet->road_dist);
 				}
 			}
 			//PROFILER.endBlock("g.road");

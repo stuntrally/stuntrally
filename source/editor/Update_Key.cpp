@@ -342,6 +342,26 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			//  looped  todo: finish set..
 			case key(N):  road->isLooped = !road->isLooped;
 				road->recalcTangents();  road->Rebuild(true);  break;
+
+			case key(KP_ENTER):  case key(RETURN):
+				if (ctrl)
+				{	//  new
+					SplineRoad* road = new SplineRoad(this);
+					int id = scn->roads.size();
+					road->Setup("sphere.mesh", pSet->road_sphr, scn->terrain, mSceneMgr, mCamera, id);
+					//road->LoadFile(gcom->TrkDir()+"road.xml");
+					road->Rebuild(true);
+					//road->RebuildRoadInt();
+					scn->roads.push_back(road);
+					scn->road = road;
+					scn->rdCur = id;
+				}else
+				{	//  next
+					int id = scn->roads.size();
+					scn->rdCur = (scn->rdCur + (shift ? -1 : 1) + id) % id;
+					scn->road = scn->roads[scn->rdCur];
+				}
+				break;
 		}
 		if (snap)
 		{	iSnap = (iSnap + (snap < 0 ? -1+ciAngSnapsNum : 1))%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];	}

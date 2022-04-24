@@ -472,7 +472,7 @@ void SplineRoad::createSeg_Meshes(
 	const DataLodMesh& DLM,
 	DataSeg& DS, RoadSeg& rs)
 {
-	String sEnd = toStr(idStr);  ++idStr;
+	String sEnd = toStr(idStr) + "_" + toStr(idRd);  ++idStr;
 	String sMesh = "rd.mesh." + sEnd, sMeshW = sMesh + "W", sMeshC = sMesh + "C", sMeshB = sMesh + "B";
 
 	posBt.clear();

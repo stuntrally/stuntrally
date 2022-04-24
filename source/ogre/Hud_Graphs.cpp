@@ -85,7 +85,7 @@ void App::CreateGraphs()
 			c = t[i];
 			gv->Create(256, "graph"+toStr(c+1), i==0 ? 0.45f : 0.f);
 			if (i == 0)  gv->CreateGrid(6,0, 0.7f, 1.0f);
-			switch(i)
+			switch (i)
 			{
 				case 0:  gv->CreateTitle("\n\n\n\n\n\n\n0 x",					c, 0.0f, -2, 24, 12);  break;
 				case 1:  gv->CreateTitle("Car accel G's\n\n\n\n\n\n\n       y",	c, 0.f,-2, 24, 12);  break;
@@ -105,7 +105,7 @@ void App::CreateGraphs()
 			c = t[i];
 			gv->Create(256, "graph"+toStr(c+1), i==0 ? 0.4f : 0.f);
 			if (i == 0)  gv->CreateGrid(6,0, 0.7f, 1.0f);
-			switch(i)
+			switch (i)
 			{
 				case 0:  gv->CreateTitle("\n\n\n\n\n\n\n0 x",					c, 0.0f, -2, 24, 12);  break;
 				case 1:  gv->CreateTitle("Cam bounce \n\n\n\n\n\n\n       y",	c, 0.f,-2, 24, 12);  break;
@@ -123,7 +123,7 @@ void App::CreateGraphs()
 			gv = new GraphView(scm,mWindow,mGui);
 			c = i%6;  /*clr*/
 			gv->Create(256/*len*/, "graph"+toStr(c+1), i==0||i==2 ? 0.52f : 0.f/*alpha*/);
-			switch(i)
+			switch (i)
 			{
 				case 0:  gv->CreateTitle("norm vel",	c, 0.0f, -2, 24);  break;
 				case 1:  gv->CreateTitle("Car Hit force",c, 0.15f,-2, 24);  break;
@@ -146,7 +146,7 @@ void App::CreateGraphs()
 			gv = new GraphView(scm,mWindow,mGui);
 			c = i%3;  String t;
 			gv->Create(1, "graphA5", i>=3 ? 0.30f : i>0 ? 0.f : 0.3f);
-			switch(i)
+			switch (i)
 			{
 				case 0:  gv->CreateTitle(t,	c, 0.1f,-2, 20,2,1);  break;
 				case 1:  gv->CreateTitle(t,	c, 0.1f,-3, 22,3,1);  break;
@@ -168,7 +168,7 @@ void App::CreateGraphs()
 			gv = new GraphView(scm,mWindow,mGui);
 			c = i%3;  String t;
 			gv->Create(1, "graphA5", i>0 ? 0.f : 0.4f);
-			switch(i)
+			switch (i)
 			{
 				case 0:  gv->CreateTitle(t,	c, 0.1f,-2, 22,2,1);  break;
 				case 1:  gv->CreateTitle(t,	c, 0.1f,-3, 22,4,1);  break;

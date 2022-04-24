@@ -55,7 +55,7 @@ public:
 
 	
 	///  main
-	void LoadTrack(), SaveTrack(), UpdateTrack();
+	void LoadTrack(), SaveTrack(), UpdateTrack(), CreateRoads();
 	
 	void SetEdMode(ED_MODE newMode);
 	void UpdVisGui(), UpdEditWnds();

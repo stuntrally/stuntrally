@@ -133,7 +133,7 @@ void App::destroyScene()
 	
 	gcom->mToolTip = 0;  //?
 
-	scn->DestroyRoad();
+	scn->DestroyRoads();
 
 	scn->DestroyTrees();
 

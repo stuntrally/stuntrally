@@ -526,11 +526,11 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 			wheel[wl].SetRadius(radius);
 			wheel[wr].SetRadius(radius);
 			
-			if (c.GetParamE("tire-"+pos+".ray-length", ray_len))
+			if (c.GetParam("tire-"+pos+".ray-length", ray_len))
 			{	wheel[wl].SetRayLength(ray_len);
 				wheel[wr].SetRayLength(ray_len);  }
 			
-			if (c.GetParamE("tire-"+pos+".friction", friction))
+			if (c.GetParam("tire-"+pos+".friction", friction))
 			{	wheel[wl].SetFriction(friction);
 				wheel[wr].SetFriction(friction);  }
 		}

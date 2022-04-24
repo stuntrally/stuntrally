@@ -267,7 +267,7 @@ public:
 
 	//  Setup, call this on Init
 	void Setup(Ogre::String sMarkerMeshFile, Ogre::Real scale,
-		Ogre::Terrain* terrain, Ogre::SceneManager* sceneMgr,  Ogre::Camera* camera);
+		Ogre::Terrain* terrain, Ogre::SceneManager* sceneMgr,  Ogre::Camera* camera, int idx);
 	
 	void createMarker(Ogre::String name, Ogre::String mat,
 					Ogre::Entity*& ent, Ogre::SceneNode*& nd);
@@ -284,6 +284,7 @@ public:
 	Ogre::Camera* mCamera;
 
 	//  setup vars
+	int idRd;  // index for more roads
 	Ogre::String sMarkerMesh;
 	Ogre::Real fMarkerScale, fScRot,fScHit;  // scale
 

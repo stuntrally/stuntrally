@@ -218,17 +218,25 @@ if (pSet->bTrees)
 	}
 	
 	
-	if (road)  // road
+	//  roads upd
+	if (!scn->roads.empty())
 	{
-		road->bCastShadow = pSet->shadow_type >= Sh_Depth;
-		bool full = road->RebuildRoadInt();
-		
-		if (full && scn->pace)  // pace
+		SplineRoad* road1 = scn->roads[0];
+
+		for (SplineRoad* road : scn->roads)
 		{
-			scn->pace->SetupTer(scn->terrain);
-			road->RebuildRoadPace();
-			scn->pace->Rebuild(road, scn->sc, pSet->trk_reverse);
-	}	}
+			road->bCastShadow = pSet->shadow_type >= Sh_Depth;
+			bool fu = road->RebuildRoadInt();
+			
+			bool full = road == road1 && fu;
+			if (full && scn->pace)  // pace, only for 1st
+			{
+				scn->pace->SetupTer(scn->terrain);
+				road->RebuildRoadPace();
+				scn->pace->Rebuild(road, scn->sc, pSet->trk_reverse);
+			}
+		}
+	}
 
 	///**  Render Targets update
 	if (edMode == ED_PrvCam)

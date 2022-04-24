@@ -357,12 +357,6 @@ void CGui::btnScaleTerH(WP)
 	delete[] hfData;
 	app->bNewHmap = true;	app->UpdateTrack();
 
-	//  road upd
-	if (0) //road)  // doesnt work here..
-	{	app->scn->road->UpdPointsH();
-		app->scn->road->Rebuild(true);
-	}
-
 	//  start pos
 	app->scn->sc->startPos[2] *= sf;  app->UpdStartPos();
 }

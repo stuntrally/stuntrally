@@ -32,7 +32,7 @@ using namespace MyGUI;
 void App::KeyTxtRoad(Real q)
 {
 	SplineRoad* road = scn->road;
-	int ic = road->iChosen;  bool bCur = ic >= 0, notEmpty = scn->road->getNumPoints() > 1;
+	int ic = road->iChosen;  bool bCur = ic >= 0, notEmpty = road->getNumPoints() > 1;
 	bool ok = bCur && notEmpty;
 	SplinePoint& sp = ok ? road->getPoint(ic) : road->newP;
 	
@@ -99,7 +99,7 @@ void App::KeyTxtRoad(Real q)
 	rdTxt[11]->setCaption(TR(bCur ? "#{Road_Cur}" : "#{Road_New}"));
 	rdTxt[11]->setTextColour(bCur ? MyGUI::Colour(0.85,0.75,1) : MyGUI::Colour(0.3,1,0.1));
 
-	rdKey[11]->setCaption(road->bMerge ? "Mrg":"");
+	rdKey[11]->setCaption(road->bMerge ? "Mrg": toStr(scn->rdCur+1)+"/"+toStr(scn->roads.size()));
 
 
 	//  road stats  --------------------------------

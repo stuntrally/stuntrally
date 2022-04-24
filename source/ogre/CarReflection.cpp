@@ -72,7 +72,7 @@ void CarReflection::Create()
 			size,size, 0/*mips*/, PF_R8G8B8, TU_RENDERTARGET);
 			//LogO("created rt cube");
 
-		for (int face = 0; face < 6; face++)
+		for (int face = 0; face < 6; ++face)
 		{
 			String name = "Reflect_" + toStr(iIndex) + hSuffix + "_" + toStr(face);
 			//LogO("REFL_CAM: " + name);
@@ -94,7 +94,8 @@ void CarReflection::Create()
 			//mRT->addListener(this);  //-
 			mCam->setPosition(Vector3::ZERO);
 
-			Vector3 lookAt(0,0,0), up(0,0,0), right(0,0,0);  switch(face)
+			Vector3 lookAt(0,0,0), up(0,0,0), right(0,0,0);
+			switch (face)
 			{
 				case 0:  lookAt.x =-1;  up.y = 1;  right.z = 1;  break;  // +X
 				case 1:  lookAt.x = 1;  up.y = 1;  right.z =-1;  break;	 // -X
