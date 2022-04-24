@@ -131,80 +131,89 @@
 	</Widget>
 
 	<Widget type="Window" skin="WindowCS" position="2400 180 700 800" align="Center" layer="Popup" name="TrackFilterWnd">
-		<Property key="MinSize" value="500 500"/>
+		<Property key="MinSize" value="500 400"/>
 		<Property key="Caption" value="#A0A0FF#{Track} - #{TerFilter}"/>
 		<Property key="Colour" value="0.7 0.7 0.9"/>
 		<Property key="Snap" value="true"/>
 		<Property key="Visible" value="false"/>
-		<Widget type="Widget" skin="PanelSkin" position="0 0 900 800">
+		<Widget type="Widget" skin="PanelSkin" position="0 0 900 700">
 			<Property key="Colour" value="0.8 0.8 1.0"/>
 		</Widget>
 		<Widget type="Button" skin="CheckBox" position="340 20 140 24" name="TracksFilter">
 			<Property key="Caption" value="#D0D0F0#{Enabled}"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="580 20 140 24" name="TrkFilterClose">
+		<Widget type="Button" skin="Button" position="160 20 140 34" name="TrkFilterClose">
 			<Property key="Caption" value="#{Close}"/>
 			<Property key="Colour" value="0.7 0.6 0.9"/>
 			<Property key="TextColour" value="0.9 0.8 1"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 
-		<Widget type="Button" skin="CheckBox" position="32 10 140 24" name="col0">
+		<Widget type="Button" skin="CheckBox" position="12 10 140 24" name="col0">
 			<Property key="Caption" value="#C0E0C0 id"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 70 240 24" name="col1">
-			<Property key="Caption" value="#C8E8C8#{Name} (#{Big})"/>
+		<Widget type="Button" skin="CheckBox" position="12 70 140 24" name="col1">
+			<Property key="Caption" value="#C8E8C8 #{Name} (#{Big})"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 40 240 24" name="col2">
-			<Property key="Caption" value="#E0FFE0#{Name}"/>
+		<Widget type="Button" skin="CheckBox" position="12 40 140 24" name="col2">
+			<Property key="Caption" value="#E0FFE0 #{Name}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 100 140 24" name="col3">
+		<Widget type="Button" skin="CheckBox" position="12 100 140 24" name="col3">
 			<Property key="Caption" value="#80FF80 N"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 130 240 24" name="col4">
-			<Property key="Caption" value="#80FFC0#{Scenery}"/>
+		<Widget type="Button" skin="CheckBox" position="12 130 240 24" name="col4">
+			<Property key="Caption" value="#80FFC0 #{Scenery}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 160 140 24" name="col5">
+		<Widget type="Button" skin="CheckBox" position="12 160 240 24" name="col5">
 			<Property key="Caption" value="#C0E0F0 ver"/>
 		</Widget>
 
-		<Widget type="Button" skin="CheckBox" position="32 200 140 24" name="col6">
+		<Widget type="Button" skin="CheckBox" position="12 200 200 24" name="col6">
 			<Property key="Caption" value="#FFE080#{difficulty}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 230 140 24" name="col7">
+		<Widget type="Button" skin="CheckBox" position="12 230 200 24" name="col7">
 			<Property key="Caption" value="#90D0FF#{rating}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 260 140 24" name="col8">
+		<Widget type="Button" skin="CheckBox" position="12 260 200 24" name="col8">
 			<Property key="Caption" value="#C06090#{objects}"/>
+			<Property key="FontName" value="font.small"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 290 140 24" name="col9">
+		<Widget type="Button" skin="CheckBox" position="12 280 200 24" name="col9">
 			<Property key="Caption" value="#C09060#{obstacles}"/>
+			<Property key="FontName" value="font.small"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 320 140 24" name="col10">
+		<Widget type="Button" skin="CheckBox" position="12 300 200 24" name="col10">
 			<Property key="Caption" value="#80C0FF#{fluids}"/>
+			<Property key="FontName" value="font.small"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 350 140 24" name="col11">
+		<Widget type="Button" skin="CheckBox" position="12 320 200 24" name="col11">
 			<Property key="Caption" value="#40FF00#{bumps}"/>
+			<Property key="FontName" value="font.small"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 380 140 24" name="col12">
+		<Widget type="Button" skin="CheckBox" position="12 340 200 24" name="col12">
 			<Property key="Caption" value="#FFA030#{jumps}"/>
+			<Property key="FontName" value="font.small"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 410 140 24" name="col13">
+		<Widget type="Button" skin="CheckBox" position="12 360 200 24" name="col13">
 			<Property key="Caption" value="#00FFFF#{loops}"/>
+			<Property key="FontName" value="font.small"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 440 140 24" name="col14">
+		<Widget type="Button" skin="CheckBox" position="12 380 200 24" name="col14">
 			<Property key="Caption" value="#FFFF00#{pipes}"/>
+			<Property key="FontName" value="font.small"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 470 140 24" name="col15">
+		<Widget type="Button" skin="CheckBox" position="12 400 200 24" name="col15">
 			<Property key="Caption" value="#C0C0C0#{banked}"/>
+			<Property key="FontName" value="font.small"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 500 140 24" name="col16">
+		<Widget type="Button" skin="CheckBox" position="12 420 200 24" name="col16">
 			<Property key="Caption" value="#C080FF#{frenzy}"/>
+			<Property key="FontName" value="font.small"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 530 140 24" name="col17">
+		<Widget type="Button" skin="CheckBox" position="12 450 200 24" name="col17">
 			<Property key="Caption" value="#C0C0FF#{sum}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="32 560 140 24" name="col18">
+		<Widget type="Button" skin="CheckBox" position="12 480 200 24" name="col18">
 			<Property key="Caption" value="#FFA0A0#{long}"/>
 		</Widget>
 
@@ -230,115 +239,115 @@
 		<Widget type="Slider" skin="Slider" position="284 202 200 20" name="min1"/>
 		<Widget type="Slider" skin="Slider" position="284 232 200 20" name="min2"/>
 		<Widget type="Slider" skin="Slider" position="284 262 200 20" name="min3"/>
-		<Widget type="Slider" skin="Slider" position="284 292 200 20" name="min4"/>
-		<Widget type="Slider" skin="Slider" position="284 322 200 20" name="min5"/>
-		<Widget type="Slider" skin="Slider" position="284 352 200 20" name="min6"/>
-		<Widget type="Slider" skin="Slider" position="284 382 200 20" name="min7"/>
-		<Widget type="Slider" skin="Slider" position="284 412 200 20" name="min8"/>
-		<Widget type="Slider" skin="Slider" position="284 442 200 20" name="min9"/>
-		<Widget type="Slider" skin="Slider" position="284 472 200 20" name="min10"/>
-		<Widget type="Slider" skin="Slider" position="284 502 200 20" name="min11"/>
-		<Widget type="Slider" skin="Slider" position="284 532 200 20" name="min12"/>
-		<Widget type="Slider" skin="Slider" position="284 562 200 20" name="min13"/>
+		<Widget type="Slider" skin="Slider" position="284 282 200 18" name="min4"/>
+		<Widget type="Slider" skin="Slider" position="284 302 200 18" name="min5"/>
+		<Widget type="Slider" skin="Slider" position="284 322 200 18" name="min6"/>
+		<Widget type="Slider" skin="Slider" position="284 342 200 18" name="min7"/>
+		<Widget type="Slider" skin="Slider" position="284 362 200 18" name="min8"/>
+		<Widget type="Slider" skin="Slider" position="284 382 200 18" name="min9"/>
+		<Widget type="Slider" skin="Slider" position="284 402 200 18" name="min10"/>
+		<Widget type="Slider" skin="Slider" position="284 422 200 18" name="min11"/>
+		<Widget type="Slider" skin="Slider" position="284 452 200 20" name="min12"/>
+		<Widget type="Slider" skin="Slider" position="284 482 200 20" name="min13"/>
 
 		<Widget type="Slider" skin="Slider" position="554 162 200 20" name="max0"/>
 		<Widget type="Slider" skin="Slider" position="554 202 200 20" name="max1"/>
 		<Widget type="Slider" skin="Slider" position="554 232 200 20" name="max2"/>
 		<Widget type="Slider" skin="Slider" position="554 262 200 20" name="max3"/>
-		<Widget type="Slider" skin="Slider" position="554 292 200 20" name="max4"/>
-		<Widget type="Slider" skin="Slider" position="554 322 200 20" name="max5"/>
-		<Widget type="Slider" skin="Slider" position="554 352 200 20" name="max6"/>
-		<Widget type="Slider" skin="Slider" position="554 382 200 20" name="max7"/>
-		<Widget type="Slider" skin="Slider" position="554 412 200 20" name="max8"/>
-		<Widget type="Slider" skin="Slider" position="554 442 200 20" name="max9"/>
-		<Widget type="Slider" skin="Slider" position="554 472 200 20" name="max10"/>
-		<Widget type="Slider" skin="Slider" position="554 502 200 20" name="max11"/>
-		<Widget type="Slider" skin="Slider" position="554 532 200 20" name="max12"/>
-		<Widget type="Slider" skin="Slider" position="554 562 200 20" name="max13"/>
+		<Widget type="Slider" skin="Slider" position="554 282 200 18" name="max4"/>
+		<Widget type="Slider" skin="Slider" position="554 302 200 18" name="max5"/>
+		<Widget type="Slider" skin="Slider" position="554 322 200 18" name="max6"/>
+		<Widget type="Slider" skin="Slider" position="554 342 200 18" name="max7"/>
+		<Widget type="Slider" skin="Slider" position="554 362 200 18" name="max8"/>
+		<Widget type="Slider" skin="Slider" position="554 382 200 18" name="max9"/>
+		<Widget type="Slider" skin="Slider" position="554 402 200 18" name="max10"/>
+		<Widget type="Slider" skin="Slider" position="554 422 200 18" name="max11"/>
+		<Widget type="Slider" skin="Slider" position="554 452 200 20" name="max12"/>
+		<Widget type="Slider" skin="Slider" position="554 482 200 20" name="max13"/>
 
-		<Widget type="TextBox" skin="TextBox" position="250 160 32 23" name="min0Val">
+		<Widget type="TextBox" skin="TextBox" position="250 160 34 23" name="min0Val">
 			<Property key="TextColour" value="0.6 0.8 0.6"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="250 200 24 20" name="min1Val">
+		<Widget type="TextBox" skin="TextBox" position="250 200 34 20" name="min1Val">
 			<Property key="TextColour" value="0.9 0.75 0.5"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="250 230 24 20" name="min2Val">
+		<Widget type="TextBox" skin="TextBox" position="250 230 34 20" name="min2Val">
 			<Property key="TextColour" value="0.6 0.75 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="250 260 24 20" name="min3Val">
+		<Widget type="TextBox" skin="TextBox" position="250 260 34 20" name="min3Val">
 			<Property key="TextColour" value="0.9 0.6 0.75"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="250 290 24 20" name="min4Val">
+		<Widget type="TextBox" skin="TextBox" position="250 280 34 20" name="min4Val">
 			<Property key="TextColour" value="0.8 0.65 0.5"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="250 320 24 20" name="min5Val">
+		<Widget type="TextBox" skin="TextBox" position="250 300 34 20" name="min5Val">
 			<Property key="TextColour" value="0.6 0.75 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="250 350 24 20" name="min6Val">
+		<Widget type="TextBox" skin="TextBox" position="250 320 34 20" name="min6Val">
 			<Property key="TextColour" value="0.3 0.75 0.3"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="250 380 24 20" name="min7Val">
+		<Widget type="TextBox" skin="TextBox" position="250 340 34 20" name="min7Val">
 			<Property key="TextColour" value="0.9 0.7 0.6"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="250 410 24 20" name="min8Val">
+		<Widget type="TextBox" skin="TextBox" position="250 360 34 20" name="min8Val">
 			<Property key="TextColour" value="0.4 0.9 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="250 440 24 20" name="min9Val">
+		<Widget type="TextBox" skin="TextBox" position="250 380 34 20" name="min9Val">
 			<Property key="TextColour" value="0.9 0.9 0.4"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="250 470 24 20" name="min10Val">
+		<Widget type="TextBox" skin="TextBox" position="250 400 34 20" name="min10Val">
 			<Property key="TextColour" value="0.6 0.6 0.6"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="250 500 24 20" name="min11Val">
+		<Widget type="TextBox" skin="TextBox" position="250 420 34 20" name="min11Val">
 			<Property key="TextColour" value="0.75 0.5 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="250 530 24 20" name="min12Val">
+		<Widget type="TextBox" skin="TextBox" position="250 450 34 20" name="min12Val">
 			<Property key="TextColour" value="0.7 0.7 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="250 560 24 20" name="min13Val">
+		<Widget type="TextBox" skin="TextBox" position="250 480 34 20" name="min13Val">
 			<Property key="TextColour" value="0.9 0.7 0.7"/>
 		</Widget>
 
-		<Widget type="TextBox" skin="TextBox" position="520 160 32 20" name="max0Val">
+		<Widget type="TextBox" skin="TextBox" position="510 160 34 20" name="max0Val">
 			<Property key="TextColour" value="0.6 0.8 0.6"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="520 200 24 20" name="max1Val">
+		<Widget type="TextBox" skin="TextBox" position="510 200 34 20" name="max1Val">
 			<Property key="TextColour" value="1.0 0.8 0.6"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="520 230 24 20" name="max2Val">
+		<Widget type="TextBox" skin="TextBox" position="510 230 34 20" name="max2Val">
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="520 260 24 20" name="max3Val">
+		<Widget type="TextBox" skin="TextBox" position="510 260 34 20" name="max3Val">
 			<Property key="TextColour" value="0.9 0.6 0.8"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="520 290 24 20" name="max4Val">
+		<Widget type="TextBox" skin="TextBox" position="510 280 34 20" name="max4Val">
 			<Property key="TextColour" value="0.9 0.75 0.6"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="520 320 24 20" name="max5Val">
+		<Widget type="TextBox" skin="TextBox" position="510 300 34 20" name="max5Val">
 			<Property key="TextColour" value="0.6 0.8 0.9"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="520 350 24 20" name="max6Val">
+		<Widget type="TextBox" skin="TextBox" position="510 320 34 20" name="max6Val">
 			<Property key="TextColour" value="0.4 0.9 0.4"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="520 380 24 20" name="max7Val">
+		<Widget type="TextBox" skin="TextBox" position="510 340 34 20" name="max7Val">
 			<Property key="TextColour" value="1.0 0.6 0.3"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="520 410 24 20" name="max8Val">
+		<Widget type="TextBox" skin="TextBox" position="510 360 34 20" name="max8Val">
 			<Property key="TextColour" value="0.4 1.0 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="520 440 24 20" name="max9Val">
+		<Widget type="TextBox" skin="TextBox" position="510 380 34 20" name="max9Val">
 			<Property key="TextColour" value="1.0 1.0 0.4"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="520 470 24 20" name="max10Val">
+		<Widget type="TextBox" skin="TextBox" position="510 400 34 20" name="max10Val">
 			<Property key="TextColour" value="0.8 0.8 0.8"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="520 500 24 20" name="max11Val">
+		<Widget type="TextBox" skin="TextBox" position="510 420 34 20" name="max11Val">
 			<Property key="TextColour" value="0.8 0.6 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="520 530 24 20" name="max12Val">
+		<Widget type="TextBox" skin="TextBox" position="510 450 34 20" name="max12Val">
 			<Property key="TextColour" value="0.8 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="520 560 24 20" name="max13Val">
+		<Widget type="TextBox" skin="TextBox" position="510 480 34 20" name="max13Val">
 			<Property key="TextColour" value="1.0 0.8 0.8"/>
 		</Widget>
 	</Widget>
@@ -397,7 +406,7 @@
 					<Property key="TextColour" value="0.4 0.5 0.6"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 85" name="TrackDesc">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 105" name="TrackDesc">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
@@ -1860,7 +1869,7 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562" name="TabTrack">
 				<Property key="Caption" value="#60E060#{Track}"/>
-				<Widget type="TextBox" skin="TextBox" position="176 456 200 24" name="TrackText">
+				<Widget type="TextBox" skin="TextBox" position="176 506 200 24" name="TrackText">
 					<Property key="InheritsAlpha" value="true"/>
 					<Property key="Colour" value="0 0 0"/>
 					<Property key="Caption" value="#{Track}"/>
@@ -1878,7 +1887,7 @@
 						<Property key="ImageTexture" value="carpos0.png"/>
 					</Widget>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 85" name="TrackDesc2">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 155" name="TrackDesc2">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
@@ -2637,6 +2646,24 @@
 				</Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562">
+				<Property key="Caption" value="#C0A0B0#{Credits}"/>
+				<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
+					<Property key="ImageCoord" value="0 384 128 128"/>
+					<Property key="Alpha" value="0.3"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+				</Widget>
+				<Widget type="EditBox" skin="EditBoxStretch" position="32 16 600 480" name="Credits">
+					<Property key="ReadOnly" value="true"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="true"/>
+					<Property key="VisibleHScroll" value="false"/>
+					<Property key="VisibleVScroll" value="true"/>
+					<Property key="MaxTextLength" value="18000"/>
+					<Property key="TextColour" value="0.85 0.85 0.85"/>
+					<Property key="Colour" value="0.65 0.65 0.65"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#D0C0FF#{About}"/>
 				<Widget type="ImageBox" skin="ImageBox" position="24 8 744 186">
 					<Property key="ImageTexture" value="stuntrally-logo.png"/>
@@ -2850,7 +2877,8 @@
 					<Widget type="TabItem" skin="" position="2 24 510 492">
 						<Property key="Caption" value="#80C0FF#{InputMain}"/>
 						<Widget type="ImageBox" skin="ImageBox" position="580 480 80 80">
-							<Property key="ImageCoord" value="0 512 128 128"/>
+							<Property key="ImageCoord" value="512 0 128 128"/>
+							<!--<Property key="ImageCoord" value="0 512 128 128"/>-->
 							<Property key="Alpha" value="0.6"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
@@ -3021,7 +3049,8 @@
 					<Property key="InheritsAlpha" value="false"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="712 20 54 54">
-					<Property key="ImageCoord" value="128 640 128 128"/>
+					<Property key="ImageCoord" value="128 384 128 128"/>
+					<!--<Property key="ImageCoord" value="128 640 128 128"/>-->
 					<Property key="Alpha" value="0.7"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
@@ -4881,7 +4910,7 @@
 		</Widget>
 		<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
 			<Property key="ImageCoord" value="128 768 128 128"/>
-			<Property key="Alpha" value="0.15"/>
+			<Property key="Alpha" value="0.4"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="12 270 768 52">
@@ -4952,7 +4981,7 @@
 			<Property key="Caption" value="#A0C8FF#{HintShow}"/>
 			<Property key="FontName" value="font.small"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="576 456 212 24">
+		<Widget type="TextBox" skin="TextBox" position="576 446 212 24">
 			<Property key="Caption" value="#A0C0E0#{HintKey}"/>
 			<Property key="FontName" value="font.small"/>
 		</Widget>
@@ -4960,14 +4989,33 @@
 		<Widget type="Button" skin="Button" position="576 276 196 40" name="btnHintScreen">
 			<Property key="Colour" value="0.7 0.9 1"/>
 			<Property key="Caption" value="#C0E0FF#{Screen}"/>
+			<Widget type="ImageBox" skin="ImageBox" position="0 0 36 36">
+				<Property key="ImageCoord" value="128 0 128 128"/>
+				<Property key="Alpha" value="0.7"/>
+				<Property key="ImageTexture" value="gui_icons.png"/>
+				<Property key="NeedMouse" value="false"/>
+			</Widget>
 		</Widget>
 		<Widget type="Button" skin="Button" position="576 336 196 40" name="btnHintInput">
 			<Property key="Colour" value="1 1 0.6"/>
 			<Property key="Caption" value="#FFFF60#{Input}"/>
+			<Widget type="ImageBox" skin="ImageBox" position="0 0 36 36">
+				<Property key="ImageCoord" value="128 384 128 128"/>
+				<Property key="Alpha" value="0.7"/>
+				<Property key="ImageTexture" value="gui_icons.png"/>
+				<Property key="NeedMouse" value="false"/>
+			</Widget>
 		</Widget>
 		<Widget type="Button" skin="Button" position="576 504 196 48" name="btnHintClose">
 			<Property key="Colour" value="0.6 0.95 1"/>
 			<Property key="Caption" value="#D0F0FF#{Close}"/>
+			<Widget type="ImageBox" skin="ImageBox" position="0 0 48 48">
+				<Property key="ImageCoord" value="256 384 128 128"/>
+				<Property key="Colour" value="0.7 0.85 1.0"/>
+				<Property key="Alpha" value="0.5"/>
+				<Property key="ImageTexture" value="gui_icons.png"/>
+				<Property key="NeedMouse" value="false"/>
+			</Widget>
 		</Widget>
 	</Widget>
 	<CodeGeneratorSettings/>

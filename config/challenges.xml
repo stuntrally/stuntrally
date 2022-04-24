@@ -198,7 +198,6 @@
 	<challenge name="Island Beauty" ver="1" difficulty="2" type="1" 
 			descr="A trip on various beautiful island tracks.">
 		<cartype names="Gravel|Terrain" />
-		<car names="N1" />
 		<pass avgPoints="12" factor="1.5" />
 		<tracks>
 			<t name="Isl10-Treasure" passPoints="9" />
@@ -212,7 +211,6 @@
 	<challenge name="Autumn Forests" ver="1" difficulty="1" type="1" 
 			descr="Forest tracks, mostly in nice autumn colors.">
 		<cartype names="Gravel|Terrain" />
-		<car names="N1" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Atm1-Autumn"      passPoints="9" />
@@ -226,7 +224,6 @@
 	<challenge name="Jungle Trip" ver="1" difficulty="3" type="1" 
 			descr="A trip inside jungle, not too dense. On 2 long, scenic tracks.">
 		<cartype names="Gravel|Terrain" />
-		<car names="N1" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Jng13-Tropic"        passPoints="9" />
@@ -246,7 +243,7 @@
 
 	<challenge name="Desert Visit" ver="2" difficulty="3" type="1" 
 			descr="Visit to desert, on sand dunes.">
-		<car names="UV|HR|LK4|O" />
+		<car names="UV|TW|HR|LK4|O" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Des1-Dunes"        passPoints="9" />
@@ -270,7 +267,6 @@
 	<challenge name="Winter Sleep" ver="2" difficulty="2" type="1" 
 			descr="Winter rally, slippery snow tracks.">
 		<cartype names="Gravel" />
-		<car names="N1|3S" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="Wnt1-Cross"     passPoints="9" />
@@ -282,7 +278,6 @@
 	<challenge name="Forest Lanscapes" ver="1" difficulty="2" type="1" 
 			descr="A trip on good looking forest tracks.">
 		<cartype names="Gravel" />
-		<car names="N1|3S" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="For4-OSquare"      passPoints="9" />
@@ -294,8 +289,7 @@
 	
 	<challenge name="Greece Coast" ver="1" difficulty="2" type="1" 
 			descr="Possibly bumpy, narrow or long tracks with good coastal views.">
-		<cartype names="Gravel" />
-		<car names="N1|FR4|M3" />
+		<cartype names="Gravel|Terrain" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Grc2-Coast"      passPoints="9" />
@@ -308,7 +302,6 @@
 	<challenge name="Mossy Jungle" ver="2" difficulty="2" type="1" 
 			descr="Banked and mossy jungle tracks.">
 		<cartype names="Gravel|Terrain" />
-		<car names="N1|M3|3S" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Mos2-Mouse"      passPoints="9" />
@@ -319,7 +312,6 @@
 	<challenge name="Canyon Side" ver="1" difficulty="3" type="1" 
 			descr="Highest banked tracks.">
 		<cartype names="Gravel|Racing|Asphalt" />
-		<car names="M3" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Can1-Hairpins"   passPoints="9" />
@@ -511,7 +503,7 @@
 
 	<challenge name="Fast Banked" ver="1" difficulty="2" type="3" 
 			descr="Short, very fast, banked forest tracks. Use boost to be faster.">
-		<car names="ES|S1|N1" />
+		<cartype names="Gravel" />
 		<pass avgPoints="14" factor="2" />
 		<tracks>
 			<t name="For7-Blur"    laps="2" passPoints="10" />
@@ -565,7 +557,7 @@
 
 	<challenge name="Max Banked" ver="1" difficulty="3" type="3" 
 			descr="Maximum banked terrain tracks. Very fast and with side turns.">
-		<car names="ES|S1|XZ|SZ|Y7" />
+		<cartype names="Gravel|Asphalt" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Can2-CanyonRun" passPoints="9" />
@@ -577,7 +569,8 @@
 
 	<challenge name="Twisted Bridges" ver="1" difficulty="4" type="3" 
 			descr="Banked and twisted bridged roads. You get fast cars, but the key is to drive not too fast.">
-		<car names="XZ|SZ|360|Y7|CT" />
+		<cartype names="Asphalt" />
+		<car names="SZ" />
 		<pass avgPos="2" />
 		<tracks>
 			<t name="Isl6-Flooded"  laps="2" passPos="2" />
@@ -587,14 +580,14 @@
 
    <challenge name="Bridge Blaster" ver="1" difficulty="4" type="3"
          descr="Race the fastest cars on bridged tracks as fast as you can while avoiding the walls. Note: when driving those fast but low suspension cars, you need to brake before all highly banked turns to not damage them." >
-      <car names="360|XZ|SZ|Y7" />
-      <sim boost="0" />
-      <pass avgPoints="11.5" />
-      <tracks>
-         <t name="Wnt12-Peaks"  laps="2" passPoints="11.5" />
-         <t name="For9-MadMntn" laps="1" passPoints="9" />
-         <t name="Isl9-Web"     laps="1" passPoints="8" />
-      </tracks>
+		<cartype names="Asphalt" />
+		<sim boost="0" />
+		<pass avgPoints="11.5" />
+		<tracks>
+			<t name="Wnt12-Peaks"  laps="2" passPoints="11.5" />
+			<t name="For9-MadMntn" laps="1" passPoints="9" />
+			<t name="Isl9-Web"     laps="1" passPoints="8" />
+		</tracks>
    </challenge>
 
 
@@ -613,7 +606,7 @@
 
 	<challenge name="Perfect Jumps" ver="1" difficulty="3" type="4" 
 			descr="Simple round tracks with jumps. But need to drive perfect. No time for mistakes.">
-		<car names="ES|S1|N1" />
+		<cartype names="Gravel" />
 		<pass avgPoints="13" />
 		<tracks>
 			<t name="Des5-LowJumps"  laps="2" passPoints="11" />
@@ -645,7 +638,7 @@
 
 	<challenge name="Banked Drive" ver="1" difficulty="3" type="4" 
 			descr="Smooth but very banked roads.">
-		<car names="S8|TC6|FN" />
+		<cartype names="Gravel" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Sav13-Hole"       passPoints="9" />
@@ -655,7 +648,7 @@
 
 	<challenge name="Half Pipes" ver="1" difficulty="4" type="4" 
 			descr="Curly tracks with a lot of half pipe roads.">
-		<car names="ES|S1|S8|N1|FN" />
+		<cartype names="Gravel" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Aus4-Snake"       passPoints="9" />
@@ -678,7 +671,7 @@
 
 	<challenge name="Jump Mania" ver="1" difficulty="5" type="4" 
 			descr="Very jump filled tracks. Mostly fast, but you need to know jumps well, and know where to land. ">
-		<car names="ES|S1|S8|N1|FN" />
+		<cartype names="Gravel" />
 		<pass avgPoints="12" />
 		<tracks>
 			<t name="Des7-CrossJumps"  passPoints="9" />
@@ -689,7 +682,7 @@
 
 	<challenge name="Loop Mania" ver="1" difficulty="5" type="4" 
 			descr="The most looped tracks, few loops in each, difficult. Pay attention to car damage. Don't drive too fast in loops.">
-		<car names="ES|S1|N1|FN" />
+		<cartype names="Gravel" />
 		<pass avgPoints="14" factor="2" />
 		<tracks>
 			<t name="Sav5-LoopBasic"   passPoints="10" />
@@ -702,7 +695,8 @@
 	<challenge name="Pipe Master" ver="1" difficulty="5" type="4" 
 			descr="Most difficult all-pipe tracks. Long and winding.">
 		<sim boost="2" />
-		<car names="ES|S8|UV" />
+		<cartype names="Gravel" />
+		<car names="U6|UV" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Sav12-Infinity"   passPoints="9" />
@@ -712,7 +706,7 @@
 
 	<challenge name="Stunt Master" ver="1" difficulty="6" type="4" 
 			descr="The most difficult, long and twisted stunt tracks. Pay attention to car damage. Avoid hitting walls.">
-		<car names="ES|S1|S8" />
+		<cartype names="Gravel" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Sav14-Refinery"   passPoints="9" />
@@ -722,7 +716,7 @@
 
 	<challenge name="Stunt Madness" ver="1" difficulty="7" type="4"
 			descr="Ultra difficult stunt tracks. Long, extremely curly and twisted. Filled with all stunt elements and obstacles. Caution: be sure you already finished Stunt Master before even trying this one. Knowing these tracks is also key.">
-		<car names="ES|S1|S8|FN" />
+		<cartype names="Gravel" />
 		<pass avgPoints="13" />
 		<tracks>
 			<t name="Grc7-Spider"	passPoints="10.5" />
@@ -732,7 +726,7 @@
 
 	<challenge name="Exhausting stunts" ver="1" difficulty="7" type="4"
 			descr="Very long and exhausting stunt tracks. Twisted bridges first and lots of on pipe driving later.">
-		<car names="ES|S1|S8|FN" />
+		<cartype names="Gravel" />
 		<pass avgPoints="12" />
 		<tracks>
 			<t name="Atm8-Ultima"      passPoints="10" />
@@ -746,7 +740,7 @@
 
 	<challenge name="Horrible Weather" ver="1" difficulty="5" type="5" 
 			descr="Ice, sandstorm and heavy rain, this is definitely a challenge. Remember, on ice, push throttle only occasionally.">
-		<car names="3S|TC6|M3" />
+		<cartype names="Terrain" />
 		<hud pacenotes="0" />
 		<pass avgPoints="14" factor="2" />
 		<tracks>
@@ -759,7 +753,7 @@
 
 	<challenge name="Dark Chase" ver="1" difficulty="2" type="5" 
 			descr="Short dark tracks with 2 laps.">
-		<cartype names="Gravel|Racing" />
+		<cartype names="Gravel" />
 		<pass avgPoints="12" />
 		<tracks>
 			<t name="Vlc1-Dark"     laps="2" passPoints="9.5" />
@@ -780,7 +774,7 @@
 
 	<challenge name="Expedition" ver="1" difficulty="3" type="5" 
 			descr="An expedition into other planets, originally driven with electic powered vehicle. Bumpy tracks.">
-		<car names="UV|BV" />
+		<car names="UV|U6|U8|BV|3B" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="Vlc4-Spikeland"  passPoints="10" />
@@ -794,7 +788,7 @@
 
 	<challenge name="Space Trip" ver="1" difficulty="4" type="5" 
 			descr="Extreme cars in interesting places outside earth.">
-		<car names="UV|TU|TW|ES|BV" />
+		<car names="UV|TU|TW|U6|BV" />
 		<hud chkBeam="1" chkArrow="1" />
 		<pass avgPoints="10" />
 		<tracks>
@@ -808,7 +802,7 @@
 	<challenge name="Outer Stunts" ver="1" difficulty="6" type="5" 
 			descr="Great, very fast stunts on other planets. Need to use the rechargable boost to be faster.">
 		<sim boost="2" />
-		<car names="ES|S1|XZ|UV|BV|Y7" />
+		<cartype names="Gravel|Asphalt|Extreme" />
 		<pass avgPoints="14" />
 		<tracks>
 			<t name="Mrs1-Mars"       passPoints="12" />
@@ -820,7 +814,7 @@
 
 	<challenge name="Alien Stunts Extreme" ver="1" difficulty="5" type="5" 
 			descr="The new outside earth stunt tracks. Continuation of Outer Stunts.">
-		<car names="ES|S1|S8|XZ|SZ" />
+		<cartype names="Gravel|Asphalt|Extreme" />
 		<pass avgPoints="12" />
 		<tracks>
 			<t name="Mrs4-Platforms"  passPoints="9" />
@@ -833,7 +827,7 @@
 	<challenge name="Unusual Places" ver="1" difficulty="3" type="5" 
 			descr="Quite unusual places for racing: on active volcano ground and near volcanic acid. Stay on road to not damage car. Use boost to be faster on straights.">
 		<sim boost="2" />
-		<car names="ES|S8|S1|FN|SZ" />
+		<cartype names="Gravel|Asphalt|Extreme" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Tox2-AcidLakes"  laps="2" passPoints="8" />
@@ -844,7 +838,7 @@
 	<challenge name="Surreal Worlds" ver="1" difficulty="4" type="5" 
 			descr="Very unrealistic, yet pretty and sometimes shocking environments.">
 		<sim boost="2" />
-		<car names="ES|S8|S1|FN|SZ" />
+		<cartype names="Gravel" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Sur1-Surreal"    passPoints="9" />
@@ -857,7 +851,7 @@
 	<challenge name="Really Dangerous" ver="1" difficulty="7" type="5" 
 			descr="The very dangerous tracks. Driving on pipe, or with obstacles. When on pipe, drive slowly and stay on top, go lower only in turns.">
 		<sim boost="2" />
-		<car names="ES|S1|FN|N1" />
+		<cartype names="Gravel" />
 		<pass avgPoints="14" />
 		<tracks>
 			<t name="Tox1-Radioactive"  passPoints="9" />
@@ -883,7 +877,7 @@
 	<challenge name="Craters Survival" ver="1" difficulty="5" type="5"
 			descr="Drive 2 laps around Craters, without damaging the car too much from the heat (orange). No time limit. Stay on road.">
 		<sim damage="2" boost="0" flip="0" rewind="0" carChng="0" dmg_lap="0" />
-		<car names="FN" />
+		<car names="ES|FN" />
 		<hud trkGhost="0" chkBeam="1" chkArrow="1" />
 		<pass avgPos="30" prizes="2" />
 		<tracks>
@@ -1036,7 +1030,7 @@
 
 	<challenge name="Test 1 prize" ver="1" difficulty="0" type="7" 
 			descr="Test Challenge 1, prize points">
-		<car names="N1|TC6|3S" />
+		<car names="HI" />
 		<pass avgPoints="10" />
 		<tracks>
 			<t name="TestC4-ow"   passPoints="7" />
@@ -1046,7 +1040,7 @@
 	<challenge name="Test 1 pos" ver="1" difficulty="0" type="7" 
 			descr="Test Challenge 1, position pass.">
 		<sim damage="0" boost="2" flip="2" rewind="1" />
-		<car names="N1" />
+		<car names="HI" />
 		<pass avgPos="2" />
 		<tracks>
 			<t name="TestC4-ow"   passPos="5" />
@@ -1056,7 +1050,7 @@
 	<challenge name="Test 2 points" ver="1" difficulty="1" type="7" 
 			descr="Test Challenge 2, points pass.">
 		<sim mode="normal" damage="1" boost="1" flip="1" rewind="1" />
-		<car names="ES|S1" />
+		<car names="ES|HI" />
 		<pass avgPoints="8" factor="3" />
 		<tracks>
 			<t name="TestC6-temp" passPoints="1"/>
