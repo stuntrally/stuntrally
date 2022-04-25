@@ -496,38 +496,12 @@ void CGui::toggleGui(bool toggle)
 	app->mWndOpts->setVisible(notMain && pSet->inMenu == MNU_Options);
 	if (!app->isFocGui)  app->mWndTrkFilt->setVisible(false);
 	
-	//  load Readme editbox from file
+	//  fill help editboxes from text files
 	if (app->mWndHelp->getVisible() && loadReadme)
 	{
 		loadReadme = false;
-		Ed ed;  string path;
-		
-		auto ReadMd = [&]()
-		{
-			std::ifstream fi(path.c_str());
-			if (fi.good())
-			{
-				String text = "", s;
-				while (getline(fi,s))
-				{
-					s = StringUtil::replaceAll(s, "#", "");
-					s = StringUtil::replaceAll(s, "**", "");
-					text += s + "\n";
-				}
-				ed->setCaption(UString(text));
-				ed->setVScrollPosition(0);
-		}	};
-		
-		ed = fEd("Readme");
-		if (ed)
-		{	path = PATHMANAGER::Data()+"/../Readme.md";
-			ReadMd();
-		}
-		ed = fEd("Contributing");
-		if (ed)
-		{	path = PATHMANAGER::Data()+"/../Contributing.md";
-			ReadMd();
-	}	}
+		FillHelpTxt();
+	}
 
 	///  update track tab, for champs wnd
 	bool game = pSet->inMenu == MNU_Single, champ = pSet->inMenu == MNU_Champ,
@@ -745,4 +719,87 @@ void CGui::btnTransl(WP)
 void CGui::btnDonations(WP)
 {
 	gcom->OpenBrowserUrl("https://cryham.tuxfamily.org/donate/");
+}
+
+
+//  read and fill help texts
+//.......................................................................................
+void CGui::FillHelpTxt()
+{
+	Ed ed;  string path;
+	
+	auto ReadMd = [&]()
+	{
+		std::ifstream fi(path.c_str());
+		if (fi.good())
+		{
+			String text = "", s;
+			while (getline(fi,s))
+			{
+				bool ch = !s.empty() && s[0]=='#';  // chapters
+				s = StringUtil::replaceAll(s, "#", "");  // headers
+				s = StringUtil::replaceAll(s, "**", "");  // bold
+				if (ch)
+				 	s = "#B0D0FF"+s+"#C8D0D8";
+				text += s + "\n";
+			}
+			ed->setCaption(UString(text));
+			ed->setVScrollPosition(0);
+	}	};
+	
+	ed = fEd("Readme");
+	if (ed)
+	{	path = PATHMANAGER::Data()+"/../Readme.md";
+		ReadMd();
+	}
+	ed = fEd("Contributing");
+	if (ed)
+	{	path = PATHMANAGER::Data()+"/../Contributing.md";
+		ReadMd();
+	}
+
+	ed = fEd("Credits");
+	if (ed)
+	{	string data = PATHMANAGER::Data()+"/";
+		String text = "", sep = "-------------------------------------------------------";
+
+		auto Sep = [&](String title)
+		{
+			text += "\n#B0D0FF"+ sep+sep +"\n"+ "   " + title +"\n"+ sep+sep +"#D0D0D0\n";
+		};
+		auto ReadTxt = [&](string path)
+		{
+			path = data + path;
+			text += "\n#F0F0C0====  File: " + path + "#D0D0D0\n\n";
+			std::ifstream fi(path.c_str());
+			if (fi.good())
+			{
+				String s;
+				while (getline(fi,s))
+					text += s + "\n";
+			}
+		};
+		auto ReadTxts = [&](string path)
+		{
+			strlist lo;
+			PATHMANAGER::DirList(data + path, lo, "txt");
+			
+			Sep(path);
+			for (auto p:lo)
+				ReadTxt(path +"/"+ p);
+		};
+		Sep("Vehicles");
+		for (auto c:liCar)
+			ReadTxt("cars/" + c.name + "/about.txt");
+
+		//  gui- hud-  particles-
+		ReadTxts("objects");  ReadTxts("objectsC");  ReadTxts("objects0");
+		ReadTxts("skies");
+		ReadTxts("grass");  ReadTxts("terrain");  ReadTxts("road");
+		ReadTxts("trees");  ReadTxts("trees2");   ReadTxts("trees-old");  //todo: replace-
+		ReadTxts("sounds");
+
+		ed->setCaption(UString(text));
+		ed->setVScrollPosition(0);
+	}
 }

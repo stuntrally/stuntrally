@@ -67,7 +67,7 @@ public:
 	//  util
 	void toggleGui(bool toggle=true);
 	void GuiShortcut(MNU_Btns mnu, int tab, int subtab=-1);
-	bool loadReadme;
+	bool loadReadme;  void FillHelpTxt();
 	
 
 	//  hints
