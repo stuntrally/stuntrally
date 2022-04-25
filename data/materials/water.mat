@@ -33,8 +33,10 @@ material Water
     speed 1.0
     //  wave normal texture
     WaterNormalMap water_nm.png
+    WaterDepthMap waterDepth.png
 
     receives_shadows true
+	alphaMap
 
     pass
     {
@@ -51,6 +53,7 @@ material Water
             smallWaves_midWaves $smallWaves_midWaves
             bump $bump
             fresnelMultiplier $fresnelMultiplier
+			alphaMap $alphaMap
 
             colour $colour
             reflectColour $reflectColour
@@ -79,6 +82,11 @@ material Water
             tex_address_mode clamp
         }
         
+		texture_unit alphaMap
+		{
+            texture HmapTex  //$alphaMap  //todo: update fix..
+		}
+		
         texture_unit normalMap
         {
             texture $WaterNormalMap
@@ -86,11 +94,11 @@ material Water
         
         texture_unit depthMap
         {
-            texture waterDepth.png
+            texture $WaterDepthMap
+            //+texture HmapTex  //todo: no waterDepth.png
             tex_address_mode border
             tex_border_colour 1 1 1
         }
-		
 		texture_unit shadowMap0
         {
             content_type shadow
@@ -111,6 +119,94 @@ material Water
         }
     }
 }
+
+
+//  Rivers  .-.-.--.-..-..
+material River_blue  // I3-Islands  J13-Tropic
+{
+    parent Water
+    WaterDepthMap white.png
+	alphaMap HmapTex
+
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.12 0.13
+    fresnelMultiplier 1.0
+
+    colour 0.002 0.37 0.45  0.0
+    reflectColour 0.92 1.0 1.0  1.0
+    refractColour 0.62 0.90 1.0  0.75
+
+    specColourAndPower 1.0 1.0 1.0  32
+    bump2SpecPowerMul 6.0 12 0.4
+    speed 4.0
+}
+
+material River_cyan  // G2-Coast
+{
+    parent Water
+    WaterDepthMap white.png
+	alphaMap HmapTex
+
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.10 0.13
+    fresnelMultiplier 1.0
+
+    colour 0.002 0.45 0.37  0.0
+    reflectColour 0.88 1.0 1.0  1.0
+    refractColour 0.62 1.0 0.9  0.75
+
+	specColourAndPower 0.99 1.0 1.0  32
+    bump2SpecPowerMul 6.0 12 0.14
+    speed 2.0
+}
+
+material River_green   // J11-Temple
+{
+    parent Water
+    WaterDepthMap white.png
+	alphaMap HmapTex
+
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.10 0.16
+    fresnelMultiplier 1.0
+
+    colour 0.29 0.35 0.23  0.0
+	reflectColour 0.8 0.94 0.33  0.6
+	refractColour 0.65 0.74 0.35  0.53
+	specColourAndPower 0.43 0.53 0.42  256
+
+    bump2SpecPowerMul 8.0 4 0.15
+    speed 3.0
+}
+
+material River_moss   // O2-Mouse
+{
+    parent Water
+    WaterDepthMap white.png
+	alphaMap HmapTex
+
+    choppyness_scale 0.27 35
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.238 0.404
+    fresnelMultiplier 1.0
+
+    colour 0.166 0.273 0.268  0.0
+    //reflectColour 0.66 0.86 0.85  1.0
+    reflectColour 0.54 0.72 0.59  1.0
+    refractColour 0.62 0.84 0.76 0.75
+
+	specColourAndPower 0.66 0.78 0.88  62
+    bump2SpecPowerMul 6.0 12 0.14
+    speed 3.0
+}
+
 
 //--------------------------------------------------------
 material Water_blue   // I3-Islands  J13-Tropic

@@ -17,6 +17,9 @@
 	#define WATERDEPTH_SWITCH
 #endif
 
+#define ALPHA_MAP  @shPropertyHasValue(alphaMap)
+
+
 #ifdef SH_VERTEX_SHADER
 
     // ------------------------------------- VERTEX ---------------------------------------
@@ -155,6 +158,9 @@
 		#if SCREEN_REFRACTION
 			shSampler2D(refractionMap)
 		#endif
+		#if ALPHA_MAP
+			shSampler2D(alphaMap)
+		#endif
 		shSampler2D(normalMap)
 		shSampler2D(depthMap)
 		
@@ -214,17 +220,42 @@
 
 		// water depth
 		float4 worldPos = shMatrixMult(worldMatrix, position);
+		// float fac = 1;
+		//+float fac = 1.0 + 1.0/512.0;  // + > shrink
+		// float2 depthUV = float2(-worldPos.z / terrainWorldSize * fac + 0.5f, worldPos.x / terrainWorldSize * fac + 0.5f);
+		//+float2 depthUV = float2(-worldPos.z / terrainWorldSize + 0.5f, worldPos.x / terrainWorldSize + 0.5f);
+		//+depthUV = depthUV * float2(fac,fac);
+		//+float depthW =  worldPos.y - shSample(depthMap, depthUV.yx).x; // + 0.1;  // -0.5
+		//+ without waterDensity.png only terrain Hmap, has offset errors
+		
+		//float2 borderUV = float2(-worldPos.z / terrainWorldSize * 2.0, worldPos.x / terrainWorldSize * 2.0);
+		//depthW = 1.0 - 1 * shSaturate( max(abs(borderUV.x), abs(borderUV.y)) );
+		// if (depthUV.x < 0 || depthUV.x > 1 || 
+		// 	depthUV.y < 0 || depthUV.y > 1)
+		// 	depthW = 100;
+		//float2 depthTex = float2(0.0,0.0);
+		//+float2 depthTex = float2( shSaturate(depthW * 8.0), shSaturate(depthW * 0.4) );
+
+#if ALPHA_MAP
+		float fac = 1.0 + 1.0/512.0;  // + > shrink  wrong correction 1025 to 1024 Hmap tex..
+		float2 alphaUV = float2(-worldPos.z / terrainWorldSize + 0.5f, worldPos.x / terrainWorldSize + 0.5f);
+		alphaUV *= float2(fac,fac);
+		float alphaH =  worldPos.y - shSample(alphaMap, alphaUV.yx).x; // + 0.1;  // -0.5
+		float2 depthTex = float2( 0.5 * shSaturate(alphaH * 2.5) + shSaturate(alphaH * 0.15), shSaturate(alphaH * 0.1) );
+		//shOutputColour(0).a *= shSample(alphaMap, float2(UV.x, UV.y * 0.025)).r;
+#else
 		float2 depthUV = float2(-worldPos.z / terrainWorldSize + 0.5f, worldPos.x / terrainWorldSize + 0.5f);
-		float4 depthTex = shSample(depthMap, depthUV);
+		float2 depthTex = shSample(depthMap, depthUV).xy;
+#endif
 
 #ifdef WATERDEPTH_SWITCH
 		if (waterDepth == 0)
-			depthTex = float4(1.0, 1.0, 0.0, 0.0);
+			depthTex = float2(1.0, 1.0);
 #endif
 		
 		// no need to render below terrain
 		if (depthTex.x == 0)
-			discard;
+		 	discard;
 
 		float2 screenCoords = screenCoordsPassthrough.xy / screenCoordsPassthrough.z;
 		screenCoords.y = (1-shSaturate(renderTargetFlipping))+renderTargetFlipping*screenCoords.y;
@@ -429,7 +460,8 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 
         shOutputColour(0).xyz = shLerp( shOutputColour(0).xyz, flClrFinal.rgb, flL);
 		shOutputColour(0).a = shLerp( shOutputColour(0).a, 1,  flL);
-		///_
+		
+		// shOutputColour(0).xyzw = shLerp( shOutputColour(0).xyzw, float4(depthTex.x,depthTex.y,0,1), 0.99);  // test depth
 
 		//#endif
 		//}

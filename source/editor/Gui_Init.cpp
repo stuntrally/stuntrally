@@ -608,6 +608,7 @@ void CGui::InitGui()
 	//---------------------  Roads  ---------------------
 	GetMaterialsMat(sMat+"road.mat");
 	GetMaterialsMat(sMat+"pipe.mat",false);
+	GetMaterialsMat(sMat+"water.mat",false/*, "material River_"*/);
 	for (u=0; u<4; ++u)
 	{
 		Cmb(cmbPipeMtr[u], "RdMtrP"+toStr(u+1), comboPipeMtr);
