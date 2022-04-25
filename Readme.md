@@ -85,7 +85,7 @@ All settings and logs are saved to user folder, see [Paths](https://stuntrally.t
 ## Editor
 
 In editor - F1 (or tilde) key shows/hides GUI,  
-Tab key switches between Camera and Edit modes.  
+Tab key - switches between Camera and Edit modes.  
 Press Ctrl-F1 to read what can be edited and how.  
 
 There is no undo, so use F5 to reload last track state, and F4 to save it (often).  
@@ -93,7 +93,7 @@ After each save, track can be tested in game.
 
 ### Tutorial
 
-Editor Tutorial page with more info and videos [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=editor)
+Editor Tutorial page with more info and videos [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=editor).
 
 ------------------------------------------------------------------------------
 
