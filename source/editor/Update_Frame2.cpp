@@ -101,7 +101,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	else if (edMode == ED_Objects)
 		KeyTxtObjects();
 
-	else if (edMode == ED_Emitters)
+	else if (edMode == ED_Particles)
 		KeyTxtEmitters(q);
 
 	mz = 0;  // mouse wheel

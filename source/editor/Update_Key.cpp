@@ -140,7 +140,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					case ED_Start:    gui->GuiShortcut(WND_Help, 1, 6);  break;
 					case ED_Fluids:   gui->GuiShortcut(WND_Help, 1, 7);  break;
 					case ED_Objects:  gui->GuiShortcut(WND_Help, 1, 8);  break;
-					case ED_Emitters: gui->GuiShortcut(WND_Help, 1, 9);  break;
+					case ED_Particles:gui->GuiShortcut(WND_Help, 1, 9);  break;
 					default:		  gui->GuiShortcut(WND_Help, 1, 0);  break;
 			}	}
 			else	//  Gui mode, Options
@@ -589,7 +589,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	}
 
 	//  Emitters  : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : :
-	if (edMode == ED_Emitters && !bGuiFocus)
+	if (edMode == ED_Particles && !bGuiFocus)
 	{	int emts = scn->sc->emitters.size();
 		switch (skey)
 		{
@@ -630,12 +630,6 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				bRecreateEmitters = true;
 				break;
 		}
-	}
-
-	//  Rivers  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	if (edMode == ED_Rivers)
-	{
-		// todo
 	}
 
 	///  Common Keys  ************************************************************************************************************
@@ -704,7 +698,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				return true;
 			}	break;
 
-		//  road
+		//  roads, rivers
 		case key(R):  if (bEdit()){  SetEdMode(ED_Road);	UpdEditWnds();  }	break;
 		case key(B):  if (road)  {  road->UpdPointsH();  road->Rebuild(true);  }  break;
 		case key(T):  if (edMode == ED_Road && mWndRoadStats)
@@ -726,11 +720,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(C):  if (edMode == ED_Objects)  {  objSim = !objSim;  ToggleObjSim();  }  break;
 		case key(X):  if (bEdit()){  SetEdMode(ED_Objects);  UpdEditWnds();  }   break;
 
-		//  emitters
-		case key(A):  if (bEdit()){  SetEdMode(ED_Emitters);  UpdEditWnds();  }   break;
-
-		//  rivers
-		///case key(A):	if (bEdit()){  SetEdMode(ED_Rivers);  UpdEditWnds();  }	break;
+		//  particles
+		case key(A):  if (bEdit()){  SetEdMode(ED_Particles);  UpdEditWnds();  }   break;
 	}
 
 	return true;

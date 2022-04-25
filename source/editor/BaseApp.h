@@ -15,7 +15,7 @@ class SplineRoad;  class SETTINGS;
 enum ED_MODE
 {
 	ED_Deform=0, ED_Smooth, ED_Height, ED_Filter, /*ED_Paint,*/
-	ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_Objects, ED_Emitters, ED_Rivers, ED_ALL
+	ED_Road, ED_Start, ED_PrvCam, ED_Fluids, ED_Objects, ED_Particles, ED_ALL
 };
 enum WND_Types
 {	WND_Track=0, WND_Edit, WND_Help, WND_Options, WND_ALL  };  // pSet->inMenu
@@ -122,8 +122,7 @@ protected:
 	#endif
 	Wnd mWndBrush, mWndCam, mWndStart,  // tool windows
 		mWndRoadCur, mWndRoadStats,
-		mWndFluids, mWndObjects,
-		mWndEmitters, mWndRivers;
+		mWndFluids, mWndObjects, mWndParticles;
 
 	//MyGUI::VectorWidgetPtr
 	std::vector<WP> vwGui;  // all widgets to destroy

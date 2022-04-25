@@ -171,8 +171,7 @@ BaseApp::BaseApp()
 	
 	,mWndBrush(0), mWndCam(0), mWndStart(0)
 	,mWndRoadCur(0), mWndRoadStats(0)
-	,mWndFluids(0), mWndObjects(0)
-	,mWndEmitters(0), mWndRivers(0)
+	,mWndFluids(0), mWndObjects(0), mWndParticles(0)
 {
 }
 

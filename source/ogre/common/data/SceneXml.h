@@ -98,7 +98,7 @@ public:
 	//  Objects  []o
 	std::vector<Object> objects;
 
-	//  Emitters  ::
+	//  Particles  Emitters  ::
 	std::vector<SEmitter> emitters;
 
 

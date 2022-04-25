@@ -1429,7 +1429,13 @@
 	<Tag name="InputObjectsPaste">shift-Ins - paste copied</Tag>
 	
 
-	<!--  Rivers  not even close  -->
+	<!--  Particles  Input  -->
+	<Tag name="InputParticlesMode">A - edit Particles</Tag>
+	<Tag name="InputParticlesDensity">[ ] - change density (emission rate)</Tag>
+	<Tag name="InputParticlesStatic">Enter - toggle static</Tag>
+
+
+	<!--  Rivers  part of roads  -->
 	<Tag name="Rivers">Rivers</Tag>
 
 

@@ -285,7 +285,7 @@ void App::KeyTxtFluids(Real q)
 			if (flTxt[i])  flTxt[i]->setCaption("");
 	}else
 	{	FluidBox& fb = scn->sc->fluids[iFlCur];
-		flTxt[0]->setCaption(TR("#{Road_Cur}") +"  "+toStr(iFlCur+1)+" / "+toStr(scn->sc->fluids.size()));
+		flTxt[0]->setCaption(TR("#{Road_Cur}     ") +toStr(iFlCur+1)+" / "+toStr(scn->sc->fluids.size()));
 		flTxt[1]->setCaption(fb.name);
 		flTxt[2]->setCaption(TR("#{Obj_Pos}  ") +fToStr(fb.pos.x,1,4)+" "+fToStr(fb.pos.y,1,4)+" "+fToStr(fb.pos.z,1,4));
 		flTxt[3]->setCaption("");
@@ -331,7 +331,7 @@ void App::KeyTxtObjects()
 	objTxt[4]->setCaption(String(objEd==EO_Scale ?"#60F0FF":"")+ TR("#{scale}  ") +fToStr(o.scale.x,2,4)+" "+fToStr(o.scale.y,2,4)+" "+fToStr(o.scale.z,2,4));
 
 	objTxt[5]->setCaption(TR("#{Simulation}:  ") + TR(objSim?"#{Yes}":"#{No}")); // +"      "+toStr(world->getNumCollisionObjects()));
-	objTxt[5]->setTextColour(objSim ? MyGUI::Colour(1.0,0.9,1.0) : MyGUI::Colour(0.6,0.6,0.63));
+	objTxt[5]->setTextColour(objSim ? MyGUI::Colour(1.0,0.9,1.0) : MyGUI::Colour(0.8,0.8,0.83));
 
 	//  edit
 	if (mz != 0 && bEdit())  // wheel prev/next
