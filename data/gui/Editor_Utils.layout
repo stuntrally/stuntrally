@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+	
+	<Widget type="ImageBox" skin="ImageBox" position="1 2000 64 64" align="Left Bottom" layer="Back" name="modeCam">
+		<Property key="ImageCoord" value="0 512 128 128"/>
+		<Property key="Colour" value="0.7 0.85 1"/>
+		<Property key="Alpha" value="0.9"/>
+		<Property key="ImageTexture" value="gui_icons.png"/>
+		<Property key="Visible" value="false"/>
+	</Widget>
+	<Widget type="ImageBox" skin="ImageBox" position="1 2100 64 64" align="Left Bottom" layer="Back" name="modeEdit">
+		<Property key="ImageCoord" value="0 896 128 128"/>
+		<Property key="Colour" value="0.6 1 0.6"/>
+		<Property key="Alpha" value="0.9"/>
+		<Property key="ImageTexture" value="gui_icons.png"/>
+		<Property key="Visible" value="false"/>
+	</Widget>
+	<Widget type="ImageBox" skin="ImageBox" position="1 2200 64 64" align="Left Bottom" layer="Back" name="modeGui">
+		<Property key="ImageCoord" value="256 640 128 128"/>
+		<Property key="Colour" value="0.9 0.88 0.75"/>
+		<Property key="Alpha" value="0.6"/>
+		<Property key="ImageTexture" value="gui_icons.png"/>
+		<Property key="Visible" value="false"/>
+	</Widget>
+	<Widget type="Widget" skin="PanelSkin" position="88 2300 320 40" align="Left Bottom" layer="Back" name="panStatus">
+		<Property key="Colour" value="0.7 0.85 1.0"/>
+		<Property key="Alpha" value="0.9"/>
+		<Property key="Visible" value="false"/>
+		<Widget type="TextBox" skin="TextBox" position="12 4 440 80" name="txtStatus">
+			<Property key="InheritsAlpha" value="false"/>
+			<!--<Property key="Caption" value="#{LoadingDesc}"/>-->
+			<Property key="TextColour" value="0.8 0.9 1.0"/>
+		</Widget>
+	</Widget>
+
+	<Widget type="Window" skin="WindowC" position="1692 928 440 600" align="Center" layer="Popup" name="PickWnd">
+		<Property key="MinSize" value="300 300"/>
+		<Property key="Caption" value="#{InputPickTab}"/>
+		<Property key="Alpha" value="0.8"/>
+		<Property key="Snap" value="true"/>
+		<Property key="Visible" value="false"/>
+		<Property key="Colour" value="0.6 0.8 0.4"/>
+		<UserString key="NotSized" value="1"/>
+		<Widget type="Button" skin="CheckBox" position="8 8 440 24" name="PickSetPar">
+			<Property key="Caption" value=" . #{PickSetParam}"/>
+			<Property key="Colour" value="1.0 1.0 0.5"/>
+			<Property key="TextColour" value="1 1 0.5"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.small"/>
+		</Widget>
+		<Widget type="Widget" skin="" position="306 36 160 400" name="PanelPick">
+			<Property key="Colour" value="0.5 0.75 1.0"/>
+			<Property key="Alpha" value="0.3"/>
+			<!--<Widget type="TextBox" skin="TextBoxS" position="12 0 160 20">
+				<Property key="TextColour" value="0.8 0.9 0.9"/>
+				<Property key="Caption" value="#{InputPickTab}"/>
+				<Property key="InheritsAlpha" value="false"/>
+			</Widget>-->
+			<!--<Widget type="Button" skin="RadioButton" position="306 80 96 20" name="PickRadAll">
+				<Property key="Caption" value="#{RplAll}"/>
+				<Property key="TextColour" value="0.6 1 1"/>
+				<Property key="InheritsAlpha" value="false"/>
+			</Widget>
+			<Widget type="Button" skin="RadioButton" position="306 120 112 20" name="PickRadCur">
+				<Property key="Caption" value="#{RplCurrent}"/>
+				<Property key="TextColour" value="0.5 0.7 0.9"/>
+				<Property key="InheritsAlpha" value="false"/>
+			</Widget>
+			<Widget type="Button" skin="RadioButton" position="306 100 92 20" name="PickRadFilter">
+				<Property key="Caption" value="#{Brush_Filter}"/>
+				<Property key="TextColour" value="0.6 0.8 1.0"/>
+				<Property key="InheritsAlpha" value="false"/>
+			</Widget>-->
+		</Widget>
+	</Widget>
+
+	<Widget type="Window" skin="WindowC" position="28 1572 550 352" layer="Popup" name="ColorWnd">
+		<Property key="Caption" value="#{Color}"/>
+		<Property key="Colour" value="0.6 0.7 0.8"/>
+		<Property key="Alpha" value="0.95"/>
+		<Property key="Snap" value="true"/>
+		<Property key="Visible" value="false"/>
+		<UserString key="NotSized" value="1"/>
+		<Widget type="TextBox" skin="TextBoxS" position="104 4 280 22">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.67 1 1"/>
+			<Property key="FontName" value="font.small"/>
+			<Property key="Caption" value="H - #{ColHue}"/>
+		</Widget>
+		<Widget type="EditBox" skin="EditBox" position="4 0 84 28" name="clrHueEdit">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.6 0.65 0.7"/>
+			<Property key="TextColour" value="0.8 1 1.0"/>
+		</Widget>
+		<Widget type="Slider" skin="Slider" position="4 32 532 24" name="clrHue">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.7 0.9 0.9"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBoxS" position="104 72 280 22">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.75 0.8"/>
+			<Property key="FontName" value="font.small"/>
+			<Property key="Caption" value="S - #{ColSat}"/>
+		</Widget>
+		<Widget type="EditBox" skin="EditBox" position="4 68 84 28" name="clrSatEdit">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.6 0.65 0.7"/>
+			<Property key="TextColour" value="0.8 0.9 1.0"/>
+		</Widget>
+		<Widget type="Slider" skin="Slider" position="4 100 532 24" name="clrSat">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.7 0.75 0.8"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBoxS" position="104 136 280 22">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.9 0.9 0.9"/>
+			<Property key="FontName" value="font.small"/>
+			<Property key="Caption" value="V - #{ColBright}"/>
+		</Widget>
+		<Widget type="EditBox" skin="EditBox" position="4 132 84 28" name="clrValEdit">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.6 0.65 0.7"/>
+			<Property key="TextColour" value="0.9 0.9 0.9"/>
+		</Widget>
+		<Widget type="Slider" skin="Slider" position="4 164 532 24" name="clrVal">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.9 0.9 0.9"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBoxS" position="104 200 280 22" name="txtClrA">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.7 0.8 0.9"/>
+			<Property key="FontName" value="font.small"/>
+			<Property key="Caption" value="A - #{Transparency}"/>
+		</Widget>
+		<Widget type="EditBox" skin="EditBox" position="4 196 84 28" name="clrAlpEdit">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.6 0.65 0.7"/>
+			<Property key="TextColour" value="0.7 0.85 1.0"/>
+		</Widget>
+		<Widget type="Slider" skin="Slider" position="4 228 532 24" name="clrAlp">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.7 0.8 0.9"/>
+		</Widget>
+
+		<Widget type="TextBox" skin="TextBoxS" position="104 264 280 22">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.1 0.1 0.1"/>
+			<Property key="FontName" value="font.small"/>
+			<Property key="Caption" value="N - #{Negative}"/>
+		</Widget>
+		<Widget type="EditBox" skin="EditBox" position="4 260 84 28" name="clrNegEdit">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.6 0.65 0.7"/>
+			<Property key="TextColour" value="0.7 0.7 0.7"/>
+		</Widget>
+		<Widget type="Slider" skin="Slider" position="4 288 532 24" name="clrNeg">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.8 0.8 0.8"/>
+		</Widget>
+	</Widget>
+</MyGUI>

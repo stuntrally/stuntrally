@@ -18,6 +18,7 @@
 #include <OgreOverlay.h>
 using namespace MyGUI;
 using namespace Ogre;
+using namespace std;
 
 
 ///  Gui Init
@@ -44,8 +45,15 @@ void CGui::InitGui()
 	FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	FactoryManager::getInstance().registerFactory<Slider>("Widget");
 
-	//  load
-	app->vwGui = LayoutManager::getInstance().loadLayout("Game.layout");
+
+	///  Load .layout files
+	auto Load = [&](string file)
+	{
+		auto v = LayoutManager::getInstance().loadLayout(file + ".layout");
+		app->vwGui.insert(app->vwGui.end(), v.begin(), v.end());
+	};
+	Load("Common");  Load("Game_Main");  Load("Game");  Load("Game_Utils");
+	Load("Game_Help");  Load("Game_Options");  Load("Game_Replay");  Load("Game_Tweak");
 
 
 	//  wnds

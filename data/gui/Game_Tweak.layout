@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+
+	<Widget type="Window" skin="WindowCX" position="2044 1620 536 756" align="Default" layer="Popup" name="WndTweak">
+		<Property key="MinSize" value="500 400"/>
+		<Property key="Caption" value="#{Tweak}"/>
+		<Property key="Alpha" value="0.4"/>
+		<Property key="Snap" value="true"/>
+		<UserString key="NotSized" value="1"/>
+		<Widget type="TabControl" skin="TabControlS" position="0 0 528 720" align="Default" layer="Back" name="TabTweak">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.7 0.85 1"/>
+			<Property key="SmoothShow" value="false"/>
+			<Widget type="TabItem" skin="" position="2 24 522 692">
+				<Property key="Caption" value="#C0E0FF#{Vehicle}"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
+				<Widget type="TextBox" skin="TextBoxS" position="16 12 800 26" name="TweakPath">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="TextColour" value="0.7 1.0 1.0"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="380 8 140 26" name="TweakCarSave">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{RplSave}"/>
+					<Property key="FontName" value="font.small"/>
+					<Property key="TextColour" value="0.6 0.8 1.0"/>
+					<Property key="Colour" value="0.6 0.8 1.0"/>
+					<UserString key="tip" value="#{TweakEdit2}"/>
+				</Widget>
+				<Widget type="TabControl" skin="TabControlS" position="0 40 520 656" name="TabEdCar">
+					<Property key="ButtonAutoWidth" value="false"/>
+					<Property key="ButtonWidth" value="42"/>
+					<Property key="SmoothShow" value="false"/>
+					<Property key="Colour" value="0.9 0.9 1.0"/>
+					<Widget type="TabItem" skin="" position="2 24 514 628">
+						<Property key="Caption" value="#D0E0F0st"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar0">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="FontName" value="font.small"/>
+							<Property key="TextColour" value="0.88 0.94 1.0"/>
+							<Property key="Colour" value="0.48 0.55 0.62"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 628">
+						<Property key="Caption" value="#D0FFD0c"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar1">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="FontName" value="font.small"/>
+							<Property key="TextColour" value="0.93 1.0 0.93"/>
+							<Property key="Colour" value="0.5 0.6 0.5"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 628">
+						<Property key="Caption" value="#FFA0A0e,"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar2">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="FontName" value="font.small"/>
+							<Property key="TextColour" value="1.0 0.92 0.92"/>
+							<Property key="Colour" value="0.65 0.5 0.5"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 628">
+						<Property key="Caption" value="#FFC8A0t,"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar3">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="FontName" value="font.small"/>
+							<Property key="TextColour" value="1.0 0.96 0.9"/>
+							<Property key="Colour" value="0.7 0.55 0.4"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 628">
+						<Property key="Caption" value="#FFFFC0g"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar4">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="FontName" value="font.small"/>
+							<Property key="TextColour" value="1.0 1.0 0.85"/>
+							<Property key="Colour" value="0.6 0.6 0.4"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 628">
+						<Property key="Caption" value="#80FFFFss"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar5">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="FontName" value="font.small"/>
+							<Property key="TextColour" value="0.9 1.0 1.0"/>
+							<Property key="Colour" value="0.4 0.6 0.6"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 628">
+						<Property key="Caption" value="#C0C0C0ti"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar6">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="FontName" value="font.small"/>
+							<Property key="TextColour" value="0.9 0.9 0.9"/>
+							<Property key="Colour" value="0.5 0.5 0.5"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 628">
+						<Property key="Caption" value="#D0B0FFbr"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar7">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="FontName" value="font.small"/>
+							<Property key="TextColour" value="0.97 0.95 1.0"/>
+							<Property key="Colour" value="0.6 0.55 0.65"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 628">
+						<Property key="Caption" value="#C8FFA0a"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar8">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="FontName" value="font.small"/>
+							<Property key="TextColour" value="0.95 1.0 0.9"/>
+							<Property key="Colour" value="0.6 0.7 0.5"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 628">
+						<Property key="Caption" value="#90C0F0.f"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar9">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="FontName" value="font.small"/>
+							<Property key="TextColour" value="0.87 0.93 0.97"/>
+							<Property key="Colour" value="0.4 0.55 0.7"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 628">
+						<Property key="Caption" value="#A0D0FF.r"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar10">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="FontName" value="font.small"/>
+							<Property key="TextColour" value="0.88 0.94 1.0"/>
+							<Property key="Colour" value="0.45 0.6 0.75"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 514 628">
+						<Property key="Caption" value="#D0D0FFm"/>
+						<Widget type="EditBox" skin="EditBoxStretch" position="4 0 515 628" name="EdCar11">
+							<Property key="InheritsAlpha" value="false"/>
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="false"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="MaxTextLength" value="2000"/>
+							<Property key="FontName" value="font.small"/>
+							<Property key="TextColour" value="0.95 0.95 1.0"/>
+							<Property key="Colour" value="0.45 0.45 0.6"/>
+						</Widget>
+					</Widget>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 522 692">
+				<Property key="Caption" value="#80FFFF#{Tires}"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
+				<Widget type="TextBox" skin="TextBoxS" position="20 32 132 22">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{Setup}"/>
+					<Property key="TextColour" value="0.9 1 1.0"/>
+				</Widget>
+				<Widget type="EditBox" skin="EditBox" position="140 28 200 32" name="TweakTireSet">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="TextColour" value="0.8 0.98 1.0"/>
+					<Property key="Colour" value="0.5 0.7 0.7"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="20 60 480 24" name="TweakTireTxtSaved">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="TextColour" value="0.8 0.8 1.0"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="380 8 140 32" name="TweakTireSave">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{RplSave}"/>
+					<Property key="FontName" value="font.small"/>
+					<Property key="TextColour" value="0.2 1 1"/>
+					<Property key="Colour" value="0.2 1 1"/>
+				</Widget>
+
+                <Widget type="Button" skin="CheckBox" position="20 96 300 24" name="TE_Reference">
+					<Property key="Caption" value="#{TireEdReference}"/>
+					<Property key="TextColour" value="0.7 0.85 0.7"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+                <Widget type="ListBox" skin="ListBox" position="20 180 212 464" name="TweakTiresOrig">
+					<Property key="Colour" value="0.6 0.8 1"/>
+				</Widget>
+                <Widget type="ListBox" skin="ListBox" position="256 180 212 464" name="TweakTiresUser">
+					<Property key="Colour" value="0.7 1 1"/>
+				</Widget>
+                <Widget type="Button" skin="Button" position="156 132 168 40" name="TweakTireLoad">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{RplLoad}.."/>
+					<Property key="FontName" value="font.small"/>
+					<Property key="TextColour" value="1.0 0.9 0.2"/>
+					<Property key="Colour" value="1.0 0.9 0.1"/>
+				</Widget>
+                <Widget type="Button" skin="Button" position="362 656 152 28" name="TweakTireReset">
+					<Property key="InheritsAlpha" value="false"/>
+                    <Property key="Caption" value="#{Reset} #{RplAll}"/>
+					<Property key="FontName" value="font.small"/>
+					<Property key="TextColour" value="1.0 0.7 0.2"/>
+					<Property key="Colour" value="1.0 0.7 0.2"/>
+				</Widget>
+                <Widget type="Button" skin="Button" position="20 656 132 28" name="TweakTireDelete">
+                    <Property key="Colour" value="1 0.6 0.6"/>
+                    <Property key="TextColour" value="1 0.6 0.6"/>
+                    <Property key="Caption" value="#{RplDelete}"/>
+                </Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 522 692">
+				<Property key="Caption" value="#A090FF#{Surface}"/>
+				<Property key="Colour" value="0.7 0.6 1"/>
+                <Widget type="Button" skin="Button" position="340 40 160 36" name="TweakSurfPickWh">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="Pick from wheel"/>
+					<Property key="FontName" value="font.small"/>
+					<Property key="TextColour" value="0.4 0.6 1.0"/>
+					<Property key="Colour" value="0.3 0.6 1.0"/>
+				</Widget>
+                <Widget type="ListBox" skin="ListBox" position="340 100 164 580" name="TweakSurfaces">
+					<Property key="Colour" value="0.8 0.8 1"/>
+				</Widget>
+
+				<Widget type="TextBox" skin="TextBoxS" position="24 32 160 20">
+					<Property key="Caption" value="#{Friction}"/>
+					<Property key="TextColour" value="1 0.6 0"/>
+					<UserString key="tip" value="#{TipSurfFrict}"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="24 56 280 18" name="SuFrict">
+					<Property key="Colour" value="1 0.6 0"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="188 32 80 20" name="SuFrictVal">
+					<Property key="TextColour" value="1 0.6 0.2"/>
+					<UserString key="tip" value="#{TipSurfFrict}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="44 80 140 18">
+					<Property key="Caption" value="#{Friction} - X"/>
+					<Property key="TextColour" value="0.8 0.5 0.5"/>
+					<UserString key="tip" value="#{TipSurfFrict}"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="44 102 260 18" name="SuFrictX">
+					<Property key="Colour" value="0.8 0.6 0.6"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="188 80 80 18" name="SuFrictXVal">
+					<Property key="TextColour" value="0.9 0.5 0.5"/>
+					<UserString key="tip" value="#{TipSurfFrict}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="44 120 140 18">
+					<Property key="Caption" value="#{Friction} - Y"/>
+					<Property key="TextColour" value="0.8 0.5 0.4"/>
+					<UserString key="tip" value="#{TipSurfFrict}"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="44 142 260 18" name="SuFrictY">
+					<Property key="Colour" value="0.8 0.6 0.5"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="188 120 80 18" name="SuFrictYVal">
+					<Property key="TextColour" value="0.9 0.5 0.4"/>
+					<UserString key="tip" value="#{TipSurfFrict}"/>
+				</Widget>
+
+				<Widget type="TextBox" skin="TextBoxS" position="24 300 160 20">
+					<Property key="Caption" value="#{BumpWavelen}"/>
+					<Property key="TextColour" value="0.8 0.7 1"/>
+					<UserString key="tip" value="#{TipBumpFreq}"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="24 324 280 18" name="SuBumpWave">
+					<Property key="Colour" value="0.85 0.75 1"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="188 300 80 20" name="SuBumpWaveVal">
+					<Property key="TextColour" value="0.87 0.75 0.93"/>
+					<UserString key="tip" value="#{TipBumpFreq}"/>
+				</Widget>
+
+				<Widget type="TextBox" skin="TextBoxS" position="24 352 160 20">
+					<Property key="Caption" value="#{Amplitude}"/>
+					<Property key="TextColour" value="0.8 0.6 1"/>
+					<UserString key="tip" value="#{TipBumpAmp}"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="24 376 280 18" name="SuBumpAmp">
+					<Property key="Colour" value="0.9 0.8 1"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="188 352 80 20" name="SuBumpAmpVal">
+					<Property key="TextColour" value="0.9 0.7 1"/>
+					<UserString key="tip" value="#{TipBumpAmp}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="24 420 160 20">
+					<Property key="Caption" value="#{BumpWavelen} 2"/>
+					<Property key="TextColour" value="0.8 0.7 1"/>
+					<UserString key="tip" value="#{TipBumpFreq}"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="24 444 280 18" name="SuBumpWave2">
+					<Property key="Colour" value="0.85 0.75 1"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="188 420 80 20" name="SuBumpWave2Val">
+					<Property key="TextColour" value="0.87 0.75 0.93"/>
+					<UserString key="tip" value="#{TipBumpFreq}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="24 472 160 20">
+					<Property key="Caption" value="#{Amplitude} 2"/>
+					<Property key="TextColour" value="0.8 0.6 1"/>
+					<UserString key="tip" value="#{TipBumpAmp}"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="24 496 280 18" name="SuBumpAmp2">
+					<Property key="Colour" value="0.9 0.8 1"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="188 472 80 20" name="SuBumpAmp2Val">
+					<Property key="TextColour" value="0.9 0.7 1"/>
+					<UserString key="tip" value="#{TipBumpAmp}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="24 180 160 20">
+					<Property key="Caption" value="#{RollingDrag}"/>
+					<Property key="TextColour" value="1 0.7 0"/>
+					<UserString key="tip" value="#{TipRollDrag}"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="24 204 280 18" name="SuRollDrag">
+					<Property key="Colour" value="1 0.8 0.6"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="188 180 80 20" name="SuRollDragVal">
+					<Property key="TextColour" value="1 0.75 0.3"/>
+					<UserString key="tip" value="#{TipRollDrag}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="24 232 160 20">
+					<Property key="Caption" value="#{RollingRes}"/>
+					<Property key="TextColour" value="1 0.7 0"/>
+					<UserString key="tip" value="#{TipRollRes}"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="24 256 280 18" name="SuRollRes">
+					<Property key="Colour" value="1 0.8 0.6"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="188 232 80 20" name="SuRollResVal">
+					<Property key="TextColour" value="1 0.75 0.3"/>
+					<UserString key="tip" value="#{TipRollRes}"/>
+				</Widget>
+
+				<!--<Widget type="Button" skin="Button" position="380 10 140 26" name="TweakSurfSave">
+					<Property key="Caption" value="#{RplSave}"/>
+					<Property key="TextColour" value="0.8 0.8 1"/>
+					<Property key="Colour" value="0.7 0.7 1"/>
+				</Widget>-->
+				<Widget type="TextBox" skin="TextBoxS" position="24 596 108 20">
+					<Property key="Caption" value="#{Sound}"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<UserString key="tip" value="#{TipSurfType}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="24 552 108 20">
+					<Property key="Caption" value="#{Tires}"/>
+					<Property key="TextColour" value="0.5 1 1"/>
+				</Widget>
+                <Widget type="ComboBox" skin="ComboBox" position="132 548 156 28" name="CmbSuTire">
+                    <Property key="ReadOnly" value="true"/>
+                    <Property key="Static" value="true"/>
+                    <Property key="Colour" value="0.45 0.9 0.9"/>
+                    <Property key="TextColour" value="0.75 1 1.0"/>
+                </Widget>
+                <Widget type="ComboBox" skin="ComboBox" position="132 590 152 28" name="CmbSuType">
+                    <Property key="Colour" value="0.6 0.8 1"/>
+                    <Property key="TextColour" value="0.8 0.9 1"/>
+                    <Property key="ReadOnly" value="true"/>
+                    <Property key="Static" value="true"/>
+                </Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 522 692">
+				<Property key="Caption" value="#D0D0D0#{Vehicle}#{Test}"/>
+				<Widget type="EditBox" skin="EditBoxStretch" position="8 64 507 626" name="TweakPerfTest">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="ReadOnly" value="true"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="false"/>
+					<Property key="VisibleHScroll" value="false"/>
+					<Property key="VisibleVScroll" value="true"/>
+					<Property key="MaxTextLength" value="2000"/>
+					<Property key="FontName" value="font.small"/>
+					<Property key="TextColour" value="0.86 0.94 1"/>
+					<Property key="Colour" value="0.73 0.86 0.95"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 522 692">
+				<Property key="Caption" value="#C0C040collisions"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
+				<Widget type="EditBox" skin="EditBoxStretch" position="2 44 520 652" name="TweakEditCol">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="ReadOnly" value="false"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="false"/>
+					<Property key="VisibleHScroll" value="true"/>
+					<Property key="VisibleVScroll" value="true"/>
+					<Property key="MaxTextLength" value="16000"/>
+					<Property key="TextColour" value="0.95 0.98 1.0"/>
+					<Property key="Colour" value="0.35 0.45 0.65"/>
+					<Property key="FontName" value="font.small"/>
+					<Property key="FontHeight" value="17"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBoxS" position="20 12 800 26" name="TweakPathCol">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="TextColour" value="0.7 1.0 1.0"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="380 8 140 26" name="TweakColSave">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Caption" value="#{RplSave}"/>
+					<Property key="FontName" value="font.small"/>
+					<Property key="TextColour" value="1.0 1.0 0.6"/>
+					<Property key="Colour" value="1.0 1.0 0.6"/>
+					<UserString key="tip" value="#{TweakEdit2}"/>
+				</Widget>
+			</Widget>
+		</Widget>
+	</Widget>
+
+</MyGUI>

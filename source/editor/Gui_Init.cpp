@@ -45,8 +45,15 @@ void CGui::InitGui()
 	FactoryManager::getInstance().registerFactory<MultiList2>("Widget");
 	FactoryManager::getInstance().registerFactory<Slider>("Widget");
 
-	//  load
-	app->vwGui = LayoutManager::getInstance().loadLayout("Editor.layout");
+
+	///  Load .layout files
+	auto Load = [&](string file)
+	{
+		auto v = LayoutManager::getInstance().loadLayout(file + ".layout");
+		app->vwGui.insert(app->vwGui.end(), v.begin(), v.end());
+	};
+	Load("Common");  Load("Editor_Main");  Load("Editor");  Load("Editor_Track");
+	Load("Editor_Utils");  Load("Editor_Tools");  Load("Editor_Help");  Load("Editor_Options");
 
 
 	//  wnds main

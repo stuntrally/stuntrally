@@ -183,7 +183,7 @@ void CGuiCom::ResizeOptWnd()
 	app->mWndOpts->setCoord(xm, ym, xo, yo);
 
 	if (bnQuit)  //  reposition Quit btn
-		bnQuit->setCoord(wx - 0.09*wx, 0, 0.09*wx, 0.03*wy);
+		bnQuit->setCoord(wx - 0.12*wx, 0, 0.12*wx + 2, /*0.05*wy*/36);
 
 	//  ed mode, status  ._
 	#ifdef SR_EDITOR

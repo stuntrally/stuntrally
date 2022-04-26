@@ -1,0 +1,748 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+
+	<Widget type="Window" skin="WindowC" position="844 932 800 600" align="Center" layer="Overlapped" name="HelpWnd">
+		<Property key="MinSize" value="500 400"/>
+		<Property key="Caption" value="#{Help}"/>
+		<Property key="Alpha" value="0.3"/>
+		<Property key="Snap" value="true"/>
+		<Property key="Visible" value="true"/>
+		<Widget type="TabControl" skin="TabControlIcon" position="0 0 800 600" align="Stretch" layer="Back" name="TabWndHelp">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.7 0.9 1"/>
+			<Property key="SmoothShow" value="false"/>
+			<Widget type="TabItem" skin="" position="2 24 794 562">
+				<Property key="Caption" value="#FFE0C0&lt;#{BackMenu}"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 562">
+				<Property key="Caption" value="#FFFF60#{InputHelp}"/>
+				<Widget type="TextBox" skin="TextBox" position="32 513 116 24">
+					<Property key="Caption" value="#{Language}**"/>
+					<Property key="TextColour" value="0.6 0.8 1"/>
+				</Widget>
+				<Widget type="ComboBox" skin="ComboBox" position="236 510 140 24" name="Lang">
+					<Property key="Static" value="true"/>
+					<Property key="ReadOnly" value="true"/>
+					<Property key="Colour" value="0.7 0.7 0.7"/>
+					<Property key="TextColour" value="1 1 1"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="146 513 64 16">
+					<Property key="ImageCoord" value="512 991 128 32"/>
+					<Property key="Alpha" value="0.5"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+				</Widget>
+				<Widget type="TabControl" skin="TabControl" position="30 24 720 472" name="SubTab">
+					<Property key="Colour" value="0.73 0.88 1"/>
+					<Property key="SmoothShow" value="false"/>
+					<Widget type="TabItem" skin="" position="2 24 714 444">
+						<Property key="Caption" value="#D0E8FF#{InputMain}"/>
+						<Widget type="TextBox" skin="TextBox" position="32 44 336 20">
+							<Property key="TextColour" value="0.9 0.96 1.0"/>
+							<Property key="Caption" value="#{InputToggleCam}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 68 336 20">
+							<Property key="TextColour" value="1.0 1.0 0.2"/>
+							<Property key="Caption" value="#{InputToggleGUIMode}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 108 136 20">
+							<Property key="Caption" value="#{InputSaveTrack}"/>
+							<Property key="TextColour" value="1.0 0.6 0.1"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 132 136 20">
+							<Property key="Caption" value="#{InputReloadTrack}"/>
+							<Property key="TextColour" value="0.5 0.75 1.0"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="172 108 232 20">
+							<Property key="Caption" value="#{InputReadyToPlay}"/>
+							<Property key="TextColour" value="0.8 0.48 0.06"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="172 132 232 20">
+							<Property key="Caption" value="#{InputUndo}"/>
+							<Property key="TextColour" value="0.4 0.65 0.9"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 172 136 20">
+							<Property key="Caption" value="#{InputUpdate}"/>
+							<Property key="TextColour" value="0.2 0.9 0.5"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="172 172 266 20">
+							<Property key="Caption" value="#{InputAfterChanges}"/>
+							<Property key="TextColour" value="0.1 0.75 0.35"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="376 68 312 20">
+							<Property key="TextColour" value="0.5 0.8 0.9"/>
+							<Property key="Caption" value="#{InputContextHelp}"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 714 444">
+						<Property key="Caption" value="#80C0FF#{View}"/>
+						<Widget type="TextBox" skin="TextBox" position="96 14 240 20">
+							<Property key="Caption" value="#{InputCameraMode}"/>
+							<Property key="TextColour" value="0.4 0.7 1.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 44 340 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{InputCamControl}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 68 340 20">
+							<Property key="Caption" value="#{InputCamControl2}"/>
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 108 340 20">
+							<Property key="TextColour" value="0.6 0.6 0.9"/>
+							<Property key="Caption" value="#{InputValueChange}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 132 340 20">
+							<Property key="TextColour" value="0.7 0.7 1.0"/>
+							<Property key="Caption" value="#{InputSlowFast}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 188 344 20">
+							<Property key="TextColour" value="0.8 0.7 1.0"/>
+							<Property key="Caption" value="#{InputTopView}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="376 68 332 20">
+							<Property key="Caption" value="#{InputTogglePreview}"/>
+							<Property key="TextColour" value="0.6 0.76 0.9"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="516 92 196 20">
+							<Property key="Caption" value="#{InputTrackScrn}"/>
+							<Property key="TextColour" value="0.5 0.66 0.8"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 132 328 20">
+							<Property key="TextColour" value="0.6 0.65 0.7"/>
+							<Property key="Caption" value="F12 - #{InputMapScreenshot}"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 714 444">
+						<Property key="Caption" value="#B0A0FF#{Shortcuts}"/>
+						<Widget type="Widget" skin="PanelSkin" position="364 56 344 200">
+							<Property key="Colour" value="0.7 0.8 0.9"/>
+							<Property key="Alpha" value="0.6"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 68 332 20">
+							<Property key="Caption" value="#{TipSliderReset}"/>
+							<Property key="TextColour" value="0.65 0.85 0.75"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 104 332 20">
+							<Property key="TextColour" value="0.5 0.95 1.0"/>
+							<Property key="Caption" value="#{InputNextOptTab}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 128 332 20">
+							<Property key="TextColour" value="0.8 0.85 0.9"/>
+							<Property key="Caption" value="#{InputSubTabSpace}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 152 332 20">
+							<Property key="TextColour" value="0.6 0.96 1.0"/>
+							<Property key="Caption" value="#{InputNextLayTab}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 188 332 20">
+							<Property key="TextColour" value="0.55 0.7 0.8"/>
+							<Property key="Caption" value="#{InputPickTab}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 216 332 20">
+							<Property key="Caption" value="#60D060#{InputFocusFind}"/>
+						</Widget>
+
+						<Widget type="EditBox" skin="EditBoxEmpty" position="32 16 676 44">
+							<Property key="ReadOnly" value="false"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="true"/>
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{ShortcutsInfo}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 64 168 20">
+							<Property key="Caption" value="#FFFF80 S  #{Sun}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 88 168 20">
+							<Property key="Caption" value="#A0D8A0 H  #{Terrain}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 108 152 20">
+							<Property key="Caption" value="#40E040 D  #{Brushes}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 136 168 20">
+							<Property key="Caption" value="#80FF00 T  #{Layers}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 156 152 20">
+							<Property key="Caption" value="#B0F060 B  #{BlendMap}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 184 170 20">
+							<Property key="Caption" value="#B0F040 G  #{Grasses}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 204 152 20">
+							<Property key="Caption" value="#70F070 F  #{Channels}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 232 170 20">
+							<Property key="Caption" value="#80F0F0 V  #{Vegetation}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 252 152 20">
+							<Property key="Caption" value="#80E0E0 M  #{Models}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 284 168 20">
+							<Property key="Caption" value="#A0A060 U  #{Surface}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 308 168 20">
+							<Property key="Caption" value="#FFB020 R  #{Road}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 336 168 20">
+							<Property key="Caption" value="#D0D0D0 X  #{Objects}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="204 64 168 20">
+							<Property key="Caption" value="#D0E8FF Q  #{Track}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="204 88 168 20">
+							<Property key="Caption" value="#B0A0FF O  #{Tools}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="204 156 170 20">
+							<Property key="Caption" value="#C0E0FF C  #{Screen}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="204 176 170 20">
+							<Property key="Caption" value="#C0C0F0 A  #{Graphics}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="204 204 170 20">
+							<Property key="Caption" value="#60A0FF E  #{Settings}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="220 224 154 20">
+							<Property key="Caption" value="#6868B0 K  #{Tweak}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="204 252 170 20">
+							<Property key="Caption" value="#FFFF60 I  #{InputHelp}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="204 132 170 20">
+							<Property key="Caption" value="#E0A0A0 J  #{Warnings}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="204 112 170 20">
+							<Property key="Caption" value="#C090B0 W  #{Game}"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 714 444">
+						<Property key="Caption" value="#80E080#{Terrain}"/>
+						<Widget type="TextBox" skin="TextBox" position="96 14 248 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{EditTerrainMode}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 44 328 20">
+							<Property key="Caption" value="#{InputTerDeform}"/>
+							<Property key="TextColour" value="0.5 1.0 0.3"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 88 328 20">
+							<Property key="Caption" value="#{InputTerSmooth}"/>
+							<Property key="TextColour" value="0.3 0.8 0.8"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 66 328 20">
+							<Property key="Caption" value="#{InputTerHeight}"/>
+							<Property key="TextColour" value="0.7 1.0 0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 110 328 20">
+							<Property key="Caption" value="#{InputTerFilter}"/>
+							<Property key="TextColour" value="0.5 0.75 1.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 154 328 20">
+							<Property key="Caption" value="#{InputToggleVeget}"/>
+							<Property key="TextColour" value="0.6 1.0 0.2"/>
+						</Widget>
+						<!--<Widget type="TextBox" skin="TextBox" position="32 186 312 20">
+							<Property key="Caption" value="#{InputUpdBlendmap}"/>
+							<Property key="TextColour" value="0.5 0.7 0.0"/>
+						</Widget>-->
+						<Widget type="TextBox" skin="TextBox" position="32 196 328 20">
+							<Property key="Caption" value="#{InputLockBrush}"/>
+							<Property key="TextColour" value="0.3 0.95 0.2"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 220 328 20">
+							<Property key="Caption" value="#{InputTerHeightSet}"/>
+							<Property key="TextColour" value="0.55 0.95 0.55"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 280 328 20">
+							<Property key="Caption" value="#{InputMinimapType}"/>
+							<Property key="TextColour" value="0.3 0.6 0.3"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 308 540 20">
+							<Property key="Caption" value="#{TipBrushPick}"/>
+							<Property key="TextColour" value="0.45 0.55 0.45"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="440 14 256 20">
+							<Property key="Caption" value="#{InputBrushParams}"/>
+							<Property key="TextColour" value="0.5 1.0 0.3"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 44 332 20">
+							<Property key="Caption" value="#{InputBrushSize}"/>
+							<Property key="TextColour" value="0.7 0.86 1.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 66 332 20">
+							<Property key="Caption" value="#{InputBrushForce}"/>
+							<Property key="TextColour" value="0.6 0.8 1.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 98 332 20">
+							<Property key="Caption" value="K,L  /  #{InputBrushPower}"/>
+							<Property key="TextColour" value="0.7 0.8 0.9"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 120 332 20">
+							<Property key="Caption" value="ctrl-#{InputBrushShape}  (#{Brush_ShapeSinus},#{Brush_ShapeNoise},#{Brush_ShapeTriangle},..)"/>
+							<Property key="TextColour" value="0.6 0.8 0.9"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="376 160 332 20">
+							<Property key="Caption" value="#{InputBrushFreq}"/>
+							<Property key="TextColour" value="0.7 0.6 0.9"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 182 332 20">
+							<Property key="Caption" value="N,M  /  #{InputBrushOctaves}"/>
+							<Property key="TextColour" value="0.63 0.63 0.73"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 204 332 20">
+							<Property key="Caption" value="#{InputBrushOffset}"/>
+							<Property key="TextColour" value="0.6 0.6 0.8"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="376 236 332 20">
+							<Property key="Caption" value="#{InputBrushFilter}"/>
+							<Property key="TextColour" value="0.4 0.6 0.9"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 714 444">
+						<Property key="Caption" value="#FFA010#{Road} 1"/>
+						<Widget type="TextBox" skin="TextBox" position="96 14 240 20">
+							<Property key="TextColour" value="0.65 0.65 1"/>
+							<Property key="Caption" value="#{InputRoadPickOne}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 38 332 20">
+							<Property key="Caption" value="#{InputRoadPick}"/>
+							<Property key="TextColour" value="0.8 0.8 1.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 60 332 20">
+							<Property key="TextColour" value="0.8 0.8 0.9"/>
+							<Property key="Caption" value="#{InputRoadNext}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="182 80 182 20">
+							<Property key="TextColour" value="0.6 0.6 0.65"/>
+							<Property key="Caption" value="#{InputRoadShiftSel}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 94 332 20">
+							<Property key="Caption" value="#{InputRoadDel}"/>
+							<Property key="TextColour" value="1.0 0.6 0.6"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 116 332 20">
+							<Property key="TextColour" value="0.5 1.0 0.5"/>
+							<Property key="Caption" value="#{InputRoadIns}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="64 138 300 20">
+							<Property key="Caption" value="#{InputRoadInsAlt}"/>
+							<Property key="TextColour" value="0.4 0.55 0.4"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 168 332 20">
+							<Property key="TextColour" value="0.7 0.7 1.0"/>
+							<Property key="Caption" value="#{InputRoadNew}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="32 236 332 20">
+							<Property key="Caption" value="#{InputRoadEdit}"/>
+							<Property key="TextColour" value="1.0 0.7 0.0"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 258 332 20">
+							<Property key="TextColour" value="1.0 0.6 0.1"/>
+							<Property key="Caption" value="#{InputRoadRebuild}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 288 344 20">
+							<Property key="TextColour" value="1.0 0.66 0.7"/>
+							<Property key="Caption" value="#{InputRoadAlignTerrain}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 330 332 20">
+							<Property key="TextColour" value="0.5 0.6 0.5"/>
+							<Property key="Caption" value="#{InputRoadMerge}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 352 332 20">
+							<Property key="TextColour" value="0.5 0.56 0.6"/>
+							<Property key="Caption" value="#{InputRoadStats}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 374 332 20">
+							<Property key="TextColour" value="0.4 0.5 0.6"/>
+							<Property key="Caption" value="#{InputRoadLooped}"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="376 38 332 20">
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="Caption" value="#{InputRoadSel}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="408 60 300 20">
+							<Property key="TextColour" value="0.5 0.65 0.8"/>
+							<Property key="Caption" value="#{InputRoadSelAlt}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="440 14 152 20">
+							<Property key="Caption" value="#{InputRoadSelectMany}"/>
+							<Property key="TextColour" value="0.5 0.8 1"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 94 332 20">
+							<Property key="TextColour" value="0.5 0.75 1.0"/>
+							<Property key="Caption" value="#{InputRoadCopySel}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 116 332 20">
+							<Property key="TextColour" value="0.4 0.8 0.9"/>
+							<Property key="Caption" value="#{InputRoadShiftReverse}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="442 138 266 20">
+							<Property key="TextColour" value="0.4 0.6 0.7"/>
+							<Property key="Caption" value="#{InputRoadAfterPick}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 168 332 20">
+							<Property key="TextColour" value="0.7 0.8 0.2"/>
+							<Property key="Caption" value="#{InputRoadMirror}"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 714 444">
+						<Property key="Caption" value="#FFC060#{Road} 2"/>
+						<Widget type="TextBox" skin="TextBox" position="32 38 136 20">
+							<Property key="TextColour" value="0.5 1.0 0.3"/>
+							<Property key="Caption" value="#{InputRoadLMB}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 60 136 20">
+							<Property key="TextColour" value="0.7 1.0 0.5"/>
+							<Property key="Caption" value="#{InputRoadRMB}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 82 136 20">
+							<Property key="TextColour" value="0.5 1.0 0.9"/>
+							<Property key="Caption" value="#{InputRoadMMB}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 112 136 20">
+							<Property key="TextColour" value="1.0 0.8 0.6"/>
+							<Property key="Caption" value="#{InputRoadAltLMB}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 134 136 20">
+							<Property key="TextColour" value="1.0 0.6 0.6"/>
+							<Property key="Caption" value="#{InputRoadAltMMB}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="170 164 190 20">
+							<Property key="TextColour" value="0.7 1.0 0.5"/>
+							<Property key="Alpha" value="0.7"/>
+							<Property key="Caption" value="*#{InputRoadNotOnTer}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="170 38 190 20">
+							<Property key="TextColour" value="0.5 1.0 0.3"/>
+							<Property key="Caption" value="#{InputRoadMove}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="170 60 190 20">
+							<Property key="TextColour" value="0.7 1.0 0.5"/>
+							<Property key="Caption" value="#{InputRoadHeight}*"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="170 82 190 20">
+							<Property key="TextColour" value="0.5 1.0 0.9"/>
+							<Property key="Caption" value="#{InputRoadWidth}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="170 112 190 20">
+							<Property key="TextColour" value="1.0 0.8 0.6"/>
+							<Property key="Caption" value="#{InputRoadRoll}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="170 134 190 20">
+							<Property key="TextColour" value="1.0 0.6 0.6"/>
+							<Property key="Caption" value="#{InputRoadYaw}*"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 116 332 20">
+							<Property key="TextColour" value="0.7 0.86 0.86"/>
+							<Property key="Caption" value="9,0  /  #{InputRoadMat}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 38 332 20">
+							<Property key="TextColour" value="0.7 1.0 0.5"/>
+							<Property key="Caption" value="#{InputRoadOnTer}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 60 332 20">
+							<Property key="TextColour" value="0.74 0.77 0.8"/>
+							<Property key="Caption" value="#{InputRoadColumn}*"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 94 332 20">
+							<Property key="TextColour" value="0.86 0.86 0.0"/>
+							<Property key="Caption" value="O,P  /  #{InputRoadPipeAngle}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 152 332 20">
+							<Property key="TextColour" value="0.75 0.64 0.96"/>
+							<Property key="Caption" value="#{InputRoadChkRadius}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="406 174 302 20">
+							<Property key="TextColour" value="0.65 0.54 0.86"/>
+							<Property key="Alpha" value="0.7"/>
+							<Property key="Caption" value="#{InputRoadChkCtrl}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 202 328 20">
+							<Property key="TextColour" value="0.9 0.6 0.8"/>
+							<Property key="Caption" value="#{InputRoadAngType}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 224 328 20">
+							<Property key="TextColour" value="1.0 0.7 0.6"/>
+							<Property key="Alpha" value="0.9"/>
+							<Property key="Caption" value="#{InputRoadAngZero}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 246 528 20">
+							<Property key="TextColour" value="0.75 0.45 0.55"/>
+							<Property key="Caption" value="#{InputRoadAngSnap}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 196 332 20">
+							<Property key="TextColour" value="0.7 0.7 1.0"/>
+							<Property key="Caption" value="ctrl-#{InputRoadChkFirst}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 284 768 20">
+							<Property key="TextColour" value="0.6 0.9 0.9"/>
+							<Property key="Alpha" value="0.7"/>
+							<Property key="Caption" value="#{InputRoadLoopChk}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="64 304 768 20">
+							<Property key="TextColour" value="0.5 0.8 0.8"/>
+							<Property key="Alpha" value="0.7"/>
+							<Property key="Caption" value="#{InputRoadLoopType}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 334 668 20">
+							<Property key="TextColour" value="0.9 0.45 0.45"/>
+							<Property key="Caption" value="#{InputRoadOnPipe}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 358 768 20">
+							<Property key="TextColour" value="0.6 0.5 0.7"/>
+							<Property key="Caption" value="#{InputRoadNotReal}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 410 328 20">
+							<Property key="Caption" value="#{InputRoadMostSel}"/>
+							<Property key="TextColour" value="0.5 0.8 1"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="96 14 120 20">
+							<Property key="Caption" value="#{InputRoadModify}"/>
+							<Property key="TextColour" value="0.3 1 0.3"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 714 444">
+						<Property key="Caption" value="#B0B0FF#{InputStart}"/>
+						<Widget type="TextBox" skin="TextBox" position="96 14 256 20">
+							<Property key="TextColour" value="0.7 0.7 1.0"/>
+							<Property key="Caption" value="#{InputStartPos}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 66 456 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{InputStartAltLMB}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 88 372 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{InputStartAltMMB}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 44 372 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{InputStartLMB}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 130 368 20">
+							<Property key="TextColour" value="0.7 0.86 1.0"/>
+							<Property key="Caption" value="O,P  /  #{InputStartHeight}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 152 368 20">
+							<Property key="TextColour" value="0.7 0.86 1.0"/>
+							<Property key="Caption" value="K,L  /  #{InputStartWidth}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 194 368 20">
+							<Property key="TextColour" value="0.6 0.6 0.9"/>
+							<Property key="Caption" value="#{InputStartDir}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="64 216 336 20">
+							<Property key="Caption" value="#{InputStartMeet}"/>
+							<Property key="TextColour" value="0.5 0.5 0.8"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 714 444">
+						<Property key="Caption" value="#50B0FF#{Fluids}"/>
+						<Widget type="TextBox" skin="TextBox" position="96 14 212 20">
+							<Property key="TextColour" value="0.3 0.65 1.0"/>
+							<Property key="Caption" value="#{InputFluidsMode}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 44 332 20">
+							<Property key="TextColour" value="0.8 0.8 0.9"/>
+							<Property key="Caption" value="#{InputFluidsPrevNext}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 80 328 20">
+							<Property key="TextColour" value="0.5 0.9 0.5"/>
+							<Property key="Caption" value="#{InputFluidsIns}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 102 328 20">
+							<Property key="TextColour" value="0.9 0.6 0.6"/>
+							<Property key="Caption" value="#{InputFluidsDel}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 44 332 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{InputFluidsMove}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 66 332 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="#{InputFluidsSize}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 126 336 20">
+							<Property key="TextColour" value="0.8 0.9 1.0"/>
+							<Property key="Caption" value="9,0  /  #{InputFluidsType}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 148 336 20">
+							<Property key="TextColour" value="0.6 0.75 0.9"/>
+							<Property key="Caption" value="O,P  /  #{InputFluidsTile}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 170 336 20">
+							<Property key="TextColour" value="0.6 0.75 0.9"/>
+							<Property key="Caption" value="K,L  /  #{InputFluidsTileY}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 214 464 20">
+							<Property key="TextColour" value="0.4 0.7 1.0"/>
+							<Property key="Caption" value="#{InputFluidsUpdate}"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 714 444">
+						<Property key="Caption" value="#D0D0D0#{Objects}"/>
+						<Widget type="TextBox" skin="TextBox" position="96 14 212 20">
+							<Property key="TextColour" value="0.9 0.9 0.9"/>
+							<Property key="Caption" value="#{InputObjectsMode}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 44 340 20">
+							<Property key="TextColour" value="0.6 1.0 0.6"/>
+							<Property key="Caption" value="#{InputObjectsMove}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 92 340 20">
+							<Property key="TextColour" value="1.0 0.6 0.6"/>
+							<Property key="Caption" value="#{InputObjectsRot}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 116 324 20">
+							<Property key="TextColour" value="0.6 0.4 0.4"/>
+							<Property key="Caption" value="#{InputObjectsRotReset}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 140 340 20">
+							<Property key="TextColour" value="0.5 1.0 1.0"/>
+							<Property key="Caption" value="#{InputObjectsScale}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 208 340 20">
+							<Property key="TextColour" value="0.6 0.76 0.9"/>
+							<Property key="Caption" value="9,0  /  #{InputObjectsType}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 164 324 20">
+							<Property key="TextColour" value="0.3 0.7 0.7"/>
+							<Property key="Caption" value="#{InputObjectsScaleReset}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 68 324 20">
+							<Property key="TextColour" value="0.3 0.6 0.3"/>
+							<Property key="Caption" value="#{InputObjectsMoveReset}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 244 340 20">
+							<Property key="TextColour" value="0.9 0.8 0.9"/>
+							<Property key="Caption" value="#{InputObjectsSimulate}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 44 328 20">
+							<Property key="TextColour" value="0.8 0.8 0.9"/>
+							<Property key="Caption" value="#{InputObjectsPrevNext}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 80 328 20">
+							<Property key="TextColour" value="0.5 0.9 0.5"/>
+							<Property key="Caption" value="#{InputObjectsIns}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 102 328 20">
+							<Property key="TextColour" value="0.9 0.6 0.6"/>
+							<Property key="Caption" value="#{InputObjectsDel}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 140 328 20">
+							<Property key="TextColour" value="0.8 0.8 1"/>
+							<Property key="Caption" value="#{InputRoadPick}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 180 328 20">
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="Caption" value="#{InputRoadSel}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="408 200 300 20">
+							<Property key="TextColour" value="0.5 0.65 0.8"/>
+							<Property key="Caption" value="#{InputRoadSelAlt}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 240 328 20">
+							<Property key="TextColour" value="0.5 0.75 1.0"/>
+							<Property key="Caption" value="#{InputObjectsCopySel}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 262 328 20">
+							<Property key="TextColour" value="0.4 0.8 0.9"/>
+							<Property key="Caption" value="#{InputObjectsPaste}"/>
+						</Widget>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 714 444">
+						<Property key="Caption" value="#F0F0A0#{Particles}"/>
+						<Widget type="TextBox" skin="TextBox" position="96 14 212 20">
+							<Property key="TextColour" value="0.9 0.9 0.5"/>
+							<Property key="Caption" value="#{InputParticlesMode}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 44 340 20">
+							<Property key="TextColour" value="0.6 1.0 0.6"/>
+							<Property key="Caption" value="#{InputObjectsMove}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 92 340 20">
+							<Property key="TextColour" value="1.0 0.6 0.6"/>
+							<Property key="Caption" value="#{InputObjectsRot}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 116 324 20">
+							<Property key="TextColour" value="0.6 0.4 0.4"/>
+							<Property key="Caption" value="#{InputObjectsRotReset}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 140 340 20">
+							<Property key="TextColour" value="0.5 1.0 1.0"/>
+							<Property key="Caption" value="#{InputObjectsScale}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 208 340 20">
+							<Property key="TextColour" value="0.6 0.76 0.9"/>
+							<Property key="Caption" value="9,0  /  #{InputObjectsType}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 238 340 20">
+							<Property key="TextColour" value="0.6 0.76 0.9"/>
+							<Property key="Caption" value="#{InputParticlesDensity}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="32 268 340 20">
+							<Property key="TextColour" value="0.6 0.76 0.9"/>
+							<Property key="Caption" value="#{InputParticlesStatic}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 164 324 20">
+							<Property key="TextColour" value="0.3 0.7 0.7"/>
+							<Property key="Caption" value="#{InputObjectsScaleReset}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="48 68 324 20">
+							<Property key="TextColour" value="0.3 0.6 0.3"/>
+							<Property key="Caption" value="#{InputObjectsMoveReset}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 44 328 20">
+							<Property key="TextColour" value="0.8 0.8 0.9"/>
+							<Property key="Caption" value="#{InputObjectsPrevNext}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 80 328 20">
+							<Property key="TextColour" value="0.5 0.9 0.5"/>
+							<Property key="Caption" value="#{InputObjectsIns}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 102 328 20">
+							<Property key="TextColour" value="0.9 0.6 0.6"/>
+							<Property key="Caption" value="#{InputObjectsDel}"/>
+						</Widget>
+						<!-- <Widget type="TextBox" skin="TextBox" position="376 140 328 20">
+							<Property key="TextColour" value="0.8 0.8 1"/>
+							<Property key="Caption" value="#{InputRoadPick}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 180 328 20">
+							<Property key="TextColour" value="0.7 0.85 1.0"/>
+							<Property key="Caption" value="#{InputRoadSel}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="408 200 300 20">
+							<Property key="TextColour" value="0.5 0.65 0.8"/>
+							<Property key="Caption" value="#{InputRoadSelAlt}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 240 328 20">
+							<Property key="TextColour" value="0.5 0.75 1.0"/>
+							<Property key="Caption" value="#{InputObjectsCopySel}"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="376 262 328 20">
+							<Property key="TextColour" value="0.4 0.8 0.9"/>
+							<Property key="Caption" value="#{InputObjectsPaste}"/>
+						</Widget> -->
+					</Widget>
+				</Widget>
+			</Widget>
+		</Widget>
+	</Widget>
+
+</MyGUI>

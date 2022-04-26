@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+
+	<Widget type="Window" skin="WindowC" position="844 76 800 600" align="Center" layer="Overlapped" name="ReplaysWnd">
+		<Property key="MinSize" value="500 400"/>
+		<Property key="Caption" value="#{ReplaysMenu}"/>
+		<Property key="Alpha" value="0.3"/>
+		<Property key="Snap" value="true"/>
+		<Widget type="TabControl" skin="TabControlIcon" position="0 0 800 600" align="Default" layer="Back" name="TabWndReplays">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.7 0.85 1"/>
+			<Property key="SmoothShow" value="false"/>
+			<Widget type="TabItem" skin="" position="2 24 794 562">
+				<Property key="Caption" value="#FFE0C0&lt;#{BackMenu}"/>
+				<Property key="Colour" value="1 0.6 0.2"/>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 562">
+				<Property key="Caption" value="#FFC080#{Replay}"/>
+				<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
+					<Property key="ImageCoord" value="0 512 128 128"/>
+					<Property key="Alpha" value="0.6"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+				</Widget>
+				<Widget type="ListBox" skin="ListBox" position="14 16 186 440" name="RplList"/>
+				<Widget type="Button" skin="RadioButton" position="224 368 160 24" name="RplBtnAll">
+					<Property key="Colour" value="0.6 0.8 1"/>
+					<Property key="TextColour" value="0.7 0.86 1"/>
+					<Property key="Caption" value="#{RplAll}"/>
+				</Widget>
+				<Widget type="Button" skin="RadioButton" position="224 400 160 24" name="RplBtnCur">
+					<Property key="Colour" value="0.6 0.8 1"/>
+					<Property key="TextColour" value="0.6 0.76 0.9"/>
+					<Property key="Caption" value="#{RplCurrent}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="224 432 160 24" name="RplBtnGhosts">
+					<Property key="Colour" value="0.7 0.8 1"/>
+					<Property key="TextColour" value="0.7 0.8 1"/>
+					<Property key="Caption" value="#{RplGhosts}"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="224 260 152 32" name="RplSave">
+					<Property key="Caption" value="#{RplSave}"/>
+					<Property key="TextColour" value="0.8 1 1"/>
+					<Property key="Colour" value="0.4 0.8 1"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="224 116 152 32" name="RplLoad">
+					<Property key="Caption" value="#{RplLoad}"/>
+					<Property key="TextColour" value="0.8 1 1"/>
+					<Property key="Colour" value="0.6 0.6 1"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="434 120 128 24" name="RplDelete">
+					<Property key="Colour" value="1 0.4 0"/>
+					<Property key="Caption" value="#{RplDelete}"/>
+					<Property key="TextColour" value="1 0.4 0.4"/>
+				</Widget>
+				<Widget type="Button" skin="Button" position="434 260 128 32" name="RplRename">
+					<Property key="TextColour" value="1 0.8 0.4"/>
+					<Property key="Colour" value="1 0.8 0.4"/>
+					<Property key="Caption" value="#{RplRename}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="224 16 384 24" name="RplName">
+					<Property key="TextColour" value="0.84 0.8 1"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="224 44 204 64" name="RplInfo">
+					<Property key="TextColour" value="0.9 0.9 1"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="434 44 216 64" name="RplInfo2">
+					<Property key="TextColour" value="0.76 0.76 0.82"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="224 190 416 24" name="RplName2">
+					<Property key="TextColour" value="1 0.8 0.6"/>
+				</Widget>
+				<Widget type="EditBox" skin="EditBox" position="224 224 240 24" name="RplNameEdit">
+					<Property key="Colour" value="0.8 0.9 1"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="16 474 24 24">
+					<Property key="ImageCoord" value="256 128 128 128"/>
+					<Property key="Alpha" value="0.7"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="40 476 92 24">
+					<Property key="Caption" value="#{Find}:"/>
+					<Property key="TextColour" value="0.7 0.8 0.9"/>
+					<UserString key="tip" value="#{TipFind}"/>
+				</Widget>
+				<Widget type="EditBox" skin="EditBox" position="16 500 88 24" name="RplFind">
+					<Property key="Colour" value="0.7 0.8 0.9"/>
+					<Property key="MaxTextLength" value="20"/>
+					<Property key="TextColour" value="0.8 0.9 1.0"/>
+					<UserString key="tip" value="#{TipFind}"/>
+				</Widget>
+			</Widget>
+			<Widget type="TabItem" skin="" position="2 24 794 562">
+				<Property key="Caption" value="#FFF060#{View}"/>
+				<Widget type="Button" skin="CheckBox" position="32 60 380 24" name="RplChkGhost">
+					<Property key="TextColour" value="1 0.94 0.83"/>
+					<Property key="Caption" value="#{RplGhost}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 90 380 24" name="RplChkTrackGhost">
+					<Property key="TextColour" value="0.6 1 0.4"/>
+					<Property key="Caption" value="#{TracksGhost}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="432 60 380 24" name="RplChkAutoRec">
+					<Property key="Caption" value="#{RplAutoRec}"/>
+					<Property key="TextColour" value="0.5 0.7 0.9"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="432 90 380 24" name="RplChkBestOnly">
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Caption" value="#{RplBestOnly}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 150 380 24" name="RplChkRewind">
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Caption" value="#{RplRewindGhost}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 180 380 24" name="RplChkGhostOther">
+					<Property key="TextColour" value="0.6 0.8 1"/>
+					<Property key="Caption" value="#{RplGhostOther}"/>
+				</Widget>
+				<Widget type="Button" skin="CheckBox" position="432 150 380 24" name="RplChkParticles">
+					<Property key="TextColour" value="0.5 0.7 0.9"/>
+					<Property key="Caption" value="#{Ghost} #{Particles}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 276 576 20">
+					<Property key="TextColour" value="0.6 0.75 0.85"/>
+					<Property key="Caption" value="#{RplMaxNumViewports} *"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 302 48 20" name="RplNumViewportsVal">
+					<Property key="TextColour" value="0.6 0.8 1"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="80 300 160 22" name="RplNumViewports"/>
+
+				<Widget type="TextBox" skin="TextBox" position="32 380 576 20">
+					<Property key="TextColour" value="0.67 0.78 0.85"/>
+					<Property key="Caption" value="#{GhostHideDist}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 408 288 20">
+					<Property key="TextColour" value="0.9 0.82 0.75"/>
+					<Property key="Caption" value="#{Ghost}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 432 60 20" name="GhoHideDistVal">
+					<Property key="TextColour" value="1 0.92 0.85"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="92 432 240 18" name="GhoHideDist"/>
+
+				<Widget type="TextBox" skin="TextBox" position="32 456 288 20">
+					<Property key="TextColour" value="0.5 0.8 0.7"/>
+					<Property key="Caption" value="#{Track}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="32 480 60 20" name="GhoHideDistTrkVal">
+					<Property key="TextColour" value="0.6 0.9 0.8"/>
+				</Widget>
+				<Widget type="Slider" skin="Slider" position="92 480 240 18" name="GhoHideDistTrk"/>
+			</Widget>
+		</Widget>
+	</Widget>
+
+	<Widget type="Window" skin="WindowC" position="224 -20 616 92" layer="Back" name="RplWnd">
+		<Property key="Alpha" value="0.3"/>
+		<Property key="Visible" value="false"/>
+		<UserString key="NotSized" value="1"/>
+		<Widget type="Slider" skin="Slider" position="4 36 600 19" name="RplSlider">
+			<Property key="Alpha" value="0.6"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.8 0.9 1"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="20 1 40 32" name="RplToStart">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Caption" value="|&lt;"/>
+			<Property key="Alpha" value="0.6"/>
+			<Property key="Colour" value="0.6 0.8 1"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="60 1 40 32" name="RplBack">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Caption" value="&lt;&lt;"/>
+			<Property key="Alpha" value="0.8"/>
+			<Property key="Colour" value="0.4 0.8 1"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="100 1 64 32" name="RplPlay">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Caption" value="||"/>
+			<Property key="Colour" value="0 1 1"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="164 1 40 32" name="RplForward">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Caption" value="&gt;&gt;"/>
+			<Property key="Colour" value="0.4 0.8 1"/>
+			<Property key="Alpha" value="0.8"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="204 1 40 32" name="RplToEnd">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Caption" value="&gt;|"/>
+			<Property key="Colour" value="0.6 0.8 1"/>
+			<Property key="Alpha" value="0.6"/>
+		</Widget>
+		<Widget type="Widget" skin="PanelSkin" position="280 3 80 28">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.9 0.92 1"/>
+			<Property key="Alpha" value="0.6"/>
+			<Widget type="TextBox" skin="TextBox" position="0 2 75 24" name="RplPercent">
+				<Property key="InheritsAlpha" value="false"/>
+				<Property key="Alpha" value="1"/>
+				<Property key="TextColour" value="0.9 0.92 1.0"/>
+				<Property key="TextAlign" value="Right"/>
+				<Property key="FontName" value="hud.replay"/>
+			</Widget>
+		</Widget>
+		<Widget type="Widget" skin="PanelSkin" position="380 3 100 28">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.9 0.96 1.0"/>
+			<Property key="Alpha" value="0.6"/>
+			<Widget type="TextBox" skin="TextBox" position="0 2 105 24" name="RplTimeCur">
+				<Property key="InheritsAlpha" value="false"/>
+				<Property key="Alpha" value="1"/>
+				<Property key="TextColour" value="0.9 0.96 1.0"/>
+				<Property key="TextAlign" value="Center"/>
+				<Property key="FontName" value="hud.replay"/>
+			</Widget>
+		</Widget>
+		<Widget type="Widget" skin="PanelSkin" position="500 3 100 28">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Colour" value="0.8 0.9 1"/>
+			<Property key="Alpha" value="0.5"/>
+			<Widget type="TextBox" skin="TextBox" position="0 2 105 24" name="RplTimeLen">
+				<Property key="InheritsAlpha" value="false"/>
+				<Property key="Alpha" value="1"/>
+				<Property key="TextColour" value="0.8 0.9 1"/>
+				<Property key="TextAlign" value="Center"/>
+				<Property key="FontName" value="hud.replay"/>
+			</Widget>
+		</Widget>
+	</Widget>
+
+</MyGUI>
