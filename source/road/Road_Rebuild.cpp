@@ -6,6 +6,9 @@
 #include "Road.h"
 #ifndef SR_EDITOR
 	#include "../vdrift/game.h"
+	#include "../ogre/CGame.h"
+	#include "../ogre/common/CScene.h"
+	#include "../ogre/common/data/SceneXml.h"
 #else
 	#include "../editor/CApp.h"
 	#include <BulletCollision/CollisionShapes/btTriangleMesh.h>
@@ -99,12 +102,13 @@ void SplineRoad::BuildSeg(
 
 
 	//  material
+	String suffix = !river && DS.onTer ? "_ter" :"";
 	int mid = mP[seg].idMtr;
 	DS.mtrId = max(0,mid);
-	DS.wallId = mP[seg].idWall;
+	DS.wallId = river ? -1 : mP[seg].idWall;
 	DS.pipe = isPipe(seg);
 	rs.sMtrRd = DS.pipe ? sMtrPipe[DS.mtrId]
-						: (sMtrRoad[DS.mtrId] + (DS.onTer ? "_ter" :""));
+						: (sMtrRoad[DS.mtrId] + suffix);
 
 	/// >  blend 2 materials
 	DS.hasBlend = false;
@@ -112,7 +116,7 @@ void SplineRoad::BuildSeg(
 	{
 		DS.hasBlend = true;
 		int mtrB = max(0,mP[seg1].idMtr);
-		rs.sMtrB = sMtrRoad[mtrB] + (DS.onTer ? "_ter" :"");
+		rs.sMtrB = sMtrRoad[mtrB] + suffix;
 	}
 	
 	//  skirt /\ not for bridges
@@ -296,8 +300,8 @@ void SplineRoad::BuildSeg(
 				Real brdg = min(1.f, std::abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
 				Real h = max(0.f, 1.f - std::abs(vP.y - yTer) / 30.f);  // for grass dens tex
 				
-				bool onP = mP[seg].onPipe > 0;
-				float pp = fPipe * 0.5f + (onP ? 0.5f : 0.f);  // put onP in pipe
+				bool onP = mP[seg].onPipe > 0;  // FIXME: on pipe road prv
+				float pp = fPipe;//*0.5f + (onP ? 0.5f : 0.f);  // put onP in pipe
 				
 				Vector4 c(brdg, pp, 1.f, h);
 				Vector2 vtc(tcw * 1.f /**2p..*/, tcL);
@@ -341,7 +345,7 @@ void SplineRoad::BuildSeg(
 			Real uv = 0.f;  // tc
 			bool onP = mP[seg].onPipe==2;
 
-			if (!DS.onTer && DS.wallId >= 0)
+			if (!river && !DS.onTer && DS.wallId >= 0)
 			if (i >= 0 && i <= il)  // length +1
 			{
 				++DLM.iLmrgW;
@@ -373,7 +377,7 @@ void SplineRoad::BuildSeg(
 			
 			///  columns |
 			//------------------------------------------------------------------------------------
-			if (!DS.onTer && mP[seg].cols > 0)
+			if (!river && !DS.onTer && mP[seg].cols > 0)
 			if (i == il/2)  // middle-
 			{	
 				++DLM.iLmrgC;
@@ -457,7 +461,7 @@ void SplineRoad::BuildSeg(
 		}
 
 		//  bullet trimesh  at lod 0
-		if (DL.isLod0 && blt)
+		if (DL.isLod0 && blt /*&& !river*/)  /// todo:
 			createSeg_Collision(DLM,DS);
 	}
 }
@@ -720,7 +724,7 @@ void SplineRoad::createSeg_Collision(
 	//  Road  ~
 	btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
 	
-	size_t su = (DS.pipe ? SU_Pipe : SU_Road) + DS.mtrId;
+	size_t su = river ? SU_Fluid : (DS.pipe ? SU_Pipe : SU_Road) + DS.mtrId;
 	shape->setUserPointer((void*)su);  // mark as road/pipe + mtrId
 	shape->setMargin(0.01f);  //?
 	
@@ -732,11 +736,16 @@ void SplineRoad::createSeg_Collision(
 	bco->setFriction(0.8f);   //+
 	bco->setRestitution(0.f);
 	bco->setCollisionFlags(bco->getCollisionFlags() |
+		(river ? btCollisionObject::CF_NO_CONTACT_RESPONSE : 0) |
 		btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 	#ifdef SR_EDITOR
 		pApp->world->addCollisionObject(bco);
 		bco->setUserPointer((void*)111);  // mark road
 	#else
+	if (river)
+	{	FluidBox& fb = pGame->app->scn->sc->fluids[0];  /// todo: .. depth in river how
+		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
+	}
 		pGame->collision.world->addCollisionObject(bco);
 		pGame->collision.shapes.push_back(shape);
 	#endif

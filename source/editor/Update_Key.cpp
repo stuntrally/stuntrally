@@ -344,7 +344,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				road->recalcTangents();  road->Rebuild(true);  break;
 
 			case key(KP_ENTER):  case key(RETURN):
-				if (ctrl)
+				if (alt)
+				{	scn->road->river = !scn->road->river;  scn->road->Rebuild(true);  }
+				else if (ctrl)
 				{	//  new
 					SplineRoad* road = new SplineRoad(this);
 					int id = scn->roads.size();

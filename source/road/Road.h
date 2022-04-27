@@ -28,29 +28,28 @@ class btTriangleMesh;
 #define LogR(a)
 #endif
 
-#define  LODs  4
-#define  MTRs  4
+#define  LODs  4  // LODs each segment has
+#define  MTRs  4  // road materials to choose
 #define  LoopTypes  9  // for pace notes
 
 
 struct RoadSeg
 {
-	struct SegData {
-		Ogre::SceneNode* node;  Ogre::Entity* ent;
-		Ogre::MeshPtr mesh;  Ogre::String smesh;
-		SegData() : node(0), ent(0), smesh("") {}
+	struct SegData
+	{	Ogre::SceneNode* node =0;  Ogre::Entity* ent =0;
+		Ogre::MeshPtr mesh;  Ogre::String smesh ="";
 	};
 	
 	SegData road[LODs], wall[LODs], col, blend[LODs];
-	Ogre::String sMtrRd,sMtrWall,sMtrB;  int mtrId;
+	Ogre::String sMtrRd,sMtrWall,sMtrB;
+	int mtrId = 0;
 	
 	std::vector<Ogre::Vector3> lpos;  //points for lod dist
-	int nTri[LODs], mrgLod;
+	int nTri[LODs], mrgLod = 0;
+	bool empty = true;
 
-	bool empty;
-	RoadSeg() : empty(true), mrgLod(0), mtrId(0) { 
-		for (int i=0;i<LODs;++i) nTri[i] = 0;
-	}
+	RoadSeg()
+	{	for (int i=0; i<LODs; ++i)  nTri[i] = 0;  }
 };
 
 //  insert before first, after chosen, after last
@@ -69,6 +68,7 @@ public:
 	#endif
 	virtual ~SplineRoad();
 	void Defaults();
+	bool river;  // has no wall, column, no _ter materials
 
 	//  File
 	bool LoadFile(Ogre::String fname, bool build=true), SaveFile(Ogre::String fname);
@@ -81,7 +81,8 @@ public:
 
 	//  Update
 	void UpdLodVis(/*Camera* pCam,*/ float fBias=1.f, bool bFull=false);
-	void SetForRnd(Ogre::String sMtr),UnsetForRnd();
+	void UpdLodVisMarks(Ogre::Real distSq, bool vis=false);
+	void SetForRnd(Ogre::String sMtr), UnsetForRnd();
 
 	void Pick(Ogre::Camera* mCamera, Ogre::Real mx, Ogre::Real my,
 			bool bRay=true, bool bAddH=false, bool bHide=false);
@@ -186,7 +187,7 @@ private:
 		{	}
 	};
 	
-	struct StatsLod   // stats for cuurent Lod
+	struct StatsLod   // stats for current Lod
 	{	//#  stats
 		Ogre::Real roadLen, rdOnT, rdPipe, rdOnPipe;
 		Ogre::Real avgWidth, stMaxH, stMinH;
@@ -225,14 +226,9 @@ public:  ///  pacenotes prepass data
 	struct PaceM
 	{
 		Ogre::Vector3 pos, pos2;
-		float aa;
-		int used;  bool vis, notReal, onTer;
-		int loop;  bool jump,jumpR, onPipe,onPipeE;
-		PaceM()
-			:used(-1), aa(0.f)
-			,vis(1), notReal(0), onTer(1)
-			,loop(0), jump(0),jumpR(0), onPipe(0),onPipeE(0)
-		{	}
+		float aa = 0.f;
+		int used = -1;  bool vis =1, notReal =0, onTer =1;
+		int loop = 0;  bool jump =0,jumpR =0, onPipe =0,onPipeE =0;
 	};
 	std::vector<PaceM> vPace;
 private:

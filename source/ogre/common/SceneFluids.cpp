@@ -148,7 +148,6 @@ void CScene::CreateBltFluids()
 		else  // solid
 		{	bco->setCollisionFlags(bco->getCollisionFlags() |
 				btCollisionObject::CF_STATIC_OBJECT);
-			// bco->setF
 			bco->setFriction(0.6f);  bco->setRestitution(0.5f);  //par?..
 		}
 

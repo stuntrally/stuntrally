@@ -59,7 +59,8 @@ void App::KeyTxtRoad(Real q)
 		rdTxt[12]->setCaption(TR("#{Wall}"));	rdKey[12]->setCaption("ctrl 9 0");
 	}
 
-	bool ter = !ok ? false : !(!sp.onTer || !road->getPoint(road->getNext(ic)).onTer);
+	bool ter = road->river ? true : !ok ? false :
+		!(!sp.onTer || !road->getPoint(road->getNext(ic)).onTer);
 
 	rdTxt[0]->setCaption(TR(sp.onTer ? "#{Road_OnTerrain}" : "#{Road_Height}"));
 	rdVal[0]->setCaption(sp.onTer ? "" : fToStr(sp.pos.y,1,3));
@@ -78,6 +79,7 @@ void App::KeyTxtRoad(Real q)
 	bool vis = !ter && !sp.isnt();
 	rdTxt[7]->setVisible(vis);	rdVal[7]->setVisible(vis);  rdKey[7]->setVisible(vis);
 	rdVal[7]->setCaption(ter ? "" : toStr(sp.cols));  // column
+	// TR("#{Rivers}")
 
 	rdTxt[12]->setVisible(vis);  rdKey[12]->setVisible(vis);  
 	rdTxt[12]->setCaption(toStr(sp.idWall)+" "+road->getWallMtrStr(ic));  // wall mtr

@@ -8,6 +8,7 @@
 #include <OgreMaterialManager.h>
 #include <OgreEntity.h>
 #include <OgreSubEntity.h>
+#include <OgreSceneNode.h>
 using namespace Ogre;
 using namespace tinyxml2;
 
@@ -31,6 +32,7 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 }
 void SplineRoad::Defaults()
 {
+	river = false;
 	sTxtDesc = "";  fScRot = 1.8f;  fScHit = 0.8f;
 	for (int i=0; i<MTRs; ++i)
 	{	sMtrRoad[i] = "";  sMtrPipe[i] = "";  bMtrPipeGlass[i] = true;  }
@@ -125,6 +127,18 @@ void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 	}
 }
 
+void SplineRoad::UpdLodVisMarks(Real distSq, bool vis)
+{
+	#ifdef SR_EDITOR  // ed markers visible  near only
+	for (auto m:vMarks)
+	if (m.nd)
+	{
+		Real d = mCamera->getPosition().squaredDistance(m.nd->getPosition());
+		m.nd->setVisible(vis && d < distSq);
+	}
+	#endif
+}
+
 ///  set lod0 for  render to tex   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 void SplineRoad::SetForRnd(String sMtr)
 {
@@ -186,55 +200,56 @@ bool SplineRoad::LoadFile(String fname, bool build)
 	
 	Defaults();
 	n = root->FirstChildElement("mtr");	if (n)  {
+		a = n->Attribute("river");  if (a)  river = s2i(a) > 0;
 		for (int i=0; i<MTRs; ++i)  {	String si = i==0 ? "" : toStr(i+1);
 			a = n->Attribute(String("road"+si).c_str());	if (a)  sMtrRoad[i] = String(a);
 			a = n->Attribute(String("pipe"+si).c_str());	if (a)  SetMtrPipe(i, String(a));	}
-		a = n->Attribute("wall");	if (a)  sMtrWall = String(a);
-		a = n->Attribute("pipeW");	if (a)  sMtrWallPipe = String(a);
-		a = n->Attribute("col");	if (a)  sMtrCol  = String(a);
+		a = n->Attribute("wall");   if (a)  sMtrWall = String(a);
+		a = n->Attribute("pipeW");  if (a)  sMtrWallPipe = String(a);
+		a = n->Attribute("col");    if (a)  sMtrCol = String(a);
 	}
 	n = root->FirstChildElement("dim");	if (n)  {
-		a = n->Attribute("tcMul");		if (a)  g_tcMul = s2r(a);
-		a = n->Attribute("tcW");		if (a)  g_tcMulW = s2r(a);
-		a = n->Attribute("tcP");		if (a)  g_tcMulP = s2r(a);
-		a = n->Attribute("tcPW");		if (a)  g_tcMulPW = s2r(a);
-		a = n->Attribute("tcC");		if (a)  g_tcMulC = s2r(a);
+		a = n->Attribute("tcMul");  if (a)  g_tcMul = s2r(a);
+		a = n->Attribute("tcW");    if (a)  g_tcMulW = s2r(a);
+		a = n->Attribute("tcP");    if (a)  g_tcMulP = s2r(a);
+		a = n->Attribute("tcPW");   if (a)  g_tcMulPW = s2r(a);
+		a = n->Attribute("tcC");    if (a)  g_tcMulC = s2r(a);
 
-		a = n->Attribute("lenDim");		if (a)  g_LenDim0 = s2r(a);
-		a = n->Attribute("widthSteps");	if (a)  g_iWidthDiv0 = s2i(a);
-		a = n->Attribute("heightOfs");	if (a)  g_Height = s2r(a);
+		a = n->Attribute("lenDim");      if (a)  g_LenDim0 = s2r(a);
+		a = n->Attribute("widthSteps");  if (a)  g_iWidthDiv0 = s2i(a);
+		a = n->Attribute("heightOfs");   if (a)  g_Height = s2r(a);
 	}
-	n = root->FirstChildElement("mrg");	if (n)  {
-		a = n->Attribute("skirtLen");	if (a)  g_SkirtLen = s2r(a);
-		a = n->Attribute("skirtH");		if (a)  g_SkirtH   = s2r(a);
+	n = root->FirstChildElement("mrg"); if (n)  {
+		a = n->Attribute("skirtLen");    if (a)  g_SkirtLen = s2r(a);
+		a = n->Attribute("skirtH");      if (a)  g_SkirtH   = s2r(a);
 
-		a = n->Attribute("merge");		if (a)  bMerge  = s2i(a) > 0;  // is always 1
-		a = n->Attribute("mergeLen");	if (a)  g_MergeLen = s2r(a);
-		a = n->Attribute("lodPntLen");	if (a)  g_LodPntLen = s2r(a);
+		a = n->Attribute("merge");       if (a)  bMerge  = s2i(a) > 0;  // is always 1
+		a = n->Attribute("mergeLen");    if (a)  g_MergeLen = s2r(a);
+		a = n->Attribute("lodPntLen");   if (a)  g_LodPntLen = s2r(a);
 		
-		a = n->Attribute("visDist");	if (a)  g_VisDist = s2r(a);
-		a = n->Attribute("visBehind");	if (a)  g_VisBehind = s2r(a);
+		a = n->Attribute("visDist");     if (a)  g_VisDist = s2r(a);
+		a = n->Attribute("visBehind");   if (a)  g_VisBehind = s2r(a);
 	}
 	int iP1 = 0;
 	n = root->FirstChildElement("geom");	if (n)  {
-		a = n->Attribute("colN");	if (a)  g_ColNSides = s2i(a);
-		a = n->Attribute("colR");	if (a)  g_ColRadius = s2r(a);
-		a = n->Attribute("wsPm");	if (a)  g_P_iw_mul = s2r(a);
-		a = n->Attribute("lsPm");	if (a)  g_P_il_mul = s2r(a);
-		a = n->Attribute("stBox");	if (a)  vStBoxDim = s2v(a);
-		a = n->Attribute("iDir");	if (a)  iDir = s2i(a);
-		a = n->Attribute("iChk1");	if (a)  iP1 = s2i(a);
+		a = n->Attribute("colN");   if (a)  g_ColNSides = s2i(a);
+		a = n->Attribute("colR");   if (a)  g_ColRadius = s2r(a);
+		a = n->Attribute("wsPm");   if (a)  g_P_iw_mul = s2r(a);
+		a = n->Attribute("lsPm");   if (a)  g_P_il_mul = s2r(a);
+		a = n->Attribute("stBox");  if (a)  vStBoxDim = s2v(a);
+		a = n->Attribute("iDir");   if (a)  iDir = s2i(a);
+		a = n->Attribute("iChk1");  if (a)  iP1 = s2i(a);
 	}
 	
 	n = root->FirstChildElement("stats");	if (n)  {
-		a = n->Attribute("length");		if (a)  st.Length = s2r(a);
-		a = n->Attribute("width");		if (a)  st.WidthAvg = s2r(a);
-		a = n->Attribute("height");		if (a)  st.HeightDiff = s2r(a);
-		  a = n->Attribute("onTer");	if (a)  st.OnTer = s2r(a);
-		  a = n->Attribute("pipes");	if (a)  st.Pipes = s2r(a);
-		  a = n->Attribute("onPipe");	if (a)  st.OnPipe = s2r(a);
-		  a = n->Attribute("bnkAvg");	if (a)  st.bankAvg = s2r(a);
-		  a = n->Attribute("bnkMax");	if (a)  st.bankMax = s2r(a);
+		a = n->Attribute("length");    if (a)  st.Length = s2r(a);
+		a = n->Attribute("width");     if (a)  st.WidthAvg = s2r(a);
+		a = n->Attribute("height");    if (a)  st.HeightDiff = s2r(a);
+		  a = n->Attribute("onTer");   if (a)  st.OnTer = s2r(a);
+		  a = n->Attribute("pipes");   if (a)  st.Pipes = s2r(a);
+		  a = n->Attribute("onPipe");  if (a)  st.OnPipe = s2r(a);
+		  a = n->Attribute("bnkAvg");  if (a)  st.bankAvg = s2r(a);
+		  a = n->Attribute("bnkMax");  if (a)  st.bankMax = s2r(a);
 	}	
 	n = root->FirstChildElement("txt");	if (n)  {
 		a = n->Attribute("desc");		if (a)  sTxtDesc = String(a);
@@ -243,26 +258,26 @@ bool SplineRoad::LoadFile(String fname, bool build)
 	n = root->FirstChildElement("P");	//  points
 	while (n)
 	{
-		a = n->Attribute("pos");	newP.pos = s2v(a);
-		a = n->Attribute("w");		newP.width = !a ? 6.f : s2r(a);
+		a = n->Attribute("pos");  newP.pos = s2v(a);
+		a = n->Attribute("w");    newP.width = !a ? 6.f : s2r(a);
 
-		a = n->Attribute("a");		if (a)  newP.mYaw = s2r(a);  else  newP.mYaw = 0.f;
-		a = n->Attribute("ay");		if (a)  newP.mRoll = s2r(a);  else  {
-		  a = n->Attribute("ar");	if (a)  newP.mRoll = s2r(a);  else  newP.mRoll = 0.f;  }
+		a = n->Attribute("a");    if (a)  newP.mYaw = s2r(a);  else  newP.mYaw = 0.f;
+		a = n->Attribute("ay");   if (a)  newP.mRoll = s2r(a);  else  {
+		  a = n->Attribute("ar"); if (a)  newP.mRoll = s2r(a);  else  newP.mRoll = 0.f;  }
 		  
-		a = n->Attribute("aT");		if (a)  newP.aType = (AngType)s2i(a);  else  newP.aType = AT_Both;
+		a = n->Attribute("aT");   if (a)  newP.aType = (AngType)s2i(a);  else  newP.aType = AT_Both;
 
-		a = n->Attribute("onTer");	newP.onTer = (a && a[0]=='0') ? false : true;
-		a = n->Attribute("col");	newP.cols = !a ? 1 : s2i(a);
+		a = n->Attribute("onTer"); newP.onTer = (a && a[0]=='0') ? false : true;
+		a = n->Attribute("col");   newP.cols = !a ? 1 : s2i(a);
 
-		a = n->Attribute("pipe");	newP.pipe = !a ? 0.f : std::max(0.f, std::min(1.f, s2r(a)));
-		a = n->Attribute("mtr");	newP.idMtr = !a ? 0 : std::max(-1, std::min(MTRs-1, s2i(a)));
-		a = n->Attribute("wall");	newP.idWall = !a ? 0 : std::max(-1, std::min(MTRs-1, s2i(a)));
-		a = n->Attribute("not");	newP.notReal = !a ? 0 : (s2i(a) > 0);
+		a = n->Attribute("pipe");  newP.pipe = !a ? 0.f : std::max(0.f, std::min(1.f, s2r(a)));
+		a = n->Attribute("mtr");   newP.idMtr = !a ? 0 : std::max(-1, std::min(MTRs-1, s2i(a)));
+		a = n->Attribute("wall");  newP.idWall = !a ? 0 : std::max(-1, std::min(MTRs-1, s2i(a)));
+		a = n->Attribute("not");   newP.notReal = !a ? 0 : (s2i(a) > 0);
 		
-		a = n->Attribute("chkR");	newP.chkR = !a ? 0.f : s2r(a);
-		a = n->Attribute("ckL");	newP.loop = !a ? 0 : s2i(a);
-		a = n->Attribute("onP");	newP.onPipe = !a ? 0 : s2i(a);
+		a = n->Attribute("chkR");  newP.chkR = !a ? 0.f : s2r(a);
+		a = n->Attribute("ckL");   newP.loop = !a ? 0 : s2i(a);
+		a = n->Attribute("onP");   newP.onPipe = !a ? 0 : s2i(a);
 				
 		//  Add point
 		//newP.pos *= 0.7f;  //scale
@@ -304,6 +319,7 @@ bool SplineRoad::SaveFile(String fname)
 	TiXmlDocument xml;	TiXmlElement root("SplineRoad");
 
 	TiXmlElement mtr("mtr");
+		mtr.SetAttribute("river",		river ? "1" : "0");
 		for (int i=0; i<MTRs; ++i)  {	String si = i==0 ? "" : toStr(i+1);
 			if (sMtrRoad[i] != "")	mtr.SetAttribute(String("road"+si).c_str(),	sMtrRoad[i].c_str());
 			if (sMtrPipe[i] != "")	mtr.SetAttribute(String("pipe"+si).c_str(),	sMtrPipe[i].c_str());  }

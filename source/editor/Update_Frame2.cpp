@@ -124,8 +124,17 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	static int dti = 5, ti = dti-1;  ++ti;
 	if (road && ti >= dti)
 	{	ti = 0;
-		road->UpdLodVis(pSet->road_dist, edMode == ED_PrvCam);
-	}
 
+		Real dist = pSet->road_dist, dist2 = 200*200; //par
+		bool prv = edMode == ED_PrvCam, ed = edMode == ED_Road;
+
+		int i = 0;
+		for (auto r:scn->roads)
+		{
+			r->UpdLodVis(dist, prv);
+			r->UpdLodVisMarks(dist2, ed && i == scn->rdCur);
+			++i;
+		}
+	}
 	return true;
 }

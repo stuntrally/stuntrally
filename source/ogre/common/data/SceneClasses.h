@@ -120,7 +120,7 @@ public:
 	std::string name;
 
 	class btCollisionObject* cobj;
-	int idParticles;  // auto set  index for wheel particles  -1 none
+	int idParticles;   // auto set  index for wheel particles  -1 none
 	bool solid, deep;  // auto set, from FluidParams
 	
 	FluidBox();

@@ -219,13 +219,14 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
 	
-	if (num == 3)  // full
+	if (num == RT_View)  // full
 	{
 		rt[RT_View].cam->setPosition(mCamera->getPosition());
 		rt[RT_View].cam->setDirection(mCamera->getDirection());
 	}
-	else if (scn->road)
-		scn->road->SetForRnd(num == 0 ? "render_clr" : "render_grass");
+	else for (auto r:scn->roads)
+		if (!r->river)
+			r->SetForRnd(num == RT_Road ? "render_clr" : "render_grass");
 }
 
 void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
@@ -233,12 +234,11 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 	const String& s = evt.source->getName();
 	int num = atoi(s.substr(s.length()-1, s.length()-1).c_str());
 
-	if (num == 3)  // full
-	{
-	}
-	else if (scn->road)
-	{	scn->road->UnsetForRnd();
-		scn->road->UpdLodVis(pSet->road_dist);
+	if (num == RT_View)  // full
+	{	}
+	else for (auto r:scn->roads)
+	{	if (!r->river)  r->UnsetForRnd();
+		r->UpdLodVis(pSet->road_dist);
 	}
 
 	//  restore shadows splits todo...
