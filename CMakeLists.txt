@@ -1,5 +1,5 @@
-project(StuntRally CXX C)
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.16)
+project(StuntRally)
 
 # Allows disabling building of components
 option(BUILD_GAME             "Build the game binary."    ON)
@@ -34,13 +34,13 @@ if(MSVC)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
 endif()
 
-
-
 # Include path for additional CMake library finding scripts
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 # We want the binaries to be easily accessible
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 
 # Data installation path
@@ -113,7 +113,7 @@ if(BUILD_GAME OR BUILD_EDITOR)
 	link_directories(${SDL2_LIBRARY_DIRS})
 	list(APPEND LIBS ${SDL2_LIBRARY})
 
-	find_package(MyGUI REQUIRED QUIET)
+	find_package(MyGUI REQUIRED)
 	include_directories(${MYGUI_INCLUDE_DIRS})
 	include_directories(${MYGUI_PLATFORM_INCLUDE_DIRS})
 	link_directories(${MYGUI_LIB_DIR})

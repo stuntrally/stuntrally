@@ -30,10 +30,10 @@ void LoadDefaultSet(SETTINGS* settings, string setFile)
 
 
 //  . . . . . . . . . .  MAIN  . . . . . . . . . .
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow)
-#else
+#if defined(main) || OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 	int main(int argc, char* argv[])
+#else
+	int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow)
 #endif
 {
 	Ogre::Timer ti;
@@ -80,12 +80,12 @@ void LoadDefaultSet(SETTINGS* settings, string setFile)
 	//  Helper for testing networked games on 1 computer
 	//  use number > 0 in command parameter,  adds it to nick, port and own ogre.log
 	int num = -1;
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	if (lpCmdLine)
-		num = Ogre::StringConverter::parseInt(lpCmdLine);
-	#else
+	#if defined(main) || OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 	if (argc > 1)
 		num = Ogre::StringConverter::parseInt(argv[1]);
+	#else
+	if (lpCmdLine)
+		num = Ogre::StringConverter::parseInt(lpCmdLine);
 	#endif
 	if (num > 0)
 	{
@@ -126,10 +126,10 @@ void LoadDefaultSet(SETTINGS* settings, string setFile)
 
 	try
 	{
-		#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-			pApp->Run( settings->ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
+		#if defined(main) || OGRE_PLATFORM != OGRE_PLATFORM_WIN32
+			pApp->Run( settings->ogre_dialog );
 		#else
-			pApp->Run( settings->ogre_dialog);
+			pApp->Run( settings->ogre_dialog || lpCmdLine[0]!=0 );  //Release change-
 		#endif
 	}
 	catch (Ogre::Exception& e)
