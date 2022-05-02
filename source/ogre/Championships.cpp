@@ -59,10 +59,10 @@ void CGui::ChampsListUpdate()
 
 			liChamps->addItem(""/*clr+ toStr(n/10)+toStr(n%10)*/, n);  int l = liChamps->getItemCount()-1;
 			liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
-			liChamps->setSubItemNameAt(2,l, gcom->clrsDiff[ch.diff]+ TR("#{Diff"+toStr(ch.diff)+"}"));
+			liChamps->setSubItemNameAt(2,l, gcom->getClrDiff(ch.diff)+ TR("#{Diff"+toStr(ch.diff)+"}"));
 
-			liChamps->setSubItemNameAt(3,l, gcom->clrsDiff[std::min(8,ntrks*2/3+1)]+ iToStr(ntrks,3));
-			liChamps->setSubItemNameAt(4,l, gcom->clrsDiff[std::min(8,int(ch.time/3.f/60.f))]+" "+ StrTime2(ch.time));
+			liChamps->setSubItemNameAt(3,l, gcom->getClrDiff(ntrks*2/3+1)+ iToStr(ntrks,3));
+			liChamps->setSubItemNameAt(4,l, gcom->getClrDiff(ch.time/3.f/60.f)+" "+ StrTime2(ch.time));
 			liChamps->setSubItemNameAt(5,l, ct == 0 || ct == ntrks ? "" :
 				clr+ fToStr(100.f * ct / ntrks,0,3)+" %");
 
@@ -150,14 +150,14 @@ void CGui::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	for (i=0; i<1; ++i)  {
 		s1 += "\n";  s2 += "\n";  }
 
-	clr = gcom->clrsDiff[ch.diff];
+	clr = gcom->getClrDiff(ch.diff);
 	s1 += clr+ TR("#{Difficulty}\n");    s2 += clr+ TR("#{Diff"+toStr(ch.diff)+"}")+"\n";
 
-	clr = gcom->clrsDiff[std::min(8,ntrks*2/3+1)];
+	clr = gcom->getClrDiff(ntrks*2/3+1);
 	s1 += clr+ TR("#{Tracks}\n");        s2 += clr+ toStr(ntrks)+"\n";
 
 	s1 += "\n";  s2 += "\n";
-	clr = gcom->clrsDiff[std::min(8,int(ch.time/3.f/60.f))];
+	clr = gcom->getClrDiff(ch.time/3.f/60.f);
 	s1 += TR("#80F0E0#{Time} [#{TimeMS}.]\n"); s2 += "#C0FFE0"+clr+ StrTime2(ch.time)+"\n";
 
 	s1 += "\n\n";  s2 += "\n\n";
@@ -397,7 +397,7 @@ void CGui::ChampFillStageInfo(bool finished)
 		if (id > 0)
 		{
 			const TrackInfo* ti = &data->tracks->trks[id-1];
-			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + gcom->clrsDiff[ti->diff] + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
+			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + gcom->getClrDiff(ti->diff) + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
 			if (app->scn->road)
 			{	Real len = app->scn->road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
 				s += "#A0D0FF"+ TR("#{Distance}:  ") + "#B0E0FF" + 

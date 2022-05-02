@@ -478,7 +478,7 @@ void CGui::InitGui()
 	{
 		int x = i % clrRow, y = i / clrRow;
 		Img img = tbc->createWidget<ImageBox>("ImageBox",
-			6+x*sx, 1+y*sx, sx-1,sx-1, Align::Left, "carClr"+toStr(i));
+			12+x*sx, 52+y*sx, sx-1,sx-1, Align::Left, "carClr"+toStr(i));
 		img->setImageTexture("white.png");
 		gcom->setOrigPos(img, "GameWnd");
 
@@ -503,7 +503,8 @@ void CGui::InitGui()
 	barCarSpeed = fImg("CarSpeedBar");
 	txCarAuthor = fTxt("CarAuthor");  txTrackAuthor = fTxt("TrackAuthor");
 
-	TabPtr tPlr = fTab("SubTabPlayer");  Tev(tPlr, Player);
+	tbPlr  = fTab("SubTabPlayer");   Tev(tbPlr, Player);
+	tbPlr2 = fTab("SubTabPlayer2");  Tev(tbPlr2, Player);
 	Btn("btnPlayers1", btnNumPlayers);	Btn("btnPlayers2", btnNumPlayers);
 	Btn("btnPlayers3", btnNumPlayers);	Btn("btnPlayers4", btnNumPlayers);
 	ck= &ckSplitVert;	ck->Init("chkSplitVertically",  &pSet->split_vertically);
@@ -648,11 +649,14 @@ void CGui::InitGui()
 	Mli2 li = carTab->createWidget<MultiList2>("MultiListBox",16,48,600,110, Align::Left | Align::VStretch);
 	li->setColour(Colour(0.7,0.85,1.0));
 	li->removeAllColumns();  int n=0;
-	li->addColumn("#BBA8A8""Id", colCar[n++]);  // +TR("#{ID}")
+	li->addColumn("#BBA8A8""Id", colCar[n++]);
 	li->addColumn("#BBA8A8"+TR("#{Name}"), colCar[n++]);
-	li->addColumn("#C0B0A0""*"/*TR("#{CarSpeed}")*/, colCar[n++]);
+	li->addColumn("#C0B0A0"+TR("#{CarSpeed}"), colCar[n++]);
+	li->addColumn("#C0C0E0 *"/*TR("#{rating}")*/, colCar[n++]);
+	li->addColumn("#C0C0E0"+TR("#{Difficulty}"), colCar[n++]);
+	li->addColumn("#C0C0E0 -"/*+TR("#{Road_Width}")*/, colCar[n++]);
 	li->addColumn("#B0B8C0"+TR("#{CarYear}"), colCar[n++]);
-	li->addColumn("#C0C0E0"+TR("#{CarType}"), colCar[n++]);
+	// li->addColumn("#C0C0E0"+TR("#{CarType}"), colCar[n++]);
 	li->addColumn(" ", colCar[n++]);
 	carList = li;
 

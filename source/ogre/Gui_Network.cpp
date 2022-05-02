@@ -89,7 +89,7 @@ void CGui::rebuildPlayerList()
 		li->setSubItemNameAt(2,l, "#F0F060"+ toStr(it->second.peers));
 		//static int pp=0;  pp+=50;  int p = (pp)%600;  //test clr
 		int p = it->second.ping;
-		li->setSubItemNameAt(3,l, CGuiCom::clrsDiff[std::min(7,1+p/100)]+ toStr(p));
+		li->setSubItemNameAt(3,l, CGuiCom::getClrDiff(1+p/100)+ toStr(p));
 		bool rd = it->second.ready;
 		li->setSubItemNameAt(4,l, (rd?"#60FF60":"#FF8080")+ YesNo(rd));
 	}

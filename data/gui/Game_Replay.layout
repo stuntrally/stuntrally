@@ -72,6 +72,7 @@
 				<Widget type="EditBox" skin="EditBox" position="224 224 240 24" name="RplNameEdit">
 					<Property key="Colour" value="0.8 0.9 1"/>
 				</Widget>
+				
 				<Widget type="ImageBox" skin="ImageBox" position="16 474 24 24">
 					<Property key="ImageCoord" value="256 128 128 128"/>
 					<Property key="Alpha" value="0.7"/>

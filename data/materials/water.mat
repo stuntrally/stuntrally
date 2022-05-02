@@ -121,93 +121,6 @@ material Water
 }
 
 
-//  Rivers  .-.-.--.-..-..
-material River_blue  // I3-Islands  J13-Tropic
-{
-    parent Water
-    WaterDepthMap white.png
-	alphaMap HmapTex
-
-    choppyness_scale 0.15 25
-    smallWaves_midWaves 0.15 0.1 0.3 0.15
-    bigWaves 0.3 0.3
-    bump 1.5 0.12 0.13
-    fresnelMultiplier 1.0
-
-    colour 0.002 0.37 0.45  0.0
-    reflectColour 0.92 1.0 1.0  1.0
-    refractColour 0.62 0.90 1.0  0.75
-
-    specColourAndPower 1.0 1.0 1.0  32
-    bump2SpecPowerMul 6.0 12 0.4
-    speed 4.0
-}
-
-material River_cyan  // G2-Coast
-{
-    parent Water
-    WaterDepthMap white.png
-	alphaMap HmapTex
-
-    choppyness_scale 0.15 25
-    smallWaves_midWaves 0.15 0.1 0.3 0.15
-    bigWaves 0.3 0.3
-    bump 1.5 0.10 0.13
-    fresnelMultiplier 1.0
-
-    colour 0.002 0.45 0.37  0.0
-    reflectColour 0.88 1.0 1.0  1.0
-    refractColour 0.62 1.0 0.9  0.75
-
-	specColourAndPower 0.99 1.0 1.0  32
-    bump2SpecPowerMul 6.0 12 0.14
-    speed 2.0
-}
-
-material River_green   // J11-Temple
-{
-    parent Water
-    WaterDepthMap white.png
-	alphaMap HmapTex
-
-    choppyness_scale 0.15 25
-    smallWaves_midWaves 0.15 0.1 0.3 0.15
-    bigWaves 0.3 0.3
-    bump 1.5 0.10 0.16
-    fresnelMultiplier 1.0
-
-    colour 0.29 0.35 0.23  0.0
-	reflectColour 0.8 0.94 0.33  0.6
-	refractColour 0.65 0.74 0.35  0.53
-	specColourAndPower 0.43 0.53 0.42  256
-
-    bump2SpecPowerMul 8.0 4 0.15
-    speed 3.0
-}
-
-material River_moss   // O2-Mouse
-{
-    parent Water
-    WaterDepthMap white.png
-	alphaMap HmapTex
-
-    choppyness_scale 0.27 35
-    smallWaves_midWaves 0.15 0.1 0.3 0.15
-    bigWaves 0.3 0.3
-    bump 1.5 0.238 0.404
-    fresnelMultiplier 1.0
-
-    colour 0.166 0.273 0.268  0.0
-    //reflectColour 0.66 0.86 0.85  1.0
-    reflectColour 0.54 0.72 0.59  1.0
-    refractColour 0.62 0.84 0.76 0.75
-
-	specColourAndPower 0.66 0.78 0.88  62
-    bump2SpecPowerMul 6.0 12 0.14
-    speed 3.0
-}
-
-
 //--------------------------------------------------------
 material Water_blue   // I3-Islands  J13-Tropic
 {
@@ -659,4 +572,142 @@ material Mud_dark_JD
 
     bump2SpecPowerMul 12.0 2.0 0.4
     speed 0.001
+}
+
+
+//  Rivers  .-.-.--.-..-..
+//--------------------------------------------------------
+material River_blue   // I3-Islands  J13-Tropic
+{
+    parent Water_blue
+    WaterDepthMap roadAlpha.png
+	alphaMap HmapTex
+    speed 4.0
+}
+
+material River_cyan  // G2-Coast
+{
+    parent Water_cyan
+    WaterDepthMap roadAlpha.png
+	alphaMap HmapTex
+    speed 2.0
+}
+
+material River_green   // J11-Temple
+{
+    parent Water_green
+    WaterDepthMap roadAlpha.png
+	alphaMap HmapTex
+    speed 3.0
+}
+
+material River_moss   // O2-Mouse
+{
+    parent Water_moss
+    WaterDepthMap roadAlpha.png
+	alphaMap HmapTex
+    speed 3.0
+}
+
+material River_white   // W2-Wet
+{
+    parent Water_white
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed 3.0
+}
+
+material River_sunset   // I4-Sunset
+{
+    parent Water_sunset
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed 3.0
+}
+
+material River_sunset_cyan   // I13-Beauty
+{
+    parent Water_sunset_cyan
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed 3.0
+}
+
+material River_shore   // I5-Shore
+{
+    parent Water_shore
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed 3.0
+}
+
+material River_dark   // V1-Dark
+{
+    parent Water_dark
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed 3.0
+}
+
+material River_blue_dark   // E1
+{
+    parent Water_blue_dark
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed 3.0
+}
+
+material River_Grease_jelly   // X1-Magic
+{
+    parent Grease_jelly
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed 3.1
+}
+
+material River_Blue_jelly
+{
+	parent Blue_jelly
+    WaterDepthMap white.png
+	alphaMap HmapTex
+	speed 3.05
+}
+
+material River_Acid_green   // green acid
+{
+    parent Acid_green
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed 3.8
+}
+
+material River_Ice   // solid
+{
+    parent Ice
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    colour 0.8 0.94 0.95  0.0
+    speed 3.0
+}
+material River_Ice_cyan   // solid
+{
+    parent Ice_cyan
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed 3.0
+}
+
+material River_LavaOrn   // lava dense fluid
+{
+    parent LavaOrn
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed 0.478
+}
+material River_LavaBlk   // lava solid
+{
+    parent LavaBlk
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed 0.15
 }

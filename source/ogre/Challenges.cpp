@@ -570,14 +570,14 @@ void CGui::UpdChallDetail(int id)
 	//s1 += "\n";  s2 += "\n";
 
 	//  track  --------
-	clr = gcom->clrsDiff[ch.diff];
+	clr = gcom->getClrDiff(ch.diff);
 	s1 += clr+ TR("#{Difficulty}\n");    s2 += clr+ TR("#{Diff"+toStr(ch.diff)+"}")+"\n";
 
-	clr = gcom->clrsDiff[std::min(8,ntrks*2/3+1)];
+	clr = gcom->getClrDiff(ntrks * 2/3 +1);
 	s1 += clr+ TR("#{Tracks}\n");        s2 += clr+ toStr(ntrks)+"\n";
 
 	//s1 += "\n";  s2 += "\n";
-	clr = gcom->clrsDiff[std::min(8,int(ch.time/3.f/60.f))];
+	clr = gcom->getClrDiff(ch.time /3.f/60.f);
 	s1 += TR("#80F0E0#{Time} [#{TimeMS}.]\n"); s2 += "#C0FFE0"+clr+ StrTime2(ch.time)+"\n";
 
 	//  cars  --------

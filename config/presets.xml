@@ -257,6 +257,25 @@
 <r sc="L"  m="roadAlienStone"  su="roadForest"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.20 0.10 0.7" z="L" />
 <r sc="Z"  m="roadDesertBlack" su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 
+<!-- rivers -->
+<r sc="J"  m="River_blue"  su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="G"  m="River_cyan"  su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_green" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="O"  m="River_moss"  su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_white"   su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_sunset"  su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_sunset_cyan"   su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_shore"   su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_dark"    su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_blue_dark"     su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_Grease_jelly"  su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_Blue_jelly"    su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_Acid_green"    su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_Ice"       su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_Ice_cyan"  su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_LavaOrn"   su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+<r sc="J"  m="River_LavaBlk"   su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="CFGJT" />
+
 
 <!-- grass -->
 <!-- g - grass material  c - colormap .png  xa,xb - min,max width  ya,yb - min,max height  -->

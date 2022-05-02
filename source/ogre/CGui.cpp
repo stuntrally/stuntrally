@@ -27,7 +27,7 @@ CGui::CGui(App* app1)
 	, iTireSet(0)
 	,bchAbs(0),bchTcs(0)
 	//  replay
-	,imgCar(0),carDesc(0)
+	,imgCar(0),carDesc(0),tbPlr(0),tbPlr2(0)
 	,cmbBoost(0), cmbFlip(0), cmbDamage(0), cmbRewind(0)
 	,valLocPlayers(0)
 	,txCarSpeed(0),txCarType(0),txCarYear(0), barCarSpeed(0)

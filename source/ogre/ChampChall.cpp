@@ -352,7 +352,7 @@ void CGui::StageListAdd(int n, String name, int laps, String progress)
 	float time = (data->tracks->times[name] * laps /*laps > 1 -1*/) / carMul;
 
 	liStages->setSubItemNameAt(2,l, clr+ ti.scenery);
-	liStages->setSubItemNameAt(3,l, gcom->clrsDiff[ti.diff]+ TR("#{Diff"+toStr(ti.diff)+"}"));
+	liStages->setSubItemNameAt(3,l, gcom->getClrDiff(ti.diff)+ TR("#{Diff"+toStr(ti.diff)+"}"));
 	liStages->setSubItemNameAt(4,l, "#60C0A0  "+toStr(laps));
 	liStages->setSubItemNameAt(5,l, "#80C0F0 "+StrTime2(time));
 	liStages->setSubItemNameAt(6,l, progress);

@@ -45,7 +45,7 @@ material checkpoint_finish
 }
 
 
-//  bridges
+//  bridges  base  -------------
 material road
 {
 	parent base
@@ -57,7 +57,7 @@ material road
 	specMap roadAsphalt_spec.jpg
 	specMap_rgb true
 }
-//  on terrain
+//  on terrain  base  -------------
 material road_terrain
 {
 	parent base

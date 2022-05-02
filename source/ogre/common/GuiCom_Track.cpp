@@ -42,14 +42,19 @@ using namespace std;
 //-----------------------------------------------------------------------------------------------------------
 
 //  track difficulties colors from value
-const String CGuiCom::clrsDiff[9] =  // difficulty
+const String CGuiCom::clrsDiff[CGuiCom::iClrsDiff] =  // difficulty
 	{"#60C0FF", "#00FF00", "#60FF00", "#C0FF00", "#FFFF00", "#FFC000", "#FF6000", "#FF4040", "#FF7090"};
-const String CGuiCom::clrsRating[7] =  // rating
+const String CGuiCom::clrsRating[CGuiCom::iClrsRating] =  // rating
 	{"#808080", "#606060", "#7090A0", "#60C8D8", "#A0D0F0", "#D0E0FF", "#FCFEFF"};
 const String CGuiCom::clrsLong[CGuiCom::iClrsLong] =  // long
 	{"#E0D0D0", "#E8C0C0", "#F0B0B0", "#F8A0A0", "#FF9090", "#FF8080", "#F07070", "#F06060", "#E04040", "#D03030", "#D01818"};
-const String CGuiCom::clrsSum[10] =  // long
+const String CGuiCom::clrsSum[CGuiCom::iClrsSum] =  // long
 	{"#D0D0E0", "#C0C0E8", "#B0B0F0", "#A0A0F8", "#9090FF", "#8080F0", "#A070F0", "#A050FF", "#C080E0", "#C060C0"};
+
+const String CGuiCom::getClrDiff(int i)   {  return clrsDiff  [std::min(iClrsDiff  -1,i)];  }
+const String CGuiCom::getClrRating(int i) {  return clrsRating[std::min(iClrsRating-1,i)];  }
+const String CGuiCom::getClrLong(int i)   {  return clrsLong  [std::min(iClrsLong  -1,i)];  }
+const String CGuiCom::getClrSum(int i)    {  return clrsSum   [std::min(iClrsSum   -1,i)];  }
 
 
 //  * * * *  CONST  * * * *
@@ -57,7 +62,7 @@ const String CGuiCom::clrsSum[10] =  // long
 const int wi = 15;            // id name nm   N  scn ver
 const int CGuiCom::colTrk[33] = {40, 90, 80, 25, 76, 25, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 22, 22, 24};
 #ifndef SR_EDITOR
-const int CGui::colCar[16] = {34, 80, 27, 37, 52, 24};  // car
+const int CGui::colCar[16] = {34, 80, 27, 27, 27, 27, 37, 52, 24};  // car
 const int CGui::colCh [16] = {16, 200, 120, 50, 80, 80, 60, 40};  // champs
 const int CGui::colChL[16] = {16, 180, 90, 100, 50, 60, 60, 60, 50};  // challs
 const int CGui::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
@@ -132,8 +137,8 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 
 	//list->setSubItemNameAt(4,l, ti->created);  list->setSubItemNameAt(5,l, ti->modified);
 	#define toS(clr,v)  (v > 0) ? (String(clr)+"  "+toStr(v)) : " "
-	li->setSubItemNameAt(6,l, toS(clrsDiff[ti->diff], ti->diff));
-	li->setSubItemNameAt(7,l, toS(clrsRating[ti->rating], ti->rating));
+	li->setSubItemNameAt(6,l, toS(getClrDiff(ti->diff), ti->diff));
+	li->setSubItemNameAt(7,l, toS(getClrRating(ti->rating), ti->rating));
 	
 	//todo: rateuser* drivenlaps-
 	li->setSubItemNameAt(8,l, toS("#D070A0",ti->objects));
@@ -145,8 +150,8 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 	li->setSubItemNameAt(14,l,toS("#FFFF00",ti->pipes));
 	li->setSubItemNameAt(15,l,toS("#C0C0C0",ti->banked));
 	li->setSubItemNameAt(16,l,toS("#C080FF",ti->frenzy));
-	li->setSubItemNameAt(17,l,toS(clrsSum[std::min(9, ti->sum/2)], ti->sum));
-	li->setSubItemNameAt(18,l,toS(clrsLong[std::min(iClrsLong-1, ti->longn)], ti->longn));
+	li->setSubItemNameAt(17,l,toS(getClrSum(ti->sum/2), ti->sum));
+	li->setSubItemNameAt(18,l,toS(getClrLong(ti->longn), ti->longn));
 	//li->setSubItemNameAt(18,l,clrsDiff[std::min(8, 5*ti->sum/10)]+" "+toStr(ti->sum));
 }
 
@@ -443,9 +448,9 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 		imInfTrk[ch][12]->setAlpha(a*0.7f);  infTrk[ch][12]->setAlpha(a);
 
 		//  diff, rate
-		  infTrk[ch][9]->setCaption(ti.diff==0   ? "" : (clrsDiff[ti.diff] + toStr(ti.diff)));
+		  infTrk[ch][9]->setCaption(ti.diff==0   ? "" : (getClrDiff(ti.diff) + toStr(ti.diff)));
 		imInfTrk[ch][9]->setAlpha(0.2f + 0.8f * ti.diff / 6.f);
-		  infTrk[ch][10]->setCaption(ti.rating==0 ? "" : (clrsRating[ti.rating] + toStr(ti.rating)));
+		  infTrk[ch][10]->setCaption(ti.rating==0 ? "" : (getClrRating(ti.rating) + toStr(ti.rating)));
 		imInfTrk[ch][10]->setAlpha(0.2f + 0.8f * ti.rating / 6.f);
 
 		#ifndef SR_EDITOR

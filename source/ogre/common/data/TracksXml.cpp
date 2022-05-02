@@ -265,8 +265,8 @@ bool TracksXml::LoadIni(string file, bool check)
 
 
 CarInfo::CarInfo()
-	:id("AA"), type("Other"), car(true)
-	,n(-1), speed(5.f), year(2005), rating(5)
+	:id("AA"), name("Other"), type("Other")
+	,speed(5.f), year(2005), rating(5), width(3), diff(3)
 	,easy(0.96f), norm(1.f), author("")
 {	}
 
@@ -305,20 +305,21 @@ bool CarsXml::LoadXml(string file)
 	while (eCar)
 	{
 		CarInfo c;
-		a = eCar->Attribute("id");		if (a)  c.id = string(a);
-		a = eCar->Attribute("name");	if (a)  c.name = string(a);
-		a = eCar->Attribute("type");	if (a)  c.type = string(a);
-		a = eCar->Attribute("car");		if (a)  c.car = s2i(a) > 0;
+		a = eCar->Attribute("id"); if (a)  c.id = string(a);
+		a = eCar->Attribute("m");  if (a)  c.name = string(a);
+		a = eCar->Attribute("t");  if (a)  c.type = string(a);
 
-		a = eCar->Attribute("n");		if (a)  c.n = s2i(a);
-		a = eCar->Attribute("speed");	if (a)  c.speed = s2r(a);
-		a = eCar->Attribute("year");	if (a)  c.year = s2i(a);
-		a = eCar->Attribute("rating");	if (a)  c.rating = s2i(a);
-
-		a = eCar->Attribute("easy");	if (a)  c.easy = fEasy * s2r(a);
-		a = eCar->Attribute("norm");	if (a)  c.norm = fNorm * s2r(a);
+		a = eCar->Attribute("s");  if (a)  c.speed = s2r(a);
+		a = eCar->Attribute("y");  if (a)  c.year = s2i(a);
 		
-		a = eCar->Attribute("author");	if (a)  c.author = string(a);
+		a = eCar->Attribute("r");  if (a)  c.rating = s2i(a);
+		a = eCar->Attribute("w");  if (a)  c.width = s2i(a);
+		a = eCar->Attribute("d");  if (a)  c.diff = s2i(a);
+
+		a = eCar->Attribute("e");  if (a)  c.easy = fEasy * s2r(a);
+		a = eCar->Attribute("n");  if (a)  c.norm = fNorm * s2r(a);
+		
+		a = eCar->Attribute("a");  if (a)  c.author = string(a);
 
 		cars.push_back(c);
 		carmap[c.id] = i++;

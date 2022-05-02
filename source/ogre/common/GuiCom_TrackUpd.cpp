@@ -334,8 +334,8 @@ void CGuiCom::updTrkListDim()
 		if (c < 17)  xico2 += w;
 	}
 
-	int xt = 0.018*wi.width, yt = 0.06*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
-	trkList->setCoord(xt, yt, sw + 8/*frame*/, 0.70/*height*/*wi.height);
+	int xt = 0.017*wi.width, yt = 0.062*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
+	trkList->setCoord(xt, yt, sw + 8/*frame*/, 0.73/*height*/*wi.height);
 	
 	imgTrkIco1->setCoord(xt + xico1+2, yico, 11*wico, wico);
 	imgTrkIco2->setCoord(xt + xico2+wico*3/4, yico, 2*wico, wico);
@@ -355,14 +355,14 @@ void CGuiCom::updTrkListDim()
 	for (c=0; c < cnt; ++c)  sum += app->gui->colCar[c];
 	for (c=0; c < cnt; ++c)
 	{
-		float wf = float(app->gui->colCar[c]) / sum * 0.37/*width*/ * wi.width * 0.97/*frame*/;
-		int w = c==cnt-1 ? (full ? 18 : 36) : (full || c < 3 || c==cnt-1 ? wf : 0);
+		float wf = float(app->gui->colCar[c]) / sum * 0.36/*width*/ * wi.width * 0.97/*frame*/;
+		int w = c==cnt-1 ? (full ? 18 : 36) : (full || c < 4 || c==cnt-1 ? wf : 0);
 		app->gui->carList->setColumnWidthAt(c, w);
 		sw += w;
 	}
 
-	xt = 0.018*wi.width;  yt = 0.0242*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
-	app->gui->carList->setCoord(xt, yt, sw + 8/*frame*/, 0.411/*height*/*wi.height);
+	xt = 0.017*wi.width;  yt = 0.062*wi.height, yico = yt - wico - 1;  //0.02*wi.height;
+	app->gui->carList->setCoord(xt, yt, sw + 8/*frame*/, 0.41/*height*/*wi.height);
 	#endif
 	
 	#ifndef SR_EDITOR

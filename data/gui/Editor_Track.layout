@@ -306,23 +306,25 @@
 					<Property key="TextColour" value="0.45 0.58 0.8"/>
 					<UserString key="tip" value="#{TipTrkViewDetailed}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="16 474 24 24">
+
+				<Widget type="ImageBox" skin="ImageBox" position="16 494 24 24">
 					<Property key="ImageCoord" value="256 128 128 128"/>
 					<Property key="Alpha" value="0.7"/>
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="40 476 108 24">
+				<Widget type="TextBox" skin="TextBox" position="40 496 108 24">
 					<Property key="Caption" value="#{Find}:"/>
 					<Property key="TextColour" value="0.7 0.8 0.9"/>
 					<Property key="FontName" value="font.small"/>
 					<UserString key="tip" value="#{TipFind}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="16 502 88 24" name="TrkFind">
+				<Widget type="EditBox" skin="EditBox" position="16 516 88 24" name="TrkFind">
 					<Property key="Colour" value="0.7 0.8 0.9"/>
 					<Property key="MaxTextLength" value="20"/>
 					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<UserString key="tip" value="#{TipFind}"/>
 				</Widget>
+
 				<Widget type="Button" skin="Button" position="116 7 40 24" name="TrkFilter">
 					<Property key="Alpha" value="0.7"/>
 					<Property key="Colour" value="0.7 0.7 1.0"/>

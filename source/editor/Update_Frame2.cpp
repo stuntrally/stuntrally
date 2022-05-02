@@ -126,7 +126,7 @@ bool App::frameRenderingQueued(const FrameEvent& evt)
 	{	ti = 0;
 
 		Real dist = pSet->road_dist, dist2 = 200*200; //par
-		bool prv = edMode == ED_PrvCam, ed = edMode == ED_Road;
+		bool prv = edMode == ED_PrvCam, ed = edMode == ED_Road && !bMoveCam;
 
 		int i = 0;
 		for (auto r:scn->roads)

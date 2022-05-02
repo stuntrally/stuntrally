@@ -144,8 +144,9 @@ public:
 	Txt txtTracksFAll, txtTracksFCur;
 
 	//  const list column widths
-	const static int colTrk[33], iClrsLong = 11;
-	const static Ogre::String clrsDiff[9], clrsRating[7], clrsLong[iClrsLong], clrsSum[10];
+	const static int colTrk[33], iClrsDiff = 9, iClrsRating = 7, iClrsLong = 11, iClrsSum = 10;
+	const static Ogre::String clrsDiff[iClrsDiff], clrsRating[iClrsRating], clrsLong[iClrsLong], clrsSum[iClrsSum];
+	const static Ogre::String getClrDiff(int), getClrRating(int), getClrLong(int), getClrSum(int);
 
 
 	//  track find

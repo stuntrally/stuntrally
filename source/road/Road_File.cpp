@@ -220,6 +220,7 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		a = n->Attribute("heightOfs");   if (a)  g_Height = s2r(a);
 	}
 	n = root->FirstChildElement("mrg"); if (n)  {
+		a = n->Attribute("loop");        if (a)  isLooped = s2i(a) > 0;
 		a = n->Attribute("skirtLen");    if (a)  g_SkirtLen = s2r(a);
 		a = n->Attribute("skirtH");      if (a)  g_SkirtH   = s2r(a);
 
@@ -342,6 +343,7 @@ bool SplineRoad::SaveFile(String fname)
 	root.InsertEndChild(dim);
 
 	TiXmlElement mrg("mrg");
+		mrg.SetAttribute("loop",	isLooped ? "1" : "0" );
 		mrg.SetAttribute("skirtLen",	toStrC( g_SkirtLen ));
 		mrg.SetAttribute("skirtH",		toStrC( g_SkirtH ));
 

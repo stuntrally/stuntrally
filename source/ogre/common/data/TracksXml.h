@@ -97,10 +97,9 @@ class CarInfo
 public:
 	std::string id, name;  // id = cars/subdir, name = animal nick
 	std::string type, author;
-	bool car;
 
 	float speed;
-	int n, year, rating;
+	int year, width, rating, diff;
 	
 	//  time mul factors, for race postion, in sim modes
 	float easy, norm;

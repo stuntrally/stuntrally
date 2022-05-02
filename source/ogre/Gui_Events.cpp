@@ -118,6 +118,7 @@ void CGui::tabPlayer(Tab, size_t id)
 			listCarChng(carList, i);
 	}	}
 	carList->setVisible(plr);
+	tbPlr->setIndexSelected(id);  tbPlr2->setIndexSelected(id);
 
 	UpdCarClrSld(false);  // no car color change
 }

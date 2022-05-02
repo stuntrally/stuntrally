@@ -662,7 +662,7 @@ void SplineRoad::createSeg_Meshes(
 
 	//  road
 	AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
-	if (pipeGlass)
+	if (pipeGlass || river)
 		ent->setRenderQueueGroup(RQG_PipeGlass);
 	else
 		ent->setRenderQueueGroup(RQG_Road);
@@ -685,7 +685,7 @@ void SplineRoad::createSeg_Meshes(
 		entB->setRenderQueueGroup(RQG_RoadBlend);
 	}
 
-	if (bCastShadow && !DS.onTer)
+	if (bCastShadow && !DS.onTer && !river)
 		ent->setCastShadows(true);
 
 	
