@@ -148,6 +148,33 @@
 	<Tag name="CarChange">Vehicle change</Tag>
 	<Tag name="Allowed">Allowed</Tag>
 	
+	<!--  Car  Names  from animals  -->
+	<Tag name="Turtle">Turtle</Tag>
+	<Tag name="Elephant">Elephant</Tag>
+	<Tag name="Aligator">Aligator</Tag>
+	<Tag name="Bison">Bison</Tag>
+	<Tag name="Caterpillar">Caterpillar</Tag>
+	<Tag name="Rhino">Rhino</Tag>
+	<Tag name="Bear">Bear</Tag>
+	<Tag name="Coyote">Coyote</Tag>
+	<Tag name="Squirrel">Squirrel</Tag>
+	<Tag name="Fox">Fox</Tag>
+	<Tag name="Hyena">Hyena</Tag>
+	<Tag name="Gorilla">Gorilla</Tag>
+	<Tag name="Lizard">Lizard</Tag>
+	<Tag name="Weasel">Weasel</Tag>
+	<Tag name="Wolf">Wolf</Tag>
+	<Tag name="Scorpion">Scorpion</Tag>
+	<Tag name="Buffalo">Buffalo</Tag>
+	<Tag name="Gazelle">Gazelle</Tag>
+	<Tag name="Jaguar">Jaguar</Tag>
+	<Tag name="Puma">Puma</Tag>
+	<Tag name="Leopard">Leopard</Tag>
+	<Tag name="Beetle">Beetle</Tag>
+	<Tag name="Swan">Swan</Tag>
+	<Tag name="Duck">Duck</Tag>
+	<Tag name="Hawk">Hawk</Tag>
+	<Tag name="Rabbit">Rabbit</Tag>
 
 	<!--  Car  -->
 	<Tag name="Vehicle">Vehicle</Tag>
@@ -1471,7 +1498,10 @@
 
 	<Tag name="CarDesc_SZ">Fastest car meant for gravel. Light and with a powerful engine. Has great aerodynamics and steerability.</Tag>
 	<Tag name="CarDesc_XZ">Very powerful engine fitted car, drivable on most tracks. Not best on bumps because of short and stiff suspension. So much torque also causes more wheels spin.</Tag>
+
+	<Tag name="CarDesc_SX">Very tuned and powerful car. Drivable on all tracks. Not best on bumps. Can spin wheels easily.</Tag>
 	<Tag name="CarDesc_Y7">Extremely fast car. Don't press throttle for too long. Drivable only on fast smooth tracks.</Tag>
+	<Tag name="CarDesc_PH">Another extremely powerful and fast car. Don't press throttle for too long. Drivable only on fast smooth tracks. Due to length and low suspension.</Tag>
 
 	<Tag name="CarDesc_V1">A spaceship reworked as a hovercraft. Very fast and easy to steer. Doesn't care about terrain bumps. But being small does slide sideways.</Tag>
 	<Tag name="CarDesc_V2">Another hovering spaceship. Slightly heavier and slower but doesn't go sideways that easily.</Tag>

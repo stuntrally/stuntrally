@@ -266,7 +266,7 @@ bool TracksXml::LoadIni(string file, bool check)
 
 CarInfo::CarInfo()
 	:id("AA"), name("Other"), type("Other")
-	,speed(5.f), year(2005), rating(5), width(3), diff(3)
+	,speed(5.f), year(2005), wheels(4), rating(5), width(3), diff(3)
 	,easy(0.96f), norm(1.f), author("")
 {	}
 
@@ -311,6 +311,7 @@ bool CarsXml::LoadXml(string file)
 
 		a = eCar->Attribute("s");  if (a)  c.speed = s2r(a);
 		a = eCar->Attribute("y");  if (a)  c.year = s2i(a);
+		a = eCar->Attribute("o");  if (a)  c.wheels = s2i(a);
 		
 		a = eCar->Attribute("r");  if (a)  c.rating = s2i(a);
 		a = eCar->Attribute("w");  if (a)  c.width = s2i(a);

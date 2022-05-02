@@ -117,6 +117,13 @@
 							<Property key="Alpha" value="0.9"/>
 							<UserString key="tip" value="#{Road_OnPipe} %"/>
 						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="170 76 80 22">
+							<Property key="Caption" value="%"/>
+							<Property key="TextColour" value="0.5 0.7 0.7"/>
+							<Property key="Alpha" value="0.8"/>
+							<Property key="FontName" value="font.small"/>
+							<Property key="FontHeight" value="17"/>
+						</Widget>
 
 						<Widget type="ImageBox" skin="ImageBox" position="170 5 32 20">
 							<Property key="ImageCoord" value="0 40 32 20"/>

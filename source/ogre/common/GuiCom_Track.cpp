@@ -62,7 +62,7 @@ const String CGuiCom::getClrSum(int i)    {  return clrsSum   [std::min(iClrsSum
 const int wi = 15;            // id name nm   N  scn ver
 const int CGuiCom::colTrk[33] = {40, 90, 80, 25, 76, 25, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 22, 22, 24};
 #ifndef SR_EDITOR
-const int CGui::colCar[16] = {34, 80, 27, 27, 27, 27, 37, 52, 24};  // car
+const int CGui::colCar[16] = {34, 80, 27, wi, wi, wi, wi, 37, 52, 24};  // car
 const int CGui::colCh [16] = {16, 200, 120, 50, 80, 80, 60, 40};  // champs
 const int CGui::colChL[16] = {16, 180, 90, 100, 50, 60, 60, 60, 50};  // challs
 const int CGui::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
@@ -394,30 +394,38 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	stTrk[ch][1]->setCaption(fToStr(sc->td.fTerWorldSize*0.001f*m ,1,3) + km);
 	if (!rd)  return;
 	float len = rd->st.Length;					//3,5
-	stTrk[ch][0]->setCaption(fToStr(len*0.001f*m ,1,3) + km);
-
-	stTrk[ch][2]->setCaption(fToStr(rd->st.WidthAvg ,1,3) + sm);
-	stTrk[ch][3]->setCaption(fToStr(rd->st.HeightDiff ,0,2) + sm);
-
-	bool h = rd->st.Pipes > 99.f && rd->st.OnTer > 99.f;  // hide bridge 100% when pipe is 100%
+	bool noRd = len < 0.1f;
 	float a;
-	stTrk[ch][4]->setCaption(fToStr(rd->st.OnTer ,0,1)/*+"%"*/);
-	a = h || rd->st.OnTer < 1.f ? 0.f :  (0.5f + 0.5f * rd->st.OnTer / 100.f);
-	stTrk[ch][4]->setAlpha(a);  imStTrk[ch][0]->setAlpha(a);
 	
-	stTrk[ch][5]->setCaption(fToStr(rd->st.Pipes ,0,1)/*+"%"*/);
-	a =      rd->st.Pipes < 1.f ? 0.f :  (0.4f + 0.4f * rd->st.Pipes / 100.f);
-	stTrk[ch][5]->setAlpha(a);  imStTrk[ch][1]->setAlpha(a);
+	if (noRd)  //  hide
+	{	for (int i=0; i < 9; ++i)  if (i != 1)
+			stTrk[ch][i]->setCaption("");
+		for (int i=0; i < 4; ++i)
+			imStTrk[ch][i]->setAlpha(0.f);
+	}else
+	{	stTrk[ch][0]->setCaption(fToStr(len*0.001f*m ,1,3) + km);
 
-	stTrk[ch][6]->setCaption(fToStr(rd->st.bankAvg,0,1)+"\'");
-	stTrk[ch][7]->setCaption(fToStr(rd->st.bankMax,0,1)+"\'");
-	a = std::min(1.f,  0.3f + 0.7f * rd->st.bankMax / 80.f);  //rd->st.bankAvg / 30.f);
-	stTrk[ch][6]->setAlpha(a);  stTrk[ch][7]->setAlpha(a);  imStTrk[ch][2]->setAlpha(a);
+		stTrk[ch][2]->setCaption(fToStr(rd->st.WidthAvg ,1,3) + sm);  // width
+		stTrk[ch][3]->setCaption(fToStr(rd->st.HeightDiff ,0,2) + sm);  // h
 
-	stTrk[ch][8]->setCaption(fToStr(rd->st.OnPipe,0,1)/*+"%"*/);
-	a = rd->st.OnPipe < 0.1f ? 0.f : (0.5f + 0.5f * rd->st.OnPipe / 100.f);
-	stTrk[ch][8]->setAlpha(a);  imStTrk[ch][3]->setAlpha(a);
+		bool h = rd->st.Pipes > 99.f && rd->st.OnTer > 99.f;  // hide bridge 100% when pipe is 100%
+		stTrk[ch][4]->setCaption(fToStr(rd->st.OnTer ,0,1));  // %
+		a = h || rd->st.OnTer < 1.f ? 0.f :  (0.5f + 0.5f * rd->st.OnTer / 100.f);
+		stTrk[ch][4]->setAlpha(a);  imStTrk[ch][0]->setAlpha(a);
+		
+		stTrk[ch][5]->setCaption(fToStr(rd->st.Pipes ,0,1));  // %
+		a =      rd->st.Pipes < 1.f ? 0.f :  (0.4f + 0.4f * rd->st.Pipes / 100.f);
+		stTrk[ch][5]->setAlpha(a);  imStTrk[ch][1]->setAlpha(a);
 
+		stTrk[ch][6]->setCaption(fToStr(rd->st.bankAvg,0,1)+"°");  // angles degrees
+		stTrk[ch][7]->setCaption(fToStr(rd->st.bankMax,0,1)+"°");
+		a = std::min(1.f,  0.3f + 0.7f * rd->st.bankMax / 80.f);  //rd->st.bankAvg / 30.f);
+		stTrk[ch][6]->setAlpha(a);  stTrk[ch][7]->setAlpha(a);  imStTrk[ch][2]->setAlpha(a);
+
+		stTrk[ch][8]->setCaption(fToStr(rd->st.OnPipe,0,1));  // %
+		a = rd->st.OnPipe < 0.1f ? 0.f : (0.5f + 0.5f * rd->st.OnPipe / 100.f);
+		stTrk[ch][8]->setAlpha(a);  imStTrk[ch][3]->setAlpha(a);
+	}
 	#ifndef SR_EDITOR
 	if (app->gui->txTrackAuthor)
 		app->gui->txTrackAuthor->setCaption("");  // user trks
@@ -470,14 +478,14 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	bool noTrk = timeTrk < 2.f;
 	std::string speedTrk = fToStr(len / timeTrk * m, 0,3) + unit;
 	float timeT = (/*place*/1 * app->scn->data->cars->magic * timeTrk + timeTrk) / carMul;
-	bool no = timeCur < 0.1f || !rd;
-	if (ch==1)  no = false;  // show track's not current
+	bool noTm = timeCur < 0.1f || !rd;
+	if (ch==1)  noTm = false;  // show track's not current
 
 	stTrk[ch][9]->setCaption(StrTime(noTrk ? 0.f : timeT));
 	stTrk[ch][10]->setCaption(noTrk ? "--" : speedTrk);
 
 	if (ch==0)
-	if (no)
+	if (noTm)
 	{	stTrk[ch][11]->setCaption(StrTime(0.f));
 		stTrk[ch][12]->setCaption("--");
 		stTrk[ch][13]->setCaption("--");

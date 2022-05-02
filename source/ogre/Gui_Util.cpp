@@ -100,12 +100,13 @@ void CGui::AddCarL(string name, const CarInfo* ci)
 	String clr = data->cars->colormap[ci->type];  if (clr.length() != 7)  clr = "#C0D0E0";
 	
 	li->addItem(clr+ name);  int l = li->getItemCount()-1;
-	li->setSubItemNameAt(1,l, clr+ ci->name);
+	li->setSubItemNameAt(1,l, clr+ TR("#{"+ ci->name +"}"));
 	li->setSubItemNameAt(2,l, gcom->getClrDiff(ci->speed *0.9f)+ fToStr(ci->speed,1,3));
 	li->setSubItemNameAt(3,l, gcom->getClrRating(ci->rating)+ " "+toStr(ci->rating));
 	li->setSubItemNameAt(4,l, gcom->getClrDiff(ci->diff )+ " "+toStr(ci->diff));
 	li->setSubItemNameAt(5,l, gcom->getClrLong(ci->width *2.f)+ " "+toStr(ci->width));
-	li->setSubItemNameAt(6,l, clr+ toStr(ci->year));
+	li->setSubItemNameAt(6,l, gcom->getClrSum(ci->wheels *2.f)+ " "+toStr(ci->wheels));
+	li->setSubItemNameAt(7,l, gcom->getClrRating(min(4, max(0,1+(ci->year-1990)/10))) + toStr(ci->year));
 	//li->setSubItemNameAt(7,l, clr+ TR("#{CarType_"+ci->type+"}"));
 }
 
@@ -239,10 +240,14 @@ void CGui::listCarChng(MultiList2* li, size_t)
 		txCarAuthor->setCaption(ci.author);
 		txCarSpeed->setCaption(gcom->getClrDiff(ci.speed*0.9f)+ fToStr(ci.speed,1,3));
 		txCarType->setCaption(data->cars->colormap[ci.type]+ TR("#{CarType_"+ci.type+"}"));
-		txCarYear->setCaption(toStr(ci.year));
+		txCarYear->setCaption(gcom->getClrRating(min(4, max(0,1+(ci.year-1990)/10))) + toStr(ci.year));
+		
+		txCarWidth->setCaption(gcom->getClrLong(ci.width *2)+ toStr(ci.width));
+		txCarDiff->setCaption(gcom->getClrDiff(ci.diff)+ toStr(ci.diff) +TR("  #{Diff"+toStr(ci.diff)+"}"));
+		txCarRating->setCaption(gcom->getClrRating(ci.rating)+ toStr(ci.rating));
 
 		if (ci.type == "Spaceship" || ci.type == "Other")
-		{	sd += TR("#E0E060 #{CarDesc_Pipes}");  car = false;  }
+		{	car = false;  sd += TR("#E0E060 \n#{CarDesc_Pipes}");  }
 
 		float v = std::max(0.f, 1.f - ci.speed/13.f);
 		barCarSpeed->setImageCoord(IntCoord(v*128.f,0,128,16));

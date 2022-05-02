@@ -377,6 +377,7 @@ public:
 	Img barCarSt[iCarSt];
 	Txt txCarStTxt[iCarSt], txCarStVals[iCarSt],
 		txCarSpeed, txCarType, txCarYear,
+		txCarRating, txCarDiff, txCarWidth,
 		txCarAuthor,txTrackAuthor;
 	Img barCarSpeed;
 	Tab tbPlr,tbPlr2;

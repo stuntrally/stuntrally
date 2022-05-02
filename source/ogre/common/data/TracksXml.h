@@ -99,7 +99,7 @@ public:
 	std::string type, author;
 
 	float speed;
-	int year, width, rating, diff;
+	int year, wheels, width, rating, diff;
 	
 	//  time mul factors, for race postion, in sim modes
 	float easy, norm;
