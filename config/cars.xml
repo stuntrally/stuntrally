@@ -23,9 +23,8 @@
 	<car id="MO"  o="4" m="Rhino"       v="2.7" r="1" w="6" d="6" s="3.5" y="2005" t="Extreme"   e="0.77" n="0.85"  a="aleksandr.yatsenco" />
 	<car id="UV"  o="4" m="Bear"        v="2.1" r="2" w="5" d="5" s="4.0" y="2008" t="Extreme"   e="0.87" n="0.965" a="greyoxide" />
  
-	<car id="FN"  o="4" m="Coyote"      v="2.4" r="3" w="3" d="3" s="5.5" y="2000" t="Gravel"    e="1.00" n="1.005" a="Neubi" />
+	<car id="FN"  o="4" m="Coyote"      v="2.4" r="2" w="3" d="3" s="5.5" y="2000" t="Gravel"    e="1.00" n="1.005" a="Neubi" />
 	<car id="S8"  o="4" m="Squirrel"    v="2.0" r="3" w="3" d="3" s="6.0" y="2008" t="Gravel"    e="0.96" n="1.00"  a="lubomircenovsky" />
-	<car id="S1"  o="4" m="Snake-"      v="1.8" r="3" w="3" d="3" s="6.1" y="2005" t="Gravel"    e="0.98" n="1.005" a="(Super Racing)" />
 	<car id="ES"  o="4" m="Fox"         v="1.2" r="4" w="3" d="3" s="6.1" y="2006" t="Gravel"    e="1.00" n="1.01"  a="VeTi" />
 	<car id="HI"  o="4" m="Hyena"       v="2.7" r="5" w="3" d="3" s="6.2" y="2014" t="Gravel"    e="1.00" n="1.01"  a="ANDREO12" />
  
@@ -35,20 +34,19 @@
  
 	<car id="SZ"  o="4" m="Weasel"      v="2.4" r="4" w="3" d="3" s="8.0" y="1996" t="Gravel"    e="0.97" n="1.03"  a="cobe571" />
 	<car id="XZ"  o="4" m="Wolf"        v="2.0" r="4" w="3" d="3" s="8.4" y="2007" t="Asphalt"   e="1.02" n="1.04"  a="Neubi" />
-	<car id="SX"  o="4" m="Jaguar"      v="2.0" r="5" w="3" d="3" s="8.5" y="2017" t="Asphalt"   e="1.02" n="1.04"  a="Socksthecat" />
- 
-<!--<car id="Y3"  o="4" m="Cheetah"     v="2.6" r="3" w="3" d="3" s="8.8" y="2013" t="Asphalt"   e="1.06" n="1.05"  a="todo.." />-->
-	<car id="PH"  o="4" m="Puma"        v="2.7" r="4" w="3" d="4" s="8.8" y="2017" t="Asphalt"   e="1.06" n="1.05"  a="Abhay Singh" />
-	<car id="Y7"  o="4" m="Leopard"     v="2.6" r="4" w="3" d="4" s="8.8" y="2013" t="Asphalt"   e="1.06" n="1.05"  a="hasapeta" />
- 
- 
+
 	<car id="3B"  o="3" m="Scorpion"    v="2.7" r="2" w="6" d="6" s="8.5" y="2773" t="Extreme"   e="1.00" n="1.025" a="Valery Kharitonov" />
 	<car id="BV"  o="2" m="Buffalo"     v="2.6" r="3" w="2" d="3" s="8.6" y="2381" t="Extreme"   e="1.01" n="1.04"  a="gakpoenya" />
 	<car id="BE"  o="2" m="Gazelle"     v="2.7" r="3" w="1" d="3" s="8.6" y="2334" t="Gravel"    e="1.01" n="1.04"  a="TooManyDemons" />
-    <car id="U6"  o="6" m="Beetle"      v="2.7" r="3" w="4" d="3" s="9.0" y="2412" t="Extreme"   e="1.01" n="1.04"  a="gakpoenya, carlospanganiban, CryHam" />
+
+	<car id="SX"  o="4" m="Jaguar"      v="2.0" r="5" w="3" d="3" s="8.7" y="2017" t="Asphalt"   e="1.02" n="1.04"  a="Socksthecat" />
+	<car id="PH"  o="4" m="Puma"        v="2.7" r="4" w="3" d="4" s="8.8" y="2017" t="Asphalt"   e="1.06" n="1.05"  a="Abhay Singh" />
+	<car id="Y7"  o="4" m="Leopard"     v="2.6" r="4" w="3" d="4" s="8.8" y="2013" t="Asphalt"   e="1.06" n="1.05"  a="hasapeta" />
+ 
+    <car id="U6"  o="6" m="Beetle"      v="2.7" r="3" w="4" d="4" s="9.0" y="2412" t="Extreme"   e="1.01" n="1.04"  a="gakpoenya, carlospanganiban, CryHam" />
 
 	<car id="V2"  o="0" m="Swan"        v="2.4" r="3" w="2" d="3" s="9.4" y="2516" t="Spaceship" e="1.00" n="1.13"  a="sypro" />
-	<car id="V1"  o="0" m="Duck"        v="2.4" r="3" w="2" d="3" s="9.6" y="2523" t="Spaceship" e="1.04" n="1.16"  a="benja" />
+	<car id="V1"  o="0" m="Duck"        v="2.4" r="2" w="2" d="3" s="9.6" y="2523" t="Spaceship" e="1.04" n="1.16"  a="benja" />
 	<car id="V3"  o="0" m="Hawk"        v="2.4" r="3" w="2" d="3" s="9.8" y="2548" t="Spaceship" e="1.10" n="1.20"  a="jumahsafarty" />
 
 	<car id="O"   o="1" m="Rabbit"      v="2.4" r="4" w="2" d="3" s="10.2" y="2785" t="Other"    e="1.10" n="1.17"  a="CryHam" />
