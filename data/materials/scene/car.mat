@@ -887,3 +887,40 @@ material BE_wheel
 	diffuse 0.6 0.6 0.6
 	specular 0.2 0.2 0.2  4
 }
+
+
+//  SX  -------------------------------
+material SX_glass
+{
+	parent car_glass
+	diffuseMap SX_glass.png
+}
+material SX_interior
+{
+	parent car_base
+	diffuseMap SX_interior.png
+	ambient 0.5 0.5 0.5
+	diffuse 0.5 0.5 0.5
+	specular 0.2 0.2 0.2 12
+}
+material SX_exterior
+{
+	parent car_base
+	diffuseMap SX_exterior.png
+	ambient 0.5 0.5 0.5
+	diffuse 0.5 0.5 0.5
+	specular 0.5 0.5 0.5 24
+}
+material SX_wheel
+{
+	parent car_base
+	diffuseMap SX_wheel.png
+	normalMap flat_n.png
+	specMap SX_wheel_spec.png
+	reflMap SX_wheel_refl.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.7 0.7 0.7
+	specular 1 1 1 24
+	env_map true
+	refl_amount 0.2
+}

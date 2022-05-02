@@ -101,7 +101,7 @@ void CGui::AddCarL(string name, const CarInfo* ci)
 	
 	li->addItem(clr+ name);  int l = li->getItemCount()-1;
 	li->setSubItemNameAt(1,l, clr+ TR("#{"+ ci->name +"}"));
-	li->setSubItemNameAt(2,l, gcom->getClrDiff(ci->speed *0.9f)+ fToStr(ci->speed,1,3));
+	li->setSubItemNameAt(2,l, gcom->getClrDiff(ci->speed *0.76f)+ fToStr(ci->speed,1,3));
 	li->setSubItemNameAt(3,l, gcom->getClrRating(ci->rating)+ " "+toStr(ci->rating));
 	li->setSubItemNameAt(4,l, gcom->getClrDiff(ci->diff )+ " "+toStr(ci->diff));
 	li->setSubItemNameAt(5,l, gcom->getClrLong(ci->width *2.f)+ " "+toStr(ci->width));
@@ -238,7 +238,7 @@ void CGui::listCarChng(MultiList2* li, size_t)
 	{	const CarInfo& ci = data->cars->cars[id-1];
 
 		txCarAuthor->setCaption(ci.author);
-		txCarSpeed->setCaption(gcom->getClrDiff(ci.speed*0.9f)+ fToStr(ci.speed,1,3));
+		txCarSpeed->setCaption(gcom->getClrDiff(ci.speed *0.76f)+ fToStr(ci.speed,1,3));
 		txCarType->setCaption(data->cars->colormap[ci.type]+ TR("#{CarType_"+ci.type+"}"));
 		txCarYear->setCaption(gcom->getClrRating(min(4, max(0,1+(ci.year-1990)/10))) + toStr(ci.year));
 		
