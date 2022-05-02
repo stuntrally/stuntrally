@@ -346,7 +346,7 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 
 	string file = PATHMANAGER::TrkGhosts()+"/"+ track + sRev + ".gho";
 	if (!PATHMANAGER::FileExists(file))
-		LogO("Pace trk gho not found: "+file);/**/
+		LogO("Pace trk gho not found: "+file);
 	else
 	{	gho.LoadFile(file, false);
 		num = gho.getNumFrames();

@@ -97,6 +97,11 @@ void CarModel::ResetChecks(bool bDist)  // needs to be done after road load!
 	iNextChk = pSet->game.trackreverse ? road->iChkId1Rev : road->iChkId1;
 	UpdNextCheck();
 
+	//LogO("ResetChecks");
+	SplineRoad* trail = pApp->scn->trail;
+	if (trail)  // +
+		trail->trailSegId = 0;
+
 	//  percent const  ------
 	if (bDist && !road->mChks.empty())
 	{

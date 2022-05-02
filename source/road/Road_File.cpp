@@ -16,15 +16,14 @@ using namespace tinyxml2;
 //  ctor
 //---------------------------------------------------------------------------------------------------------------
 #ifdef SR_EDITOR
-SplineRoad::SplineRoad(App* papp) : pApp(papp),
+SplineRoad::SplineRoad(App* papp) : pApp(papp)
 #else
-SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
+SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame)
 #endif
-	posHit(Vector3::UNIT_SCALE), bHitTer(0),
-	idStr(0),
-	fLodBias(1.f),
-	bCastShadow(0), bRoadWFullCol(0),
-	ed_Wadd(0.f),ed_Wmul(1.f)
+	,posHit(Vector3::UNIT_SCALE), bHitTer(0)
+	,idStr(0), fLodBias(1.f)
+	,bCastShadow(0), bRoadWFullCol(0)
+	,ed_Wadd(0.f),ed_Wmul(1.f)
 {
 	Defaults();
 	st.Reset();
@@ -32,7 +31,7 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame),
 }
 void SplineRoad::Defaults()
 {
-	river = false;
+	river = false;  trail = false;  trailSegId = -1;
 	sTxtDesc = "";  fScRot = 1.8f;  fScHit = 0.8f;
 	for (int i=0; i<MTRs; ++i)
 	{	sMtrRoad[i] = "";  sMtrPipe[i] = "";  bMtrPipeGlass[i] = true;  }
@@ -78,7 +77,7 @@ void SplineRoad::ToggleMerge()
 
 ///  update road lods visibility
 //--------------------------------------------------------------------------------------------------------
-void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
+void SplineRoad::UpdLodVis(float fBias, bool bFull)
 {
 	st.iVis = 0;  st.iTris = 0;
 	const Real fDist[LODs+1] = {-g_VisBehind, 40, 80, 140, g_VisDist};  //par gui bias..
@@ -104,6 +103,9 @@ void SplineRoad::UpdLodVis(/*Camera* pCam,*/ float fBias, bool bFull)
 			bool vis;
 			if (bFull)  vis = i==0;  else  // all in 1st lod for preview
 			vis = d >= fDist[i] * fBias && d < fDist[i+1] * fBias;  // normal
+			if (trailSegId >= 0 && vis && 
+				abs(trailSegId - int(seg)) > 50)  //par..
+				vis = false;
 			/*if (bMerge)  vis = rs.mrgLod == i;  // vis mrg test-
 			else  vis = i == 3;  /**/// check lod 0
 			

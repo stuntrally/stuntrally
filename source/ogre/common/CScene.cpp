@@ -18,7 +18,7 @@ CScene::CScene(App* app1)
 	,terrain(0), mTerrainGroup(0), mTerrainGlobals(0)
 	,horizon(0), mHorizonGroup(0), mHorizonGlobals(0)
 	,mWaterRTT(0)
-	,road(0), pace(0)
+	,road(0), pace(0), trail(0)
 {
 	data = new CData();
 	sc = new Scene();
@@ -51,9 +51,15 @@ void CScene::DestroyRoads()
 
 void CScene::DestroyPace()
 {
-	if (!pace)  return;
-	pace->Destroy();
-	delete pace;  pace = 0;
+	if (pace)
+	{	pace->Destroy();
+		delete pace;  pace = 0;
+	}
+	if (trail)
+	{	trail->Destroy();
+		delete trail;  trail = 0;
+	}
+	mapChkTrl.clear();
 }
 
 

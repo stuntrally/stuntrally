@@ -295,17 +295,22 @@ void SplineRoad::BuildSeg(
 
 			}else if (vis)
 			{
+				Vector4 c;
 				///  color  for minimap preview
 				//  ---~~~====~~~---
-				Real brdg = min(1.f, std::abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
-				Real h = max(0.f, 1.f - std::abs(vP.y - yTer) / 30.f);  // for grass dens tex
-				
-				bool onP = mP[seg].onPipe > 0;  // FIXME: on pipe road prv
-				float pp = fPipe;//*0.5f + (onP ? 0.5f : 0.f);  // put onP in pipe
-				
-				Vector4 c(brdg, pp, 1.f, h);
-				Vector2 vtc(tcw * 1.f /**2p..*/, tcL);
+				if (!trail)
+				{
+					Real brdg = min(1.f, std::abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
+					Real h = max(0.f, 1.f - std::abs(vP.y - yTer) / 30.f);  // for grass dens tex
+					
+					bool onP = mP[seg].onPipe > 0;  // FIXME: on pipe road prv
+					float pp = fPipe;//*0.5f + (onP ? 0.5f : 0.f);  // put onP in pipe
+					
+					c = Vector4(brdg, pp, mP[seg].notReal ? 0.f : 1.f, h);
+				}else
+					c = (float(i)/il) * (mP[seg1].clr - mP[seg].clr) + mP[seg].clr;
 
+				Vector2 vtc(tcw * 1.f /**2p..*/, tcL);
 
 				//>  data road
 				DLM.pos.push_back(vP);   DLM.norm.push_back(vN);
@@ -461,7 +466,8 @@ void SplineRoad::BuildSeg(
 		}
 
 		//  bullet trimesh  at lod 0
-		if (DL.isLod0 && blt /*&& !river*/)  /// todo:
+		if (DL.isLod0 && blt && !river)  /// todo:
+		//if (DL.isLod0 && blt && !trail)  /// todo:
 			createSeg_Collision(DLM,DS);
 	}
 }
@@ -662,10 +668,11 @@ void SplineRoad::createSeg_Meshes(
 
 	//  road
 	AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
-	if (pipeGlass || river)
-		ent->setRenderQueueGroup(RQG_PipeGlass);
-	else
-		ent->setRenderQueueGroup(RQG_Road);
+	ent->setRenderQueueGroup(
+		trail ? RQG_Hud1 :
+		pipeGlass || river ? RQG_PipeGlass : RQG_Road);
+	if (trail)
+		ent->setVisibilityFlags(RV_Hud);
 
 	if (wall)
 	{

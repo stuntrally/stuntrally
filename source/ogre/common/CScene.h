@@ -64,7 +64,10 @@ public:
 	//  Road
 	int rdCur = 0;  // cur
 	std::vector<SplineRoad*> roads;
-	SplineRoad* road = 0;
+	SplineRoad* road = 0;  // main
+	std::map<int,int> mapChkTrl;
+	
+	SplineRoad* trail = 0;  // driving aids
 	PaceNotes* pace = 0;
 	void DestroyRoads(), DestroyPace();
 

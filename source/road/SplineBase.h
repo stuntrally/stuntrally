@@ -1,6 +1,7 @@
 #pragma once
 #include <deque>
 #include <OgreVector3.h>
+#include <OgreVector4.h>
 
 namespace Ogre {  class Terrain;  class SceneNode;  }
 
@@ -33,6 +34,7 @@ public:
 	Ogre::Real aYaw,aRoll;  // working angles (from auto)
 	Ogre::Real tYaw,tRoll;  //- angles+tan interp, not used yet
 	Ogre::Real aY,aR;   // after prepass+
+	Ogre::Vector4 clr;  // trail color
 
 	//  on/off
 	bool onTer;   // sticked on terrain

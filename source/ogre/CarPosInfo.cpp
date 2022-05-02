@@ -258,7 +258,7 @@ void ReplayFrame2::FromCar(const CAR* pCar, half prevHitTime)
 		int idPar = -1;
 		if (inFl)
 		{	const FluidBox* fb = *cd.inFluidsWh[w].begin();
-			idPar = fb->idParticles;  }
+			idPar = fb ? fb->idParticles : -1;  }
 		wh.whP = idPar;
 		wh.whSteerAng = cd.wheel[w].GetSteerAngle();
 		wheels.push_back(wh);

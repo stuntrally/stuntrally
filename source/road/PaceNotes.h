@@ -70,9 +70,6 @@ public:
 	void Update(PaceNote& n), UpdateTxt(PaceNote& n), UpdTxt();
 	void Reset();
 	
-	//  pacenotes.xml
-	bool LoadFile(Ogre::String fname), SaveFile(Ogre::String fname);
-
 	//  Update
 	void UpdVis(Ogre::Vector3 carPos, bool hide=false);
 	void updTxt(PaceNote& n, bool vis);

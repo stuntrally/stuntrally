@@ -1,8 +1,10 @@
+#include "SplineBase.h"
 #include "pch.h"
 #include "common/Def_Str.h"
 #include "common/RenderConst.h"
 #include "common/data/CData.h"
 #include "common/data/SceneXml.h"
+#include "../ogre/common/Axes.h"
 #include "common/CScene.h"
 #include "common/GuiCom.h"
 #include "CGame.h"
@@ -843,7 +845,7 @@ void App::CreateRoads()
 		scn->pace->Setup(mSceneMgr, cam, scn->terrain, gui->mGui, mWindow);
 	}
 
-	
+
 	//  after road load we have iChk1 so set it for carModels
 	for (int i=0; i < carModels.size(); ++i)
 		carModels[i]->ResetChecks(true);
@@ -867,6 +869,10 @@ void App::CreateRoads()
 		road->RebuildRoadPace();  //todo: load only..
 		scn->pace->Rebuild(road, scn->sc, pSet->game.trackreverse);
 	}
+
+
+	if (dstTrk)
+		CreateTrail(cam);
 }
 
 
@@ -874,6 +880,7 @@ void App::CreateRoadsInt()
 {
 	Camera* cam = *mSplitMgr->mCameras.begin();
 
+	//  get all road*.xml
 	strlist lr;  string path = gcom->TrkDir();
 	PATHMANAGER::DirList(path, lr, "xml");
 	
@@ -890,4 +897,95 @@ void App::CreateRoadsInt()
 
 	scn->rdCur = 0;
 	scn->road = scn->roads[scn->rdCur];
+}
+
+
+///  Trail ghost track  ~~--~-~--
+//---------------------------------------------------------------------------------------------------------------
+
+void App::CreateTrail(Camera* cam)
+{
+	//  load
+	TrackGhost gho;
+	int num = 0;
+
+	string sRev = pSet->game.trackreverse ? "_r" : "";
+	string file = PATHMANAGER::TrkGhosts()+"/"+ pSet->game.track + sRev + ".gho";
+	if (!PATHMANAGER::FileExists(file))
+		LogO("Trail trk gho not found: "+file);
+	else
+	{	gho.LoadFile(file, false);
+		num = gho.getNumFrames();
+	}
+	if (num == 0 || !scn->terrain)  return;
+
+
+	//  setup trail road
+	SplineRoad* tr = new SplineRoad(pGame);
+	tr->Setup("", 0.7, scn->terrain, mSceneMgr, cam, 100);
+	tr->sMtrRoad[0] = "trailRoad";
+	tr->river = true;  tr->trail = true;  tr->isLooped = false;
+
+	tr->g_LenDim0 = 2.f;  tr->g_iWidthDiv0 = 2;
+	tr->g_MergeLen = 100.f;  tr->g_LodPntLen = 50.f;  tr->bMerge = true;
+	tr->g_VisDist = 100.f;  tr->g_VisBehind = 100.f;
+	tr->newP.onTer = false;
+	tr->newP.aType = AT_Both;
+
+	//  params  smooth low
+	const float dd = 10*10, down = 0.5f, al = 0.6f,
+		acc_sens = 30.f, acc_sensw = 45.f;
+
+	//  add points
+	Vector3 pos, old;  float tOld = 0.f, vOld = 0.f;
+	for (int i=0; i < num; ++i)
+	{
+		const TrackFrame& fr = gho.getFrame0(i);
+		Axes::toOgre(pos, fr.pos);  pos.y -= down;
+		if (i==0)  old = pos;
+
+		float d = old.squaredDistance(pos);
+		if (d > dd)
+		{	d = sqrt(d);
+
+			float t = fr.time, dt = t - tOld;
+			float vel = d / dt * 3.6f;  // kmh
+			float acc = (vel - vOld) / dt;
+			LogO(toStr(i) + " v " + fToStr(vel) + " a " + fToStr(acc));
+			
+			//  if ghost car in any road check, save it for trail point id
+			int i=0;
+			for (auto ck : scn->road->mChks)
+			{
+				if (/*ck.trailSegId < 0 &&*/ pos.squaredDistance(ck.pos) < ck.r2)
+				{	//ck.trailSegId = tr->getNumPoints();
+					//if (!scn->mapChkTrl[i+1])  //?
+						scn->mapChkTrl[i+1] = tr->getNumPoints();
+					//LogO("in ck "+toStr(i)+" r "+toStr(ck.r) + " n " + toStr(tr->getNumPoints()));
+				}	++i;
+			}
+
+			float a = max(-1.f, min(1.f, acc / acc_sens));
+			float aw = max(-1.f, min(1.f, acc / acc_sensw));
+			//tr->newP.width = 0.5f - a * 0.3f;  // par big
+			tr->newP.width = 0.3f - aw * 0.15f;  // par sm
+			tr->newP.pos = pos;  
+
+			//auto q = Axes::toOgre(fr.rot);
+			//tr->newP.mRoll = q.getRoll().valueDegrees();  //-
+			tr->newP.mRoll = fr.steer/127.f * 10.f;  //?
+
+			tr->newP.clr = a > 0.f ?
+				Vector4(1.f - a, 1.f, 0.f, al) :  // accel
+				Vector4(1.f + aw*aw*0.5f, 1.f + a, 0.f, al);  // brake clr
+
+			if (vel < 600.f)  // end jmp err
+				tr->Insert(INS_End);
+			
+			old = pos;  tOld = t;  vOld = vel;
+	}	}
+
+	tr->Rebuild(true);
+	tr->RebuildRoadInt();
+	scn->trail = tr;
 }

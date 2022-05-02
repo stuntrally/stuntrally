@@ -631,8 +631,11 @@
 #endif
 
 
-#if ROAD_BLEND 
+#if ROAD_BLEND
 		shOutputColour(0).a *= vertexColour.b;
+#endif
+#if ROAD_BLEND && VERTEX_COLOUR
+		shOutputColour(0) = vertexColour;
 #endif
 
 #if SELECTED_GLOW

@@ -412,6 +412,10 @@ bool App::frameStart(Real time)
 					roadUpdTm = 0.f;
 					for (auto r:scn->roads)
 						r->UpdLodVis(pSet->road_dist);
+					
+					//  trail upd lods
+					if (scn->trail)
+						scn->trail->UpdLodVis();
 				}
 			}
 			//PROFILER.endBlock("g.road");

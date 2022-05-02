@@ -8,6 +8,7 @@
 #include "../sound/SoundMgr.h"
 #include "../sound/SoundBase.h"
 #include "../road/PaceNotes.h"
+#include "../road/Road.h"
 #include "common/data/SceneXml.h"
 #include "common/CScene.h"
 #include "common/GraphView.h"
@@ -411,8 +412,12 @@ void App::GraphsNewVals()				// Game
 			CarModel* cm = carModels[0];
 			graphs[0]->UpdTitle("Pacenotes\n"
 				"#E0F0FF cur "+toStr(scn->pace->iCur)+"  all "+toStr(scn->pace->iAll)+"  st "+toStr(scn->pace->iStart));
-			graphs[1]->UpdTitle("\nCheckpoints  #F0F0D0 in "+iToStr(cm->iInChk,2)+(cm->bInSt?" inSt":"")+"\n"+
-				" cur "+iToStr(cm->iCurChk,2)+" next "+iToStr(cm->iNextChk,2)+" all "+iToStr(cm->iNumChks,2));
+			graphs[1]->UpdTitle("\nCheckpoints  #F0F0D0 in "+iToStr(cm->iInChk,2)+" C "+
+				(cm->iInChk >= 0 ? toStr(scn->mapChkTrl[cm->iInChk]-1) : "")+ //toStr(scn->road->mChks[cm->iInChk].trailSegId) : "-")+
+				(cm->bInSt?" inSt":"")+"\n"+
+				" cur "+iToStr(cm->iCurChk,2)+" next "+iToStr(cm->iNextChk,2)+" all "+iToStr(cm->iNumChks,2)+"\n"+
+				(!scn->trail ? "No trail" :
+				"Trail  #F0D0A0 all "+toStr(scn->trail->getNumPoints())+ " id "+ toStr(scn->trail->trailSegId) ));
 		}	break;
 		
 	case Gh_Fps:  /// fps

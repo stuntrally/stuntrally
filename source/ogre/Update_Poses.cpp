@@ -381,7 +381,11 @@ void App::newPoses(float time)  // time only for camera update
 								//  save car pos and rot
 								carM->pCar->SavePosAtCheck();
 								carM->updTimes = true;
-	
+
+								//  trail  next start>
+								if (scn->trail && scn->mapChkTrl[i])
+									scn->trail->trailSegId = scn->mapChkTrl[i]-1; //cs.trailSegId; //-
+
 								if (pSet->snd_chk && locar)
 									pGame->snd_chk->start();  //)
 							}

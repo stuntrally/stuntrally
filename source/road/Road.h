@@ -68,7 +68,10 @@ public:
 	#endif
 	virtual ~SplineRoad();
 	void Defaults();
+	
 	bool river;  // has no wall, column, no _ter materials
+	bool trail;  // as river, but has colors per vertex
+	int trailSegId;  // for current road trace only
 
 	//  File
 	bool LoadFile(Ogre::String fname, bool build=true), SaveFile(Ogre::String fname);
@@ -80,7 +83,7 @@ public:
 
 
 	//  Update
-	void UpdLodVis(/*Camera* pCam,*/ float fBias=1.f, bool bFull=false);
+	void UpdLodVis(float fBias=1.f, bool bFull=false);
 	void UpdLodVisMarks(Ogre::Real distSq, bool vis=false);
 	void SetForRnd(Ogre::String sMtr), UnsetForRnd();
 

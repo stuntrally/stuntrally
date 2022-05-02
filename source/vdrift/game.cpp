@@ -422,6 +422,7 @@ void GAME::Tick(double deltat)
 		deltat = maxtime;
 		
 	//.  dont simulate before /network start
+	if (!app)  return;
 	bool sim = app->iLoad1stFrames == -2 && (!timer.waiting || timer.end_sim);
 
 	//  speed up perf test

@@ -70,6 +70,30 @@ material road_terrain
 }
 
 
+//  trail ghost  ~~--~-~--
+material trailRoad
+{
+	parent base
+	scene_blend alpha_blend
+	vertex_colour true
+	road_blend true
+	alphaMap white.png
+
+	depth_bias 3
+	depth_check off
+	//depth_write off
+	cull_hardware none
+	fog_override true
+	twoside_diffuse true
+	receives_shadows false
+
+	diffuseMap white.png
+	ambient 1 1 1
+	diffuse 0 0 0
+	specular 0 0 1 32
+}
+
+
 //  Jungle  ----
 material roadJungle
 {
