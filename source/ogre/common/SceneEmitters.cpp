@@ -79,7 +79,7 @@ void CScene::DestroyEmitters(bool clear)
 void App::UpdEmtBox()
 {
 	int emts = scn->sc->emitters.size();
-	bool vis = edMode == ED_Particles && emts > 0 && !bMoveCam;
+	bool vis = edMode == ED_Particles && emts > 0 && !bMoveCam && bParticles;
 	if (emts > 0)
 		iEmtCur = std::max(0, std::min(iEmtCur, emts-1));
 

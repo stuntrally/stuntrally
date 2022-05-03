@@ -43,7 +43,7 @@ App::App(SETTINGS* pSet1)
 	,objSim(0), objEd(EO_Move)
 	,inst(0)
 	//  emts
-	,ndEmtBox(0),entEmtBox(0)
+	,ndEmtBox(0),entEmtBox(0), bParticles(1)
 	,iEmtCur(-1),iEmtNew(0), emtEd(EO_Move), bRecreateEmitters(0)
 {
 	pSet = pSet1;

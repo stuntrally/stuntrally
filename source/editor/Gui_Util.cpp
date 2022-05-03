@@ -78,20 +78,8 @@ void CGui::SetGuiFromXmls()
 	tabGrLayers(tabsGrLayers, idGrLay);
 	tabPgLayers(tabsPgLayers, idPgLay);
 
-	//  [Road]
-	//-----------------------------------------------
-	SplineRoad* rd = scn->road;
-	for (int i=0; i < 4/*MTRs*/; ++i)
-	{	btnRoad[i]->setCaption(rd->sMtrRoad[i]);
-		_Cmb(cmbPipeMtr[i], rd->sMtrPipe[i]);  }
-	_Cmb(cmbRoadWMtr, rd->sMtrWall);  _Cmb(cmbRoadColMtr, rd->sMtrCol);
-	_Cmb(cmbPipeWMtr, rd->sMtrWallPipe);
+	SetGuiRoadFromXml();
 
-	_Ed(RdHeightOfs, rd->g_Height);
-	_Ed(RdSkirtLen, rd->g_SkirtLen);  _Ed(RdSkirtH, rd->g_SkirtH);
-	SldUpd_Road();
-	ckRoad1Mtr.Upd();
-	
 	//  [Game]
 	//-----------------------------------------------
 	ckDenyReversed.Upd(&sc->denyReversed);
@@ -107,6 +95,23 @@ void CGui::SetGuiFromXmls()
 	listSurf(surfList, idSurf);
 	
 	bGI = true;
+}
+
+void CGui::SetGuiRoadFromXml()
+{
+	//  [Road]
+	//-----------------------------------------------
+	SplineRoad* rd = scn->road;
+	for (int i=0; i < 4/*MTRs*/; ++i)
+	{	btnRoad[i]->setCaption(rd->sMtrRoad[i]);
+		_Cmb(cmbPipeMtr[i], rd->sMtrPipe[i]);  }
+	_Cmb(cmbRoadWMtr, rd->sMtrWall);  _Cmb(cmbRoadColMtr, rd->sMtrCol);
+	_Cmb(cmbPipeWMtr, rd->sMtrWallPipe);
+
+	_Ed(RdHeightOfs, rd->g_Height);
+	_Ed(RdSkirtLen, rd->g_SkirtLen);  _Ed(RdSkirtH, rd->g_SkirtH);
+	SldUpd_Road();
+	ckRoad1Mtr.Upd();
 }
 
 

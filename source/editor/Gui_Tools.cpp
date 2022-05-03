@@ -67,7 +67,7 @@ void CGui::btnCopyTerHmap(WP)
 	if (app->scn->road)  app->scn->road->UpdAllMarkers();
 }
 
-//  copy sun, etc.
+//  copy Sun, etc.  can you copy a star
 void CGui::btnCopySun(WP)
 {
 	if (!ChkTrkCopy())  return;
@@ -91,7 +91,7 @@ void CGui::btnCopySun(WP)
 	app->scn->DestroyWeather();  app->scn->CreateWeather();
 }
 
-//  copy ter layers
+//  copy Ter layers
 void CGui::btnCopyTerLayers(WP)
 {
 	if (!ChkTrkCopy())  return;
@@ -107,7 +107,7 @@ void CGui::btnCopyTerLayers(WP)
 	SetGuiFromXmls();	app->UpdateTrack();
 }
 
-//  copy veget
+//  copy Veget
 void CGui::btnCopyVeget(WP)
 {
 	if (!ChkTrkCopy())  return;
@@ -129,45 +129,39 @@ void CGui::btnCopyVeget(WP)
 	SetGuiFromXmls();	app->UpdateTrack();
 }
 
-//  copy road
+//  copy Road
 void CGui::btnCopyRoad(WP)
 {
 	if (!ChkTrkCopy() || !app->scn->road)  return;
 	String from = PathCopyTrk();
-	app->scn->road->LoadFile(from + "/road.xml");
+	app->scn->road->LoadFile(from + "/road.xml");  // todo: other roads cmb?
 
 	SetGuiFromXmls();	app->scn->road->Rebuild(true);
 	scn->UpdPSSMMaterials();	app->scn->road->UpdAllMarkers();
 }
 
-//  copy road pars
+//  copy Road pars
 void CGui::btnCopyRoadPars(WP)
 {
 	SplineRoad* r = app->scn->road;
 	if (!ChkTrkCopy() || !r)  return;
 	String from = PathCopyTrk();
-	SplineRoad rd(app);  rd.LoadFile(from + "/road.xml",false);
+	SplineRoad rd(app);  rd.LoadFile(from + "/road.xml",false);  // todo: other roads
 
 	for (int i=0; i < MTRs; ++i)
 	{	r->sMtrRoad[i] = rd.sMtrRoad[i];
-		r->SetMtrPipe(i, rd.sMtrPipe[i]);  }
-
+		r->SetMtrPipe(i, rd.sMtrPipe[i]);
+	}
 	r->g_tcMul  = rd.g_tcMul;	r->g_tcMulW = rd.g_tcMulW;
 	r->g_tcMulP = rd.g_tcMulP;	r->g_tcMulPW= rd.g_tcMulPW;
 	r->g_tcMulC = rd.g_tcMulC;
-	r->g_LenDim0 = rd.g_LenDim0;
-	r->g_iWidthDiv0 = rd.g_iWidthDiv0;
-	r->g_ColNSides = rd.g_ColNSides;
-	r->g_ColRadius = rd.g_ColRadius;
-	r->g_P_iw_mul = rd.g_P_iw_mul;
-	r->g_P_il_mul = rd.g_P_il_mul;
+	r->g_LenDim0 = rd.g_LenDim0;    r->g_iWidthDiv0 = rd.g_iWidthDiv0;
+	r->g_ColNSides = rd.g_ColNSides;  r->g_ColRadius = rd.g_ColRadius;
+	r->g_P_iw_mul = rd.g_P_iw_mul;  r->g_P_il_mul = rd.g_P_il_mul;
 	r->g_Height = rd.g_Height;
-	r->g_SkirtLen = rd.g_SkirtLen;
-	r->g_SkirtH = rd.g_SkirtH;
-	r->g_MergeLen = rd.g_MergeLen;
-	r->g_LodPntLen = rd.g_LodPntLen;
-	r->g_VisDist = rd.g_VisDist;
-	r->g_VisBehind = rd.g_VisBehind;
+	r->g_SkirtLen = rd.g_SkirtLen;  r->g_SkirtH = rd.g_SkirtH;
+	r->g_MergeLen = rd.g_MergeLen;  r->g_LodPntLen = rd.g_LodPntLen;
+	r->g_VisDist = rd.g_VisDist;    r->g_VisBehind = rd.g_VisBehind;
 
 	SetGuiFromXmls();	app->scn->road->Rebuild(true);
 	scn->UpdPSSMMaterials();	app->scn->road->UpdAllMarkers();
@@ -203,11 +197,12 @@ void CGui::btnScaleAll(WP)
 	if (!app->scn->road)  return;
 	Real sf = std::max(0.1f, fScale);  // scale mul
 	
-	//  road
-	for (int i=0; i < app->scn->road->getNumPoints(); ++i)
+	//  roads
+	for (auto& r : app->scn->roads)
+	for (int i=0; i < r->getNumPoints(); ++i)
 	{
-		app->scn->road->Scale1(i, sf, 0.f);
-		app->scn->road->mP[i].width *= sf;
+		r->Scale1(i, sf, 0.f);
+		r->mP[i].width *= sf;
 	}
 	app->scn->road->bSelChng = true;
 	
@@ -271,7 +266,7 @@ void CGui::btnTrackNew(WP)
 	//  Copy
 	CreateDir(t);  CreateDir(to);  CreateDir(tp);
 	int i;
-	for (i=0; i < cnTrkFm; ++i)  Copy(st + csTrkFm[i], t + csTrkFm[i]);
+	for (i=0; i < cnTrkFm; ++i)  Copy(st + csTrkFm[i], t + csTrkFm[i]);  // todo: other roads too?
 	for (i=0; i < cnTrkFo; ++i)  Copy(sto + csTrkFo[i], to + csTrkFo[i]);
 	for (i=1; i < cnTrkFp; ++i)  Copy(stp + csTrkFp[i], tp + csTrkFp[i]);  // 1-not view.jpg
 
@@ -320,7 +315,7 @@ void CGui::msgTrackDel(Message* sender, MessageBoxStyle result)
 	String t = gcom->PathListTrk(),
 		to = t + "/objects", tp = t + "/preview";
 	int i;
-	for (i=0; i < cnTrkFo; ++i)  Delete(to + csTrkFo[i]);
+	for (i=0; i < cnTrkFo; ++i)  Delete(to + csTrkFo[i]);  // todo: other roads! list whole dir..
 	for (i=0; i < cnTrkFp; ++i)  Delete(tp + csTrkFp[i]);
 	for (i=0; i < cnTrkFm; ++i)  Delete(t + csTrkFm[i]);
 	Delete(t + "/heightmap-new.f32");

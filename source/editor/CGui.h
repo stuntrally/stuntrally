@@ -50,7 +50,7 @@ public:
 
 	//  ed
 	void Status(Ogre::String s, float r,float g,float b);
-	void SetGuiFromXmls();  // update gui controls
+	void SetGuiFromXmls(), SetGuiRoadFromXml();  // update gui controls
 	bool noBlendUpd;
 
 	///  mode, status

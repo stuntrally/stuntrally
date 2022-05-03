@@ -335,7 +335,8 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	{	bRecreateEmitters = false;
 
 		scn->DestroyEmitters(false);
-		scn->CreateEmitters();
+		if (bParticles)
+			scn->CreateEmitters();
 		UpdEmtBox();
 	}
 

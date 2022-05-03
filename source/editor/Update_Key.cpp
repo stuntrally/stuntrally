@@ -132,15 +132,16 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(F1):  case key(GRAVE):
 			if (ctrl)  // context help (show for cur mode)
 			{
-				if (bMoveCam)		 gui->GuiShortcut(WND_Help, 1, 0);
+				if (bMoveCam)         gui->GuiShortcut(WND_Help, 1, 1);
 				else switch (edMode)
 				{	case ED_Smooth: case ED_Height: case ED_Filter:
 					case ED_Deform:   gui->GuiShortcut(WND_Help, 1, 3);  break;
 					case ED_Road:     gui->GuiShortcut(WND_Help, 1, 5);  break;
-					case ED_Start:    gui->GuiShortcut(WND_Help, 1, 6);  break;
-					case ED_Fluids:   gui->GuiShortcut(WND_Help, 1, 7);  break;
-					case ED_Objects:  gui->GuiShortcut(WND_Help, 1, 8);  break;
-					case ED_Particles:gui->GuiShortcut(WND_Help, 1, 9);  break;
+					case ED_Start:    gui->GuiShortcut(WND_Help, 1, 8);  break;
+					case ED_Fluids:   gui->GuiShortcut(WND_Help, 1, 9);  break;
+					case ED_Objects:  gui->GuiShortcut(WND_Help, 1, 10);  break;
+					case ED_Particles:gui->GuiShortcut(WND_Help, 1, 11);  break;
+					case ED_PrvCam:
 					default:		  gui->GuiShortcut(WND_Help, 1, 0);  break;
 			}	}
 			else	//  Gui mode, Options
@@ -339,21 +340,37 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			
 			case key(U):  AlignTerToRoad();  break;
 			
-			//  looped  todo: finish set..
+			//  looped  todo: separate finish in Q start ..
 			case key(N):  road->isLooped = !road->isLooped;
 				road->recalcTangents();  road->Rebuild(true);  break;
 
+			//  more roads  ------
 			case key(KP_ENTER):  case key(RETURN):
 				if (alt)
-				{	scn->road->river = !scn->road->river;  scn->road->Rebuild(true);  }
+				{	//  river
+					scn->road->river = !scn->road->river;
+					scn->road->Rebuild(true);
+				}
+				else if (ctrl && shift)
+				{	//  del
+					auto& r = scn->roads;
+					if (r.size() > 1)  // not last
+					{
+						r[scn->rdCur]->Destroy();
+						r.erase(r.begin() + scn->rdCur);
+						
+						if (scn->rdCur >= r.size())
+							scn->rdCur = r.size();
+						scn->road = r[scn->rdCur];
+				}	}
 				else if (ctrl)
-				{	//  new
+				{	//  add new
 					SplineRoad* road = new SplineRoad(this);
 					int id = scn->roads.size();
+					
 					road->Setup("sphere.mesh", pSet->road_sphr, scn->terrain, mSceneMgr, mCamera, id);
-					//road->LoadFile(gcom->TrkDir()+"road.xml");
-					road->Rebuild(true);
-					//road->RebuildRoadInt();
+					road->Rebuild(true);  //road->RebuildRoadInt();
+					
 					scn->roads.push_back(road);
 					scn->road = road;
 					scn->rdCur = id;
@@ -362,8 +379,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 					int id = scn->roads.size();
 					scn->rdCur = (scn->rdCur + (shift ? -1 : 1) + id) % id;
 					scn->road = scn->roads[scn->rdCur];
-				}
-				break;
+					gui->SetGuiRoadFromXml();
+				}	break;
 		}
 		if (snap)
 		{	iSnap = (iSnap + (snap < 0 ? -1+ciAngSnapsNum : 1))%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];	}
@@ -678,10 +695,11 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			bMoveCam = !bMoveCam;  UpdVisGui();  UpdFluidBox();  UpdObjPick();
 		}	break;
 
-		//  toggle fog, veget, weather
-		case key(G):  gui->ckFog.Invert();  break;
+		//  toggle fog, veget, weather, particles
 		case key(V):  bTrGrUpd = true;  break;
+		case key(G):  gui->ckFog.Invert();  break;
 		case key(I):  gui->ckWeather.Invert();  break;
+		case key(P):  bParticles = !bParticles;  bRecreateEmitters = true;  break;
 
 		//  terrain
 		case key(D):  if (bEdit()){  SetEdMode(ED_Deform);  curBr = 0;  updBrush();  UpdEditWnds();  }	break;

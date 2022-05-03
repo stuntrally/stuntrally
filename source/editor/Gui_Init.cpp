@@ -457,11 +457,11 @@ void CGui::InitGui()
 	
 	///  [Road]
 	//------------------------------------------------------------------------
-	sv= &svRdTcMul; 	sv->Init("RdTcMul", 	&f, 0.01f,0.3f, 1.5f, 3,5);  sv->DefaultF(0.1f);
-	sv= &svRdTcMulW;	sv->Init("RdTcMulW",	&f, 0.01f,0.4f, 1.5f, 3,5);  sv->DefaultF(0.1f);
-	sv= &svRdTcMulP;	sv->Init("RdTcMulP",	&f, 0.01f,0.3f, 1.5f, 3,5);  sv->DefaultF(0.2f);
-	sv= &svRdTcMulPW;	sv->Init("RdTcMulPW",	&f, 0.01f,0.4f, 1.5f, 3,5);  sv->DefaultF(0.2f);
-	sv= &svRdTcMulC;	sv->Init("RdTcMulC",	&f, 0.01f,0.4f, 1.5f, 3,5);  sv->DefaultF(0.2f);
+	sv= &svRdTcMul; 	sv->Init("RdTcMul", 	&f, 0.001f,0.3f, 1.5f, 3,5);  sv->DefaultF(0.1f);
+	sv= &svRdTcMulW;	sv->Init("RdTcMulW",	&f, 0.005f,0.4f, 1.5f, 3,5);  sv->DefaultF(0.1f);
+	sv= &svRdTcMulP;	sv->Init("RdTcMulP",	&f, 0.005f,0.3f, 1.5f, 3,5);  sv->DefaultF(0.2f);
+	sv= &svRdTcMulPW;	sv->Init("RdTcMulPW",	&f, 0.005f,0.4f, 1.5f, 3,5);  sv->DefaultF(0.2f);
+	sv= &svRdTcMulC;	sv->Init("RdTcMulC",	&f, 0.005f,0.4f, 1.5f, 3,5);  sv->DefaultF(0.2f);
 
 	sv= &svRdLenDim;	sv->Init("RdLenDim",	&f, 0.5f, 4.f, 1.5f, 2,4);  sv->DefaultF(1.f);
 	sv= &svRdWidthSteps;sv->Init("RdWidthSteps",&i, 3,16, 1.5f);  sv->DefaultI(6);

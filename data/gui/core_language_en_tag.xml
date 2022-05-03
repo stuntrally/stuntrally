@@ -1287,6 +1287,12 @@
 	<Tag name="InputSlowFast">shift - slow   ctrl - fast</Tag>
 	<Tag name="InputTopView">Alt-Z - toggle top view</Tag>
 
+	<!--  MAIN  Editor View toggle  -->
+	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
+	<Tag name="InputToggleFog">G - toggle Fog</Tag>
+	<Tag name="InputToggleWeather">I - toggle Weather</Tag>
+	<Tag name="InputToggleParticles">P - toggle Particles</Tag>
+
 
 	<!--  Terrain  Edit modes  -->
 	<Tag name="EditTerrainMode">Edit Terrain mode</Tag>
@@ -1300,7 +1306,6 @@
 	<Tag name="InputPaintColor">C - Paint Color</Tag>
 
 	<!--  Terrain  Toggle  -->
-	<Tag name="InputToggleVeget">V - Disable / enable vegetation</Tag>
 	<Tag name="InputLockBrush">Enter - lock brush position</Tag>
 	<Tag name="InputTerHeightSet">Space - set height from cursor</Tag>
 
@@ -1390,6 +1395,12 @@
 	<Tag name="InputRoadAlignTerrain">U - Align terrain to road (for selected segments)</Tag>
 	<Tag name="InputRoadMirror">alt-Home - Mirror selection</Tag>
 
+	<!-- Road  Input  more roads  -->
+	<Tag name="InputRoadsAdd">ctrl-Enter - Add road, also for decoration or river etc.</Tag>
+	<Tag name="InputRoadsNext">Enter - next road (if many), shift - previous</Tag>
+	<Tag name="InputRoadsDel">ctrl-shift-Enter - delete road</Tag>
+	<Tag name="InputRoadsRiver">alt-Enter - toggle River (no wall, columns etc.)</Tag>
+
 	<!-- Road  Input  rarely used   -->
 	<Tag name="InputRoadMerge">M - toggle road merge segs (for test)</Tag>
 	<Tag name="InputRoadStats">T - road stats window</Tag>
@@ -1462,7 +1473,7 @@
 
 	<!--  Particles  Input  -->
 	<Tag name="InputParticlesMode">A - edit Particles</Tag>
-	<Tag name="InputParticlesDensity">[ ] - change density (emission rate)</Tag>
+	<Tag name="InputParticlesDensity">[,] - change density (emission rate)</Tag>
 	<Tag name="InputParticlesStatic">Enter - toggle static</Tag>
 
 
