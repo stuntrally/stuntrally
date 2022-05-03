@@ -270,6 +270,8 @@ void CGui::InitGui()
 	sv= &svPaceNear;	sv->Init("PaceNear",	&pSet->pace_near,   0.1f,2.f);  sv->DefaultF(1.f);  Sev(Upd_Pace);
 	sv= &svPaceAlpha;	sv->Init("PaceAlpha",	&pSet->pace_alpha,  0.3f,1.f);  sv->DefaultF(1.f);  Sev(Upd_Pace);
 	//slUpd_Pace(0);
+	ck= &ckTrailShow;	ck->Init("ChkTrail",	&pSet->trail_show);  Cev(Trail);
+	
 
 	//  times, opp
 	ck= &ckTimes;		ck->Init("Times",       &pSet->show_times);      Cev(HudShow);

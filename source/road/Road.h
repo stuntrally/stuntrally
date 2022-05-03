@@ -86,6 +86,7 @@ public:
 	void UpdLodVis(float fBias=1.f, bool bFull=false);
 	void UpdLodVisMarks(Ogre::Real distSq, bool vis=false);
 	void SetForRnd(Ogre::String sMtr), UnsetForRnd();
+	void SetVisTrail(bool vis);
 
 	void Pick(Ogre::Camera* mCamera, Ogre::Real mx, Ogre::Real my,
 			bool bRay=true, bool bAddH=false, bool bHide=false);

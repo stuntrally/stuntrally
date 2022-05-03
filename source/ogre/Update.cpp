@@ -414,7 +414,7 @@ bool App::frameStart(Real time)
 						r->UpdLodVis(pSet->road_dist);
 					
 					//  trail upd lods
-					if (scn->trail)
+					if (scn->trail && pSet->trail_show)
 						scn->trail->UpdLodVis();
 				}
 			}

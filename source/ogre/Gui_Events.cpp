@@ -6,6 +6,7 @@
 #include "../vdrift/settings.h"
 #include "../vdrift/game.h"
 #include "../road/PaceNotes.h"
+#include "../road/Road.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
@@ -335,7 +336,7 @@ void CGui::chkWireframe(Ck*)
 		app->ndSky->setVisible(!b);  // hide sky
 }
 
-//  Hud
+//  HUD
 void CGui::chkHudShow(Ck*)
 {
 	hud->Show();
@@ -371,7 +372,15 @@ void CGui::slUpd_Pace(SV*)
 	app->scn->UpdPaceParams();
 }
 
-void CGui::chkReverse(Ck*){  gcom->ReadTrkStats();  }
+void CGui::chkTrail(Ck*)
+{
+	if (!app->scn->trail)  return;
+	if (!pSet->trail_show)
+		app->scn->trail->SetVisTrail(false);
+}
+
+void CGui::chkReverse(Ck*) {  gcom->ReadTrkStats();  }
+
 
 //  graphs
 void CGui::chkGraphs(Ck*)

@@ -250,7 +250,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 			case key(F6):	//  Arrow
 				if (shift)	gui->ckBeam.Invert(); else
-				if (!ctrl)	gui->ckArrow.Invert();
+				if (ctrl)	gui->ckArrow.Invert();
+				else		gui->ckTrailShow.Invert();
 				return false;
 
 			case key(F7):	//  Times

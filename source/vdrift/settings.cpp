@@ -109,6 +109,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "pacenotes.show", pace_show);		Param(c,w, "pacenotes.dist", pace_dist);
 	Param(c,w, "pacenotes.size", pace_size);		Param(c,w, "pacenotes.near", pace_near);
 	Param(c,w, "pacenotes.next", pace_next);		Param(c,w, "pacenotes.alpha", pace_alpha);
+	Param(c,w, "pacenotes.trail", trail_show);
 	
 
 	//  graphics
@@ -196,6 +197,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	//  pace
 	,pace_show(1), pace_next(4)
 	,pace_dist(200.f), pace_size(1.f), pace_near(1.f), pace_alpha(1.f)
+	,trail_show(1)
 	
 	//  gui
 	,cars_view(0), cars_sort(1), cars_sortup(1)

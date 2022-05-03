@@ -220,6 +220,8 @@ public:
 	Ck ckPaceShow;  SV svPaceDist, svPaceSize, svPaceNext;
 	SV svPaceNear, svPaceAlpha;
 	void slUpd_Pace(SV*);
+	//  Trail
+	Ck ckTrailShow;  void chkTrail(Ck*);
 	//  Times, opp
 	Ck ckTimes, ckOpponents, ckOppSort;
 

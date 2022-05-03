@@ -145,9 +145,8 @@ void SplineRoad::UpdLodVisMarks(Real distSq, bool vis)
 void SplineRoad::SetForRnd(String sMtr)
 {
 	MaterialPtr mat = MaterialManager::getSingleton().getByName(sMtr);
-	for (size_t seg = 0; seg < vSegs.size(); ++seg)
+	for (auto& rs : vSegs)
 	{
-		RoadSeg& rs = vSegs[seg];
 		if (rs.empty)  continue;
 		
 		for (int i=0; i < LODs; ++i)
@@ -165,9 +164,8 @@ void SplineRoad::SetForRnd(String sMtr)
 }
 void SplineRoad::UnsetForRnd()
 {
-	for (size_t seg = 0; seg < vSegs.size(); ++seg)
+	for (auto& rs : vSegs)
 	{
-		RoadSeg& rs = vSegs[seg];
 		if (rs.empty)  continue;
 		
 		MaterialPtr mat = MaterialManager::getSingleton().getByName(  //^opt?..
@@ -181,7 +179,16 @@ void SplineRoad::UnsetForRnd()
 			rs.col.ent->setVisible(true);
 	}
 }
+void SplineRoad::SetVisTrail(bool vis)
+{
+	for (auto& rs : vSegs)
+	{
+		if (rs.empty)  continue;
 
+		for (int i=0; i < LODs; ++i)
+			rs.road[i].ent->setVisible(vis);
+	}
+}
 
 //---------------------------------------------------------------------------------------------------------------
 ///  Load
