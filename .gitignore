@@ -6,6 +6,7 @@ tx
 *.pot
 sr.log
 #*.xml
+#*.layout
 #core_lang*
 data/gui/core_language_*_tag.xml
 !*/core_language_en_tag.xml
@@ -43,6 +44,8 @@ sr-editor*
 data/ghosts/original
 data/tracks
 data/car*/
+#data/skies
+#data/objects*
 #data
 #.vscode
 #tracks.ini

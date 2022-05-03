@@ -5,3 +5,9 @@ https://sketchfab.com/3d-models/subaru-brz-varis-8fecd93279644ada9111c5bfa222632
 
 Sort & merge parts, UV unwrap, AO bake,
 import, fixes and car settings by CryHam
+
+Wheel modified from this:
+
+Author: Socksthecat
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/nissan-silvia-s15-custom-2c3481e502c24d818d23a5eb2be8dac9

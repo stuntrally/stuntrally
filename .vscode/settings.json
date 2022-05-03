@@ -9,6 +9,7 @@
         "*.mat": "c",
         "*.car": "ini",
         "*.ini": "ruby",
+        "*.layout": "xml",
         "random": "cpp",
         "iostream": "cpp",
         "*.tcc": "cpp",
