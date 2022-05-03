@@ -844,6 +844,7 @@ void CGui::InitGui()
 	Btn("OpenWebsite", btnWebsite);
 	Btn("OpenWiki", btnWiki);
 	Btn("OpenForum", btnForum);
+	Btn("OpenEdTut", btnEdTut);
 	Btn("OpenTransl", btnTransl);
 	Btn("OpenDonations", btnDonations);
 
