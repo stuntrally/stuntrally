@@ -1,4 +1,69 @@
-//  0AD buildings
+//  0AD buildings  ----
+material han
+{
+	parent base
+	diffuseMap han_struct_02.png
+	normalMap han_struct_02_norm.jpg
+	specMap han_struct_02_spec.png
+    //specMap_rgb true
+	ambient 1.1 1.1 1.1
+	diffuse 0.75 0.75 0.75
+	specular 1.8 1.8 1.8 12
+	terrain_light_map true
+}
+
+material maur
+{
+	parent base
+	diffuseMap maur_struct_b.png
+	normalMap maur_struct_b_norm.png
+	specMap maur_struct_b_spec.png
+    //specMap_rgb true
+	ambient 1.1 1.1 1.1
+	diffuse 0.75 0.75 0.75
+	specular 1.8 1.8 1.8 12
+	terrain_light_map true
+}
+material maur2
+{
+	parent base
+	diffuseMap maur_struct_a.png
+	normalMap maur_struct_a_norm.png
+	specMap maur_struct_a_spec.png
+    //specMap_rgb true
+	ambient 1.1 1.1 1.1
+	diffuse 0.75 0.75 0.75
+	specular 1.8 1.8 1.8 12
+	terrain_light_map true
+	//bump_scale 1.0
+}
+
+material maur_boat
+{
+	parent base
+	diffuseMap maur_boat.png
+	normalMap maur_boat_norm.png
+	specMap maur_boat_spec.png
+    //specMap_rgb true
+	ambient 1.1 1.1 1.1
+	diffuse 0.75 0.75 0.75
+	specular 1.8 1.8 1.8 12
+	terrain_light_map true
+}
+material maur_ship
+{
+	parent base
+	diffuseMap maur_ship.png
+	//normalMap maur_struct_b_norm.png
+	//specMap maur_struct_b_spec.png
+    //specMap_rgb true
+	ambient 1.1 1.1 1.1
+	diffuse 0.75 0.75 0.75
+	specular 1.1 1.1 1.1 12
+	terrain_light_map true
+}
+
+//  0AD buildings old  ----
 material pers_struct_dds
 {
 	parent base
@@ -58,7 +123,7 @@ material kart
 	terrain_light_map true
 }
 
-//  0AD obj
+//  0AD obj  ----
 material pyramid_small
 {
 	parent base
