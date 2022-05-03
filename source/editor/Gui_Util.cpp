@@ -118,6 +118,11 @@ void CGui::btnNewGame(WP)
 	app->LoadTrack();
 }
 
+void CGui::btnEdTut(WP)
+{
+	gcom->OpenBrowserUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=editor");
+}
+
 
 //  Update  input, info
 //-------------------------------------------------------------------------------

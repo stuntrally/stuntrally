@@ -499,6 +499,10 @@
 						<Widget type="TextBox" skin="TextBox" position="296 216 48 24" name="PaceAlphaVal">
 							<Property key="TextColour" value="0.6 0.6 0.4"/>
 						</Widget>
+						<Widget type="Button" skin="CheckBox" position="32 316 184 24" name="ChkTrail">
+							<Property key="Caption" value="#{RacingLine} #986848 F6"/>
+							<Property key="TextColour" value="1.0 0.7 0.4"/>
+						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">
 						<Property key="Caption" value="#60F8F8#{Minimap}"/>
@@ -550,7 +554,7 @@
 							<Property key="TextColour" value="0.6 0.9 0.6"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 296 196 24" name="Arrow">
-							<Property key="Caption" value="#{CheckArrow} #608058 F6"/>
+							<Property key="Caption" value="#{CheckArrow} #608058 ctrl-F6"/>
 							<Property key="TextColour" value="0.5 1.0 0.4"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="232 296 64 24">

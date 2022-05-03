@@ -882,7 +882,9 @@ void CGui::InitGui()
 	Btn("TrackNew",		btnTrackNew);
 	Btn("TrackRename",	btnTrackRename);
 	Btn("TrackDelete",	btnTrackDel);
-	
+
+	Btn("OpenEdTut", btnEdTut);
+
     //  load = new game
     for (i=1; i<=3; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  }

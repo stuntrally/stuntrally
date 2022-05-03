@@ -4,4 +4,8 @@ rest of gauges edited
 gui_icons.png - has many from:
 https://www.openclipart.org/
 CC0  https://creativecommons.org/publicdomain/zero/1.0/
-edited, rest drawn
+edited
+
+Rest of Gui drawn, generated, etc.
+Author: CryHam
+License: CC-BY 4.0

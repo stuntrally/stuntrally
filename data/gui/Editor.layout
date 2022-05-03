@@ -2452,10 +2452,6 @@
 							<Property key="Colour" value="0.8 0.8 0.4"/>
 						</Widget>
 
-						<Widget type="TextBox" skin="TextBox" position="480 28 140 24">
-							<Property key="Caption" value="#{Advanced}"/>
-							<Property key="TextColour" value="0.5 0.8 0.7"/>
-						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="480 140 140 24">
 							<Property key="Caption" value="#{HeightOffset}"/>
 							<Property key="TextColour" value="0.5 0.8 0.8"/>
