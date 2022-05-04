@@ -634,6 +634,7 @@ void CGui::InitGui()
 
 	//---------------------  Objects  ---------------------
 	app->vObjNames.clear();  strlist lo;
+	PATHMANAGER::DirList(sData + "/objects2", lo);
 	PATHMANAGER::DirList(sData + "/objects", lo);
 	for (q = lo.begin(); q != lo.end(); ++q)
 		if (StringUtil::endsWith(*q,".mesh") && !StringUtil::startsWith(*q,"sphere"))

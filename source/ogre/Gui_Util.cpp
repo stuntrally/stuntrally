@@ -803,7 +803,7 @@ void CGui::FillHelpTxt()
 			ReadTxt("cars/" + c.name + "/about.txt");
 
 		//  gui- hud-  particles-
-		ReadTxts("objects");  ReadTxts("objectsC");  ReadTxts("objects0");
+		ReadTxts("objects");  ReadTxts("objects2");  ReadTxts("objectsC");  ReadTxts("objects0");
 		ReadTxts("skies");
 		ReadTxts("grass");  ReadTxts("terrain");  ReadTxts("road");
 		ReadTxts("trees");  ReadTxts("trees2");   ReadTxts("trees-old");  //todo: replace-

@@ -1,0 +1,48 @@
+//  satellite antenna
+material satellite1a
+{
+	parent base
+	diffuseMap satellite1a.jpg
+	normalMap satellite1a_norm.jpg
+	ambient 0.6 0.6 0.6
+	diffuse 0.8 0.8 0.8
+	specular 0.6 0.6 0.6 24
+}
+material satellite1b
+{
+	parent base
+	diffuseMap satellite1b.jpg
+	normalMap satellite1b_norm.jpg
+	ambient 0.6 0.6 0.6
+	diffuse 0.8 0.8 0.8
+	specular 0.6 0.6 0.6 32
+}
+
+material satellite2a
+{
+	parent base
+	diffuseMap satellite2a.jpg
+	normalMap satellite2a_norm.jpg
+	ambient 0.6 0.6 0.6
+	diffuse 0.8 0.8 0.8
+	specular 0.6 0.6 0.6 24
+}
+material satellite2b
+{
+	parent base
+	diffuseMap satellite2b.jpg
+	normalMap satellite2b_norm.jpg
+	ambient 0.6 0.6 0.6
+	diffuse 0.8 0.8 0.8
+	specular 0.6 0.6 0.6 32
+}
+
+material satellite3
+{
+	parent base
+	diffuseMap satellite3.jpg
+	normalMap satellite3_norm.jpg
+	ambient 0.6 0.6 0.6
+	diffuse 0.8 0.8 0.8
+	specular 0.6 0.6 0.6 24
+}
