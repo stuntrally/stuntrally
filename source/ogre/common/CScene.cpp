@@ -55,11 +55,13 @@ void CScene::DestroyPace()
 	{	pace->Destroy();
 		delete pace;  pace = 0;
 	}
+}
+void CScene::DestroyTrail()
+{
 	if (trail)
 	{	trail->Destroy();
 		delete trail;  trail = 0;
 	}
-	mapChkTrl.clear();
 }
 
 
@@ -67,7 +69,7 @@ void CScene::destroyScene()
 {
 	mWaterRTT->destroy();
 
-	DestroyRoads();  DestroyPace();
+	DestroyRoads();  DestroyPace();  DestroyTrail();
 	DestroyTrees();
 	DestroyWeather();
 

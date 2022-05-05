@@ -171,8 +171,8 @@ void App::CreateGraphs()
 			gv->Create(1, "graphA5", i>0 ? 0.f : 0.4f);
 			switch (i)
 			{
-				case 0:  gv->CreateTitle(t,	c, 0.1f,-2, 22,2,1);  break;
-				case 1:  gv->CreateTitle(t,	c, 0.1f,-3, 22,4,1);  break;
+				case 0:  gv->CreateTitle(t,	c, 0.01f,-2, 22,2,1);  break;
+				case 1:  gv->CreateTitle(t,	c, 0.01f,-3, 22,4,1);  break;
 			}
 			gv->SetSize(0.00f, 0.05f, 0.15f, 0.1f);
 			
@@ -410,14 +410,17 @@ void App::GraphsNewVals()				// Game
 		if (gsi >= 2 && !carModels.empty())
 		{
 			CarModel* cm = carModels[0];
+			int ncs = scn->road->mChks.size();
 			graphs[0]->UpdTitle("Pacenotes\n"
 				"#E0F0FF cur "+toStr(scn->pace->iCur)+"  all "+toStr(scn->pace->iAll)+"  st "+toStr(scn->pace->iStart));
-			graphs[1]->UpdTitle("\nCheckpoints  #F0F0D0 in "+iToStr(cm->iInChk,2)+" C "+
-				(cm->iInChk >= 0 ? toStr(scn->mapChkTrl[cm->iInChk]-1) : "")+ //toStr(scn->road->mChks[cm->iInChk].trailSegId) : "-")+
+			graphs[1]->UpdTitle("\nCheckpoints  #F0F0D0 in "+iToStr(cm->iInChk,2)+" "+
+				" | "+ (cm->iInChk >= 0 ? toStr( (cm->iInChk - scn->road->iChkId1 + ncs) % ncs ) : "")+
 				(cm->bInSt?" inSt":"")+"\n"+
-				" cur "+iToStr(cm->iCurChk,2)+" next "+iToStr(cm->iNextChk,2)+" all "+iToStr(cm->iNumChks,2)+"\n"+
+				" cur "+iToStr(cm->iCurChk,2)+" next "+iToStr(cm->iNextChk,2)+
+				" all "+iToStr(cm->iNumChks,2)+"="+toStr(ncs)+" 1st "+toStr(scn->road->iChkId1)+"\n"+
 				(!scn->trail ? "No trail" :
-				"Trail  #F0D0A0 all "+toStr(scn->trail->getNumPoints())+ " id "+ toStr(scn->trail->trailSegId) ));
+				"Trail  #F0D0A0 all "+toStr(scn->trail->getNumPoints())+ " id "+ toStr(scn->trail->trailSegId)
+				) );
 		}	break;
 		
 	case Gh_Fps:  /// fps

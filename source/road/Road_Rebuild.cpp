@@ -56,8 +56,7 @@ void SplineRoad::BuildSeg(
 	int seg1 = getNext(seg), seg0 = getPrev(seg), seg02 = getAdd(seg,-2);
 	DS.seg = seg;  DS.seg1 = seg1;  DS.seg0 = seg0;  // save
 	
-	//if (isLod0)
-	//LogR("[Seg]  cur: " + toStr(seg) + "/" + toStr(sNumO) + "  all:" + toStr(segs));/**/
+	//LogR("[Seg]  cur: " + toStr(seg) + "/" /*+ toStr(DR.segM) + "  all:"*/ + toStr(DR.segs));/*if (isLod0*/
 
 	//  on terrain  (whole seg)
 	DS.onTer = mP[seg].onTer && mP[seg1].onTer;
@@ -83,6 +82,7 @@ void SplineRoad::BuildSeg(
 	if (bMerge)
 	{	bNew = (segM   == DR.sMin/*1st*/)  || DL.v_bMerge[seg];
 		bNxt = (segM+1 == DR.sMax/*last*/) || DL.v_bMerge[seg1];  // next is new
+		if (bNew)  LogR("^ merge");
 	}
 	
 	if (bNew)  //> new seg data
@@ -214,8 +214,8 @@ void SplineRoad::BuildSeg(
 		bool trans = (p1 == 0.f || p2 == 0.f) && !DL.v_iwEq[seg];
 		Real trp = (p1 == 0.f) ? 1.f - l01 : l01;
 
-		//LogR("   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw)
-		//	/*+(bNew?"  New ":"") +(bNxt?"  Nxt ":"")/**/);
+		/*LogR("   il="+toStr(i)+"/"+toStr(il)+"   iw="+toStr(iw)
+			+(bNew?"  New ":"") +(bNxt?"  Nxt ":""));/**/
 		if (DS.hasBlend && vis)
 			++DLM.iLmrgB;
 		
@@ -250,7 +250,7 @@ void SplineRoad::BuildSeg(
 				vP = vL0 + vw  * 0.5 * so +
 						 + vn * (0.5 - 0.5 * co) * wiMul;
 				vN = vn * co + vwn * so;
-				//LogO(toStr(w)+" "+fToStr(so,2,4));
+				//LogR(toStr(w)+" "+fToStr(so,2,4));
 
 				if (vN.y < 0.f)  vN.y = -vN.y;
 				if (trans)  //  transition from flat to pipe
@@ -340,8 +340,8 @@ void SplineRoad::BuildSeg(
 				float h = (vH0.y - vH1.y), w = vH0.distance(vH1), d = fabs(h/w), a = asin(d)*180.f/PI_d;
 				ST.bankAvg += a;
 				if (a > ST.bankMax)  ST.bankMax = a;
-				//LogO("RD seg :" + toStr(seg)+ "  h " + fToStr(h,1,3)
-				//	+ "  w " + fToStr(w,1,3)+ "  d " + fToStr(d,1,3)+ "  a " + fToStr(a,1,3) );
+				/*LogR("RD seg :" + toStr(seg)+ "  h " + fToStr(h,1,3)
+					+ "  w " + fToStr(w,1,3)+ "  d " + fToStr(d,1,3)+ "  a " + fToStr(a,1,3) );/**/
 			}
 			
 
@@ -669,7 +669,7 @@ void SplineRoad::createSeg_Meshes(
 	//  road
 	AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
 	ent->setRenderQueueGroup(
-		trail ? RQG_Hud1 :
+		trail ? /*RQG_RoadBlend :*/ RQG_Hud1 :
 		pipeGlass || river ? RQG_PipeGlass : RQG_Road);
 	if (trail)
 		ent->setVisibilityFlags(RV_Hud);

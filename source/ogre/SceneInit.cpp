@@ -114,34 +114,28 @@ void App::createScene()
 	///  rpl test-
 	#if 0
 	std::string file = PATHMANAGER::Ghosts() + "/normal/TestC4-ow_V2.rpl";
-	replay.LoadFile(file);
-	exit(0);
+	replay.LoadFile(file);  exit(0);
 	#endif
 	
 
 	///  _Tool_ ghosts times .......
 	#if 0
-	gui->ToolGhosts();
-	//ShutDown();  return;
-	exit(0);
+	gui->ToolGhosts();  exit(0);
 	#endif
 
 	///  _Tool_ convert to track's ghosts ..............
 	#if 0
-	gui->ToolGhostsConv();
-	exit(0);
+	gui->ToolGhostsConv();  exit(0);
 	#endif
 
 	///  _Tool_ test track's ghosts ..............
 	#if 0
-	gui->ToolTestTrkGhosts();
-	exit(0);
+	gui->ToolTestTrkGhosts();  exit(0);
 	#endif
 
 	///  _Tool_ presets .......
 	#if 0
-	gui->ToolPresets();
-	exit(0);
+	gui->ToolPresets();  exit(0);
 	#endif
 
 
@@ -838,6 +832,8 @@ void App::CreateRoads()
 
 	//  pace ~ ~
 	scn->DestroyPace();
+	LogO("->--- DestroyTrail");
+	scn->DestroyTrail();
 
 	if (!bHideHudPace)
 	{
@@ -870,8 +866,7 @@ void App::CreateRoads()
 		scn->pace->Rebuild(road, scn->sc, pSet->game.trackreverse);
 	}
 
-
-	if (dstTrk)
+	if (dstTrk)  // todo: rem, fix
 		CreateTrail(cam);
 }
 
@@ -907,7 +902,7 @@ void App::CreateTrail(Camera* cam)
 {
 	//  load
 	TrackGhost gho;
-	int num = 0;
+	int frames = 0;
 
 	string sRev = pSet->game.trackreverse ? "_r" : "";
 	string file = PATHMANAGER::TrkGhosts()+"/"+ pSet->game.track + sRev + ".gho";
@@ -915,69 +910,84 @@ void App::CreateTrail(Camera* cam)
 		LogO("Trail trk gho not found: "+file);
 	else
 	{	gho.LoadFile(file, false);
-		num = gho.getNumFrames();
+		frames = gho.getNumFrames();
 	}
-	if (num == 0 || !scn->terrain)  return;
+	if (frames == 0 || !scn->terrain)  return;
+	LogO("->-- CreateTrail");
 
 
 	//  setup trail road
 	SplineRoad* tr = new SplineRoad(pGame);
 	tr->Setup("", 0.7, scn->terrain, mSceneMgr, cam, 100);
 	tr->sMtrRoad[0] = "trailRoad";
-	tr->river = true;  tr->trail = true;  tr->isLooped = false;
+	tr->river = true;  tr->trail = true;  tr->isLooped = true;
 
-	tr->g_LenDim0 = 2.f;  tr->g_iWidthDiv0 = 2;
-	tr->g_MergeLen = 100.f;  tr->g_LodPntLen = 50.f;  tr->bMerge = true;
-	tr->g_VisDist = 100.f;  tr->g_VisBehind = 100.f;
-	tr->newP.onTer = false;
-	tr->newP.aType = AT_Both;
+	//tr->g_LenDim0 = 2.f;  tr->g_iWidthDiv0 = 1;  //  quality
+	tr->g_LenDim0 = 4.f;  tr->g_iWidthDiv0 = 1;  //  low
+	//tr->g_MergeLen = 100.f;  tr->g_LodPntLen = 20.f;  tr->bMerge = true;
+	tr->g_MergeLen = 200.f;  tr->g_LodPntLen = 30.f;  tr->bMerge = true;  // low
+	tr->newP.onTer = false;  tr->newP.aType = AT_Both;
 
-	//  params  smooth low
-	const float dd = 10*10, down = 0.5f, al = 0.6f,
+	//  params  add p
+	// const float dd = 10*10, al = 0.6f, down = 0.5f,  // quality  p each 10 m
+	const float dd = 20*20, al = 0.6f, down = 0.45f, // low
+	// const float dd = 30*30, al = 0.6f, down = 0.45f, // too low
 		acc_sens = 30.f, acc_sensw = 45.f;
 
-	//  add points
+
+	//  chk vars
+	int iNextChk = pSet->game.trackreverse ? scn->road->iChkId1Rev : scn->road->iChkId1;
+	int iCk = 1;
+	const bool rev = pSet->game.trackreverse;
+	const int inc = (rev ? -1 : 1) * scn->road->iDir;
+	const int ncs = scn->road->mChks.size();
+
+
+	//  add points  - > - -
 	Vector3 pos, old;  float tOld = 0.f, vOld = 0.f;
-	for (int i=0; i < num; ++i)
+
+	for (int i=0; i < frames; ++i)
 	{
 		const TrackFrame& fr = gho.getFrame0(i);
 		Axes::toOgre(pos, fr.pos);  pos.y -= down;
 		if (i==0)  old = pos;
 
+		//  if ghost car in next check, inc trail seg id
+		const int np = tr->getNumPoints();
+
+		const auto& ck = scn->road->mChks[iNextChk];
+		if (pos.squaredDistance(ck.pos) < ck.r2)
+		{
+			//LogO(toStr(np) + " in ck "+toStr(iCk)+" r "+toStr(ck.r)+" nCk "+toStr(tr->newP.nCk));
+			++iCk;
+			iNextChk = (iNextChk + inc + ncs) % ncs;
+		}
+
 		float d = old.squaredDistance(pos);
 		if (d > dd)
 		{	d = sqrt(d);
 
-			float t = fr.time, dt = t - tOld;
-			float vel = d / dt * 3.6f;  // kmh
-			float acc = (vel - vOld) / dt;
-			LogO(toStr(i) + " v " + fToStr(vel) + " a " + fToStr(acc));
-			
-			//  if ghost car in any road check, save it for trail point id
-			int i=0;
-			for (auto ck : scn->road->mChks)
-			{
-				if (/*ck.trailSegId < 0 &&*/ pos.squaredDistance(ck.pos) < ck.r2)
-				{	//ck.trailSegId = tr->getNumPoints();
-					//if (!scn->mapChkTrl[i+1])  //?
-						scn->mapChkTrl[i+1] = tr->getNumPoints();
-					//LogO("in ck "+toStr(i)+" r "+toStr(ck.r) + " n " + toStr(tr->getNumPoints()));
-				}	++i;
-			}
+			const float t = fr.time, dt = t - tOld;
+			const float vel = d / dt * 3.6f;  // kmh
+			const float acc = (vel - vOld) / dt;
+
+			//LogO(toStr(np) + " v " + fToStr(vel) + " a " + fToStr(acc)+" ic "+toStr(iCk));
 
 			float a = max(-1.f, min(1.f, acc / acc_sens));
 			float aw = max(-1.f, min(1.f, acc / acc_sensw));
 			//tr->newP.width = 0.5f - a * 0.3f;  // par big
 			tr->newP.width = 0.3f - aw * 0.15f;  // par sm
-			tr->newP.pos = pos;  
+			tr->newP.pos = pos;
+			tr->newP.nCk = iCk;
 
+			tr->newP.mRoll = fr.steer/127.f * 10.f;
+			// get roll from car in road seg space..
 			//auto q = Axes::toOgre(fr.rot);
 			//tr->newP.mRoll = q.getRoll().valueDegrees();  //-
-			tr->newP.mRoll = fr.steer/127.f * 10.f;  //?
 
 			tr->newP.clr = a > 0.f ?
-				Vector4(1.f - a, 1.f, 0.f, al) :  // accel
-				Vector4(1.f + aw*aw*0.5f, 1.f + a, 0.f, al);  // brake clr
+				Vector4(1.f - a, 1.f, 0.f, al) :  // accel clr
+				Vector4(1.f + aw*aw*0.5f, 1.f + a, 0.f, al);  // brake
 
 			if (vel < 600.f)  // end jmp err
 				tr->Insert(INS_End);

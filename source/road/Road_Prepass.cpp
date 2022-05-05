@@ -88,7 +88,8 @@ bool SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	for (int lod = 0; lod < LODs; ++lod)
 	{
 		LogR("");
-		LogR("LOD: "+toStr(lod)+" ---");
+		LogR("LOD: "+toStr(lod)+" ---  " +
+			(trail ? "trail" : river ? "river" : ""));
 
 		DataLod DL;
 		StatsLod ST;
@@ -200,6 +201,7 @@ void SplineRoad::PrepassLod(
 	DL.fLenDim =  DL.isPace ? pace_fLen :  g_LenDim0 * iLodDiv;
 	DL.tcLen = 0.f;
 	int inLoop = 0;
+	int oldCk = -1;
 		
 	//if (isLod0)?
 	LogR("--- Lod segs prepass ---");
@@ -242,8 +244,16 @@ void SplineRoad::PrepassLod(
 		//  mtr changes
 		int hid = mP[seg].idMtr, hid1 = mP[seg1].idMtr, hid0 = mP[seg0].idMtr;
 
+		if (trail)
+		{
+			int ck = mP[seg].nCk;
+			bool mrg = oldCk != ck;  oldCk = ck;
+			
+			DL.sumLenMrg = 0.f;  ++DL.mrgCnt;
+			DL.v_bMerge.push_back(mrg ? 1 : 0);
+		}
 		//  merge road and pipe segs, don't merge transitions
-		if (sp != sp1 || sp != sp0  ||  hid != hid1 || hid != hid0)
+		else if (sp != sp1 || sp != sp0  ||  hid != hid1 || hid != hid0)
 		{	DL.sumLenMrg = 0.f;  ++DL.mrgCnt;
 			DL.v_bMerge.push_back(1);
 		}
@@ -259,7 +269,9 @@ void SplineRoad::PrepassLod(
 			DL.v_bMerge.push_back(0);  // merged
 		
 		LogR("seg " + iToStr(seg,3) + "  iw " + iToStr(iw,3) + "  il " + iToStr(il,3) +
-			"  pipe prv" + toStr(sp0) + "  cur " + toStr(sp) + "  nxt" + toStr(sp1));
+			"  pipe prv" + toStr(sp0) + "  cur " + toStr(sp) + "  nxt" + toStr(sp1) +
+			(trail ? "  ck " + toStr(mP[seg].nCk) : "") +
+			(DL.v_bMerge[DL.v_bMerge.size()-1] ? "  mrg" : ""));
 		
 		if (DL.isLod0)
 		{	
@@ -291,7 +303,7 @@ void SplineRoad::PrepassLod(
 			DL0.v0_N.push_back(vn);
 		}
 
-		//  width
+		//  width  -
 		{
 		Real wiMul = mP[seg].width;
 		if (editorAlign)  // wider road for align terrain tool

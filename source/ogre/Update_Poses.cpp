@@ -370,21 +370,23 @@ void App::newPoses(float time)  // time only for camera update
 									carM->iLoopLastCam = -1;
 								}
 							}
-							//  next check
+							//  next check  ()
 							if (i == carM->iNextChk && carM->iNumChks < ncs)
 							{
 								carM->iCurChk = i;  carM->iNumChks++;
 								carM->timeAtCurChk = pGame->timer.GetPlayerTime(c);
-								int ii = (pSet->game.trackreverse ? -1 : 1) * road->iDir;
-								carM->iNextChk = (carM->iCurChk + ii + ncs) % ncs;
+								bool rev = pSet->game.trackreverse;
+								int inc = (rev ? -1 : 1) * road->iDir;
+								
+								carM->iNextChk = (carM->iCurChk + inc + ncs) % ncs;
 								carM->UpdNextCheck();
 								//  save car pos and rot
 								carM->pCar->SavePosAtCheck();
 								carM->updTimes = true;
 
-								//  trail  next start>
-								if (scn->trail && scn->mapChkTrl[i])
-									scn->trail->trailSegId = scn->mapChkTrl[i]-1; //cs.trailSegId; //-
+								//  trail  next start ->--
+								if (scn->trail)  scn->trail->trailSegId =
+										(inc * (i - scn->road->iChkId1) + (rev ? 0 : 1) + ncs) % ncs;
 
 								if (pSet->snd_chk && locar)
 									pGame->snd_chk->start();  //)

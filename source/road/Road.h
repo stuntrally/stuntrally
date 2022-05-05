@@ -25,7 +25,7 @@ class btTriangleMesh;
 #ifdef SR_EDITOR
 #define LogR(a)  //LogO(String("~ Road  ") + a)
 #else
-#define LogR(a)
+#define LogR(a)  //LogO(String("~ Road  ") + a)
 #endif
 
 #define  LODs  4  // LODs each segment has

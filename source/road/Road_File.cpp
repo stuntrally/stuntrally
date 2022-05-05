@@ -103,11 +103,12 @@ void SplineRoad::UpdLodVis(float fBias, bool bFull)
 			bool vis;
 			if (bFull)  vis = i==0;  else  // all in 1st lod for preview
 			vis = d >= fDist[i] * fBias && d < fDist[i+1] * fBias;  // normal
-			if (trailSegId >= 0 && vis && 
-				abs(trailSegId - int(seg)) > 50)  //par..
-				vis = false;
+			if (trail && vis)  // ->--
+				vis = mP[seg].nCk >= trailSegId -1
+				   && mP[seg].nCk <= trailSegId +3;  // par vis -1..5
+
 			/*if (bMerge)  vis = rs.mrgLod == i;  // vis mrg test-
-			else  vis = i == 3;  /**/// check lod 0
+			else  vis = i == 3;/**/  // check lod 0
 			
 			#ifdef SR_EDITOR
 			if (vis)  //  road mark selected segments, vSel, SELECTED_GLOW, isSelected in main.shader

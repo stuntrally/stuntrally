@@ -34,7 +34,9 @@ public:
 	Ogre::Real aYaw,aRoll;  // working angles (from auto)
 	Ogre::Real tYaw,tRoll;  //- angles+tan interp, not used yet
 	Ogre::Real aY,aR;   // after prepass+
+	
 	Ogre::Vector4 clr;  // trail color
+	int nCk = -1;  // trail, checkpoint id
 
 	//  on/off
 	bool onTer;   // sticked on terrain

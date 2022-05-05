@@ -506,13 +506,13 @@ void CGui::ToolTestTrkGhosts()
 				
 				//  test
 				MATHVECTOR<float,3> oldPos;  float oldTime = 0.f;
-				int num = gho.getNumFrames(), jmp = 0;
-				for (int i=0; i < num; ++i)
+				int frames = gho.getNumFrames(), jmp = 0;
+				for (int i=0; i < frames; ++i)
 				{
 					const TrackFrame& fr = gho.getFrame0(i);
 
 					//  check for sudden pos jumps  (rewind used but not with _Tool_ go back time !)
-					if (i > 10 && i < num-1)  // ignore jumps at start or end
+					if (i > 10 && i < frames-1)  // ignore jumps at start or end
 					{	float dist = (fr.pos - oldPos).MagnitudeSquared();
 						if (dist > 6.f*6.f)  //par
 						{	
