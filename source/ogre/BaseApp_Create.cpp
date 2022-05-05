@@ -150,49 +150,13 @@ void BaseApp::Run(bool showDialog)
 	destroyScene();
 }
 
+
 //  ctor
 //-------------------------------------------------------------------------------------
 BaseApp::BaseApp()
-	:mRoot(0), mSceneMgr(0), mWindow(0), mSDLWindow(0)
-	,pSet(0), mFactory(0)
-	,bckFps(0),txFps(0), imgBack(0),imgLoad(0)
-	,bckLoad(0),bckLoadBar(0),barLoad(0), txLoadBig(0),txLoad(0)
-	,barSizeX(0), barSizeY(0)
-
-	,mHDRLogic(0), mMotionBlurLogic(0),mSSAOLogic(0), mCameraBlurLogic(0)
-	,mGodRaysLogic(0), mSoftParticlesLogic(0), mGBufferLogic(0)
-	,mDepthOfFieldLogic(0), mFilmGrainLogic(0)
-	
-	,mShowDialog(0), mShutDown(0)
-
-	,bWindowResized(0), mLoadingBar(0), roadUpdTm(0.f)
-
-	,alt(0), ctrl(0), shift(0)
-	,mbLeft(0), mbRight(0), mbMiddle(0)
-	,isFocGui(0),isFocRpl(0)
-
-	,mGui(0), mPlatform(0)
-	,mWndTabsGame(0),mWndTabsRpl(0),mWndTabsHelp(0),mWndTabsOpts(0)
-	,mWndMain(0),mWndGame(0),mWndReplays(0),mWndHelp(0),mWndOpts(0)
-	,mWndWelcome(0), mWndRpl(0), mWndNetEnd(0), mWndTweak(0), mWndTrkFilt(0)
-	,mWndChampStage(0),mWndChampEnd(0), mWndChallStage(0),mWndChallEnd(0)
-
-	,bSizeHUD(true), bRecreateHUD(false), bAssignKey(false)
-	, bLoading(false), iLoad1stFrames(0), bLoadingEnd(0), bSimulating(0)
-	,mMasterClient(), mClient(), mLobbyState(DISCONNECTED)
-	,ndSky(0),	mbWireFrame(0)
-	,iCurCam(0), mSplitMgr(0), motionBlurIntensity(0.9)
-	,mMouseX(0), mMouseY(0)
-	,mCursorManager(NULL), mInputWrapper(NULL), mInputCtrl(0), mBindListner(0)
+	:mMasterClient(), mClient()
 {
 	mLoadingBar = new LoadingBar(this);
-
-	int i;
-	for (i=0; i < 4; ++i)
-		mInputCtrlPlayer[i] = 0;
-	
-	for (i=0; i < ciMainBtns; ++i)
-	{	mWndMainPanels[i] = 0;  mWndMainBtns[i] = 0;  }
 }
 
 //  dtor
@@ -212,6 +176,7 @@ BaseApp::~BaseApp()
 	if (mPlatform)  {
 		mPlatform->shutdown();  delete mPlatform;  mPlatform = 0;  }
 
+	//  save inputs
 	mInputCtrl->save(PATHMANAGER::UserConfigDir() + "/input.xml");
 	delete mInputCtrl;
 	for (int i=0; i<4; ++i)
@@ -237,6 +202,7 @@ BaseApp::~BaseApp()
 	SDL_DestroyWindow(mSDLWindow);
 }
 
+
 //  config
 //-------------------------------------------------------------------------------------
 bool BaseApp::configure()
@@ -249,12 +215,12 @@ bool BaseApp::configure()
 	{	LogO("RenderSystem '" + pSet->rendersystem + "' is not available. Exiting.");
 		return false;
 	}
-	if (pSet->rendersystem == "OpenGL Rendering Subsystem")  // not on dx
+	if (pSet->rendersystem == "OpenGL Rendering Subsystem")
 		mRoot->getRenderSystem()->setConfigOption("RTT Preferred Mode", pSet->buffer);
 
 	mRoot->initialise(false);
 
-	Uint32 flags = SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_NOPARACHUTE;
+	Uint32 flags = SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_NOPARACHUTE;
 	if (SDL_WasInit(flags) == 0)
 	{
 		SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
@@ -288,7 +254,7 @@ bool BaseApp::configure()
 	int pos_x = SDL_WINDOWPOS_UNDEFINED,
 		pos_y = SDL_WINDOWPOS_UNDEFINED;
 
-	#if 0  /// _tool_ rearrange window pos for local netw testing
+#if 0  /// _tool_ rearrange window pos for local netw testing
 	SDL_Rect screen;
 	if (SDL_GetDisplayBounds(/*pSet.screen_id*/0, &screen) != 0)
 		LogO("SDL_GetDisplayBounds errror");
@@ -299,7 +265,7 @@ bool BaseApp::configure()
 	{	pos_x = screen.w - pSet->windowx;
 		pos_y = screen.h - pSet->windowy;
 	}
-	#endif
+#endif
 	/// \todo For multiple monitors, WINDOWPOS_UNDEFINED is not the best idea. Needs a setting which screen to launch on,
 	/// then place the window on that screen (derive x&y pos from SDL_GetDisplayBounds)
 
@@ -315,6 +281,7 @@ bool BaseApp::configure()
 
 	return true;
 }
+
 
 //  Setup
 //-------------------------------------------------------------------------------------

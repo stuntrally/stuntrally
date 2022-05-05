@@ -37,7 +37,7 @@ public:
 	virtual ~BaseApp();
 	virtual void Run(bool showDialog);
 	
-	bool bLoading,bLoadingEnd,bSimulating;  int iLoad1stFrames;
+	bool bLoading =0, bLoadingEnd =0, bSimulating =0;  int iLoad1stFrames =0;
 	
 	//  has to be in baseApp for camera mouse move
 	typedef std::vector<class CarModel*> CarModels;
@@ -49,35 +49,36 @@ public:
 	virtual void postInit() = 0;
 		
 	///  effects
-	class SplitScr* mSplitMgr;
-	class HDRLogic* mHDRLogic; class MotionBlurLogic* mMotionBlurLogic;
-	class CameraBlurLogic* mCameraBlurLogic;
-	class SSAOLogic* mSSAOLogic;
-	class GodRaysLogic* mGodRaysLogic;
-	class SoftParticlesLogic* mSoftParticlesLogic;
-	class DepthOfFieldLogic* mDepthOfFieldLogic;
-	class GBufferLogic* mGBufferLogic;
-	class FilmGrainLogic* mFilmGrainLogic;
+	class SplitScr* mSplitMgr =0;
+	class HDRLogic* mHDRLogic =0;
+	class MotionBlurLogic* mMotionBlurLogic =0;
+	class CameraBlurLogic* mCameraBlurLogic =0;
+	class SSAOLogic* mSSAOLogic =0;
+	class GodRaysLogic* mGodRaysLogic =0;
+	class SoftParticlesLogic* mSoftParticlesLogic =0;
+	class DepthOfFieldLogic* mDepthOfFieldLogic =0;
+	class GBufferLogic* mGBufferLogic =0;
+	class FilmGrainLogic* mFilmGrainLogic =0;
 	void recreateCompositor();
 	bool AnyEffectEnabled();
 	bool NeedMRTBuffer();
-	float motionBlurIntensity;
+	float motionBlurIntensity =0.9f;
 
-	class SETTINGS* pSet;
+	class SETTINGS* pSet =0;
 
-	sh::Factory* mFactory;
+	sh::Factory* mFactory =0;
 
 	//  wnd, hud, upl
-	bool bWindowResized, bSizeHUD, bRecreateHUD;
-	float roadUpdTm;
-	class LoadingBar* mLoadingBar;
-	Ogre::SceneNode* ndSky;  //-
+	bool bWindowResized =1, bSizeHUD =1, bRecreateHUD =0;
+	float roadUpdTm =0.f;
+	class LoadingBar* mLoadingBar =0;
+	Ogre::SceneNode* ndSky =0;  //-
 	
 
-	bool mShowDialog, mShutDown;
+	bool mShowDialog =0, mShutDown =0;
 	bool setup(), configure();  void updateStats();
 
-	int mMouseX,mMouseY;
+	int mMouseX =0, mMouseY =0;
 	
 	///  create
 	virtual void createScene() = 0;
@@ -107,64 +108,67 @@ public:
 	void onCursorChange(const std::string& name);
 
 	///  Ogre
-	Ogre::Root* mRoot;  Ogre::SceneManager* mSceneMgr;
-	Ogre::RenderWindow* mWindow;
-	SDL_Window* mSDLWindow;
+	Ogre::Root* mRoot =0;  Ogre::SceneManager* mSceneMgr =0;
+	Ogre::RenderWindow* mWindow =0;
+	SDL_Window* mSDLWindow =0;
 
 	virtual void windowResized (int x, int y);
 	virtual void windowClosed();
 
 	///  input
-	SFO::InputWrapper* mInputWrapper;
-	SFO::SDLCursorManager* mCursorManager;
-	ICS::InputControlSystem* mInputCtrl;
-	ICS::InputControlSystem* mInputCtrlPlayer[4];
+	SFO::InputWrapper* mInputWrapper =0;
+	SFO::SDLCursorManager* mCursorManager =0;
+	ICS::InputControlSystem* mInputCtrl =0;
+	ICS::InputControlSystem* mInputCtrlPlayer[4] ={0,};
 	std::vector<SDL_Joystick*> mJoysticks;
 	
 	// this is set to true when the user is asked to assign a new key
-	bool bAssignKey;
-	ICS::DetectingBindingListener* mBindListner;
+	bool bAssignKey =0;
+	ICS::DetectingBindingListener* mBindListner =0;
 
 	bool IsFocGuiInput()  {  return isFocGui || isFocRpl;  }
 	bool IsFocGui();
 	Ogre::RenderWindow* getWindow()  {  return mWindow;  }
 
 	///  input
-	bool alt, ctrl, shift;  // key modifiers
-	bool mbLeft, mbRight, mbMiddle;  // mouse buttons
-	bool mbWireFrame;
-	int iCurCam;
+	bool alt =0, ctrl =0, shift =0;  // key modifiers
+	bool mbLeft =0, mbRight =0, mbMiddle =0;  // mouse buttons
+	bool mbWireFrame =0;
+	int iCurCam =0;
 
 	///  Gui  ..........................
-	bool isFocGui,isFocRpl;  // gui shown
+	bool isFocGui =0, isFocRpl =0;  // gui shown
 	bool isTweak();
 	
-	MyGUI::Gui* mGui;
+	MyGUI::Gui* mGui =0;
 	void baseInitGui(), baseSizeGui();
 
-	Img bckFps, imgBack;
-	Txt txFps;
+	Img bckFps =0, imgBack =0;
+	Txt txFps =0;
 
 	//  loading
-	Img bckLoad, bckLoadBar, barLoad, imgLoad;
-	Txt txLoadBig, txLoad;
-	int barSizeX, barSizeY;
+	Img bckLoad =0, bckLoadBar =0, barLoad =0, imgLoad =0;
+	Txt txLoadBig =0, txLoad =0;
+	int barSizeX =0, barSizeY =0;
 
 	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	MyGUI::OgreD3D11Platform* mPlatform;
+	MyGUI::OgreD3D11Platform* mPlatform =0;
 	#else
-	MyGUI::OgrePlatform* mPlatform;
+	MyGUI::OgrePlatform* mPlatform =0;
 	#endif
 	
 	///  main menu  // pSet->inMenu
-	WP mWndMainPanels[ciMainBtns];
-	Btn mWndMainBtns[ciMainBtns];
+	WP mWndMainPanels[ciMainBtns] ={0,};
+	Btn mWndMainBtns[ciMainBtns] ={0,};
 
-	Wnd mWndMain, mWndGame,mWndReplays, mWndHelp,mWndOpts,  // menu, windows
-		mWndWelcome, mWndRpl, mWndNetEnd, mWndTweak, mWndTrkFilt,  // rpl controls, netw, tools
-		mWndChampStage,mWndChampEnd, mWndChallStage,mWndChallEnd;
-	Tab mWndTabsGame,mWndTabsRpl, mWndTabsHelp,mWndTabsOpts;  // main tabs on windows
+	Wnd mWndMain =0, mWndRace =0,
+		mWndGame =0,mWndReplays =0,  mWndHelp =0, mWndOpts =0,  // menu, windows
+		mWndWelcome =0, mWndRpl =0,
+		mWndNetEnd =0, mWndTweak =0, mWndTrkFilt =0,  // rpl controls, netw, tools
+		mWndChampStage =0, mWndChampEnd =0,
+		mWndChallStage =0, mWndChallEnd =0;
+	Tab mWndTabsGame =0, mWndTabsRpl =0, mWndTabsHelp =0, mWndTabsOpts =0;  // main tabs on windows
 	
 	//MyGUI::VectorWidgetPtr
 	std::vector<WP> vwGui;  // all widgets to destroy
@@ -172,5 +176,5 @@ public:
 	///  networking
 	boost::scoped_ptr<MasterClient> mMasterClient;
 	boost::scoped_ptr<P2PGameClient> mClient;
-	LobbyState mLobbyState;
+	LobbyState mLobbyState =DISCONNECTED;
 };

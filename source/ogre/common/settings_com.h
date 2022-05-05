@@ -10,22 +10,23 @@ public:
 //------------------------------------------
 
 	//  misc
-	std::string language;
-	bool isMain;  int inMenu;  // last menu id
+	std::string language;  // "" autodetect lang
+	bool isMain =1, isRace =0;
+	int inMenu =0, inRace =0;  // last menu id
 
 	//  startup, other
-	bool autostart, escquit, startInMain;
-	bool ogre_dialog, mouse_capture, screen_png;
+	bool autostart =0, escquit =0, startInMain =1;
+	bool ogre_dialog =0, mouse_capture =1, screen_png =0;
 
 	//  screen
-	int windowx, windowy, fsaa;
-	bool fullscreen, vsync;
+	int windowx =800, windowy =600, fsaa =0;
+	bool fullscreen =0, vsync =0;
 	std::string buffer, rendersystem;
 	//  limit
-	bool limit_fps;  float limit_fps_val;  int limit_sleep;
+	bool limit_fps =0;  float limit_fps_val = 60.f;  int limit_sleep = -1;
 	
 	//  hud
-	bool show_fps;
+	bool show_fps =0;
 
 
 	//  graphics  ----
@@ -36,8 +37,8 @@ public:
 	bool water_reflect, water_refract;  int water_rttsize;  // water
 	float shadow_dist;  int shadow_size, lightmap_size, shadow_count,  shadow_type; //eShadowType
 
-	bool use_imposters, imposters_only;  //  veget
-	float grass, trees_dist, grass_dist;  // trees in gui.
+	bool use_impostors =1, impostors_only =0;  //  veget
+	float grass =1.f, trees_dist =1.f, grass_dist =1.f;  // trees in gui.
 
 	//  graphics other
 	int preset;  // last set, info only
@@ -46,8 +47,8 @@ public:
 
 
 	//  track
-	int tracks_view, tracks_sort;
-	bool tracks_sortup, tracks_filter;
+	int tracks_view =0, tracks_sort =2;
+	bool tracks_sortup =1, tracks_filter =0;
 
 	#define COL_VIS 19
 	#define COL_FIL 14

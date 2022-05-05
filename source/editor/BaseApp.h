@@ -28,27 +28,27 @@ class BaseApp : public BGui,
 		public SFO::KeyListener, public SFO::MouseListener, public SFO::WindowListener
 {
 public:
-	BaseApp();	virtual ~BaseApp();
+	virtual ~BaseApp();
 	virtual void Run( bool showDialog );
 
 	friend class CGui;
 	friend class CGuiCom;
 	friend class CScene;
 
-	SETTINGS* pSet;
+	SETTINGS* pSet =0;
 
-	bool bWindowResized;
-	Ogre::SceneNode* ndSky;  //- out to CScene?
+	bool bWindowResized =1;
+	Ogre::SceneNode* ndSky =0;  //- out to CScene?
 	
 	// stuff to be executed in App after BaseApp init
 	virtual void postInit() = 0;
 
-	bool mShutDown;
+	bool mShutDown =0;
 protected:	
-	bool mShowDialog;//, mShutDown;
+	bool mShowDialog =0;//, mShutDown;
 	bool setup(), configure();  void updateStats();
 	
-	bool bFirstRenderFrame;
+	bool bFirstRenderFrame =1;
 	
 	///  create
 	virtual void createScene() = 0;
@@ -78,64 +78,67 @@ protected:
 
 	///  Ogre
 public:
-	Ogre::Root *mRoot;
+	Ogre::Root *mRoot =0;
 protected:	
-	Ogre::SceneManager* mSceneMgr;
-	Ogre::Viewport* mViewport;
-	Ogre::RenderWindow* mWindow;
-	SDL_Window* mSDLWindow;
-	Ogre::Camera* mCamera;
+	Ogre::SceneManager* mSceneMgr =0;
+	Ogre::Viewport* mViewport =0;
+	Ogre::RenderWindow* mWindow =0;
+	SDL_Window* mSDLWindow =0;
+	Ogre::Camera* mCamera =0;
 	Ogre::Vector3 mCamPosOld,mCamDirOld;
-	
+
+
 	///  input
-	SFO::InputWrapper* mInputWrapper;
-	SFO::SDLCursorManager* mCursorManager;
+	SFO::InputWrapper* mInputWrapper =0;
+	SFO::SDLCursorManager* mCursorManager =0;
 
 	///  ovelay
-	Ogre::Overlay *ovBrushPrv, *ovTerPrv;
-	Ogre::OverlayElement *ovBrushMtr, *ovTerMtr;
-	float fStFade;
+	Ogre::Overlay *ovBrushPrv =0, *ovTerPrv =0;
+	Ogre::OverlayElement *ovBrushMtr =0, *ovTerMtr =0;
+	float fStFade =0.f;
 
-	bool alt, ctrl, shift;  // key modifiers
-	bool mbLeft, mbRight, mbMiddle;  // mouse buttons
+
+	bool alt =0, ctrl =0, shift =0;  // key modifiers
+	bool mbLeft =0, mbRight =0, mbMiddle =0;  // mouse buttons
 
 	Ogre::String  mDebugText;	// info texts
-	bool mbWireFrame;  void UpdWireframe();
+	bool mbWireFrame =0;  void UpdWireframe();
 
 	///  camera upd
-	bool bMoveCam;
-	int mx,my,mz;  double mDTime;
-	Ogre::Real mRotX, mRotY,  mRotKX, mRotKY,  moveMul, rotMul;
+	bool bMoveCam  =0;
+	int mx =0, my =0, mz =0;  double mDTime =0.0;
+	Ogre::Real mRotX =0, mRotY =0,  mRotKX =0, mRotKY =0,  moveMul =0, rotMul =0;
 	Ogre::Vector3 mTrans;
 
-	ED_MODE	edMode,edModeOld;
+	ED_MODE	edMode =ED_Deform, edModeOld =ED_Deform;
+
 
 	///  Gui  ..........................
-	bool bGuiFocus;  // gui shown
-	MyGUI::Gui* mGui;
+	bool bGuiFocus =0;  // gui shown
+	MyGUI::Gui* mGui =0;
 	void baseInitGui();
 	
 	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	MyGUI::OgreD3D11Platform* mPlatform;
+	MyGUI::OgreD3D11Platform* mPlatform =0;
 	#else
-	MyGUI::OgrePlatform* mPlatform;
+	MyGUI::OgrePlatform* mPlatform =0;
 	#endif
-	Wnd mWndBrush, mWndCam, mWndStart,  // tool windows
-		mWndRoadCur, mWndRoadStats,
-		mWndFluids, mWndObjects, mWndParticles;
+	Wnd mWndBrush =0, mWndCam =0, mWndStart =0,  // tool windows
+		mWndRoadCur =0, mWndRoadStats =0,
+		mWndFluids =0, mWndObjects =0, mWndParticles =0;
 
 	//MyGUI::VectorWidgetPtr
 	std::vector<WP> vwGui;  // all widgets to destroy
-	Img bckFps, imgCur, bckInput;
-	Txt txFps, txCamPos, txInput;
+	Img bckFps =0, imgCur =0, bckInput =0;
+	Txt txFps =0, txCamPos =0, txInput =0;
 
-	Wnd mWndMain, mWndTrack,mWndEdit,mWndHelp,mWndOpts;  // menu, windows
-	Wnd mWndTrkFilt, mWndPick;
-	Tab mWndTabsTrack,mWndTabsEdit,mWndTabsHelp,mWndTabsOpts;  // main tabs on windows
+	Wnd mWndMain =0, mWndTrack =0, mWndEdit =0, mWndHelp =0, mWndOpts =0;  // menu, windows
+	Wnd mWndTrkFilt =0, mWndPick =0;
+	Tab mWndTabsTrack =0, mWndTabsEdit =0, mWndTabsHelp =0, mWndTabsOpts =0;  // main tabs on windows
 
 	///  main menu
-	WP mWndMainPanels[WND_ALL];
-	Btn mWndMainBtns[WND_ALL];
+	WP mWndMainPanels[WND_ALL] ={0,};
+	Btn mWndMainBtns[WND_ALL] ={0,};
 
 	
 public:

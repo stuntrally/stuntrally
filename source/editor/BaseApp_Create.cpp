@@ -145,36 +145,8 @@ void BaseApp::Run( bool showDialog )
 	destroyScene();
 }
 
-//  ctor
+//  dtor
 //-------------------------------------------------------------------------------------
-BaseApp::BaseApp()
-	:mRoot(0), mCamera(0), mViewport(0)
-	,mSceneMgr(0), mWindow(0),  mGui(0), mPlatform(0)
-
-	,pSet(0), bGuiFocus(0), bMoveCam(0), mDTime(0)
-	,edMode(ED_Deform), edModeOld(ED_Deform)
-	,mInputWrapper(NULL), mSDLWindow(NULL), mCursorManager(0)
-
-	,ovBrushPrv(0),ovBrushMtr(0), ovTerPrv(0),ovTerMtr(0)
-	,imgCur(0), bckFps(0), txFps(0), txCamPos(0), fStFade(0.f)
-	,bckInput(0), txInput(0)
-
-	,mShowDialog(1), mShutDown(false), bWindowResized(true), bFirstRenderFrame(true)
-	,ndSky(0), mbWireFrame(0)
-
-	,alt(0), ctrl(0), shift(0)
-	,mx(0),my(0),mz(0),  mbLeft(0), mbRight(0), mbMiddle(0)
-
-	,mWndMain(0), mWndTrack(0),mWndEdit(0),mWndHelp(0),mWndOpts(0)
-	,mWndTrkFilt(0), mWndPick(0)
-	,mWndTabsTrack(0),mWndTabsEdit(0),mWndTabsHelp(0),mWndTabsOpts(0)
-	
-	,mWndBrush(0), mWndCam(0), mWndStart(0)
-	,mWndRoadCur(0), mWndRoadStats(0)
-	,mWndFluids(0), mWndObjects(0), mWndParticles(0)
-{
-}
-
 BaseApp::~BaseApp()
 {
 	delete mCursorManager;  mCursorManager = 0;
