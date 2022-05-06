@@ -141,7 +141,7 @@ void App::createScene()
 
 	//  gui  * * *
 	if (pSet->startInMain)
-		pSet->isMain = true;
+		pSet->bMain = true;
 
 	if (!pSet->autostart)
 		isFocGui = true;
@@ -923,16 +923,18 @@ void App::CreateTrail(Camera* cam)
 	tr->river = true;  tr->trail = true;  tr->isLooped = true;
 
 	//tr->g_LenDim0 = 2.f;  tr->g_iWidthDiv0 = 1;  //  quality
-	tr->g_LenDim0 = 4.f;  tr->g_iWidthDiv0 = 1;  //  low
+	tr->g_LenDim0 = 3.f;  tr->g_iWidthDiv0 = 1;  //  low
+	//tr->g_LenDim0 = 4.f;  tr->g_iWidthDiv0 = 1;  //  low
+	//  mergeLen affects Fps most
 	//tr->g_MergeLen = 100.f;  tr->g_LodPntLen = 20.f;  tr->bMerge = true;
 	tr->g_MergeLen = 200.f;  tr->g_LodPntLen = 30.f;  tr->bMerge = true;  // low
 	tr->newP.onTer = false;  tr->newP.aType = AT_Both;
 
 	//  params  add p
+	const float dd = 5*5, al = 0.6f, down = 0.5f,  // high quality
 	// const float dd = 10*10, al = 0.6f, down = 0.5f,  // quality  p each 10 m
-	const float dd = 20*20, al = 0.6f, down = 0.45f, // low
-	// const float dd = 30*30, al = 0.6f, down = 0.45f, // too low
-		acc_sens = 30.f, acc_sensw = 45.f;
+	// const float dd = 20*20, al = 0.6f, down = 0.45f, // low, cuts loops etcs
+		acc_sens = 30.f, acc_sensw = 45.f;  // color sensitivity
 
 
 	//  chk vars
@@ -965,7 +967,10 @@ void App::CreateTrail(Camera* cam)
 
 		float d = old.squaredDistance(pos);
 		if (d > dd)
-		{	d = sqrt(d);
+		{	d = sqrt(d);  // todo: on angle changes..
+
+			float fa = scn->sc->GetDepthInFluids(pos);
+			if (fa > 0.f)  pos.y += fa + 0.2f;  // above fluids
 
 			const float t = fr.time, dt = t - tOld;
 			const float vel = d / dt * 3.6f;  // kmh
@@ -989,7 +994,7 @@ void App::CreateTrail(Camera* cam)
 				Vector4(1.f - a, 1.f, 0.f, al) :  // accel clr
 				Vector4(1.f + aw*aw*0.5f, 1.f + a, 0.f, al);  // brake
 
-			if (vel < 600.f)  // end jmp err
+			if (vel < 600.f)  // fix end jmp err
 				tr->Insert(INS_End);
 			
 			old = pos;  tOld = t;  vOld = vel;

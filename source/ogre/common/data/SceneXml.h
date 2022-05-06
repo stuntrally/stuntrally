@@ -94,6 +94,7 @@ public:
 	//  Fluids  ~~~
 	std::vector<FluidBox> fluids;
 	class FluidsXml* pFluidsXml;  //! set this after Load
+	float GetDepthInFluids(Ogre::Vector3 pos);
 	
 	//  Objects  []o
 	std::vector<Object> objects;

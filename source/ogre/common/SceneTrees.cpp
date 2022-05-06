@@ -189,14 +189,14 @@ void CScene::CreateTrees()
 	{
 		trees = new PagedGeometry(cam, sc->trPage);
 		
-		bool imp = pSet->use_imposters || (!pSet->use_imposters && pSet->imposters_only);
+		bool imp = pSet->use_impostors || (!pSet->use_impostors && pSet->impostors_only);
 		
 		// create dir if not exist
 		boost::filesystem::create_directory(sCache);
 		trees->setTempDir(sCache + "/");
 
 		//ImpostorPage* ipg = 0;
-		if (!pSet->imposters_only)
+		if (!pSet->impostors_only)
 		{
 			trees->addDetailLevel<WindBatchPage>(sc->trDist * pSet->trees_dist, 0);
 			//trees->addDetailLevel<BatchPage>	 (sc->trDist * pSet->trees_dist, 0);  // no wind
@@ -346,22 +346,7 @@ void CScene::CreateTrees()
 				if (!add)  continue;  //
 				
 				//  check if in fluids  ------------
-				float fa = 0.f;  // depth
-				for (int fi=0; fi < sc->fluids.size(); ++fi)
-				{
-					const FluidBox& fb = sc->fluids[fi];
-					if (fb.pos.y - pos.y > 0.f)  // dont check when above fluid, ..or below its size-
-					{
-						const float sizex = fb.size.x*0.5f, sizez = fb.size.z*0.5f;
-						//  check rect 2d - no rot !
-						if (pos.x > fb.pos.x - sizex && pos.x < fb.pos.x + sizex &&
-							pos.z > fb.pos.z - sizez && pos.z < fb.pos.z + sizez)
-						{
-							float f = fb.pos.y - pos.y;
-							if (f > fa)  fa = f;
-						}
-					}
-				}
+				float fa = sc->GetDepthInFluids(pos);
 				if (fa > pg.maxDepth)
 					add = false;
 				

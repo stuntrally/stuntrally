@@ -74,8 +74,8 @@ void CGuiCom::GuiInitGraphics()  // also called on preset change with bGI true
 	sv= &svGrassDist;	sv->Init("GrassDist",   &pSet->grass_dist,	0.5f,7.f, 2.f);  sv->DefaultF(2.f);
 	BtnC("TrGrReset",  btnTrGrReset);
 
-	ck= &ckUseImposters;  ck->Init("UseImposters", &pSet->use_imposters);
-	ck= &ckImpostorsOnly; ck->Init("ImpostorsOnly",&pSet->imposters_only);
+	ck= &ckUseImposters;  ck->Init("UseImposters", &pSet->use_impostors);
+	ck= &ckImpostorsOnly; ck->Init("ImpostorsOnly",&pSet->impostors_only);
 
 	//  shadows
 	sv= &svShadowType;

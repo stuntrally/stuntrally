@@ -161,3 +161,24 @@ void Scene::UpdPgLayers()
 			pgLayers.push_back(i);
 	}
 }
+
+
+//  util
+float Scene::GetDepthInFluids(Vector3 pos)
+{
+	float fa = 0.f;
+	for (int i=0; i < fluids.size(); ++i)
+	{
+		const FluidBox& fb = fluids[i];
+		if (fb.pos.y - pos.y > 0.f)  // dont check when above fluid, ..or below its size-
+		{
+			const float sizex = fb.size.x*0.5f, sizez = fb.size.z*0.5f;
+			//  check rect 2d - no rot !
+			if (pos.x > fb.pos.x - sizex && pos.x < fb.pos.x + sizex &&
+				pos.z > fb.pos.z - sizez && pos.z < fb.pos.z + sizez)
+			{
+				float f = fb.pos.y - pos.y;
+				if (f > fa)  fa = f;
+	}	}	}
+	return fa;
+}

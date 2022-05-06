@@ -11,7 +11,7 @@ public:
 
 	//  misc
 	std::string language;  // "" autodetect lang
-	bool isMain =1, isRace =0;
+	bool bMain =1, bRace =0;
 	int inMenu =0, inRace =0;  // last menu id
 
 	//  startup, other
