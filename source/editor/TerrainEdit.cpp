@@ -7,7 +7,7 @@
 #include "CGui.h"
 #include <OgreTerrain.h>
 #include <OgreHardwarePixelBuffer.h>
-//#include "../vdrift/settings.h"
+//#include "../settings.h"
 #include <MyGUI.h>
 #include <OgreTimer.h>
 #include <OgreOverlay.h>

@@ -511,7 +511,8 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	//---------------------------------------------------------------------------
 #ifndef SR_EDITOR
 	if (pSet->dev_no_prvs)  return;
-	bool any = pSet->inMenu == MNU_Tutorial || pSet->inMenu == MNU_Champ || pSet->inMenu == MNU_Challenge;
+	bool any = pSet->iMenu == MN_Champ ||
+		pSet->iMenu == MN_Tutorial || pSet->iMenu == MN_Chall;
 #else
 	bool any = false;
 #endif

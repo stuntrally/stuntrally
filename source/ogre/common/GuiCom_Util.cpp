@@ -7,7 +7,7 @@
 #ifndef SR_EDITOR
 	#include "../CGame.h"
 	#include "../CGui.h"
-	#include "../../vdrift/settings.h"
+	#include "../settings.h"
 #else
 	#include "../../editor/CApp.h"
 	#include "../../editor/CGui.h"
@@ -380,73 +380,6 @@ void CGuiCom::comboLanguage(ComboBox* wp, size_t val)
 	#ifndef SR_EDITOR  //todo: fix in ed
 	bGuiReinit = true;
 	#endif
-}
-
-
-//  Main menu
-//----------------------------------------------------------------------------------------------------------------
-#ifdef SR_EDITOR
-	#define cntMain WND_ALL
-#else
-	#define cntMain ciMainBtns
-#endif
-
-void CGuiCom::InitMainMenu()
-{
-	Btn btn;
-	for (int i=0; i < cntMain; ++i)
-	{
-		const String s = toStr(i);
-		app->mWndMainPanels[i] = fWP("PanMenu"+s);
-		BtnC("BtnMenu"+s, btnMainMenu);  app->mWndMainBtns[i] = btn;
-	}
-
-	//  center
-	int wx = app->mWindow->getWidth(), wy = app->mWindow->getHeight();
-	Wnd wnd = app->mWndMain;
-
-	IntSize w = wnd->getSize();
-	wnd->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
-}
-
-void CGuiCom::btnMainMenu(WP wp)
-{
-	for (int i=0; i < cntMain; ++i)
-		if (wp == app->mWndMainBtns[i])
-		{
-			pSet->isMain = false;
-			pSet->inMenu = i;
-			app->gui->toggleGui(false);
-			return;
-		}
-}
-
-void CGuiCom::tabMainMenu(Tab tab, size_t id)
-{
-	#ifndef SR_EDITOR  ///_  game tab change
-	if (tab == app->mWndTabsGame)
-	{
-		if (id == TAB_Car)
-			app->gui->CarListUpd();  //  off filtering by chall
-	
-		app->mWndTrkFilt->setVisible(false);  //
-
-		if (id == TAB_Multi)
-		{	//  back to mplr tab, upload game info
-									//_ only for host..
-			if (app->mMasterClient && app->gui->valNetPassword->getVisible())
-			{	app->gui->uploadGameInfo();
-				app->gui->updateGameInfoGUI();
-			}
-			//- app->gui->evBtnNetRefresh(0);  // upd games list (don't, breaks game start)
-		}
-	}
-	#endif
-
-	if (id != 0)  return;  // <back
-	tab->setIndexSelected(1);  // dont switch to 0
-	pSet->isMain = true;
-	app->gui->toggleGui(false);  // back to main
 }
 
 

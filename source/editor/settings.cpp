@@ -22,9 +22,16 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	
 	SerializeCommon(w,c);
 	
+	Param(c,w, "game.in_main", bMain);		Param(c,w, "game.in_menu", inMenu);
+
 	//  game common
 	Param(c,w, "game.track", gui.track);				Param(c,w, "game.track_user", gui.track_user);
 	Param(c,w, "graph_veget.trees", gui.trees);
+
+	Param(c,w, "pacenotes.show", pace_show);		Param(c,w, "pacenotes.dist", pace_dist);
+	Param(c,w, "pacenotes.size", pace_size);
+	Param(c,w, "pacenotes.near", pace_near);		Param(c,w, "pacenotes.alpha", pace_alpha);
+	Param(c,w, "pacenotes.trk_reverse", trk_reverse);
 
 
 	Param(c,w, "hud_show.trackmap", trackmap);			Param(c,w, "hud_size.minimap", size_minimap);
@@ -44,6 +51,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "set.ter_skip", ter_skip);			Param(c,w, "set.road_sphr", road_sphr);
 	Param(c,w, "set.mini_skip", mini_skip);
 		
+
 	Param(c,w, "ter_gen.scale", gen_scale);
 	Param(c,w, "ter_gen.ofsx", gen_ofsx);			Param(c,w, "ter_gen.ofsy", gen_ofsy);
 	Param(c,w, "ter_gen.freq", gen_freq);			Param(c,w, "ter_gen.persist", gen_persist);
@@ -57,17 +65,13 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "teralign.w_mul", al_w_mul);			Param(c,w, "teralign.smooth", al_smooth);
 	Param(c,w, "teralign.w_add", al_w_add);
 
-	Param(c,w, "pacenotes.show", pace_show);		Param(c,w, "pacenotes.dist", pace_dist);
-	Param(c,w, "pacenotes.size", pace_size);
-	Param(c,w, "pacenotes.near", pace_near);		Param(c,w, "pacenotes.alpha", pace_alpha);
-	Param(c,w, "pacenotes.trk_reverse", trk_reverse);
-
 	Param(c,w, "tweak.mtr", tweak_mtr);
 	Param(c,w, "pick.set_par", pick_setpar);
 }
 
 SETTINGS::SETTINGS()  ///  Defaults
 	:version(100)  // old
+	,bMain(1), inMenu(0)
 	//  show
 	,trackmap(1), size_minimap(0.5), num_mini(0), brush_prv(1)
 	//  misc

@@ -3,7 +3,7 @@
 #include "common/Gui_Def.h"
 #include "common/GuiCom.h"
 #include "common/CScene.h"
-#include "../vdrift/settings.h"
+#include "../settings.h"
 #include "../vdrift/game.h"
 #include "../road/PaceNotes.h"
 #include "../road/Road.h"
@@ -466,11 +466,11 @@ void CGui::btnHintNext(WP)
 
 void CGui::btnHintScreen(WP)
 {
-	GuiShortcut(MNU_Options, TABo_Screen,0);  btnHintClose(0);
+	GuiShortcut(MN_Options, TABo_Screen,0);  btnHintClose(0);
 }
 void CGui::btnHintInput(WP)
 {
-	GuiShortcut(MNU_Options, TABo_Input,0);  btnHintClose(0);
+	GuiShortcut(MN_Options, TABo_Input,0);  btnHintClose(0);
 }
 
 void CGui::btnHintClose(WP)

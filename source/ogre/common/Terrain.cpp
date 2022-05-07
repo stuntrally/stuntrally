@@ -14,7 +14,7 @@
 #else
 	#include "../CGame.h"
 	#include "../../vdrift/game.h"
-	#include "../../vdrift/settings.h"
+	#include "../settings.h"
 #endif
 #include <BulletCollision/CollisionDispatch/btCollisionObject.h>
 #include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
@@ -164,6 +164,18 @@ void CScene::CreateTerrain(bool bNewHmap, bool bTer, bool terLoad)
 	
 	///  sky
 	Vector3 scl = app->pSet->view_distance*Vector3::UNIT_SCALE;
+#if 0
+	app->mSceneMgr->setSkyBox(true, "SpaceSkyBox", app->pSet->view_distance*0.63);
+	SceneNode* sk = app->mSceneMgr->getSkyBoxNode();
+	MovableObject* m = sk->getAttachedObject(0);
+	m->setRenderQueueGroup(RQG_Sky);
+	m->setCastShadows(false);
+	m->setVisibilityFlags(RV_Sky);  // hide on minimap
+	// AxisAlignedBox aab;  aab.setInfinite();
+	// sk->setBoundingBox(aab);  // always visible
+	//sk->setScale(scl);
+	app->ndSky = sk;
+#endif
 	CreateSkyDome(sc->skyMtr, scl, sc->skyYaw);
 	UpdFog();
 

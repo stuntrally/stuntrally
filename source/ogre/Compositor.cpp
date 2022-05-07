@@ -2,7 +2,7 @@
 #include "Compositor.h"
 #include "CGame.h"
 #include "SplitScreen.h"
-#include "../vdrift/settings.h"
+#include "../settings.h"
 #include "../vdrift/game.h"
 #include "common/CScene.h"
 

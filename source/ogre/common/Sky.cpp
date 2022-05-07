@@ -11,7 +11,7 @@
 	#include "../../editor/settings.h"
 #else
 	#include "../CGame.h"
-	#include "../../vdrift/settings.h"
+	#include "../settings.h"
 #endif
 #include <OgreRoot.h>
 #include <OgreManualObject.h>
@@ -206,6 +206,7 @@ void App::SetFactoryDefaults()
 	fct.setGlobalSetting("editor", "false");
 	#endif
 
+	if (!scn)  return;
 	scn->UpdFog(false);
 
 	fct.setSharedParameter("pssmSplitPoints", sh::makeProperty<sh::Vector3>(new sh::Vector3(0.1,0.2,0.5)));

@@ -23,6 +23,8 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	
 	SerializeCommon(w,c);
 	
+	Param(c,w, "game.menu", iMenu);  Param(c,w, "game.ymain", yMain);  Param(c,w, "game.yrace", yRace);
+
 	//  game common
 	Param(c,w, "game.track", gui.track);				Param(c,w, "game.track_user", gui.track_user);
 	Param(c,w, "graph_veget.trees", gui.trees);

@@ -117,7 +117,7 @@ void CGui::InitGui()
 	}
 
 	///  Gui common init  ---
-	gcom->InitMainMenu();
+	InitMainMenu();
 	gcom->GuiInitTooltip();
 	gcom->GuiInitLang();
 

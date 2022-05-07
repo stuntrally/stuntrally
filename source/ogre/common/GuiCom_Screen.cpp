@@ -5,7 +5,7 @@
 #ifndef SR_EDITOR
 	#include "../CGame.h"
 	#include "../SplitScreen.h"
-	#include "../vdrift/settings.h"
+	#include "../settings.h"
 #else
 	#include "../../editor/CApp.h"
 	#include "../../editor/settings.h"

@@ -30,7 +30,7 @@ void CGui::BackFromChs()
 bool CGui::isChallGui()
 {
 	//return imgChall && imgChall->getVisible();
-	return pSet->inMenu == MNU_Challenge;
+	return pSet->iMenu == MN_Chall;
 }
 
 void CGui::tabChallType(Tab wp, size_t id)

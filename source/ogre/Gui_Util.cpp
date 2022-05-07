@@ -2,7 +2,7 @@
 #include "common/Def_Str.h"
 #include "common/Gui_Def.h"
 #include "../vdrift/pathmanager.h"
-#include "../vdrift/settings.h"
+#include "../settings.h"
 #include "../vdrift/game.h"
 #include "CGame.h"
 #include "CGui.h"
@@ -23,6 +23,7 @@
 #include <MyGUI_MultiListBox.h>
 #include <MyGUI_PolygonalSkin.h>
 #include "../tinyxml/tinyxml2.h"
+#include "settings.h"
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
@@ -494,30 +495,33 @@ void CGui::toggleGui(bool toggle)
 {
 	if (toggle)
 		app->isFocGui = !app->isFocGui;
+	const bool gui = app->isFocGui;
+	const int mnu = pSet->iMenu;
 
-	bool notMain = app->isFocGui && !pSet->isMain;
-	app->mWndMain->setVisible(app->isFocGui && pSet->isMain);
-	app->mWndReplays->setVisible(notMain && pSet->inMenu == MNU_Replays);
-	app->mWndHelp->setVisible(notMain && pSet->inMenu == MNU_Help);
-	app->mWndOpts->setVisible(notMain && pSet->inMenu == MNU_Options);
-	if (!app->isFocGui)  app->mWndTrkFilt->setVisible(false);
+	app->mWndMain->setVisible(gui && mnu == MN1_Main);
+	app->mWndRace->setVisible(gui && mnu == MN1_Race);
+	
+	app->mWndReplays->setVisible(gui && mnu == MN_Replays);
+	app->mWndHelp->setVisible(   gui && mnu == MN_Help);
+	app->mWndOpts->setVisible(   gui && mnu == MN_Options);
+	if (!gui)  app->mWndTrkFilt->setVisible(false);
 	
 	//  fill help editboxes from text files
 	if (app->mWndHelp->getVisible() && loadReadme)
-	{
-		loadReadme = false;
+	{	loadReadme = false;
 		FillHelpTxt();
 	}
 
 	///  update track tab, for champs wnd
-	bool game = pSet->inMenu == MNU_Single, champ = pSet->inMenu == MNU_Champ,
-		tutor = pSet->inMenu == MNU_Tutorial, chall = pSet->inMenu == MNU_Challenge,
+	bool game = mnu == MN_Single,   champ = mnu == MN_Champ,
+		tutor = mnu == MN_Tutorial, chall = mnu == MN_Chall,
 		chAny = champ || tutor || chall, gc = game || chAny;
 	UString sCh = chall ? TR("#90FFD0#{Challenge}") : (tutor ? TR("#FFC020#{Tutorial}") : TR("#80C0FF#{Championship}"));
 
 	UpdChampTabVis();
 	
-	bool vis = notMain  && gc;
+	bool notMain = gui && !(mnu == MN1_Main || mnu == MN1_Race);
+	bool vis = notMain && gc;
 	app->mWndGame->setVisible(vis);
 	if (vis)
 	{
@@ -536,16 +540,18 @@ void CGui::toggleGui(bool toggle)
 		t->setButtonWidthAt(TAB_Stage, chAny ?-1 : 1);  if (id == TAB_Stage  && !chAny)  t->setIndexSelected(TAB_Track);
 	}
 
-	gcom->bnQuit->setVisible(app->isFocGui);
+	gcom->bnQuit->setVisible(gui);
 	app->updMouse();
-	if (!app->isFocGui)  gcom->mToolTip->setVisible(false);
+	if (!gui)  gcom->mToolTip->setVisible(false);
 
 	for (int i=0; i < ciMainBtns; ++i)
-		app->mWndMainPanels[i]->setVisible(pSet->inMenu == i);
+		app->mWndMainPanels[i]->setVisible(pSet->yMain == i);
+	for (int i=0; i < ciRaceBtns; ++i)
+		app->mWndRacePanels[i]->setVisible(pSet->yRace == i);
 		
 	//  1st center mouse
 	static bool first = true;
-	if (app->isFocGui && first)
+	if (gui && first)
 	{	first = false;
 		gcom->GuiCenterMouse();
 	}
@@ -554,23 +560,21 @@ void CGui::toggleGui(bool toggle)
 
 //  Gui Shortcut  alt-letters
 //.......................................................................................
-void CGui::GuiShortcut(MNU_Btns mnu, int tab, int subtab)
+void CGui::GuiShortcut(EMenu menu, int tab, int subtab)
 {
-	if (subtab == -1 && (!app->isFocGui || pSet->inMenu != mnu))
+	if (subtab == -1 && (!app->isFocGui || pSet->iMenu != menu))
 		subtab = -2;  // cancel subtab cycling
 
 	app->isFocGui = true;
-	pSet->isMain = false;
-	if (!(tab == TAB_Car && pSet->inMenu >= MNU_Tutorial && pSet->inMenu <= MNU_Challenge))  //
-		pSet->inMenu = mnu;
+	pSet->iMenu = menu;
 	
 	TabPtr mWndTabs = 0;
 	std::vector<TabControl*>* subt = 0;
 	
-	switch (mnu)
-	{	case MNU_Replays:	mWndTabs = app->mWndTabsRpl;  break;
-		case MNU_Help:		mWndTabs = app->mWndTabsHelp;  break;
-		case MNU_Options:	mWndTabs = app->mWndTabsOpts;  subt = &vSubTabsOpts;  break;
+	switch (menu)
+	{	case MN_Replays:	mWndTabs = app->mWndTabsRpl;  break;
+		case MN_Help:		mWndTabs = app->mWndTabsHelp;  break;
+		case MN_Options:	mWndTabs = app->mWndTabsOpts;  subt = &vSubTabsOpts;  break;
 		default:			mWndTabs = app->mWndTabsGame;  subt = &vSubTabsGame;  break;
 	}
 	toggleGui(false);
@@ -641,10 +645,10 @@ int CGui::LNext(Li lp, int rel, int ofs)
 void CGui::LNext(int rel)
 {
 	//if (!ap->isFocGui || pSet->isMain)  return;
-	if (pSet->inMenu == MNU_Replays)
+	if (pSet->iMenu == MN_Replays)
 		listRplChng(rplList,  LNext(rplList, rel, 11));
 	else
-		if (app->mWndGame->getVisible())
+	if (app->mWndGame->getVisible())
 		switch (app->mWndTabsGame->getIndexSelected())
 		{	case TAB_Track:  gcom->listTrackChng(gcom->trkList,  LNext(gcom->trkList, rel, 11));  return;
 			case TAB_Car:	 listCarChng(carList,    LNext(carList, rel, 5));  return;

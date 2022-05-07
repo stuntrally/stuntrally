@@ -7,7 +7,7 @@
 	#include "../editor/settings.h"
 #else
 	#include "../ogre/CGame.h"
-	#include "../vdrift/settings.h"
+	#include "../settings.h"
 #endif
 #include <OgreTimer.h>
 #include <OgreCamera.h>

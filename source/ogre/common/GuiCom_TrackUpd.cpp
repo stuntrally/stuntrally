@@ -45,7 +45,6 @@ bool TrkSort(const TrkL& t1, const TrkL& t2)
 	{
 		if (t1.ti->testC  != t2.ti->testC)   return t1.ti->testC;  // TestC first
 		if (t1.ti->test   != t2.ti->test)    return t1.ti->test;   // Test after
-		if (t1.ti->vdrift != t2.ti->vdrift)  return t1.ti->vdrift; // vdrift next
 		
 		if (TrkL::idSort > 3)
 		{		 if (TrkL::idSort==4) {  if (t1.ti->scenery  != t2.ti->scenery)   return t1.ti->scenery  < t2.ti->scenery;   }
@@ -213,7 +212,7 @@ void CGuiCom::listTrackChng(Mli2 li, size_t pos)
 #ifdef SR_EDITOR
 void CGuiCom::trkListNext(int rel)
 {
-	bool b = app->bGuiFocus && !pSet->isMain;
+	bool b = app->bGuiFocus && !pSet->bMain;
 	if (!b)  return;
 	
 	//  tracks

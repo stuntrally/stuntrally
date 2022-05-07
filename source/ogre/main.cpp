@@ -3,7 +3,7 @@
 #include "CGame.h"
 #include "../vdrift/game.h"
 #include "../vdrift/pathmanager.h"
-#include "../vdrift/settings.h"
+#include "../settings.h"
 #include "../network/enet-wrapper.hpp"
 #include <string>
 #include <sstream>

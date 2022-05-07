@@ -300,8 +300,9 @@ void CGui::Ch_XmlLoad()
 void CGui::UpdChampTabVis()
 {
 	if (!liChamps || !tabChamp || !btStChamp)  return;
-	static int oldMenu = pSet->inMenu;
-	bool tutor = pSet->inMenu == MNU_Tutorial, champ = pSet->inMenu == MNU_Champ, chall = pSet->inMenu == MNU_Challenge;
+	static int oldMenu = pSet->iMenu;
+	bool game = pSet->iMenu == MN_Single,   champ = pSet->iMenu == MN_Champ,
+		tutor = pSet->iMenu == MN_Tutorial, chall = pSet->iMenu == MN_Chall;
 	bool any = tutor || champ || chall;
 
 	tabTut->setVisible(tutor);    imgTut->setVisible(tutor);    btStTut->setVisible(tutor);
@@ -313,12 +314,12 @@ void CGui::UpdChampTabVis()
 	liChalls->setVisible( chall);  liChalls->setColour(Colour(0.74,0.7,0.82));
 	panCh->setColour(tutor ? Colour(0.9,0.8,0.7) : champ ? Colour(0.7,0.9,0.8) : Colour(0.77,0.75,0.92));
 
-	if (oldMenu != pSet->inMenu && any)
-	{	oldMenu = pSet->inMenu;
+	if (oldMenu != pSet->iMenu && any)
+	{	oldMenu = pSet->iMenu;
 		if (chall)  ChallsListUpdate();
 		else        ChampsListUpdate();
 	}
-	//if (pSet->inMenu == MNU_Single)
+	//if (pSet->inRace == Race_Single)
 	//	BackFromChs();
 	
 	if (edChInfo->getVisible())  // info texts
@@ -435,14 +436,14 @@ void CGui::btnStagePrev(WP)
 void CGui::btnChRestart(WP)
 {
 	int p = pSet->game.champ_rev ? 1 : 0;
-	if (pSet->inMenu == MNU_Tutorial || pSet->inMenu == MNU_Champ)
+	if (pSet->iMenu == MN_Tutorial || pSet->iMenu == MN_Champ)
 	{
 		if (liChamps->getIndexSelected()==ITEM_NONE)  return;
 		int chId = *liChamps->getItemDataAt<int>(liChamps->getIndexSelected())-1;
 		ProgressChamp& pc = progress[p].chs[chId];
 		pc.curTrack = 0;  ChampsListUpdate();
 	}
-	else if (pSet->inMenu == MNU_Challenge)
+	else if (pSet->iMenu == MN_Chall)
 	{
 		if (liChalls->getIndexSelected()==ITEM_NONE)  return;
 		int chId = *liChalls->getItemDataAt<int>(liChalls->getIndexSelected())-1;

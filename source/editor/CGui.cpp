@@ -1,8 +1,23 @@
 #include "pch.h"
+#include "enums.h"
+#include "BaseApp.h"
+#include "GuiCom.h"
 #include "CApp.h"
 #include "CGui.h"
 #include "../ogre/common/CScene.h"
 #include "../vdrift/pathmanager.h"
+#include "settings.h"
+#include <OgreRoot.h>
+#include <OgreRenderWindow.h>
+#include <OgreOverlay.h>
+#include <MyGUI_Gui.h>
+#include <MyGUI_Widget.h>
+#include <MyGUI_Button.h>
+#include <MyGUI_Window.h>
+#include <MyGUI_TabControl.h>
+using namespace MyGUI;
+using namespace Ogre;
+using namespace std;
 
 
 //  ctor
@@ -93,4 +108,45 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	pSet = app1->pSet;
 	data = app->scn->data;
 	mGui = app->mGui;
+}
+
+
+
+//  Main menu
+//----------------------------------------------------------------------------------------------------------------
+void CGui::InitMainMenu()
+{
+	Btn btn;
+	for (int i=0; i < WND_ALL; ++i)
+	{
+		const String s = toStr(i);
+		app->mWndMainPanels[i] = fWP("PanMenu"+s);
+		Btn("BtnMenu"+s, btnMainMenu);  app->mWndMainBtns[i] = btn;
+	}
+
+	//  center
+	int wx = app->mWindow->getWidth(), wy = app->mWindow->getHeight();
+	
+	Wnd wnd = app->mWndMain;  IntSize w = wnd->getSize();
+	wnd->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
+}
+
+void CGui::btnMainMenu(WP wp)
+{
+	for (int i=0; i < WND_ALL; ++i)
+		if (wp == app->mWndMainBtns[i])
+		{
+			pSet->bMain = false;
+			pSet->inMenu = i;
+			app->gui->toggleGui(false);
+			return;
+		}
+}
+
+void CGui::tabMainMenu(Tab tab, size_t id)
+{
+	if (id != 0)  return;  // <back
+	tab->setIndexSelected(1);  // dont switch to 0
+	pSet->bMain = true;
+	app->gui->toggleGui(false);  // back to main
 }

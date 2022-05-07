@@ -35,9 +35,8 @@ public:
 	int	banked,frenzy,longn, objects,obstacles;
 	int diff, rating, sum;
 
-	int nn;  // number got from name eg. for D15-.. it is 15
+	int nn;  // number got from name eg. for Des15-.. it is 15
 	bool test,testC;  // starts with Test.. or TestC..
-	bool vdrift;  // from author name
 
 	TrackInfo();
 };
@@ -61,7 +60,7 @@ public:
 
 
 //  user Track's info
-//  rating, stats ...  not yet used
+//  rating, stats todo: ...  not yet used
 //-------------------------------------
 class UserTrkInfo
 {

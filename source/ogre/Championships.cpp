@@ -50,8 +50,8 @@ void CGui::ChampsListUpdate()
 	for (int i=0; i < data->champs->all.size(); ++i,++n)
 	{
 		const Champ& ch = data->champs->all[i];
-		if (pSet->inMenu == MNU_Tutorial && ch.type == pSet->tut_type ||
-			pSet->inMenu == MNU_Champ && ch.type - 2 == pSet->champ_type)
+		if (pSet->iMenu == MN_Tutorial && ch.type == pSet->tut_type ||
+			pSet->iMenu == MN_Champ && ch.type - 2 == pSet->champ_type)
 		{
 			const ProgressChamp& pc = progress[p].chs[i];
 			int ntrks = pc.trks.size(), ct = pc.curTrack;
@@ -171,7 +171,7 @@ void CGui::listChampChng(MyGUI::MultiList2* chlist, size_t id)
 	
 	//  btn start
 	s1 = cur == all ? TR("#{Restart}") : (cur == 0 ? TR("#{Start}") : TR("#{Continue}"));
-	if (pSet->inMenu == MNU_Tutorial)
+	if (pSet->iMenu == MN_Tutorial)
 		btStTut->setCaption(s1);
 	else  btStChamp->setCaption(s1);
 	btChRestart->setVisible(cur > 0);

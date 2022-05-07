@@ -1,9 +1,28 @@
+#include "BaseApp.h"
 #include "pch.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
 #include "common/CScene.h"
 #include "../vdrift/pathmanager.h"
+#include <OgreRoot.h>
+#include <OgreRenderWindow.h>
+#include <OgreOverlay.h>
+#include "settings.h"
+#include "common/MultiList2.h"
+#include "common/Slider.h"
+#include "common/Gui_Popup.h"
+#include <OgreRoot.h>
+#include <OgreRenderWindow.h>
+#include <OgreOverlay.h>
+#include <MyGUI_Gui.h>
+#include <MyGUI_Widget.h>
+#include <MyGUI_Button.h>
+#include <MyGUI_Window.h>
+#include <MyGUI_TabControl.h>
+using namespace MyGUI;
+using namespace Ogre;
+using namespace std;
 
 
 CGui::CGui(App* app1)
@@ -109,4 +128,93 @@ CGui::CGui(App* app1)
 
 CGui::~CGui()
 {
+}
+
+
+
+//  Main menu
+//----------------------------------------------------------------------------------------------------------------
+void CGui::InitMainMenu()
+{
+	Btn btn;
+	for (int i=0; i < ciMainBtns; ++i)
+	{
+		const String s = toStr(i);
+		app->mWndMainPanels[i] = fWP("PanMenu"+s);
+		Btn("BtnMenu"+s, btnMainMenu);  app->mWndMainBtns[i] = btn;
+	}
+	for (int i=0; i < ciRaceBtns; ++i)
+	{
+		const String s = toStr(i);
+		app->mWndRacePanels[i] = fWP("PanRace"+s);
+		Btn("BtnRace"+s, btnMainMenu);  app->mWndRaceBtns[i] = btn;
+	}
+
+	//  center
+	int wx = app->mWindow->getWidth(), wy = app->mWindow->getHeight();
+	
+	Wnd wnd = app->mWndMain;  IntSize w = wnd->getSize();
+	wnd->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
+	
+	wnd = app->mWndRace;  w = wnd->getSize();
+	wnd->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
+}
+
+void CGui::btnMainMenu(WP wp)
+{
+	for (int i=0; i < ciMainBtns; ++i)
+		if (wp == app->mWndMainBtns[i])
+		{	switch (i)
+			{
+			case Menu_Race:     pSet->iMenu = MN1_Race;  break;
+			case Menu_Replays:  pSet->iMenu = MN_Replays;  break;
+			case Menu_Help:     pSet->iMenu = MN_Help;  break;
+			case Menu_Options:  pSet->iMenu = MN_Options;  break;
+			}
+			app->gui->toggleGui(false);
+			return;
+		}
+	for (int i=0; i < ciRaceBtns; ++i)
+		if (wp == app->mWndRaceBtns[i])
+		{	switch (i)
+			{
+			case Race_Single:     pSet->iMenu = MN_Single;  break;
+			case Race_Tutorial:   pSet->iMenu = MN_Tutorial;  break;
+			case Race_Champ:      pSet->iMenu = MN_Champ;  break;
+			case Race_Challenge:  pSet->iMenu = MN_Chall;  break;
+			case Race_Back:       pSet->iMenu = MN1_Main;  break;
+			}
+			app->gui->toggleGui(false);
+			return;
+		}
+}
+
+void CGui::tabMainMenu(Tab tab, size_t id)
+{
+	//_  game tab change
+	if (tab == app->mWndTabsGame)
+	{
+		if (id == TAB_Car)
+			app->gui->CarListUpd();  //  off filtering by chall
+	
+		app->mWndTrkFilt->setVisible(false);  //
+
+		if (id == TAB_Multi)
+		{	//  back to mplr tab, upload game info
+									//_ only for host..
+			if (app->mMasterClient && app->gui->valNetPassword->getVisible())
+			{	app->gui->uploadGameInfo();
+				app->gui->updateGameInfoGUI();
+			}
+			//- app->gui->evBtnNetRefresh(0);  // upd games list (don't, breaks game start)
+		}
+	}
+	
+	if (id != 0)  return;  // <back
+	tab->setIndexSelected(1);  // dont switch to 0
+	if (pSet->iMenu >= MN_Single && pSet->iMenu <= MN_Chall)
+		pSet->iMenu = MN1_Race;
+	else
+		pSet->iMenu = MN1_Main;
+	app->gui->toggleGui(false);  // back to main
 }

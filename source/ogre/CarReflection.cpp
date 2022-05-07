@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "common/Def_Str.h"
 #include "CarReflection.h"
-#include "../vdrift/settings.h"
+#include "../settings.h"
 #include "../ogre/common/RenderConst.h"
 
 #include "CGame.h"

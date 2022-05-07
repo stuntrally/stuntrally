@@ -8,7 +8,6 @@ void SETcom::SerializeCommon(bool w, CONFIGFILE & c)
 {
 	//  menu
 	Param(c,w, "game.start_in_main", startInMain);
-	Param(c,w, "game.in_menu", inMenu);				Param(c,w, "game.in_main", isMain);
 	
 	//  misc
 	Param(c,w, "misc.autostart", autostart);		Param(c,w, "misc.ogredialog", ogre_dialog);
@@ -50,7 +49,7 @@ void SETcom::SerializeCommon(bool w, CONFIGFILE & c)
 	//  veget
 	Param(c,w, "graph_veget.grass", grass);
 	Param(c,w, "graph_veget.trees_dist", trees_dist);		Param(c,w, "graph_veget.grass_dist", grass_dist);
-	Param(c,w, "graph_veget.use_imposters", use_imposters); Param(c,w, "graph_veget.imposters_only", imposters_only);
+	Param(c,w, "graph_veget.use_imposters", use_impostors); Param(c,w, "graph_veget.imposters_only", impostors_only);
 
 
 	//  hud
@@ -102,21 +101,9 @@ void SETcom::SerializeCommon(bool w, CONFIGFILE & c)
 
 SETcom::SETcom()   ///  Defaults
 	//  menu
-	:isMain(1), startInMain(1), inMenu(0)
-
-	//  misc
-	,autostart(0), ogre_dialog(0), escquit(0)
-	,language("")  // "" = autodetect lang
-	,mouse_capture(true), screen_png(0)
-
 	//  video
-	,windowx(800), windowy(600)
-	,fullscreen(false), vsync(false)
-
-	,buffer("FBO"), fsaa(0)
+	:buffer("FBO"), fsaa(0)
 	,rendersystem("Default")
-
-	,limit_fps(0), limit_fps_val(60.f), limit_sleep(-1)
 
 	//  graphics
 	,preset(4)
@@ -128,14 +115,7 @@ SETcom::SETcom()   ///  Defaults
 
 	,water_reflect(0), water_refract(0), water_rttsize(0)
 	,shadow_type(Sh_Depth), shadow_size(2), shadow_count(3), shadow_dist(1000.f)
-	,grass(1.f), trees_dist(1.f), grass_dist(1.f), use_imposters(true), imposters_only(false)
-
-	//  hud
-	,show_fps(0)
-
-	//  gui tracks
-	,tracks_view(0), tracks_filter(0)
-	,tracks_sort(2), tracks_sortup(1)
+	,use_impostors(true), impostors_only(false)
 {
 
 	int i,v;

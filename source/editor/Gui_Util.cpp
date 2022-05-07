@@ -202,8 +202,8 @@ void App::UpdVisGui()
 {
 	//  wnd
 	bool g = bGuiFocus;
-	bool notMain = g && !pSet->isMain;
-	mWndMain->setVisible(g && pSet->isMain);
+	bool notMain = g && !pSet->bMain;
+	mWndMain->setVisible(g && pSet->bMain);
 	mWndTrack->setVisible(notMain && pSet->inMenu == WND_Track);
 	mWndEdit->setVisible(notMain && pSet->inMenu == WND_Edit);
 	mWndHelp->setVisible(notMain && pSet->inMenu == WND_Help);
@@ -323,7 +323,7 @@ void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 		app->bGuiFocus = !app->bGuiFocus;  app->UpdVisGui();  }
 
 	//isFocGui = true;
-	pSet->isMain = false;  pSet->inMenu = wnd;
+	pSet->bMain = false;  pSet->inMenu = wnd;
 	
 	TabPtr mWndTabs = 0;
 	std::vector<TabControl*>* subt = 0;
@@ -361,7 +361,7 @@ void CGui::GuiShortcut(WND_Types wnd, int tab, int subtab)
 //.......................................................................................
 void CGui::NumTabNext(int rel)
 {
-	if (!app->bGuiFocus || pSet->isMain /*|| pSet->inMenu != WND_Edit*/)  return;
+	if (!app->bGuiFocus || pSet->bMain /*|| pSet->inMenu != WND_Edit*/)  return;
 
 	TabPtr tab = 0;
 

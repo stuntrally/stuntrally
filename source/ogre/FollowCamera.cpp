@@ -2,7 +2,7 @@
 #include "../vdrift/par.h"
 #include "common/Def_Str.h"
 #include "FollowCamera.h"
-#include "../vdrift/settings.h"
+#include "../settings.h"
 
 #include "../tinyxml/tinyxml2.h"
 #include "../vdrift/pathmanager.h"

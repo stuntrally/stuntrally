@@ -14,7 +14,7 @@
 #else
 	#include "../CGame.h"
 	#include "../../vdrift/game.h"
-	//#include "../../vdrift/settings.h"
+	//#include "../../settings.h"
 #endif
 #include <BulletCollision/CollisionDispatch/btCollisionObject.h>
 #include <BulletCollision/CollisionShapes/btBoxShape.h>

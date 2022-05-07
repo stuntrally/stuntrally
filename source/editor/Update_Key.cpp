@@ -61,7 +61,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	Widget* wf = InputManager::getInstance().getKeyFocusWidget();
 	bool editFocus = wf && wf->getTypeName() == "EditBox";
 
-	if (pSet->isMain && bGuiFocus)
+	if (pSet->bMain && bGuiFocus)
 	{
 		switch (skey)
 		{
@@ -74,26 +74,26 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			gui->toggleGui(false);  return true;
 
 		case key(KP_ENTER):  case key(RETURN):
-			pSet->isMain = false;
+			pSet->bMain = false;
 			gui->toggleGui(false);  return true;
 		}
 	}
-	if (!pSet->isMain && bGuiFocus)
+	if (!pSet->bMain && bGuiFocus)
 	{
 		switch (skey)
 		{
 		case key(BACKSPACE):
-			if (pSet->isMain)  break;
+			if (pSet->bMain)  break;
 			if (bGuiFocus)
 			{	if (editFocus)  break;
-				pSet->isMain = true;  gui->toggleGui(false);  }
+				pSet->bMain = true;  gui->toggleGui(false);  }
 			return true;
 		}
 	}
 
 	//  change gui tabs
 	TabPtr tab = 0;  TabControl* sub = 0;  int iTab1 = 1;
-	if (bGuiFocus && !pSet->isMain)
+	if (bGuiFocus && !pSet->bMain)
 	switch (pSet->inMenu)
 	{
 		case WND_Track:   tab = mWndTabsTrack;  sub = gui->vSubTabsTrack[tab->getIndexSelected()];  break;
@@ -106,7 +106,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 
 	///  Pick open  ---------------------
-	bool editGui = bGuiFocus && !pSet->isMain && pSet->inMenu==WND_Edit;
+	bool editGui = bGuiFocus && !pSet->bMain && pSet->inMenu==WND_Edit;
 	if (skey==key(TAB) && editGui)
 	{
 		switch (tab->getIndexSelected())
@@ -181,7 +181,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
    			if (shift)
    			{	pSet->num_mini = (pSet->num_mini - 1 + RT_ALL) % RT_ALL;  UpdMiniVis();  }
    			else
-   			if (bGuiFocus && tab && !pSet->isMain)
+   			if (bGuiFocus && tab && !pSet->bMain)
    				if (alt)  // prev gui subtab
    				{
    					if (sub)  {  int num = sub->getItemCount();
@@ -190,7 +190,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
    				else	// prev gui tab
    				{	int num = tab->getItemCount()-1, i = tab->getIndexSelected();
 					if (i==iTab1)  i = num;  else  --i;
-					tab->setIndexSelected(i);  if (iTab1==1)  gcom->tabMainMenu(tab,i);
+					tab->setIndexSelected(i);  if (iTab1==1)  gui->tabMainMenu(tab,i);
 	   			}
    			break;
 
@@ -198,7 +198,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
    			if (shift)
    			{	pSet->num_mini = (pSet->num_mini + 1) % RT_ALL;  UpdMiniVis();  }
    			else
-   			if (bGuiFocus && tab && !pSet->isMain)
+   			if (bGuiFocus && tab && !pSet->bMain)
    				if (alt)  // next gui subtab
    				{
    					if (sub)  {  int num = sub->getItemCount();
@@ -207,19 +207,19 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	   			else	// next gui tab
 	   			{	int num = tab->getItemCount()-1, i = tab->getIndexSelected();
 					if (i==num)  i = iTab1;  else  ++i;
-					tab->setIndexSelected(i);  if (iTab1==1)  gcom->tabMainMenu(tab,i);
+					tab->setIndexSelected(i);  if (iTab1==1)  gui->tabMainMenu(tab,i);
 				}
    			break;
    			
    		case key(SPACE):  // subtabs
-   			if (bGuiFocus && !editFocus && tab && !pSet->isMain)
+   			if (bGuiFocus && !editFocus && tab && !pSet->bMain)
 				if (sub)  {  int num = sub->getItemCount();
 					sub->setIndexSelected( (sub->getIndexSelected() + (shift ? -1 : 1) + num) % num );  }
 			break;
    			
 		case key(KP_ENTER):  case key(RETURN):  // load track
 			if (bGuiFocus)
-			if (mWndTabsTrack->getIndexSelected() == 1 && !pSet->isMain && pSet->inMenu == WND_Track)
+			if (mWndTabsTrack->getIndexSelected() == 1 && !pSet->bMain && pSet->inMenu == WND_Track)
 				gui->btnNewGame(0);
    			break;
 

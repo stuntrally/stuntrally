@@ -1,3 +1,4 @@
+#include "BaseApp.h"
 #include "pch.h"
 #include "common/Def_Str.h"
 #include "common/Gui_Def.h"
@@ -15,6 +16,7 @@
 #include "../sdl4ogre/sdlinputwrapper.hpp"
 #include "../sound/SoundMgr.h"
 #include "../sound/SoundBaseMgr.h"
+#include "settings.h"
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
@@ -38,27 +40,63 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	#define key(a)  SDL_SCANCODE_##a
 	bool tweak = isTweak();
 
-	//  main menu keys
-	if (pSet->isMain && isFocGui)
+
+	//  Main menu keys  ----
+	if (pSet->iMenu == MN1_Main && isFocGui)
 	{
 		switch (skey)
 		{
 		case key(UP):  case key(KP_8):
-			pSet->inMenu = (pSet->inMenu-1 + ciMainBtns) % ciMainBtns;
+			pSet->yMain = (pSet->yMain - 1 + ciMainBtns) % ciMainBtns;
 			gui->toggleGui(false);  return true;
 
 		case key(DOWN):  case key(KP_2):
-			pSet->inMenu = (pSet->inMenu+1) % ciMainBtns;
+			pSet->yMain = (pSet->yMain + 1) % ciMainBtns;
 			gui->toggleGui(false);  return true;
 
 		case key(KP_ENTER):
 		case key(RETURN):
-			pSet->isMain = false;
+			switch (pSet->yMain)
+			{
+			case Menu_Race:     pSet->iMenu = MN1_Race;  break;
+			case Menu_Replays:  pSet->iMenu = MN_Replays;  break;
+			case Menu_Help:     pSet->iMenu = MN_Help;  break;
+			case Menu_Options:  pSet->iMenu = MN_Options;  break;
+			}
 			gui->toggleGui(false);  return true;
-		}
-	}
+	}	}
 
-	//  esc
+	//  Race menu keys  ----
+	if (pSet->iMenu == MN1_Race && isFocGui)
+	{
+		switch (skey)
+		{
+		case key(UP):  case key(KP_8):
+			pSet->yRace = (pSet->yRace - 1 + ciRaceBtns) % ciRaceBtns;
+			gui->toggleGui(false);  return true;
+
+		case key(DOWN):  case key(KP_2):
+			pSet->yRace = (pSet->yRace + 1) % ciRaceBtns;
+			gui->toggleGui(false);  return true;
+
+		case key(BACKSPACE):    pSet->iMenu = MN1_Main;
+			gui->toggleGui(false);  break;
+
+		case key(KP_ENTER):
+		case key(RETURN):
+			switch (pSet->yRace)
+			{
+			case Race_Single:    pSet->iMenu = MN_Single;  break;
+			case Race_Tutorial:  pSet->iMenu = MN_Tutorial;  break;
+			case Race_Champ:     pSet->iMenu = MN_Champ;  break;
+			case Race_Challenge: pSet->iMenu = MN_Chall;  break;
+			case Race_Back:      pSet->iMenu = MN1_Main;  break;
+			}
+			gui->toggleGui(false);  return true;
+	}	}
+
+
+	//  Esc
 	if (skey == key(ESCAPE))
 	{
 		if (pSet->escquit && !bAssignKey)
@@ -74,46 +112,43 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		return true;
 	}
 
-	//  ctrl-F1  welcome wnd
+	//  ctrl-F1  Welcome wnd
 	if (skey == key(F1) && ctrl)
 	{
 		mWndWelcome->setVisible(true);
 		return false;
 	}
 
+
 	//  shortcut keys for gui access (alt-Q,C,S,G,V,.. )
 	if (alt && !shift)
 		switch (skey)
 		{
-			case key(Z):  // alt-Z Tweak (alt-shift-Z save&reload)
-				gui->TweakToggle();	return true;
+			case key(Q):	gui->GuiShortcut(MN_Single, TAB_Track); return true;  // Q Track
+			case key(C):	gui->GuiShortcut(MN_Single, TAB_Car);	return true;  // C Car
 
-			case key(Q):	gui->GuiShortcut(MNU_Single, TAB_Track);return true;  // Q Track
-			case key(C):	gui->GuiShortcut(MNU_Single, TAB_Car);	return true;  // C Car
+			case key(W):	gui->GuiShortcut(MN_Single, TAB_Setup); return true;  // W Car Setup
+			case key(G):	gui->GuiShortcut(MN_Single, TAB_Game);	return true;  // G Game Setup
 
-			case key(W):	gui->GuiShortcut(MNU_Single, TAB_Setup);return true;  // W Car Setup
-			case key(G):	gui->GuiShortcut(MNU_Single, TAB_Game);	return true;  // G Game Setup
+			case key(J):	gui->GuiShortcut(MN_Tutorial, TAB_Champs);	return true;  // J Tutorials
+			case key(H):	gui->GuiShortcut(MN_Champ,    TAB_Champs);	return true;  // H Champs
+			case key(L):	gui->GuiShortcut(MN_Chall,    TAB_Champs);	return true;  // L Challenges
 
-			case key(J):	gui->GuiShortcut(MNU_Tutorial, TAB_Champs);	return true;  // J Tutorials
-			case key(H):	gui->GuiShortcut(MNU_Champ,    TAB_Champs);	return true;  // H Champs
-			case key(L):	gui->GuiShortcut(MNU_Challenge,TAB_Champs);	return true;  // L Challenges
+			case key(U):	gui->GuiShortcut(MN_Single,   TAB_Multi);	return true;  // U Multiplayer
+			case key(R):	gui->GuiShortcut(MN_Replays,  1);	return true;		  // R Replays
 
-			case key(U):	gui->GuiShortcut(MNU_Single, TAB_Multi);	return true;  // U Multiplayer
-			case key(R):	gui->GuiShortcut(MNU_Replays, 1);	return true;		  // R Replays
+			case key(S):	gui->GuiShortcut(MN_Options, TABo_Screen);	return true;  // S Screen
+			case key(I):	gui->GuiShortcut(MN_Options, TABo_Input);	return true;  // I Input
+			case key(V):	gui->GuiShortcut(MN_Options, TABo_View);	return true;  // V View
 
-			case key(S):	gui->GuiShortcut(MNU_Options, TABo_Screen);	return true;  // S Screen
-			case key(I):	gui->GuiShortcut(MNU_Options, TABo_Input);	return true;  // I Input
-			case key(V):	gui->GuiShortcut(MNU_Options, TABo_View);	return true;  // V View
+			case key(A):	gui->GuiShortcut(MN_Options, TABo_Graphics);	return true;  // A Graphics
+			 case key(E):	gui->GuiShortcut(MN_Options, TABo_Graphics,2);	return true;  // E -Effects
 
-			case key(A):	gui->GuiShortcut(MNU_Options, TABo_Graphics);	return true;  // A Graphics
-			 case key(E):	gui->GuiShortcut(MNU_Options, TABo_Graphics,2);	return true;  // E -Effects
-
-			case key(T):	gui->GuiShortcut(MNU_Options, TABo_Settings);	return true;  // T Settings
-			case key(O):	gui->GuiShortcut(MNU_Options, TABo_Sound);	return true;  // O Sound
-			case key(K):	gui->GuiShortcut(MNU_Options, TABo_Tweak);  return true;  // K Tweak
+			case key(T):	gui->GuiShortcut(MN_Options, TABo_Settings);	return true;  // T Settings
+			case key(O):	gui->GuiShortcut(MN_Options, TABo_Sound);	return true;  // O Sound
+			case key(K):	gui->GuiShortcut(MN_Options, TABo_Tweak);  return true;  // K Tweak
 		}
-
-
+	
 	//>--  dev shortcuts, alt-shift - start test tracks
 	if (pSet->dev_keys && alt && shift && !mClient)
 	{
@@ -151,7 +186,14 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	}
 
 
-	/// tire edit
+	//  alt-Z  Tweak  (alt-shift-Z  save & reload)
+	if (pSet->dev_keys && alt)
+	switch (skey)
+	{
+		case key(Z):  gui->TweakToggle();   return true;
+	}
+
+	///  Tire edit
 	if (pSet->graphs_type == Gh_TireEdit || pSet->graphs_type == Gh_Tires4Edit && !tweak)
 	{
 		int& iCL = iEdTire==1 ? iCurLong : (iEdTire==0 ? iCurLat : iCurAlign);
@@ -181,7 +223,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	#ifdef REVERB_BROWSER
 	static int ii=0;
 	#endif
-	bool trkTab = !pSet->isMain && pSet->inMenu == MNU_Single && mWndTabsGame->getIndexSelected() == TAB_Track;
+	bool trkTab = mWndTabsGame->getVisible() && mWndTabsGame->getIndexSelected() == TAB_Track;
 	//bool Fspc = isFocGui && trkTab && wf == gcom->edTrkFind;
 	if (!tweak)
 	{
@@ -198,12 +240,21 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				if (mWndChallStage->getVisible())	// chall
 				{	gui->btnChallStageBack(0);  return true;  }
 
-				if (pSet->isMain)  break;
-				if (isFocGui)
-				{	if (edFoc)  break;
-					pSet->isMain = true;  gui->toggleGui(false);  }
-				else
+				switch (pSet->iMenu)
+				{
+				case MN1_Main:  break;
+				case MN1_Race:  pSet->iMenu = MN1_Main;  break;
+				
+				case MN_Single: case MN_Tutorial: case MN_Champ: case MN_Chall:
+					pSet->iMenu = MN1_Race;  break;
+				case MN_Replays:
 					if (mWndRpl && !isFocGui)	bRplWnd = !bRplWnd;  // replay controls
+					if (isFocGui)  pSet->iMenu = MN1_Main;
+					break;
+				case MN_Help: case MN_Options:
+					pSet->iMenu = MN1_Main;  break;
+				}
+				gui->toggleGui(false);
 				return true;
 
 			case key(P):	// replay play/pause
@@ -224,8 +275,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				{
 					if (wf == gcom->edTrkFind)  // ctrl-F  twice to toggle filtering
 					{	gcom->ckTrkFilter.Invert();  return true;  }
-					if (pSet->dev_keys)
-						gui->GuiShortcut(MNU_Single, 1);	// Track tab
+					// if (pSet->dev_keys)
+						// gui->GuiShortcut(Menu_Race, 1);	// Track tab
 					MyGUI::InputManager::getInstance().resetKeyFocusWidget();
 					MyGUI::InputManager::getInstance().setKeyFocusWidget(gcom->edTrkFind);
 					return true;
@@ -292,13 +343,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				else				///  chall
 				if (mWndChallStage->getVisible())
 					gui->btnChallStageStart(0);
-				else				//  new game  after up/dn
-				if (isFocGui && !pSet->isMain)
-					switch (pSet->inMenu)
+				else				//  New game  after up/dn
+				if (isFocGui)
+					switch (pSet->iMenu)
 					{
-					case MNU_Replays:	gui->btnRplLoad(0);  break;
-					default:
-					{	if (mWndGame->getVisible())
+					case MN_Replays:	gui->btnRplLoad(0);  break;
+					case MN_Single:
+						if (mWndGame->getVisible())
 						switch (mWndTabsGame->getIndexSelected())
 						{
 						case TAB_Track:	 gui->changeTrack();  gui->btnNewGame(0);  break;
@@ -308,8 +359,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 							if (gui->isChallGui())
 								  gui->btnChallStart(0);
 							else  gui->btnChampStart(0);  break;
-					}	break;
-				}	}
+						}	break;
+				}
 				else
 				if (mClient && !isFocGui)  // show/hide players net wnd
 				{	mWndNetEnd->setVisible(!mWndNetEnd->getVisible());  return true;  }
@@ -325,7 +376,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	}
 
 	if (skey != key(RCTRL) && skey != key(LCTRL))
-		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::Enum( mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)), 0);
+		MyGUI::InputManager::getInstance().injectKeyPress(
+			MyGUI::KeyCode::Enum( mInputWrapper->sdl2OISKeyCode(arg.keysym.sym)), 0);
 	return true;
 }
 
@@ -336,6 +388,7 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 		return;
 
 	#define action(a) (channel->getNumber() == a)
+	int mnu = pSet->iMenu;
 
 	//  change tabs
 	//----------------------------------------------------------------------------------------
@@ -359,14 +412,14 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 			MyGUI::InputManager::getInstance().setKeyFocusWidget(gui->edCar[tab->getIndexSelected()]);  }
 	}
 	//  change gui tabs
-	else if (isFocGui && !pSet->isMain)
+	else if (isFocGui && !(mnu == MN1_Main || mnu == MN1_Race))
 	{
 		MyGUI::TabPtr tab = 0;  MyGUI::TabControl* sub = 0;
-		switch (pSet->inMenu)
-		{	case MNU_Replays:  tab = mWndTabsRpl;  break;
-			case MNU_Help:     tab = mWndTabsHelp;  break;
-			case MNU_Options:  tab = mWndTabsOpts;  sub = gui->vSubTabsOpts[tab->getIndexSelected()];  break;
-			default:           tab = mWndTabsGame;  sub = gui->vSubTabsGame[tab->getIndexSelected()];  break;
+		switch (mnu)
+		{	case MN_Replays:  tab = mWndTabsRpl;  break;
+			case MN_Help:     tab = mWndTabsHelp;  break;
+			case MN_Options:  tab = mWndTabsOpts;  sub = gui->vSubTabsOpts[tab->getIndexSelected()];  break;
+			default:          tab = mWndTabsGame;  sub = gui->vSubTabsGame[tab->getIndexSelected()];  break;
 		}
 		if (tab)
 		if (alt)
@@ -396,7 +449,7 @@ void App::channelChanged(ICS::Channel *channel, float currentValue, float previo
 				chng = true;
 			}
 			if (chng)
-			{	tab->setIndexSelected(i);  gcom->tabMainMenu(tab,i);  return;  }
+			{	tab->setIndexSelected(i);  gui->tabMainMenu(tab,i);  return;  }
 		}
 	}
 	//  change graphs type

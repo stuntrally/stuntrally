@@ -66,9 +66,6 @@ public:
 	//  init tabs
 	void GuiInitGraphics(), GuiInitTrack(), initMiniPos(int i);
 
-	//  main menu
-	void InitMainMenu();
-	void btnMainMenu(WP);  void tabMainMenu(Tab tab, size_t id);
 	MyGUI::TabPtr FindSubTab(WP tab);  // util
 	
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "configfile.h"
+#include "../vdrift/configfile.h"
 #include "../ogre/common/settings_com.h"
 
 
@@ -31,11 +31,21 @@ const static std::string csGraphNames[Gh_ALL] = {
 	"Clutch, Rpm, Gear" };
 
 
+enum EMenu
+{	MN1_Main, MN1_Race,  // small main menus
+	MN_Single, MN_Tutorial, MN_Champ, MN_Chall,  // game, same window
+	MN_Replays, MN_Help, MN_Options  };  // other windows
+
+
 class SETTINGS : public SETcom
 {
 public:
 //------------------------------------------
 	int version;  // file version =
+
+	//  menu
+	int iMenu;  // EMenu,
+	int yMain =0, yRace =0;  // kbd up/dn cursors
 
 	//  show
 	bool show_gauges, show_digits,

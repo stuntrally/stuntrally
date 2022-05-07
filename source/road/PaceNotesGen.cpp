@@ -10,7 +10,7 @@
 	#include "../editor/settings.h"
 #else
 	#include "../ogre/CGame.h"
-	#include "../vdrift/settings.h"
+	#include "../settings.h"
 #endif
 #include "../road/SplineBase.h"
 #include "../road/Road.h"

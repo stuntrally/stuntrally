@@ -5,7 +5,7 @@
 #include "CGui.h"
 #include "common/data/SceneXml.h"
 #include "common/CScene.h"
-#include "../vdrift/settings.h"
+#include "../settings.h"
 #ifndef BT_NO_PROFILE
 #include <LinearMath/btQuickprof.h>
 #endif // BT_NO_PROFILE

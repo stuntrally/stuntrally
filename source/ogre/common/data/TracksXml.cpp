@@ -32,7 +32,7 @@ TrackInfo::TrackInfo()
 	,jumps(0), loops(0), pipes(0)
 	,banked(0), frenzy(0), longn(0)
 	,diff(0), rating(0), obstacles(0), sum(0)
-	,nn(0), test(0), testC(0), vdrift(0)
+	,nn(0), test(0), testC(0)
 {	}
 
 UserTrkInfo::UserTrkInfo()
@@ -179,7 +179,6 @@ bool TracksXml::LoadIni(string file, bool check)
 				t.testC = t.name.length() > 5 ? t.name.substr(0,5)=="TestC" : false;
 			if (t.testC)  t.test = false;  else
 				t.test  = t.name.length() > 4 ? t.name.substr(0,4)=="Test"  : false;
-			t.vdrift = author == "VDrift";
 			if (!t.testC && !t.test)
 				++cntAll;
 

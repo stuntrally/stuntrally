@@ -141,7 +141,7 @@ void App::createScene()
 
 	//  gui  * * *
 	if (pSet->startInMain)
-		pSet->bMain = true;
+		pSet->iMenu = MN1_Main;
 
 	if (!pSet->autostart)
 		isFocGui = true;

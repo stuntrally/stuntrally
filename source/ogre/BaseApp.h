@@ -15,23 +15,27 @@ namespace sh   {  class Factory;  }
 class MasterClient;  class P2PGameClient;
 
 
+//  main, race menus
+enum Menu_Btns {  Menu_Race, Menu_Replays, Menu_Help, Menu_Options,  ciMainBtns };
+enum Race_Btns {  Race_Single, Race_Tutorial, Race_Champ, Race_Challenge,
+				  Race_HowToPlay, Race_Difficulty, Race_Back,  ciRaceBtns };
 //  gui
-enum MNU_Btns {  MNU_Single=0, MNU_Tutorial, MNU_Champ, MNU_Challenge, MNU_Replays, MNU_Help, MNU_Options, ciMainBtns  };
-enum TAB_Game {  TAB_Back=0, TAB_Track,TAB_Car, TAB_Setup,TAB_Game, TAB_Multi, TAB_Champs,TAB_Stages,TAB_Stage  };
+enum TAB_Game    {  TAB_Back=0, TAB_Track,TAB_Car, TAB_Setup,TAB_Game, TAB_Multi, TAB_Champs,TAB_Stages,TAB_Stage  };
 enum TAB_Options {  TABo_Back=0, TABo_Screen, TABo_Input, TABo_View, TABo_Graphics, TABo_Sound, TABo_Settings, TABo_Tweak  };
-enum LobbyState { DISCONNECTED, HOSTING, JOINED };
+enum LobbyState  {  DISCONNECTED, HOSTING, JOINED  };
 
 
 
 class BaseApp : public BGui,
-		public Ogre::FrameListener,
-		public SFO::KeyListener, public SFO::MouseListener,
-		public SFO::JoyListener, public SFO::WindowListener
+	public Ogre::FrameListener,
+	public SFO::KeyListener, public SFO::MouseListener,
+	public SFO::JoyListener, public SFO::WindowListener
 {
 	friend class CarModel;
 	friend class CGame;
 	friend class CHud;
 	friend class CGui;
+
 public:
 	BaseApp();
 	virtual ~BaseApp();
@@ -159,8 +163,8 @@ public:
 	#endif
 	
 	///  main menu  // pSet->inMenu
-	WP mWndMainPanels[ciMainBtns] ={0,};
-	Btn mWndMainBtns[ciMainBtns] ={0,};
+	WP mWndMainPanels[ciMainBtns] ={0,}, mWndRacePanels[ciRaceBtns] ={0,};
+	Btn mWndMainBtns[ciMainBtns]  ={0,}, mWndRaceBtns[ciRaceBtns]   ={0,};
 
 	Wnd mWndMain =0, mWndRace =0,
 		mWndGame =0,mWndReplays =0,  mWndHelp =0, mWndOpts =0,  // menu, windows

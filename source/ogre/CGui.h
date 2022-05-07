@@ -13,6 +13,7 @@
 #include "ChampsXml.h"  // progress..
 #include "ChallengesXml.h"
 #include "CInput.h"
+#include "../settings.h"
 
 namespace Ogre {  class SceneNode;  class Root;  class SceneManager;  class RenderWindow;  class Viewport;  class Light;  }
 namespace MyGUI{  class MultiList2;  class Slider;  class Message;  class PolygonalSkin;  }
@@ -45,6 +46,11 @@ public:
 	typedef std::list <std::string> strlist;
 
 
+	//  main menu
+	void InitMainMenu();
+	void btnMainMenu(WP);  void tabMainMenu(Tab tab, size_t id);
+
+
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------
 
@@ -66,7 +72,7 @@ public:
 
 	//  util
 	void toggleGui(bool toggle=true);
-	void GuiShortcut(MNU_Btns mnu, int tab, int subtab=-1);
+	void GuiShortcut(EMenu menu, int tab, int subtab=-1);
 	bool loadReadme;  void FillHelpTxt();
 	
 

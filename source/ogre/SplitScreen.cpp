@@ -4,7 +4,7 @@
 #include "common/RenderConst.h"
 #include "common/data/SceneXml.h"
 #include "common/CScene.h"
-#include "../vdrift/settings.h"
+#include "../settings.h"
 #include "SplitScreen.h"
 #include "CGame.h"
 #include "CHud.h"

@@ -57,10 +57,10 @@ void CGui::InitGui()
 
 
 	//  wnds
-	app->mWndMain = fWnd("MainMenuWnd");  app->mWndWelcome = fWnd("WelcomeWnd");
+	app->mWndMain = fWnd("MainMenuWnd");  app->mWndRace = fWnd("RaceMenuWnd");
 	app->mWndGame = fWnd("GameWnd");  app->mWndReplays = fWnd("ReplaysWnd");
 	app->mWndHelp = fWnd("HelpWnd");  app->mWndOpts = fWnd("OptionsWnd");
-	app->mWndTrkFilt = fWnd("TrackFilterWnd");
+	app->mWndTrkFilt = fWnd("TrackFilterWnd");  app->mWndWelcome = fWnd("WelcomeWnd");
 
 	app->mWndChampStage = fWnd("WndChampStage");  app->mWndChampStage->setVisible(false);
 	app->mWndChampEnd   = fWnd("WndChampEnd");    app->mWndChampEnd->setVisible(false);
@@ -98,14 +98,14 @@ void CGui::InitGui()
 		vSubTabsOpts.push_back(sub);
 	}
 
-	if (pSet->inMenu > MNU_Single && pSet->inMenu <= MNU_Challenge)
+	if (pSet->iMenu >= MN_Tutorial && pSet->iMenu <= MN_Chall)
 		app->mWndTabsGame->setIndexSelected(TAB_Champs);
 
 	app->mWndRpl = fWnd("RplWnd");
 
 
 	///  Gui common init  ---
-	gcom->InitMainMenu();
+	InitMainMenu();
 	gcom->GuiInitTooltip();
 	gcom->GuiInitLang();
 
@@ -119,7 +119,7 @@ void CGui::InitGui()
 	gcom->bnQuit->setVisible(app->isFocGui);
 
 
-	///  Hints  ----
+	///  Welcome, Hints  ----
 	edHintTitle = fEd("HintTitle");  edHintText = fEd("HintText");
 	UpdHint();
 	ck= &ckShowWelcome;  ck->Init("chkHintShow", &pSet->show_welcome);

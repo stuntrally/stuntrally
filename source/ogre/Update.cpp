@@ -30,6 +30,7 @@
 #include <OgreTimer.h>
 #include "common/MultiList2.h"
 #include "common/Slider.h"
+#include "settings.h"
 #include <MyGUI.h>
 using namespace Ogre;
 using namespace MyGUI;
@@ -287,14 +288,14 @@ bool App::frameStart(Real time)
 
 		
 		//  input
-		if (isFocGui && pSet->inMenu == MNU_Options && !pSet->isMain &&
+		if (isFocGui && pSet->iMenu == MN_Options &&
 			mWndTabsOpts->getIndexSelected() == TABo_Input)
 			gui->UpdateInputBars();
 		
 		
 		//  keys up/dn, for lists
 		static float dirU = 0.f,dirD = 0.f;
-		if (isFocGui && !pSet->isMain && !isTweak())
+		if (isFocGui && pSet->iMenu == MN_Single && !isTweak())
 		{
 			if (isKey(SDL_SCANCODE_UP)  ||isKey(SDL_SCANCODE_KP_8))	dirD += time;  else
 			if (isKey(SDL_SCANCODE_DOWN)||isKey(SDL_SCANCODE_KP_2))	dirU += time;  else
@@ -512,7 +513,7 @@ bool App::frameEnd(Real time)
 {
 	//  sleep when in Gui
 	if (isFocGui && pSet->gui_sleep >= 0)  // && gui && gui->bGI)
-		//!pSet->isMain && pSet->inMenu == MNU_Single && mWndTabsGame->getIndexSelected() == TAB_Multi)
+		//!pSet->isMain && pSet->inRace == Race_Single && mWndTabsGame->getIndexSelected() == TAB_Multi)
 		boost::this_thread::sleep(boost::posix_time::milliseconds(pSet->gui_sleep));
 
 	return true;

@@ -13,7 +13,7 @@
 	#include "../../editor/settings.h"
 #else
 	#include "../CGame.h"
-	#include "../../vdrift/settings.h"
+	#include "../settings.h"
 	#include "../../vdrift/game.h"
 	#include "../SplitScreen.h"
 	#include "../../btOgre/BtOgreGP.h"

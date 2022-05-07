@@ -32,6 +32,11 @@ public:
 	typedef std::list <std::string> strlist;
 
 
+	//  main menu
+	void InitMainMenu();
+	void btnMainMenu(WP);  void tabMainMenu(Tab tab, size_t id);
+
+
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------	
 	

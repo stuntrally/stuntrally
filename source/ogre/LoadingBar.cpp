@@ -9,7 +9,7 @@
 using namespace Ogre;
 using namespace MyGUI;
 #include "CGame.h"
-#include "../vdrift/settings.h"
+#include "../settings.h"
 #include "../vdrift/pathmanager.h"
 
 

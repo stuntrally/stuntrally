@@ -13,6 +13,9 @@ public:
 //------------------------------------------
 	int version;  // file version =
 	
+	//  menu
+	bool bMain;  int inMenu;
+
 	//  show
 	bool trackmap, brush_prv;  int num_mini;
 	float size_minimap;

@@ -86,7 +86,7 @@ void App::createScene()  // once, init
 
 	//  gui  * * *
 	if (pSet->startInMain)
-		pSet->isMain = true;
+		pSet->bMain = true;
 		
 	bGuiFocus = false/*true*/;  bMoveCam = true;  //*--
 

@@ -50,6 +50,7 @@
 	<Tag name="Championship">Championship</Tag>
 	<Tag name="Tutorial">Tutorial</Tag>
 	<Tag name="Challenge">Challenge</Tag>
+	<Tag name="HowToPlay">How To Play</Tag>
 
 	<Tag name="ReplaysMenu">Replays</Tag>
 	<Tag name="Options">Options</Tag>
@@ -62,6 +63,7 @@
 	<Tag name="Contributing">Contributing</Tag>
 	<Tag name="Credits">Credits</Tag>
 
+	<!--  MAIN  Help links  -->
 	<Tag name="LinksToWeb">Links to websites:</Tag>
 	<Tag name="Homepage">Homepage</Tag>
 	<Tag name="DocumentationWiki">Documentation (Wiki)</Tag>

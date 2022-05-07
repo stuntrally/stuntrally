@@ -68,7 +68,7 @@ public:
 
 #define fTabW(s)  tab = fTab(s); \
 	tab->setIndexSelected(1);  tab->setSmoothShow(false); \
-	tab->eventTabChangeSelect += newDelegate(gcom, &CGuiCom::tabMainMenu);
+	tab->eventTabChangeSelect += newDelegate(this, &CGui::tabMainMenu);
 
 
 ///  find control, assign event, set value (old)

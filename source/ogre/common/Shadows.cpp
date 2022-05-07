@@ -10,7 +10,7 @@
 	#include "../../road/Road.h"
 #else
 	#include "../CGame.h"
-	#include "../../vdrift/settings.h"
+	#include "../settings.h"
 	#include "../../road/Road.h"
 	#include "../SplitScreen.h"
 #endif

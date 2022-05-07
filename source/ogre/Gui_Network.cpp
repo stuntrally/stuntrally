@@ -3,7 +3,7 @@
 #include "common/GuiCom.h"
 #include "CGame.h"
 #include "CGui.h"
-#include "../vdrift/settings.h"
+#include "../settings.h"
 #include "../vdrift/game.h"
 #include "../network/masterclient.hpp"
 #include "../network/gameclient.hpp"

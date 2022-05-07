@@ -3,7 +3,7 @@
 #include "BaseApp.h"
 
 #include "../vdrift/pathmanager.h"
-#include "../vdrift/settings.h"
+#include "../settings.h"
 
 #include "Compositor.h"
 #include "SplitScreen.h"
