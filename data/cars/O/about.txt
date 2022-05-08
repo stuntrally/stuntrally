@@ -1,5 +1,6 @@
 
 Author: CryHam
+License: CC-BY
 https://github.com/stuntrally/blendfiles/tree/master/cars/O
 
-Model, settings and vehicle code by: CryHam
+Model, settings and vehicle code by CryHam

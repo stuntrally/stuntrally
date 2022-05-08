@@ -372,7 +372,7 @@ void CGui::slUpd_Pace(SV*)
 	app->scn->UpdPaceParams();
 }
 
-void CGui::chkTrail(Ck*)
+void CGui::chkTrailShow(Ck*)
 {
 	if (!app->scn->trail)  return;
 	if (!pSet->trail_show)

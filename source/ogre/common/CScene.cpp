@@ -42,7 +42,7 @@ CScene::~CScene()
 
 void CScene::DestroyRoads()
 {
-	for (auto r:roads)
+	for (auto r : roads)
 		r->Destroy();
 	roads.clear();
 	rdCur = 0;

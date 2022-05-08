@@ -105,7 +105,7 @@ void SplineRoad::UpdLodVis(float fBias, bool bFull)
 			vis = d >= fDist[i] * fBias && d < fDist[i+1] * fBias;  // normal
 			if (trail && vis)  // ->--
 				vis = mP[seg].nCk >= trailSegId -1
-				   && mP[seg].nCk <= trailSegId +3;  // par vis -1..5
+				   && mP[seg].nCk <= trailSegId +3;  // par vis -1..5 far
 
 			/*if (bMerge)  vis = rs.mrgLod == i;  // vis mrg test-
 			else  vis = i == 3;/**/  // check lod 0

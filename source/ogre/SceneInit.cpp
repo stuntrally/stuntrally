@@ -286,9 +286,10 @@ void App::LoadCleanUp()  // 1 first
 		scn->DestroyTerrain();
 		scn->DestroyRoads();
 	}
+	scn->DestroyTrail();
+
 
 	///  destroy all
-	///  todo: check if track/car changed, dont recreate if same..
 	if (dstTrk)
 	{
 		//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();  // destroy all scenenodes

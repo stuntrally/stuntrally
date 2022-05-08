@@ -311,7 +311,7 @@ void App::UpdateTrackEv()
 	scn->CreateTerrain(bNewHmap,true,false);/**/
 
 	//  road ~
-	for (auto r:scn->roads)
+	for (auto r : scn->roads)
 	{
 		r->mTerrain = scn->terrain;
 		r->Rebuild(true);
@@ -393,7 +393,7 @@ void App::SaveTrackEv()
 	}
 
 	int i = 0;  // all roads
-	for (auto r:scn->roads)
+	for (auto r : scn->roads)
 	{
 		auto si = i==0 ? "" : toStr(i+1);  ++i;
 		r->SaveFile(dir+ "road"+si+".xml");

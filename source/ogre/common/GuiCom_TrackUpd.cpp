@@ -96,12 +96,12 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 		//  sort
 		TrkL::idSort = min(18, (int)trkList->mSortColumnIndex);
 
-		std::list<TrkL> liTrk2 = liTrk;  // copy
+		auto liTrk2 = liTrk;  // copy
 		liTrk2.sort(TrkSort);
 		if (!trkList->mSortUp)  liTrk2.reverse();
 		
 		//  original
-		for (std::list<TrkL>::iterator i = liTrk2.begin(); i != liTrk2.end(); ++i)
+		for (auto i = liTrk2.begin(); i != liTrk2.end(); ++i)
 		{
 			String name = (*i).name, nlow = name;  StringUtil::toLowerCase(nlow);
 			const TrackInfo* ti = (*i).ti;
@@ -109,6 +109,7 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 			if (!pSet->gui.track_user && name == pSet->gui.track)
 			{	bFound = true;  bListTrackU = 0;  }
 			
+			bool add = 0;
 			if (sTrkFind == "" || strstr(nlow.c_str(), sTrkFind.c_str()) != 0)
 			if (!ti || !pSet->tracks_filter ||  //  filtering
 				ti->ver      >= pSet->col_fil[0][0]  && ti->ver      <= pSet->col_fil[1][0]  &&
@@ -130,14 +131,19 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 				AddTrkL(name, 0, (*i).ti);
 				if (!pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
 					trkList->setIndexSelected(si);  }
-				++ii;
+				
+				if (!ti->test && !ti->testC)
+					++ii;  // dont count test tracks
+				add = 1;
 			}
+			//if (!add)  LogO("!add: " + name);  // test missing
 		}
-		txtTracksFCur->setCaption(TR("#{Road_Cur}: "+toStr(ii)));
-		txtTracksFAll->setCaption(TR("#{RplAll}: "+toStr(app->scn->data->tracks->cntAll)));
+		int all = max(1, app->scn->data->tracks->cntAll);
+		txtTracksFCur->setCaption(TR("#{Road_Cur}: ")+toStr(ii)+"    "+fToStr(100.f*ii/all, 2,4)+"%");
+		txtTracksFAll->setCaption(TR("#{RplAll}: "+toStr(all)));
 		
 		//  user
-		for (strlist::iterator i = liTracksUser.begin(); i != liTracksUser.end(); ++i)
+		for (auto i = liTracksUser.begin(); i != liTracksUser.end(); ++i)
 		{
 			String name = *i, nlow = name;  StringUtil::toLowerCase(nlow);
 			if (sTrkFind == "" || strstr(nlow.c_str(), sTrkFind.c_str()) != 0)

@@ -277,8 +277,7 @@ void CGuiCom::FillTrackLists()
 	}
 
 	//  original
-	strlist::iterator i;
-	i = liTracks.begin();
+	auto i = liTracks.begin();
 	while (i != liTracks.end())
 	{
 		std::string s = pathTrk[0] + *i + chkfile;
@@ -298,7 +297,7 @@ void CGuiCom::FillTrackLists()
 
 	//  get info for track name, from data->tracks
 	liTrk.clear();
-	for (strlist::iterator i = liTracks.begin(); i != liTracks.end(); ++i)
+	for (auto i = liTracks.begin(); i != liTracks.end(); ++i)
 	{
 		TrkL trl;  trl.name = *i;  //trl.pA = this;
 		int id = app->scn->data->tracks->trkmap[*i];
@@ -369,9 +368,9 @@ String CGuiCom::PathListTrkPrv(int user, String track) {
 bool CGuiCom::TrackExists(String name/*, bool user*/)
 {
 	// ignore letters case..
-	for (strlist::const_iterator it = liTracks.begin(); it != liTracks.end(); ++it)
+	for (auto it = liTracks.begin(); it != liTracks.end(); ++it)
 		if (*it == name)  return true;
-	for (strlist::const_iterator it = liTracksUser.begin(); it != liTracksUser.end(); ++it)
+	for (auto it = liTracksUser.begin(); it != liTracksUser.end(); ++it)
 		if (*it == name)  return true;
 	return false;
 }

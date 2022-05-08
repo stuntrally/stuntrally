@@ -50,6 +50,8 @@ public:
 	void InitMainMenu();
 	void btnMainMenu(WP);  void tabMainMenu(Tab tab, size_t id);
 
+	Cmb diffList;  void comboDiff(CMB);
+
 
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------
@@ -227,7 +229,7 @@ public:
 	SV svPaceNear, svPaceAlpha;
 	void slUpd_Pace(SV*);
 	//  Trail
-	Ck ckTrailShow;  void chkTrail(Ck*);
+	CK(TrailShow);
 	//  Times, opp
 	Ck ckTimes, ckOpponents, ckOppSort;
 

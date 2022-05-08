@@ -3,7 +3,7 @@
 
 	<Widget type="Window" skin="WindowC" position="1768 156 600 620" align="Center" layer="Overlapped" name="MainMenuWnd">
 		<Property key="MinSize" value="500 400"/>
-		<Property key="Caption" value="Stunt Rally"/>
+		<Property key="Caption" value="Stunt Rally #{GameVersion}"/>
 		<Property key="Alpha" value="0.7"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
@@ -88,8 +88,8 @@
 
 	<Widget type="Window" skin="WindowC" position="1768 156 600 620" align="Center" layer="Overlapped" name="RaceMenuWnd">
 		<Property key="MinSize" value="500 400"/>
-		<Property key="Caption" value="Stunt Rally"/>
-		<Property key="Alpha" value="0.8"/>
+		<Property key="Caption" value="#{NewGame}"/>
+		<Property key="Alpha" value="0.7"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
 
@@ -175,11 +175,18 @@
 			<Property key="Alpha" value="0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="108 348 404 50" align="Left" name="BtnRace4">
+		<Widget type="Button" skin="TextBoxS" position="108 348 144 50" align="Left" name="BtnRace4">
 			<Property key="Caption" value="#{Difficulty}"/>
 			<Property key="Colour" value="0.6 0.7 0.8"/>
 			<Property key="TextColour" value="0.7 0.8 0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.big"/>
+		</Widget>
+		<Widget type="ComboBox" skin="ComboBox" position="252 348 200 50" name="DiffList">
+			<Property key="Static" value="true"/>
+			<Property key="ReadOnly" value="true"/>
+			<Property key="Colour" value="0.7 0.86 1"/>
+			<Property key="TextColour" value="0.7 0.9 1"/>
 			<Property key="FontName" value="font.big"/>
 		</Widget>
 
@@ -199,6 +206,7 @@
 			<Property key="TextColour" value="0.75 0.9 1"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.big"/>
+			<Property key="Alpha" value="0.2"/>
 		</Widget>
 
 		<Widget type="ImageBox" skin="ImageBox" position="32 488 56 56">

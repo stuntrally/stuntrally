@@ -353,7 +353,7 @@ bool App::frameStart(Real time)
 		if (pSet->check_arrow && hud->arrow.node && !bRplPlay && !carModels.empty())
 		{
 			FollowCamera* cam = carModels[0]->fCam;
-		
+
 			Vector3 pos = cam->mCamera->getPosition();
 			Vector3 dir = cam->mCamera->getDirection();  dir.normalise();
 			Vector3 up = cam->mCamera->getUp();  up.normalise();

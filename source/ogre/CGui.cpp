@@ -1,8 +1,10 @@
 #include "BaseApp.h"
+#include "Gui_Def.h"
 #include "pch.h"
 #include "CGame.h"
 #include "CHud.h"
 #include "CGui.h"
+#include "common/GuiCom.h"
 #include "common/CScene.h"
 #include "../vdrift/pathmanager.h"
 #include <OgreRoot.h>
@@ -125,11 +127,9 @@ CGui::CGui(App* app1)
 		edCar[i] = 0;
 }
 
-
 CGui::~CGui()
 {
 }
-
 
 
 //  Main menu
@@ -158,7 +158,15 @@ void CGui::InitMainMenu()
 	
 	wnd = app->mWndRace;  w = wnd->getSize();
 	wnd->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
+
+	//  difficulty
+	Cmb(diffList, "DiffList", comboDiff);
+	diffList->addItem(TR("#{Diff2}"));
+	diffList->addItem(TR("#{Diff3}"));
+	diffList->addItem(TR("#{Diff4}"));
+	diffList->addItem(TR("#{Diff5}"));
 }
+
 
 void CGui::btnMainMenu(WP wp)
 {
@@ -217,4 +225,45 @@ void CGui::tabMainMenu(Tab tab, size_t id)
 	else
 		pSet->iMenu = MN1_Main;
 	app->gui->toggleGui(false);  // back to main
+}
+
+
+//  Game difficulty change  Race menu
+//----------------------------------------------------------------------------------------------------------------
+void CGui::comboDiff(Cmb cmb, size_t val)
+{
+	LogO("+ comboDiff");
+	int i;
+
+	auto resetFilter = [&]()
+	{
+		for (int i=0; i < COL_FIL; ++i)
+		{	pSet->col_fil[0][i] = pSet->colFilDef[0][i];
+			pSet->col_fil[1][i] = pSet->colFilDef[1][i];
+	}	};
+
+	auto SetDiff = [&](
+		bool sortUp, int sortCol,  bool filt, int diffMax,
+		bool beam, bool arrow, bool trail, bool easy)
+	{
+		//  tracks
+		gcom->trkList->mSortColumnIndex = pSet->tracks_sort = sortCol;
+		gcom->trkList->mSortUp = pSet->tracks_sortup = sortUp;
+		pSet->tracks_filter = filt;  resetFilter();  // upd filt wnd gui ...
+		pSet->col_fil[1][2] = diffMax;
+		pSet->gui.sim_mode = easy ? "easy" : "normal";
+		//  hud
+		ckBeam.SetValue(beam);
+		ckArrow.SetValue(arrow);
+		ckTrailShow.SetValue(trail);
+	};
+
+	switch (val)
+	{
+	case 0:  SetDiff(1, 1,  1, 2,  1,1,1,1);  break;
+	case 1:  SetDiff(1, 1,  1, 3,  0,0,1,1);  break;
+	case 2:  SetDiff(0, 3,  1, 5,  0,0,1,0);  break;
+	case 3:  SetDiff(0, 3,  0, 6,  0,0,0,0);  break;
+	}
+	gcom->TrackListUpd(true);
 }
