@@ -832,8 +832,8 @@ void App::CreateRoads()
 
 	//  pace ~ ~
 	scn->DestroyPace();
-	LogO("->--- DestroyTrail");
-	scn->DestroyTrail();
+	//LogO("->-- DestroyTrail");
+	//scn->DestroyTrail();
 
 	if (!bHideHudPace)
 	{
@@ -853,7 +853,7 @@ void App::CreateRoads()
 		road->bCastShadow = pSet->shadow_type >= Sh_Depth;
 		road->bRoadWFullCol = pSet->gui.collis_roadw;
 
-		for (auto r:scn->roads)
+		for (auto r : scn->roads)
 		{	r->RebuildRoadInt();
 			r->SetChecks();  // 2nd, upd
 	}	}
@@ -866,8 +866,7 @@ void App::CreateRoads()
 		scn->pace->Rebuild(road, scn->sc, pSet->game.trackreverse);
 	}
 
-	if (dstTrk)  // todo: rem, fix
-		CreateTrail(cam);
+	CreateTrail(cam);
 }
 
 
@@ -900,6 +899,9 @@ void App::CreateRoadsInt()
 
 void App::CreateTrail(Camera* cam)
 {
+	if (scn->trail)
+		scn->DestroyTrail();
+
 	//  load
 	TrackGhost gho;
 	int frames = 0;
