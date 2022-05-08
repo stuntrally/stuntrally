@@ -920,14 +920,14 @@ void App::CreateTrail(Camera* cam)
 	SplineRoad* tr = new SplineRoad(pGame);
 	tr->Setup("", 0.7, scn->terrain, mSceneMgr, cam, 100);
 	tr->sMtrRoad[0] = "trailRoad";
-	tr->river = true;  tr->trail = true;  tr->isLooped = true;
+	tr->river = true;  tr->trail = true;  tr->isLooped = false;
 
-	//tr->g_LenDim0 = 2.f;  tr->g_iWidthDiv0 = 1;  //  quality
-	tr->g_LenDim0 = 3.f;  tr->g_iWidthDiv0 = 1;  //  low
+	//tr->g_LenDim0 = 2.f;  tr->g_iWidthDiv0 = 1;  //  high quality
+	tr->g_LenDim0 = 3.f;  tr->g_iWidthDiv0 = 1;  //  ok
 	//tr->g_LenDim0 = 4.f;  tr->g_iWidthDiv0 = 1;  //  low
 	//  mergeLen affects Fps most
-	//tr->g_MergeLen = 100.f;  tr->g_LodPntLen = 20.f;  tr->bMerge = true;
-	tr->g_MergeLen = 200.f;  tr->g_LodPntLen = 30.f;  tr->bMerge = true;  // low
+	tr->g_MergeLen = 200.f;  tr->g_LodPntLen = 30.f;  tr->bMerge = true;  // ok
+	//tr->g_MergeLen = 100.f;  tr->g_LodPntLen = 20.f;  tr->bMerge = true;  // low
 	tr->newP.onTer = false;  tr->newP.aType = AT_Both;
 
 	//  params  add p

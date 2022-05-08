@@ -385,7 +385,8 @@ void App::newPoses(float time)  // time only for camera update
 								carM->updTimes = true;
 
 								//  trail  next start ->--
-								if (scn->trail)  scn->trail->trailSegId =
+								if (scn->trail && carM->iNumChks < ncs-1)  // skip last
+									scn->trail->trailSegId =
 										(inc * (i - scn->road->iChkId1) + (rev ? 0 : 1) + ncs) % ncs;
 
 								if (pSet->snd_chk && locar)
