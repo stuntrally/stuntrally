@@ -45,7 +45,7 @@
  
     <car id="U6"  o="6" m="Beetle"      v="2.7" r="3" w="4" d="4" s="9.0" y="2412" t="Extreme"   e="1.01" n="1.04"  a="gakpoenya, carlospanganiban, CryHam" />
 
-	<car id="V2"  o="0" m="Swan"        v="2.4" r="3" w="2" d="3" s="9.4" y="2516" t="Spaceship" e="1.00" n="1.13"  a="sypro" />
+	<car id="V2"  o="0" m="Swan"        v="2.4" r="3" w="2" d="2" s="9.4" y="2516" t="Spaceship" e="1.00" n="1.13"  a="sypro" />
 	<car id="V1"  o="0" m="Duck"        v="2.4" r="2" w="2" d="3" s="9.6" y="2523" t="Spaceship" e="1.04" n="1.16"  a="benja" />
 	<car id="V3"  o="0" m="Hawk"        v="2.4" r="3" w="2" d="3" s="9.8" y="2548" t="Spaceship" e="1.10" n="1.20"  a="jumahsafarty" />
 

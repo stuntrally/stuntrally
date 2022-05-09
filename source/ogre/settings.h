@@ -46,6 +46,7 @@ public:
 	//  menu
 	int iMenu;  // EMenu,
 	int yMain =0, yRace =0;  // kbd up/dn cursors
+	int difficulty =0;
 
 	//  show
 	bool show_gauges, show_digits,

@@ -175,18 +175,19 @@
 			<Property key="Alpha" value="0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="TextBoxS" position="108 348 144 50" align="Left" name="BtnRace4">
+		<Widget type="Button" skin="TextBoxS" position="118 354 144 50" align="Left" name="BtnRace4">
 			<Property key="Caption" value="#{Difficulty}"/>
 			<Property key="Colour" value="0.6 0.7 0.8"/>
 			<Property key="TextColour" value="0.7 0.8 0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.big"/>
 		</Widget>
-		<Widget type="ComboBox" skin="ComboBox" position="252 348 200 50" name="DiffList">
+		<Widget type="ComboBox" skin="ComboBox" position="272 348 220 50" name="DiffList">
 			<Property key="Static" value="true"/>
 			<Property key="ReadOnly" value="true"/>
 			<Property key="Colour" value="0.7 0.86 1"/>
 			<Property key="TextColour" value="0.7 0.9 1"/>
+			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.big"/>
 		</Widget>
 
@@ -206,7 +207,7 @@
 			<Property key="TextColour" value="0.75 0.9 1"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.big"/>
-			<Property key="Alpha" value="0.2"/>
+			<Property key="Alpha" value="0.4"/>
 		</Widget>
 
 		<Widget type="ImageBox" skin="ImageBox" position="32 488 56 56">

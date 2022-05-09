@@ -91,7 +91,7 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 {
 	if (trkList)
 	{	trkList->removeAllItems();
-		int ii = 0, si = -1;  bool bFound = false;
+		int ii = 0, a = 0, si = -1;  bool bFound = false;
 
 		//  sort
 		TrkL::idSort = min(18, (int)trkList->mSortColumnIndex);
@@ -132,14 +132,13 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 				if (!pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
 					trkList->setIndexSelected(si);  }
 				
-				if (!ti->test && !ti->testC)
-					++ii;  // dont count test tracks
-				add = 1;
+				if (!ti->test && !ti->testC)  ++a;  // dont count test tracks
+				++ii;  add = 1;
 			}
 			//if (!add)  LogO("!add: " + name);  // test missing
 		}
 		int all = max(1, app->scn->data->tracks->cntAll);
-		txtTracksFCur->setCaption(TR("#{Road_Cur}: ")+toStr(ii)+"    "+fToStr(100.f*ii/all, 2,4)+"%");
+		txtTracksFCur->setCaption(TR("#{Road_Cur}: ")+toStr(a)+"     "+fToStr(100.f * a/all, 1,4)+"%");
 		txtTracksFAll->setCaption(TR("#{RplAll}: "+toStr(all)));
 		
 		//  user
