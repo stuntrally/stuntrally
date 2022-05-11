@@ -280,7 +280,7 @@ void CGui::comboDiff(Cmb cmb, size_t val)
 	{// up,col, fil,diff, pipes,jmp,len  bm,ar,tr, sim,dmg  car,trk
 	case 0:  SetDiff(1,6,  1,2, 0,0, 3,  1,1,1, 1,1, "V2", "Isl2-Sandy");  break;
 	case 1:  SetDiff(1,6,  1,3, 1,1, 6,  0,1,1, 1,1, "ES", "Isl12-Beach");  break;  //Isl5-Shore
-	case 2:  SetDiff(0,6,  1,4, 2,2, 9,  0,0,1, 0,2, "HI", "Jng6-Fun");  break;  // Isl6-Flooded
+	case 2:  SetDiff(1,6,  1,4, 2,2, 9,  0,0,1, 0,2, "HI", "Jng6-Fun");  break;  // Isl6-Flooded
 	case 3:  SetDiff(0,3,  1,5, 4,4,14,  0,0,1, 0,2, "HI", "Isl14-Ocean");  break;
 	case 4:  SetDiff(0,3,  0,6, 4,4,24,  0,0,0, 0,2, "SX", "Grc9-Oasis");  break;
 	}

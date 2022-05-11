@@ -101,6 +101,7 @@ void CHud::Size()
 			if (h.txDamage)
 			{	h.txDamage ->setPosition(gxL-83-72, gy+10-5);
 				h.icoDamage->setPosition(gxL-83+57, gy+10-5);
+				h.imgDamage->setPosition(gxL-83-26, gy+10-7);
 			}
 			if (h.txBFuel)
 			{	h.txBFuel ->setPosition(gxL-83-74, gy-60);
@@ -299,6 +300,10 @@ void CHud::Create()
 		//  damage %
 		if (pSet->game.damage_type > 0)
 		{
+			h.imgDamage = h.parent->createWidget<ImageBox>("ImageBox",
+				0,y, 130,46, Align::Left, "PDmg"+s);
+			h.imgDamage->setImageTexture("menu2.png");
+			
 			h.txDamage = h.parent->createWidget<TextBox>("TextBox",
 				0,y, 120,40, Align::Right, "Dmg"+s);  //h.txDamage->setVisible(false);
 			h.txDamage->setTextAlign(Align::Right|Align::VCenter);
@@ -533,24 +538,7 @@ CHud::OvrDbg::OvrDbg() :
 {	}
 
 CHud::Hud::Hud()
-	:parent(0)
-	,txTimTxt(0), txTimes(0), /*bckTimes(0),*/  sTimes("")
-	,txLapTxt(0), txLap(0), bckLap(0)
-	,bckOpp(0), lastOppH(-1), xOpp(0), yOpp(0)
-	,txWarn(0), txPlace(0),  bckWarn(0), bckPlace(0)
-	,txCountdown(0), updGauges(0)
-
-	,txGear(0), txVel(0), bckVel(0)
-	,ndNeedles(0), ndGauges(0)
-	,moNeedles(0), moGauges(0)
-	,txAbs(0), txTcs(0),  txCam(0)
-
-	,txBFuel(0), txDamage(0), txRewind(0)
-	,icoBFuel(0), icoBInf(0), icoDamage(0), icoRewind(0)
-
-	,moMap(0), ndMap(0)
 {
-	for (int i=0; i<3; ++i)  txOpp[i]=0;
 	vMiniPos.resize(6);
 }
 
@@ -575,7 +563,7 @@ void CHud::Destroy()
 		Dest(h.txGear)  Dest(h.txVel)  Dest(h.bckVel)
 		Dest(h.txAbs)  Dest(h.txTcs)  Dest(h.txCam)
 		
-		Dest(h.txBFuel)  Dest(h.txDamage)  Dest(h.txRewind)
+		Dest(h.txBFuel)  Dest(h.txDamage)  Dest(h.txRewind)  Dest(h.imgDamage)
 		Dest(h.icoBFuel)  Dest(h.icoBInf)  Dest(h.icoDamage)  Dest(h.icoRewind)
 
 		for (i=0; i < 3; ++i)  Dest(h.txOpp[i])
@@ -652,7 +640,8 @@ void CHud::Show(bool hideAll)
 				{	h.txBFuel->setVisible(show && btxt);
 					h.icoBFuel->setVisible(show && bfuel);  /*h.icoBInf->setVisible(show && binf);*/  }
 				if (h.txDamage)
-				{	h.txDamage->setVisible(show && bdmg);  h.icoDamage->setVisible(show && bdmg);	}
+				{	h.txDamage->setVisible(show && bdmg);  h.icoDamage->setVisible(show && bdmg);
+					h.imgDamage->setVisible(show && bdmg);  }
 				//txRewind;icoRewind;
 
 				h.ndGauges->setVisible(show);  h.ndNeedles->setVisible(show);

@@ -201,6 +201,7 @@ void CGui::InitGui()
 	sv= &svCarClrV;		sv->Init("CarClrV", &f, 0.f,1.f);  Sev(CarClr);
 	sv= &svCarClrGloss;	sv->Init("CarClrGloss", &f, 0.f,1.f, 1.6f);  Sev(CarClr);
 	sv= &svCarClrRefl;	sv->Init("CarClrRefl",  &f, 0.f,1.4f);  Sev(CarClr);
+	imgCarClr = fImg("ImgCarClr");
 	UpdCarClrSld();
 
 

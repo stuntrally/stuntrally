@@ -286,7 +286,7 @@ public:
 	SV svCarClrGloss, svCarClrRefl;  void slCarClr(SV*);
 	void SldUpd_CarClr();
 	void UpdCarClrSld(bool upd=true);
-	void SetCarClr();
+	void SetCarClr(), UpdImgClr();
 
 
 	//  [Setup] car
@@ -304,7 +304,7 @@ public:
 	SV svSteerRangeSurf, svSteerRangeSim;
 	void btnSSSReset(WP), btnSteerReset(WP), slSSS(SV*);
 
-	void imgBtnCarClr(WP), btnCarClrRandom(WP);
+	void imgBtnCarClr(WP), btnCarClrRandom(WP);  Img imgCarClr =0;
 	
 	//  radios
 	Btn bRkmh, bRmph;  // km/h, mph

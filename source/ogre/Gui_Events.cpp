@@ -153,13 +153,16 @@ void CGui::UpdCarClrSld(bool upd)
 {
 	SldUpd_CarClr();
 	int i = iCurCar;
-	pSet->game.car_hue[i] = pSet->gui.car_hue[i];  // copy to apply
-	pSet->game.car_sat[i] = pSet->gui.car_sat[i];
-	pSet->game.car_val[i] = pSet->gui.car_val[i];
+	float h = pSet->gui.car_hue[i], s = pSet->gui.car_sat[i], v = pSet->gui.car_val[i];
+	
+	pSet->game.car_hue[i] = h;  // copy to apply
+	pSet->game.car_sat[i] = s;
+	pSet->game.car_val[i] = v;
 	pSet->game.car_gloss[i]= pSet->gui.car_gloss[i];
 	pSet->game.car_refl[i] = pSet->gui.car_refl[i];
 	if (upd)
 		SetCarClr();
+	UpdImgClr();
 }
 
 //  1. upd sld and pointers after tab change
@@ -176,6 +179,16 @@ void CGui::SldUpd_CarClr()
 void CGui::slCarClr(SV*)
 {
 	SetCarClr();
+	UpdImgClr();
+}
+
+void CGui::UpdImgClr()
+{
+	int i = iCurCar;
+	float h = pSet->gui.car_hue[i], s = pSet->gui.car_sat[i], v = pSet->gui.car_val[i];
+	ColourValue c;  c.setHSB(1.f - h, s, v);
+	Colour cc(c.r, c.g, c.b);
+	imgCarClr->setColour(cc);
 }
 
 //  color buttons

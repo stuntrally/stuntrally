@@ -682,9 +682,9 @@ void CarModel::UpdWhTerMtr()
 void CarModel::ChangeClr()
 {
 	int i = iColor;
-	float c_h = pSet->gui.car_hue[i], c_s = pSet->gui.car_sat[i],
-	      c_v = pSet->gui.car_val[i], gloss = pSet->gui.car_gloss[i], refl = pSet->gui.car_refl[i];
-	color.setHSB(1-c_h, c_s, c_v);  //set, mini pos clr
+	float h = pSet->gui.car_hue[i], s = pSet->gui.car_sat[i], v = pSet->gui.car_val[i],
+		gloss = pSet->gui.car_gloss[i], refl = pSet->gui.car_refl[i];
+	color.setHSB(1.f - h, s, v);  //set, mini pos clr
 
 	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
 	if (!mtr.isNull())
@@ -703,7 +703,7 @@ void CarModel::ChangeClr()
 	}	}	}	}
 
 	if (pNickTxt)
-		pNickTxt->setTextColour(MyGUI::Colour(color.r,color.g,color.b));
+		pNickTxt->setTextColour(MyGUI::Colour(color.r, color.g, color.b));
 	
 	// opp list text and mini pos colors - auto in hud update
 }

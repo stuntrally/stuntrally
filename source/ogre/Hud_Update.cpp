@@ -411,9 +411,22 @@ void CHud::Update(int carId, float time)
 	if (h.txDamage && pCar && h.txDamage->getVisible())
 	{
 		float d = std::min(100.f, Math::Floor(pCar->dynamics.fDamage));
+		float& a = h.dmgBlink;
+		if (d != h.dmgOld)
+		{	float aa = std::max(0.f, std::min(1.f, 0.3f + (d - h.dmgOld) * 0.1f));
+			if (aa > a)  a = aa;  // par
+			h.dmgOld = d;
+		}
 		h.txDamage->setCaption(fToStr(d,0,3)+" %");  d*=0.01f;
 		float e = std::min(1.f, 0.8f + d*2.f);
-		h.txDamage->setTextColour(Colour(e-d*d*0.4f, std::max(0.f, e-d), std::max(0.f, e-d*2.f) ));
+		//h.txDamage->setTextColour(Colour(e-d*d*0.4f, std::max(0.f, e-d), std::max(0.f, e-d*2.f) ));
+		h.txDamage->setTextColour(Colour(e-d*d*0.4f, std::max(0.f, e-d*0.6f), std::max(0.f, e-d*1.f) ));
+		
+		if (h.dmgOld >= 99.f)  a = 1.f;
+		if (a < 0.01f)  a = 0.01f;
+		h.imgDamage->setColour(Colour(1.f, 0.1f, 0.1f));
+		h.imgDamage->setAlpha(a);
+		a -= time;
 	}
 	
 	//  abs, tcs on  ------

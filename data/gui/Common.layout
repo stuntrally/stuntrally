@@ -64,19 +64,20 @@
 		<Widget type="Button" skin="CheckBox" position="12 10 140 24" name="col0">
 			<Property key="Caption" value="#C0E0C0 id"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="12 70 140 24" name="col1">
-			<Property key="Caption" value="#C8E8C8 #{Name} (#{Big})"/>
-		</Widget>
-		<Widget type="Button" skin="CheckBox" position="12 40 140 24" name="col2">
+		<Widget type="Button" skin="CheckBox" position="12 35 140 24" name="col2">
 			<Property key="Caption" value="#E0FFE0 #{Name}"/>
 		</Widget>
+		<Widget type="Button" skin="CheckBox" position="12 60 140 24" name="col1">
+			<Property key="Caption" value="#C8E8C8 #{Name} (#{Big})"/>
+		</Widget>
+
 		<Widget type="Button" skin="CheckBox" position="12 100 140 24" name="col3">
 			<Property key="Caption" value="#80FF80 N"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="12 130 240 24" name="col4">
+		<Widget type="Button" skin="CheckBox" position="12 125 240 24" name="col4">
 			<Property key="Caption" value="#80FFC0 #{Scenery}"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="12 160 240 24" name="col5">
+		<Widget type="Button" skin="CheckBox" position="12 150 240 24" name="col5">
 			<Property key="Caption" value="#C0E0F0 #{Version}"/>
 		</Widget>
 

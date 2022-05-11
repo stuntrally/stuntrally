@@ -286,13 +286,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			#ifdef REVERB_BROWSER
 			case key(1):
 			{	--ii;  int s = pGame->snd->sound_mgr->mapReverbs.size();  if (ii < 0)  ii += s;
-				std::map <std::string, int>::const_iterator it = pGame->snd->sound_mgr->mapReverbs.begin();
+				auto it = pGame->snd->sound_mgr->mapReverbs.begin();
 				for (int i=0; i<ii; ++i)  ++it;
 				pGame->snd->sound_mgr->SetReverb((*it).first);
 			}	break;
 			case key(2):
 			{	++ii;  int s = pGame->snd->sound_mgr->mapReverbs.size();  if (ii >= s)  ii -= s;
-				std::map <std::string, int>::const_iterator it = pGame->snd->sound_mgr->mapReverbs.begin();
+				auto it = pGame->snd->sound_mgr->mapReverbs.begin();
 				for (int i=0; i<ii; ++i)  ++it;
 				pGame->snd->sound_mgr->SetReverb((*it).first);
 			}	break;
@@ -372,6 +372,11 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 						cm->updLap = true;  cm->fLapAlpha = 1.f;
 				}	}
 				break;
+
+			case key(SPACE):		//  toggle reversed
+				if (isFocGui && mWndGame->getVisible() &&
+					mWndTabsGame->getIndexSelected())
+					gui->ckReverse.Invert();
 		}
 	}
 

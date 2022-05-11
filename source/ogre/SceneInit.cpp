@@ -989,7 +989,7 @@ void App::CreateTrail(Camera* cam)
 			tr->newP.nCk = iCk;
 
 			tr->newP.mRoll = fr.steer/127.f * 10.f;
-			// get roll from car in road seg space..
+			// todo: get roll from car in road seg space?..
 			//auto q = Axes::toOgre(fr.rot);
 			//tr->newP.mRoll = q.getRoll().valueDegrees();  //-
 
@@ -1006,4 +1006,6 @@ void App::CreateTrail(Camera* cam)
 	tr->Rebuild(true);
 	tr->RebuildRoadInt();
 	scn->trail = tr;
+	if (!pSet->trail_show)
+		tr->SetVisTrail(false);
 }

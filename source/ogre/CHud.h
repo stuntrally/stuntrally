@@ -7,6 +7,7 @@
 #include "common/MessageBox/MessageBox.h"
 #include "common/MessageBox/MessageBoxStyle.h"
 #include "common/GraphView.h"
+#include "common/Gui_Def.h"
 
 #include "../network/networkcallbacks.hpp"
 #include <boost/thread.hpp>
@@ -23,12 +24,12 @@ namespace MyGUI  {  class MultiList2;  class Slider;  }
 class GraphView;  class App;  class SETTINGS;  class CGui;
 
 
-class CHud
+class CHud : public BGui
 {
 public:
-	App* app;
-	SETTINGS* pSet;
-	CGui* gui;
+	App* app =0;
+	SETTINGS* pSet =0;
+	CGui* gui =0;
 	
 	CHud(App* ap1);
 		
@@ -45,60 +46,63 @@ public:
 	{
 	public:
 		//  times bar
-		MyGUI::TextBox *txTimTxt,*txTimes;  //MyGUI::ImageBox *bckTimes;
-		Ogre::String sTimes,sLap;
+		Txt txTimTxt =0, txTimes =0;
+		Ogre::String sTimes, sLap;
 		//  lap results
-		MyGUI::TextBox *txLapTxt,*txLap;  MyGUI::ImageBox *bckLap;
+		Txt txLapTxt =0, txLap =0;  Img bckLap =0;
 		//  opponents list  columns: trk %, dist m, nick
-		MyGUI::TextBox *txOpp[3];  MyGUI::ImageBox *bckOpp;
-		int xOpp, yOpp, lastOppH;
+		Txt txOpp[3]={0,0,0};  Img bckOpp =0;
+		int xOpp =0, yOpp =0, lastOppH = -1;
 
 		//  wrong check warning, win place
-		MyGUI::TextBox *txWarn,*txPlace;  MyGUI::ImageBox *bckWarn,*bckPlace;
+		Txt txWarn =0,  txPlace =0;
+		Img bckWarn =0, bckPlace =0;
 		//  start countdown
-		MyGUI::TextBox *txCountdown;
+		Txt txCountdown =0;
 
 		//  gauges
-		Ogre::SceneNode    *ndNeedles, *ndGauges;
-		Ogre::ManualObject *moNeedles, *moGauges;
+		Ogre::SceneNode    *ndNeedles =0, *ndGauges =0;
+		Ogre::ManualObject *moNeedles =0, *moGauges =0;
 		//  gear, vel
-		MyGUI::TextBox *txGear,*txVel, *txAbs,*txTcs;
-		MyGUI::ImageBox *bckVel;
+		Txt txVel =0, txGear =0, txAbs =0, txTcs =0;
+		Img bckVel =0;
 
 		//  boost fuel, damage %, rewind time
-		MyGUI::TextBox  *txBFuel, *txDamage, *txRewind;
-		MyGUI::ImageBox *icoBFuel,*icoBInf,*icoDamage,*icoRewind;
+		Img imgDamage =0;
+		float dmgBlink = 0.f, dmgOld = 0.f;
+		Txt txDamage =0,  txRewind =0,  txBFuel =0;
+		Img icoDamage =0, icoRewind =0, icoBFuel =0, icoBInf =0;
 		
 		//  current camera name
-		MyGUI::TextBox *txCam;
+		Txt txCam =0;
 
 		//  miniap
-		Ogre::ManualObject *moMap;  Ogre::SceneNode *ndMap;
+		Ogre::ManualObject *moMap =0;  Ogre::SceneNode *ndMap =0;
 		//  all info for this car's minimap
 		std::vector<SMiniPos> vMiniPos;  // const size: 6
 		
 		//  center position .
 		Ogre::Vector2 vcRpm, vcVel;  Ogre::Real fScale;
-		bool updGauges;
+		bool updGauges =0;
 
-		MyGUI::Widget* parent;
+		WP parent =0;
 		Hud();
 	};
 	std::vector<Hud> hud;  // const size: max viewports 4
+
 
 	///  global hud  ---------
 
 	//  car pos tris on minimap
 	//  one for all cars on all viewports
-	Ogre::SceneNode* ndPos;
-	Ogre::ManualObject* moPos;
+	Ogre::SceneNode* ndPos =0;  Ogre::ManualObject* moPos =0;
 
 	//  chat messages
-	MyGUI::TextBox *txMsg;  MyGUI::ImageBox *bckMsg;
+	Txt txMsg =0;  Img bckMsg =0;
 	//  camera move info
-	MyGUI::TextBox *txCamInfo;
+	Txt txCamInfo =0;
 	//  car debug texts  todo...
-	MyGUI::TextBox *txDbgCar,*txDbgTxt,*txDbgExt;
+	Txt txDbgCar =0, txDbgTxt =0, txDbgExt =0;
 
 	Ogre::SceneNode    *ndTireVis[4];
 	Ogre::ManualObject *moTireVis[4];
@@ -109,7 +113,7 @@ public:
 		OvrDbg();
 	};
 	std::vector<OvrDbg> ov;
-	Ogre::Overlay *ovCarDbg,*ovCarDbgTxt,*ovCarDbgExt;
+	Ogre::Overlay *ovCarDbg =0, *ovCarDbgTxt =0, *ovCarDbgExt =0;
 
 
 	///  checkpoint arrow
@@ -122,8 +126,9 @@ public:
 		void Create(Ogre::SceneManager* mSceneMgr, SETTINGS* pSet);
 	} arrow;
 		
-	float asp, scX,scY, minX,maxX, minY,maxY;  // minimap visible range
-	Ogre::SceneNode *ndLine;
+	float asp =1.f, scX =1.f, scY =1.f,
+		minX =0.f, maxX =0.f, minY =0.f, maxY =0.f;  // minimap visible range
+	Ogre::SceneNode *ndLine =0;
 
 	//------------------------------------------
 
@@ -148,7 +153,7 @@ public:
 		Ogre::Real mul, Ogre::Vector2 ofs,
 		Ogre::uint32 vis, Ogre::uint8 rndQue, int cnt = 1);
 
-	MyGUI::TextBox* CreateNickText(int carId, Ogre::String text);
+	Txt CreateNickText(int carId, Ogre::String text);
 	Ogre::Vector3 projectPoint(const Ogre::Camera* cam, const Ogre::Vector3& pos);  // 2d xy, z - out info
 
 	//  string utils

@@ -138,7 +138,8 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 			//if (!add)  LogO("!add: " + name);  // test missing
 		}
 		int all = max(1, app->scn->data->tracks->cntAll);
-		txtTracksFCur->setCaption(TR("#{Road_Cur}: ")+toStr(a)+"     "+fToStr(100.f * a/all, 1,4)+"%");
+		txtTracksFCur->setCaption(TR("#{Road_Cur}: ")+toStr(a) +"     "+
+			getClrSum((iClrsSum-1) * a/all)+ fToStr(100.f * a/all, 1,4)+"%");
 		txtTracksFAll->setCaption(TR("#{RplAll}: "+toStr(all)));
 		
 		//  user

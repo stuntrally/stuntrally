@@ -22,23 +22,10 @@ using namespace Ogre;
 
 CHud::CHud(App* ap1)
 	:app(ap1)
-	
-	,asp(1)//,  xcRpm(0), ycRpm(0), xcVel(0), ycVel(0)
-	,scX(1),scY(1), minX(0),maxX(0), minY(0),maxY(0)
-	,ndLine(0)
-
-	,moPos(0) ,ndPos(0)
-	
-	,txMsg(0), bckMsg(0)
-	,txCamInfo(0)
-
-	,txDbgCar(0),txDbgTxt(0),txDbgExt(0)
-
-	,ovCarDbg(0),ovCarDbgTxt(0),ovCarDbgExt(0)
 {
 	hud.resize(4);  ov.resize(5);
 	
-	for (int i=0; i<4; ++i)
+	for (int i=0; i < 4; ++i)
 	{	ndTireVis[i]=0;  moTireVis[i]=0;  }
 	
 	pSet = ap1->pSet;
