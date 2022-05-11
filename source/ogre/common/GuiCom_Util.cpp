@@ -105,7 +105,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnClr["Forest"]       = "#A0C000";  scnClr["ForestMntn"]   = "#A0C080";
 	scnClr["ForestYellow"] = "#C0C000";  scnClr["Finland"]      = "#A0E080";
 	scnClr["Island"]       = "#FFFF80";  scnClr["IslandDark"]   = "#909080";
-	scnClr["Mud"]          = "#A0A000";  scnClr["Australia"]    = "#FFA080";
+	scnClr["Mud"]          = "#A0A000";  scnClr["Australia"]    = "#FF9070";
 	scnClr["Greece"]       = "#B0FF00";  scnClr["Canyon"]       = "#E0B090";
 	scnClr["Autumn"]       = "#FFA020";  scnClr["AutumnDark"]   = "#908070";
 	scnClr["Moss"]         = "#70F0B0";
@@ -115,7 +115,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnClr["Toxic"]        = "#60A030";  scnClr["Surreal"]      = "#F080B0";
 	scnClr["Alien"]        = "#D0FFA0";  scnClr["Other"]        = "#C0D0E0";
 	scnClr["Stone"]        = "#A0A0A0";  scnClr["Space"]        = "#A0B8D0";
-	scnClr["BlackDesert"]  = "#202020";  scnClr["SurrealSpace"] = "#F06060";
+	scnClr["BlackDesert"]  = "#202020";  scnClr["SurrealSpace"] = "#80B0FF"; //"#F06060";
 }
 
 int TrkL::idSort = 0;

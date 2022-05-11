@@ -67,9 +67,9 @@ public:
 		Txt txVel =0, txGear =0, txAbs =0, txTcs =0;
 		Img bckVel =0;
 
-		//  boost fuel, damage %, rewind time
-		Img imgDamage =0;
+		//  damage %, rewind time, boost fuel
 		float dmgBlink = 0.f, dmgOld = 0.f;
+		Img imgDamage =0;
 		Txt txDamage =0,  txRewind =0,  txBFuel =0;
 		Img icoDamage =0, icoRewind =0, icoBFuel =0, icoBInf =0;
 		
@@ -134,18 +134,24 @@ public:
 
 	//  init
 	void Create(), Destroy();
-	Ogre::ManualObject* CreateVdrMinimap();  //vdr only
 
 	//  show, size
 	void Size(), Show(bool hideAll=false), ShowVp(bool vp);
 
 	///  update
 	void Update(int carId, float time);
-
 	//  update internal
-	void UpdRot(int baseCarId, int carId, float vel, float rpm);  // rpm < 0.f to hide
-	void GetVals(int id, float* vel, float* rpm, float* clutch, int* gear);
-	void UpdMiniTer(), UpdDbgTxtClr();
+	void UpdPosElems(int cnt, int cntC, int carId),
+		 UpdRotElems(int baseCarId, int carId, float vel, float rpm),  // rpm < 0.f to hide
+		 GetCarVals(int id, float* vel, float* rpm, float* clutch, int* gear),
+		 UpdMiniTer(), UpdDbgTxtClr(),
+		 UpdMultiplayer(int cnt, float time),
+		 UpdOpponents(Hud& h, int cnt, CarModel* pCarM),
+		 UpdMotBlur(CAR* pCar, float time),
+		 UpdCarTexts(int carId, Hud& h, float time, CAR* pCar),
+		 UpdTimes(int carId, Hud& h, float time, CAR* pCar, CarModel* pCarM),
+		 UpdDebug(CAR* pCar, CarModel* pCarM);
+
 
 	//  util create
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::SceneManager* sceneMgr,

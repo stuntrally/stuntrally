@@ -132,7 +132,7 @@ void CGuiCom::TrackListUpd(bool resetNotFound)
 				if (!pSet->gui.track_user && name == pSet->gui.track)  {  si = ii;
 					trkList->setIndexSelected(si);  }
 				
-				if (!ti->test && !ti->testC)  ++a;  // dont count test tracks
+				if (ti && !ti->test && !ti->testC)  ++a;  // dont count test tracks
 				++ii;  add = 1;
 			}
 			//if (!add)  LogO("!add: " + name);  // test missing

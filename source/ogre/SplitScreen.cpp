@@ -119,8 +119,7 @@ void SplitScr::Align()
 			else if (i == 1)	dim_(0.5, 0.0, 0.5, 0.5)
 			else if (i == 2)	dim_(0.0, 0.5, 0.5, 0.5)
 			else if (i == 3)	dim_(0.5, 0.5, 0.5, 0.5)
-		}
-		else
+		}else
 		{
 			LogO("ERROR: Unsupported number of viewports: " + toStr(mNumViewports));
 			return;
@@ -262,10 +261,8 @@ void SplitScr::preViewportUpdate(const RenderTargetViewportEvent& evt)
 					sh::Factory::getInstance().setTextureAlias("SceneDepth", depthTexture->getName());
 			}
 		}
-	}
-	else
-	{
-		//  Gui viewport - hide stuff we don't want
+	}else
+	{	//  Gui viewport - hide stuff we don't want
 		pApp->hud->Update(-1, 1.f / mWindow->getStatistics().lastFPS);
 		pApp->hud->ShowVp(false);
 		
