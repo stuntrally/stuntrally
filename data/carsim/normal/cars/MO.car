@@ -29,7 +29,7 @@ exhaust-mirror-second = 0
 com_ofs_H = 0.2
 radius = 0.40
 width = 1.5
-height = 1.2
+height = 1.6
 posLfront = 2.1
 posLrear = -2.5
 
@@ -43,7 +43,7 @@ TopWmul = 0.4
 
 offsetL = 0.0
 offsetW = 0.0
-offsetH = 0.8
+offsetH = 0.85
 start-offsetY = 1.45
 fluidTrigH = 0.4
 friction = 0.4

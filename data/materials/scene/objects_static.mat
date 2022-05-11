@@ -73,7 +73,7 @@ material pers_struct_dds
 	diffuse 0.75 0.75 0.7
 	specular 0.1 0.1 0.1 12
 	terrain_light_map true
-	bump_scale 1.3
+	//bump_scale 1.3
 }
 
 material ptol_struct
