@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
 
-	<Widget type="Window" skin="WindowC" position="1740 24 500 480" align="Center" layer="Overlapped" name="MainMenuWnd">
+	<Widget type="Window" skin="WindowC" position="1740 24 500 610" align="Center" layer="Overlapped" name="MainMenuWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="Caption" value="#{SREditorVersion} #{GameVersion}"/>
 		<Property key="Alpha" value="0.7"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
+
+		<Widget type="ImageBox" skin="ImageBox" position="0 410 496 169">
+			<Property key="ImageTexture" value="stuntrally-logo.jpg"/>
+			<!-- <Property key="ImageCoord" value="0 0 1892 645"/>  2.933  0.341 -->
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
 
 		<Widget type="ImageBox" skin="ImageBox" position="28 56 56 56">
 			<Property key="ImageCoord" value="0 896 128 128"/>

@@ -1,3 +1,6 @@
+![](https://github.com/stuntrally/stuntrally/blob/master/data/hud/stuntrally-logo.jpg?raw=true)
+
+------------------------------------------------------------------------------
 
     Stunt Rally - 3D racing game, based on VDrift and OGRE, with Track Editor
     Copyright (C) 2010-2022  Crystal Hammer and contributors
