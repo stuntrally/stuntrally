@@ -168,7 +168,7 @@ void CGui::InitMainMenu()
 		auto clr = gcom->getClrDiff(diff);
 		diffList->addItem(clr+ TR("#{Diff"+toStr(diff)+"}"));
 	};
-	add(1);  add(2);  add(3);  add(4);  add(5);
+	add(1);  add(2);  add(3);  add(4);  add(5);  add(6);
 	diffList->setIndexSelected(pSet->difficulty);
 }
 
@@ -247,16 +247,14 @@ void CGui::comboDiff(Cmb cmb, size_t val)
 			pSet->col_fil[1][i] = pSet->colFilDef[1][i];
 	}	};
 
-	auto SetDiff = [&](
-		bool sortUp, int sortCol,  bool filt, int diffMax,
-		int pipes, int jumps, int len,
-		bool beam, bool arrow, bool trail,
-		bool easy, int damage, string car, string track)
+	auto SetDiff = [&](bool sortUp, int sortCol,  bool filter, int diffMax,
+		int pipes, int jumps, int len,  bool beam, bool arrow, bool trail, bool minimap,
+		bool easy, int damage,  string car, string track)
 	{
 		//  tracks
 		gcom->trkList->mSortColumnIndex = pSet->tracks_sort = sortCol;
 		gcom->trkList->mSortUp = pSet->tracks_sortup = sortUp;  gcom->trkList->mSortUpOld = !sortUp;
-		pSet->tracks_filter = filt;  resetFilter();  gcom->ckTrkFilter.SetValue(filt);
+		pSet->tracks_filter = filter;  resetFilter();  gcom->ckTrkFilter.SetValue(filter);
 
 		pSet->col_fil[1][1] = diffMax;  gcom->svTrkFilMax[1].SetValueI(diffMax);  // upd filt wnd gui
 		pSet->col_fil[1][7] = jumps;  gcom->svTrkFilMax[7].SetValueI(jumps);
@@ -273,16 +271,18 @@ void CGui::comboDiff(Cmb cmb, size_t val)
 		bRsimEasy->setStateSelected(easy);  bRsimNorm->setStateSelected(!easy);
 		pSet->gui.damage_type = damage;  cmbDamage->setIndexSelected(damage);
 		//  hud
-		ckBeam.SetValue(beam);  ckArrow.SetValue(arrow);  ckTrailShow.SetValue(trail);
+		ckBeam.SetValue(beam);  ckArrow.SetValue(arrow);
+		ckTrailShow.SetValue(trail);  ckMinimap.SetValue(minimap);
 	};
 
 	switch (val)
-	{// up,col, fil,diff, pipes,jmp,len  bm,ar,tr, sim,dmg  car,trk
-	case 0:  SetDiff(1,6,  1,2, 0,0, 3,  1,1,1, 1,1, "V2", "Isl2-Sandy");  break;
-	case 1:  SetDiff(1,6,  1,3, 1,1, 6,  0,1,1, 1,1, "ES", "Isl12-Beach");  break;  //Isl5-Shore
-	case 2:  SetDiff(1,6,  1,4, 2,2, 9,  0,0,1, 0,2, "HI", "Jng6-Fun");  break;  // Isl6-Flooded
-	case 3:  SetDiff(0,3,  1,5, 4,4,14,  0,0,1, 0,2, "HI", "Isl14-Ocean");  break;
-	case 4:  SetDiff(0,3,  0,6, 4,4,24,  0,0,0, 0,2, "SX", "Grc9-Oasis");  break;
+	{// up,col, filt,diff, pipes,jmp,len  bm,ar,tr, sim,dmg  car,trk
+	case 0:  SetDiff(1,6,  1,2, 0,0, 3,  1,1,1,1, 1,1, "V2", "Isl2-Sandy");  break;
+	case 1:  SetDiff(1,6,  1,3, 1,1, 6,  0,1,1,1, 1,1, "ES", "Isl12-Beach");  break;  //Isl5-Shore
+	case 2:  SetDiff(1,6,  1,4, 2,2, 9,  0,0,1,1, 0,2, "HI", "Jng6-Fun");  break;  // Isl6-Flooded
+	case 3:  SetDiff(0,3,  1,5, 4,4,14,  0,0,1,1, 0,2, "HI", "Isl14-Ocean");  break;
+	case 4:  SetDiff(0,3,  0,6, 4,4,24,  0,0,0,1, 0,2, "SX", "Grc9-Oasis");  break;
+	case 5:  SetDiff(0,17, 0,6, 4,4,24,  0,0,0,0, 0,2, "U6", "Uni7-GlassStairs");  break;
 	}
 	gcom->TrackListUpd(true);  gcom->listTrackChng(gcom->trkList,0);
 	listCarChng(carList,0);
