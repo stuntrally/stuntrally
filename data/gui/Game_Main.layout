@@ -1,14 +1,20 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
 
-	<Widget type="Window" skin="WindowC" position="1768 156 600 620" align="Center" layer="Overlapped" name="MainMenuWnd">
+	<Widget type="Window" skin="WindowC" position="1768 156 600 650" align="Center" layer="Overlapped" name="MainMenuWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="Caption" value="Stunt Rally #{GameVersion}"/>
 		<Property key="Alpha" value="0.7"/>
 		<Property key="Snap" value="true"/>
 		<UserString key="NotSized" value="1"/>
 
-<!-- 0 pan +8 img +12 btn   +72  12 84 156 228 300  336 408 480 -->
+<!-- 0 pan +8 img +12 btn   +72  12 84 156 228 300  336 408 480  -->
+
+		<Widget type="ImageBox" skin="ImageBox" position="0 420 589 201">
+			<Property key="ImageTexture" value="stuntrally-logo.jpg"/>
+			<!-- <Property key="ImageCoord" value="0 0 1892 645"/> 2.933 -->
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
 
 		<Widget type="ImageBox" skin="ImageBox" position="32 92 56 56">
 			<Property key="ImageCoord" value="256 0 128 128"/>
@@ -86,7 +92,7 @@
 
 <!-- 0 pan +8 img +12 btn   +72  12 84 156 228 300  336 408 480 -->
 
-	<Widget type="Window" skin="WindowC" position="1768 156 600 620" align="Center" layer="Overlapped" name="RaceMenuWnd">
+	<Widget type="Window" skin="WindowC" position="1768 156 600 650" align="Center" layer="Overlapped" name="RaceMenuWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="Caption" value="#{NewGame}"/>
 		<Property key="Alpha" value="0.7"/>
