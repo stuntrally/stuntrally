@@ -22,7 +22,7 @@ class Scene;  class SplineRoad;  class GAME;  class CHud;  class CData;
 class CGuiCom;  class CarInfo;  class GuiPopup;
 
 
-//  tracks,cars list items - with info for sorting
+//  cars list items - with info for sorting
 struct CarL
 {
 	std::string name;
@@ -35,9 +35,9 @@ class CGui : public BGui,
 			 public ICS::DetectingBindingListener
 {
 public:
-	App* app;  GAME* pGame;  SETTINGS* pSet;
-	Scene* sc;  CData* data;
-	CHud* hud;  MyGUI::Gui* mGui;  CGuiCom* gcom;
+	App* app =0;  GAME* pGame =0;  SETTINGS* pSet =0;
+	Scene* sc =0;  CData* data =0;
+	CHud* hud =0;  MyGUI::Gui* mGui =0;  CGuiCom* gcom =0;
 	
 	CGui(App* ap1);
 	~CGui();
@@ -56,11 +56,11 @@ public:
 	///  Gui
 	///-----------------------------------------------------------------------------------------------------------------
 
-	bool bGI;  // gui inited  set values
+	bool bGI =0;  // gui inited  set values
 	void InitGui(), GuiUpdate();
 	void UpdGuiAfterPreset();
 
-	Txt valTrkNet;
+	Txt valTrkNet =0;
 	std::vector<Tab> vSubTabsGame, vSubTabsOpts;
 
 	//  car list
@@ -75,15 +75,16 @@ public:
 	//  util
 	void toggleGui(bool toggle=true);
 	void GuiShortcut(EMenu menu, int tab, int subtab=-1);
-	bool loadReadme;  void FillHelpTxt();
+	bool loadReadme = 1;  void FillHelpTxt();
 	
 
 	//  hints
-	const int iHints;  int iHintCur;  void UpdHint();
+	const int iHints = 20;  int iHintCur = 0;  void UpdHint();
 	Ck ckShowWelcome;
-	Ed edHintTitle, edHintText;
+	Ed edHintTitle =0, edHintText =0;
 	void btnHintPrev(WP), btnHintNext(WP);
 	void btnHintScreen(WP), btnHintInput(WP), btnHintClose(WP);
+	void btnHowToBack(WP), btnLesson(WP);
 
 
 	///  [Input] tab
@@ -126,16 +127,16 @@ public:
 	enum EBind {  B_Done=0, B_First, B_Second  };
 	void UpdateInputButton(Btn button, const InputAction& action, EBind bind = B_Done);
 
-	InputAction* mBindingAction;
-	Btn mBindingSender;
+	InputAction* mBindingAction =0;
+	Btn mBindingSender =0;
 
 	virtual void notifyInputActionBound(bool complete);
 	bool actionIsActive(std::string, std::string);
 
 	//  input gui
-	Tab tabInput;  void tabInputChg(Tab, size_t);
-	Txt txtInpDetail;  WP panInputDetail;  Btn chOneAxis;
-	Ed edInputIncrease;
+	Tab tabInput =0;  void tabInputChg(Tab, size_t);
+	Txt txtInpDetail =0;  WP panInputDetail =0;  Btn chOneAxis =0;
+	Ed edInputIncrease =0;
 
 	void editInput(Ed), btnInputInv(WP), chkOneAxis(WP);
 	void comboInputKeyAllPreset(CMB);
@@ -145,22 +146,22 @@ public:
 
 	///  [Tweak]  -----------------------------------------
 	const static int ciEdCar = 12;
-	Ed edCar[ciEdCar],edPerfTest, edTweakCol;
-	Txt txtTweakPath, txtTweakTire, txtTweakPathCol;
+	Ed edCar[ciEdCar] ={0,}, edPerfTest =0, edTweakCol =0;
+	Txt txtTweakPath =0, txtTweakTire =0, txtTweakPathCol;
 
-	Tab tabTweak, tabEdCar;
+	Tab tabTweak =0, tabEdCar =0;
 	void tabCarEdChng(Tab, size_t), tabTweakChng(Tab, size_t);
 
 	///  tire
-	Ed edTweakTireSet;  void editTweakTireSet(Ed);
-	Li liTwkTiresUser, liTwkTiresOrig;
+	Ed edTweakTireSet =0;  void editTweakTireSet(Ed);
+	Li liTwkTiresUser =0, liTwkTiresOrig =0;
 	void listTwkTiresUser(Li, size_t), listTwkTiresOrig(Li, size_t);
 	void btnTweakTireLoad(WP), btnTweakTireReset(WP), btnTweakTireDelete(WP);
 	void FillTweakLists();  Ogre::String sTireLoad;
 	
 	///  surface
-	Li liTwkSurfaces;  void listTwkSurfaces(Li, size_t);
-	int idTwkSurf;  void btnTwkSurfPick(WP), updSld_TwkSurf(int id);
+	Li liTwkSurfaces =0;  void listTwkSurfaces(Li, size_t);
+	int idTwkSurf = -1;  void btnTwkSurfPick(WP), updSld_TwkSurf(int id);
 	SV svSuFrict, svSuFrictX, svSuFrictY, svSuRollDrag, svSuRollRes;
 	SV svSuBumpWave, svSuBumpAmp, svSuBumpWave2, svSuBumpAmp2;
 	Cmb cmbSurfTire, cmbSurfType;  void comboSurfTire(CMB), comboSurfType(CMB);
@@ -180,7 +181,7 @@ public:
 		std::string carname, bool forceOrig=false);
 
 	//  graphs
-	Cmb cmbGraphs;  void comboGraphs(CMB);  Txt valGraphsType;
+	Cmb cmbGraphs =0;  void comboGraphs(CMB);  Txt valGraphsType =0;
 
 
 	///  [Options]  game only
@@ -271,14 +272,14 @@ public:
 
 
 	///  Car 3d view  ---
-	CarModel* viewCar;
+	CarModel* viewCar =0;
 	Can viewCanvas;
-	wraps::RenderBoxScene* viewBox;  Ogre::Vector3 viewSc;
+	wraps::RenderBoxScene* viewBox =0;  Ogre::Vector3 viewSc;
 	MyGUI::IntCoord GetViewSize();
 	void InitCarPrv();
 	
-	WP graphV, graphS;
-	MyGUI::PolygonalSkin* graphVel,*graphVGrid, *graphSSS,*graphSGrid;
+	WP graphV =0, graphS =0;
+	MyGUI::PolygonalSkin* graphVel =0,*graphVGrid =0, *graphSSS =0,*graphSGrid =0;
 
 
 	///  [Car] color  --===---
@@ -292,11 +293,11 @@ public:
 	//  [Setup] car
 	Ck ckCarGear, ckCarRear, ckCarRearInv;  void chkGear(Ck*);
 	Ck ckAbs, ckTcs;
-	Btn bchAbs,bchTcs;
+	Btn bchAbs =0, bchTcs =0;
 	void chkAbs(WP), chkTcs(WP);
 
 	//  gui car tire set gravel/asphalt
-	int iTireSet;
+	int iTireSet = 0;
 	void tabTireSet(Tab, size_t);
 	void SldUpd_TireSet();
 
@@ -307,13 +308,13 @@ public:
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);  Img imgCarClr =0;
 	
 	//  radios
-	Btn bRkmh, bRmph;  // km/h, mph
+	Btn bRkmh =0, bRmph =0;  // km/h, mph
 	void radKmh(WP), radMph(WP);
 
-	Btn bRsimEasy, bRsimNorm, bRsimHard;  // sim mode
+	Btn bRsimEasy =0, bRsimNorm =0, bRsimHard =0;  // sim mode
 	void radSimEasy(WP), radSimNorm(WP), radSimHard(WP);
 	void setSimMode(std::string mode);
-	bool bReloadSim;
+	bool bReloadSim = 1;
 
 	//  [Game] setup
 	Ck ckVegetCollis, ckCarCollis, ckRoadWCollis, ckDynamicObjs;
@@ -323,22 +324,23 @@ public:
 
 
 	///  [Replay]  -----------------------------
-	Li rplList;
+	Li rplList =0;
 	void listRplChng(Li, size_t);
 	void updReplaysList();
 
 	//  cur rpl stats gui
-	Txt valRplName, valRplInfo,
-		valRplName2,valRplInfo2;
+	Txt valRplName =0, valRplInfo =0,
+		valRplName2 =0,valRplInfo2 =0;
 	
 	//  controls percent and time info
-	Txt valRplPerc, valRplCur, valRplLen;
+	Txt valRplPerc =0, valRplCur =0, valRplLen =0;
 
 	//  gui save
-	Ed edRplName, edRplDesc;
+	Ed edRplName =0, edRplDesc =0;
 	Ogre::String getRplName();
-	void btnRplLoad(WP), btnRplSave(WP);
+	void btnRplLoad(WP), btnRplSave(WP), btnRplLoadFile(std::string file);
 	void btnRplDelete(WP), btnRplRename(WP);
+	bool bLesson =0;
 	
 	//  chk, options
 	Ck ckRplAutoRec, ckRplBestOnly, ckRplGhost, ckRplParticles;
@@ -346,15 +348,15 @@ public:
 	SV svGhoHideDist, svGhoHideDistTrk;
 
 	//  list filtering
-	Btn rbRplCur, rbRplAll;  // radio
+	Btn rbRplCur =0, rbRplAll =0;  // radio
 	void btnRplCur(WP),btnRplAll(WP);
 	CK(RplGhosts);
 	void edRplFind(Ed);  Ogre::String sRplFind;
 
 	//  controls bar buttons
-	Btn btRplPl;  void UpdRplPlayBtn();
-	Sl slRplPos;  void slRplPosEv(SL);
-	bool bRplBack, bRplFwd;
+	Btn btRplPl =0;  void UpdRplPlayBtn();
+	Sl slRplPos =0;  void slRplPosEv(SL);
+	bool bRplBack =0, bRplFwd =0;
 	void btnRplToStart(WP),btnRplToEnd(WP), btnRplPlay(WP);
 	void btnRplBackDn(WP,int,int,MyGUI::MouseButton), btnRplBackUp(WP,int,int,MyGUI::MouseButton);
 	void btnRplFwdDn(WP,int,int, MyGUI::MouseButton), btnRplFwdUp(WP,int,int, MyGUI::MouseButton);
@@ -363,20 +365,20 @@ public:
 
 	//  Game
 	///---------------------------------------
-	Btn btNewGameCar;
+	Btn btNewGameCar =0;
 	void btnNewGame(WP), btnNewGameStart(WP);
 
 	//  split
 	void btnNumPlayers(WP);
-	Txt valLocPlayers;
+	Txt valLocPlayers =0;
 	Ck ckSplitVert;
 	void chkStartOrd(WP);
 
 	//  [Car] list
-	int iCurCar;  // current
+	int iCurCar = 0;  // current
 	Ogre::String sListCar;
 
-	Mli2 carList;
+	Mli2 carList =0;
 	void listCarChng(Mli2, size_t);
 	void btnCarView1(WP), btnCarView2(WP);
 
@@ -386,16 +388,16 @@ public:
 	const static int iCarSt = 10;
 	Img barCarSt[iCarSt];
 	Txt txCarStTxt[iCarSt], txCarStVals[iCarSt],
-		txCarSpeed, txCarType, txCarYear,
-		txCarRating, txCarDiff, txCarWidth,
-		txCarAuthor,txTrackAuthor;
-	Img barCarSpeed;
-	Tab tbPlr,tbPlr2;
+		txCarSpeed =0, txCarType =0, txCarYear =0,
+		txCarRating =0, txCarDiff =0, txCarWidth =0,
+		txCarAuthor =0, txTrackAuthor =0;
+	Img barCarSpeed =0;
+	Tab tbPlr =0, tbPlr2 =0;
 	void UpdCarStats(bool car);
 	std::vector<Ogre::String> vsu; //CarStatsUnits
 
-	Img imgCar;  Ed carDesc;
-	Cmb cmbBoost, cmbFlip, cmbDamage, cmbRewind;
+	Img imgCar =0;  Ed carDesc =0;
+	Cmb cmbBoost =0, cmbFlip =0, cmbDamage =0, cmbRewind =0;
 	void comboBoost(CMB), comboFlip(CMB), comboDamage(CMB), comboRewind(CMB);
 
 
@@ -410,24 +412,27 @@ public:
 
 	///  championships & challenges
 	///-----------------------------------------------------------------------------------------------------------------
-	Btn btStTut, btStChamp, btStChall;
-	Img imgTut, imgChamp, imgChall;
+	Btn btStTut =0, btStChamp =0, btStChall =0;
+	Img imgTut =0, imgChamp =0, imgChall =0;
 	//  tabs
-	Tab tabTut, tabChamp, tabChall;
+	Tab tabTut =0, tabChamp =0, tabChall =0;
+	
 	void tabTutType(Tab, size_t), tabChampType(Tab, size_t);
 	void tabChallType(Tab, size_t);
 
 	//  stages
-	Ed edChInfo, edChDesc;  WP panCh;
-	Txt txtCh, valCh, txtChP[3], valChP[3];  // stages info, pass/progress
-	void btnStageNext(WP), btnStagePrev(WP);  Txt valStageNum;
+	Ed edChInfo =0, edChDesc =0;  WP panCh =0;
+	Txt txtCh =0, valCh =0, txtChP[3] ={0,0,0}, valChP[3] ={0,0,0};  // stages info, pass/progress
+	
+	void btnStageNext(WP), btnStagePrev(WP);  Txt valStageNum =0;
 	void StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress);
 	
 	//  xml  [1]= reversed  L= challenge
 	ProgressXml progress[2];
 	ProgressLXml progressL[2];
+	
 	void ProgressSave(bool upgGui=true), ProgressLSave(bool upgGui=true);
-	Chall* pChall;  // current challenge or 0 if not
+	Chall* pChall =0;  // current challenge or 0 if not
 
 	//  load
 	void Ch_XmlLoad(), Ch_LoadEnd();
@@ -437,20 +442,20 @@ public:
 	const static int ciAddPos[3];  const static float cfSubPoints[3];
 	
 	//  common
-	Mli2 liStages, liNetEnd;  void listStageChng(Mli2, size_t);
-	Mli2 liChamps;  void listChampChng(Mli2, size_t);
-	Mli2 liChalls;  void listChallChng(Mli2, size_t);
+	Mli2 liStages =0, liNetEnd =0;  void listStageChng(Mli2, size_t);
+	Mli2 liChamps =0;  void listChampChng(Mli2, size_t);
+	Mli2 liChalls =0;  void listChallChng(Mli2, size_t);
 
 	void btnChampStart(WP), btnChampEndClose(WP), btnChampStageBack(WP), btnChampStageStart(WP);
 	void btnChallStart(WP), btnChallEndClose(WP), btnChallStageBack(WP), btnChallStageStart(WP);
-	void btnChRestart(WP);  Btn btChRestart;
+	void btnChRestart(WP);  Btn btChRestart =0;
 
-	Btn btChampStage, btChallStage;
-	Ed edChampStage, edChampEnd;  Img imgChampStage, imgChampEndCup;
-	Ed edChallStage, edChallEnd;  Img imgChallStage;
-	Img imgChallFail, imgChallCup;
-	Txt txChallEndC, txChallEndF, txChampEndF;
-	int iChSnd;  // snd id to play
+	Btn btChampStage =0, btChallStage =0;
+	Ed edChampStage =0, edChampEnd =0;  Img imgChampStage =0, imgChampEndCup =0;
+	Ed edChallStage =0, edChallEnd =0;  Img imgChallStage =0;
+	Img imgChallFail =0, imgChallCup =0;
+	Txt txChallEndC =0, txChallEndF =0, txChampEndF =0;
+	int iChSnd = 0;  // snd id to play
 
 	//  main
 	void ChampsListUpdate(), ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
@@ -492,36 +497,36 @@ public:
 	protocol::GameInfo netGameInfo;
 
 	///  multiplayer gui  --------------------
-	Tab tabsNet;
-	WP  panNetServer,panNetServer2, panNetGame, panNetTrack;
-	Mli listServers, listPlayers;
-	int iColLock, iColHost, iColPort;  // ids of columns in listServers
+	Tab tabsNet =0;
+	WP  panNetServer =0,panNetServer2 =0, panNetGame =0, panNetTrack =0;
+	Mli listServers =0, listPlayers =0;
+	int iColLock =0, iColHost =0, iColPort =0;  // ids of columns in listServers
 
 	//  upd gui triggers
-	bool bRebuildPlayerList, bRebuildGameList;
-	bool bUpdateGameInfo, bUpdChat;
-	bool bStartGame, bStartedGame;
+	bool bRebuildPlayerList =0, bRebuildGameList =0;
+	bool bUpdateGameInfo =0, bUpdChat =0;
+	bool bStartGame =0, bStartedGame =0;
 	void UpdGuiNetw();
 
 	//  chat,msg  ----
-	Ed edNetChat;  // chat area, set text through sChatBuffer
-	MyGUI::UString sChatBuffer,sChatLast1,sChatLast2;  int iChatMove;
+	Ed edNetChat =0;  // chat area, set text through sChatBuffer
+	MyGUI::UString sChatBuffer,sChatLast1,sChatLast2;  int iChatMove = 0;
 	void AddChatMsg(const MyGUI::UString& clr, const MyGUI::UString& msg, bool add=true);
 
-	Ed edNetChatMsg;
-	Btn btnNetSendMsg;  void chatSendMsg();
-	GuiPopup* popup;  // msg with edits
+	Ed edNetChatMsg =0;
+	Btn btnNetSendMsg =0;  void chatSendMsg();
+	GuiPopup* popup =0;  // msg with edits
 
 	//  Net gui
-	Btn btnNetRefresh, btnNetJoin;    void evBtnNetRefresh(WP), evBtnNetJoin(WP),   evBtnNetJoinLockedClose();
-	Btn btnNetCreate,  btnNetDirect;  void evBtnNetCreate(WP),  evBtnNetDirect(WP), evBtnNetDirectClose();
-	Btn btnNetReady,   btnNetLeave;	  void evBtnNetReady(WP),   evBtnNetLeave(WP);
+	Btn btnNetRefresh =0, btnNetJoin =0;    void evBtnNetRefresh(WP), evBtnNetJoin(WP),   evBtnNetJoinLockedClose();
+	Btn btnNetCreate =0,  btnNetDirect =0;  void evBtnNetCreate(WP),  evBtnNetDirect(WP), evBtnNetDirectClose();
+	Btn btnNetReady =0,   btnNetLeave =0;   void evBtnNetReady(WP),   evBtnNetLeave(WP);
 	void btnNetEndClose(WP);
 
-	Txt valNetGameInfo, valNetPassword;
-	Ed edNetGameName,   edNetPassword;   void evEdNetGameName(Ed),   evEdNetPassword(Ed);
-	Ed edNetNick,       edNetLocalPort;  void evEdNetNick(Ed),       evEdNetLocalPort(Ed);
-	Ed edNetServerPort, edNetServerIP;   void evEdNetServerPort(Ed), evEdNetServerIP(Ed);
+	Txt valNetGameInfo =0, valNetPassword =0;
+	Ed edNetGameName =0,   edNetPassword =0;   void evEdNetGameName(Ed),   evEdNetPassword(Ed);
+	Ed edNetNick =0,       edNetLocalPort =0;  void evEdNetNick(Ed),       evEdNetLocalPort(Ed);
+	Ed edNetServerPort =0, edNetServerIP =0;   void evEdNetServerPort(Ed), evEdNetServerIP(Ed);
 
 	//  open urls
 	void btnWelcome(WP), btnWebsite(WP), btnWiki(WP);

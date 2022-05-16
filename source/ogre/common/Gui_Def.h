@@ -137,7 +137,7 @@ public:
 
 //  declare slider event and its text
 #define SL   Sl wp, float val
-#define SLV(name)  void sl##name(SL);  Txt val##name;
+#define SLV(name)  void sl##name(SL);  Txt val##name =0;
 
 //  slider  //old
 #define Slv(name, vset)  \
