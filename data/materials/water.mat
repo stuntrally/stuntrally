@@ -30,7 +30,7 @@ material Water
     specColourAndPower 1.0 1.0 1.0  32
 
     //  waves anim speed
-    speed 1.0
+    speed 1.0 1.0
     //  wave normal texture
     WaterNormalMap water_nm.png
     WaterDepthMap waterDepth.png
@@ -137,7 +137,7 @@ material Water_blue   // I3-Islands  J13-Tropic
 
     specColourAndPower 1.0 1.0 1.0  32
     bump2SpecPowerMul 6.0 12 0.4
-    speed 1.0
+    speed 1.0 1.0
 }
 
 material Water_cyan   // G2-Coast
@@ -155,7 +155,7 @@ material Water_cyan   // G2-Coast
 
 	specColourAndPower 0.99 1.0 1.0  32
     bump2SpecPowerMul 6.0 12 0.4
-    speed 1.0
+    speed 1.0 1.0
 }
 
 material Water_green   // J11-Temple
@@ -173,7 +173,7 @@ material Water_green   // J11-Temple
 	specColourAndPower 0.43 0.53 0.42  256
 
     bump2SpecPowerMul 8.0 4 0.15
-    speed 1.0
+    speed 1.0 1.0
 }
 
 material Water_moss   // O2-Mouse
@@ -192,7 +192,7 @@ material Water_moss   // O2-Mouse
 
 	specColourAndPower 0.66 0.78 0.88  62
     bump2SpecPowerMul 6.0 12 0.4
-    speed 1.0
+    speed 1.0 1.0
 }
 
 
@@ -211,7 +211,7 @@ material Water_white   // W2-Wet
 	specColourAndPower 0.98 1.0 1.0  64
 
     bump2SpecPowerMul 6.0 16 0.8
-    speed 1.0
+    speed 1.0 1.0
 }
 
 material Water_sunset   // I4-Sunset
@@ -229,7 +229,7 @@ material Water_sunset   // I4-Sunset
 	specColourAndPower 1.0 0.84 0.3  64
 
     bump2SpecPowerMul 6.0 16 0.8
-    speed 1.0
+    speed 1.0 1.0
 }
 
 material Water_sunset_cyan   // I13-Beauty
@@ -247,7 +247,7 @@ material Water_sunset_cyan   // I13-Beauty
 	specColourAndPower 1.0 0.84 0.3  32
 
     bump2SpecPowerMul 6.0 36 0.9
-    speed 1.0
+    speed 1.0 1.0
 }
 
 material Water_shore   // I5-Shore
@@ -265,7 +265,7 @@ material Water_shore   // I5-Shore
 	specColourAndPower 0.8 0.8 0.9  16
 
     bump2SpecPowerMul 6.0 12 0.4
-    speed 1.0
+    speed 1.0 1.0
 }
 
 material Water_dark   // V1-Dark
@@ -283,7 +283,7 @@ material Water_dark   // V1-Dark
 	specColourAndPower 1.0 0.8 0.3  96
 
     bump2SpecPowerMul 6.0 12 0.4
-    speed 1.0
+    speed 1.0 1.0
 }
 
 material Water_blue_dark   // E1
@@ -306,7 +306,7 @@ material Water_blue_dark   // E1
 
 	specColourAndPower 0.66 0.78 0.88  62
     bump2SpecPowerMul 2.0 12 0.4
-    speed 1.0
+    speed 1.0 1.0
 }
 
 //material Water_blue_dark   // E1
@@ -325,7 +325,7 @@ material Water_blue_dark   // E1
 //	specColourAndPower 0.535 0.613 0.66  24
 //
 //    bump2SpecPowerMul 2.0 3 0.4
-//    speed 1.0
+//    speed 1.0 1.0
 //}
 
 
@@ -345,7 +345,7 @@ material Grease_jelly   // X1-Magic
 	specColourAndPower 1.0 1.0 1.0  64
 
     bump2SpecPowerMul 6.0 12 0.4
-    speed 0.1
+    speed 0.1 1.0
 }
 
 material Blue_jelly
@@ -364,7 +364,7 @@ material Blue_jelly
 	specColourAndPower 1.0 1.0 1.0 64
 
 	bump2SpecPowerMul 12.0 12 0.4
-	speed 0.05
+	speed 0.05 1.0
 }
 
 material Acid_green   // green acid
@@ -382,7 +382,7 @@ material Acid_green   // green acid
 	specColourAndPower 0.33 0.38 0.33  256
 
     bump2SpecPowerMul 128.0 2.0 1.3
-    speed 0.8
+    speed 0.8 1.0
 }
 
 material Ice   // solid
@@ -400,7 +400,7 @@ material Ice   // solid
 	specColourAndPower 0.75 0.78 0.8  256
 
     bump2SpecPowerMul 128.0 2.0 1.3
-    speed 0.0
+    speed 0.0 1.0
 }
 material Ice_cyan   // solid
 {
@@ -417,7 +417,7 @@ material Ice_cyan   // solid
 	specColourAndPower 0.75 0.78 0.8  256
 
     bump2SpecPowerMul 128.0 2.0 1.3
-    speed 0.0
+    speed 0.0 1.0
 }
 
 material LavaOrn   // lava dense fluid
@@ -435,7 +435,7 @@ material LavaOrn   // lava dense fluid
 	specColourAndPower 1.0 0.70 0.44  256
 
     bump2SpecPowerMul 12.86 1.0 1.03
-    speed 0.478
+    speed 0.478 1.0
 }
 material LavaBlk   // lava solid
 {
@@ -452,7 +452,7 @@ material LavaBlk   // lava solid
 	specColourAndPower 1.5 0.75 0.30  256
 
     bump2SpecPowerMul 72.0 2.0 1.0
-    speed 0.15
+    speed 0.15 1.0
 }
 
 
@@ -474,7 +474,7 @@ material Mud_orange
 	specColourAndPower 0.33 0.25 0.2  16
 
     bump2SpecPowerMul 16.0 8 0.3
-    speed 0.03
+    speed 0.03 1.0
 }
 
 material Mud_brown
@@ -493,7 +493,7 @@ material Mud_brown
 	specColourAndPower 0.26 0.22 0.14  32
 
     bump2SpecPowerMul 16.0 2.0 0.9
-    speed 0.01
+    speed 0.01 1.0
 }
 
 material Mud_dark
@@ -512,7 +512,7 @@ material Mud_dark
     specColourAndPower 0.31 0.27 0.18  64
 
     bump2SpecPowerMul 12.0 2.0 0.4
-    speed 0.001
+    speed 0.001 1.0
 }
 
 //  Mud  Jungle Dark
@@ -533,7 +533,7 @@ material Mud_orange_JD
 	specColourAndPower 0.41 0.33 0.16  16
 
     bump2SpecPowerMul 16.0 5 0.85
-    speed 0.03
+    speed 0.03 1.0
 }
 
 material Mud_brown_JD
@@ -552,7 +552,7 @@ material Mud_brown_JD
 	specColourAndPower 0.238 0.266 0.063  32
 
     bump2SpecPowerMul 16.0 2.0 0.9
-    speed 0.01
+    speed 0.01 1.0
 }
 
 material Mud_dark_JD
@@ -571,7 +571,7 @@ material Mud_dark_JD
     specColourAndPower 0.283 0.30 0.18  64
 
     bump2SpecPowerMul 12.0 2.0 0.4
-    speed 0.001
+    speed 0.001 1.0
 }
 
 
@@ -582,7 +582,7 @@ material River_blue   // I3-Islands  J13-Tropic
     parent Water_blue
     WaterDepthMap roadAlpha.png
 	alphaMap HmapTex
-    speed 4.0
+    speed -15.0 -0.5
 }
 
 material River_cyan  // G2-Coast
@@ -590,7 +590,7 @@ material River_cyan  // G2-Coast
     parent Water_cyan
     WaterDepthMap roadAlpha.png
 	alphaMap HmapTex
-    speed 2.0
+    speed -12.0 -0.2
 }
 
 material River_green   // J11-Temple
@@ -598,7 +598,7 @@ material River_green   // J11-Temple
     parent Water_green
     WaterDepthMap roadAlpha.png
 	alphaMap HmapTex
-    speed 3.0
+    speed -3.0 -1.0
 }
 
 material River_moss   // O2-Mouse
@@ -606,7 +606,7 @@ material River_moss   // O2-Mouse
     parent Water_moss
     WaterDepthMap roadAlpha.png
 	alphaMap HmapTex
-    speed 3.0
+    speed -3.0 -1.0
 }
 
 material River_white   // W2-Wet
@@ -614,7 +614,7 @@ material River_white   // W2-Wet
     parent Water_white
     WaterDepthMap white.png
 	alphaMap HmapTex
-    speed 3.0
+    speed -3.0 -1.0
 }
 
 material River_sunset   // I4-Sunset
@@ -622,7 +622,7 @@ material River_sunset   // I4-Sunset
     parent Water_sunset
     WaterDepthMap white.png
 	alphaMap HmapTex
-    speed 3.0
+    speed -3.0 -1.0
 }
 
 material River_sunset_cyan   // I13-Beauty
@@ -630,7 +630,7 @@ material River_sunset_cyan   // I13-Beauty
     parent Water_sunset_cyan
     WaterDepthMap white.png
 	alphaMap HmapTex
-    speed 3.0
+    speed -3.0 -1.0
 }
 
 material River_shore   // I5-Shore
@@ -638,7 +638,7 @@ material River_shore   // I5-Shore
     parent Water_shore
     WaterDepthMap white.png
 	alphaMap HmapTex
-    speed 3.0
+    speed -3.0 -1.0
 }
 
 material River_dark   // V1-Dark
@@ -646,7 +646,7 @@ material River_dark   // V1-Dark
     parent Water_dark
     WaterDepthMap white.png
 	alphaMap HmapTex
-    speed 3.0
+    speed -3.0 -1.0
 }
 
 material River_blue_dark   // E1
@@ -654,7 +654,7 @@ material River_blue_dark   // E1
     parent Water_blue_dark
     WaterDepthMap white.png
 	alphaMap HmapTex
-    speed 3.0
+    speed -3.0 -1.0
 }
 
 material River_Grease_jelly   // X1-Magic
@@ -662,7 +662,7 @@ material River_Grease_jelly   // X1-Magic
     parent Grease_jelly
     WaterDepthMap white.png
 	alphaMap HmapTex
-    speed 3.1
+    speed -3.1 -1.0
 }
 
 material River_Blue_jelly
@@ -670,7 +670,7 @@ material River_Blue_jelly
 	parent Blue_jelly
     WaterDepthMap white.png
 	alphaMap HmapTex
-	speed 3.05
+	speed -3.05 -1.0
 }
 
 material River_Acid_green   // green acid
@@ -678,7 +678,7 @@ material River_Acid_green   // green acid
     parent Acid_green
     WaterDepthMap white.png
 	alphaMap HmapTex
-    speed 3.8
+    speed -3.8 -1.0
 }
 
 material River_Ice   // solid
@@ -687,14 +687,14 @@ material River_Ice   // solid
     WaterDepthMap white.png
 	alphaMap HmapTex
     colour 0.8 0.94 0.95  0.0
-    speed 3.0
+    speed -3.0 -1.0
 }
 material River_Ice_cyan   // solid
 {
     parent Ice_cyan
     WaterDepthMap white.png
 	alphaMap HmapTex
-    speed 3.0
+    speed -3.0 -1.0
 }
 
 material River_LavaOrn   // lava dense fluid
@@ -702,12 +702,12 @@ material River_LavaOrn   // lava dense fluid
     parent LavaOrn
     WaterDepthMap white.png
 	alphaMap HmapTex
-    speed 0.478
+    speed -0.478 -1.0
 }
 material River_LavaBlk   // lava solid
 {
     parent LavaBlk
     WaterDepthMap white.png
 	alphaMap HmapTex
-    speed 0.15
+    speed -0.15 -1.0
 }

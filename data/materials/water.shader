@@ -165,7 +165,7 @@
 		shSampler2D(depthMap)
 		
 		shUniform(float3, windDir_windSpeed)  @shSharedParameter(windDir_windSpeed)
-		shUniform(float, speed)  @shUniformProperty1f(speed, speed)
+		shUniform(float2, speed)  @shUniformProperty2f(speed, speed)
 		#define WIND_SPEED  windDir_windSpeed.z
 		#define WIND_DIR  windDir_windSpeed.xy
 		
@@ -254,7 +254,7 @@
 #endif
 		
 		// no need to render below terrain
-		if (depthTex.x == 0)
+		if (depthTex.x == 0.0)
 		 	discard;
 
 		float2 screenCoords = screenCoordsPassthrough.xy / screenCoordsPassthrough.z;
@@ -262,7 +262,29 @@
 
 
 		float2 nCoord = float2(0,0);
-	  	float timer = waterTimer * speed;
+#if 0
+	  	float3 timer = speed.x < 0 ? float3(speed.x, speed.x, 1.0) : float3(speed.x, speed.y, 0.01);
+		timer *= waterTimer;
+	  	
+		nCoord = UV * (WAVE_SCALE * 0.05)+ WIND_DIR * timer.x * (WIND_SPEED*0.04);											
+		float3 normal0 = 2.0 * shSample(normalMap, nCoord + float2(-timer.z * timer.x*0.015,-timer.x*0.005)).rgb - 1.0;
+
+		nCoord = UV * (WAVE_SCALE * 0.1) + WIND_DIR * timer.x * (WIND_SPEED*0.08)-(normal0.xy/normal0.zz)*WAVE_CHOPPYNESS;
+		float3 normal1 = 2.0 * shSample(normalMap, nCoord + float2( timer.z * timer.y*0.020, timer.y*0.015)).rgb - 1.0;
+
+		nCoord = UV * (WAVE_SCALE * 0.25)+ WIND_DIR * timer.x * (WIND_SPEED*0.07)-(normal1.xy/normal1.zz)*WAVE_CHOPPYNESS;
+		float3 normal2 = 2.0 * shSample(normalMap, nCoord + float2(-timer.z * timer.x*0.04, -timer.x*0.03)).rgb - 1.0;
+
+		nCoord = UV * (WAVE_SCALE * 0.5) + WIND_DIR * timer.x * (WIND_SPEED*0.09)-(normal2.xy/normal2.zz)*WAVE_CHOPPYNESS;
+		float3 normal3 = 2.0 * shSample(normalMap, nCoord + float2( timer.z * timer.y*0.03,  timer.y*0.04)).rgb - 1.0;
+
+		nCoord = UV * (WAVE_SCALE * 1.0) + WIND_DIR * timer.x * (WIND_SPEED*0.4)-(normal3.xy/normal3.zz)*WAVE_CHOPPYNESS;
+		float3 normal4 = 2.0 * shSample(normalMap, nCoord + float2(-timer.z * timer.x*0.02,  timer.y*0.10)).rgb - 1.0;
+
+		nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer.x * (WIND_SPEED*0.7)-(normal4.xy/normal4.zz)*WAVE_CHOPPYNESS;
+		float3 normal5 = 2.0 * shSample(normalMap, nCoord + float2( timer.z * timer.y*0.10, -timer.x*0.06)).rgb - 1.0;
+#else
+	  	float timer = waterTimer * speed.x;
 	  	
 nCoord = UV * (WAVE_SCALE * 0.05)+ WIND_DIR * timer * (WIND_SPEED*0.04);											float3 normal0 = 2.0 * shSample(normalMap, nCoord + float2(-timer*0.015,-timer*0.005)).rgb - 1.0;
 nCoord = UV * (WAVE_SCALE * 0.1) + WIND_DIR * timer * (WIND_SPEED*0.08)-(normal0.xy/normal0.zz)*WAVE_CHOPPYNESS;	float3 normal1 = 2.0 * shSample(normalMap, nCoord + float2(+timer*0.020,+timer*0.015)).rgb - 1.0;
@@ -270,8 +292,8 @@ nCoord = UV * (WAVE_SCALE * 0.25)+ WIND_DIR * timer * (WIND_SPEED*0.07)-(normal1
 nCoord = UV * (WAVE_SCALE * 0.5) + WIND_DIR * timer * (WIND_SPEED*0.09)-(normal2.xy/normal2.zz)*WAVE_CHOPPYNESS;	float3 normal3 = 2.0 * shSample(normalMap, nCoord + float2(+timer*0.03,+timer*0.04)).rgb - 1.0;
 nCoord = UV * (WAVE_SCALE * 1.0) + WIND_DIR * timer * (WIND_SPEED*0.4)-(normal3.xy/normal3.zz)*WAVE_CHOPPYNESS;		float3 normal4 = 2.0 * shSample(normalMap, nCoord + float2(-timer*0.02,+timer*0.1)).rgb - 1.0;
 nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.xy/normal4.zz)*WAVE_CHOPPYNESS;		float3 normal5 = 2.0 * shSample(normalMap, nCoord + float2(+timer*0.1,-timer*0.06)).rgb - 1.0;
-		
 
+#endif
 		float3 normal = (normal0 * BIG_WAVES_X   + normal1 * BIG_WAVES_Y +
 						 normal2 * MID_WAVES_X   + normal3 * MID_WAVES_Y +
 						 normal4 * SMALL_WAVES_X + normal5 * SMALL_WAVES_Y).xzy;
@@ -290,7 +312,7 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 		float3 vVec = normalize(position.xyz - cameraPos.xyz);
 		
 		
-		float isUnderwater = (cameraPos.y > 0) ? 0.0 : 1.0;
+		float isUnderwater = (cameraPos.y > 0 || speed.x < 0.0) ? 0.0 : 1.0;  // speed - rivers no underwater
 
 	   
 		// sunlight scattering
@@ -336,7 +358,7 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 
 
 		//  fresnel
-		float ior = (cameraPos.y>0)?(1.333/1.0):(1.0/1.333); //air to water; water to air
+		float ior = (isUnderwater < 1.0) ? (1.333/1.0) : (1.0/1.333); //air to water; water to air
 		float fresnel = fresnel_dielectric(-vVec, normal, ior);
 		
 		fresnel = shSaturate(shSaturate(fresnel) * fresnelMultiplier);
@@ -347,13 +369,13 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 		#if SCREEN_REFLECTION
 			float3 reflection = reflectColour.rgb * shSample(reflectionMap, screenCoords+(normal.xz*REFL_BUMP)).rgb;
 		#else
-			float3 reflNormal = normalize(float3(normal.x * REFL_BUMP*6, normal.y, normal.z * REFL_BUMP*6));
+			float3 reflNormal = normalize(float3(normal.x * REFL_BUMP * 6, normal.y, normal.z * REFL_BUMP * 6));
 			//float3 reflNormal = normalize(float3(0, normal.y, 0));  //test
 			R = reflect(vVec, reflNormal);
 			const float PI = 3.1415926536f;
 			float2 refl2;
 			#if SH_GLSL
-				refl2.x = /*(refl.x == 0) ? 0 :*/ ( (R.z < 0.0) ? atan(-R.z, R.x) : (2*PI - atan(R.z, R.x)) );
+				refl2.x = /*(refl.x == 0) ? 0 :*/ ( (R.z < 0.0) ?  atan(-R.z, R.x) : (2*PI - atan(R.z, R.x)) );
 			#else
 				refl2.x = /*(refl.x == 0) ? 0 :*/ ( (R.z < 0.0) ? atan2(-R.z, R.x) : (2*PI - atan2(R.z, R.x)) );
 			#endif
@@ -372,7 +394,7 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 			refraction.g = shSample(refractionMap, (screenCoords-shoreFade*(normal.xz*REFR_BUMP))*1.0-(R.xy*ABBERATION)).g;
 			refraction.b = shSample(refractionMap, (screenCoords-shoreFade*(normal.xz*REFR_BUMP))*1.0-(R.xy*ABBERATION*2.0)).b;
 
-			 // brighten up the refraction underwater  why?
+			// brighten up the refraction underwater  why?
 			//refraction = (cameraPos.y < 0) ? shSaturate(refraction * 1.5) : refraction;
 		#endif
 	
@@ -421,13 +443,14 @@ nCoord = UV * (WAVE_SCALE * 2.0) + WIND_DIR * timer * (WIND_SPEED*0.7)-(normal4.
 			float3 waterSunColour = float3(0.0,1.0,0.85)*waterSunGradient * 0.5;
 		   
 			float waterGradient = dot(-vVec, float3(0.0,-1.0,0.0));
-			waterGradient = clamp((waterGradient*0.5+0.5),0.2,1.0);
-			float3 watercolour = (float3(0.0078, 0.5176, 0.700)+waterSunColour)*waterGradient*2.0;
+			waterGradient = clamp((waterGradient * 0.5 + 0.5), 0.2, 1.0);
+			float3 watercolour = (float3(0.0078, 0.5176, 0.700) + waterSunColour) * waterGradient*2.0;
 			float3 waterext = float3(0.6, 0.9, 1.0);  //water extinction
-			watercolour = shLerp( watercolour*0.3*waterSunFade_sunHeight.x, watercolour, shSaturate(1.0-exp(-waterSunFade_sunHeight.y*SUN_EXT)));
+			watercolour = shLerp( watercolour * 0.3 * waterSunFade_sunHeight.x, watercolour,
+								shSaturate(1.0 - exp(-waterSunFade_sunHeight.y * SUN_EXT)));
 		
 			float darkness = VISIBILITY*2.0;
-			darkness = clamp((cameraPos.y+darkness)/darkness,0.2,1.0);
+			darkness = clamp((cameraPos.y + darkness) / darkness, 0.2, 1.0);
 	
 		
 			float fog = shSaturate(length(cameraPos.xyz - position.xyz) / VISIBILITY);
