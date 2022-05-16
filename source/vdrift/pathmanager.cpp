@@ -168,13 +168,13 @@ void PATHMANAGER::Init(bool log_paths)
 		// TODO: Adding path from config file
 
 		//  Loop through the paths and pick the first one that contain some data
-		for (Paths::const_iterator p = dirs.begin(); p != dirs.end(); ++p)
+		for (auto d : dirs)
 		{	//  Data dir
-			if (fs::exists(*p / "hud"))
-				game_data = p->string();
+			if (fs::exists(d / "hud"))
+				game_data = d.string();
 			//  Config dir
-			if (fs::exists(*p / "config"))
-				game_config = (*p / "config").string();
+			if (fs::exists(d / "config"))
+				game_config = (d / "config").string();
 			//  Check if both are found
 			if (!game_data.empty() && !game_config.empty())  break;
 		}
@@ -185,10 +185,10 @@ void PATHMANAGER::Init(bool log_paths)
 	///--------------------------------------------------
 	list <string> li;
 	PATHMANAGER::DirList(PATHMANAGER::CarSim(), li);
-	for (list <string>::iterator i = li.begin(); i != li.end(); ++i)
+	for (auto d : li)
 	{
-		CreateDir(Records()+"/"+*i);
-		CreateDir(Ghosts()+"/"+*i);
+		CreateDir(Records()+"/"+d);
+		CreateDir(Ghosts()+"/"+d);
 	}
 
 	// Find cache dir
@@ -296,17 +296,17 @@ bool PATHMANAGER::DirList(string dirpath, strlist& dirlist, string extension)
 #endif
 //------End
 	
-	//remove non-matcthing extensions
+	// remove non-matcthing extensions
 	if (!extension.empty())
 	{
 		list <list <string>::iterator> todel;
-		for (list <string>::iterator i = dirlist.begin(); i != dirlist.end(); ++i)
+		for (auto i = dirlist.begin(); i != dirlist.end(); ++i)
 		{
 			if (i->find(extension) != i->length()-extension.length())
 				todel.push_back(i);
 		}
 		
-		for (list <list <string>::iterator>::iterator i = todel.begin(); i != todel.end(); ++i)
+		for (auto i = todel.begin(); i != todel.end(); ++i)
 			dirlist.erase(*i);
 	}
 	
@@ -314,34 +314,42 @@ bool PATHMANAGER::DirList(string dirpath, strlist& dirlist, string extension)
 	return true;
 }
 
-namespace {
+namespace
+{
 	/// Get the current executable name with path. Returns empty path if the name
 	/// cannot be found. May return absolute or relative paths.
-	#if defined(_WIN32)
+#if defined(_WIN32)
 	#include <windows.h>
-	fs::path execname() {
+	fs::path execname()
+	{
 		char buf[1024];
 		DWORD ret = GetModuleFileName(NULL, buf, sizeof(buf));
 		if (ret == 0 || ret == sizeof(buf)) return fs::path();
 		return buf;
 	}
-	#elif defined(__APPLE__)
+
+#elif defined(__APPLE__)
 	#include <mach-o/dyld.h>
-	fs::path execname() {
+	fs::path execname()
+	{
 		char buf[1024];
 		uint32_t size = sizeof(buf);
 		int ret = _NSGetExecutablePath(buf, &size);
 		if (ret != 0) return fs::path();
 		return buf;
 	}
-	#elif defined(sun) || defined(__sun)
+
+#elif defined(sun) || defined(__sun)
 	#include <stdlib.h>
-	fs::path execname() {
+	fs::path execname()
+	{
 		return getexecname();
 	}
-	#elif defined(__FreeBSD__)
+
+#elif defined(__FreeBSD__)
 	#include <sys/sysctl.h>
-	fs::path execname() {
+	fs::path execname()
+	{
 		int mib[4];
 		mib[0] = CTL_KERN;
 		mib[1] = KERN_PROC;
@@ -355,9 +363,11 @@ namespace {
 		buf[size] = '\0';
 		return buf;
 	}
-	#elif defined(__linux__)
+	
+#elif defined(__linux__)
 	#include <unistd.h>
-	fs::path execname() {
+	fs::path execname()
+	{
 		char buf[1024];
 		ssize_t maxchars = sizeof(buf) - 1;
 		ssize_t size = readlink("/proc/self/exe", buf, sizeof(buf));
@@ -365,9 +375,10 @@ namespace {
 		buf[size] = '\0';
 		return buf;
 	}
-	#else
-	fs::path execname() {
+#else
+	fs::path execname()
+	{
 		return fs::path();
 	}
-	#endif
+#endif
 }

@@ -175,24 +175,24 @@ void CARDYNAMICS::AlignWithGround()
 MATHVECTOR<Dbl,3> CARDYNAMICS::GetTotalAero() const
 {
 	MATHVECTOR<Dbl,3> downforce = 0;
-	for (std::vector <CARAERO>::const_iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
-		downforce = downforce + i->GetLiftVector() +  i->GetDragVector();
+	for (auto a : aerodynamics)
+		downforce = downforce + a.GetLiftVector() + a.GetDragVector();
 	return downforce;
 }
 
 Dbl CARDYNAMICS::GetAerodynamicDownforceCoefficient() const
 {
 	Dbl coeff = 0.0;
-	for (std::vector <CARAERO>::const_iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
-		coeff += i->GetAerodynamicDownforceCoefficient();
+	for (auto a : aerodynamics)
+		coeff += a.GetAerodynamicDownforceCoefficient();
 	return coeff;
 }
 
 Dbl CARDYNAMICS::GetAeordynamicDragCoefficient() const
 {
 	Dbl coeff = 0.0;
-	for (std::vector <CARAERO>::const_iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
-		coeff += i->GetAeordynamicDragCoefficient();
+	for (auto a : aerodynamics)
+		coeff += a.GetAeordynamicDragCoefficient();
 	return coeff;
 }
 
@@ -226,10 +226,10 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::LocalToWorld(const MATHVECTOR<Dbl,3> & local) con
 	//return ToMathVector <Dbl> (position);
 }
 
-//simple hinge (arc) suspension displacement
+//  simple hinge (arc) suspension displacement
 MATHVECTOR<Dbl,3> CARDYNAMICS::GetLocalWheelPosition(WHEEL_POSITION wp, Dbl displacement_percent) const
 {
-	//const
+	// const
 	const MATHVECTOR<Dbl,3> & wheelext = wheel[wp].GetExtendedPosition();
 	const MATHVECTOR<Dbl,3> & hinge = suspension[wp].GetHinge();
 	MATHVECTOR<Dbl,3> relwheelext = wheelext - hinge;
@@ -237,7 +237,7 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::GetLocalWheelPosition(WHEEL_POSITION wp, Dbl disp
 	MATHVECTOR<Dbl,3> rotaxis = up.cross ( relwheelext.Normalize() );
 	Dbl hingeradius = relwheelext.Magnitude();
 	Dbl travel = suspension[wp].GetTravel();
-	//const
+	// const
 
 	Dbl displacement = displacement_percent * travel;
 	Dbl displacementradians = displacement / hingeradius;
@@ -248,7 +248,7 @@ MATHVECTOR<Dbl,3> CARDYNAMICS::GetLocalWheelPosition(WHEEL_POSITION wp, Dbl disp
 	return localwheelpos + hinge;
 }
 
-///returns the orientation of the wheel due only to steering and suspension
+//  returns the orientation of the wheel due only to steering and suspension
 QUATERNION<Dbl> CARDYNAMICS::GetWheelSteeringAndSuspensionOrientation(WHEEL_POSITION wp) const
 {
 	QUATERNION<Dbl> steer;
@@ -269,8 +269,8 @@ QUATERNION<Dbl> CARDYNAMICS::GetWheelSteeringAndSuspensionOrientation(WHEEL_POSI
 	return camber * toe * steer;
 }
 
-/// worldspace position of the center of the wheel when the suspension is compressed
-/// by the displacement_percent where 1.0 is fully compressed
+//  worldspace position of the center of the wheel when the suspension is compressed
+//  by the displacement_percent where 1.0 is fully compressed
 MATHVECTOR<Dbl,3> CARDYNAMICS::GetWheelPositionAtDisplacement(WHEEL_POSITION wp, Dbl displacement_percent) const
 {
 	return LocalToWorld(GetLocalWheelPosition(wp, displacement_percent));
@@ -328,7 +328,7 @@ void CARDYNAMICS::SetDrive(const std::string & newdrive)
 	else  assert(0);
 }
 
-void CARDYNAMICS::AddMassParticle( Dbl newmass, MATHVECTOR<Dbl,3> newpos )
+void CARDYNAMICS::AddMassParticle(Dbl newmass, MATHVECTOR<Dbl,3> newpos)
 {
 	newpos[0] += com_ofs_L;  //|
 	newpos[2] += com_ofs_H;  //|
@@ -336,7 +336,7 @@ void CARDYNAMICS::AddMassParticle( Dbl newmass, MATHVECTOR<Dbl,3> newpos )
 	//std::cout << "adding mass particle " << newmass << " at " << newpos << std::endl;
 }
 
-void CARDYNAMICS::AddAerodynamicDevice( const MATHVECTOR<Dbl,3> & newpos,
+void CARDYNAMICS::AddAerodynamicDevice(const MATHVECTOR<Dbl,3> & newpos,
 	Dbl drag_frontal_area, Dbl drag_coefficient,
 	Dbl lift_surface_area, Dbl lift_coefficient, Dbl lift_efficiency )
 {
@@ -352,8 +352,8 @@ char CARDYNAMICS::IsBraking() const
 	for (int w=0; w < numWheels; ++w)
 	{
 		WHEEL_POSITION wp = (WHEEL_POSITION)w;
-		if (GetBrake(wp).GetBrakeFactor() > 0
-		 || GetBrake(wp).GetHandbrakeFactor() > 0)
+		if (GetBrake(wp).GetBrakeFactor() > 0 ||
+			GetBrake(wp).GetHandbrakeFactor() > 0)
 			return 1;
 	}
 	return 0;

@@ -35,16 +35,13 @@ bool CONFIGFILE::GetParam(string param, int & outvar) const
 		{
 			++ppos;
 			param = param.substr(ppos, param.length() - ppos);
-		}
-	}
+	}	}
 	
-	const CONFIGVARIABLE * v = variables.Get(param);
-	
+	const CONFIGVARIABLE* v = variables.Get(param);
 	if (!v)
 		return false;
 	
 	outvar = v->val_i;
-	
 	return true;
 }
 
@@ -58,16 +55,13 @@ bool CONFIGFILE::GetParam(string param, bool & outvar) const
 		{
 			++ppos;
 			param = param.substr(ppos, param.length() - ppos);
-		}
-	}
+	}	}
 	
-	const CONFIGVARIABLE * v = variables.Get(param);
-	
+	const CONFIGVARIABLE* v = variables.Get(param);
 	if (!v)
 		return false;
 	
 	outvar = v->val_b;
-	
 	return true;
 }
 
@@ -81,16 +75,13 @@ bool CONFIGFILE::GetParam(string param, float & outvar) const
 		{
 			++ppos;
 			param = param.substr(ppos, param.length() - ppos);
-		}
-	}
+	}	}
 	
-	const CONFIGVARIABLE * v = variables.Get(param);
-	
+	const CONFIGVARIABLE* v = variables.Get(param);
 	if (!v)
 		return false;
 	
 	outvar = v->val_f;
-	
 	return true;
 }
 
@@ -104,11 +95,9 @@ bool CONFIGFILE::GetParam(string param, float * outvar) const
 		{
 			++ppos;
 			param = param.substr(ppos, param.length() - ppos);
-		}
-	}
+	}	}
 	
-	const CONFIGVARIABLE * v = variables.Get(param);
-	
+	const CONFIGVARIABLE* v = variables.Get(param);
 	if (!v)
 		return false;
 	
@@ -128,24 +117,23 @@ bool CONFIGFILE::GetParam(string param, string & outvar) const
 		{
 			++ppos;
 			param = param.substr(ppos, param.length() - ppos);
-		}
-	}
+	}	}
 	
-	const CONFIGVARIABLE * v = variables.Get(param);
-	
+	const CONFIGVARIABLE* v = variables.Get(param);
 	if (!v)
 		return false;
 	
 	outvar = v->val_s;
-	
 	return true;
 }
 
-void CONFIGFILE::GetPoints(const std::string & sectionname, const std::string & paramprefix, std::vector <std::pair <double, double> > & output_points)
+void CONFIGFILE::GetPoints( const std::string & sectionname,
+							const std::string & paramprefix,
+							std::vector <std::pair <double, double> > & output_points)
 {
 	std::list <std::string> params;
 	GetParamList(params, sectionname);
-	for (std::list <std::string>::iterator i = params.begin(); i != params.end(); ++i)
+	for (auto i = params.begin(); i != params.end(); ++i)
 	{
 		if (i->find(paramprefix) == 0)
 		{
@@ -154,8 +142,7 @@ void CONFIGFILE::GetPoints(const std::string & sectionname, const std::string & 
 			{
 				output_points.push_back(std::make_pair(point[0], point[1]));
 			}
-		}
-	}
+	}	}
 }
 
 void CONFIGFILE::Clear()
@@ -343,10 +330,8 @@ void CONFIGFILE::ProcessLine(string & cursection, string linestr)
 				
 				Add(paramname, newvar);
 			}
-		}
-		else
-		{
-			//section header
+		}else
+		{	//section header
 			linestr = Strip(linestr, '[');
 			linestr = Strip(linestr, ']');
 			linestr = Trim(linestr);
@@ -359,7 +344,8 @@ string CONFIGFILE::Strip(string instr, char stripchar)
 {
 	string::size_type pos = 0;
 	string outstr = "";
-	int length= instr.length();
+	int length = instr.length();
+
 	while (pos < instr.length())
 	{
 		if (instr.c_str()[pos] == stripchar)
@@ -368,13 +354,11 @@ string CONFIGFILE::Strip(string instr, char stripchar)
 		++pos;
 	}
 	if (pos > 0)
-	{
 		outstr = instr.substr(0, pos);
-	}
+
 	if (pos+1 < length)
-	{
 		outstr = outstr + instr.substr(pos+1, (length-pos)-1);
-	}
+
 	return outstr;
 }
 
@@ -382,15 +366,15 @@ void CONFIGFILE::DebugPrint(ostream & out)
 {
 	out << "*** " << filename << " ***" << endl << endl;
 	
-	std::list <CONFIGVARIABLE> vlist;
+	std::list<CONFIGVARIABLE> vlist;
 	
-	for (bucketed_hashmap <std::string, CONFIGVARIABLE>::iterator i = variables.begin(); i != variables.end(); ++i)
-		vlist.push_back(*i);
+	for (auto i : variables)
+		vlist.push_back(i);
 	
 	vlist.sort();
 	
-	for (std::list <CONFIGVARIABLE>::iterator i = vlist.begin(); i != vlist.end(); ++i)
-		i->DebugPrint(out);
+	for (auto& i : vlist)
+		i.DebugPrint(out);
 }
 
 string CONFIGVARIABLE::strLCase(string instr)
@@ -412,7 +396,6 @@ string CONFIGVARIABLE::strLCase(string instr)
 		
 		++pos;
 	}
-	
 	return outstr;
 }
 
@@ -426,23 +409,17 @@ string CONFIGFILE::LCase(string instr)
 bool CONFIGFILE::SetParam(string param, int invar)
 {
 	char tc[256];
-	
 	sprintf(tc, "%i", invar);
 	
 	string tstr = tc;
-	
 	return SetParam(param, tstr);
 }
 
 bool CONFIGFILE::SetParam(string param, bool invar)
 {
-	//char tc[256];
-	//sprintf(tc, "%i", invar);
-	
-	string tstr = "off";  //"false";
-	
+	string tstr = "off";
 	if (invar)
-		tstr = "on";  //"true";
+		tstr = "on";
 	
 	return SetParam(param, tstr);
 }
@@ -450,22 +427,18 @@ bool CONFIGFILE::SetParam(string param, bool invar)
 bool CONFIGFILE::SetParam(string param, float invar)
 {
 	char tc[256];
-	
 	sprintf(tc, "%f", invar);  //5.2f
 	
 	string tstr = tc;
-	
 	return SetParam(param, tstr);
 }
 
 bool CONFIGFILE::SetParam(string param, float * invar)
 {
 	char tc[256];
-	
 	sprintf(tc, "%f,%f,%f", invar[0], invar[1], invar[2]);
 	
 	string tstr = tc;
-	
 	return SetParam(param, tstr);
 }
 
@@ -505,35 +478,34 @@ bool CONFIGFILE::Write(bool with_brackets, string save_as)
 
 	std::list <CONFIGVARIABLE> vlist;
 
-	for (bucketed_hashmap <std::string, CONFIGVARIABLE>::iterator i = variables.begin(); i != variables.end(); ++i)
+	for (auto i : variables)
 	{
 		//cout << incsuccess << endl;
 		// variables.IteratorGet()->DebugPrint();
-		vlist.push_back(*i);
+		vlist.push_back(i);
 	}
-	
+
 	vlist.sort();
 	
 	string cursection = "";
-	for (std::list <CONFIGVARIABLE>::iterator cur = vlist.begin(); cur != vlist.end(); ++cur)
+	for (auto cur : vlist)
 	{
-		if (cur->section == "")
+		if (cur.section == "")
 		{
-			f << cur->name << " = " << cur->val_s << endl;
+			f << cur.name << " = " << cur.val_s << endl;
 		}else
 		{
-			if (cur->section != cursection)
+			if (cur.section != cursection)
 			{
 				f << endl;
-				cursection = cur->section;
+				cursection = cur.section;
 				
 				if (with_brackets)
-					f << "[ " << cur->section << " ]" << endl;
+					f << "[ " << cur.section << " ]" << endl;
 				else
-					f << cur->section << endl;
+					f << cur.section << endl;
 			}
-			
-			f << cur->name << " = " << cur->val_s << endl;
+			f << cur.name << " = " << cur.val_s << endl;
 		}
 	}
 	
@@ -555,11 +527,12 @@ void CONFIGFILE::GetSectionList(std::list <string> & sectionlistoutput) const
 {
 	sectionlistoutput.clear();
 	std::map <string, bool> templist;
-	for (bucketed_hashmap <std::string, CONFIGVARIABLE>::const_iterator i = variables.begin(); i != variables.end(); ++i)
-		templist[i->section] = true;
+
+	for (auto i : variables)
+		templist[i.section] = true;
 	
-	for (std::map <string, bool>::iterator i = templist.begin(); i != templist.end(); ++i)
-		sectionlistoutput.push_back(i->first);
+	for (auto i : templist)
+		sectionlistoutput.push_back(i.first);
 }
 
 void CONFIGFILE::GetParamList(std::list <string> & paramlistoutput, string sel_section) const
@@ -570,18 +543,19 @@ void CONFIGFILE::GetParamList(std::list <string> & paramlistoutput, string sel_s
 	
 	paramlistoutput.clear();
 	std::map <string, bool> templist;
-	for (bucketed_hashmap <std::string, CONFIGVARIABLE>::const_iterator i = variables.begin(); i != variables.end(); ++i)
+
+	for (auto i : variables)
 	{
 		if (all)
-			templist[i->section+"."+i->name] = true;
+			templist[i.section +"."+ i.name] = true;
 		else
-		if (i->section == sel_section)
-			templist[i->name] = true;
+		if (i.section == sel_section)
+			templist[i.name] = true;
 	}
-	
-	for (std::map <string, bool>::iterator i = templist.begin(); i != templist.end(); ++i)
+
+	for (auto i : templist)
 	{
-		paramlistoutput.push_back(i->first);
+		paramlistoutput.push_back(i.first);
 	}
 }
 
@@ -656,7 +630,7 @@ QT_TEST(configfile_test)
 		std::list <string> slist;
 		testconfig.GetSectionList(slist);
 		slist.sort();
-		std::list <string>::iterator i = slist.begin();
+		auto i = slist.begin();
 		QT_CHECK_EQUAL(*i, "");
 		++i;
 		QT_CHECK_EQUAL(*i, "section    dos??");
@@ -671,7 +645,7 @@ QT_TEST(configfile_test)
 		std::list <string> slist;
 		testconfig.GetParamList(slist, "test section numero UNO");
 		slist.sort();
-		std::list <string>::iterator i = slist.begin();
+		auto i = slist.begin();
 		QT_CHECK_EQUAL(*i, "i'm so great");
 		++i;
 		QT_CHECK_EQUAL(*i, "look at me");

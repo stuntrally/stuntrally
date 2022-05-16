@@ -122,8 +122,8 @@ string replaceTagsPass(const string& _line, bool& _replaceResult)
 
 	string line(_line);
 
-	string::iterator end = line.end();
-	for (string::iterator iter = line.begin(); iter != end; )
+	auto end = line.end();
+	for (auto iter = line.begin(); iter != end; )
 	{
 		if (*iter == '#')
 		{
@@ -137,7 +137,7 @@ string replaceTagsPass(const string& _line, bool& _replaceResult)
 					++iter;
 					continue;
 				}
-				string::iterator iter2 = iter;
+				auto iter2 = iter;
 				++iter2;
 
 				while (true)
@@ -154,7 +154,7 @@ string replaceTagsPass(const string& _line, bool& _replaceResult)
 
 						bool find = true;
 						// try to find in loaded from resources language strings
-						map<string,string>::iterator replace = transl.find(tag);
+						auto replace = transl.find(tag);
 						if (replace != transl.end())
 							replacement = replace->second;
 						else

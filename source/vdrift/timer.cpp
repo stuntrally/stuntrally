@@ -41,8 +41,8 @@ void TIMER::Tick(float dt)
 	if (waiting)
 		dt = 0.f;
 
-	for (std::vector <LAPINFO>::iterator i = car.begin(); i != car.end(); ++i)
-		i->Tick(dt);
+	for (auto& l : car)
+		l.Tick(dt);
 }
 
 bool TIMER::Lap(const int carId, const bool countit, bool bTrackReverse)

@@ -204,8 +204,12 @@ private:
 	HASH_NAMESPACE::hasher <KEYCLASS> hash;
 	
 public:
-	typedef HASH_NAMESPACE::hash_iterator <KEYCLASS, DATACLASS, typename std::vector < std::map <KEYCLASS, DATACLASS> >::iterator, typename std::map <KEYCLASS, DATACLASS>::iterator> iterator;
-	typedef HASH_NAMESPACE::hash_iterator <const KEYCLASS, const DATACLASS, typename std::vector < std::map <KEYCLASS, DATACLASS> >::const_iterator, typename std::map <KEYCLASS, DATACLASS>::const_iterator> const_iterator;
+	typedef HASH_NAMESPACE::hash_iterator <KEYCLASS, DATACLASS,
+		typename std::vector < std::map <KEYCLASS, DATACLASS> >::iterator,
+						typename std::map <KEYCLASS, DATACLASS>::iterator> iterator;
+	typedef HASH_NAMESPACE::hash_iterator <const KEYCLASS, const DATACLASS,
+		typename std::vector < std::map <KEYCLASS, DATACLASS> >::const_iterator,
+						typename std::map <KEYCLASS, DATACLASS>::const_iterator> const_iterator;
 	
 	bucketed_hashmap() {set_buckets(256);}
 	bucketed_hashmap(unsigned int num_buckets) {set_buckets(num_buckets);}
@@ -247,7 +251,7 @@ public:
 	///iterators will be invalidated
 	void Clear()
 	{
-		for (typename std::vector < std::map <KEYCLASS, DATACLASS> >::iterator i = data.begin(); i != data.end(); ++i)
+		for (auto i = data.begin(); i != data.end(); ++i)
 		{
 			i->clear();
 		}

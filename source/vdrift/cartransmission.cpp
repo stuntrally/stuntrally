@@ -38,7 +38,7 @@ void CARTRANSMISSION::SetGearRatio(int gear, Dbl ratio)
 Dbl CARTRANSMISSION::GetGearRatio(int gear) const
 {
 	Dbl ratio = 1.0;
-	std::map <int, Dbl>::const_iterator i = gear_ratios.find(gear);
+	auto i = gear_ratios.find(gear);
 	if (i != gear_ratios.end())
 		ratio = i->second;
 	return ratio;
@@ -55,7 +55,7 @@ Dbl CARTRANSMISSION::CalculateClutchSpeed(Dbl driveshaft_speed)
 ///get the rotational speed of the clutch given the rotational speed of the driveshaft (const)
 Dbl CARTRANSMISSION::GetClutchSpeed(Dbl driveshaft_speed) const
 {
-	std::map <int, Dbl>::const_iterator i = gear_ratios.find(gear);
+	auto i = gear_ratios.find(gear);
 	assert(i != gear_ratios.end());
 	return driveshaft_speed * i->second;
 }

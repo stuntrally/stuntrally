@@ -21,7 +21,7 @@ Dbl CARENGINE::GetTorqueCurve(const Dbl cur_throttle, const Dbl cur_rpm) const
 	
 	Dbl torque = torque_curve.Interpolate(cur_rpm);
 	
-	//make sure the real function only returns values > 0
+	//  make sure the real function only returns values > 0
 	return torque*cur_throttle;
 }
 
@@ -54,16 +54,16 @@ void CARENGINE::ComputeForces()
 	else
 		stalled = false;
 	
-	//make sure the throttle is at least idling
+	//  make sure the throttle is at least idling
 	if (throttle_position < idle)
 		throttle_position = idle;
 	
-	//engine friction
+	//  engine friction
 	Dbl cur_angvel = crankshaft.GetAngularVelocity()[0];
 	
-	//engine drive torque
-	Dbl friction_factor = 1.0; //used to make sure we allow friction to work if we're out of gas or above the rev limit
-	Dbl rev_limit = rpm_max+500; //rpm_limit;
+	//  engine drive torque
+	Dbl friction_factor = 1.0; // used to make sure we allow friction to work if we're out of gas or above the rev limit
+	Dbl rev_limit = rpm_max+500; // rpm_limit;
 	if (rev_limit_exceeded)
 		rev_limit -= 400.0;  ///par
 	
@@ -83,7 +83,7 @@ void CARENGINE::ComputeForces()
 	friction_torque = GetFrictionTorque(cur_angvel, friction_factor, throttle_position);
 	if (stalled)
 	{
-		//try to model the static friction of the engine
+		//  try to model the static friction of the engine
 		friction_torque *= 100.0;
 	}
 }
@@ -99,43 +99,38 @@ void CARENGINE::ApplyForces()
 	crankshaft.SetTorque(total_torque);
 }
 
-///Set the torque curve using a vector of (RPM, torque) pairs.
-/// also recalculate engine friction
-/// the max_power_rpm value should be set to the engine's redline
+//  Set the torque curve using a vector of (RPM, torque) pairs.
+//  also recalculate engine friction
+//  the max_power_rpm value should be set to the engine's redline
 void CARENGINE::SetTorqueCurve(Dbl max_power_rpm, std::vector <std::pair <Dbl, Dbl> > & curve)
 {
 	torque_curve.Clear();
 	
-	//this value accounts for the fact that the torque curves are usually measured
-	// on a dyno, but we're interested in the actual crankshaft power
-	const Dbl dyno_correction_factor = 1.0;//1.14;
-	
 	assert(curve.size() > 1);
 	
-	//ensure we have a smooth curve down to 0 RPM
+	//  ensure we have a smooth curve down to 0 RPM
 	if (curve[0].first != 0)
 		torque_curve.AddPoint(0,0);
 	
-	for (std::vector <std::pair <Dbl, Dbl> >::iterator i = curve.begin();
-		i != curve.end(); ++i)
+	for (auto i : curve)
 	{
-		torque_curve.AddPoint(i->first, i->second*dyno_correction_factor);
+		torque_curve.AddPoint(i.first, i.second);
 	}
 	
-	//ensure we have a smooth curve for over-revs
+	//  ensure we have a smooth curve for over-revs
 	torque_curve.AddPoint(curve[curve.size()-1].first + 10000, 0);
 	
-	//write out a debug torque curve file
+	//  write out a debug torque curve file
 	/*std::ofstream f("out.dat");
 	for (Dbl i = 0; i < curve[curve.size()-1].first+1000; i+= 20) f << i << " " << torque_curve.Interpolate(i) << std::endl;*/
 	//for (unsigned int i = 0; i < curve.size(); ++i) f << curve[i].first << " " << curve[i].second << std::endl;
 	
-	//calculate engine friction
+	//  calculate engine friction
 	Dbl max_power_angvel = max_power_rpm * PI_d/30.0;
 	Dbl max_power = torque_curve.Interpolate(max_power_rpm)*max_power_angvel;
 	friction = max_power / (max_power_angvel*max_power_angvel*max_power_angvel);
 	
-	//calculate idle throttle position
+	//  calculate idle throttle position
 	for (idle = 0; idle < 1.0; idle += 0.01)
 	{
 		if (GetTorqueCurve(idle, start_rpm) > -GetFrictionTorque(start_rpm*PI_d/30.0, 1.0, idle))

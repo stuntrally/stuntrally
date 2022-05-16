@@ -67,7 +67,7 @@ void CARDYNAMICS::ApplyAerodynamicsToBody(Dbl dt)
 	MATHVECTOR<Dbl,3> air_velocity = -GetVelocity();
 	(-Orientation()).RotateVector(air_velocity);
 
-	for(std::vector <CARAERO>::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
+	for (auto i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
 	{
 		MATHVECTOR<Dbl,3> force = i->GetForce(air_velocity);
 		wind_force = wind_force + force;

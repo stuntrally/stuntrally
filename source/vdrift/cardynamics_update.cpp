@@ -49,6 +49,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 	//	sinf(chassisPosition[0]*0.3f)*cosf(chassisPosition[1]*0.32f);
 	//LogO("pos " + toStr((float)chassisPosition[0]) + " " + toStr((float)chassisPosition[1]) + "  b " + toStr(bc));
 
+	// for (auto fb : inFluids)
 	for (std::list<FluidBox*>::const_iterator i = inFluids.begin();
 		i != inFluids.end(); ++i)  // 0 or 1 is there
 	{
@@ -310,8 +311,8 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 			out << "total: " << endl;
 			out << fToStr(aero[0],0,5) << " " << fToStr(aero[1],0,4) << " " << fToStr(aero[2],0,6) << endl;
 
-			for (vector <CARAERO>::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
-				i->DebugPrint(out);
+			for (auto a : aerodynamics)
+				a.DebugPrint(out);
 			}
 
 			//if (cnt > 1)
@@ -321,11 +322,11 @@ void CARDYNAMICS::DebugPrint( std::ostream & out, bool p1, bool p2, bool p3, boo
 			MATHVECTOR<Dbl,3> wind_force(0), wind_torque(0), air_velocity(0);
 			air_velocity[0] = -160/3.6;
 
-			for(std::vector <CARAERO>::iterator i = aerodynamics.begin(); i != aerodynamics.end(); ++i)
+			for (auto a : aerodynamics)
 			{
-				MATHVECTOR<Dbl,3> force = i->GetForce(air_velocity, false);
+				MATHVECTOR<Dbl,3> force = a.GetForce(air_velocity, false);
 				wind_force = wind_force + force;
-				wind_torque = wind_torque + (i->GetPosition() - center_of_mass).cross(force);
+				wind_torque = wind_torque + (a.GetPosition() - center_of_mass).cross(force);
 			}
 			out << "F: " << wind_force << endl << "Tq: " << wind_torque << endl;
 			}
@@ -594,13 +595,13 @@ void CARDYNAMICS::UpdateMass()
 	center_of_mass.Set(0,0,0);
 
 	// calculate the total mass, and center of mass
-	for (std::list <MASS_PAIR>::iterator i = mass_only_particles.begin(); i != mass_only_particles.end(); ++i)
+	for (auto i : mass_only_particles)
 	{
 		// add the current mass to the total mass
-		total_mass += i->first;
+		total_mass += i.first;
 
 		// incorporate the current mass into the center of mass
-		center_of_mass = center_of_mass + i->second * i->first;
+		center_of_mass = center_of_mass + i.second * i.first;
 	}
 
 	// account for fuel
@@ -618,11 +619,11 @@ void CARDYNAMICS::UpdateMass()
 	for (int i = 0; i < 9; ++i)
 		inertia[i] = 0;
 
-	for (std::list <MASS_PAIR>::iterator i = mass_only_particles.begin(); i != mass_only_particles.end(); ++i)
+	for (auto i : mass_only_particles)
 	{
 		// transform into the rigid body coordinates
-		MATHVECTOR<Dbl,3> pos = i->second - center_of_mass;
-		Dbl mass = i->first;
+		MATHVECTOR<Dbl,3> pos = i.second - center_of_mass;
+		Dbl mass = i.first;
 
 		// add the current mass to the inertia tensor
 		inertia[0] += mass * ( pos[1] * pos[1] + pos[2] * pos[2] );
