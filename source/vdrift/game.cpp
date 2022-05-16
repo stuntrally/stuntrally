@@ -53,14 +53,20 @@ GAME::GAME(SETTINGS* pSettings)
 //  start the game with the given arguments
 void GAME::Start(list <string> & args)
 {
-	if (!ParseArguments(args))
-		return;
+	//Test();  return;  // unit tests-
+
+	//debugmode = true;  ///+
+
+	//if (settings->bltLines)
+	PROFILER.init(20);
+	profilingmode = true;
+
 
 	//settings->Load(PATHMANAGER::GetSettingsFile());
 
 	controls.second.Reset();
 
-	InitializeSound(); //if sound initialization fails, that's okay, it'll disable itself
+	InitializeSound();  // if it fails, will be disabled
 
 	//ProcessNewSettings();
 
@@ -107,33 +113,33 @@ bool GAME::LoadAllSurfaces()
 	list <string> sectionlist;
 	param.GetSectionList(sectionlist);
 	
-	for (list<string>::const_iterator section = sectionlist.begin(); section != sectionlist.end(); ++section)
+	for (auto section : sectionlist)
 	{
 		TRACKSURFACE surf;
-		surf.name = *section;
+		surf.name = section;
 		
 		int id;
-		param.GetParam(*section + ".ID", id);  // for sound..
+		param.GetParam(section + ".ID", id);  // for sound..
 		//-assert(indexnum >= 0 && indexnum < (int)tracksurfaces.size());
 		surf.setType(id);
 		
 		float f = 0.f;
-		param.GetParamE(*section + ".BumpWaveLength", f);	surf.bumpWaveLength = f;
-		param.GetParamE(*section + ".BumpAmplitude", f);	surf.bumpAmplitude = f;
-		if (param.GetParam(*section + ".BumpWaveLength2", f))  surf.bumpWaveLength2 = f;
-		if (param.GetParam(*section + ".BumpAmplitude2", f))   surf.bumpAmplitude2 = f;
+		param.GetParamE(section + ".BumpWaveLength", f);	surf.bumpWaveLength = f;
+		param.GetParamE(section + ".BumpAmplitude", f);	surf.bumpAmplitude = f;
+		if (param.GetParam(section + ".BumpWaveLength2", f))  surf.bumpWaveLength2 = f;
+		if (param.GetParam(section + ".BumpAmplitude2", f))   surf.bumpAmplitude2 = f;
 		
-		param.GetParamE(*section + ".FrictionTread", f);	surf.friction = f;
-		if (param.GetParam(*section + ".FrictionX", f))   surf.frictionX = f;
-		if (param.GetParam(*section + ".FrictionY", f))   surf.frictionY = f;
+		param.GetParamE(section + ".FrictionTread", f);	surf.friction = f;
+		if (param.GetParam(section + ".FrictionX", f))   surf.frictionX = f;
+		if (param.GetParam(section + ".FrictionY", f))   surf.frictionY = f;
 		
-		if (param.GetParam(*section + ".RollResistance", f))	surf.rollingResist = f;
-		param.GetParamE(*section + ".RollingDrag", f);			surf.rollingDrag = f;
+		if (param.GetParam(section + ".RollResistance", f))	surf.rollingResist = f;
+		param.GetParamE(section + ".RollingDrag", f);			surf.rollingDrag = f;
 
 
 		///---  Tire  ---
 		string tireFile;
-		if (!param.GetParam(*section + "." + "Tire", tireFile))
+		if (!param.GetParam(section + "." + "Tire", tireFile))
 		{
 			tireFile = "gravel";  // default surface if not found
 			LogO("Surface: Warning: Tire file not found, using default: "+tireFile);
@@ -208,9 +214,8 @@ bool GAME::LoadTires()
 		list <string> li;
 		PATHMANAGER::DirList(path, li);
 
-		for (list <string>::iterator i = li.begin(); i != li.end(); ++i)
+		for (auto file : li)
 		{
-			string file = *i;
 			if (file.find(".tire") != string::npos)
 			{
 				CARTIRE ct;
@@ -251,9 +256,8 @@ bool GAME::LoadSusp()
 	string path = PATHMANAGER::CarSim() + "/" + settings->game.sim_mode + "/susp";
 	list <string> li;
 	PATHMANAGER::DirList(path, li);
-	for (list <string>::iterator i = li.begin(); i != li.end(); ++i)
+	for (auto file : li)
 	{
-		string file = *i;
 		if (file.find(".susp") != string::npos)
 		{
 			CONFIGFILE c;
@@ -667,78 +671,6 @@ void GAME::UpdateForceFeedback(float dt)
 #endif
 }
 
-
-//-----------------------------------------------------------
-bool GAME::ParseArguments(list <string> & args)
-{
-	bool continue_game(true);
-
-	map <string, string> arghelp;
-	map <string, string> argmap;
-
-	//generate an argument map
-	for (list <string>::iterator i = args.begin(); i != args.end(); ++i)
-	{
-		if ((*i)[0] == '-')
-			argmap[*i] = "";
-
-		list <string>::iterator n = i;
-		++n;
-		if (n != args.end())
-		if ((*n)[0] != '-')
-			argmap[*i] = *n;
-	}
-
-	//check for arguments
-	if (argmap.find("-test") != argmap.end())
-	{
-		Test();
-		continue_game = false;
-	}
-	arghelp["-test"] = "Run unit tests.";
-
-	///+
-	//debugmode = true;
-
-	///+
-	//if (settings->bltLines/*bltProfilerTxt*/)
-	{
-		PROFILER.init(20);
-		profilingmode = true;
-	}
-
-	//if (argmap.find("-nosound") != argmap.end())
-	//	sound.DisableAllSound();
-	//arghelp["-nosound"] = "Disable all sound.";
-
-	if (argmap.find("-benchmark") != argmap.end())
-	{
-		LogO("Entering benchmark mode.");
-		benchmode = true;
-	}
-	arghelp["-benchmark"] = "Run in benchmark mode.";
-
-
-	arghelp["-help"] = "Display command-line help.";
-	if (argmap.find("-help") != argmap.end() || argmap.find("-h") != argmap.end() || argmap.find("--help") != argmap.end() || argmap.find("-?") != argmap.end())
-	{
-		string helpstr;
-		unsigned int longest = 0;
-		for (map <string,string>::iterator i = arghelp.begin(); i != arghelp.end(); ++i)
-			if (i->first.size() > longest)
-				longest = i->first.size();
-		for (map <string,string>::iterator i = arghelp.begin(); i != arghelp.end(); ++i)
-		{
-			helpstr.append(i->first);
-			for (unsigned int n = 0; n < longest+3-i->first.size(); ++n)
-				helpstr.push_back(' ');
-			helpstr.append(i->second + "\n");
-		}
-		cout << "Command-line help:\n\n" << helpstr << endl;
-		continue_game = false;
-	}
-	return continue_game;
-}
 
 
 void GAME::UpdateTimer()

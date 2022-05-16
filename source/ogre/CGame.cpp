@@ -125,8 +125,8 @@ void App::destroyScene()
 		pSet->cam_view[i] = carsCamNum[i];
 
 	// Delete all cars
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it)
-		delete (*it);
+	for (auto& car : carModels)
+		delete car;
 
 	carModels.clear();
 	//carPoses.clear();
@@ -139,6 +139,7 @@ void App::destroyScene()
 
 	if (pGame)
 		pGame->End();
+	
 	delete[] scn->sc->td.hfHeight;
 	delete[] blendMtr;  blendMtr = 0;
 

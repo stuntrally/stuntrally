@@ -576,13 +576,12 @@ void CGui::InitGui()
 	//---------------------  Terrain  ---------------------
 	Cmb(cmbTexNorm, "TexNormal", comboTexNorm);  cmbTexNorm->addItem("flat_n.png");
 
-	strlist li;  strlist::iterator q;
+	strlist li;
 	PATHMANAGER::DirList(sData + (pSet->tex_size > 0 ? "/terrain" : "/terrain_s"), li);
-
-	for (q = li.begin(); q != li.end(); ++q)
+	for (auto q : li)
 	{
-		if (StringUtil::match(*q, "*_n.*", false))
-			cmbTexNorm->addItem(*q);
+		if (StringUtil::match(q, "*_n.*", false))
+			cmbTexNorm->addItem(q);
 		//else
 		//if (StringUtil::match(*q, "*_d.*", false))  //_T
 		//	cmbTexDiff->addItem(*q);
@@ -602,10 +601,10 @@ void CGui::InitGui()
 
 	//---------------------  Grass  ---------------------
 	PATHMANAGER::DirList(sData + "/grass", li);
-	for (q = li.begin(); q != li.end(); ++q)
+	for (auto q : li)
 	{
-		if (StringUtil::startsWith(*q, "grClr", false))
-			cmbGrassClr->addItem(*q);
+		if (StringUtil::startsWith(q, "grClr", false))
+			cmbGrassClr->addItem(q);
 	}
 
 
@@ -636,9 +635,9 @@ void CGui::InitGui()
 	app->vObjNames.clear();  strlist lo;
 	PATHMANAGER::DirList(sData + "/objects2", lo);
 	PATHMANAGER::DirList(sData + "/objects", lo);
-	for (q = lo.begin(); q != lo.end(); ++q)
-		if (StringUtil::endsWith(*q,".mesh") && !StringUtil::startsWith(*q,"sphere"))
-			app->vObjNames.push_back((*q).substr(0,(*q).length()-5));  //no .ext
+	for (auto q : lo)
+		if (StringUtil::endsWith(q, ".mesh") && !StringUtil::startsWith(q, "sphere"))
+			app->vObjNames.push_back(q.substr(0,q.length()-5));  //no .ext
 	
 	objListDyn = fLi("ObjListDyn");  Lev(objListDyn, ObjsChng);
 	objListSt  = fLi("ObjListSt");   Lev(objListSt,  ObjsChng);
@@ -667,10 +666,10 @@ void CGui::InitGui()
 	app->vBuildings.clear();
 	PATHMANAGER::DirList(sData + "/objects0", lo);
 	PATHMANAGER::DirList(sData + "/objectsC", lo);//-
-	for (q = lo.begin(); q != lo.end(); ++q)
-		if (StringUtil::endsWith(*q,".mesh"))
+	for (auto q : lo)
+		if (StringUtil::endsWith(q,".mesh"))
 		{
-			string name = (*q).substr(0,(*q).length()-5);  //no .ext
+			string name = q.substr(0, q.length()-5);  //no .ext
 			string cat = name.substr(0,4);
 			++cats[cat];
 			app->vBuildings.push_back(name);
@@ -679,9 +678,9 @@ void CGui::InitGui()
 	//  get cats  ----
 	objListCat->removeAllItems();
 	//objListCat->addItem("#E0A0A0"+TR("#{Other}"));  //all
-	for (map<string, int>::iterator it = cats.begin(); it != cats.end(); ++it)
+	for (auto it : cats)
 	{
-		string cat = (*it).first;  int n = (*it).second;
+		string cat = it.first;  int n = it.second;
 		//LogO(cat+" "+toStr(n));
 		if (n > 1)  // add category (> 1 Bld with this prefix)
 			objListCat->addItem("#E09090"+cat);

@@ -20,7 +20,7 @@ namespace attribute
 	{
 		~DataHolder()
 		{
-			for (typename Type::iterator item = data.begin(); item != data.end(); ++item)
+			for (auto item = data.begin(); item != data.end(); ++item)
 				delete (*item).first;
 		}
 

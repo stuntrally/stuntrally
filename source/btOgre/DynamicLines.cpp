@@ -236,14 +236,12 @@ void DynamicLines::fillHardwareBuffers()
 
 	pVert = static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD));
 
-	Ogre::VertexDeclaration::VertexElementList elems = mRenderOp.vertexData->vertexDeclaration->findElementsBySource(0);
-	Ogre::VertexDeclaration::VertexElementList::const_iterator elemItr = elems.begin(), elemEnd = elems.end();
+	auto elems = mRenderOp.vertexData->vertexDeclaration->findElementsBySource(0);
 
 	for(int i = 0; i < iBufferSize/*size*/; ++i)
 	{
-		for (elemItr = elems.begin(); elemItr != elemEnd; ++elemItr)
+		for (const auto& elem : elems)
 		{
-			const Ogre::VertexElement& elem = *elemItr;
 			switch (elem.getSemantic())
 			{
 				case Ogre::VES_POSITION:

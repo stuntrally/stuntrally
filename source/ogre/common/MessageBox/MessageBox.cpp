@@ -78,10 +78,8 @@ namespace MyGUI
 			MYGUI_LOG(Warning, "Too many buttons in message box, ignored");
 			return MessageBoxStyle::None;
 		}
-		// бит, номер кнопки + смещение до Button1
 		MessageBoxStyle info = MessageBoxStyle(MessageBoxStyle::Enum(MYGUI_FLAG(mVectorButton.size() + MessageBoxStyle::_IndexUserButton1)));
 
-		// запоминаем кнопки для отмены и подтверждения
 		if (mVectorButton.empty())
 			mInfoOk = info;
 		mInfoCancel = info;
@@ -146,19 +144,14 @@ namespace MyGUI
 
 		for (size_t index = 0; index < buttons.size(); ++index)
 		{
-			// корректируем ее номер
 			MessageBoxStyle info = buttons[index];
 
-			// если бит есть то ставим кнопку
 			addButtonName(getButtonName(info));
 
-			// внутри адд сбрасывается
 			mVectorButton.back()->_setInternalData(info);
 
-			// первая кнопка
 			if (mVectorButton.size() == 1)
 				mInfoOk = info;
-			// последняя кнопка
 			mInfoCancel = info;
 		}
 
@@ -262,7 +255,7 @@ namespace MyGUI
 			}
 		}
 
-		for (std::vector<Button*>::iterator iter = mVectorButton.begin(); iter != mVectorButton.end(); ++iter)
+		for (auto iter = mVectorButton.begin(); iter != mVectorButton.end(); ++iter)
 		{
 			(*iter)->setCoord(offset, mMainWidget->getClientCoord().height - mButtonOffset.height, mButtonSize.width, mButtonSize.height);
 			offset += mButtonOffset.width + mButtonSize.width;
@@ -276,7 +269,7 @@ namespace MyGUI
 
 	void Message::clearButton()
 	{
-		for (std::vector<Button*>::iterator iter = mVectorButton.begin(); iter != mVectorButton.end(); ++iter)
+		for (auto iter = mVectorButton.begin(); iter != mVectorButton.end(); ++iter)
 			WidgetManager::getInstance().destroyWidget(*iter);
 		mVectorButton.clear();
 	}

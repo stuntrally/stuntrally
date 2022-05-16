@@ -235,7 +235,7 @@ void CGui::updReplaysList()
 	strlist li;
 	PATHMANAGER::DirList(GetRplListDir(), li, "rpl");
 	
-	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
+	for (auto i = li.begin(); i != li.end(); ++i)
 	if (StringUtil::endsWith(*i, ".rpl"))
 	{
 		String s = *i;  s = StringUtil::replaceAll(s,".rpl","");

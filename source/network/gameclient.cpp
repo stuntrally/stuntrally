@@ -140,7 +140,7 @@ void P2PGameClient::loadingFinished()
 		LogO("== Netw loadingFinished  WRONG !m_callback");
 		return;
 	}
-	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
+	for (auto it = m_peers.begin(); it != m_peers.end(); ++it)
 		if (!it->second.loaded)
 		{
 			LogO("== Netw loadingFinished (but others not ready yet)");
@@ -253,7 +253,7 @@ size_t P2PGameClient::getPeerCount() const
 PeerInfo P2PGameClient::getPeer(ClientID id) const
 {
 	boost::mutex::scoped_lock lock(m_mutex);
-	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
+	for (auto it = m_peers.begin(); it != m_peers.end(); ++it)
 		if (it->second.id == id)
 			return it->second;
 	return PeerInfo();
@@ -299,7 +299,7 @@ void P2PGameClient::recountPeersAndAssignIds(bool validate)
 		return;
 	}
 	// Validate unique IDs
-	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
+	for (auto it = m_peers.begin(); it != m_peers.end(); ++it)
 		if (it->second.id == -1)
 		{	LogO("== Netw recountPeersAndAssignIds  Unassigned or duplicate client ID!");
 			throw std::runtime_error("Unassigned or duplicate client ID!");
@@ -309,7 +309,7 @@ void P2PGameClient::recountPeersAndAssignIds(bool validate)
 // Mutex should be already locked when this is called
 void P2PGameClient::broadcastToAuthed(net::NetworkTraffic const& msg, int flags)
 {
-	for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
+	for (auto it = m_peers.begin(); it != m_peers.end(); ++it)
 		if (it->second.authenticated)
 			m_client.send(it->second.peer_id, msg, flags);
 }
@@ -496,7 +496,7 @@ void P2PGameClient::receiveEvent(net::NetworkTraffic const& e)
 				}
 
 				bool start = true;
-				for (PeerMap::const_iterator it = m_peers.begin(); it != m_peers.end(); ++it)
+				for (auto it = m_peers.begin(); it != m_peers.end(); ++it)
 					if (!it->second.loaded)
 					{	start = false;	break;	}
 

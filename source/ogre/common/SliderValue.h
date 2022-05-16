@@ -11,14 +11,14 @@ const float slHalf = 0.45f;  // added to int value sliders to their float value
 class SliderValue
 {
 private:
-	MyGUI::Slider* slider;
+	MyGUI::Slider* slider =0;
 	//  not required
-	MyGUI::TextBox* text;  // for value show
-	MyGUI::EditBox* edit;  // for value edit
+	MyGUI::TextBox* text =0;  // for value show
+	MyGUI::EditBox* edit =0;  // for value edit
 
 	//  pointer to value  // call UpdF or UpdI to change after init
-	float* pFloat;
-	int* pInt;
+	float* pFloat =0;
+	int* pInt =0;
 
 public:
 	typedef MyGUI::delegates::CMultiDelegate1<SliderValue*> ValueChanged;
@@ -32,9 +32,9 @@ public:
 
 	
 	//  format float value (for display only)
-	int fmtDigits, fmtLength;
+	int fmtDigits = 2, fmtLength = 4;
 
-	float fmtValMul;  // value multiplier
+	float fmtValMul = 1.f;  // value multiplier
 	Ogre::String sSuffix;
 
 
@@ -43,14 +43,11 @@ public:
 
 
 	//  slider value range
-	float fMin, fRange, fPow;
+	float fMin = 0.f, fRange = 1.f, fPow = 1.f;
 
 	ValueChanged event;  // sent after Move, user callback
 		// add a method here if you need it executed
 
-
-	//  ctor
-	SliderValue();
 
 	//  Init
 	//  float*  // name in .layout  // power, 1=linear
@@ -111,7 +108,7 @@ private:
 class Check
 {
 private:
-	MyGUI::Button* chk;
+	MyGUI::Button* chk =0;
 
 public:
 	typedef MyGUI::delegates::CMultiDelegate1<Check*> ValueChanged;
@@ -123,14 +120,11 @@ public:
 
 
 	//  pointer to value
-	bool* pBool;
+	bool* pBool =0;
 	
 	ValueChanged event;  // after change, user callback
 		// add a method here if you need it executed
 
-
-	//  ctor
-	Check();
 
 	//  init   // name in .layout
 	void Init(Ogre::String name, bool* pB);

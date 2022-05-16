@@ -26,12 +26,11 @@ public:
 	MotionBlurListener(BaseApp* app);
 	virtual ~MotionBlurListener();
 
-	BaseApp* pApp;
-
 	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
 	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
 
 private:
+	BaseApp* pApp;
 	Matrix4 mPreviousViewProjMatrix;
 };
 
@@ -51,7 +50,6 @@ MotionBlurListener::MotionBlurListener(BaseApp* app) : pApp(0)
 	mPreviousViewProjMatrix = Matrix4::IDENTITY;
 	pApp = app;
 }
-
 MotionBlurListener::~MotionBlurListener()
 {
 }
@@ -59,7 +57,6 @@ MotionBlurListener::~MotionBlurListener()
 void MotionBlurListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 {
 }
-
 void MotionBlurListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
 	if (pass_id != 999)  return;
@@ -122,13 +119,14 @@ protected:
 public:
 	HDRListener(BaseApp * app);
 	virtual ~HDRListener();
+
 	void notifyViewportSize(int width, int height);
 	void notifyCompositor(CompositorInstance* instance);
 	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
 	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
+
 	BaseApp * mApp;
 	int mViewportWidth,mViewportHeight;
-
 };
 
 CompositorInstance::Listener* HDRLogic::createListener(CompositorInstance* instance)
@@ -136,6 +134,7 @@ CompositorInstance::Listener* HDRLogic::createListener(CompositorInstance* insta
 	HDRListener* listener = new HDRListener(mApp);
 	Viewport* vp = instance->getChain()->getViewport();
 	listener->notifyViewportSize(vp->getActualWidth(), vp->getActualHeight());
+	
 	listener->mViewportWidth = vp->getActualWidth();
 	listener->mViewportHeight = vp->getActualHeight();
 	listener->notifyCompositor(instance);
@@ -163,8 +162,7 @@ void HDRListener::notifyViewportSize(int width, int height)
 void HDRListener::notifyCompositor(CompositorInstance* instance)
 {
 	// Get some RTT dimensions for later calculations
-	CompositionTechnique::TextureDefinitionIterator defIter =
-		instance->getTechnique()->getTextureDefinitionIterator();
+	auto defIter = instance->getTechnique()->getTextureDefinitionIterator();
 	while (defIter.hasMoreElements())
 	{
 		CompositionTechnique::TextureDefinition* def =
@@ -186,7 +184,7 @@ void HDRListener::notifyCompositor(CompositorInstance* instance)
 			mBloomTexWeights[0][3] = 1.0f;
 
 			// 'pre' samples
-			for(int i = 1; i < 8; ++i)
+			for (int i = 1; i < 8; ++i)
 			{
 				mBloomTexWeights[i][0] = mBloomTexWeights[i][1] =
 					mBloomTexWeights[i][2] = 1.25f * Math::gaussianDistribution(i, 0, deviation);
@@ -197,7 +195,7 @@ void HDRListener::notifyCompositor(CompositorInstance* instance)
 				mBloomTexOffsetsVert[i][1] = i * texelSize;
 			}
 			// 'post' samples
-			for(int i = 8; i < 15; ++i)
+			for (int i = 8; i < 15; ++i)
 			{
 				mBloomTexWeights[i][0] = mBloomTexWeights[i][1] =
 					mBloomTexWeights[i][2] = mBloomTexWeights[i - 7][0];
@@ -217,7 +215,7 @@ void HDRListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 	//  Prepare the fragment params offsets
 	switch (pass_id)
 	{
-		//case 994: // rt_lum4
+	//case 994: // rt_lum4
 	case 993: // rt_lum3
 	case 992: // rt_lum2
 	case 991: // rt_lum1
@@ -225,42 +223,37 @@ void HDRListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 		break;
 	case 800: // rt_brightpass
 		break;
+	
 	case 701: // rt_bloom1
-		{
-			// horizontal bloom
-			try
-			{	mat->load();
-				GpuProgramParametersSharedPtr fparams =
-					mat->getBestTechnique()->getPass(0)->getFragmentProgramParameters();
-				fparams->setNamedConstant("sampleOffsets", mBloomTexOffsetsHorz[0], 15);
-				fparams->setNamedConstant("sampleWeights", mBloomTexWeights[0], 15);
-			}
-			catch(...)
-			{	}
-
-			break;
+		// horizontal bloom
+		try
+		{	mat->load();
+			GpuProgramParametersSharedPtr fparams =
+				mat->getBestTechnique()->getPass(0)->getFragmentProgramParameters();
+			fparams->setNamedConstant("sampleOffsets", mBloomTexOffsetsHorz[0], 15);
+			fparams->setNamedConstant("sampleWeights", mBloomTexWeights[0], 15);
 		}
+		catch(...)
+		{	}
+		break;
+
 	case 700: // rt_bloom0
-		{
-			// vertical bloom
-			try
-			{	mat->load();
-				GpuProgramParametersSharedPtr fparams =
-					mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-				fparams->setNamedConstant("sampleOffsets", mBloomTexOffsetsVert[0], 15);
-				fparams->setNamedConstant("sampleWeights", mBloomTexWeights[0], 15);
-			}
-			catch(...)
-			{	}
-
-			break;
+		// vertical bloom
+		try
+		{	mat->load();
+			GpuProgramParametersSharedPtr fparams =
+				mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+			fparams->setNamedConstant("sampleOffsets", mBloomTexOffsetsVert[0], 15);
+			fparams->setNamedConstant("sampleWeights", mBloomTexWeights[0], 15);
 		}
+		catch(...)
+		{	}
+		break;
 	}
 }
 
 void HDRListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
-
 	if (pass_id == 600 || pass_id == 800)
 	{
 		Pass *pass = mat->getBestTechnique()->getPass(0);
@@ -281,7 +274,6 @@ void HDRListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 			Vector4 vignettingSettings(mApp->pSet->vignRadius, mApp->pSet->vignDarkness, 1.0, 1.0);
 			params->setNamedConstant("vignettingSettings", vignettingSettings);
 		}
-
 	}
 	else if(pass_id == 989)
 	{
@@ -295,16 +287,15 @@ void HDRListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 }
 
 
-
 class SSAOListener: public CompositorInstance::Listener
 {
 protected:
 public:
 	SSAOListener(BaseApp * app);
 	virtual ~SSAOListener();
-	BaseApp * mApp;
 	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
 	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
+	BaseApp * mApp;
 };
 
 CompositorInstance::Listener* SSAOLogic::createListener(CompositorInstance* instance)
@@ -318,7 +309,6 @@ void SSAOLogic::setApp(BaseApp* app)
 {
 	mApp = app;
 }
-
 
 SSAOListener::SSAOListener(BaseApp* app) : mApp(app)
 {
@@ -413,12 +403,12 @@ void GodRaysListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 	params3 = mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
 	*/
 }
-void clamp(Vector2 &v)  {
-	v.x = v.x < -1 ? -1 : (v.x > 1 ? 1 : v.x);
+void clamp(Vector2 &v)
+{	v.x = v.x < -1 ? -1 : (v.x > 1 ? 1 : v.x);
 	v.y = v.y < -1 ? -1 : (v.y > 1 ? 1 : v.y);
 }
-void clamp(Vector3 &v)  {
-	v.x = v.x < -1 ? -1 : (v.x > 1 ? 1 : v.x);
+void clamp(Vector3 &v)
+{	v.x = v.x < -1 ? -1 : (v.x > 1 ? 1 : v.x);
 	v.y = v.y < -1 ? -1 : (v.y > 1 ? 1 : v.y);
 }
 
@@ -435,11 +425,12 @@ void GodRaysListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 	Camera *cam = mApp->mCamera;
 	#endif
 
-	//update the sun position
+	// update the sun position
 	Light* sun = ((App*)mApp)->scn->sun;  //todo:!?
 	GpuProgramParametersSharedPtr params= mat->getTechnique(0)->getPass(0)->getVertexProgramParameters();
 	GpuProgramParametersSharedPtr fparams= mat->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-	//disable god rays when the sun is not facing us
+	
+	// disable god rays when the sun is not facing us
 	float enable=0.0f;
 	if (sun != NULL)
 	{
@@ -491,12 +482,9 @@ void GBufferLogic::setApp(BaseApp* app)
 
 void GBufferListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 {
-
 }
-
 void GBufferListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
-
 }
 
 
@@ -555,8 +543,9 @@ public:
 	virtual ~DepthOfFieldListener();
 	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
 	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
+	
 	BaseApp * mApp;
-	int mViewportWidth,mViewportHeight;
+	int mViewportWidth, mViewportHeight;
 };
 
 CompositorInstance::Listener* DepthOfFieldLogic::createListener(CompositorInstance* instance)
@@ -586,9 +575,10 @@ void DepthOfFieldListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 {
 	if (pass_id == 1)
 	{
-		float blurScale =.5f;
+		float blurScale = 0.5f;
 
-		Vector4 pixelSize(1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale), 0.0f, 0.0f);
+		Vector4 pixelSize(  1.f / (mViewportWidth * blurScale),
+							1.f / (mViewportHeight * blurScale), 0.f, 0.f);
 
 		mat->load();
 		Pass *pass = mat->getBestTechnique()->getPass(0);
@@ -600,8 +590,10 @@ void DepthOfFieldListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 	}
 	else if (pass_id == 2)
 	{
-		float blurScale =.5f;
-		Vector4  pixelSize(1.0f / mViewportWidth, 1.0f / mViewportHeight,1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale) );
+		float blurScale = 0.5f;
+		Vector4  pixelSize( 1.f / mViewportWidth, 1.f / mViewportHeight,
+							1.f / (mViewportWidth * blurScale),
+							1.f / (mViewportHeight * blurScale) );
 
 		Pass *pass = mat->getBestTechnique()->getPass(0);
 		GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
@@ -632,8 +624,11 @@ void DepthOfFieldListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat
 {
 	if(pass_id == 2)
 	{
-		float blurScale =.5f;
-		Vector4  pixelSize(1.0f / mViewportWidth, 1.0f / mViewportHeight,1.0f / (mViewportWidth * blurScale), 1.0f / (mViewportHeight * blurScale) );
+		float blurScale = 0.5f;
+		Vector4  pixelSize( 1.f / mViewportWidth,
+							1.f / mViewportHeight,
+							1.f / (mViewportWidth * blurScale),
+							1.f / (mViewportHeight * blurScale) );
 
 		Pass *pass = mat->getBestTechnique()->getPass(0);
 		GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
@@ -665,9 +660,10 @@ class FilmGrainListener: public CompositorInstance::Listener
 public:
 	FilmGrainListener(BaseApp * app);
 	virtual ~FilmGrainListener();
-	BaseApp * mApp;
 	virtual void notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat);
 	virtual void notifyMaterialRender(uint32 pass_id, MaterialPtr &mat);
+	
+	BaseApp * mApp;
 	int mViewportWidth,mViewportHeight;
 };
 
@@ -696,13 +692,12 @@ FilmGrainListener::~FilmGrainListener()
 
 void FilmGrainListener::notifyMaterialSetup(uint32 pass_id, MaterialPtr &mat)
 {
-
 }
 
 
 void FilmGrainListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 {
-	if(pass_id == 1)
+	if (pass_id == 1)
 	{
 		float noiseIntensity = 0.1f;
 		float exposure = 1-mApp->pSet->hdrParam3;
@@ -756,7 +751,6 @@ CameraBlurListener::CameraBlurListener(BaseApp* app) : mApp(0)
 {
 	mApp = (App*)app;
 }
-
 CameraBlurListener::~CameraBlurListener()
 {
 }
@@ -772,36 +766,36 @@ void CameraBlurListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 		if (mApp->pGame->pause == false)
 		{
 			//acquire the texture flipping attribute in the first frame
-			if(compositorinstance)
+			if (compositorinstance)
 			{
 				mRequiresTextureFlipping  = compositorinstance->getRenderTarget("previousscene")->requiresTextureFlipping();
 				compositorinstance=NULL;
 			}
 			// this is the camera you're using
 			#ifndef SR_EDITOR
-			Camera *cam = mApp->mSplitMgr->mCameras.front();
+			Camera* cam = mApp->mSplitMgr->mCameras.front();
 			#else
-			Camera *cam = mApp->mCamera;
+			Camera* cam = mApp->mCamera;
 			#endif
 
 			// get the pass
-			Pass *pass = mat->getBestTechnique()->getPass(0);
+			Pass* pass = mat->getBestTechnique()->getPass(0);
 			GpuProgramParametersSharedPtr  params = pass->getFragmentProgramParameters();
 
 			const RenderTarget::FrameStats& stats =  mApp->getWindow()->getStatistics();
 			float m_lastFPS =stats.lastFPS;
 
-			Matrix4 projectionMatrix   = cam->getProjectionMatrix();
+			Matrix4 projMat = cam->getProjectionMatrix();
 			if (mRequiresTextureFlipping)
 			{
 				// Because we're not using setProjectionMatrix, this needs to be done here
 				// Invert transformed y
-				projectionMatrix[1][0] = -projectionMatrix[1][0];
-				projectionMatrix[1][1] = -projectionMatrix[1][1];
-				projectionMatrix[1][2] = -projectionMatrix[1][2];
-				projectionMatrix[1][3] = -projectionMatrix[1][3];
+				projMat[1][0] = -projMat[1][0];
+				projMat[1][1] = -projMat[1][1];
+				projMat[1][2] = -projMat[1][2];
+				projMat[1][3] = -projMat[1][3];
 			}
-			Matrix4 iVP = (projectionMatrix * cam->getViewMatrix()).inverse();
+			Matrix4 iVP = (projMat * cam->getViewMatrix()).inverse();
 
 			if (params->_findNamedConstantDefinition("EPF_ViewProjectionInverseMatrix"))
 				params->setNamedConstant("EPF_ViewProjectionInverseMatrix", iVP);
@@ -810,18 +804,19 @@ void CameraBlurListener::notifyMaterialRender(uint32 pass_id, MaterialPtr &mat)
 			if (params->_findNamedConstantDefinition("intensity"))
 				params->setNamedConstant("intensity", mApp->pSet->blur_int);
 
-			float interpolationFactor = m_lastFPS * 0.03f ; //* m_timeScale m_timeScale is a multiplier to control motion blur interactively
-			Quaternion current_orientation = cam->getDerivedOrientation();
-			Vector3 current_position = cam->getDerivedPosition();
-			Quaternion estimatedOrientation = Quaternion::Slerp(interpolationFactor, current_orientation, (m_pPreviousOrientation));
-			Vector3 estimatedPosition    = (1-interpolationFactor) * current_position + interpolationFactor * (m_pPreviousPosition);
-			Matrix4 prev_viewMatrix = Math::makeViewMatrix(estimatedPosition, estimatedOrientation);//.inverse().transpose();
-			// compute final matrix
-			prevviewproj = projectionMatrix * prev_viewMatrix;
+			//  interpolate  * m_timeScale m_timeScale is a multiplier to control motion blur interactively
+			float factor = m_lastFPS * 0.03f;
+			Quaternion curRot = cam->getDerivedOrientation();
+			Vector3 curPos = cam->getDerivedPosition();
+			
+			Quaternion estRot = Quaternion::Slerp(factor, curRot, m_pPreviousOrientation);
+			Vector3 estPos = (1.f - factor) * curPos + factor * m_pPreviousPosition;
+			
+			Matrix4 prev_viewMatrix = Math::makeViewMatrix(estPos, estRot);//.inverse().transpose();
+			prevviewproj = projMat * prev_viewMatrix;  // final matrix
 
-			// update position and orientation for next update time
-			m_pPreviousOrientation = current_orientation;
-			m_pPreviousPosition = current_position;			
+			m_pPreviousOrientation = curRot;
+			m_pPreviousPosition = curPos;			
 		}
 	}
 }

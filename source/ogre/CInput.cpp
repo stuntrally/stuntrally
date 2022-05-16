@@ -82,7 +82,7 @@ void CInput::LoadInputDefaults()
 
 void CInput::LoadInputDefaults(vector<InputAction> &actions, ICS::InputControlSystem *pICS)
 {
-	for (vector<InputAction>::iterator it = actions.begin(); it != actions.end(); ++it)
+	for (auto it = actions.begin(); it != actions.end(); ++it)
 	{
 		ICS::Control* control;
 		bool controlExists = (pICS->getChannel(it->mId)->getControlsCount() != 0);

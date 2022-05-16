@@ -49,60 +49,55 @@ void CARDYNAMICS::UpdateBuoyancy()
 	//	sinf(chassisPosition[0]*0.3f)*cosf(chassisPosition[1]*0.32f);
 	//LogO("pos " + toStr((float)chassisPosition[0]) + " " + toStr((float)chassisPosition[1]) + "  b " + toStr(bc));
 
-	// for (auto fb : inFluids)
-	for (std::list<FluidBox*>::const_iterator i = inFluids.begin();
-		i != inFluids.end(); ++i)  // 0 or 1 is there
+	for (auto fb : inFluids)
+	if (fb->id >= 0)
 	{
-		const FluidBox* fb = *i;
-		if (fb->id >= 0)
-		{
-			const FluidParams& fp = pFluids->fls[fb->id];
+		const FluidParams& fp = pFluids->fls[fb->id];
 
-			WaterVolume water;
-			//float bump = 1.f + 0.7f * sinf(chassisPosition[0]*fp.bumpFqX)*cosf(chassisPosition[1]*fp.bumpFqY);
-			water.density = fp.density /* (1.f + 0.7f * bc)*/;  water.angularDrag = fp.angularDrag;
-			water.linearDrag = fp.linearDrag;  water.linearDrag2 = 0.f;  //1.4f;//fp.linearDrag2;
-			water.velocity.SetZero();
-			water.plane.offset = fb->pos.y;  water.plane.normal = Vec3(0,0,1);
-			//todo: fluid boxes rotation yaw, pitch ?-
+		WaterVolume water;
+		//float bump = 1.f + 0.7f * sinf(chassisPosition[0]*fp.bumpFqX)*cosf(chassisPosition[1]*fp.bumpFqY);
+		water.density = fp.density /* (1.f + 0.7f * bc)*/;  water.angularDrag = fp.angularDrag;
+		water.linearDrag = fp.linearDrag;  water.linearDrag2 = 0.f;  //1.4f;//fp.linearDrag2;
+		water.velocity.SetZero();
+		water.plane.offset = fb->pos.y;  water.plane.normal = Vec3(0,0,1);
+		//todo: fluid boxes rotation yaw, pitch ?-
 
-			RigidBody body;  body.mass = body_mass;
-			body.inertia = Vec3(body_inertia.getX(),body_inertia.getY(),body_inertia.getZ());
+		RigidBody body;  body.mass = body_mass;
+		body.inertia = Vec3(body_inertia.getX(),body_inertia.getY(),body_inertia.getZ());
 
-			///  body initial conditions
-			//  pos & rot
-			body.x.x = chassisPosition[0];  body.x.y = chassisPosition[1];  body.x.z = chassisPosition[2];
-			if (vtype == V_Sphere)
-			{	body.q.x = 0.f;  body.q.y = 0.f;  body.q.z = 0.f;  body.q.w = 1.f;  // no rot
-			}else
-			{	body.q.x = chassisRotation[0];  body.q.y = chassisRotation[1];  body.q.z = chassisRotation[2];  body.q.w = chassisRotation[3];
-				body.q.Normalize();//
-			}
-			//LogO(fToStr(body.q.x,2,4)+" "+fToStr(body.q.y,2,4)+" "+fToStr(body.q.z,2,4)+" "+fToStr(body.q.w,2,4));
-
-			//  vel, ang vel
-			btVector3 v = chassis->getLinearVelocity();
-			btVector3 a = chassis->getAngularVelocity();
-			body.v.x = v.getX();  body.v.y = v.getY();  body.v.z = v.getZ();
-			if (vtype == V_Sphere)
-			{	body.omega.SetZero();  // no ang vel
-			}else
-			{	body.omega.x = a.getX();  body.omega.y = a.getY();  body.omega.z = a.getZ();
-			}
-			body.F.SetZero();  body.T.SetZero();
-			
-			//  damp from height vel
-			body.F.z += fp.heightVelRes * -1000.f * body.v.z;
-			
-			///  add buoyancy force
-			if (ComputeBuoyancy(body, *poly, water, 9.8f))
-			{
-				if (vtype != V_Car)
-				{	body.F.x *= 0.15f;  body.F.y *= 0.15f;  }
-				chassis->applyCentralForce( btVector3(body.F.x,body.F.y,body.F.z) );
-				chassis->applyTorque(       btVector3(body.T.x,body.T.y,body.T.z) );
-			}	
+		///  body initial conditions
+		//  pos & rot
+		body.x.x = chassisPosition[0];  body.x.y = chassisPosition[1];  body.x.z = chassisPosition[2];
+		if (vtype == V_Sphere)
+		{	body.q.x = 0.f;  body.q.y = 0.f;  body.q.z = 0.f;  body.q.w = 1.f;  // no rot
+		}else
+		{	body.q.x = chassisRotation[0];  body.q.y = chassisRotation[1];  body.q.z = chassisRotation[2];  body.q.w = chassisRotation[3];
+			body.q.Normalize();//
 		}
+		//LogO(fToStr(body.q.x,2,4)+" "+fToStr(body.q.y,2,4)+" "+fToStr(body.q.z,2,4)+" "+fToStr(body.q.w,2,4));
+
+		//  vel, ang vel
+		btVector3 v = chassis->getLinearVelocity();
+		btVector3 a = chassis->getAngularVelocity();
+		body.v.x = v.getX();  body.v.y = v.getY();  body.v.z = v.getZ();
+		if (vtype == V_Sphere)
+		{	body.omega.SetZero();  // no ang vel
+		}else
+		{	body.omega.x = a.getX();  body.omega.y = a.getY();  body.omega.z = a.getZ();
+		}
+		body.F.SetZero();  body.T.SetZero();
+		
+		//  damp from height vel
+		body.F.z += fp.heightVelRes * -1000.f * body.v.z;
+		
+		///  add buoyancy force
+		if (ComputeBuoyancy(body, *poly, water, 9.8f))
+		{
+			if (vtype != V_Car)
+			{	body.F.x *= 0.15f;  body.F.y *= 0.15f;  }
+			chassis->applyCentralForce( btVector3(body.F.x,body.F.y,body.F.z) );
+			chassis->applyTorque(       btVector3(body.T.x,body.T.y,body.T.z) );
+		}	
 	}
 
 	///  wheel spin force (for mud)

@@ -103,7 +103,7 @@ void CScene::CreateTrees()
 	if (resMgr.resourceGroupExists("BinFolder"))
 	{
 		StringVectorPtr locations = resMgr.listResourceLocations("BinFolder");
-		for (StringVector::const_iterator it=locations->begin(); it!=locations->end(); ++it)
+		for (auto it = locations->begin(); it != locations->end(); ++it)
 			resMgr.removeResourceLocation( (*it), "BinFolder" );
 	}
 	

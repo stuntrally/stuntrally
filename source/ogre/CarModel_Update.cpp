@@ -552,12 +552,12 @@ void CarModel::UpdateKeys()
 			if (fCam)
 			{	fCam->Next(iC < 0, pApp->shift);
 				pApp->carsCamNum[iIndex] = fCam->miCurrent +1;  // save for pSet
+				
 				visMask = fCam->ca->mHideGlass ? RV_MaskAll-RV_CarGlass : RV_MaskAll;
-				for (std::list<Viewport*>::iterator it = pApp->mSplitMgr->mViewports.begin();
-					it != pApp->mSplitMgr->mViewports.end(); ++it)
-					(*it)->setVisibilityMask(visMask);
-			}
-		}
+				
+				for (auto vp : pApp->mSplitMgr->mViewports)
+					vp->setVisibilityMask(visMask);
+		}	}
 	}
 	iCamNextOld = iC;
 }

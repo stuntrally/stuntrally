@@ -43,7 +43,7 @@ void CGui::rebuildGameList()
 	protocol::GameList list = app->mMasterClient->getList();
 	const static char* sBoost[4] = {"#{Never}","#{FuelLap}","#{FuelTime}","#{Always}"};
 	
-	for (protocol::GameList::const_iterator it = list.begin(); it != list.end(); ++it)
+	for (auto it = list.begin(); it != list.end(); ++it)
 	{
 		li->addItem("#C0FFC0"+UString(it->second.name));  int l = li->getItemCount()-1;
 		li->setSubItemNameAt(1,l, "#50FF50"+ string(it->second.track));
@@ -75,7 +75,7 @@ void CGui::rebuildPlayerList()
 	//  Add others
 	bool allReady = true;
 	const PeerMap peers = app->mClient->getPeers();
-	for (PeerMap::const_iterator it = peers.begin(); it != peers.end(); ++it)
+	for (auto it = peers.begin(); it != peers.end(); ++it)
 	{
 		if (it->second.name.empty() || it->second.connection == PeerInfo::DISCONNECTED)
 			continue;

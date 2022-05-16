@@ -224,7 +224,7 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 		rt[RT_View].cam->setPosition(mCamera->getPosition());
 		rt[RT_View].cam->setDirection(mCamera->getDirection());
 	}
-	else for (auto r:scn->roads)
+	else for (auto r : scn->roads)
 		if (!r->river)
 			r->SetForRnd(num == RT_Road ? "render_clr" : "render_grass");
 }
@@ -236,7 +236,7 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 
 	if (num == RT_View)  // full
 	{	}
-	else for (auto r:scn->roads)
+	else for (auto r : scn->roads)
 	{	if (!r->river)  r->UnsetForRnd();
 		r->UpdLodVis(pSet->road_dist);
 	}
@@ -461,8 +461,7 @@ void App::AlignTerToRoad()
 
 			world->removeCollisionObject(obj);
 			delete obj;
-		}
-	}
+	}	}
 
 
 	//  update terrain
@@ -472,8 +471,8 @@ void App::AlignTerToRoad()
 
 
 	//  put sel segs on terrain
-	for (std::set<int>::const_iterator it = scn->road->vSel.begin(); it != scn->road->vSel.end(); ++it)
-		scn->road->mP[*it].onTer = true;
+	for (auto i : scn->road->vSel)
+		scn->road.mP[i].onTer = true;
 
 	//  restore orig road width
 	scn->road->Rebuild(true);

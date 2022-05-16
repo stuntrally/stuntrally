@@ -62,10 +62,10 @@ MyGUI::IntPoint ResourceImageSetPointerFix::getTexturePosition()
 	while (groupImages.next())
 	{
 		const MyGUI::GroupImage& image = groupImages.current();
-		for (MyGUI::VectorIndexImage::const_iterator it = image.indexes.begin(); it != image.indexes.end(); ++it)
+		for (auto it = image.indexes.begin(); it != image.indexes.end(); ++it)
 		{
 			const MyGUI::IndexImage& index = *it;
-			for (std::vector<MyGUI::IntPoint>::const_iterator fIt = index.frames.begin(); fIt != index.frames.end(); ++fIt)
+			for (auto fIt = index.frames.begin(); fIt != index.frames.end(); ++fIt)
 				return *fIt;
 		}
 	}

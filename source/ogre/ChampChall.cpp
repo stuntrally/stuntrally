@@ -149,7 +149,7 @@ void CGui::Ch_XmlLoad()
 {
 	/* stats */
 	float time = 0.f;  int trks = 0;
-	for (std::map<std::string, float>::const_iterator it = data->tracks->times.begin();
+	for (auto it = data->tracks->times.begin();
 		it != data->tracks->times.end(); ++it)
 	{
 		const string& trk = (*it).first;

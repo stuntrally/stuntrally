@@ -18,15 +18,6 @@ using namespace MyGUI;
 Gui* SliderValue::pGUI = NULL;
 bool* SliderValue::bGI = NULL;
 
-//  ctor
-SliderValue::SliderValue()
-	:slider(NULL), text(NULL), edit(NULL)
-	,pFloat(NULL), pInt(NULL)
-	,fMin(0.f), fRange(1.f), fPow(1.f)
-	,fmtDigits(2), fmtLength(4)
-	,fmtValMul(1.f), sSuffix()
-{	}
-
 
 //  events
 //-------------------------------------------------------------------------
@@ -269,13 +260,8 @@ void SliderValue::Init(
 //  Check
 //------------------------------------------------------------------------------------------------
 
-Gui* Check::pGUI = NULL;
-bool* Check::bGI = NULL;
-
-//  ctor
-Check::Check()
-	:chk(NULL), pBool(NULL)
-{	}
+Gui* Check::pGUI = nullptr;
+bool* Check::bGI = nullptr;
 
 
 //  button event

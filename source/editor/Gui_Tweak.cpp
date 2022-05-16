@@ -32,11 +32,11 @@ void CGui::CreateGUITweakMtr()
 	//if (!mat)  return;
 	
 	int y = 0;
-	const sh::PropertyMap& props = mat->listProperties();
-	for (sh::PropertyMap::const_iterator it = props.begin(); it != props.end(); ++it)
+	const auto& props = mat->listProperties();
+	for (auto it : props)
 	{
-		sh::PropertyValuePtr pv = (*it).second;
-		std::string name = (*it).first;
+		sh::PropertyValuePtr pv = it.second;
+		std::string name = it.first;
 		
 		//  get type
 		std::string sVal = pv->_getStringValue();

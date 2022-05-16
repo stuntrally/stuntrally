@@ -198,7 +198,7 @@ bool TracksXml::LoadIni(string file, bool check)
 		stringstream ss;  ss << fixed;
 		ss << "))) Sceneries stats:\n""Num - Name - tracks count - last track in it (num trks back)""\n";
 
-		for (set<string>::iterator it = scns.begin(); it != scns.end(); ++it,++i)
+		for (auto it = scns.begin(); it != scns.end(); ++it,++i)
 		{
 			//  find last trk in this scn
 			n = nn;  bool srch = true;
@@ -247,7 +247,7 @@ bool TracksXml::LoadIni(string file, bool check)
 		//  not in tracks.ini
 		strlist li;
 		PATHMANAGER::DirList(PATHMANAGER::Tracks(), li);
-		for (strlist::iterator i = li.begin(); i != li.end(); ++i)
+		for (auto i = li.begin(); i != li.end(); ++i)
 		{
 			string s = *i;
 			if (trkmap[s]==0)

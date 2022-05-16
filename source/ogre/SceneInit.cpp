@@ -359,7 +359,7 @@ void App::LoadGame()  // 2
 	///--------------------------------------------
 	//  will create vdrift cars, actual car loading will be done later in LoadCar()
 	//  this is just here because vdrift car has to be created first
-	std::list<Camera*>::iterator camIt = mSplitMgr->mCameras.begin();
+	auto camIt = mSplitMgr->mCameras.begin();
 	
 	int numCars = mClient ? mClient->getPeerCount()+1 : pSet->game.local_players;  // networked or splitscreen
 	int i;
@@ -514,9 +514,8 @@ void App::LoadCar()  // 4
 			c->fCam->setCamera(carsCamNum[i] -1);
 			
 			int visMask = c->fCam->ca->mHideGlass ? RV_MaskAll-RV_CarGlass : RV_MaskAll;
-			for (std::list<Viewport*>::iterator it = mSplitMgr->mViewports.begin();
-				it != mSplitMgr->mViewports.end(); ++it)
-				(*it)->setVisibilityMask(visMask);
+			for (auto vp : mSplitMgr->mViewports)
+				vp->setVisibilityMask(visMask);
 		}
 		iCurPoses[i] = 0;
 	}
@@ -686,23 +685,23 @@ void App::LoadMisc()  // 9 last
 	hud->Show(true);  // hide
 	
 	// Camera settings
-	for (std::vector<CarModel*>::iterator it=carModels.begin(); it!=carModels.end(); ++it)
-	{	(*it)->First();
-		if ((*it)->fCam)
-		{	(*it)->fCam->mTerrain = scn->mTerrainGroup;
-			//(*it)->fCam->mWorld = &(pGame->collision);
+	for (auto car : carModels)
+	{	car->First();
+		if (car->fCam)
+		{	car->fCam->mTerrain = scn->mTerrainGroup;
+			//car->fCam->mWorld = &(pGame->collision);
 	}	}
 	
 	if (dstTrk)
-	try {
-	TexturePtr tex = Ogre::TextureManager::getSingleton().getByName("waterDepth.png");
-	if (!tex.isNull())
-		tex->reload();
-	} catch(...) {  }
-
+	try
+	{	TexturePtr tex = Ogre::TextureManager::getSingleton().getByName("waterDepth.png");
+		if (!tex.isNull())
+			tex->reload();
+	} catch(...)
+	{	}
 	
 	/// rendertextures debug
-	#if 0
+#if 0
 	// init overlay elements
 	OverlayManager& mgr = OverlayManager::getSingleton();
 	Overlay* overlay;
@@ -711,7 +710,7 @@ void App::LoadMisc()  // 9 last
 		mgr.destroy(overlay);
 	overlay = mgr.create("DebugOverlay");
 	//Ogre::CompositorInstance  *compositor= CompositorManager::getSingleton().getCompositorChain(mSplitMgr->mViewports.front())->getCompositor("HDR");
-	for (int i=0; i<3; ++i)
+	for (int i=0; i < 3; ++i)
 	{
 		// Set up a debug panel
 		if (MaterialManager::getSingleton().resourceExists("Ogre/DebugTexture" + toStr(i)))
@@ -723,7 +722,7 @@ void App::LoadMisc()  // 9 last
 		//TexturePtr depthTexture = compositor->getTextureInstance("mrt_output",i);
 		//TexturePtr depthTexture = compositor->getTextureInstance("rt_bloom0",0);
 		TexturePtr depthTexture = mSceneMgr->getShadowTexture(i);
-		if(!depthTexture.isNull())
+		if (!depthTexture.isNull())
 		{
 			TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(depthTexture->getName());
 			t->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
@@ -732,13 +731,14 @@ void App::LoadMisc()  // 9 last
 		// destroy container if exists
 		try
 		{
-			if (debugPanel = 
-				static_cast<OverlayContainer*>(
+			if (debugPanel = static_cast<OverlayContainer*>(
 					mgr.getOverlayElement("Ogre/DebugTexPanel" + toStr(i)
 				)))
 				mgr.destroyOverlayElement(debugPanel);
 		}
-		catch (Exception&) {}
+		catch (Exception&)
+		{	}
+
 		debugPanel = (OverlayContainer*)
 			(OverlayManager::getSingleton().createOverlayElement("Panel", "Ogre/DebugTexPanel" + StringConverter::toString(i)));
 		debugPanel->_setPosition(0.67, i*0.33);
@@ -748,7 +748,7 @@ void App::LoadMisc()  // 9 last
 		overlay->add2D(debugPanel);
 		overlay->show();
 	}
-	#endif
+#endif
 }
 
 

@@ -419,14 +419,13 @@ void CarModel::Create()
 		fCam->loadCameras();
 		
 		//  set in-car camera position to driver position
-		for (std::vector<CameraAngle*>::iterator it=fCam->mCameraAngles.begin();
-			it!=fCam->mCameraAngles.end(); ++it)
+		for (auto cam : fCam->mCameraAngles)
 		{
-			(*it)->mDist *= camDist;
-			if ((*it)->mName == "Car driver")
-				(*it)->mOffset = Vector3(driver_view[0], driver_view[2], -driver_view[1]);
-			else if ((*it)->mName == "Car bonnet")
-				(*it)->mOffset = Vector3(hood_view[0], hood_view[2], -hood_view[1]);
+			cam->mDist *= camDist;
+			if (cam->mName == "Car driver")
+				cam->mOffset = Vector3(driver_view[0], driver_view[2], -driver_view[1]);
+			else if (cam->mName == "Car bonnet")
+				cam->mOffset = Vector3(hood_view[0], hood_view[2], -hood_view[1]);
 		}
 	}
 	

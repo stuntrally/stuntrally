@@ -321,7 +321,7 @@ public:
 			obj += data[i].size();
 		}*/
 		
-		for (typename std::vector < std::map <KEYCLASS, DATACLASS> >::const_iterator i = data.begin(); i != data.end(); ++i)
+		for (auto i = data.begin(); i != data.end(); ++i)
 		{
 			obj += i->size();
 		}

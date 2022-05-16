@@ -132,7 +132,7 @@ void CGui::CreateInputTab(int iTab, bool player,
 
 	///  Actions  ------------------------------------------------
 	int i = 0;
-	for (std::vector<InputAction>::const_iterator it = actions.begin(); it != actions.end(); ++it)
+	for (auto it = actions.begin(); it != actions.end(); ++it)
 	{
 		std::string name = it->mName;
 		y = yHdr + yRow[name] * yAdd;

@@ -289,17 +289,17 @@ void CGui::slReflMode(SV* sv)
 }
 void App::recreateReflections()
 {
-	for (std::vector<CarModel*>::iterator it = carModels.begin(); it!=carModels.end(); it++)
+	for (auto* car : carModels)
 	{	
-		delete (*it)->pReflect;
-		(*it)->CreateReflection();
+		delete car->pReflect;
+		car->CreateReflection();
 	}
 }
 
 void CGui::chkParTrl(Ck*)
 {		
-	for (std::vector<CarModel*>::iterator it=app->carModels.begin(); it!=app->carModels.end(); it++)
-		(*it)->UpdParsTrails();
+	for (auto* car : app->carModels)
+		car->UpdParsTrails();
 }
 
 
@@ -342,8 +342,8 @@ void CGui::chkWireframe(Ck*)
 	app->refreshCompositor(b);  // disable effects
 
 	if (app->mSplitMgr)
-	for (std::list<Camera*>::iterator it=app->mSplitMgr->mCameras.begin(); it!=app->mSplitMgr->mCameras.end(); ++it)
-		(*it)->setPolygonMode(mode);
+	for (auto* cam : app->mSplitMgr->mCameras)
+		cam->setPolygonMode(mode);
 	
 	if (app->ndSky)
 		app->ndSky->setVisible(!b);  // hide sky
@@ -456,13 +456,14 @@ void CGui::slVolHud(SV*)
 }
 
 
-//  Hints, welcome screen
+//  Hints, How to play
 //---------------------------------------------------------------------
-const static char hOrd[/*CGui::iHints*/17]={0,1,2,3,4,5,16,6,7,8,9,10,11,12,13,14, 15};
+const static char hintsOrder[/*CGui::iHints*/17]={0,1,2,3,4,5,16,6,7,8,9,10,11,12,13,14, 15};
+
 void CGui::UpdHint()
 {
 	if (!edHintTitle)  return;
-	int h = hOrd[iHintCur];
+	int h = hintsOrder[iHintCur];
 	edHintTitle->setCaption(TR("#C0E0FF#{Hint}  #A0D0FF") +toStr(iHintCur+1)+"/"+toStr(iHints)+
 					  ":   "+TR("#D0E8FF#{Hint-"+toStr(h)+"}"));
 	edHintText->setCaption(TR("#{Hint-"+toStr(h)+"text}"));
@@ -493,9 +494,8 @@ void CGui::btnHintClose(WP)
 
 
 
-///  3d car view  TODO ...
-//--------------------------------------------
-
+///  3d car view  // todo: ..
+//---------------------------------------------------------------------
 IntCoord CGui::GetViewSize()
 {
 	IntCoord ic = app->mWndGame->getClientCoord();

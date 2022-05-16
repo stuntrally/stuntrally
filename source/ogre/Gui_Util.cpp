@@ -69,7 +69,7 @@ void CGui::CarListUpd(bool resetNotFound)
 		if (carList->mSortUp)  liCar2.reverse();
 		
 		//  original
-		for (std::list<CarL>::iterator i = liCar2.begin(); i != liCar2.end(); ++i)
+		for (auto i = liCar2.begin(); i != liCar2.end(); ++i)
 		{
 			String name = (*i).name;  //, nlow = name;  StringUtil::toLowerCase(nlow);
 			//if (sTrkFind == "" || strstr(nlow.c_str(), sTrkFind.c_str()) != 0)
@@ -474,7 +474,7 @@ void CGui::btnNewGame(WP wp)
 	}
 	app->NewGame(force);  app->isFocGui = false;  // off gui
 	app->mWndOpts->setVisible(app->isFocGui);
-	app->mWndRpl->setVisible(false);//
+	app->mWndRpl->setVisible(false);  app->mWndRplTxt->setVisible(false);//
 	gcom->bnQuit->setVisible(app->isFocGui);
 	
 	app->updMouse();

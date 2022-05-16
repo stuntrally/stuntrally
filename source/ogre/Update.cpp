@@ -97,12 +97,12 @@ void App::DoNetworking()
 
 		//  update the local car's state to the client
 		protocol::CarStatePackage cs;  // FIXME: Handles only one local car
-		for (CarModels::const_iterator it = carModels.begin(); it != carModels.end(); ++it)
+		for (auto car : carModels)
 		{
-			if ((*it)->eType == CarModel::CT_LOCAL)
+			if (car->eType == CarModel::CT_LOCAL)
 			{
-				cs = (*it)->pCar->GetCarStatePackage();
-				cs.trackPercent = uint8_t( (*it)->trackPercent / 100.f * 255.f);  // pack to uint8
+				cs = car->pCar->GetCarStatePackage();
+				cs.trackPercent = uint8_t( car->trackPercent / 100.f * 255.f);  // pack to uint8
 				break;
 			}
 		}
@@ -110,15 +110,15 @@ void App::DoNetworking()
 
 		//  check for new car states
 		protocol::CarStates states = mClient->getReceivedCarStates();
-		for (protocol::CarStates::const_iterator it = states.begin(); it != states.end(); ++it)
+		for (auto it : states)
 		{
-			int8_t id = it->first;  // Car number  // FIXME: Various places assume carModels[0] is local
+			int8_t id = it.first;  // Car number  // FIXME: Various places assume carModels[0] is local
 			if (id == 0)  id = mClient->getId();
 			
 			CarModel* cm = carModels[id];
 			if (cm && cm->pCar)
 			{
-				cm->pCar->UpdateCarState(it->second);
+				cm->pCar->UpdateCarState(it.second);
 				cm->trackPercent = cm->pCar->trackPercentCopy;  // got from client
 			}
 		}

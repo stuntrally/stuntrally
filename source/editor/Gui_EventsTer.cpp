@@ -564,29 +564,29 @@ bool App::LoadAllSurfaces()
 	std::list <std::string> sectionlist;
 	param.GetSectionList(sectionlist);
 	
-	for (std::list<std::string>::const_iterator section = sectionlist.begin(); section != sectionlist.end(); ++section)
+	for (auto section : sectionlist)
 	{
 		TRACKSURFACE surf;
-		surf.name = *section;
+		surf.name = section;
 		
 		int id;
-		param.GetParam(*section + ".ID", id);  // for sound..
+		param.GetParam(section + ".ID", id);  // for sound..
 		//-assert(indexnum >= 0 && indexnum < (int)tracksurfaces.size());
 		surf.setType(id);
 		
 		float temp = 0.0;
-		param.GetParam(*section + ".BumpWaveLength", temp);		surf.bumpWaveLength = temp;
-		param.GetParam(*section + ".BumpAmplitude", temp);		surf.bumpAmplitude = temp;
+		param.GetParam(section + ".BumpWaveLength", temp);		surf.bumpWaveLength = temp;
+		param.GetParam(section + ".BumpAmplitude", temp);		surf.bumpAmplitude = temp;
 
 		//frictionX, frictionY, bumpWaveLength2, bumpAmplitude2, not shown ..
-		param.GetParam(*section + ".FrictionTread", temp);		surf.friction = temp;
+		param.GetParam(section + ".FrictionTread", temp);		surf.friction = temp;
 		
-		if (param.GetParam(*section + ".RollResistance", temp))	surf.rollingResist = temp;
-		param.GetParam(*section + ".RollingDrag", temp);		surf.rollingDrag = temp;
+		if (param.GetParam(section + ".RollResistance", temp))	surf.rollingResist = temp;
+		param.GetParam(section + ".RollingDrag", temp);		surf.rollingDrag = temp;
 
 		///---  Tire  ---
 		std::string tireFile;
-		if (!param.GetParam(*section + "." + "Tire", tireFile))
+		if (!param.GetParam(section + "." + "Tire", tireFile))
 			tireFile = "Default";  // default surface if not found
 		surf.tireName = tireFile;
 		///---

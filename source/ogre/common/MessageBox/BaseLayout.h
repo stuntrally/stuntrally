@@ -33,7 +33,7 @@ namespace wraps
 		void assignWidget(T * & _widget, const std::string& _name, bool _throw = true, bool _createFakeWidgets = true)
 		{
 			_widget = nullptr;
-			for (MyGUI::VectorWidgetPtr::iterator iter = mListWindowRoot.begin(); iter != mListWindowRoot.end(); ++iter)
+			for (auto iter = mListWindowRoot.begin(); iter != mListWindowRoot.end(); ++iter)
 			{
 				MyGUI::Widget* find = (*iter)->findWidget(mPrefix + _name);
 				if (nullptr != find)
@@ -65,7 +65,7 @@ namespace wraps
 		void assignBase(T * & _widget, const std::string& _name, bool _throw = true, bool _createFakeWidgets = true)
 		{
 			_widget = nullptr;
-			for (MyGUI::VectorWidgetPtr::iterator iter = mListWindowRoot.begin(); iter != mListWindowRoot.end(); ++iter)
+			for (auto iter = mListWindowRoot.begin(); iter != mListWindowRoot.end(); ++iter)
 			{
 				MyGUI::Widget* find = (*iter)->findWidget(mPrefix + _name);
 				if (nullptr != find)
@@ -104,7 +104,7 @@ namespace wraps
 
 				const std::string mainName1 = mPrefix + MAIN_WINDOW1;
 				const std::string mainName2 = mPrefix + MAIN_WINDOW2;
-				for (MyGUI::VectorWidgetPtr::iterator iter = mListWindowRoot.begin(); iter != mListWindowRoot.end(); ++iter)
+				for (auto iter = mListWindowRoot.begin(); iter != mListWindowRoot.end(); ++iter)
 				{
 					if ((*iter)->getName() == mainName1 || (*iter)->getName() == mainName2)
 					{
@@ -128,12 +128,10 @@ namespace wraps
 
 		void shutdown()
 		{
-			// удаляем все классы
 			for (VectorBasePtr::reverse_iterator iter = mListBase.rbegin(); iter != mListBase.rend(); ++iter)
 				delete (*iter);
 			mListBase.clear();
 
-			// удаляем все рутовые виджеты
 			MyGUI::LayoutManager::getInstance().unloadLayout(mListWindowRoot);
 			mListWindowRoot.clear();
 		}
@@ -143,8 +141,8 @@ namespace wraps
 		{
 			initialise(attribute::AttributeLayout<Type>::getData(), _parent, _throw, _createFakeWidgets);
 
-			typename attribute::AttributeFieldWidgetName<Type>::VectorBindPair& data = attribute::AttributeFieldWidgetName<Type>::getData();
-			for (typename attribute::AttributeFieldWidgetName<Type>::VectorBindPair::iterator item = data.begin(); item != data.end(); ++item)
+			auto& data = attribute::AttributeFieldWidgetName<Type>::getData();
+			for (auto item = data.begin(); item != data.end(); ++item)
 			{
 				MyGUI::Widget* value = nullptr;
 				assignWidget(value, item->second, _throw, false);
@@ -217,9 +215,11 @@ namespace wraps
 		MyGUI::Widget* _createFakeWidgetT(const std::string& _typeName, MyGUI::Widget* _parent)
 		{
 			if (_parent)
-				return _parent->createWidgetT(_typeName, MyGUI::SkinManager::getInstance().getDefaultSkin(), MyGUI::IntCoord(), MyGUI::Align::Default);
+				return _parent->createWidgetT(_typeName,
+					MyGUI::SkinManager::getInstance().getDefaultSkin(), MyGUI::IntCoord(), MyGUI::Align::Default);
 
-			return MyGUI::Gui::getInstance().createWidgetT(_typeName, MyGUI::SkinManager::getInstance().getDefaultSkin(), MyGUI::IntCoord(), MyGUI::Align::Default, "");
+			return MyGUI::Gui::getInstance().createWidgetT(_typeName,
+				MyGUI::SkinManager::getInstance().getDefaultSkin(), MyGUI::IntCoord(), MyGUI::Align::Default, "");
 		}
 
 	public:
