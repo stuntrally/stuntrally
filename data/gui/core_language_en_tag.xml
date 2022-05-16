@@ -1526,7 +1526,11 @@
 	<Tag name="CarDesc_O">An experimental, perfectly stabilized, rotating sphere. Uses advanced spacecraft propulsion to easily move in any direction. Very fast but very bouncy.</Tag>
 	<Tag name="CarDesc_Pipes">NOTE: Currently impossible to use in pipes.</Tag>
 
-	<!--  TIP  Hints title+text  (on welcome screen)  -->
+	<!--  TIP  Hints title+text  (in How To Play)  -->
+	<Tag name="Lesson">Lesson</Tag>
+	<Tag name="DrivingSchool">Stunt Rally driving school</Tag>
+	<Tag name="LessonClick">click button to play a lesson</Tag>
+
 	<Tag name="Hint-0">Rewind</Tag>
 	<Tag name="Hint-0text">If you crashed or you're stuck, hold [Backspace] to move back in time.</Tag>
 	<Tag name="Hint-1">Turns</Tag>
@@ -1557,10 +1561,32 @@
 	<Tag name="Hint-13text">By default simulation is in easy mode, for beginners. Don't forget to set it to normal if the game feels too easy.</Tag>
 	<Tag name="Hint-14">Fps</Tag>
 	<Tag name="Hint-14text">Press F11 to show the bar with frames per second and other info. For playing, it's best to have at least 30 Fps, 60 Fps being the ideal value.</Tag>
-	<Tag name="Hint-15">Last</Tag>
-	<Tag name="Hint-15text">For more info, check [Help] in the menu.</Tag>
+	<Tag name="Hint-15">Help</Tag>
+	<Tag name="Hint-15text">For more info, check [Help] in the menu. It also has links to websites.</Tag>
 	<Tag name="Hint-16">Camera</Tag>
 	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
+	<Tag name="Hint-17">Trail</Tag>
+	<Tag name="Hint-17text">Follow racing line trail, for best way to drive. Use its colors to your advantage. Brake early when you see it turning red.</Tag>
+	<Tag name="Hint-18">Pacenotes</Tag>
+	<Tag name="Hint-18text">Observe pace note signs above road. They show turns: easy as green, medium as orange, and sharpest being red.</Tag>
+	<Tag name="Hint-19">Stunt Pacenotes</Tag>
+	<Tag name="Hint-19text">Pace notes also warn about stunts like jumps, loops and on pipe drive. For jumps, also text with ideal speed is shown. Turning green on close match, orange when too low and cyan or white when too fast.</Tag>
+	<Tag name="Hint-20">Fluids</Tag>
+	<Tag name="Hint-20text">Fluids like water and mud are safe. You can drive cars under the water and through mud. Stay out of lava and acid, which will cause damage fast.</Tag>
+	<Tag name="Hint-21">Wheels</Tag>
+	<Tag name="Hint-21text">Beware of spinning wheels, car looses grip and will slide too much. Release throttle to get back grip and wheels rolling normally. This will happen on surfaces like snow or with faster cars.</Tag>
+	<Tag name="Hint-22">Keyboard</Tag>
+	<Tag name="Hint-22text">By default, keyboard arrows are used to drive.</Tag>
+	<Tag name="Hint-23">Editors</Tag>
+	<Tag name="Hint-23text">Stunt Rally comes with its own Track Editor, where you can modify its tracks or create your own. Game also has its vehicle editor and many other development tools.</Tag>
+	<Tag name="Hint-24">Details</Tag>
+	<Tag name="Hint-24text">Track and Vehicle tabs show a lot of information. You can sort or filter their lists. Some vehicles are difficult to drive, and will only drive well on few tracks.</Tag>
+	<Tag name="Hint-25">Support</Tag>
+	<Tag name="Hint-25text">Stunt Rally is Free Libre Open Source Software. You can contribute to this project or support it with donation(s).</Tag>
+	<Tag name="Hint-26">Test tracks</Tag>
+	<Tag name="Hint-26text">When beginning it may be safer and more fun, to train driving on big test tracks with no roads: Flat, TerrainBig, Fluids, Snow or Asphalt. Type name in find box for quick search.</Tag>
+	<Tag name="Hint-27">Handbrake</Tag>
+	<Tag name="Hint-27text">Use handbrake very shortly in very sharp turns. It will lock rear wheels and make car turn faster.</Tag>
 
 
 	<!--  Game  User Path  -->

@@ -215,12 +215,10 @@
 			<Property key="TextColour" value="0.5 0.8 1"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.big"/>
-			<!-- <Property key="Alpha" value="0.4"/> -->
 		</Widget>
 
 		<Widget type="ImageBox" skin="ImageBox" position="32 508 56 56">
-			<Property key="ImageCoord" value="512 384 128 128"/>
-			<Property key="Colour" value="0.6 1.0 0.6"/>
+			<Property key="ImageCoord" value="256 896 128 128"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>

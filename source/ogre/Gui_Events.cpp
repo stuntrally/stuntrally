@@ -469,20 +469,20 @@ void CGui::slVolHud(SV*)
 
 //  Hints, How to play
 //---------------------------------------------------------------------
-const int CGui::iHints = 27;
+const int CGui::iHints = 28;
 const static char hintsOrder[CGui::iHints] = {
 /*	0 Rewind  22 Keyboard  16 Camera
 	1 Turns  3 Gravel  26 Test tracks
 	17 Trail  18 Pacenotes  5 Ghost cars
 	2 Flipping  4 Damage  6 Boost
 	9 Jumps  19 Stunt Pacenotes  10 Loops  11 Pipes
-	20 Fluids
+	20 Fluids  27 Handbrake
 	7 Cars  12 Vehicles  21 Wheels
 	13 Simulation  8 Steering  14 Fps
 	23 Editors  24 Details
 	15 Last Help  25 Support  */
 	0,22,16, 1,3,26, 17,18,5, 2,4,6,
-	9,19,10,11, 20, 7,12,21,
+	9,19,10,11, 20,27, 7,12,21,
 	13,8,14, 23,24, 15,25
 };
 
@@ -496,47 +496,52 @@ void CGui::btnLesson(WP wp)
 	auto Add = [&](float b, float e, string t){  rplSubtitles.push_back(Subtitle(b, e, t));  };
 
 	switch (n)
-	{	// hints not here: 5,8, 13-15, 23-26
-	case 1:  file = "1";  // turns gravel trail pace
-		Add(1.f,  8.f,  "#{Hint-22text}");  // keys
+	{	// hints not here: 5!gho,8, 13-15, 23,25-26
+	case 1:  file = "1";  //  keys  turns trail  gravel pace
+		Add(1.f,  8.f,  "#{Hint-22text}");
 		Add(10.f, 21.f, "#{Hint-1text}");
 		Add(23.f, 30.f, "#{Hint-17text}");
 		Add(32.f, 40.f, "#{Hint-3text}");
 		Add(41.f, 55.f, "#{Hint-18text}");
 		break;
-	case 2:  file = "2";  // damage rewind flip
-		Add(0.1f,  8.f, "#{Hint-4text}");
-		Add( 9.f, 18.f, "#{Hint-2text}");
+	case 2:  file = "2";  //  damage  flip  rewind
+		Add(0.1f, 11.f, "#{Hint-4text}");
+		Add(12.f, 18.f, "#{Hint-2text}");
 		Add(19.f, 33.f, "#{Hint-0text}");
 		break;
-	case 3:  file = "3";  // boost jumps
-		Add(0.5f,  9.f, "#{Hint-6text}");
-		Add(10.f, 20.f, "#{Hint-9text}");
-		Add(22.f, 35.f, "#{Hint-19text}");
+	case 3:  file = "3";  //  boost  jumps
+		Add(0.5f,  8.f, "#{Hint-6text}");
+		Add( 9.f, 18.f, "#{Hint-9text}");
+		Add(19.f, 38.f, "#{Hint-19text}");
 		break;
-	case 4:  file = "4r";  // loops pipes
-		Add(0.5f, 9.f,  "#{Hint-10text}");
-		Add(10.f, 21.f, "#{Hint-11text}");
+	case 4:  file = "4b"; //  pipes  loops
+		Add(0.5f, 9.f,  "#{Hint-11text}");
+		Add(10.f, 21.f, "#{Hint-10text}");
 		break;
-	case 5:  file = "5r";  // fluids
+	case 5:  file = "5b"; //  fluids  camera  cars
 		Add(0.5f, 21.f, "#{Hint-20text}");
+		Add(22.f, 31.f, "#{Hint-16text}");
+		Add(32.f, 46.f, "#{Hint-7text}");
 		break;
-	case 6:  file = "6";  // cars veh
-		Add(0.5f, 9.f,  "#{Hint-7text}");
-		Add(10.f, 21.f, "#{Hint-12text}");
-		Add(22.f, 35.f, "#{Hint-21text}");  // wheels?
+	case 6:  file = "6";  //  test  handbrake  wheels
+		Add(0.5f, 14.f, "#{Hint-26text}");
+		Add(15.f, 24.f, "#{Hint-27text}");
+		Add(25.f, 40.f, "#{Hint-21text}");
+		break;
+	case 7:  file = "7";  //  vehicles  details
+		Add(1.f,  15.f, "#{Hint-12text}");
+		Add(16.f, 29.f, "#{Hint-24text}");
 		break;
 	}
 	file = PATHMANAGER::Lessons() + "/" + file + ".rpl";
 	bLesson = true;
 	btnRplLoadFile(file);
-	pSet->game.trackreverse = file.find('r')!=string::npos;  //app->replay.header.reverse;
+	pSet->game.trackreverse = file.find('b')!=string::npos;  //app->replay.header.reverse;
 	
 	rplSubText->setCaption("");  app->mWndRplTxt->setVisible(false);
-	//  hud, restore.. 
-	// ckTrailShow.SetValue(1);
-	// ckMinimap.SetValue(1);
-	// ckTimes.SetValue(1);
+	//  hud setup, restore ..
+	ckTrailShow.SetValue(1);  ckPaceShow.SetValue(1);  ckMinimap.SetValue(1);
+	ckTimes.SetValue(0);
 }
 
 void CGui::UpdHint()

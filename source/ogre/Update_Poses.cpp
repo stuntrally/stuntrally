@@ -273,7 +273,7 @@ void App::newPoses(float time)  // time only for camera update
 				if (ncs > 0)
 				{
 					//  Finish  --------------------------------------
-					if (locar &&
+					if (locar && !bRplPlay &&
 						(carM->bInSt && carM->iNumChks == ncs && carM->iCurChk != -1))
 					{
 						///  Lap
@@ -394,7 +394,7 @@ void App::newPoses(float time)  // time only for camera update
 									pGame->snd_chk->start();  //)
 							}
 							else
-							if (carM->iInChk != carM->iCurChk &&
+							if (carM->iInChk != carM->iCurChk && !bRplPlay &&
 								!scn->sc->noWrongChks)  // denies
 							{
 								carM->bWrongChk = true;
@@ -529,6 +529,8 @@ void App::updatePoses(float time)
 			if (v > 0.98f && !isFocGui)  // end, back to gui
 			{	//bRplPause = true;
 				pSet->iMenu = MN_HowTo;  isFocGui = true;  gui->toggleGui(false);
+				//  hud restore ..
+				gui->ckTimes.SetValue(1);
 			}
 			bool vis = false;
 			for (auto s : gui->rplSubtitles)

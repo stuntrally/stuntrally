@@ -358,17 +358,77 @@
 		<Property key="Colour" value="0.7 0.85 1"/>
 		<Property key="Alpha" value="1"/>
 		<Property key="Visible" value="false"/>
-		<Widget type="TextBox" skin="TextBox" position="20 20 240 24">
-			<Property key="Caption" value="#B0D0F0#{HowToPlay}"/>
+
+		<Widget type="TextBox" skin="TextBox" position="20 20 640 24">
+			<Property key="Caption" value="#{DrivingSchool} - #{LessonClick}"/>
+			<Property key="Colour" value="1.0 1.0 0.95"/>
 			<Property key="FontName" value="font.big"/>
 			<Property key="TextShadow" value="true"/>
 		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
+		<Widget type="ImageBox" skin="ImageBox" position="660 56 96 96">
 			<Property key="ImageCoord" value="0 128 128 128"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
+	
+		<Widget type="Button" skin="Button" position="42 60 464 30" align="Left" name="BtnLesson1">
+			<Property key="Caption" value="#{Lesson} 1 - #{Hint-1}, #{Hint-3}, #{Hint-17}, #{Hint-18} "/>
+			<Property key="Colour" value="0.6 1.0 0.5"/><!-- turns  gravel  trail  pace -->
+			<Property key="TextColour" value="0.6 1.0 0.5"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextAlign" value="Left"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="42 100 464 30" align="Left" name="BtnLesson2">
+			<Property key="Caption" value="#{Lesson} 2 - #{Hint-4}, #{Hint-2}, #{Hint-0}"/>
+			<Property key="Colour" value="1.0 1.0 0.5"/><!-- damage  flip  rewind -->
+			<Property key="TextColour" value="1.0 1.0 0.5"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextAlign" value="Left"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="42 140 464 30" align="Left" name="BtnLesson3">
+			<Property key="Caption" value="#{Lesson} 3 - #{Hint-6}, #{Hint-9}"/>
+			<Property key="Colour" value="1.0 0.75 0.5"/><!-- boost  jumps -->
+			<Property key="TextColour" value="1.0 0.75 0.5"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextAlign" value="Left"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="42 180 464 30" align="Left" name="BtnLesson4">
+			<Property key="Caption" value="#{Lesson} 4 - #{Hint-11}, #{Hint-10}"/>
+			<Property key="Colour" value="0.7 0.9 1.0"/><!-- pipes  loops -->
+			<Property key="TextColour" value=".7 0.9 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextAlign" value="Left"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="42 220 464 30" align="Left" name="BtnLesson5">
+			<Property key="Caption" value="#{Lesson} 5 - #{Hint-20}, #{Hint-16}, #{Hint-7}"/>
+			<Property key="Colour" value="0.4 0.7 1.0"/><!-- fluids  camera  cars -->
+			<Property key="TextColour" value="0.4 0.6 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextAlign" value="Left"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="42 260 464 30" align="Left" name="BtnLesson6">
+			<Property key="Caption" value="#{Lesson} 6 - #{Hint-26}, #{Hint-27}, #{Hint-21}"/>
+			<Property key="Colour" value="0.6 0.6 1.0"/><!-- test tracks  handbrake  wheels -->
+			<Property key="TextColour" value="0.6 0.6 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextAlign" value="Left"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="42 300 464 30" align="Left" name="BtnLesson7">
+			<Property key="Caption" value="#{Lesson} 7 - #{Hint-12}, #{Hint-24}"/>
+			<Property key="Colour" value="0.8 0.6 1.0"/><!-- vehicles  details -->
+			<Property key="TextColour" value="0.8 0.6 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextAlign" value="Left"/>
+		</Widget>
 
+		<!-- Hints -->
+		<Widget type="ImageBox" skin="ImageBox" position="560 400 80 80">
+			<Property key="ImageCoord" value="768 768 128 128"/>
+			<Property key="Colour" value="0.7 0.85 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Alpha" value="1"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="16 406 524 146">
 			<Property key="Colour" value="0.7 0.85 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
@@ -381,7 +441,7 @@
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
-			<Property key="Colour" value="0.6 0.66 0.7"/>
+			<Property key="Colour" value="0.5 0.56 0.6"/>
 			<Property key="TextColour" value="0.9 0.95 1.0"/>
 			<Property key="TextAlign" value="Left Top"/>
 			<Property key="TextShadow" value="true"/>
@@ -396,22 +456,21 @@
 			<Property key="FontName" value="font.big"/>
 			<Property key="TextShadow" value="true"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="288 412 32 24" name="btnHintPrev">
-			<Property key="Colour" value="0.7 0.85 1.0"/>
-			<Property key="Caption" value="#A0C0FF&lt;"/>
+		<Widget type="Button" skin="Button" position="288 410 42 26" name="btnHintPrev">
+			<Property key="Colour" value="0.9 0.95 1.0"/>
+			<Property key="Caption" value="#B0D0FF&lt;"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="324 412 32 24" name="btnHintNext">
-			<Property key="Colour" value="0.7 0.85 1.0"/>
-			<Property key="Caption" value="#A0C0FF&gt;"/>
+		<Widget type="Button" skin="Button" position="334 410 42 26" name="btnHintNext">
+			<Property key="Colour" value="0.9 0.95 1.0"/>
+			<Property key="Caption" value="#B0D0FF&gt;"/>
 		</Widget>
 		
-		<Widget type="Button" skin="Button" position="576 504 196 48" name="btnHintClose">
-			<Property key="Colour" value="0.6 0.95 1"/>
-			<Property key="Caption" value="#D0F0FF#{Close}"/>
+		<Widget type="Button" skin="Button" position="576 504 196 48" name="btnHowToBack">
+			<Property key="Colour" value="0.7 0.95 1"/>
+			<Property key="Caption" value="#D0F0FF&lt;#{BackMenu}"/>
 			<Widget type="ImageBox" skin="ImageBox" position="0 0 48 48">
-				<Property key="ImageCoord" value="256 384 128 128"/>
-				<Property key="Colour" value="0.7 0.85 1.0"/>
-				<Property key="Alpha" value="0.5"/>
+				<Property key="ImageCoord" value="256 896 128 128"/>
+				<Property key="InheritsAlpha" value="false"/>
 				<Property key="ImageTexture" value="gui_icons.png"/>
 				<Property key="NeedMouse" value="false"/>
 			</Widget>

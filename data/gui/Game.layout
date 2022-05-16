@@ -1587,7 +1587,13 @@
 				<Widget type="Button" skin="Button" position="28 484 48 40" name="btnChampInfo">
 					<Property key="Colour" value="0.6 0.8 1.0"/>
 					<Property key="TextColour" value="0.6 0.8 1.0"/>
-					<Property key="Caption" value="?"/>
+					<Widget type="ImageBox" skin="ImageBox" position="4 0 40 40">
+						<Property key="ImageCoord" value="128 768 128 128"/>
+						<Property key="Alpha" value="0.6"/>
+						<Property key="InheritsAlpha" value="false"/>
+						<Property key="ImageTexture" value="gui_icons.png"/>
+						<Property key="NeedMouse" value="false"/>
+					</Widget>
 				</Widget>
 				<Widget type="EditBox" skin="EditBoxEmpty" position="100 472 624 60" name="ChampInfo">
 					<Property key="Caption" value="#{ChampInfo}"/>

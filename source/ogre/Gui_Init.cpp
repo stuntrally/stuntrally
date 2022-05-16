@@ -138,7 +138,7 @@ void CGui::InitGui()
 
 	//  How to play  >> >
 	Btn("btnHowToBack", btnHowToBack);
-	for (int i=1; i <= 6; ++i)
+	for (int i=1; i <= 7; ++i)
 	{	Btn("BtnLesson"+toStr(i), btnLesson);  }
 
 
