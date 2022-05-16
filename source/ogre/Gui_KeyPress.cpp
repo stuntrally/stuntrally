@@ -230,12 +230,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	if (!tweak)
 	{
 		Widget* wf = MyGUI::InputManager::getInstance().getKeyFocusWidget();
-		bool edFoc = wf && wf->getTypeName() == "EditBox";
-		//if (wf)  LogO(wf->getTypeName()+" " +toStr(edFoc));
+		bool editFocus = wf && wf->getTypeName() == "EditBox";
 		bool rpl = bRplPlay && !isFocGui;
 		switch (skey)
 		{
 			case key(BACKSPACE):
+				if (editFocus)
+					break;
 				if (mWndHowTo->getVisible())
 				{	pSet->iMenu = MN1_Race;  gui->toggleGui(false);  return true;  }
 				else if (mWndChampStage->getVisible())	// back from champs stage wnd

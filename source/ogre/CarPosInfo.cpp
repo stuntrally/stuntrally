@@ -80,41 +80,6 @@ void PosInfo::FromRpl2(const ReplayFrame2* rf, CARDYNAMICS* cd)
 	}
 }
 
-//  pos from replay/ghost  Old
-//-----------------------------------------------------------------------
-void PosInfo::FromRpl(const ReplayFrame* rf)
-{
-	//  car
-	Axes::toOgre(pos, rf->pos);
-	rot = Axes::toOgre(rf->rot);
-	carY = rot * Vector3::UNIT_Y;
-
-	//  hud
-	speed = rf->speed;
-	fboost = rf->fboost;  steer = rf->steer;
-	braking = rf->braking;  percent = rf->percent;
-	hov_roll = rf->hov_roll;  hov_throttle = rf->throttle;
-
-	fHitTime = rf->fHitTime;  fParIntens = rf->fParIntens;  fParVel = rf->fParVel;
-	vHitPos = rf->vHitPos;  vHitNorm = rf->vHitNorm;
-
-	//  wheels
-	for (int w=0; w < 4; ++w)
-	{
-		Axes::toOgre(whPos[w], rf->whPos[w]);
-		whRot[w] = Axes::toOgreW(rf->whRot[w]);
-		//whR[w] = outside
-		
-		whVel[w] = rf->whVel[w];
-		whSlide[w] = rf->slide[w];  whSqueal[w] = rf->squeal[w];
-
-		whTerMtr[w] = rf->whTerMtr[w];  whRoadMtr[w] = rf->whRoadMtr[w];
-
-		whH[w] = rf->whH[w];  whP[w] = rf->whP[w];
-		whAngVel[w] = rf->whAngVel[w];
-		if (w < 2)  whSteerAng[w] = rf->whSteerAng[w];
-	}
-}
 
 ///  pos from Simulation
 //-----------------------------------------------------------------------
@@ -160,67 +125,6 @@ void PosInfo::FromCar(CAR* pCar)
 	camOfs = Axes::toOgre(cd->cam_body.GetPosition());  ///..
 }
 
-
-//  replay from simulation  Old
-//-----------------------------------------------------------------------
-void ReplayFrame::FromCar(const CAR* pCar)
-{
-	//  car
-	const CARDYNAMICS& cd = pCar->dynamics;
-	pos = cd.GetPosition();
-	rot = cd.GetOrientation();
-
-	//  wheels
-	for (int w=0; w < cd.numWheels; ++w)
-	{	WHEEL_POSITION wp = WHEEL_POSITION(w);
-		whPos[w] = cd.GetWheelPosition(wp);
-		whRot[w] = cd.GetWheelOrientation(wp);
-
-		const TRACKSURFACE* surface = cd.GetWheelContact(wp).GetSurfacePtr();
-		surfType[w] = !surface ? TRACKSURFACE::NONE : surface->type;
-		//  squeal
-		slide[w] = -1.f;  squeal[w] = pCar->GetTireSquealAmount(wp, &slide[w]);
-		whVel[w] = cd.GetWheelVelocity(wp).Magnitude();
-		//  susp
-		suspVel[w] = cd.GetSuspension(wp).GetVelocity();
-		suspDisp[w] = cd.GetSuspension(wp).GetDisplacementPercent();
-
-		whTerMtr[w] = cd.whTerMtr[w];  whRoadMtr[w] = cd.whRoadMtr[w];
-		//  fluids
-		whH[w] = cd.whH[w];  whP[w] = cd.whP[w];
-		whAngVel[w] = cd.wheel[w].GetAngularVelocity();
-		bool inFl = cd.inFluidsWh[w].size() > 0;
-		int idPar = -1;
-		if (inFl)
-		{	const FluidBox* fb = *cd.inFluidsWh[w].begin();
-			idPar = fb->idParticles;  }
-		whP[w] = idPar;
-		if (w < 2)  whSteerAng[w] = cd.wheel[w].GetSteerAngle();
-	}
-	//  hud
-	vel = pCar->GetSpeedometer();  rpm = pCar->GetEngineRPM();
-	gear = pCar->GetGear();  clutch = pCar->GetClutch();
-	throttle = cd.GetThrottle();
-	steer = pCar->GetLastSteer();
-	fboost = cd.doBoost;
-	//  eng snd
-	posEngn = cd.GetEnginePosition();
-	speed = pCar->GetSpeed();
-	dynVel = cd.GetVelocity().Magnitude();
-	braking = cd.IsBraking();
-	if (cd.vtype == V_Sphere)
-		hov_roll = cd.sphereYaw;
-	else
-		hov_roll = cd.hov_roll;
-	
-	//  hit sparks
-	fHitTime = cd.fHitTime;	fParIntens = cd.fParIntens;	fParVel = cd.fParVel;
-	vHitPos = cd.vHitPos;	vHitNorm = cd.vHitNorm;
-	whMudSpin = pCar->sounds.whMudSpin;
-	fHitForce = cd.fHitForce;
-	fCarScrap = std::min(1.f, cd.fCarScrap);
-	fCarScreech = std::min(1.f, cd.fCarScreech);
-}
 
 ///  replay from Simulation  New
 //-----------------------------------------------------------------------

@@ -28,10 +28,13 @@
 #include <MyGUI_ImageBox.h>
 #include <MyGUI_TextBox.h>
 #include <OgreWindowEventUtilities.h>
+using namespace std;
+using namespace Ogre;
+using namespace MyGUI;
 
 namespace
 {
-	std::vector<unsigned long> utf8ToUnicode(const std::string& utf8)
+	std::vector<unsigned long> utf8ToUnicode(const string& utf8)
 	{
 		std::vector<unsigned long> unicode;
 		size_t i = 0;
@@ -41,22 +44,22 @@ namespace
 			unsigned char ch = utf8[i++];
 
 				 if (ch <= 0x7F){	uni = ch;	todo = 0;	}
-			else if (ch <= 0xBF){	throw std::logic_error("not a UTF-8 string");	}
+			else if (ch <= 0xBF){	throw logic_error("not a UTF-8 string");	}
 			else if (ch <= 0xDF){	uni = ch&0x1F;	todo = 1;	}
 			else if (ch <= 0xEF){	uni = ch&0x0F;	todo = 2;	}
 			else if (ch <= 0xF7){	uni = ch&0x07;	todo = 3;	}
-			else				{	throw std::logic_error("not a UTF-8 string");	}
+			else				{	throw logic_error("not a UTF-8 string");	}
 
 			for (size_t j = 0; j < todo; ++j)
 			{
-				if (i == utf8.size())	throw std::logic_error("not a UTF-8 string");
+				if (i == utf8.size())	throw logic_error("not a UTF-8 string");
 				unsigned char ch = utf8[i++];
-				if (ch < 0x80 || ch > 0xBF)  throw std::logic_error("not a UTF-8 string");
+				if (ch < 0x80 || ch > 0xBF)  throw logic_error("not a UTF-8 string");
 				uni <<= 6;
 				uni += ch & 0x3F;
 			}
-			if (uni >= 0xD800 && uni <= 0xDFFF)  throw std::logic_error("not a UTF-8 string");
-			if (uni > 0x10FFFF)  throw std::logic_error("not a UTF-8 string");
+			if (uni >= 0xD800 && uni <= 0xDFFF)  throw logic_error("not a UTF-8 string");
+			if (uni > 0x10FFFF)  throw logic_error("not a UTF-8 string");
 			unicode.push_back(uni);
 		}
 		return unicode;
@@ -79,14 +82,14 @@ namespace
 void BaseApp::createCamera()
 {
 	mCamera = mSceneMgr->createCamera("Cam");
-	mCamera->setPosition(Ogre::Vector3(0,00,100));
-	mCamera->lookAt(Ogre::Vector3(0,0,0));
+	mCamera->setPosition(Vector3(0,00,100));
+	mCamera->lookAt(Vector3(0,0,0));
 	mCamera->setNearClipDistance(0.5f);
 
 	mViewport = mWindow->addViewport(mCamera);
-	//mViewport->setBackgroundColour(Ogre::ColourValue(0.5,0.65,0.8));  //`
-	mViewport->setBackgroundColour(Ogre::ColourValue(0.2,0.3,0.4));  //`
-	Ogre::Real asp = Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight());
+	//mViewport->setBackgroundColour(ColourValue(0.5,0.65,0.8));  //`
+	mViewport->setBackgroundColour(ColourValue(0.2,0.3,0.4));  //`
+	Real asp = Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight());
 	mCamera->setAspectRatio(asp);
 }
 
@@ -97,7 +100,7 @@ void BaseApp::createFrameListener()
 {
 	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing ***");
 
-	Ogre::OverlayManager& ovr = Ogre::OverlayManager::getSingleton();
+	OverlayManager& ovr = OverlayManager::getSingleton();
 	//  overlays-
 	ovBrushPrv = ovr.getByName("Editor/BrushPrvOverlay");
 	ovBrushMtr = ovr.getOverlayElement("Editor/BrushPrvPanel");
@@ -131,7 +134,7 @@ void BaseApp::Run( bool showDialog )
 	{	Ogre::Timer tim;
 		while (1)
 		{
-			Ogre::WindowEventUtilities::messagePump();
+			WindowEventUtilities::messagePump();
 			if (tim.getMicroseconds() > 1000000.0 / pSet->limit_fps_val)
 			{
 				tim.reset();
@@ -165,7 +168,7 @@ BaseApp::~BaseApp()
 //-------------------------------------------------------------------------------------
 bool BaseApp::configure()
 {
-	Ogre::RenderSystem* rs;
+	RenderSystem* rs;
 	if (rs = mRoot->getRenderSystemByName(pSet->rendersystem))
 	{
 		mRoot->setRenderSystem(rs);
@@ -183,15 +186,15 @@ bool BaseApp::configure()
 	{
 		SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
 		if (SDL_Init(flags) != 0)
-			throw std::runtime_error("Could not initialize SDL! " + std::string(SDL_GetError()));
+			throw runtime_error("Could not initialize SDL! " + string(SDL_GetError()));
 	}
 	SDL_StartTextInput();
 
 
-	Ogre::NameValuePairList params;
-	params.insert(std::make_pair("title", "SR Editor"));
-	params.insert(std::make_pair("FSAA", toStr(pSet->fsaa)));
-	params.insert(std::make_pair("vsync", pSet->vsync ? "true" : "false"));
+	NameValuePairList params;
+	params.insert(make_pair("title", "SR Editor"));
+	params.insert(make_pair("FSAA", toStr(pSet->fsaa)));
+	params.insert(make_pair("vsync", pSet->vsync ? "true" : "false"));
 
 	int pos_x = SDL_WINDOWPOS_UNDEFINED,
 		pos_y = SDL_WINDOWPOS_UNDEFINED;
@@ -203,7 +206,7 @@ bool BaseApp::configure()
 	{
 		SDL_Rect display_bounds;
 		if (SDL_GetDisplayBounds(settings.screen, &display_bounds) != 0)
-			throw std::runtime_error("Couldn't get display bounds!");
+			throw runtime_error("Couldn't get display bounds!");
 		pos_x = display_bounds.x;
 		pos_y = display_bounds.y;
 	}
@@ -272,14 +275,14 @@ bool BaseApp::setup()
 	mSceneMgr = mRoot->createSceneManager("DefaultSceneManager");
 
 	#if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0) 
-	Ogre::OverlaySystem* pOverlaySystem = new Ogre::OverlaySystem();
+	OverlaySystem* pOverlaySystem = new OverlaySystem();
 	mSceneMgr->addRenderQueueListener(pOverlaySystem);
 	#endif
 
 	createCamera();
 
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-	mSceneMgr->setFog(Ogre::FOG_NONE);
+	mSceneMgr->setFog(FOG_NONE);
 
     postInit();
 	loadResources();
@@ -288,7 +291,7 @@ bool BaseApp::setup()
 
 	createFrameListener();
 
-	LogO(Ogre::String("::: Time Ogre Start: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	LogO(String("::: Time Ogre Start: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 
 	createScene();
 
@@ -300,25 +303,24 @@ bool BaseApp::setup()
 void BaseApp::setupResources()
 {
 	//  Load resource paths from config file
-	Ogre::ConfigFile cf;
-	std::string s = PATHMANAGER::GameConfigDir() +
+	ConfigFile cf;
+	string s = PATHMANAGER::GameConfigDir() +
 		(pSet->tex_size > 0 ? "/resources_ed.cfg" : "/resources_s_ed.cfg");
 	cf.load(s);
 
 	//  Go through all sections & settings in the file
-	Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
+	auto seci = cf.getSectionIterator();
 
-	Ogre::String secName, typeName, archName;
+	String secName, typeName, archName;
 	while (seci.hasMoreElements())
 	{
 		secName = seci.peekNextKey();
-		Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
-		Ogre::ConfigFile::SettingsMultiMap::iterator i;
-		for (i = settings->begin(); i != settings->end(); ++i)
+		auto *settings = seci.getNext();
+		for (auto i = settings->begin(); i != settings->end(); ++i)
 		{
 			typeName = i->first;
 			archName = i->second;
-			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+			ResourceGroupManager::getSingleton().addResourceLocation(
 				PATHMANAGER::Data() + "/" + archName, typeName, secName);
 		}
 	}
@@ -336,7 +338,7 @@ void BaseApp::setupResources()
 
 void BaseApp::loadResources()
 {
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
 
@@ -354,9 +356,9 @@ void BaseApp::textInput(const SDL_TextInputEvent &arg)
 {
 	const char* text = &arg.text[0];
 	if (*text == '`')  return;
-	std::vector<unsigned long> unicode = utf8ToUnicode(std::string(text));
+	std::vector<unsigned long> unicode = utf8ToUnicode(string(text));
 	if (bGuiFocus)
-	for (std::vector<unsigned long>::iterator it = unicode.begin(); it != unicode.end(); ++it)
+	for (auto it = unicode.begin(); it != unicode.end(); ++it)
 		MyGUI::InputManager::getInstance().injectKeyPress(MyGUI::KeyCode::None, *it);
 }
 
@@ -396,7 +398,7 @@ bool BaseApp::mouseReleased( const SDL_MouseButtonEvent &arg, Uint8 id )
 }
 
 
-void BaseApp::onCursorChange(const std::string &name)
+void BaseApp::onCursorChange(const string &name)
 {
 	if (!mCursorManager->cursorChanged(name))
 		return;  // the cursor manager doesn't want any more info about this cursor
@@ -405,8 +407,8 @@ void BaseApp::onCursorChange(const std::string &name)
 	if (imgSetPtr != NULL)
 	{
 		MyGUI::ResourceImageSet* imgSet = imgSetPtr->getImageSet();
-		std::string tex_name = imgSet->getIndexInfo(0,0).texture;
-		Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().getByName(tex_name);
+		string tex_name = imgSet->getIndexInfo(0,0).texture;
+		TexturePtr tex = Ogre::TextureManager::getSingleton().getByName(tex_name);
 
 		//  everything looks good, send it to the cursor manager
 		if (!tex.isNull())
@@ -435,7 +437,7 @@ void BaseApp::windowResized(int x, int y)
 
 void BaseApp::windowClosed()
 {
-	Ogre::Root::getSingleton().queueEndRendering();
+	Root::getSingleton().queueEndRendering();
 }
 
 
@@ -457,7 +459,7 @@ void BaseApp::baseInitGui()
 	mGui->initialise("");
 
 	FactoryManager::getInstance().registerFactory<ResourceImageSetPointerFix>("Resource", "ResourceImageSetPointer");
-	ResourceManager::getInstance().load("core.xml");
+	MyGUI::ResourceManager::getInstance().load("core.xml");
 
 	PointerManager::getInstance().eventChangeMousePointer += newDelegate(this, &BaseApp::onCursorChange);
 	PointerManager::getInstance().setVisible(false);

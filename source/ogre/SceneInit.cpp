@@ -101,9 +101,9 @@ void App::createScene()
 	//  rpl sizes
 	ushort u(0x1020);
 	struct SV{  std::vector<int> v;  };
-	int sr = sizeof(ReplayFrame), sv = sizeof(SV), sr2 = sizeof(ReplayFrame2)-3*sv, wh2 = sizeof(RWheel);
+	int sv = sizeof(SV), sr2 = sizeof(ReplayFrame2)-3*sv, wh2 = sizeof(RWheel);
 
-	LogO(String("**** ReplayFrame size old: ") + toStr(sr)+"  new: "+toStr(sr2)+"+ wh: "+toStr(wh2)+"= "+toStr(sr2+4*wh2));
+	LogO(String("**** ReplayFrame size ") +toStr(sr2)+"+ wh: "+toStr(wh2)+"= "+toStr(sr2+4*wh2));
 	LogO(String("**** Replay test sizes: 12244: ") + toStr(sizeof(char))+","+toStr(sizeof(short))+
 		","+toStr(sizeof(half))+","+toStr(sizeof(float))+","+toStr(sizeof(int))+"  sv: "+toStr(sv)+
 		"   hi,lo 16,32: h "+toStr(*((uchar*)&u+1))+" l "+toStr(*((uchar*)&u)));
@@ -220,7 +220,7 @@ void App::NewGame(bool force)
 		//todo: gui is stuck..
 		return;
 	}	
-	mWndRpl->setVisible(false);  // hide rpl ctrl
+	mWndRpl->setVisible(false);  mWndRplTxt->setVisible(false);  // hide rpl ctrl
 
 	LoadingOn();
 	hud->Show(true);  // hide HUD
@@ -244,11 +244,12 @@ void App::LoadCleanUp()  // 1 first
 	DestroyGraphs();  hud->Destroy();
 	
 	//  hide hud arrow,beam,pace
+	bool morePlr = pSet->game.local_players > 1;
 	bool rplRd = bRplPlay /*|| scn->road && scn->road->getNumPoints() < 2/**/;
 	bHideHudBeam = rplRd;
-	bHideHudArr = rplRd || pSet->game.local_players > 1;
+	bHideHudArr = rplRd || morePlr;
 	bool denyPace = gui->pChall && !gui->pChall->pacenotes;
-	bHideHudPace = bHideHudArr || denyPace;
+	bHideHudPace = morePlr || denyPace;
 
 
 	// rem old track
