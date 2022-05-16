@@ -679,11 +679,11 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(R):  gui->GuiShortcut(WND_Edit, TAB_Road);      return true;  // R Road
 		case key(X):  gui->GuiShortcut(WND_Edit, TAB_Objects);   return true;  // X Objects
 
-		case key(C):  gui->GuiShortcut(WND_Options, 1);		return true;  // C Screen
-		case key(A):  gui->GuiShortcut(WND_Options, 2);		return true;  // A Graphics
+		case key(C):  gui->GuiShortcut(WND_Options, 1);	  return true;  // C Screen
+		case key(A):  gui->GuiShortcut(WND_Options, 2);   return true;  // A Graphics
 
-		case key(E):  gui->GuiShortcut(WND_Options, 3);     return true;  // E View /Settings
-		case key(K):  gui->GuiShortcut(WND_Options, 3,3);   return true;  // K -Tweak
+		case key(E):  gui->GuiShortcut(WND_Options, 3);   return true;  // E View /Settings
+		case key(K):  gui->GuiShortcut(WND_Options, 4);   return true;  // K Tweak
 		
 		case key(I):  gui->GuiShortcut(WND_Help, 1);  return true;  // I Input/help
 	}

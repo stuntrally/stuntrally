@@ -214,7 +214,7 @@ void CGuiCom::GuiInitTrack()
 	li->addColumn("#80FFC0"+TR("#{Scenery}"), colTrk[c++]);
 	li->addColumn("#80FF80""ver", colTrk[c++]);  // created- modified-
 
-	li->addColumn("#C0D0FF""diff", colTrk[c++]);  //todo: rateuser, drivenlaps ..
+	li->addColumn("#C0D0FF""!", colTrk[c++]);  //todo: rateuser, drivenlaps ..
 	li->addColumn("#C0E0FF""*", colTrk[c++]);   // rating
 
 	li->addColumn("#FF80C0""o", colTrk[c++]);   // objects

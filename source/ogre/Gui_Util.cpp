@@ -501,6 +501,7 @@ void CGui::toggleGui(bool toggle)
 	app->mWndMain->setVisible(gui && mnu == MN1_Main);
 	app->mWndRace->setVisible(gui && mnu == MN1_Race);
 	
+	app->mWndHowTo->setVisible(  gui && mnu == MN_HowTo);
 	app->mWndReplays->setVisible(gui && mnu == MN_Replays);
 	app->mWndHelp->setVisible(   gui && mnu == MN_Help);
 	app->mWndOpts->setVisible(   gui && mnu == MN_Options);
@@ -755,7 +756,9 @@ void CGui::FillHelpTxt()
 				s = StringUtil::replaceAll(s, "**", "");  // bold
 				if (ch)
 				 	s = "#B0D0FF"+s+"#C8D0D8";
-				text += s + "\n";
+				
+				if (s.substr(0,4) != "![](")  // no imgs
+					text += s + "\n";
 			}
 			ed->setCaption(UString(text));
 			ed->setVScrollPosition(0);

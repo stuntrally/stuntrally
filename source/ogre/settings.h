@@ -34,7 +34,7 @@ const static std::string csGraphNames[Gh_ALL] = {
 enum EMenu
 {	MN1_Main, MN1_Race,  // small main menus
 	MN_Single, MN_Tutorial, MN_Champ, MN_Chall,  // game, same window
-	MN_Replays, MN_Help, MN_Options  };  // other windows
+	MN_HowTo, MN_Replays, MN_Help, MN_Options  };  // other windows
 
 
 class SETTINGS : public SETcom

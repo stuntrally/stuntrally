@@ -18,7 +18,7 @@ class MasterClient;  class P2PGameClient;
 //  main, race menus
 enum Menu_Btns {  Menu_Race, Menu_Replays, Menu_Help, Menu_Options,  ciMainBtns };
 enum Race_Btns {  Race_Single, Race_Tutorial, Race_Champ, Race_Challenge,
-				  Race_HowToPlay, Race_Difficulty, Race_Back,  ciRaceBtns };
+				  Race_Difficulty, Race_HowToPlay, Race_Back,  ciRaceBtns };
 //  gui
 enum TAB_Game    {  TAB_Back=0, TAB_Track,TAB_Car, TAB_Setup,TAB_Game, TAB_Multi, TAB_Champs,TAB_Stages,TAB_Stage  };
 enum TAB_Options {  TABo_Back=0, TABo_Screen, TABo_Input, TABo_View, TABo_Graphics, TABo_Sound, TABo_Settings, TABo_Tweak  };
@@ -168,7 +168,7 @@ public:
 
 	Wnd mWndMain =0, mWndRace =0,
 		mWndGame =0,mWndReplays =0,  mWndHelp =0, mWndOpts =0,  // menu, windows
-		mWndWelcome =0, mWndRpl =0,
+		mWndWelcome =0, mWndHowTo =0, mWndRpl =0,
 		mWndNetEnd =0, mWndTweak =0, mWndTrkFilt =0,  // rpl controls, netw, tools
 		mWndChampStage =0, mWndChampEnd =0,
 		mWndChallStage =0, mWndChallEnd =0;

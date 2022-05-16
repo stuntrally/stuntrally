@@ -169,15 +169,16 @@ void CGuiCom::ResizeOptWnd()
 	Real yo = (1.f - ym)*wy, xo = 4.f/3.f * yo;  // opt wnd size in pix
 	ym = (wy - yo)*0.5f;  xm = (wx - xo)*0.5f;
 
-	#ifndef SR_EDITOR  // game
+#ifndef SR_EDITOR  // game
 	app->mWndGame->setCoord(xm, ym, xo, yo);
 	app->mWndReplays->setCoord(xm, ym, xo, yo);
 	app->mWndWelcome->setCoord(xm, ym, xo, yo);
+	app->mWndHowTo->setCoord(xm, ym, xo, yo);
 	//ap->mWndTweak->setCoord(0, 6, xo/3, yo-ym);
-	#else  // editor
+#else  // editor
 	app->mWndTrack->setCoord(xm, ym, xo, yo);
 	app->mWndEdit->setCoord(xm, ym, xo, yo);
-	#endif  // both
+#endif  // both
 	app->mWndTrkFilt->setCoord(xm, ym+50, xo, yo);
 	app->mWndHelp->setCoord(xm, ym, xo, yo);
 	app->mWndOpts->setCoord(xm, ym, xo, yo);

@@ -177,7 +177,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="92 336 436 72" name="PanRace4">
-			<Property key="Colour" value="0.6 0.7 0.8"/>
+			<Property key="Colour" value="0.7 0.85 1.0"/>
 			<Property key="Alpha" value="0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
@@ -198,36 +198,38 @@
 		</Widget>
 
 		<Widget type="ImageBox" skin="ImageBox" position="32 412 56 56">
-			<Property key="ImageCoord" value="0 640 128 128"/>
+			<!-- <Property key="ImageCoord" value="0 640 128 128"/> ?-->
+			<Property key="ImageCoord" value="128 768 128 128"/>
+			<Property key="Alpha" value="0.8"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="92 408 436 72" name="PanRace5">
-			<Property key="Colour" value="0.4 0.7 1"/>
-			<Property key="Alpha" value="0.9"/>
+			<Property key="Colour" value="0.5 0.75 1"/>
+			<Property key="Alpha" value="0.95"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="108 420 404 47" name="BtnRace5">
 			<Property key="Caption" value="#{HowToPlay}"/>
-			<Property key="Colour" value="0.4 0.7 1"/>
-			<Property key="TextColour" value="0.75 0.9 1"/>
+			<Property key="Colour" value="0.5 0.75 1"/>
+			<Property key="TextColour" value="0.5 0.8 1"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.big"/>
-			<Property key="Alpha" value="0.4"/>
+			<!-- <Property key="Alpha" value="0.4"/> -->
 		</Widget>
 
-		<Widget type="ImageBox" skin="ImageBox" position="32 488 56 56">
+		<Widget type="ImageBox" skin="ImageBox" position="32 508 56 56">
 			<Property key="ImageCoord" value="512 384 128 128"/>
 			<Property key="Colour" value="0.6 1.0 0.6"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="92 480 436 72" name="PanRace6">
+		<Widget type="Widget" skin="PanelSkin" position="92 500 436 72" name="PanRace6">
 			<Property key="Colour" value="0.9 0.9 0.9"/>
 			<Property key="Alpha" value="1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="108 492 404 50" name="BtnRace6">
+		<Widget type="Button" skin="Button" position="108 512 404 50" name="BtnRace6">
 			<Property key="Caption" value="&lt;#{BackMenu}"/>
 			<Property key="Colour" value="0.8 0.8 0.8"/>
 			<Property key="TextColour" value="0.9 0.9 0.9"/>

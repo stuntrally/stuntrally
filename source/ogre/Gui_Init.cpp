@@ -60,6 +60,8 @@ void CGui::InitGui()
 	app->mWndMain = fWnd("MainMenuWnd");  app->mWndRace = fWnd("RaceMenuWnd");
 	app->mWndGame = fWnd("GameWnd");  app->mWndReplays = fWnd("ReplaysWnd");
 	app->mWndHelp = fWnd("HelpWnd");  app->mWndOpts = fWnd("OptionsWnd");
+	app->mWndHowTo = fWnd("HowToPlayWnd");
+
 	app->mWndTrkFilt = fWnd("TrackFilterWnd");  app->mWndWelcome = fWnd("WelcomeWnd");
 
 	app->mWndChampStage = fWnd("WndChampStage");  app->mWndChampStage->setVisible(false);
@@ -655,11 +657,11 @@ void CGui::InitGui()
 	li->removeAllColumns();  int n=0;
 	li->addColumn("#BBA8A8""Id", colCar[n++]);
 	li->addColumn("#BBA8A8"+TR("#{Name}"), colCar[n++]);
-	li->addColumn("#C0B0A0"+TR("#{CarSpeed}"), colCar[n++]);
-	li->addColumn("#C0D0E0 *"/*TR("#{rating}")*/, colCar[n++]);
-	li->addColumn("#C0C0E0"+TR("#{Difficulty}"), colCar[n++]);
-	li->addColumn("#80A0E0 -"/*+TR("#{Road_Width}")*/, colCar[n++]);
-	li->addColumn("#B0B0B0 o", colCar[n++]);
+	li->addColumn("#C0B0A0"">"/*+TR("#{CarSpeed}")*/, colCar[n++]);
+	li->addColumn("#C0D0E0""*"/*TR("#{rating}")*/, colCar[n++]);
+	li->addColumn("#C0C0E0""!"/*+TR("#{Difficulty}")*/, colCar[n++]);
+	li->addColumn("#80A0E0""-"/*+TR("#{Road_Width}")*/, colCar[n++]);
+	li->addColumn("#B0B0B0""o", colCar[n++]);
 	li->addColumn("#B0B8C0"+TR("#{CarYear}"), colCar[n++]);
 	// li->addColumn("#C0C0E0"+TR("#{CarType}"), colCar[n++]);
 	li->addColumn(" ", colCar[n++]);

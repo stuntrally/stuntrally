@@ -230,6 +230,7 @@
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="244 288 276 276">
 					<Property key="ImageTexture" value="_ch-logo.png"/>
+					<UserString key="tip" value="cryham.tuxfamily.org"/>
 				</Widget>
 
 				<Widget type="TextBox" skin="TextBox" position="102 456 150 24">
@@ -261,32 +262,27 @@
 
 	<Widget type="Window" skin="WindowC" position="1732 844 800 600" align="Center" layer="Popup" name="WelcomeWnd">
 		<Property key="MinSize" value="500 400"/>
+		<Property key="Caption" value="#{WelcomeTo}"/>
 		<Property key="Colour" value="0.6 0.8 1"/>
 		<Property key="Alpha" value="1"/>
 		<Property key="Visible" value="false"/>
-		<Widget type="TextBox" skin="TextBox" position="20 20 240 24">
-			<Property key="Caption" value="#B0D0F0#{WelcomeTo}"/>
-			<Property key="FontName" value="font.big"/>
-			<Property key="TextShadow" value="true"/>
-		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="276 0 240 60">
+		<Widget type="ImageBox" skin="ImageBox" position="200 0 400 136">
 			<Property key="ImageTexture" value="stuntrally-logo.jpg"/>
+			<!-- <Property key="ImageCoord" value="0 0 1892 645"/> 2.933 -->
+			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="16 84 528 154">
-			<Property key="ImageCoord" value="0 0 1266 369"/>
-			<Property key="ImageTexture" value="keys.png"/>
-		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
+		<!--<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
 			<Property key="ImageCoord" value="128 768 128 128"/>
 			<Property key="Alpha" value="0.4"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
-		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="12 270 768 52">
+		</Widget>-->
+
+		<Widget type="Widget" skin="PanelSkin" position="12 170 768 52">
 			<Property key="Colour" value="0.7 0.85 1"/>
 			<Property key="Alpha" value="0.5"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="EditBox" skin="EditBoxEmpty" position="20 276 520 56">
+		<Widget type="EditBox" skin="EditBoxEmpty" position="20 176 520 56">
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
@@ -295,12 +291,23 @@
 			<Property key="Caption" value="#{HintScreen}"/>
 			<Property key="TextShadow" value="true"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="12 330 768 52">
+		<Widget type="Button" skin="Button" position="576 176 196 40" name="btnHintScreen">
+			<Property key="Colour" value="0.7 0.9 1"/>
+			<Property key="Caption" value="#C0E0FF#{Screen}"/>
+			<Widget type="ImageBox" skin="ImageBox" position="0 0 36 36">
+				<Property key="ImageCoord" value="128 0 128 128"/>
+				<Property key="Alpha" value="0.7"/>
+				<Property key="ImageTexture" value="gui_icons.png"/>
+				<Property key="NeedMouse" value="false"/>
+			</Widget>
+		</Widget>
+
+		<Widget type="Widget" skin="PanelSkin" position="12 240 768 52">
 			<Property key="Colour" value="0.9 0.9 0.8"/>
 			<Property key="Alpha" value="0.5"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="EditBox" skin="EditBoxEmpty" position="20 336 520 54">
+		<Widget type="EditBox" skin="EditBoxEmpty" position="20 246 520 54">
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
@@ -308,6 +315,58 @@
 			<Property key="TextAlign" value="Left Top"/>
 			<Property key="Caption" value="#{HintInput}"/>
 			<Property key="TextShadow" value="true"/>
+		</Widget>
+		<Widget type="Button" skin="Button" position="576 246 196 40" name="btnHintInput">
+			<Property key="Colour" value="1 1 0.6"/>
+			<Property key="Caption" value="#FFFF60#{Input}"/>
+			<Widget type="ImageBox" skin="ImageBox" position="0 0 36 36">
+				<Property key="ImageCoord" value="128 384 128 128"/>
+				<Property key="Alpha" value="0.7"/>
+				<Property key="ImageTexture" value="gui_icons.png"/>
+				<Property key="NeedMouse" value="false"/>
+			</Widget>
+		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" position="16 312 459 134">
+			<Property key="ImageCoord" value="0 0 1266 369"/>  <!-- asp 3.428 -->
+			<Property key="ImageTexture" value="keys.png"/>
+		</Widget>
+
+		<Widget type="Button" skin="CheckBox" position="576 426 232 24" name="chkHintShow">
+			<Property key="Caption" value="#A0C8FF#{HintShow}"/>
+			<!-- <Property key="FontName" value="font.small"/> -->
+		</Widget>
+		<Widget type="TextBox" skin="TextBox" position="576 466 232 24">
+			<Property key="Caption" value="#A0C0E0#{HintKey}"/>
+			<!-- <Property key="FontName" value="font.small"/> -->
+		</Widget>
+		<Widget type="Button" skin="Button" position="576 504 196 48" name="btnHintClose">
+			<Property key="Colour" value="0.6 0.95 1"/>
+			<Property key="Caption" value="#D0F0FF#{Close}"/>
+			<Widget type="ImageBox" skin="ImageBox" position="0 0 48 48">
+				<Property key="ImageCoord" value="256 384 128 128"/>
+				<Property key="Colour" value="0.7 0.85 1.0"/>
+				<Property key="Alpha" value="0.5"/>
+				<Property key="ImageTexture" value="gui_icons.png"/>
+				<Property key="NeedMouse" value="false"/>
+			</Widget>
+		</Widget>
+	</Widget>
+
+	<Widget type="Window" skin="WindowC" position="1732 844 800 600" align="Center" layer="Popup" name="HowToPlayWnd">
+		<Property key="MinSize" value="500 400"/>
+		<Property key="Caption" value="#B0D0F0#{HowToPlay}"/>
+		<Property key="Colour" value="0.7 0.85 1"/>
+		<Property key="Alpha" value="1"/>
+		<Property key="Visible" value="false"/>
+		<Widget type="TextBox" skin="TextBox" position="20 20 240 24">
+			<Property key="Caption" value="#B0D0F0#{HowToPlay}"/>
+			<Property key="FontName" value="font.big"/>
+			<Property key="TextShadow" value="true"/>
+		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
+			<Property key="ImageCoord" value="0 128 128 128"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
 
 		<Widget type="Widget" skin="PanelSkin" position="16 406 524 146">
@@ -345,35 +404,7 @@
 			<Property key="Colour" value="0.7 0.85 1.0"/>
 			<Property key="Caption" value="#A0C0FF&gt;"/>
 		</Widget>
-		<Widget type="Button" skin="CheckBox" position="576 412 212 24" name="chkHintShow">
-			<Property key="Caption" value="#A0C8FF#{HintShow}"/>
-			<Property key="FontName" value="font.small"/>
-		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="576 446 212 24">
-			<Property key="Caption" value="#A0C0E0#{HintKey}"/>
-			<Property key="FontName" value="font.small"/>
-		</Widget>
-
-		<Widget type="Button" skin="Button" position="576 276 196 40" name="btnHintScreen">
-			<Property key="Colour" value="0.7 0.9 1"/>
-			<Property key="Caption" value="#C0E0FF#{Screen}"/>
-			<Widget type="ImageBox" skin="ImageBox" position="0 0 36 36">
-				<Property key="ImageCoord" value="128 0 128 128"/>
-				<Property key="Alpha" value="0.7"/>
-				<Property key="ImageTexture" value="gui_icons.png"/>
-				<Property key="NeedMouse" value="false"/>
-			</Widget>
-		</Widget>
-		<Widget type="Button" skin="Button" position="576 336 196 40" name="btnHintInput">
-			<Property key="Colour" value="1 1 0.6"/>
-			<Property key="Caption" value="#FFFF60#{Input}"/>
-			<Widget type="ImageBox" skin="ImageBox" position="0 0 36 36">
-				<Property key="ImageCoord" value="128 384 128 128"/>
-				<Property key="Alpha" value="0.7"/>
-				<Property key="ImageTexture" value="gui_icons.png"/>
-				<Property key="NeedMouse" value="false"/>
-			</Widget>
-		</Widget>
+		
 		<Widget type="Button" skin="Button" position="576 504 196 48" name="btnHintClose">
 			<Property key="Colour" value="0.6 0.95 1"/>
 			<Property key="Caption" value="#D0F0FF#{Close}"/>

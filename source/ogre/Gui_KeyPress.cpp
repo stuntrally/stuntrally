@@ -90,6 +90,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case Race_Tutorial:  pSet->iMenu = MN_Tutorial;  break;
 			case Race_Champ:     pSet->iMenu = MN_Champ;  break;
 			case Race_Challenge: pSet->iMenu = MN_Chall;  break;
+			case Race_HowToPlay: pSet->iMenu = MN_HowTo;  break;
 			case Race_Back:      pSet->iMenu = MN1_Main;  break;
 			}
 			gui->toggleGui(false);  return true;
@@ -102,10 +103,11 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		if (pSet->escquit && !bAssignKey)
 			ShutDown();  // quit
 		else
-			if (mWndChampStage->getVisible())  ///  close champ wnds
+			if (mWndHowTo->getVisible())
+			{	pSet->iMenu = MN1_Race;  gui->toggleGui(false);	}
+			else if (mWndChampStage->getVisible())  ///  close champ wnds
 				gui->btnChampStageStart(0);
-			else
-			if (mWndChallStage->getVisible())  ///  chall
+			else if (mWndChallStage->getVisible())  ///  chall
 				gui->btnChallStageStart(0);
 			else
 				gui->toggleGui(true);	// gui on/off
@@ -234,10 +236,11 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		switch (skey)
 		{
 			case key(BACKSPACE):
-				if (mWndChampStage->getVisible())	// back from champs stage wnd
+				if (mWndHowTo->getVisible())
+				{	pSet->iMenu = MN1_Race;  gui->toggleGui(false);  return true;  }
+				else if (mWndChampStage->getVisible())	// back from champs stage wnd
 				{	gui->btnChampStageBack(0);  return true;  }
-				else
-				if (mWndChallStage->getVisible())	// chall
+				else if (mWndChallStage->getVisible())	// chall
 				{	gui->btnChallStageBack(0);  return true;  }
 
 				switch (pSet->iMenu)
