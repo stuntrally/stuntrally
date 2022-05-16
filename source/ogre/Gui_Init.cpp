@@ -103,7 +103,11 @@ void CGui::InitGui()
 	if (pSet->iMenu >= MN_Tutorial && pSet->iMenu <= MN_Chall)
 		app->mWndTabsGame->setIndexSelected(TAB_Champs);
 
-	app->mWndRpl = fWnd("RplWnd");
+	
+	//  replay
+	app->mWndRpl = fWnd("RplControlsWnd");
+	app->mWndRplTxt = fWnd("RplLessonTextWnd");
+	rplSubText = fEd("RplLessonText");
 
 
 	///  Gui common init  ---
@@ -121,7 +125,7 @@ void CGui::InitGui()
 	gcom->bnQuit->setVisible(app->isFocGui);
 
 
-	///  Welcome, Hints  ----
+	///  Welcome, HowToPlay, Hints  ----
 	edHintTitle = fEd("HintTitle");  edHintText = fEd("HintText");
 	UpdHint();
 	ck= &ckShowWelcome;  ck->Init("chkHintShow", &pSet->show_welcome);
@@ -131,7 +135,12 @@ void CGui::InitGui()
 	Btn("btnHintClose", btnHintClose);
 
 	app->mWndWelcome->setVisible(pSet->show_welcome && !pSet->autostart);
-	
+
+	//  How to play  >> >
+	Btn("btnHowToBack", btnHowToBack);
+	for (int i=1; i <= 6; ++i)
+	{	Btn("BtnLesson"+toStr(i), btnLesson);  }
+
 
 	///  Sliders
 	//------------------------------------------------------------------------

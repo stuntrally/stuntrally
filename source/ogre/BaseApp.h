@@ -168,7 +168,7 @@ public:
 
 	Wnd mWndMain =0, mWndRace =0,
 		mWndGame =0,mWndReplays =0,  mWndHelp =0, mWndOpts =0,  // menu, windows
-		mWndWelcome =0, mWndHowTo =0, mWndRpl =0,
+		mWndWelcome =0, mWndHowTo =0, mWndRpl =0, mWndRplTxt =0,
 		mWndNetEnd =0, mWndTweak =0, mWndTrkFilt =0,  // rpl controls, netw, tools
 		mWndChampStage =0, mWndChampEnd =0,
 		mWndChallStage =0, mWndChallEnd =0;

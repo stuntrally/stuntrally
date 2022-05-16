@@ -2,6 +2,8 @@
 #include <vector>
 #include <OgreString.h>
 #include <OgreVector3.h>
+#include <OgreVector4.h>
+#include <OgreVector2.h>
 
 namespace Ogre {  class SceneManager;  class SceneNode;  class Entity;  class Terrain;  class Camera;
 	class BillboardSet;  class Billboard;  class RenderWindow;  }

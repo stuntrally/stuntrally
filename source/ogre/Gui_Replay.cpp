@@ -47,7 +47,12 @@ void CGui::btnRplLoad(WP)  // Load
 	//  from list
 	String name = getRplName();  if (name.empty())  return;
 	string file = GetRplListDir() + "/" + name + ".rpl";
+	bLesson = false;
+	btnRplLoadFile(file);
+}
 
+void CGui::btnRplLoadFile(std::string file)
+{
 	if (!app->replay.LoadFile(file))
 	{
 		Message::createMessageBox(
@@ -84,6 +89,7 @@ void CGui::btnRplLoad(WP)  // Load
 		//  set game config from replay
 		pSet->game = pSet->gui;
 		pSet->game.track = trk;  pSet->game.track_user = usr;
+		//todo: pSet->game.trackreverse = h.trackreverse;
 
 		pSet->game.trees = h.trees;
 		pSet->game.local_players = h.numPlayers;

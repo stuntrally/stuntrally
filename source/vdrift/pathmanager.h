@@ -43,6 +43,7 @@ public:
 	static std::string Replays() {         return user_data + "/replays"; }
 	static std::string Ghosts() {          return user_data + "/ghosts"; }
 	static std::string TrkGhosts() {       return game_data + "/ghosts"; }
+	static std::string Lessons() {         return game_data + "/lessons"; }
 
 	static std::string Records() {         return user_data + "/records";  }
 	static std::string Sounds() {          return game_data + "/sounds"; }

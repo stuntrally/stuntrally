@@ -17,6 +17,7 @@
 #include "../sound/SoundMgr.h"
 #include "common/Slider.h"
 #include "SplitScreen.h"
+#include "settings.h"
 #include <OgreCamera.h>
 #include <OgreSceneNode.h>
 using namespace Ogre;
@@ -206,7 +207,7 @@ void App::newPoses(float time)  // time only for camera update
 
 		//  checkpoints, lap start
 		//-----------------------------------------------------------------------
-		if (bRplPlay || bGhost)   // dont check for replay or ghost
+		if (bGhost || bRplPlay && !gui->bLesson)   // dont check for replay or ghost
 			carM->bWrongChk = false;
 		else
 		{
@@ -520,6 +521,24 @@ void App::updatePoses(float time)
 		gui->valRplLen->setCaption(StrTime(len));
 
 		float v = pos/len;  gui->slRplPos->setValue(v);
+
+
+		//  lessons  >> >
+		if (gui->bLesson)
+		{
+			if (v > 0.98f && !isFocGui)  // end, back to gui
+			{	//bRplPause = true;
+				pSet->iMenu = MN_HowTo;  isFocGui = true;  gui->toggleGui(false);
+			}
+			bool vis = false;
+			for (auto s : gui->rplSubtitles)
+				if (pos > s.beg && pos < s.end)
+				{	vis = true;
+					gui->rplSubText->setCaption(TR(s.txt));
+					break;
+				}
+			mWndRplTxt->setVisible(vis);
+		}
 	}	
 	
 	

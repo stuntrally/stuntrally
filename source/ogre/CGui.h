@@ -79,12 +79,24 @@ public:
 	
 
 	//  hints
-	const int iHints = 20;  int iHintCur = 0;  void UpdHint();
+	const static int iHints;  int iHintCur = 0;
 	Ck ckShowWelcome;
-	Ed edHintTitle =0, edHintText =0;
+	Ed edHintTitle =0, edHintText =0, rplSubText =0;
+
+	void UpdHint();
 	void btnHintPrev(WP), btnHintNext(WP);
 	void btnHintScreen(WP), btnHintInput(WP), btnHintClose(WP);
 	void btnHowToBack(WP), btnLesson(WP);
+	
+	struct Subtitle  // for replay lessons
+	{
+		std::string txt;
+		float beg, end;  // time
+		Subtitle(float begingTime, float endTime, std::string text)
+			:txt(text), beg(begingTime), end(endTime)
+		{	}
+	};
+	std::list<Subtitle> rplSubtitles;
 
 
 	///  [Input] tab
@@ -309,7 +321,7 @@ public:
 	
 	//  radios
 	Btn bRkmh =0, bRmph =0;  // km/h, mph
-	void radKmh(WP), radMph(WP);
+	void radKmh(WP), radMph(WP), radUpd(bool kmh);
 
 	Btn bRsimEasy =0, bRsimNorm =0, bRsimHard =0;  // sim mode
 	void radSimEasy(WP), radSimNorm(WP), radSimHard(WP);

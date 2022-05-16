@@ -174,6 +174,7 @@ void CHud::Show(bool hideAll)
 		}	}
 		app->hideMouse();
 		if (app->mWndRpl)  app->mWndRpl->setVisible(false);
+		if (app->mWndRplTxt)  app->mWndRplTxt->setVisible(false);
 		return;
 	}
 	//  this goes each frame..
@@ -225,8 +226,11 @@ void CHud::Show(bool hideAll)
 	if (ndPos)  ndPos->setVisible(pSet->trackmap);
 	
 	app->updMouse();
-	if (app->mWndRpl && !app->bLoading)
-		app->mWndRpl->setVisible(app->bRplPlay && app->bRplWnd);  //
+	if (app->mWndRpl && !app->bLoading)  // replay ctrls
+		app->mWndRpl->setVisible(app->bRplPlay && app->bRplWnd);
+	//  lesson replay  >> >
+	/*if (app->mWndRplTxt && !app->bLoading && app->gui->bLesson)
+		app->mWndRplTxt->setVisible(app->bRplPlay);*/
 }
 
 void CHud::ShowVp(bool vp)	// todo: use vis mask ..

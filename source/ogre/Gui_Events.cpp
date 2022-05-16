@@ -234,22 +234,33 @@ void CGui::comboRewind(CMB)
 	pSet->gui.rewind_type = val;
 }
 	
-void CGui::radKmh(WP wp){	Radio2(bRkmh, bRmph, true);   pSet->show_mph = false;  hud->Size();  if (app->scn->pace) app->scn->pace->UpdTxt();  }
-void CGui::radMph(WP wp){	Radio2(bRkmh, bRmph, false);  pSet->show_mph = true;   hud->Size();  if (app->scn->pace) app->scn->pace->UpdTxt();  }
+void CGui::radUpd(bool kmh)
+{
+	Radio2(bRkmh, bRmph, kmh);
+	pSet->show_mph = !kmh;  hud->Size();
+	if (app->scn->pace)
+		app->scn->pace->UpdTxt();
+}
+void CGui::radKmh(WP wp){	radUpd(true);   }
+void CGui::radMph(WP wp){	radUpd(false);  }
+
 
 void CGui::setSimMode(std::string mode)
 {
 	pSet->gui.sim_mode = mode;  bReloadSim = true;
+
 	bRsimEasy->setStateSelected(mode == "easy");
 	bRsimNorm->setStateSelected(mode == "normal");
 	if (bRsimHard)
 		bRsimHard->setStateSelected(mode == "hard");
+
 	tabTireSet(0,iTireSet);  listCarChng(carList,0);
 }
 
 void CGui::radSimEasy(WP){	setSimMode("easy");  }
 void CGui::radSimNorm(WP){	setSimMode("normal");  }
 void CGui::radSimHard(WP){	setSimMode("hard");  }
+
 
 void CGui::btnNumPlayers(WP wp)
 {
@@ -458,7 +469,75 @@ void CGui::slVolHud(SV*)
 
 //  Hints, How to play
 //---------------------------------------------------------------------
-const static char hintsOrder[/*CGui::iHints*/17]={0,1,2,3,4,5,16,6,7,8,9,10,11,12,13,14, 15};
+const int CGui::iHints = 27;
+const static char hintsOrder[CGui::iHints] = {
+/*	0 Rewind  22 Keyboard  16 Camera
+	1 Turns  3 Gravel  26 Test tracks
+	17 Trail  18 Pacenotes  5 Ghost cars
+	2 Flipping  4 Damage  6 Boost
+	9 Jumps  19 Stunt Pacenotes  10 Loops  11 Pipes
+	20 Fluids
+	7 Cars  12 Vehicles  21 Wheels
+	13 Simulation  8 Steering  14 Fps
+	23 Editors  24 Details
+	15 Last Help  25 Support  */
+	0,22,16, 1,3,26, 17,18,5, 2,4,6,
+	9,19,10,11, 20, 7,12,21,
+	13,8,14, 23,24, 15,25
+};
+
+//  Lesson replay start  >> >
+void CGui::btnLesson(WP wp)
+{
+	string s = wp->getName(), file;
+	int n = s[s.length() - 1] - '0';
+
+	rplSubtitles.clear();
+	auto Add = [&](float b, float e, string t){  rplSubtitles.push_back(Subtitle(b, e, t));  };
+
+	switch (n)
+	{	// hints not here: 5,8, 13-15, 23-26
+	case 1:  file = "1";  // turns gravel trail pace
+		Add(1.f,  8.f,  "#{Hint-22text}");  // keys
+		Add(10.f, 21.f, "#{Hint-1text}");
+		Add(23.f, 30.f, "#{Hint-17text}");
+		Add(32.f, 40.f, "#{Hint-3text}");
+		Add(41.f, 55.f, "#{Hint-18text}");
+		break;
+	case 2:  file = "2";  // damage rewind flip
+		Add(0.1f,  8.f, "#{Hint-4text}");
+		Add( 9.f, 18.f, "#{Hint-2text}");
+		Add(19.f, 33.f, "#{Hint-0text}");
+		break;
+	case 3:  file = "3";  // boost jumps
+		Add(0.5f,  9.f, "#{Hint-6text}");
+		Add(10.f, 20.f, "#{Hint-9text}");
+		Add(22.f, 35.f, "#{Hint-19text}");
+		break;
+	case 4:  file = "4r";  // loops pipes
+		Add(0.5f, 9.f,  "#{Hint-10text}");
+		Add(10.f, 21.f, "#{Hint-11text}");
+		break;
+	case 5:  file = "5r";  // fluids
+		Add(0.5f, 21.f, "#{Hint-20text}");
+		break;
+	case 6:  file = "6";  // cars veh
+		Add(0.5f, 9.f,  "#{Hint-7text}");
+		Add(10.f, 21.f, "#{Hint-12text}");
+		Add(22.f, 35.f, "#{Hint-21text}");  // wheels?
+		break;
+	}
+	file = PATHMANAGER::Lessons() + "/" + file + ".rpl";
+	bLesson = true;
+	btnRplLoadFile(file);
+	pSet->game.trackreverse = file.find('r')!=string::npos;  //app->replay.header.reverse;
+	
+	rplSubText->setCaption("");  app->mWndRplTxt->setVisible(false);
+	//  hud, restore.. 
+	// ckTrailShow.SetValue(1);
+	// ckMinimap.SetValue(1);
+	// ckTimes.SetValue(1);
+}
 
 void CGui::UpdHint()
 {
@@ -492,6 +571,10 @@ void CGui::btnHintClose(WP)
 	app->mWndWelcome->setVisible(false);
 }
 
+void CGui::btnHowToBack(WP)
+{
+	pSet->iMenu = MN1_Race;  toggleGui(false);
+}
 
 
 ///  3d car view  // todo: ..

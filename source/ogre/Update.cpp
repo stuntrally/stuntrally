@@ -427,9 +427,9 @@ bool App::frameStart(Real time)
 		{	
 			const CarModel* cm = *carModels.begin();
 			Vector3 p = cm->pMainNode->getPosition();
-			float vel = cm->pCar->GetSpeedometer();
+			float vel = bRplPlay ? frm[0].vel : cm->pCar->GetSpeedometer();
 			scn->pace->carVel = vel;
-			scn->pace->rewind = cm->pCar->bRewind;
+			scn->pace->rewind = bRplPlay ? false : cm->pCar->bRewind;
 			scn->pace->UpdVis(p);
 		}
 		
