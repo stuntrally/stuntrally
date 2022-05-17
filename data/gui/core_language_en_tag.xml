@@ -312,6 +312,7 @@
 	<Tag name="SC_Space">Space</Tag>
 	<Tag name="SC_BlackDesert">BlackDesert</Tag>
 	<Tag name="SC_SurrealSpace">SurrealSpace</Tag>
+	<Tag name="SC_GreeceRocky">GreeceRocky</Tag>
 	
 
 <!--  ..............................................................................................  -->
@@ -1570,7 +1571,7 @@
 	<Tag name="Hint-18">Pacenotes</Tag>
 	<Tag name="Hint-18text">Observe pace note signs above road. They show turns: easy as green, medium as orange, and sharpest being red.</Tag>
 	<Tag name="Hint-19">Stunt Pacenotes</Tag>
-	<Tag name="Hint-19text">Pace notes also warn about stunts like jumps, loops and on pipe drive. For jumps, also text with ideal speed is shown. Turning green on close match, orange when too low and cyan or white when too fast.</Tag>
+	<Tag name="Hint-19text">Pace notes also warn about stunts like jumps, loops and on pipe drive. For jumps, also text with ideal speed is shown. Turning green on close match, orange when too slow and cyan or white when too fast.</Tag>
 	<Tag name="Hint-20">Fluids</Tag>
 	<Tag name="Hint-20text">Fluids like water and mud are safe. You can drive cars under the water and through mud. Stay out of lava and acid, which will cause damage fast.</Tag>
 	<Tag name="Hint-21">Wheels</Tag>

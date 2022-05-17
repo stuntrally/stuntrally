@@ -442,7 +442,7 @@
 						<Property key="Caption" value="#E0F8C0#{Pacenotes}"/>
 						<Widget type="ImageBox" skin="ImageBox" position="32 130 72 72">
 							<Property key="ImageCoord" value="640 512 128 128"/>
-							<Property key="Alpha" value="0.3"/>
+							<Property key="Alpha" value="0.8"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
 						<Widget type="Button" skin="CheckBox" position="32 56 184 24" name="ChkPace">
@@ -502,6 +502,11 @@
 						<Widget type="Button" skin="CheckBox" position="32 316 184 24" name="ChkTrail">
 							<Property key="Caption" value="#{RacingLine} #986848 F6"/>
 							<Property key="TextColour" value="1.0 0.7 0.4"/>
+						</Widget>
+						<Widget type="ImageBox" skin="ImageBox" position="32 346 72 72">
+							<Property key="ImageCoord" value="768 640 128 128"/>
+							<Property key="Alpha" value="0.7"/>
+							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">

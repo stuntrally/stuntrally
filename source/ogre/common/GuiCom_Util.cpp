@@ -116,6 +116,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnClr["Alien"]        = "#D0FFA0";  scnClr["Other"]        = "#C0D0E0";
 	scnClr["Stone"]        = "#A0A0A0";  scnClr["Space"]        = "#A0B8D0";
 	scnClr["BlackDesert"]  = "#202020";  scnClr["SurrealSpace"] = "#80B0FF"; //"#F06060";
+	scnClr["GreeceRocky"]  = "#B0A8A0";
 }
 
 int TrkL::idSort = 0;
