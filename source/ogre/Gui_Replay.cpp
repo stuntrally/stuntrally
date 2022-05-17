@@ -89,6 +89,7 @@ void CGui::btnRplLoadFile(std::string file)
 		//  set game config from replay
 		pSet->game = pSet->gui;
 		pSet->game.track = trk;  pSet->game.track_user = usr;
+		pSet->game.sim_mode = h.sim_mode;  //?
 		//todo: pSet->game.trackreverse = h.trackreverse;
 
 		pSet->game.trees = h.trees;

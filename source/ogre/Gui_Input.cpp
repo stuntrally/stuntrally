@@ -206,11 +206,14 @@ void CGui::CreateInputTab(int iTab, bool player,
 		if (player)  switch (i)
 		{	//case 0:  CrtImg(x1,y, 128,256);  break;  // gauge
 			case 2:  CrtImg(x1,y, 128,384);  break;  // steer
+			case 3:  CrtImg(x1,y, 768,512);  break;  // handbrake
+
 			case 6:  CrtImg(x1,y, 128,512);  break;  // gear
 			case 9:  CrtImg(x1,y, 0,512);  break;    // camera
 
 			case 4:  CrtImg(x1,y, 512,0);  break;    // boost
 			case 5:  CrtImg(x1,y, 512,128);  break;  // flip
+			
 			//case 7:  CrtImg(x1,y, 512,256);  break;  // damage
 			case 11:  CrtImg(x1,y, 512,384);  break; // rewind
 		}	++i;

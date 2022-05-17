@@ -380,8 +380,8 @@
 		</Widget>
 		<Widget type="Button" skin="Button" position="42 100 464 30" align="Left" name="BtnLesson2">
 			<Property key="Caption" value="#{Lesson} 2 - #{Hint-4}, #{Hint-2}, #{Hint-0}"/>
-			<Property key="Colour" value="1.0 1.0 0.5"/><!-- damage  flip  rewind -->
-			<Property key="TextColour" value="1.0 1.0 0.5"/>
+			<Property key="Colour" value="0.9 0.9 0.5"/><!-- damage  flip  rewind -->
+			<Property key="TextColour" value="0.9 0.9 0.5"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextAlign" value="Left"/>
 		</Widget>
@@ -394,22 +394,22 @@
 		</Widget>
 		<Widget type="Button" skin="Button" position="42 180 464 30" align="Left" name="BtnLesson4">
 			<Property key="Caption" value="#{Lesson} 4 - #{Hint-11}, #{Hint-10}"/>
-			<Property key="Colour" value="0.7 0.9 1.0"/><!-- pipes  loops -->
-			<Property key="TextColour" value=".7 0.9 1.0"/>
+			<Property key="Colour" value="0.7 0.9 0.9"/><!-- pipes  loops -->
+			<Property key="TextColour" value=".7 0.9 0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextAlign" value="Left"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="42 220 464 30" align="Left" name="BtnLesson5">
 			<Property key="Caption" value="#{Lesson} 5 - #{Hint-20}, #{Hint-16}, #{Hint-7}"/>
-			<Property key="Colour" value="0.4 0.7 1.0"/><!-- fluids  camera  cars -->
-			<Property key="TextColour" value="0.4 0.6 1.0"/>
+			<Property key="Colour" value="0.5 0.7 1.0"/><!-- fluids  camera  cars -->
+			<Property key="TextColour" value="0.5 0.7 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextAlign" value="Left"/>
 		</Widget>
 		<Widget type="Button" skin="Button" position="42 260 464 30" align="Left" name="BtnLesson6">
 			<Property key="Caption" value="#{Lesson} 6 - #{Hint-26}, #{Hint-27}, #{Hint-21}"/>
-			<Property key="Colour" value="0.6 0.6 1.0"/><!-- test tracks  handbrake  wheels -->
-			<Property key="TextColour" value="0.6 0.6 1.0"/>
+			<Property key="Colour" value="0.7 0.7 1.0"/><!-- test tracks  handbrake  wheels -->
+			<Property key="TextColour" value="0.7 0.7 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextAlign" value="Left"/>
 		</Widget>
@@ -422,13 +422,6 @@
 		</Widget>
 
 		<!-- Hints -->
-		<Widget type="ImageBox" skin="ImageBox" position="560 400 80 80">
-			<Property key="ImageCoord" value="768 768 128 128"/>
-			<Property key="Colour" value="0.7 0.85 1.0"/>
-			<Property key="InheritsAlpha" value="false"/>
-			<Property key="Alpha" value="1"/>
-			<Property key="ImageTexture" value="gui_icons.png"/>
-		</Widget>
 		<Widget type="Widget" skin="PanelSkin" position="16 406 524 146">
 			<Property key="Colour" value="0.7 0.85 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
@@ -463,6 +456,20 @@
 		<Widget type="Button" skin="Button" position="334 410 42 26" name="btnHintNext">
 			<Property key="Colour" value="0.9 0.95 1.0"/>
 			<Property key="Caption" value="#B0D0FF&gt;"/>
+		</Widget>
+
+		<Widget type="ImageBox" skin="ImageBox" position="650 400 96 96">
+			<Property key="ImageCoord" value="768 768 128 128"/>
+			<Property key="Colour" value="0.7 0.85 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+			<Property key="Alpha" value="0.9"/>
+		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" position="560 400 80 80" name="HintImg">
+			<Property key="ImageCoord" value="0 128 128 128"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Alpha" value="0.8"/>
 		</Widget>
 		
 		<Widget type="Button" skin="Button" position="576 504 196 48" name="btnHowToBack">

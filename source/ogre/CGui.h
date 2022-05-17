@@ -79,11 +79,12 @@ public:
 	
 
 	//  hints
-	const static int iHints;  int iHintCur = 0;
 	Ck ckShowWelcome;
+	const static int iHints;  int iHintCur = 0;
 	Ed edHintTitle =0, edHintText =0, rplSubText =0;
+	Img imgHint =0, rplSubImg =0;
 
-	void UpdHint();
+	void UpdHint(), setHintImg(Img img, int h);
 	void btnHintPrev(WP), btnHintNext(WP);
 	void btnHintScreen(WP), btnHintInput(WP), btnHintClose(WP);
 	void btnHowToBack(WP), btnLesson(WP);
@@ -92,8 +93,9 @@ public:
 	{
 		std::string txt;
 		float beg, end;  // time
-		Subtitle(float begingTime, float endTime, std::string text)
-			:txt(text), beg(begingTime), end(endTime)
+		int hintImg;
+		Subtitle(float begingTime, float endTime, int imgId, std::string text)
+			:txt(text), beg(begingTime), end(endTime), hintImg(imgId)
 		{	}
 	};
 	std::list<Subtitle> rplSubtitles;

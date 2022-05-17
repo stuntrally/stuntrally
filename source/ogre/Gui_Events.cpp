@@ -16,6 +16,7 @@
 #include <OgreCamera.h>
 #include <OgreSceneNode.h>
 #include "../ogre/common/RenderBoxScene.h"
+#include <MyGUI_Types.h>
 using namespace std;
 using namespace Ogre;
 using namespace MyGUI;
@@ -486,57 +487,61 @@ const static char hintsOrder[CGui::iHints] = {
 	13,8,14, 23,24, 15,25
 };
 
-//  Lesson replay start  >> >
+//  Lesson replay start  >> >  --------
 void CGui::btnLesson(WP wp)
 {
 	string s = wp->getName(), file;
 	int n = s[s.length() - 1] - '0';
 
 	rplSubtitles.clear();
-	auto Add = [&](float b, float e, string t){  rplSubtitles.push_back(Subtitle(b, e, t));  };
+	auto Add = [&](float b, float e, int i)
+	{
+		string s = "#{Hint-"+toStr(i)+"text}";
+		rplSubtitles.push_back(Subtitle(b, e, i, s));
+	};
 
-	switch (n)
-	{	// hints not here: 5!gho,8, 13-15, 23,25-26
+	switch (n)  // hints not here: 5!gho,8, 13-15, 23,25-26
+	{	//  Subtitles  ----
 	case 1:  file = "1";  //  keys  turns trail  gravel pace
-		Add(1.f,  8.f,  "#{Hint-22text}");
-		Add(10.f, 21.f, "#{Hint-1text}");
-		Add(23.f, 30.f, "#{Hint-17text}");
-		Add(32.f, 40.f, "#{Hint-3text}");
-		Add(41.f, 55.f, "#{Hint-18text}");
+		Add(1.f,  8.f,  22);
+		Add(10.f, 21.f, 1 );
+		Add(23.f, 30.f, 17);
+		Add(32.f, 40.f, 3 );
+		Add(41.f, 55.f, 18);
 		break;
 	case 2:  file = "2";  //  damage  flip  rewind
-		Add(0.1f, 11.f, "#{Hint-4text}");
-		Add(12.f, 18.f, "#{Hint-2text}");
-		Add(19.f, 33.f, "#{Hint-0text}");
+		Add(0.1f, 11.f, 4 );
+		Add(12.f, 18.f, 2 );
+		Add(19.f, 33.f, 0 );
 		break;
 	case 3:  file = "3";  //  boost  jumps
-		Add(0.5f,  8.f, "#{Hint-6text}");
-		Add( 9.f, 18.f, "#{Hint-9text}");
-		Add(19.f, 38.f, "#{Hint-19text}");
+		Add(0.5f,  8.f, 6 );
+		Add( 9.f, 18.f, 9 );
+		Add(19.f, 38.f, 19);
 		break;
 	case 4:  file = "4b"; //  pipes  loops
-		Add(0.5f, 9.f,  "#{Hint-11text}");
-		Add(10.f, 21.f, "#{Hint-10text}");
+		Add(0.5f, 9.f,  11);
+		Add(10.f, 21.f, 10);
 		break;
 	case 5:  file = "5b"; //  fluids  camera  cars
-		Add(0.5f, 21.f, "#{Hint-20text}");
-		Add(22.f, 31.f, "#{Hint-16text}");
-		Add(32.f, 46.f, "#{Hint-7text}");
+		Add(0.5f, 21.f, 20);
+		Add(22.f, 31.f, 16);
+		Add(32.f, 46.f, 7 );
 		break;
 	case 6:  file = "6";  //  test  handbrake  wheels
-		Add(0.5f, 14.f, "#{Hint-26text}");
-		Add(15.f, 24.f, "#{Hint-27text}");
-		Add(25.f, 40.f, "#{Hint-21text}");
+		Add(0.5f, 14.f, 26);
+		Add(15.f, 24.f, 27);
+		Add(25.f, 40.f, 21);
 		break;
 	case 7:  file = "7";  //  vehicles  details
-		Add(1.f,  15.f, "#{Hint-12text}");
-		Add(16.f, 29.f, "#{Hint-24text}");
+		Add(1.f,  15.f, 12);
+		Add(16.f, 29.f, 24);
 		break;
 	}
 	file = PATHMANAGER::Lessons() + "/" + file + ".rpl";
-	bLesson = true;
+	bLesson = true;  //`
 	btnRplLoadFile(file);
-	pSet->game.trackreverse = file.find('b')!=string::npos;  //app->replay.header.reverse;
+	pSet->game.trackreverse = file.find('b') != string::npos;  //app->replay.header.reverse;
 	
 	rplSubText->setCaption("");  app->mWndRplTxt->setVisible(false);
 	//  hud setup, restore ..
@@ -544,14 +549,63 @@ void CGui::btnLesson(WP wp)
 	ckTimes.SetValue(0);
 }
 
+//---------------------------------------------------------------------
+const static short hintsImg[CGui::iHints][5] = {
+	{0, 4*128, 3*128, 128,128}, //  0 rewind <<
+	{0, 6*128, 5*128, 128,128}, //  1 turn -
+	{0, 4*128, 1*128, 128,128}, //  2 flip ^
+	{0, 3*128, 4*128, 128,128}, //  3 gravel
+	{0, 5*128, 3*128, 128,128}, //  4 damage
+	{0, 4*128, 5*128, 128,128}, //  5 ghost --
+	{0, 4*128, 0*128, 128,128}, //  6 boost
+	{0, 1*128, 2*128, 128,128}, //  7 cars
+	{0, 1*128, 3*128, 128,128}, //  8 steer
+
+	{1, 192, 0, 32, 32},        //  9 Jumps
+	{1, 224, 0, 32, 32},        // 10 Loops
+	{1, 256, 0, 32, 32},        // 11 Pipes
+
+	{0, 4*128, 5*128, 128,128}, // 12 vehicles --
+	{1,   0, 0, 32, 32},        // 13 sim
+	{0, 1*128, 7*128, 128,128}, // 14 fps
+	{0, 0*128, 5*128, 128,128}, // 15 help
+	{0, 0*128, 4*128, 128,128}, // 16 camera
+
+	{0, 6*128, 5*128, 128,128}, // 17 trail --
+	{0, 5*128, 4*128, 128,128}, // 18 pace
+	{1, 192, 0, 32, 32},        // 19 pace jmp vel
+
+	{1, 128, 0, 32, 32},        // 20 fluids ~
+	{0, 3*128, 5*128, 128,128}, // 21 wheels
+	{2, 837, 204, 187,187},     // 22 keys
+
+	{0, 0*128, 7*128, 128,128}, // 23 editors
+	{0, 5*128, 7*128, 128,128}, // 24 details
+	{0, 5*128, 5*128, 128,128}, // 25 support
+	{0, 4*128, 4*128, 128,128}, // 26 test trks -
+	{0, 6*128, 4*128, 128,128}, // 27 handbrake
+};
+const static char* hintTex[3] = {
+	"gui_icons.png", "track_icons.png", "keys.png" };
+
+//  upd hint text, img  ----
 void CGui::UpdHint()
 {
 	if (!edHintTitle)  return;
 	int h = hintsOrder[iHintCur];
+	
 	edHintTitle->setCaption(TR("#C0E0FF#{Hint}  #A0D0FF") +toStr(iHintCur+1)+"/"+toStr(iHints)+
 					  ":   "+TR("#D0E8FF#{Hint-"+toStr(h)+"}"));
 	edHintText->setCaption(TR("#{Hint-"+toStr(h)+"text}"));
+	setHintImg(imgHint, h);
 }
+
+void CGui::setHintImg(Img img, int h)
+{
+	auto i = hintsImg[h];
+	img->setImageInfo(hintTex[i[0]], IntCoord(i[1],i[2],i[3],i[4]), IntSize(i[3],i[4]));
+}
+
 
 void CGui::btnHintPrev(WP)
 {

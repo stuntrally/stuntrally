@@ -535,9 +535,13 @@ void App::updatePoses(float time)
 			bool vis = false;
 			for (auto s : gui->rplSubtitles)
 				if (pos > s.beg && pos < s.end)
-				{	vis = true;
-					gui->rplSubText->setCaption(TR(s.txt));
-					break;
+				{
+					vis = true;
+					if (!mWndRplTxt->getVisible())
+					{
+						gui->rplSubText->setCaption(TR(s.txt));
+						gui->setHintImg(gui->rplSubImg, s.hintImg);
+					}	break;
 				}
 			mWndRplTxt->setVisible(vis);
 		}

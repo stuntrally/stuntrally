@@ -230,23 +230,27 @@
 		</Widget>
 	</Widget>
 
-	<Widget type="Window" skin="WindowC" position="144 102 886 168" layer="Back" name="RplLessonTextWnd">
-		<Property key="Alpha" value="0.8"/>
-		<Property key="TextColour" value="0.6 0.8 1.0"/>
+	<Widget type="Window" skin="WindowC" position="144 102 920 168" layer="Back" name="RplLessonTextWnd">
+		<Property key="Alpha" value="0.9"/>
+		<Property key="Colour" value="0.6 0.8 1.0"/>
 		<Property key="Caption" value="#{Lesson} - #{Hint}"/>
 		<Property key="Visible" value="false"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="EditBox" skin="EditBoxEmpty" position="0 0 884 166" name="RplLessonText">
+		<Widget type="EditBox" skin="EditBoxEmpty" position="4 4 884 166" name="RplLessonText">
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
 			<Property key="InheritsAlpha" value="false"/>
-			<Property key="Alpha" value="1.0"/>
-			<Property key="Colour" value="0.5 0.56 0.6"/>
-			<Property key="TextColour" value="0.8 0.9 1.0"/>
+			<Property key="TextColour" value="0.9 0.96 1.0"/>
 			<Property key="TextAlign" value="Left Top"/>
 			<Property key="FontName" value="font.big"/>
 			<Property key="TextShadow" value="true"/>
+		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" position="848 74 60 60" name="RplLessonImg">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="Alpha" value="0.9"/>
+			<Property key="ImageCoord" value="0 0 128 128"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
 	</Widget>
 

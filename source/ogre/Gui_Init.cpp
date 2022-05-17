@@ -107,7 +107,7 @@ void CGui::InitGui()
 	//  replay
 	app->mWndRpl = fWnd("RplControlsWnd");
 	app->mWndRplTxt = fWnd("RplLessonTextWnd");
-	rplSubText = fEd("RplLessonText");
+	rplSubText = fEd("RplLessonText");  rplSubImg = fImg("RplLessonImg");
 
 
 	///  Gui common init  ---
@@ -126,9 +126,10 @@ void CGui::InitGui()
 
 
 	///  Welcome, HowToPlay, Hints  ----
-	edHintTitle = fEd("HintTitle");  edHintText = fEd("HintText");
-	UpdHint();
 	ck= &ckShowWelcome;  ck->Init("chkHintShow", &pSet->show_welcome);
+
+	edHintTitle = fEd("HintTitle");  edHintText = fEd("HintText");
+	imgHint = fImg("HintImg");  UpdHint();
 
 	Btn("btnHintPrev", btnHintPrev);     Btn("btnHintNext", btnHintNext);
 	Btn("btnHintScreen",btnHintScreen);  Btn("btnHintInput", btnHintInput);
