@@ -31,15 +31,14 @@
 using namespace Ogre;
 
 
-
 ///  create Fluid areas  . . . . . . . 
 //----------------------------------------------------------------------------------------------------------------------
 void CScene::CreateFluids()
 {
 	vFlNd.clear();  vFlEnt.clear();  vFlSMesh.clear();
-	#ifdef SR_EDITOR
+#ifdef SR_EDITOR
 	app->UpdFluidBox();
-	#endif
+#endif
 	if (!mWaterRTT->mNdFluidsRoot)
 		mWaterRTT->mNdFluidsRoot = app->mSceneMgr->getRootSceneNode()->createChildSceneNode("FluidsRootNode");
 			
@@ -69,9 +68,9 @@ void CScene::CreateFluids()
 
 		vFlSMesh.push_back(smesh);  vFlEnt.push_back(efl);  vFlNd.push_back(nfl);
 
-		#ifndef SR_EDITOR  // game
+	#ifndef SR_EDITOR  // game
 		CreateBltFluids();
-		#endif
+	#endif
 	}		
 }
 
@@ -120,13 +119,13 @@ void CScene::CreateBltFluids()
 			btCollisionObject::CF_STATIC_OBJECT /*| btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 	
 		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
-		#ifndef SR_EDITOR
-			app->pGame->collision.world->addCollisionObject(bco);
-			app->pGame->collision.shapes.push_back(hfShape);
-			fb.cobj = bco;
-		#else
-			app->world->addCollisionObject(bco);
-		#endif
+	#ifndef SR_EDITOR
+		app->pGame->collision.world->addCollisionObject(bco);
+		app->pGame->collision.shapes.push_back(hfShape);
+		fb.cobj = bco;
+	#else
+		app->world->addCollisionObject(bco);
+	#endif
 
 	}else{
 
@@ -152,19 +151,19 @@ void CScene::CreateBltFluids()
 		}
 
 		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
-		#ifndef SR_EDITOR
-			app->pGame->collision.world->addCollisionObject(bco);
-			app->pGame->collision.shapes.push_back(bshp);
-			fb.cobj = bco;
-		#else
-			app->world->addCollisionObject(bco);
-		#endif
+	#ifndef SR_EDITOR
+		app->pGame->collision.world->addCollisionObject(bco);
+		app->pGame->collision.shapes.push_back(bshp);
+		fb.cobj = bco;
+	#else
+		app->world->addCollisionObject(bco);
+	#endif
 	}
 		
 	}
-	#ifdef SR_EDITOR
+#ifdef SR_EDITOR
 	app->UpdObjPick();
-	#endif
+#endif
 }
 
 void CScene::DestroyFluids()

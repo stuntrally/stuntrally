@@ -25,7 +25,7 @@ CARDYNAMICS::CARDYNAMICS() :
 	shift_time(0.2),
 	abs(false), tcs(false),
 	maxangle(45.0), ang_damp(0.4),
-	/*bTerrain(false),*/ pSet(0), pScene(0), poly(NULL),
+	/*bTerrain(false),*/ pSet(0), pScene(0),
 	doBoost(0.f), doFlip(0.f), boostVal(0.f), fBoostFov(0.f),
 	boostFuel(0.f),boostFuelStart(0.f),
 	fHitTime(0), fHitForce(0), fParIntens(0), fParVel(0), //hit
@@ -87,13 +87,6 @@ void CARDYNAMICS::HoverPar::Default()
 CARDYNAMICS::~CARDYNAMICS()
 {
 	RemoveBlt();
-	
-	if (poly)
-	{
-		delete[] poly->verts;
-		delete[] poly->faces;
-	}
-	delete poly;
 }
 
 static void ConvertV2to1(float& x, float& y, float& z)
@@ -831,30 +824,27 @@ void CARDYNAMICS::Init(
 
 		///  init poly for buoyancy computations
 		//________________________________________________________
-		if (poly == NULL)
-		{
-			poly = new Polyhedron();
-			poly->numVerts = 8;  poly->numFaces = 12;
-			poly->verts = new Vec3[8];
-			poly->faces = new Face[12];
+		poly.verts.clear();  poly.verts.resize(8);
+		poly.faces.clear();  poly.faces.resize(12);
 
-			float hx = 1.2f, hy = 0.7f, hz = 0.4f;  // box dim
-			poly->verts[0] = Vec3(-hx,-hy,-hz);	poly->verts[1] = Vec3(-hx,-hy, hz);
-			poly->verts[2] = Vec3(-hx, hy,-hz);	poly->verts[3] = Vec3(-hx, hy, hz);
-			poly->verts[4] = Vec3( hx,-hy,-hz);	poly->verts[5] = Vec3( hx,-hy, hz);
-			poly->verts[6] = Vec3( hx, hy,-hz);	poly->verts[7] = Vec3( hx, hy, hz);
+		const float& hx = buoy_X, hy = buoy_Y, hz = buoy_Z;  // box dim
+		poly.verts[0] = Vec3(-hx,-hy,-hz);  poly.verts[1] = Vec3(-hx,-hy, hz);
+		poly.verts[2] = Vec3(-hx, hy,-hz);  poly.verts[3] = Vec3(-hx, hy, hz);
+		poly.verts[4] = Vec3( hx,-hy,-hz);  poly.verts[5] = Vec3( hx,-hy, hz);
+		poly.verts[6] = Vec3( hx, hy,-hz);  poly.verts[7] = Vec3( hx, hy, hz);
 
-			poly->faces[0] = Face(0,1,3);	poly->faces[1] = Face(0,3,2);	poly->faces[2] = Face(6,3,7);	poly->faces[3] = Face(6,2,3);
-			poly->faces[4] = Face(4,6,5);	poly->faces[5] = Face(6,7,5);	poly->faces[6] = Face(4,5,0);	poly->faces[7] = Face(0,5,1);
-			poly->faces[8] = Face(5,7,1);	poly->faces[9] = Face(7,3,1);	poly->faces[10]= Face(0,6,4);	poly->faces[11]= Face(0,2,6);
+		poly.faces[0] = BFace(0,1,3);  poly.faces[1] = BFace(0,3,2);
+		poly.faces[2] = BFace(6,3,7);  poly.faces[3] = BFace(6,2,3);
+		poly.faces[4] = BFace(4,6,5);  poly.faces[5] = BFace(6,7,5);
+		poly.faces[6] = BFace(4,5,0);  poly.faces[7] = BFace(0,5,1);
+		poly.faces[8] = BFace(5,7,1);  poly.faces[9] = BFace(7,3,1);
+		poly.faces[10]= BFace(0,6,4);  poly.faces[11]= BFace(0,2,6);
 
-			poly->length = 1.0f;  //  approx. length-?
-			poly->volume = ComputeVolume(*poly);
+		poly.length = 1.f;  //  for drag torque-
+		poly.volume = ComputeVolume(poly);
 
-			body_mass = 1900.0f * 2.688;  //poly->volume;  // car density
-			// body_mass = 1350 / chassisMass;
-			body_inertia = (4.0f * body_mass / 12.0f) * btVector3(hy*hz, hx*hz, hx*hy);
-		}
+		body_mass = buoy_Mul * 1900.f * 2.688f;  // car density-
+		body_inertia = (4.f * body_mass / 12.f) * btVector3(hy*hz, hx*hz, hx*hy);
 	}
 	//-------------------------------------------------------------	
 
@@ -870,6 +860,7 @@ void CARDYNAMICS::Init(
 
 	AlignWithGround();//--
 }
+
 
 //  remove from bullet
 //-------------------------------------------------------------	

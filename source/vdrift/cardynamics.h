@@ -21,6 +21,7 @@
 #include "../btOgre/BtOgreDebug.h"
 #include "btBulletCollisionCommon.h"
 #include "btBulletDynamicsCommon.h"
+#include "Buoyancy.h"
 
 class MODEL;  class CONFIGFILE;  class COLLISION_WORLD;  class FluidBox;  class GAME;
 
@@ -89,6 +90,8 @@ public:
 	float coll_FrWmul, coll_FrHmul, coll_TopWmul,
 		coll_TopFr, coll_TopMid, coll_TopBack,
 		coll_TopFrHm, coll_TopMidHm, coll_TopBackHm, coll_FrontWm;
+// buoyancy params dim
+	float buoy_X, buoy_Y, buoy_Z, buoy_Mul;
 	
 // damage
 	// changed in CAR::UpdateSounds from bullet hit info
@@ -153,7 +156,7 @@ public:
 	std::vector<float> whH;  // wheel submerge 0..1
 	std::vector<int> whP;  // fluid particles id
 	std::vector<float> whDmg;  // damage from fluid
-	struct Polyhedron* poly;
+	Polyhedron poly;
 	float body_mass;  btVector3 body_inertia;
 
 	// interpolated chassis state

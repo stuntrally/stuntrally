@@ -17,18 +17,24 @@ appreciated but is not required.
 misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
+// 2022 modified by CryHam
 
-#ifndef MATHUTILS_H
-#define MATHUTILS_H
-
+#pragma once
 #include <math.h>
+
 
 struct Vec3
 {
-	Vec3() : x(0.f),y(0.f),z(0.f) {}
-	Vec3(float x, float y, float z) : x(x), y(y), z(z) {}
+	float x, y, z;
 
-	void SetZero() { x = y = z = 0.0f; }
+	Vec3() : x(0.f), y(0.f), z(0.f)
+	{	}
+	Vec3(float x, float y, float z) : x(x), y(y), z(z)
+	{	}
+
+	void SetZero()
+	{	x = y = z = 0.f;  }
+
 
 	Vec3& operator *= (float s)
 	{
@@ -56,12 +62,10 @@ struct Vec3
 		float norm = Length();
 		if (norm)
 		{
-			float inv = 1.0f/norm;
-			x *= inv; y *= inv; z *= inv;
+			float inv = 1.f / norm;
+			x *= inv;  y *= inv;  z *= inv;
 		}
 	}
-
-	float x, y, z;
 };
 
 
@@ -95,12 +99,17 @@ inline Vec3 operator % (const Vec3& a, const Vec3& b)
 
 struct Quat
 {
-	Quat() : x(0.f),y(0.f),z(0.f),w(0.f) {}
-	Quat(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
+	float x, y, z, w;
+
+	Quat() : x(0.f), y(0.f), z(0.f), w(0.f)
+	{	}
+	Quat(float x, float y, float z, float w) : x(x), y(y), z(z), w(w)
+	{	}
+
 
 	Quat& operator += (const Quat& q)
 	{
-		x += q.x; y += q.y; z += q.z; w += q.w;
+		x += q.x;  y += q.y;  z += q.z;  w += q.w;
 		return *this;
 	}
 
@@ -109,11 +118,9 @@ struct Quat
 		float len = sqrtf(x*x + y*y + z*z + w*w);
 		if (len)
 		{
-			x /= len; y /= len; z /= len; w /= len;
-		}
-		else
-		{
-			x = 0; y = 0; z = 0; w = 1;
+			x /= len;  y /= len;  z /= len;  w /= len;
+		}else{
+			x = 0.f;  y = 0.f;  z = 0.f;  w = 1.f;
 		}
 	}
 
@@ -125,10 +132,8 @@ struct Quat
 	Vec3 Rotate(const Vec3& v) const
 	{
 		Vec3 s(x,y,z);
-		return v + 2.0f*(s % (s % v + w*v));
+		return v + 2.0f * (s % (s % v + w*v));
 	}
-
-	float x, y, z, w;
 };
 
 // Quat multiplication
@@ -152,13 +157,17 @@ inline Quat operator * (float s, const Quat& q)
 	return Quat(s*q.x, s*q.y, s*q.z, s*q.w);
 }
 
+
 struct Mat33
 {
-	Mat33() {}
+	Vec3 col1, col2, col3;
+
+	Mat33()
+	{	}
 	Mat33(const Quat& q)
 	{
 		float x = q.x, y = q.y, z = q.z, w = q.w;
-		float x2 = x+x, y2 = y+y, z2 = z+z;
+		float x2 = x+x,  y2 = y+y,  z2 = z+z;
 		float xx = x*x2, xy = x*y2, xz = x*z2;
 		float yy = y*y2, yz = y*z2, zz = z*z2;
 		float wx = w*x2, wy = w*y2, wz = w*z2;
@@ -171,16 +180,18 @@ struct Mat33
 		col2.y = 1 - (xx + zz);
 		col3.y =      yz - wx;
 		
-		col1.z =       xz - wy;
-		col2.z =       yz + wx;
+		col1.z =      xz - wy;
+		col2.z =      yz + wx;
 		col3.z = 1 - (xx + yy);
 	}
 
-	float& operator ()(int row, int col) { return *( (float*)this + col*3 + row); }
-	float operator ()(int row, int col) const { return *( (float*)this + col*3 + row); }
+	float& operator ()(int row, int col)
+	{	return *( (float*)this + col*3 + row);  }
 
-	Vec3 col1, col2, col3;
+	float operator ()(int row, int col) const
+	{	return *( (float*)this + col*3 + row);  }
 };
+
 
 struct RigidBody
 {
@@ -192,7 +203,4 @@ struct RigidBody
 	Vec3 T;		// torque
 	Vec3 inertia;		// rotational inertia
 	float mass;
-
 };
-
-#endif

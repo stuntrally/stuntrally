@@ -17,10 +17,12 @@ appreciated but is not required.
 misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
+// 2022 modified by CryHam
 
 #include "pch.h"
 #include "Buoyancy.h"
 #include <assert.h>
+
 
 // Returns the volume of a tetrahedron and updates the centroid accumulator.
 static float TetrahedronVolume(Vec3& c, Vec3 p, Vec3 v1, Vec3 v2, Vec3 v3)
@@ -29,10 +31,11 @@ static float TetrahedronVolume(Vec3& c, Vec3 p, Vec3 v1, Vec3 v2, Vec3 v3)
 	Vec3 b = v3 - v1;
 	Vec3 r = p - v1;
 
-	float volume = (1.0f/6.0f)*(b % a) * r;
-	c += 0.25f*volume*(v1 + v2 + v3 + p);
+	float volume = (1.0f / 6.0f) * (b % a) * r;
+	c += 0.25f * volume * (v1 + v2 + v3 + p);
 	return volume;
 }
+
 
 // Clips a partially submerged triangle and returns the volume of the
 // resulting tetrahedrons and updates the centroid accumulator.
@@ -41,49 +44,40 @@ static float ClipTriangle(	Vec3& c, Vec3 p,
 							float d1, float d2, float d3)
 {
 	assert(d1*d2 < 0);
-	Vec3 vc1 = v1 + (d1/(d1 - d2))*(v2 - v1);
+	Vec3 vc1 = v1 + (d1 / (d1 - d2)) * (v2 - v1);
 	float volume = 0;
 
 	if (d1 < 0)
-	{
-		if (d3 < 0)
-		{
-			// Case B - a quadrilateral or two triangles.
-			Vec3 vc2 = v2 + (d2/(d2 - d3))*(v3 - v2);
+	{	if (d3 < 0)
+		{	// Case B - a quadrilateral or two triangles.
+			Vec3 vc2 = v2 + (d2 / (d2 - d3)) * (v3 - v2);
 			volume += TetrahedronVolume(c, p, vc1, vc2, v1);
 			volume += TetrahedronVolume(c, p, vc2, v3, v1);
-		}
-		else
-		{
+		}else{
 			// Case A - a single triangle.
-			Vec3 vc2 = v1 + (d1/(d1 - d3))*(v3 - v1);
+			Vec3 vc2 = v1 + (d1 / (d1 - d3)) * (v3 - v1);
 			volume += TetrahedronVolume(c, p, vc1, vc2, v1);
 		}
-	}
-	else
-	{
+	}else{
 		if (d3 < 0)
-		{
-			// Case B
-			Vec3 vc2 = v1 + (d1/(d1 - d3))*(v3 - v1);
+		{	// Case B
+			Vec3 vc2 = v1 + (d1 / (d1 - d3)) * (v3 - v1);
 			volume += TetrahedronVolume(c, p, vc1, v2, v3);
 			volume += TetrahedronVolume(c, p, vc1, v3, vc2);
-		}
-		else
-		{
+		}else{
 			// Case A
-			Vec3 vc2 = v2 + (d2/(d2 - d3))*(v3 - v2);
+			Vec3 vc2 = v2 + (d2 / (d2 - d3)) * (v3 - v2);
 			volume += TetrahedronVolume(c, p, vc1, v2, vc2);
 		}
 	}
-
 	return volume;
 }
+
 
 // Computes the submerged volume and center of buoyancy of a polyhedron with
 // the water surface defined as a plane.
 static float SubmergedVolume(Vec3& c, Vec3 x, Quat q,
-							Polyhedron& poly, Plane& plane)
+							Polyhedron& poly, BPlane& plane)
 {
 	// Transform the plane into the polyhedron frame.
 	Quat qt = q.Conjugate();
@@ -92,14 +86,14 @@ static float SubmergedVolume(Vec3& c, Vec3 x, Quat q,
 
 	// Compute the vertex heights relative to the surface.
 	float TINY_DEPTH = -1e-6f;
-	float* ds = new float [poly.numVerts];
+	std::vector<float> ds;  ds.reserve(poly.verts.size());
 
 	// Compute the depth of each vertex.
 	int numSubmerged = 0;
 	int sampleVert = 0;
-	for (int i = 0; i < poly.numVerts; ++i)
+	for (int i = 0; i < poly.verts.size(); ++i)
 	{
-		ds[i] = normal*poly.verts[i] - offset;
+		ds.push_back(normal * poly.verts[i] - offset);
 		if (ds[i] < TINY_DEPTH)
 		{
 			++numSubmerged;
@@ -111,7 +105,6 @@ static float SubmergedVolume(Vec3& c, Vec3 x, Quat q,
 	if (numSubmerged == 0)
 	{
 		c.SetZero();
-		delete [] ds;
 		return 0;
 	}
 
@@ -120,14 +113,14 @@ static float SubmergedVolume(Vec3& c, Vec3 x, Quat q,
 	// computing all the tetrahedron volumes. Since this point is on the
 	// surface, all of the surface faces get zero volume tetrahedrons. This
 	// way the surface polygon does not need to be considered.
-	Vec3 p = poly.verts[sampleVert] - ds[sampleVert]*normal;
+	Vec3 p = poly.verts[sampleVert] - ds[sampleVert] * normal;
 
 	// Initialize volume and centroid accumulators.
 	float volume = 0;
 	c.SetZero();
 
 	// Compute the contribution of each triangle.
-	for (int i = 0; i < poly.numFaces; ++i)
+	for (int i = 0; i < poly.faces.size(); ++i)
 	{
 		int i1 = poly.faces[i].i1;
 		int i2 = poly.faces[i].i2;
@@ -170,19 +163,18 @@ static float SubmergedVolume(Vec3& c, Vec3 x, Quat q,
 	if (volume <= TINY_VOLUME)
 	{
 		c.SetZero();
-		delete [] ds;
 		return 0;
 	}
 
 	// Normalize the centroid by the total volume.
-	c *= 1.0f/volume;
+	c *= 1.0f / volume;
 
 	// Transform the centroid into world coordinates.
 	c = x + q.Rotate(c);
 
-	delete [] ds;
 	return volume;
 }
+
 
 float ComputeVolume(Polyhedron& poly)
 {
@@ -192,7 +184,7 @@ float ComputeVolume(Polyhedron& poly)
 	zero.SetZero();
 
 	// Compute the contribution of each triangle.
-	for (int i = 0; i < poly.numFaces; ++i)
+	for (int i = 0; i < poly.faces.size(); ++i)
 	{
 		int i1 = poly.faces[i].i1;
 		int i2 = poly.faces[i].i2;
@@ -204,9 +196,9 @@ float ComputeVolume(Polyhedron& poly)
 
 		volume += TetrahedronVolume(c, zero, v1, v2, v3);
 	}
-
 	return volume;
 }
+
 
 // Compute the buoyancy and drag forces.
 bool ComputeBuoyancy(RigidBody& body, Polyhedron& poly,
@@ -218,23 +210,24 @@ bool ComputeBuoyancy(RigidBody& body, Polyhedron& poly,
 	if (volume <= 0)
 		return false;
 
-	Vec3 buoyancyForce = (water.density*volume*gravity)*water.plane.normal;
+	Vec3 buoyancyForce = (water.density * volume * gravity) * water.plane.normal;
 
 	float partialMass = body.mass * volume / poly.volume;
 	Vec3 rc = c - body.x;
 	Vec3 vc = body.v + body.omega % rc;
-	Vec3 dragForce = (partialMass * water.linearDrag)*(water.velocity - vc);
+	Vec3 dragForce = (partialMass * water.linearDrag) * (water.velocity - vc);
 
 	Vec3 totalForce = buoyancyForce + dragForce;
 	body.F += totalForce;
 	if (water.linearDrag2 > 0.001f)
-	{	Vec3 vc2 = Vec3(-body.v.x*body.v.x, -body.v.y*body.v.y, -body.v.z*body.v.z);
+	{
+		Vec3 vc2 = Vec3(-body.v.x * body.v.x, -body.v.y * body.v.y, -body.v.z * body.v.z);
 		body.F += (volume / poly.volume * water.linearDrag2) * vc2;
 	}
 	body.T += rc % totalForce;
 
-	float length2 = poly.length*poly.length;
-	Vec3 dragTorque = (-partialMass*water.angularDrag*length2)*body.omega;
+	float length2 = poly.length * poly.length;
+	Vec3 dragTorque = (-partialMass * water.angularDrag * length2) * body.omega;
 	body.T += dragTorque;
 
 	return true;

@@ -115,6 +115,12 @@ bool CAR::Load(class App* pApp1,
 	cd.coll_flTrig_H = 0.f;   cf.GetParam("collision.fluidTrigH",cd.coll_flTrig_H);
 	cd.coll_flTrig_H -= cd.com_ofs_H;  //|
 	
+	//  buoyancy  dim
+	cd.buoy_X = 1.2f;   cf.GetParam("collision.buoy_X", cd.buoy_X);
+	cd.buoy_Y = 0.7f;   cf.GetParam("collision.buoy_Y", cd.buoy_Y);
+	cd.buoy_Z = 0.4f;   cf.GetParam("collision.buoy_Z", cd.buoy_Z);
+	cd.buoy_Mul = 1.f;  cf.GetParam("collision.buoy_Mul", cd.buoy_Mul);
+
 
 	//  load cardynamics
 	if (!cd.Load(pGame, cf))

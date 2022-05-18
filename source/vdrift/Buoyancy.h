@@ -17,39 +17,44 @@ appreciated but is not required.
 misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
+// 2022 modified by CryHam
+
 #pragma once
-
 #include "BuoyMath.h"
+#include <vector>
 
 
-struct Face
+struct BFace
 {
-	Face() : i1(0),i2(0),i3(0) {}
-	Face(int i1, int i2, int i3) : i1(i1), i2(i2), i3(i3) {}
 	int i1, i2, i3;
+
+	BFace() : i1(0),i2(0),i3(0)
+	{	}
+	BFace(int i1, int i2, int i3) : i1(i1), i2(i2), i3(i3)
+	{	}
 };
 
-struct Polyhedron
-{
-	Vec3* verts;
-	Face* faces;
-	int numVerts;
-	int numFaces;
-	float length;
-	float volume;
-	Polyhedron() : verts(0),faces(0),numVerts(0),numFaces(0),length(0.f),volume(1.f)
-	{ }
-};
-
-struct Plane
+struct BPlane
 {
 	Vec3 normal;
 	float offset;
 };
 
+struct Polyhedron
+{
+	std::vector<Vec3> verts;
+	std::vector<BFace> faces;
+	
+	float length = 0.f;
+	float volume = 1.f;
+
+	Polyhedron()
+	{	}
+};
+
 struct WaterVolume
 {
-	Plane plane;
+	BPlane plane;
 	Vec3 velocity;
 	float density;
 	float linearDrag,linearDrag2;

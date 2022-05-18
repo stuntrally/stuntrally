@@ -43,7 +43,7 @@ void CARDYNAMICS::Update()
 ///................................................ Buoyancy ................................................
 void CARDYNAMICS::UpdateBuoyancy()
 {
-	if (!pScene || (pScene->fluids.size() == 0) || !poly || !pFluids)  return;
+	if (!pScene || (pScene->fluids.size() == 0) || !pFluids)  return;
 
 	//float bc = /*sinf(chassisPosition[0]*20.3f)*cosf(chassisPosition[1]*30.4f) +*/
 	//	sinf(chassisPosition[0]*0.3f)*cosf(chassisPosition[1]*0.32f);
@@ -91,7 +91,7 @@ void CARDYNAMICS::UpdateBuoyancy()
 		body.F.z += fp.heightVelRes * -1000.f * body.v.z;
 		
 		///  add buoyancy force
-		if (ComputeBuoyancy(body, *poly, water, 9.8f))
+		if (ComputeBuoyancy(body, poly, water, 9.8f))
 		{
 			if (vtype != V_Car)
 			{	body.F.x *= 0.15f;  body.F.y *= 0.15f;  }
