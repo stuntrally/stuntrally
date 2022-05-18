@@ -56,6 +56,11 @@ start-offsetY = 0.90
 fluidTrigH = 0.4
 friction = 0.4
 
+buoy_X = 4.2
+buoy_Y = 1.3
+buoy_Z = 0.4
+buoy_Mul = 4.0
+
 
 #  engine
 #---------------------------
