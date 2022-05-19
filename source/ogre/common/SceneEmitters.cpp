@@ -36,7 +36,7 @@ void CScene::CreateEmitters()
 		}
 		catch (Exception& ex)
 		{
-			LogO("Warning: emitter particle system: " + em.name + " doesn't exist");
+			LogO("Warning: emitter " + toStr(i) + " particle system: " + em.name + " doesn't exist");
 			continue;
 		}
 		ps->setVisibilityFlags(RV_Particles);
@@ -66,8 +66,8 @@ void CScene::DestroyEmitters(bool clear)
 	for (int i=0; i < sc->emitters.size(); ++i)
 	{
 		SEmitter& em = sc->emitters[i];
-		if (em.ps) {  app->mSceneMgr->destroyParticleSystem(em.ps);  em.ps = 0;  }
 		if (em.nd) {  app->mSceneMgr->destroySceneNode(em.nd);  em.nd = 0;  }
+		if (em.ps) {  app->mSceneMgr->destroyParticleSystem(em.ps);  em.ps = 0;  }
 	}
 	if (clear)
 		sc->emitters.clear();

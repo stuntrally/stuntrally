@@ -325,7 +325,7 @@ public:
 	void btnCopySun(WP), btnCopyTerHmap(WP), btnCopyTerLayers(WP);
 	void btnCopyVeget(WP), btnCopyRoad(WP), btnCopyRoadPars(WP);
 	//  delete
-	void btnDeleteRoad(WP),btnDeleteFluids(WP),btnDeleteObjects(WP);
+	void btnDeleteRoad(WP),btnDeleteFluids(WP),btnDeleteObjects(WP),btnDeleteParticles(WP);
 	//  scale
 	float fScale, fScaleTer;
 	SV svScaleAllMul, svScaleTerHMul;

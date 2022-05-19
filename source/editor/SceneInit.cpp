@@ -151,7 +151,7 @@ void App::NewCommon(bool onlyTerVeget)
 	if (ndSky)
 		mSceneMgr->destroySceneNode(ndSky);
 		
-	if (inst) {  delete inst;  inst=0;  }
+	//if (inst) {  delete inst;  inst=0;  }
 
 	scn->DestroyTrees();
 

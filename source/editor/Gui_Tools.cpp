@@ -64,7 +64,7 @@ void CGui::btnCopyTerHmap(WP)
 	sc->td.UpdVals();
 	app->bNewHmap = true;
 	SetGuiFromXmls();	app->UpdateTrack();
-	if (app->scn->road)  app->scn->road->UpdAllMarkers();
+	if (scn->road)  scn->road->UpdAllMarkers();
 }
 
 //  copy Sun, etc.  can you copy a star
@@ -88,7 +88,7 @@ void CGui::btnCopySun(WP)
 	sc->lAmb = sF.lAmb;  sc->lDiff = sF.lDiff;  sc->lSpec = sF.lSpec;
 
 	SetGuiFromXmls();	app->UpdateTrack();
-	app->scn->DestroyWeather();  app->scn->CreateWeather();
+	scn->DestroyWeather();  scn->CreateWeather();
 }
 
 //  copy Ter layers
@@ -132,18 +132,18 @@ void CGui::btnCopyVeget(WP)
 //  copy Road
 void CGui::btnCopyRoad(WP)
 {
-	if (!ChkTrkCopy() || !app->scn->road)  return;
+	if (!ChkTrkCopy() || !scn->road)  return;
 	String from = PathCopyTrk();
-	app->scn->road->LoadFile(from + "/road.xml");  // todo: other roads cmb?
+	scn->road->LoadFile(from + "/road.xml");  // todo: other roads cmb?
 
-	SetGuiFromXmls();	app->scn->road->Rebuild(true);
-	scn->UpdPSSMMaterials();	app->scn->road->UpdAllMarkers();
+	SetGuiFromXmls();	scn->road->Rebuild(true);
+	scn->UpdPSSMMaterials();	scn->road->UpdAllMarkers();
 }
 
 //  copy Road pars
 void CGui::btnCopyRoadPars(WP)
 {
-	SplineRoad* r = app->scn->road;
+	SplineRoad* r = scn->road;
 	if (!ChkTrkCopy() || !r)  return;
 	String from = PathCopyTrk();
 	SplineRoad rd(app);  rd.LoadFile(from + "/road.xml",false);  // todo: other roads
@@ -163,8 +163,8 @@ void CGui::btnCopyRoadPars(WP)
 	r->g_MergeLen = rd.g_MergeLen;  r->g_LodPntLen = rd.g_LodPntLen;
 	r->g_VisDist = rd.g_VisDist;    r->g_VisBehind = rd.g_VisBehind;
 
-	SetGuiFromXmls();	app->scn->road->Rebuild(true);
-	scn->UpdPSSMMaterials();	app->scn->road->UpdAllMarkers();
+	SetGuiFromXmls();	scn->road->Rebuild(true);
+	scn->UpdPSSMMaterials();	scn->road->UpdAllMarkers();
 }
 
 
@@ -172,13 +172,16 @@ void CGui::btnCopyRoadPars(WP)
 
 void CGui::btnDeleteRoad(WP)
 {
-	int l = app->scn->road->getNumPoints();
+	//scn->DestroyRoads();
+	//scn->road = new
+
+	int l = scn->road->getNumPoints();
 	for (int i=0; i < l; ++i)
 	{
-		app->scn->road->iChosen = app->scn->road->getNumPoints()-1;
-		app->scn->road->Delete();
+		scn->road->iChosen = scn->road->getNumPoints()-1;
+		scn->road->Delete();
 	}
-	//app->scn->road->Rebuild(true);
+	//scn->road->Rebuild(true);
 }
 void CGui::btnDeleteFluids(WP)
 {
@@ -190,21 +193,26 @@ void CGui::btnDeleteObjects(WP)
 	app->DestroyObjects(true);
 	app->iObjCur = -1;
 }
+void CGui::btnDeleteParticles(WP)
+{
+	scn->DestroyEmitters(true);
+}
+
 
 //  Scale track  --------------------------------
 void CGui::btnScaleAll(WP)
 {
-	if (!app->scn->road)  return;
+	if (!scn->road)  return;
 	Real sf = std::max(0.1f, fScale);  // scale mul
 	
 	//  roads
-	for (auto& r : app->scn->roads)
+	for (auto& r : scn->roads)
 	for (int i=0; i < r->getNumPoints(); ++i)
 	{
 		r->Scale1(i, sf, 0.f);
 		r->mP[i].width *= sf;
 	}
-	app->scn->road->bSelChng = true;
+	scn->road->bSelChng = true;
 	
 	//  fluids
 	for (int i=0; i < sc->fluids.size(); ++i)
@@ -229,13 +237,13 @@ void CGui::btnScaleAll(WP)
 	
 	//  road upd
 	if (0) //road)  // doesnt work here..
-	{	app->scn->road->UpdPointsH();
-		app->scn->road->Rebuild(true);
+	{	scn->road->UpdPointsH();
+		scn->road->Rebuild(true);
 	}
 
 	//  start pos
-	app->scn->sc->startPos[0] *= sf;
-	app->scn->sc->startPos[1] *= sf;  app->UpdStartPos();
+	scn->sc->startPos[0] *= sf;
+	scn->sc->startPos[1] *= sf;  app->UpdStartPos();
 }
 
 

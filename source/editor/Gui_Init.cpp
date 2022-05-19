@@ -516,7 +516,7 @@ void CGui::InitGui()
 	Btn("CopyRoad", btnCopyRoad);			Btn("CopyRoadPars", btnCopyRoadPars);
 
 	Btn("DeleteRoad", btnDeleteRoad);		Btn("DeleteFluids", btnDeleteFluids);
-	Btn("DeleteObjects", btnDeleteObjects);
+	Btn("DeleteObjects", btnDeleteObjects); Btn("DeleteParticles", btnDeleteParticles);
 
 	sv= &svScaleAllMul;		sv->Init("ScaleAllMul",		&fScale,    0.5f,2.f, 1.5f);  sv->DefaultF(1.f);
 	sv= &svScaleTerHMul;	sv->Init("ScaleTerHMul",	&fScaleTer, 0.5f,2.f, 1.5f);  sv->DefaultF(1.f);

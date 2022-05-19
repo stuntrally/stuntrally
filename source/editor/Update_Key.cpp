@@ -97,12 +97,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	switch (pSet->inMenu)
 	{
 		case WND_Track:   tab = mWndTabsTrack;  sub = gui->vSubTabsTrack[tab->getIndexSelected()];  break;
-		case WND_Edit:    tab = mWndTabsEdit;  sub = gui->vSubTabsEdit[tab->getIndexSelected()];  break;
+		case WND_Edit:    tab = mWndTabsEdit;   sub = gui->vSubTabsEdit[tab->getIndexSelected()];  break;
 		case WND_Help:    tab = sub = gui->vSubTabsHelp[1];  iTab1 = 0;  break;
-		case WND_Options: tab = mWndTabsOpts;  sub = gui->vSubTabsOpts[tab->getIndexSelected()];  break;
+		case WND_Options: tab = mWndTabsOpts;   sub = gui->vSubTabsOpts[tab->getIndexSelected()];  break;
 	}
+	bool edit = bEdit();
 	SplineRoad* road = scn->road;
-	bool bRoad = edMode == ED_Road && road && bEdit();
+	bool bRoad = edMode == ED_Road && road && edit;
 
 
 	///  Pick open  ---------------------
@@ -360,7 +361,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 						r.erase(r.begin() + scn->rdCur);
 						
 						if (scn->rdCur >= r.size())
-							scn->rdCur = r.size();
+							scn->rdCur = r.size()-1;
 						scn->road = r[scn->rdCur];
 				}	}
 				else if (ctrl)
@@ -386,8 +387,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		{	iSnap = (iSnap + (snap < 0 ? -1+ciAngSnapsNum : 1))%ciAngSnapsNum;  angSnap = crAngSnaps[iSnap];	}
 	}
 
+
 	//  ter brush shape
-	if (edMode < ED_Road && !alt && !bGuiFocus)
+	if (edMode < ED_Road && !alt && edit)
 	switch (skey)
 	{
 		case key(K):    if (ctrl)  {  mBrShape[curBr] = (EBrShape)((mBrShape[curBr]-1 + BRS_ALL) % BRS_ALL);  updBrush();  }  break;
@@ -404,9 +406,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	}
 
 	//  ter brush presets  ----
-	if (edMode < ED_Road && alt && skey >= key(1) && skey <= key(0) && !bMoveCam)
+	if (edMode < ED_Road && alt && skey >= key(1) && skey <= key(0) && edit)
 	{
-		// TODO
 		int id = skey - key(1);
 		if (shift)  id += 10;
 		SetBrushPreset(id);
@@ -414,7 +415,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 
 	
 	//  Fluids  ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
-	if (edMode == ED_Fluids)
+	if (edMode == ED_Fluids && edit)
 	{	int fls = scn->sc->fluids.size();
 		const std::vector<FluidParams>& dfl = scn->data->fluids->fls;
 		switch (skey)
@@ -425,7 +426,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			{
 				FluidBox fb;	fb.name = "water blue";
 				fb.pos = road->posHit;	fb.rot = Vector3(0.f, 0.f, 0.f);
-				fb.size = Vector3(50.f, 20.f, 50.f);	fb.tile = Vector2(0.01f, 0.01f);
+				fb.size = Vector3(50.f, 20.f, 50.f);  fb.tile = Vector2(0.01f, 0.01f);
 				scn->sc->fluids.push_back(fb);
 				scn->sc->UpdateFluidsId();
 				iFlCur = scn->sc->fluids.size()-1;
@@ -439,13 +440,13 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(HOME):  case key(KP_7):
 				iFlCur = 0;  UpdFluidBox();  break;
 			case key(END):  case key(KP_1):
-				if (fls > 0)  iFlCur = fls-1;  UpdFluidBox();  break;
+				iFlCur = fls-1;  UpdFluidBox();  break;
 
 			//  prev,next
 			case key(PAGEUP):  case key(KP_9):
-				if (fls > 0) {  iFlCur = (iFlCur-1+fls)%fls;  }  UpdFluidBox();  break;
+				iFlCur = (iFlCur-1+fls)%fls;  UpdFluidBox();  break;
 			case key(PAGEDOWN):	case key(KP_3):
-				if (fls > 0) {  iFlCur = (iFlCur+1)%fls;	  }  UpdFluidBox();  break;
+				iFlCur = (iFlCur+1)%fls;	  UpdFluidBox();  break;
 
 			//  del
 			case key(DELETE):  case key(KP_PERIOD):
@@ -475,7 +476,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	}
 
 	//  Objects  | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |
-	if (edMode == ED_Objects)
+	if (edMode == ED_Objects && edit)
 	{	int objs = scn->sc->objects.size(), objAll = vObjNames.size();
 		switch (skey)
 		{
@@ -608,7 +609,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	}
 
 	//  Emitters  : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : :
-	if (edMode == ED_Particles && !bGuiFocus)
+	if (edMode == ED_Particles && edit)
 	{	int emts = scn->sc->emitters.size();
 		switch (skey)
 		{
@@ -634,7 +635,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(INSERT):  case key(KP_0):
 			if (road && road->bHitTer)
 			{
-				SEmitter em;  em.name = "AcidVapor1";
+				SEmitter em;  em.name = "SmokeBrown";
 				em.pos = road->posHit;  em.size = Vector3(2.f, 1.f, 2.f);  em.rate = 10.f;
 				scn->sc->emitters.push_back(em);  iEmtCur = scn->sc->emitters.size()-1;
 				bRecreateEmitters = true;
@@ -643,6 +644,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			//  del
 			case key(DELETE):  case key(KP_PERIOD):
 			case key(KP_5):
+				if (emts == 0)  break;
+				scn->DestroyEmitters(false);
 				if (emts == 1)	scn->sc->emitters.clear();
 				else			scn->sc->emitters.erase(scn->sc->emitters.begin() + iEmtCur);
 				iEmtCur = std::max(0, std::min(iEmtCur, (int)scn->sc->emitters.size()-1));

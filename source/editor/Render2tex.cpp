@@ -472,7 +472,7 @@ void App::AlignTerToRoad()
 
 	//  put sel segs on terrain
 	for (auto i : scn->road->vSel)
-		scn->road.mP[i].onTer = true;
+		scn->road->mP[i].onTer = true;
 
 	//  restore orig road width
 	scn->road->Rebuild(true);
