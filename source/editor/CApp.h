@@ -35,23 +35,23 @@ public:
 	App(class SETTINGS* pSet1);
 	virtual ~App();
 
-	class Instanced* inst;
+	//class Instanced* inst;
 
-	CScene* scn;
+	CScene* scn =0;
 
 	//  materials
-	sh::Factory* mFactory;
+	sh::Factory* mFactory =0;
 	void postInit(), SetFactoryDefaults();
 	virtual void materialCreated(sh::MaterialInstance* m, const std::string& configuration, unsigned short lodIndex);
 
 
 	///  Gui
-	CGui* gui;
-	CGuiCom* gcom;
+	CGui* gui =0;
+	CGuiCom* gcom =0;
 
 	PreviewTex prvView,prvRoad,prvTer;  // track tab
 
-	float mTimer;
+	float mTimer =0.f;
 
 	
 	///  main
@@ -65,7 +65,8 @@ public:
 	bool keyPressed(const SDL_KeyboardEvent &arg);
 
 	void LoadTrackEv(), SaveTrackEv(), UpdateTrackEv();
-	enum TrkEvent {  TE_None=0, TE_Load, TE_Save, TE_Update  } eTrkEvent;
+	enum TrkEvent {  TE_None=0, TE_Load, TE_Save, TE_Update  }
+	eTrkEvent = TE_None;
 
 	virtual void createScene();
 	virtual void destroyScene();
@@ -76,6 +77,7 @@ public:
 
 	void processMouse(double dt), UpdKeyBar(Ogre::Real dt);
 	Ogre::Vector3 vNew;
+	
 	//  Edit all  :
 	void EditMouse(),  MouseRoad(), MouseStart(), MouseFluids(), MouseEmitters(), MouseObjects();
 	void KeyTxtRoad(Ogre::Real q), KeyTxtTerrain(Ogre::Real q), KeyTxtStart(Ogre::Real q);
@@ -83,7 +85,7 @@ public:
 	
 
 	//  create  . . . . . . . . . . . . . . . . . . . . . . . . 
-	bool bNewHmap, bTrGrUpd, bParticles;
+	bool bNewHmap =0, bTrGrUpd =0, bParticles =1;
 	Ogre::String resTrk;  void NewCommon(bool onlyTerVeget);
 
 	void CreateObjects(), DestroyObjects(bool clear), ResetObjects();
@@ -91,10 +93,10 @@ public:
 
 
 	///  rnd to tex  minimap  * * * * * * * * *	
-	Ogre::SceneNode *ndPos;
-	Ogre::ManualObject* mpos;
+	Ogre::SceneNode *ndPos =0;
+	Ogre::ManualObject* mpos =0;
 	Ogre::ManualObject* Create2D(const Ogre::String& mat, Ogre::Real s, bool dyn=false);
-	Ogre::Real asp, xm1,ym1,xm2,ym2;
+	Ogre::Real asp =4.f/3.f, xm1 =-1.f, ym1 =1.f, xm2 =1.f, ym2 =-1.f;
 
 	enum ERnd2Tex
 	{	RT_Road=0, RT_Grass, RT_Terrain, RT_View, RT_Last, RT_Brush, RT_ALL  };
@@ -111,28 +113,24 @@ public:
 	virtual void postRenderTargetUpdate(const Ogre::RenderTargetEvent &evt);
 	
 
-	//  fluids
-	int iFlCur;  bool bRecreateFluids;
-	void UpdFluidBox(), UpdMtrWaterDepth();
-	
-
 	//  terrain cursor, circle mesh
-	Ogre::ManualObject* moTerC;
-	Ogre::SceneNode* ndTerC;
+	Ogre::ManualObject* moTerC =0;
+	Ogre::SceneNode* ndTerC =0;
 	void TerCircleInit(), TerCircleUpd();
 
 	//  brush preview tex
 	void createBrushPrv();
 	void updateBrushPrv(bool first=false), updateTerPrv(bool first=false);
 
-	bool bUpdTerPrv;
+	bool bUpdTerPrv =0;
 	Ogre::TexturePtr brushPrvTex, terPrvTex;
 	const static int BrPrvSize = 128, TerPrvSize = 256;
 
 
 	///<>  terrain edit, brush
 	enum EBrShape
-	{   BRS_Triangle=0, BRS_Sinus, BRS_Noise, BRS_Noise2, BRS_Ngon, BRS_ALL  }  mBrShape[ED_ALL];
+	{   BRS_Triangle=0, BRS_Sinus, BRS_Noise, BRS_Noise2, BRS_Ngon, BRS_ALL
+	} mBrShape[ED_ALL];
 	const static Ogre::String csBrShape[BRS_ALL];
 
 	struct BrushSet  // brush preset ----
@@ -154,13 +152,13 @@ public:
 
 
 	//  brush vars
-	int curBr;
-	bool bTerUpd,bTerUpdBlend;  char sBrushTest[512];
-	float* pBrFmask, *mBrushData;
-	bool brLockPos;
+	int curBr = 0;
+	bool bTerUpd =0, bTerUpdBlend =0;  char sBrushTest[512] ={0,};
+	float* pBrFmask =0, *mBrushData =0;
+	bool brLockPos =0;
 
 	//  params
-	float terSetH, mBrFilt,mBrFiltOld;
+	float terSetH = 10.f,  mBrFilt = 2.f, mBrFiltOld = 1.f;
 	float mBrSize[ED_ALL],mBrIntens[ED_ALL], mBrPow[ED_ALL];
 	float mBrFq[ED_ALL],mBrNOf[ED_ALL];  int mBrOct[ED_ALL];
 
@@ -180,11 +178,11 @@ public:
 
 
 	///  bullet world, simulate
-	class btDiscreteDynamicsWorld* world;
-	class btDefaultCollisionConfiguration* config;
-	class btCollisionDispatcher* dispatcher;
-	class bt32BitAxisSweep3* broadphase;
-	class btSequentialImpulseConstraintSolver* solver;
+	class btDiscreteDynamicsWorld* world =0;
+	class btDefaultCollisionConfiguration* config =0;
+	class btCollisionDispatcher* dispatcher =0;
+	class bt32BitAxisSweep3* broadphase =0;
+	class btSequentialImpulseConstraintSolver* solver =0;
 
 	void BltWorldInit(), BltWorldDestroy(), BltClear(), BltUpdate(float dt);
 
@@ -192,26 +190,30 @@ public:
 	//  tools, road  -in base
 	void SaveGrassDens(), SaveWaterDepth();
 	void AlignTerToRoad();
-	int iSnap;  Ogre::Real angSnap;
+	int iSnap = 0;  Ogre::Real angSnap = 0.f;
 
 
-	//  box cursors  car start, fluids, objects, emitters
+	//  box cursors  car start,end,  fluids, objects, emitters
 	void UpdStartPos();
 	void CreateBox(Ogre::SceneNode*& nd, Ogre::Entity*& ent, Ogre::String sMat, Ogre::String sMesh, int x=0);
 
-	Ogre::SceneNode* ndCar,*ndStBox, *ndFluidBox,*ndObjBox, *ndEmtBox;
-	Ogre::Entity*  entCar,*entStBox, *entFluidBox,*entObjBox,*entEmtBox;
+	Ogre::SceneNode* ndCar =0, *ndStBox =0, *ndEndBox =0,  *ndFluidBox =0, *ndObjBox =0, *ndEmtBox =0;
+	Ogre::Entity*    entCar =0,*entStBox =0,*entEndBox =0, *entFluidBox =0,*entObjBox =0,*entEmtBox =0;
 	void togPrvCam();
 
 
+	//  [Fluids]
+	int iFlCur =0;  bool bRecreateFluids =0;
+	void UpdFluidBox(), UpdMtrWaterDepth();
+	
+
 	//  [Objects]  ----
-	ED_OBJ objEd;  // edit mode
+	ED_OBJ objEd = EO_Move;  // edit mode
 
-	int iObjCur;  // picked id
-	int iObjLast;  // last counter, just for naming
+	int iObjCur = -1;  // picked id
+	int iObjLast = 0;  // last counter, just for naming
 
-	//  new object's type
-	int iObjTNew;  // id for vObjNames
+	int iObjTNew = 0;  // new object's type, id for vObjNames
 	std::vector<std::string> vObjNames, vBuildings;
 	void SetObjNewType(int tnew), UpdObjNewNode();
 
@@ -221,28 +223,27 @@ public:
 	void UpdObjSel();  // upd selected glow
 	Ogre::Vector3 GetObjPos0();  // sel center
 
-	bool objSim;  // dynamic simulate on
+	bool objSim = 0;  // dynamic simulate on
 	Object objNew;  //Object*..
 
 	std::vector<Object> vObjCopy;  // copied objects
 
 
 	//  [Emitters]  ----
-	ED_OBJ emtEd;  // edit mode
-	int iEmtCur;  // picked id
+	ED_OBJ emtEd = EO_Move;  // edit mode
+	int iEmtCur = -1;  // picked id
 	SEmitter emtNew;
 	
-	int iEmtNew;  // id for vEmtNames
+	int iEmtNew = 0;  // id for vEmtNames
 	std::vector<std::string> vEmtNames;
 	void SetEmtType(int rel);
 
 	void UpdEmtBox();
-	bool bRecreateEmitters;
+	bool bRecreateEmitters = 0;
 
 
-	//  surfaces
+	//  [Surfaces]
 	std::vector <TRACKSURFACE> surfaces;  // all
 	std::map <std::string, int> surf_map;  // name to surface id
 	bool LoadAllSurfaces();
-
 };

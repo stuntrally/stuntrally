@@ -73,6 +73,10 @@ public:
 		Txt txDamage =0,  txRewind =0,  txBFuel =0;
 		Img icoDamage =0, icoRewind =0, icoBFuel =0, icoBInf =0;
 		
+		//  input bars
+		//Img imgSteer =0, barSteer =0,  barThrottle =0, barBrake =0;
+		//Txt txtOther =0;  //barHandBrake = 0, barBoost = 0, barRewind =0;
+
 		//  current camera name
 		Txt txCam =0;
 
@@ -99,6 +103,7 @@ public:
 
 	//  chat messages
 	Txt txMsg =0;  Img bckMsg =0;
+	
 	//  camera move info
 	Txt txCamInfo =0;
 	//  car debug texts  todo...

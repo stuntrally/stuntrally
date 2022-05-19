@@ -33,7 +33,7 @@
 			//Todo: track retries/resets limit
 
 		<cartype names="Gravel" />
-		<car names="ES|S1" />
+		<car names="HI|ES" />
 		
 			//  *** Hud ***
 			//  not allowed when "0", "1" means user can choose

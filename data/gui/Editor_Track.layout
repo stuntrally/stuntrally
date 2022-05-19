@@ -483,14 +483,14 @@
 					<Property key="Caption" value="#{Fluids}"/>
 				</Widget>
 				<Widget type="Button" skin="Button" position="640 270 108 24" name="DeleteObjects">
-					<Property key="Colour" value="0.7 0.7 0.7"/>
-					<Property key="TextColour" value="0.7 0.7 0.7"/>
+					<Property key="Colour" value="0.8 0.8 0.8"/>
+					<Property key="TextColour" value="0.8 0.8 0.8"/>
 					<Property key="Caption" value="#{Objects}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="640 270 108 24" name="DeleteObjects">
-					<Property key="Colour" value="0.7 0.7 0.7"/>
-					<Property key="TextColour" value="0.7 0.7 0.7"/>
-					<Property key="Caption" value="#{Objects}"/>
+				<Widget type="Button" skin="Button" position="640 300 108 24" name="DeleteParticles">
+					<Property key="Colour" value="0.8 0.8 0.5"/>
+					<Property key="TextColour" value="0.8 0.8 0.5"/>
+					<Property key="Caption" value="#{Particles}"/>
 				</Widget>
 
 				<Widget type="TextBox" skin="TextBox" position="168 188 128 24">

@@ -84,6 +84,15 @@
     "workbench.colorCustomizations": {
         "errorLens.errorForeground":"#F0A0F0"
     },
+    "C_Cpp.autocomplete": "Disabled",
+    "C_Cpp.formatting": "Disabled",
+    "C_Cpp.errorSquiggles": "Disabled",
+    "C_Cpp.intelliSenseEngine": "Disabled",
+    "clangd.arguments": [
+      "-clang-tidy-checks=-*,modernize-use-override",
+      "--suggest-missing-includes",
+      "--header-insertion=iwyu"
+    ],    
     "favorites.sortDirection": "ASC",
     "python.pythonPath": "/usr/bin/python3",
     "editor.suggest.localityBonus": true,

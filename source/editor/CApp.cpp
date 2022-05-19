@@ -24,27 +24,6 @@ using namespace Ogre;
 //  ctor
 //----------------------------------------------------------------------------------------------------------------------
 App::App(SETTINGS* pSet1)
-	:mFactory(0)
-	,bTerUpd(0), curBr(0), brLockPos(0)
-	,vNew(0,0,0)
-	,ndPos(0), mpos(0), asp(4.f/3.f)
-	,ndCar(0),entCar(0), ndStBox(0),entStBox(0)
-	
-	,eTrkEvent(TE_None), bNewHmap(0), bTrGrUpd(0)
-	,bTerUpdBlend(0)
-	,world(0), config(0), dispatcher(0), broadphase(0), solver(0)  //blt
-	,mTimer(0.f), bUpdTerPrv(0)
-	//  fl
-	,ndFluidBox(0),entFluidBox(0)
-	,iFlCur(0), bRecreateFluids(0)
-	//  objs
-	,ndObjBox(0),entObjBox(0)
-	,iObjCur(-1), iObjTNew(0), iObjLast(0)
-	,objSim(0), objEd(EO_Move)
-	,inst(0)
-	//  emts
-	,ndEmtBox(0),entEmtBox(0), bParticles(1)
-	,iEmtCur(-1),iEmtNew(0), emtEd(EO_Move), bRecreateEmitters(0)
 {
 	pSet = pSet1;
 	Axes::Init();
@@ -57,10 +36,8 @@ App::App(SETTINGS* pSet1)
 	mBrOct[0] = 5;		mBrOct[1] = 5;		mBrOct[2] = 5;		mBrOct[3] = 5;
 	mBrShape[0] = BRS_Sinus;  mBrShape[1] = BRS_Sinus;
 	mBrShape[2] = BRS_Sinus;  mBrShape[3] = BRS_Sinus;
-	terSetH = 10.f;     mBrFilt = 2.f;  mBrFiltOld = 1.f;  pBrFmask = 0;
 	mBrushData = new float[BrushMaxSize*BrushMaxSize];
-	sBrushTest[0]=0;   updBrush();
-	iSnap = 0;  angSnap = crAngSnaps[iSnap];
+	updBrush();
 
 	///  new
 	scn = new CScene(this);
@@ -77,7 +54,8 @@ App::App(SETTINGS* pSet1)
 	gui->data = scn->data;
 }
 
-const Ogre::String App::csBrShape[BRS_ALL] = { "Triangle", "Sinus", "Noise", "Noise2", "N-gon" };  // static
+const Ogre::String App::csBrShape[BRS_ALL] =
+{ "Triangle", "Sinus", "Noise", "Noise2", "N-gon" };  // static
 
 
 ///  material factory setup

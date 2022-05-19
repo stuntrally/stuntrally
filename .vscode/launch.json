@@ -11,6 +11,14 @@
 			"program": "${workspaceFolder}/build/stuntrally",
 			"args": [],
 			"cwd": "${workspaceFolder}"
+		},
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug Editor",
+			"program": "${workspaceFolder}/build/sr-editor",
+			"args": [],
+			"cwd": "${workspaceFolder}"
 		}
 	]
 }

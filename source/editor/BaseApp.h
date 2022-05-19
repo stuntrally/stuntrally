@@ -53,8 +53,7 @@ protected:
 	virtual bool frameEnded(const Ogre::FrameEvent& evt);
 	
 	///  input events
-	/*virtual*/
-	bool keyPressed( const SDL_KeyboardEvent &arg) = 0;
+	virtual bool keyPressed( const SDL_KeyboardEvent &arg) =0;
 	bool keyReleased(const SDL_KeyboardEvent &arg);
 	bool mouseMoved( const SFO::MouseMotionEvent &arg );
 	bool mousePressed( const SDL_MouseButtonEvent &arg, Uint8 id );
@@ -75,7 +74,7 @@ protected:
 	Ogre::RenderWindow* mWindow =0;
 	SDL_Window* mSDLWindow =0;
 	Ogre::Camera* mCamera =0;
-	Ogre::Vector3 mCamPosOld,mCamDirOld;
+	Ogre::Vector3 mCamPosOld, mCamDirOld;
 
 
 	///  input

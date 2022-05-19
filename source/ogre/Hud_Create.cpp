@@ -322,6 +322,15 @@ void CHud::Create()
 			0,0, 300,30, Align::Left, "CamT"+s);
 		h.txCam->setFontName("hud.text");  h.txCam->setTextShadow(true);
 		h.txCam->setTextColour(Colour(0.65,0.85,0.85));
+
+		//  input bars  --------------
+		/*Img bar = tabitem->createWidget<ImageBox>("ImageBox",
+			x2 + (twosided ? 0 : 64), y+4, twosided ? 128 : 64, 16, Align::Default,
+			"bar_" + toStr(i) + "_" + sPlr);
+		gcom->setOrigPos(bar, "OptionsWnd");
+		bar->setUserData(*it);
+		bar->setImageTexture(String("input_bar.png"));  bar->setImageCoord(IntCoord(0,0,128,16));
+		*/
 	}
 
 	//  camera info
@@ -329,6 +338,7 @@ void CHud::Create()
 		0,y, 800,100, Align::Left, "Back", "CamIT");  txCamInfo->setVisible(false);
 	txCamInfo->setFontName("hud.text");  txCamInfo->setTextShadow(true);
 	txCamInfo->setTextColour(Colour(0.8,0.9,0.9));
+
 
 	//  chat msg  -----------
 	bckMsg = app->mGui->createWidget<ImageBox>("ImageBox",
