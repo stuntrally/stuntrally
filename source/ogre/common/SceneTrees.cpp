@@ -308,7 +308,7 @@ void CScene::CreateTrees()
 						d = c + pg.maxRdist+1;  // not less than c
 
 					//  find dist to road
-					register int ii,jj, rr, rmin = 3000;  //d
+					int ii,jj, rr, rmin = 3000;  //d
 					for (jj = -d; jj <= d; ++jj)
 					for (ii = -d; ii <= d; ++ii)
 					{

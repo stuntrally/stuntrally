@@ -106,7 +106,7 @@ void PreviewTex::Clear(const uint8 b, const uint8 g, const uint8 r, const uint8 
 	const PixelBox& pixelBox = pb->getCurrentLock();
 	uint8* pDest = static_cast<uint8*>(pixelBox.data);
 	 
-	register size_t j,i;
+	size_t j,i;
 	for (j = 0; j < ySize; ++j)
 	{
 		for (i = 0; i < xSize; ++i)   // B,G,R,A
@@ -157,7 +157,7 @@ bool PreviewTex::LoadTer(String sRgb, String sAa, float defA)
 		int aD = pb.getRowSkip() * PixelUtil::getNumElemBytes(pb.format);
 		 
 		float fA = defA * 255.f;
-		register size_t j,i;
+		size_t j,i;
 		for (j = 0; j < ySize; ++j)
 		{
 			for (i = 0; i < xSize; ++i)   // B,G,R,A
@@ -205,7 +205,7 @@ bool PreviewTex::LoadTer(String sRgb, String sAa, float defA)
 		uint8* pD = static_cast<uint8*>(pb.data);
 		int aD = pb.getRowSkip() * PixelUtil::getNumElemBytes(pb.format);
 		 
-		register size_t j,i;
+		size_t j,i;
 		for (j = 0; j < ySize; ++j)
 		{
 			for (i = 0; i < xSize; ++i)   // B,G,R,A

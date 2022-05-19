@@ -222,7 +222,7 @@ void App::updBrush()
 		delete[] pBrFmask;  pBrFmask = 0;
 		const float fl = mBrFilt;
 		const int f = ceil(fl);  float fd = 1.f + fl - floor(fl);
-		register int m,i,j;
+		int m,i,j;
 
 		//  gauss kernel for smoothing
 		const int mm = (f*2+1)*(f*2+1);
@@ -278,7 +278,7 @@ void CGui::btnTerGenerate(WP wp)
 	Ogre::Timer ti;
 
 	//  generate noise terrain hmap
-	register int a,x,y;  register float c;
+	int a,x,y;  float c;
 
 	for (y=0; y < sx; ++y)  {  a = y * sx;
 	for (x=0; x < sx; ++x,++a)
@@ -560,7 +560,7 @@ void App::filter(Vector3 &pos, float dtime, float brMul)
 		ter = scn->sc->td.iTerSize, ter2 = ter*ter, ter1 = ter+1;
 
 	const float fl = mBrFilt;  const int f = ceil(fl);
-	register int x,y,m,yy,i,j;
+	int x,y,m,yy,i,j;
 	
 	for (j = rcMap.top; j < rcMap.bottom; ++j,++jj)
 	{
@@ -571,7 +571,7 @@ void App::filter(Vector3 &pos, float dtime, float brMul)
 		if (mapPos -f*ter1 >= 0 && mapPos +f*ter1 < ter2)  // ter borders
 		{
 			//  sum in kernel
-			register float s = 0.f;  m = 0;
+			float s = 0.f;  m = 0;
 			for (y = -f; y <= f; ++y) {  yy = y*ter-f;
 			for (x = -f; x <= f; ++x, ++m, ++yy)
 				s += fHmap[mapPos + yy] * pBrFmask[m];  }

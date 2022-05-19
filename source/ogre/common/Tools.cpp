@@ -55,7 +55,7 @@ void CGui::ToolTexAlpha()
 
 		uchar* rgb = new uchar[w*h*3];
 		uchar* aa = new uchar[w*h];
-		register int i,j,a=0,b=0;
+		int i,j,a=0,b=0;
 		for (j=0; j < h; ++j)
 		for (i=0; i < w; ++i)
 		{
@@ -129,7 +129,7 @@ void CGui::ToolBrushesPrv()
 		
 		//void * pb.data
 		int a = (i%16)*128, b = (i/16)*128;
-		register int x,y;  ColourValue c;
+		int x,y;  ColourValue c;
 		for (y = 0; y < yy; ++y)
 		for (x = 0; x < xx; ++x)
 		{
