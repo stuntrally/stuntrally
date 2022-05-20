@@ -142,6 +142,16 @@ void SplineRoad::UpdLodVisMarks(Real distSq, bool vis)
 	#endif
 }
 
+void SplineRoad::HideMarks()
+{
+	if (!ndRot)  return;
+	ndSel->setVisible(false);
+	ndChosen->setVisible(false);
+	ndHit->setVisible(false);
+	ndChk->setVisible(false);
+	ndRot->setVisible(false);
+}
+
 ///  set lod0 for  render to tex   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 void SplineRoad::SetForRnd(String sMtr)
 {

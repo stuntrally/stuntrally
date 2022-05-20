@@ -282,8 +282,10 @@ void App::ResetObjects()
 #ifdef SR_EDITOR
 void App::UpdObjPick()
 {
-	if (ndStBox)
-		ndStBox->setVisible(edMode == ED_Start && !bMoveCam);
+	bool st = edMode == ED_Start && !bMoveCam;
+	if (ndStBox[0])  ndStBox[0]->setVisible(st);
+	if (ndStBox[1])  ndStBox[1]->setVisible(st && !scn->road->isLooped);  // end separate
+
 
 	int objs = scn->sc->objects.size();
 	bool bObjects = edMode == ED_Objects && !bMoveCam && objs > 0 && iObjCur >= 0;

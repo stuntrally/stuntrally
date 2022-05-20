@@ -29,10 +29,10 @@ public:
 	virtual ~App();
 	void ShutDown();
 	
-	CScene* scn;
-	CData* data;  //p
+	CScene* scn =0;
+	CData* data =0;  //p
 	
-	GAME* pGame;
+	GAME* pGame =0;
 	
 
 	//  BaseApp init
@@ -117,7 +117,7 @@ public:
 
 
 	//  mtr from ter  . . . 
-	int blendMapSize;  char* blendMtr;
+	int blendMapSize;  char* blendMtr =0;
 	void GetTerMtrIds();
 
 
@@ -127,16 +127,16 @@ public:
 
 
 	//  Input
-	CInput* input;
+	CInput* input =0;
 
-	virtual bool keyPressed (const SDL_KeyboardEvent &arg);
+	virtual bool keyPressed(const SDL_KeyboardEvent &arg);
 	void channelChanged(ICS::Channel *channel, float currentValue, float previousValue);
 
 
 	///  Gui
 	//-----------------------------------------------------------------
-	CGui* gui;
-	CGuiCom* gcom;
+	CGui* gui =0;
+	CGuiCom* gcom =0;
 
 	PreviewTex prvView,prvRoad,prvTer;  // track tab
 	PreviewTex prvStCh;  // champ,chall stage view

@@ -253,14 +253,17 @@ void App::newPoses(float time)  // time only for camera update
 			}
 			
 			//----------------------------------------------------------------------------
-			if (carM->bGetStPos)  // first pos is at start
+			if (carM->bGetStPos)  // get finish, end box
 			{	carM->bGetStPos = false;
-				carM->matStPos.makeInverseTransform(pi.pos, Vector3::UNIT_SCALE, pi.rot);
+				int st = !road || road->isLooped ? 0 : pSet->game.trackreverse ? 0 : 1;
+				carM->matStPos.makeInverseTransform(
+					Axes::toOgre(scn->sc->startPos[st]), Vector3::UNIT_SCALE,
+					Axes::toOgre(scn->sc->startRot[st]));
 				carM->ResetChecks();
 			}
 			if (road && !carM->bGetStPos)
 			{
-				//  start/finish box dist
+				//  finish box dist
 				Vector4 carP(pi.pos.x,pi.pos.y,pi.pos.z,1);
 				carM->vStDist = carM0->matStPos * carP;  // start pos from 1st car always
 				carM->bInSt = abs(carM->vStDist.x) < road->vStBoxDim.x && 

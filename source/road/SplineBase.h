@@ -125,8 +125,8 @@ public:
 	static Ogre::Vector3 GetRot(Ogre::Real ayaw, Ogre::Real ang);
 
 
-protected:
 	bool isLooped;  ///=closed, if false begin and end are not connected
+protected:
 
 	std::deque<SplinePoint> mP;  // points
 	static std::deque<SplinePoint> mPc;  // copy points

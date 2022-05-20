@@ -42,8 +42,8 @@ void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 	{
 		///-  start  -------------
 		int cnt = road->getNumPoints();
-		Vector3 stPos = Axes::toOgre(app->scn->sc->startPos);
-		Quaternion q1 = Axes::toOgre(app->scn->sc->startRot);
+		Vector3 stPos = Axes::toOgre(scn->sc->startPos[0]);  // todo: [1] too?
+		Quaternion q1 = Axes::toOgre(scn->sc->startRot[0]);
 		Vector3 vx,vy,vz;  q1.ToAxes(vx,vy,vz);  Vector3 stDir = -vx;
 		Plane stPla(stDir, stPos);
 
@@ -79,8 +79,8 @@ void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 		if (stPos.x < -tws || stPos.x > tws || stPos.z < -tws || stPos.z > tws)
 			Warn(ERR,"Car start outside track area  Whoa :o");
 		
-		if (app->scn->terrain)  // won't work in tool..
-		{	float yt = app->scn->terrain->getHeightAtWorldPosition(stPos), yd = stPos.y - yt - 0.5f;
+		if (scn->terrain)  // won't work in tool..
+		{	float yt = scn->terrain->getHeightAtWorldPosition(stPos), yd = stPos.y - yt - 0.5f;
 			//Warn(TXT,"Car start to terrain distance "+fToStr(yd,1,4));
 			if (yd < 0.f)   Warn(ERR, "Car start below terrain  Whoa :o");
 			if (yd > 0.3f)  Warn(INFO,"Car start far above terrain\n (skip this if on bridge or in pipe), distance: "+fToStr(yd,1,4));
@@ -88,11 +88,11 @@ void CGui::WarningsCheck(const Scene* sc, const SplineRoad* road)
 		
 
 		//-  other start places inside terrain (split screen)  ----
-		if (app->scn->terrain)  // won't work in tool..
+		if (scn->terrain)  // won't work in tool..
 		for (int i=1; i<4; ++i)
 		{
 			Vector3 p = stPos + i * stDir * 6.f;  //par dist
-			float yt = app->scn->terrain->getHeightAtWorldPosition(p), yd = p.y - yt - 0.5f;
+			float yt = scn->terrain->getHeightAtWorldPosition(p), yd = p.y - yt - 0.5f;
 			String si = toStr(i);
 							Warn(TXT, "Car "+si+" start to ter dist "+fToStr(yd,1,4));
 			//if (yd < 0.f)   Warn(WARN,"Car "+si+" start below terrain !");  // moved above in game

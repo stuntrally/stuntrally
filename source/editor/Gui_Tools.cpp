@@ -204,10 +204,11 @@ void CGui::btnScaleAll(WP)
 {
 	if (!scn->road)  return;
 	Real sf = std::max(0.1f, fScale);  // scale mul
+	int i;
 	
 	//  roads
 	for (auto& r : scn->roads)
-	for (int i=0; i < r->getNumPoints(); ++i)
+	for (i=0; i < r->getNumPoints(); ++i)
 	{
 		r->Scale1(i, sf, 0.f);
 		r->mP[i].width *= sf;
@@ -215,7 +216,7 @@ void CGui::btnScaleAll(WP)
 	scn->road->bSelChng = true;
 	
 	//  fluids
-	for (int i=0; i < sc->fluids.size(); ++i)
+	for (i=0; i < sc->fluids.size(); ++i)
 	{
 		FluidBox& fb = sc->fluids[i];
 		fb.pos.x *= sf;  fb.pos.z *= sf;
@@ -223,7 +224,7 @@ void CGui::btnScaleAll(WP)
 	}
 	
 	//  objs
-	for (int i=0; i < sc->objects.size(); ++i)
+	for (i=0; i < sc->objects.size(); ++i)
 	{
 		Object& o = sc->objects[i];
 		o.pos[0] *= sf;  o.pos[1] *= sf;
@@ -241,9 +242,11 @@ void CGui::btnScaleAll(WP)
 		scn->road->Rebuild(true);
 	}
 
-	//  start pos
-	scn->sc->startPos[0] *= sf;
-	scn->sc->startPos[1] *= sf;  app->UpdStartPos();
+	//  start,end pos
+	for (i=0; i < 2; ++i)
+	{	scn->sc->startPos[i][0] *= sf;
+		scn->sc->startPos[i][1] *= sf;  }
+	app->UpdStartPos();
 }
 
 

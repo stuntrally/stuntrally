@@ -22,9 +22,9 @@ class Scene
 public:
 
 	//  car start pos
-	MATHVECTOR <float,3> startPos;
-	QUATERNION <float>   startRot;
-	std::pair <MATHVECTOR<float,3>, QUATERNION<float> > GetStart(int index);
+	MATHVECTOR <float,3> startPos[2];  // [1] is end for not looped, and start for reversed
+	QUATERNION <float>   startRot[2];
+	std::pair <MATHVECTOR<float,3>, QUATERNION<float>> GetStart(int index, bool looped);
 
 	//  preview cam
 	Ogre::Vector3 camPos,camDir;
@@ -113,6 +113,5 @@ public:
 	void UpdateFluidsId(), UpdateSurfId();
 
 	class GAME* pGame;  // for all surfaces by name
-	bool LoadStartPos(Ogre::String file);
 	bool LoadXml(Ogre::String file, bool bTer = true), SaveXml(Ogre::String file);
 };

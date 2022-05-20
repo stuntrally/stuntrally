@@ -93,7 +93,7 @@ void App::MouseRoad()
 void App::MouseStart()
 {
 	const Real fMove(0.02f), fRot(0.05f);  //par speed
-	const Real d = mCamera->getRealPosition().distance(Axes::toOgre(scn->sc->startPos)) * fMove;
+	const Real d = mCamera->getRealPosition().distance(Axes::toOgre(scn->sc->startPos[iEnd])) * fMove;
 	if (!alt)
 	{
 		if (mbLeft)
@@ -102,24 +102,24 @@ void App::MouseStart()
 			{	if (scn->road && scn->road->bHitTer)
 				{
 					Vector3 v = scn->road->posHit;
-					scn->sc->startPos[0] = v.x;
-					scn->sc->startPos[1] =-v.z;
-					scn->sc->startPos[2] = v.y+0.6f;  //car h above
+					scn->sc->startPos[iEnd][0] = v.x;
+					scn->sc->startPos[iEnd][1] =-v.z;
+					scn->sc->startPos[iEnd][2] = v.y+0.6f;  //car h above
 			}	}
 			else  // move
 			{
 				Vector3 vx = mCamera->getRight();      vx.y = 0;  vx.normalise();
 				Vector3 vz = mCamera->getDirection();  vz.y = 0;  vz.normalise();
 				Vector3 vm = (-vNew.y * vx - vNew.x * vz) * d * moveMul;
-				scn->sc->startPos[0] += vm.z;
-				scn->sc->startPos[1] += vm.x;
+				scn->sc->startPos[iEnd][0] += vm.z;
+				scn->sc->startPos[iEnd][1] += vm.x;
 			}
 			UpdStartPos();
 		}
 		else if (mbRight)
 		{
 			Real ym = -vNew.y * d * moveMul;
-			scn->sc->startPos[2] += ym;  UpdStartPos();
+			scn->sc->startPos[iEnd][2] += ym;  UpdStartPos();
 		}
 	}else  //  alt
 	{
@@ -127,7 +127,7 @@ void App::MouseStart()
 		if (mbLeft)    // rot yaw
 		{
 			qr.Rotate(vNew.x * fRot, 0,0,1);
-			Qf& q = scn->sc->startRot;
+			Qf& q = scn->sc->startRot[iEnd];
 			if (shift)  q = qr * q;  else  q = q * qr;
 			UpdStartPos();
 		}
@@ -135,13 +135,13 @@ void App::MouseStart()
 		{
 			if (shift)  qr.Rotate(vNew.x * fRot, 1,0,0);
 			else        qr.Rotate(vNew.y *-fRot, 0,1,0);
-			Qf& q = scn->sc->startRot;
+			Qf& q = scn->sc->startRot[iEnd];
 			q = q * qr;  UpdStartPos();
 		}
 		else if (mbMiddle)  // rot reset
 		{
 			qr.Rotate(0, 0,0,1);
-			scn->sc->startRot = qr;
+			scn->sc->startRot[iEnd] = qr;
 			UpdStartPos();
 		}
 	}

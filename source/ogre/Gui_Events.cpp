@@ -657,7 +657,7 @@ void CGui::InitCarPrv()
 
 	//viewBox->injectObject("sphere.mesh");
 	viewCar = new CarModel(3, 0, CarModel::CT_GHOST, "XZ", viewBox->mScene, pSet, pGame, app->scn->sc, 0, app);
-	viewCar->Load();
+	viewCar->Load(-1, false);
 	viewCar->Create();
 	viewCar->ChangeClr();
 

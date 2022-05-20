@@ -76,7 +76,8 @@ void PaceNotes::Rebuild(SplineRoad* road, Scene* sc, bool reversed)
 
 	
 	//  find start point
-	Vector3 posSt = Axes::toOgre(sc->startPos), vSt = posSt;
+	int st = road->isLooped ? 0 : reversed ? 1 : 0;
+	Vector3 posSt = Axes::toOgre(sc->startPos[st]), vSt = posSt;
 	float stDist = FLT_MAX;
 	int ist = -1;
 	iStart = 0;  iAll = 1;

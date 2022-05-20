@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "enums.h"
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/RenderConst.h"
@@ -187,6 +188,8 @@ void App::SetEdMode(ED_MODE newMode)
 		SetObjNewType(iObjTNew);
 		first = false;
 	}
+	if (ndObjBox)  ndObjBox->setVisible(newMode == ED_Objects && bEdit());
+	if (ndEmtBox)  ndEmtBox->setVisible(newMode == ED_Particles && bEdit());
 
 	//if (pSet->autoWaterDepth)  //..?
 	if (edMode == ED_Fluids && newMode != ED_Fluids)

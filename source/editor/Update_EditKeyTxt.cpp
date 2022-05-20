@@ -265,6 +265,7 @@ void App::KeyTxtStart(Real q)
 	stTxt[1]->setCaption(TR("#{Road_Width} ") +fToStr(road->vStBoxDim.z,1,4));
 	stTxt[2]->setCaption(TR("#{Road_Height} ")+fToStr(road->vStBoxDim.y,1,4));
 	stTxt[3]->setCaption(TR("#{Road_Dir}  ") +(road->iDir == 1 ? "+1" : "-1") );
+	stTxt[4]->setCaption(TR(road->isLooped ? "" : iEnd ? "#{FogEnd}" : "#{FogStart}"));
 
 	//  edit
 	if (isKey(LEFTBRACKET) ||isKey(O)){  road->AddBoxH(-q*0.2);  UpdStartPos();  }

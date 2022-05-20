@@ -119,7 +119,7 @@ void CarModel::Defaults()
 
 //  Load CAR
 //------------------------------------------------------------------------------------------------------
-void CarModel::Load(int startId)
+void CarModel::Load(int startId, bool loop)
 {
 	//  names for local play
 	if (isGhostTrk())    sDispName = TR("#{Track}");
@@ -147,8 +147,10 @@ void CarModel::Load(int startId)
 		int i = pSet->game.collis_cars ? startId : 0;  // offset when cars collide
 
 		//  start pos
-		MATHVECTOR<float,3> pos(0,0,0);  pos = pApp->scn->sc->GetStart(i).first;
-		QUATERNION<float> rot;  rot = pApp->scn->sc->GetStart(i).second;
+		auto st = pApp->scn->sc->GetStart(i, loop);
+		MATHVECTOR<float,3> pos = st.first;
+		QUATERNION<float> rot = st.second;
+		
 		vStartPos = Vector3(pos[0], pos[2], -pos[1]);
 		if (pSet->game.trackreverse)
 		{	rot.Rotate(PI_d, 0,0,1);  rot[0] = -rot[0];  rot[1] = -rot[1];  }

@@ -387,9 +387,15 @@ void App::LoadGame()  // 2
 		Camera* cam = 0;
 		if (et == CarModel::CT_LOCAL && camIt != mSplitMgr->mCameras.end())
 		{	cam = *camIt;  ++camIt;  }
+
+		//  need road looped here
+		String sRd = gcom->PathListTrk() + "/road.xml";
+		SplineRoad rd(pGame);  rd.LoadFile(sRd,false);
+		bool loop = //rd.getNumPoints() < 2 ? false :
+					!rd.isLooped && pSet->game.trackreverse ? true : false;
 		
 		CarModel* car = new CarModel(i, i, et, carName, mSceneMgr, pSet, pGame, scn->sc, cam, this);
-		car->Load(startId);
+		car->Load(startId, loop);
 		carModels.push_back(car);
 		
 		if (nick != "")  // set remote nickname
@@ -411,7 +417,7 @@ void App::LoadGame()  // 2
 		//  always because ghplay can appear during play after best lap
 		// 1st ghost = orgCar
 		CarModel* c = new CarModel(i, 4, CarModel::CT_GHOST, orgCar, mSceneMgr, pSet, pGame, scn->sc, 0, this);
-		c->Load();
+		c->Load(-1, false);
 		c->pCar = (*carModels.begin())->pCar;  // based on 1st car
 		carModels.push_back(c);
 
@@ -419,7 +425,7 @@ void App::LoadGame()  // 2
 		if (isGhost2nd)
 		{
 			CarModel* c = new CarModel(i, 4, CarModel::CT_GHOST2, ghCar, mSceneMgr, pSet, pGame, scn->sc, 0, this);
-			c->Load();
+			c->Load(-1, false);
 			c->pCar = (*carModels.begin())->pCar;
 			carModels.push_back(c);
 		}
@@ -435,7 +441,7 @@ void App::LoadGame()  // 2
 		if (ghtrk.LoadFile(file))
 		{
 			CarModel* c = new CarModel(i, 5, CarModel::CT_TRACK, "ES", mSceneMgr, pSet, pGame, scn->sc, 0, this);
-			c->Load();
+			c->Load(-1, false);
 			c->pCar = (*carModels.begin())->pCar;  // based on 1st car
 			carModels.push_back(c);
 	}	}

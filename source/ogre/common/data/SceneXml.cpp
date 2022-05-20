@@ -68,9 +68,10 @@ void Scene::Default()
 
 ///  start
 ///------------------------------
-pair <MATHVECTOR<float,3>, QUATERNION<float> > Scene::GetStart(int index)
+pair <MATHVECTOR<float,3>, QUATERNION<float> > Scene::GetStart(int index, bool notLoopedReverse)
 {
-	pair <MATHVECTOR<float,3>, QUATERNION<float> > sp = make_pair(startPos, startRot);
+	int st = notLoopedReverse ? 1 : 0;
+	pair <MATHVECTOR<float,3>, QUATERNION<float> > sp = make_pair(startPos[st], startRot[st]);
 	if (index == 0)
 		return sp;
 

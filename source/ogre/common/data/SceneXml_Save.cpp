@@ -43,11 +43,17 @@ bool Scene::SaveXml(String file)
 
 
 	TiXmlElement st("start");
-		string s = toStr(startPos[0])+" "+toStr(startPos[1])+" "+toStr(startPos[2]);
+		string s = toStr(startPos[0][0])+" "+toStr(startPos[0][1])+" "+toStr(startPos[0][2]);
 		st.SetAttribute("pos",	s.c_str());
 
-		s = toStr(startRot[0])+" "+toStr(startRot[1])+" "+toStr(startRot[2])+" "+toStr(startRot[3]);
+		s = toStr(startRot[0][0])+" "+toStr(startRot[0][1])+" "+toStr(startRot[0][2])+" "+toStr(startRot[0][3]);
 		st.SetAttribute("rot",	s.c_str());
+
+		s = toStr(startPos[1][0])+" "+toStr(startPos[1][1])+" "+toStr(startPos[1][2]);
+		st.SetAttribute("pos2",	s.c_str());
+
+		s = toStr(startRot[1][0])+" "+toStr(startRot[1][1])+" "+toStr(startRot[1][2])+" "+toStr(startRot[1][3]);
+		st.SetAttribute("rot2",	s.c_str());
 	root.InsertEndChild(st);
 
 

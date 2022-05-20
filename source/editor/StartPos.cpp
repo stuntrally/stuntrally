@@ -34,22 +34,28 @@ void App::UpdStartPos()
 {
 	CreateBox(ndCar, entCar, "", "car.mesh");
 	
-	CreateBox(ndStBox, entStBox, "start_box", "cube.mesh", 20000);
+	CreateBox(ndStBox[0], entStBox[0], "start_box", "cube.mesh", 20000);
+	CreateBox(ndStBox[1], entStBox[1], "end_box", "cube.mesh", 20000);
 
 	CreateBox(ndFluidBox, entFluidBox, "fluid_box", "box_fluids.mesh");
-
 	CreateBox(ndObjBox, entObjBox, "object_box", "box_obj.mesh");
-
 	CreateBox(ndEmtBox, entEmtBox, "emitter_box", "box_obj.mesh");
 
+	//  start, end boxes
+	for (int i=0; i < 2; ++i)
+	{
+		Vector3 p1 = Axes::toOgre(scn->sc->startPos[i]);
+		Quaternion q1 = Axes::toOgre(scn->sc->startRot[i]);
+		if (i == iEnd)
+		{
+			ndCar->setPosition(p1);  ndCar->setOrientation(q1);
+			ndCar->setVisible(scn->road);  // hide before load
+		}
+		ndStBox[i]->setPosition(p1);  ndStBox[i]->setOrientation(q1);
 
-	Vector3 p1 = Axes::toOgre(scn->sc->startPos);
-	Quaternion q1 = Axes::toOgre(scn->sc->startRot);
-	ndCar->setPosition(p1);  ndCar->setOrientation(q1);
-	ndCar->setVisible(scn->road);  // hide before load
-
-	ndStBox->setPosition(p1);  ndStBox->setOrientation(q1);
-	if (scn->road)
-	ndStBox->setScale(Vector3(1, scn->road->vStBoxDim.y, scn->road->vStBoxDim.z));
-	ndStBox->setVisible(edMode == ED_Start && bEdit());
+		if (scn->road)
+			ndStBox[i]->setScale(Vector3(1, scn->road->vStBoxDim.y, scn->road->vStBoxDim.z));
+	
+		ndStBox[i]->setVisible(edMode == ED_Start && bEdit());
+	}
 }

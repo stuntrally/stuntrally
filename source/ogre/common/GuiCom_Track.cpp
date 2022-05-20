@@ -524,15 +524,16 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 
 	//  start pos on minimap
 	//---------------------------------------------------------------------------
-	float t = sc->td.fTerWorldSize,
-		xp = sc->startPos[1]/t, yp = sc->startPos[0]/t;
+	int i = !rd->isLooped && reverse ? 1 : 0;
+	float t = sc->td.fTerWorldSize,  // todo: end too?
+		xp = sc->startPos[i][1]/t, yp = sc->startPos[i][0]/t;
 	const IntSize& si = imgTer[ch]->getSize(), st = imgMiniPos[ch]->getSize();
 	int x = (xp + 0.5f) * si.width  - st.width *0.5f,
 		y = (yp + 0.5f) * si.height - st.height*0.5f;
 	imgMiniPos[ch]->setPosition(IntPoint(x,y));
 
 	//  rot
-	const float* rot = &sc->startRot[0];
+	const float* rot = &sc->startRot[i][0];
 	Quaternion q(rot[0],rot[1],rot[2],rot[3]);
 	a = q.getPitch().valueRadians();
 	if (reverse)  a += PI_d;

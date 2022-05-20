@@ -317,21 +317,22 @@ void CGui::btnScaleTerH(WP)
 {
 	if (!app->scn->road)  return;
 	Real sf = std::max(0.1f, fScaleTer);  // scale mul
+	int i;
 
 	//  road
-	for (int i=0; i < app->scn->road->getNumPoints(); ++i)
+	for (i=0; i < app->scn->road->getNumPoints(); ++i)
 		app->scn->road->Scale1(i, 0.f, sf);
 	app->scn->road->bSelChng = true;
 	
 	//  fluids
-	for (int i=0; i < sc->fluids.size(); ++i)
+	for (i=0; i < sc->fluids.size(); ++i)
 	{
 		FluidBox& fb = sc->fluids[i];
 		fb.pos.y *= sf;  fb.size.y *= sf;
 	}
 	
 	//  objs h
-	for (int i=0; i < sc->objects.size(); ++i)
+	for (i=0; i < sc->objects.size(); ++i)
 	{
 		Object& o = sc->objects[i];
 		o.pos[2] *= sf;
@@ -346,7 +347,7 @@ void CGui::btnScaleTerH(WP)
 	for (int j=0; j < sc->td.iVertsY; ++j)
 	{
 		int a = j * sc->td.iVertsX;
-		for (int i=0; i < sc->td.iVertsX; ++i,++a)
+		for (i=0; i < sc->td.iVertsX; ++i,++a)
 			hfData[a] = sc->td.hfHeight[a] * sf;
 	}
 	std::ofstream of;
@@ -357,8 +358,10 @@ void CGui::btnScaleTerH(WP)
 	delete[] hfData;
 	app->bNewHmap = true;	app->UpdateTrack();
 
-	//  start pos
-	app->scn->sc->startPos[2] *= sf;  app->UpdStartPos();
+	//  start,end pos
+	for (i=0; i < 2; ++i)
+		app->scn->sc->startPos[i][2] *= sf;
+	app->UpdStartPos();
 }
 //----------------------------------------------------------------------------------------------------------
 

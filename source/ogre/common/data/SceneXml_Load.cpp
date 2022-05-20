@@ -11,34 +11,6 @@ using namespace Ogre;
 using namespace tinyxml2;
 
 
-//  old
-bool Scene::LoadStartPos(String file)
-{
-	CONFIGFILE param;
-	if (!param.Load(file))
-		return false;
-
-	float f3[3], f1;
-	QUATERNION <float> fixer;  fixer.Rotate(3.141593, 0,0,1);
-	
-	param.GetParam("start position 0", f3);
-	MATHVECTOR <float, 3> pos(f3[2], f3[0], f3[1]);
-
-	if (!param.GetParam("start orientation-xyz 0", f3))
-		return false;
-
-	if (!param.GetParam("start orientation-w 0", f1))
-		return false;
-
-	QUATERNION <float> rot(f3[2], f3[0], f3[1], f1);
-	rot = fixer * rot;
-
-	startPos = pos;
-	startRot = rot;
-	return true;
-}
-
-
 //  Load
 //--------------------------------------------------------------------------------------------------------------------------------------
 
@@ -91,13 +63,10 @@ bool Scene::LoadXml(String file, bool bTer)
 	///  car start
 	e = root->FirstChildElement("start");
 	if (e)
-	{	a = e->Attribute("pos");		if (a)  {  Vector3 v = s2v(a);   startPos = MATHVECTOR<float,3>(v.x,v.y,v.z);    }
-		a = e->Attribute("rot");		if (a)  {  Vector4 v = s2v4(a);  startRot = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
-	}else
-	{	LogO("!Old, loading start from track.txt");
-		String s = StringUtil::replaceAll(file,"scene.xml","track.txt");
-		if (!LoadStartPos(s))
-			LogO("!Error: Can't load start from "+s);
+	{	a = e->Attribute("pos");		if (a)  {  Vector3 v = s2v(a);   startPos[0] = MATHVECTOR<float,3>(v.x,v.y,v.z);    }
+		a = e->Attribute("rot");		if (a)  {  Vector4 v = s2v4(a);  startRot[0] = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
+		a = e->Attribute("pos2");		if (a)  {  Vector3 v = s2v(a);   startPos[1] = MATHVECTOR<float,3>(v.x,v.y,v.z);    }
+		a = e->Attribute("rot2");		if (a)  {  Vector4 v = s2v4(a);  startRot[1] = QUATERNION<float>(v.x,v.y,v.z,v.w);  }
 	}
 
 	///  sound
