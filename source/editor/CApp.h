@@ -63,6 +63,8 @@ public:
 
 
 	bool keyPressed(const SDL_KeyboardEvent &arg);
+	void keyPressRoad(SDL_Scancode skey);
+	void keyPressObjects(SDL_Scancode skey);
 
 	void LoadTrackEv(), SaveTrackEv(), UpdateTrackEv();
 	enum TrkEvent {  TE_None=0, TE_Load, TE_Save, TE_Update  }
@@ -191,14 +193,15 @@ public:
 	void SaveGrassDens(), SaveWaterDepth();
 	void AlignTerToRoad();
 	int iSnap = 0;  Ogre::Real angSnap = 0.f;
+	int iEnd = 0;  // edit: 0 scn->start 1 end
 
 
 	//  box cursors  car start,end,  fluids, objects, emitters
 	void UpdStartPos();
 	void CreateBox(Ogre::SceneNode*& nd, Ogre::Entity*& ent, Ogre::String sMat, Ogre::String sMesh, int x=0);
 
-	Ogre::SceneNode* ndCar =0, *ndStBox =0, *ndEndBox =0,  *ndFluidBox =0, *ndObjBox =0, *ndEmtBox =0;
-	Ogre::Entity*    entCar =0,*entStBox =0,*entEndBox =0, *entFluidBox =0,*entObjBox =0,*entEmtBox =0;
+	Ogre::SceneNode* ndCar =0, *ndStBox[2] ={0,0},  *ndFluidBox =0, *ndObjBox =0, *ndEmtBox =0;
+	Ogre::Entity*    entCar =0,*entStBox[2]={0,0}, *entFluidBox =0,*entObjBox =0,*entEmtBox =0;
 	void togPrvCam();
 
 

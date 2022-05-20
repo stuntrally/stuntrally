@@ -578,8 +578,8 @@ void GAME::LeaveGame(bool dstTrk)
 }
 
 ///  add a car, optionally controlled by the local player
-CAR* GAME::LoadCar(const string & pathCar, const string & carname,
-	const MATHVECTOR<float,3> & start_position, const QUATERNION<float> & start_orientation,
+CAR* GAME::LoadCar(const string& pathCar, const string& carname,
+	const MATHVECTOR<float,3>& start_pos, const QUATERNION<float>& start_rot,
 	bool islocal, bool isRemote, int idCar)
 {
 	CONFIGFILE carconf;
@@ -589,7 +589,7 @@ CAR* GAME::LoadCar(const string & pathCar, const string & carname,
 	CAR* car = new CAR();
 
 	if (!car->Load(app,  carconf, carname,
-		start_position, start_orientation,  collision,
+		start_pos, start_rot,  collision,
 		settings->abs, settings->tcs,  isRemote, idCar, false))
 	{
 		LogO("-=- Error: loading CAR: "+carname);
