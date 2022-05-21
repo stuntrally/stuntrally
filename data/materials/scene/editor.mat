@@ -60,14 +60,15 @@ material sphere_check
 	parent base
 	diffuseMap white.png
 	ambient 0.1 0.1 0.2
-	diffuse 0.5 0.5 0.6 0.5
-	specular 0.4 0.4 0.4 32
+	diffuse 0.5 0.5 0.7 0.5
+	specular 0.5 0.5 0.7 6
 	//lightingAlpha 0.5 0.25 0.2 0
     depth_write off
 	depth_bias 6
 	transparent true
 	scene_blend alpha_blend
     receives_shadows false
+    twoside_diffuse true
 }
 
 material start_box
@@ -77,6 +78,14 @@ material start_box
 	ambient 0.2 0.2 0.3
 	diffuse 0.1 0.1 0.15 0.5
 	specular 0.1 0.1 0.15 32
+}
+material end_box
+{
+	parent sphere_check
+	diffuseMap white.png
+	ambient 0.3 0.2 0.4
+	diffuse 0.15 0.1 0.2 0.5
+	specular 0.12 0.1 0.15 32
 }
 
 material body_realtime

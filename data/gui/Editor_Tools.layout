@@ -150,7 +150,7 @@
 	</Widget>
 
 <!-- ============================================================================================================================================= -->
-	<Widget type="Window" skin="WindowC" position="644 676 230 155" align="Left Top" layer="Back" name="StartWnd">
+	<Widget type="Window" skin="WindowC" position="644 676 230 165" align="Left Top" layer="Back" name="StartWnd">
 		<Property key="Caption" value="Q - #{CarStart}"/>
 		<Property key="Colour" value="0.7 0.7 1.0"/>
 		<Property key="Alpha" value="0.6"/>
@@ -215,7 +215,7 @@
 			<Property key="Caption" value="Space"/>
 			<Property key="FontHeight" value="16"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBoxS" position="174 119 60 25" name="stVal5">
+		<Widget type="TextBox" skin="TextBoxS" position="174 99 60 25" name="stVal5">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.6 0.7 0.8"/>
 			<Property key="Caption" value="Enter"/>
