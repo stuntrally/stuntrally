@@ -1,0 +1,681 @@
+//  Rocks
+//------------------------------------------------------------------
+
+material rock1
+{
+    parent base
+	//parallax true
+	//parallaxHeight 0.035
+	diffuseMap 1rock.png
+	normalMap 1rock_norm.png
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+
+material rock_y2  // greece yellow
+{
+    parent base
+	diffuseMap rock_n2-GYel.jpg
+	normalMap rock_n2_norm.png
+	terrain_light_map true
+	specular 0.4 0.4 0.35 32
+}
+
+
+material rock_n1
+{
+    parent base
+	diffuseMap rock_n1.jpg
+	normalMap rock_n1_norm.png
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+material rock_w1  //w
+{
+    parent base
+	diffuseMap rock_n1-W.jpg
+	normalMap rock_n1_norm.png
+	terrain_light_map true
+	ambient 1.0 1.02 1.02
+	diffuse 1.0 1.02 1.02
+	specular 0.8 0.8 0.8 32
+}
+
+material rocks_n1
+{
+    parent base
+	diffuseMap rock_n1.jpg
+	normalMap rock_n1_norm.png
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+material rock_n2
+{
+    parent base
+	diffuseMap rock_n2.jpg
+	normalMap rock_n2_norm.png
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+material rock_n3
+{
+    parent base
+	diffuseMap rock_n3.jpg
+	normalMap rock_n3_norm.png
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+material rock_n4
+{
+    parent base
+	diffuseMap rock_n4.jpg
+	normalMap rock_n4_norm.png
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+material rock_w4  //w
+{
+    parent base
+	diffuseMap rock_n4-W.jpg
+	normalMap rock_n4_norm.png
+	terrain_light_map true
+	ambient 1.0 1.02 1.02
+	diffuse 1.0 1.02 1.02
+	specular 0.9 0.9 0.9 24
+}
+
+material rock_n5
+{
+    parent base
+	diffuseMap rock_n5.jpg
+	normalMap rock_n5_norm.png
+	terrain_light_map true
+	specular 0.5 0.5 0.5 32
+}
+
+material rock_w5v  //w
+{
+    parent base
+	diffuseMap rock_n5v-W.jpg
+	normalMap rock_n5_norm.png
+	terrain_light_map true
+	ambient 1.0 1.02 1.02
+	diffuse 1.0 1.02 1.02
+	specular 0.9 0.9 0.9 24
+}
+
+
+//  Mars Rocks
+//------------------------------------------------------------------
+
+material rock_R2
+{
+    parent base
+	diffuseMap rock_R2.jpg
+	normalMap rock_n2_norm.png
+	terrain_light_map true
+	ambient 1.3 1.0 1.0
+	diffuse 1.0 0.8 0.7
+	//specular 1.5 0.5 0.5 32
+}
+
+material rock_R3
+{
+    parent base
+	diffuseMap rock_R3.jpg
+	normalMap rock_n3_norm.png
+	terrain_light_map true
+	ambient 1.3 1.0 1.0
+	diffuse 1.0 0.8 0.7
+	//specular 1.5 0.5 0.5 32
+}
+
+material rock_R4
+{
+    parent base
+	diffuseMap rock_R4.jpg
+	normalMap rock_n4_norm.png
+	terrain_light_map true
+	ambient 1.3 1.0 1.0
+	diffuse 1.0 0.8 0.7
+	//specular 1.5 0.5 0.5 32
+}
+
+material rock_r4
+{
+    parent base
+	diffuseMap rock_R4.jpg
+	normalMap rock_n4_norm.png
+	terrain_light_map true
+	ambient 1.3 1.0 1.0
+	diffuse 1.0 0.8 0.7
+	//specular 1.5 0.5 0.5 32
+}
+
+material rock_R5
+{
+    parent base
+	diffuseMap rock_R5.jpg
+	normalMap rock_n5_norm.png
+	terrain_light_map true
+	ambient 1.3 1.0 1.0
+	diffuse 1.0 0.8 0.7
+	//specular 1.5 0.5 0.5 32
+}
+
+material rock_R5f
+{
+    parent base
+	diffuseMap rock_R5.jpg
+	normalMap rock_n5_norm.png
+	terrain_light_map true
+	ambient 1.3 1.1 1.0
+	diffuse 1.0 0.8 0.7
+	//specular 0.9 0.9 0.9 24
+}
+
+
+//  Crystals
+//------------------------------------------------------------------
+material crystal1
+{
+    parent base
+	diffuseMap crystal_form3.jpg
+	normalMap crystal_form3_n.jpg
+
+	ambient 0.1 0.3 0.3
+	diffuse 0.3 0.6 0.6
+	specular 0.05 0.2 0.25 64
+
+	transparent true
+	scene_blend add
+	//scene_blend alpha_blend
+	//cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+material crystal6
+{
+    parent base
+	diffuseMap crystal_form2.jpg
+	normalMap crystal_form2_n.jpg
+
+	//ambient 1 1 1
+	ambient 0.08 0.1 0.12
+	diffuse 0.22 0.25 0.3
+	specular 0.2 0.2 0.3 64
+
+	transparent true
+	scene_blend add
+	//scene_blend alpha_blend
+	cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+//  -
+material crystal_cube4
+{
+    parent base
+	diffuseMap crystal_form3.jpg
+	normalMap crystal_form3_n.jpg
+
+	ambient 0.34 0.80 0.78
+	diffuse 0.20 0.90 0.85
+	specular 0.5 0.95 1.0 128
+
+	tree_wind false
+	terrain_light_map true
+	twoside_diffuse true
+	//receives_shadows false
+	shadowBias 0.0001
+	bump_scale 3
+}
+
+material crystal_form1
+{
+    parent base
+	diffuseMap crystal_form1.jpg
+	normalMap crystal_form1_n.jpg
+
+	ambient 0.75 0.85 0.9
+	diffuse 0.6 0.80 0.90
+	specular 0.3 0.4 1.0 20
+
+	env_map true
+	envMap ReflectionCube
+	refl_amount 0.2
+
+	tree_wind false
+	terrain_light_map true
+	bump_scale 1
+}
+
+material crystalForm4
+{
+    parent base
+	diffuseMap crystal_form2.jpg
+	normalMap crystal_form2_n.jpg
+
+	ambient 0.9 0.9 0.9
+	diffuse 0.85 0.8 0.85
+	specular 0.05 0.4 0.4 64
+
+	tree_wind false
+	terrain_light_map true
+	bump_scale 2
+}
+
+material crystal_form3
+{
+    parent base
+	diffuseMap crystal_form3.jpg
+	normalMap crystal_form3_n.jpg
+
+	ambient 0.8 0.85 0.9
+	diffuse 0.8 0.85 0.9
+	specular 0.3 0.35 0.4 32
+
+	env_map true
+	envMap ReflectionCube
+	refl_amount 0.2
+
+	tree_wind false
+	terrain_light_map true
+	bump_scale 3
+}
+//------------------------------------------------------------------
+
+
+material rock_L2
+{
+    parent base
+	diffuseMap rock_L2.jpg
+	normalMap rock_n2_norm.png
+	terrain_light_map true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.8
+	specular 0.3 0.5 0.2 32
+}
+
+material rock_L3
+{
+    parent base
+	diffuseMap rock_L3.jpg
+	normalMap rock_n3_norm.png
+	terrain_light_map true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.8
+	//specular 0.5 0.5 1.0 32
+}
+
+material rock_L4
+{
+    parent base
+	diffuseMap rock_L4.jpg
+	normalMap rock_n4_norm.png
+	terrain_light_map true
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.8
+	//specular 0.5 0.5 1.0 32
+}
+
+
+//  newest rocks
+//--------------------------------------------------------------------------------------------------------------
+material rock01
+{
+    parent base
+	diffuseMap rock01.jpg
+	normalMap rock01_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock02
+{
+    parent base
+	diffuseMap rock02.jpg
+	normalMap rock02_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock03
+{
+    parent base
+	diffuseMap rock03.jpg
+	normalMap rock03_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock04
+{
+    parent base
+	diffuseMap rock04.jpg
+	normalMap rock04_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock05
+{
+    parent base
+	diffuseMap rock05.jpg
+	normalMap rock05_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock06
+{
+    parent base
+	diffuseMap rock06.jpg
+	normalMap rock06_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock07
+{
+    parent base
+	diffuseMap rock07.jpg
+	normalMap rock07_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock08
+{
+    parent base
+	diffuseMap rock08.jpg
+	normalMap rock08_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock09
+{
+    parent base
+	diffuseMap rock09.jpg
+	normalMap rock09_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock10
+{
+    parent base
+	diffuseMap rock10.jpg
+	normalMap rock10_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock11
+{
+    parent base
+	diffuseMap rock11.jpg
+	normalMap rock11_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock12
+{
+    parent base
+	diffuseMap rock12.jpg
+	normalMap rock12_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock13
+{
+    parent base
+	diffuseMap rock13.jpg
+	normalMap rock13_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock14
+{
+    parent base
+	diffuseMap rock14.jpg
+	normalMap rock14_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock15
+{
+    parent base
+	diffuseMap rock15.jpg
+	normalMap rock15_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock16
+{
+    parent base
+	diffuseMap rock16.jpg
+	normalMap rock16_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock17
+{
+    parent base
+	diffuseMap rock17.jpg
+	normalMap rock17_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock18
+{
+    parent base
+	diffuseMap rock18.jpg
+	normalMap rock18_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock19
+{
+    parent base
+	diffuseMap rock19.jpg
+	normalMap rock19_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock20
+{
+    parent base
+	diffuseMap rock20.jpg
+	normalMap rock20_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock21
+{
+    parent base
+	diffuseMap rock21.jpg
+	normalMap rock21_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock22
+{
+    parent base
+	diffuseMap rock22.jpg
+	normalMap rock22_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock23
+{
+    parent base
+	diffuseMap rock23.jpg
+	normalMap rock23_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock24
+{
+    parent base
+	diffuseMap rock24.jpg
+	normalMap rock24_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock25
+{
+    parent base
+	diffuseMap rock25.jpg
+	normalMap rock25_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock26
+{
+    parent base
+	diffuseMap rock26.jpg
+	normalMap rock26_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock27
+{
+    parent base
+	diffuseMap rock27.jpg
+	normalMap rock27_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock28
+{
+    parent base
+	diffuseMap rock28.jpg
+	normalMap rock28_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock30
+{
+    parent base
+	diffuseMap rock30.jpg
+	normalMap rock30_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock32
+{
+    parent base
+	diffuseMap rock32.jpg
+	normalMap rock32_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock33
+{
+    parent base
+	diffuseMap rock33.jpg
+	normalMap rock33_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock34
+{
+    parent base
+	diffuseMap rock34.jpg
+	normalMap rock34_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock35
+{
+    parent base
+	diffuseMap rock35.jpg
+	normalMap rock35_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock37
+{
+    parent base
+	diffuseMap rock37.jpg
+	normalMap rock37_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock39
+{
+    parent base
+	diffuseMap rock39.jpg
+	normalMap rock39_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock40
+{
+    parent base
+	diffuseMap rock40.jpg
+	normalMap rock40_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock41
+{
+    parent base
+	diffuseMap rock41.jpg
+	normalMap rock41_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock42
+{
+    parent base
+	diffuseMap rock42.jpg
+	normalMap rock42_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock43
+{
+    parent base
+	diffuseMap rock43.jpg
+	normalMap rock43_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock44
+{
+    parent base
+	diffuseMap rock44.jpg
+	normalMap rock44_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock45
+{
+    parent base
+	diffuseMap rock45.jpg
+	normalMap rock45_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+material rock46
+{
+    parent base
+	diffuseMap rock46.jpg
+	normalMap rock46_norm.jpg
+	terrain_light_map true
+	specular 0.3 0.3 0.3 32
+}
+//--------------------------------------------------------------------------------------------------------------

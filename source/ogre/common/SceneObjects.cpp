@@ -104,7 +104,7 @@ public:
 //-------------------------------------------------------------------------------------------------------
 void App::CreateObjects()
 {
-	//  maps for file exist (optimize)
+	//  maps for file exist (optimized)
 	using std::map;  using std::string;
 	map<string,bool> objExists, objHasBlt;
 	
@@ -113,23 +113,28 @@ void App::CreateObjects()
 		const string& s = scn->sc->objects[i].name;
 		objExists[s] = false;  objHasBlt[s] = false;
 	}
-	for (map<string,bool>::iterator it = objExists.begin(); it != objExists.end(); ++it)
+	const static int dirCnt = 5;
+	const static char* dirs[dirCnt] = {"objects", "rocks", "objects2", "objects0", "objectsC"};
+	for (auto& o : objExists)
 	{
-		bool ex = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects/"+ (*it).first + ".mesh");
-		bool ex2 = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects2/"+ (*it).first + ".mesh");
-		bool ex0 = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects0/"+ (*it).first + ".mesh");
-		bool exC = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objectsC/"+ (*it).first + ".mesh");
-		(*it).second = ex || ex2 || ex0 || exC;
-		if (!ex)  LogO("Warning: CreateObjects mesh doesn't exist: " + (*it).first + ".mesh");
+		o.second = false;
+		for (int d=0; d < dirCnt; ++d)
+			if (PATHMANAGER::FileExists(PATHMANAGER::Data() +"/"+ dirs[d] +"/"+ o.first + ".mesh"))
+			{	o.second = true;  break;  }
+
+		if (!o.second)
+			LogO("Warning: CreateObjects mesh doesn't exist: " + o.first + ".mesh");
 	}
-	for (map<string,bool>::iterator it = objHasBlt.begin(); it != objHasBlt.end(); ++it)
-		(*it).second = PATHMANAGER::FileExists(PATHMANAGER::Data()+"/objects/"+ (*it).first + ".bullet");
+	for (auto& ob : objHasBlt)
+		ob.second = PATHMANAGER::FileExists(PATHMANAGER::Data() +"/"+ dirs[0] +"/"+ ob.first + ".bullet");
+
 
 	//  loader
 	#ifndef SR_EDITOR
 	btDiscreteDynamicsWorld* world = pGame->collision.world;
 	#endif
 	BulletWorldOffset* fileLoader = new BulletWorldOffset(world);
+
 
 	///  create  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 	for (int i=0; i < scn->sc->objects.size(); ++i)
@@ -215,6 +220,7 @@ void App::CreateObjects()
 	iObjLast = scn->sc->objects.size();
 	#endif
 }
+
 
 ///  destroy
 void App::DestroyObjects(bool clear)

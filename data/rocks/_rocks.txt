@@ -1,0 +1,42 @@
+
+Models:     cave_* and rock_*.mesh
+made by rubberduck from these:
+
+5 Models:	rock_n1 - n5.mesh
+Url:		https://opengameart.org/content/rocks-0
+Artist:		yughues
+License:	CC0
+Date:		29/08/2012
+and also made more color variants from them
+
+
+Model:		rock.mesh  1rock*.png
+Url:		https://www.blendswap.com/blends/landscapes/toddmcintosh_nature_rocks2/
+Artist:		tmcintosh
+License:	CC-BY
+Date:		02/08/2012
+Notes:		Texture by yughues (OpenGameArt user) [under CC0]
+
+
+Model:		crystal
+Low Poly Rock Formation
+Url:		https://www.blendswap.com/blend/11024
+Artist:		OliverMH
+License:    CC-BY
+Date:		05/12/2013
+
+Low Poly Rock Formation #2
+Url:		https://www.blendswap.com/blend/11147
+Artist:		OliverMH
+License:    CC-0
+Date:		16/12/2013
+
+
+Models:		rock01* - rock46*.mesh
+Lowpoly Rocks - 1
+Url:		https://sketchfab.com/3d-models/lowpoly-rocks-1-d9ffac943bb24a609c1082c1aa118d76
+Artist:		Loïc Norgeot
+License:    CC BY 4.0
+Date:		08/05/2018
+
+https://sketchfab.com/3d-models/lowpoly-rocks-1-d9ffac943bb24a609c1082c1aa118d76

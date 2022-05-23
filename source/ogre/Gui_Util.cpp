@@ -811,7 +811,7 @@ void CGui::FillHelpTxt()
 
 		//  gui- hud-  particles-
 		ReadTxts("objects");  ReadTxts("objects2");  ReadTxts("objectsC");  ReadTxts("objects0");
-		ReadTxts("skies");
+		ReadTxts("skies");  ReadTxts("rocks");
 		ReadTxts("grass");  ReadTxts("terrain");  ReadTxts("road");
 		ReadTxts("trees");  ReadTxts("trees2");   ReadTxts("trees-old");  //todo: replace-
 		ReadTxts("sounds");

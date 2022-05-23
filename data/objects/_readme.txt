@@ -123,12 +123,6 @@ Author: ahedov
 License: CC-BY-SA
 https://www.blendswap.com/blends/view/69148
 
----- cave_* and rock_*.mesh
-made by rubberduck from these:
-Artist: yughues
-License: CC0
-https://opengameart.org/content/rocks-0
-
 
 ---- water_plane_big.mesh
 Plane Martin m 130 Cycles

@@ -49,17 +49,3 @@ Url:		https://opengameart.org/content/freebies-mundo-commissions
 Artist:		yughues (OpenGameArt user)
 License:	CC0 (Public Domain)
 Date:		18/08/2012
-
-5 Models:	rock_n1 - n5.mesh
-Url:		https://opengameart.org/content/rocks-0
-Artist:		yughues (OpenGameArt user)
-License:	CC0 (Public Domain)
-Date:		29/08/2012
-
-Model:		rock.mesh
-Url:		https://www.blendswap.com/blends/landscapes/toddmcintosh_nature_rocks2/
-Artist:		tmcintosh (blendswap user)
-License:	CC-BY
-Date:		02/08/2012
-Notes:		Texture by yughues (OpenGameArt user) [under CC0]
-
