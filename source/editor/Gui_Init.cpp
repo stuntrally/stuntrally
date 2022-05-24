@@ -666,6 +666,7 @@ void CGui::InitGui()
 	app->vBuildings.clear();
 	PATHMANAGER::DirList(sData + "/objects0", lo);
 	PATHMANAGER::DirList(sData + "/objectsC", lo);//-
+	PATHMANAGER::DirList(sData + "/rocks", lo);  //too?
 	for (auto q : lo)
 		if (StringUtil::endsWith(q,".mesh"))
 		{
@@ -872,7 +873,8 @@ void CGui::InitGui()
 	bCopyTrackU = 0;
 	
 	//  text desc
-	Edt(gcom->trkDesc[0], "TrackDesc", editTrkDesc);
+	Edt(gcom->trkDesc[0], "TrackDesc", editTrkDescr);
+	Edt(gcom->trkAdvice[0], "TrackAdvice", editTrkAdvice);
 	trkName = fEd("TrackName");
 	if (trkName)  trkName->setCaption(pSet->gui.track);
 

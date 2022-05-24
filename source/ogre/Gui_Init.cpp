@@ -695,7 +695,7 @@ void CGui::InitGui()
 	///  tracks list, text, chg btn
 	//------------------------------------------------------------------------
 
-	gcom->trkDesc[0] = fEd("TrackDesc");
+	gcom->trkDesc[0] = fEd("TrackDesc");  gcom->trkAdvice[0] = fEd("TrackAdvice");
 	gcom->sListTrack = pSet->gui.track;
 
 	gcom->GuiInitTrack();
@@ -724,7 +724,7 @@ void CGui::InitGui()
 	//------------------------------------------------------------------------
 
 	//  track stats 2nd set
-	gcom->trkDesc[1] = fEd("TrackDesc2");
+	gcom->trkDesc[1] = fEd("TrackDesc2");  gcom->trkAdvice[1] = fEd("TrackAdvice2");
 	valTrkNet = fTxt("TrackText");
 
 	//  preview images

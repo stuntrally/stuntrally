@@ -55,18 +55,28 @@
 					<Property key="TextColour" value="0.45 0.55 0.65"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 105" name="TrackDesc">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 52" name="TrackAdvice">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
 					<Property key="VisibleHScroll" value="false"/>
 					<Property key="VisibleVScroll" value="true"/>
-					<Property key="TextColour" value="0.6 1.0 0.8"/>
-					<Property key="Colour" value="0.4 1 0.7"/>
-					<Property key="TextAlign" value="Left Top"/>
+					<Property key="TextColour" value="0.9 0.9 0.6"/>
+					<Property key="Colour" value="0.9 0.9 0.6"/>
 					<Property key="FontName" value="font.small"/>
 					<UserString key="tip" value="#{TipTrackDesc}"/>
 				</Widget>
+				<Widget type="EditBox" skin="EditBoxEmpty" position="176 410 336 52" name="TrackDesc">
+					<Property key="ReadOnly" value="false"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="true"/>
+					<Property key="VisibleHScroll" value="false"/>
+					<Property key="VisibleVScroll" value="true"/>
+					<Property key="FontName" value="font.small"/>
+					<Property key="TextColour" value="0.6 1.0 0.8"/>
+					<Property key="Colour" value="0.4 1 0.7"/>
+					<UserString key="tip" value="#{TipTrackDesc}"/>
+				</Widget>				
 
 				<Widget type="Widget" skin="PanelSkin" position="524 95 256 172">
 					<Property key="Colour" value="0.6 0.73 0.85"/>
@@ -1643,17 +1653,28 @@
 						<Property key="ImageTexture" value="carpos0.png"/>
 					</Widget>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 155" name="TrackDesc2">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 52" name="TrackAdvice2">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
 					<Property key="VisibleHScroll" value="false"/>
 					<Property key="VisibleVScroll" value="true"/>
-					<Property key="TextColour" value="0.6 1.0 0.8"/>
-					<Property key="Colour" value="0.4 1 0.7"/>
-					<Property key="TextAlign" value="Left Top"/>
+					<Property key="TextColour" value="0.9 0.9 0.6"/>
+					<Property key="Colour" value="0.9 0.9 0.6"/>
+					<Property key="FontName" value="font.small"/>
 					<UserString key="tip" value="#{TipTrackDesc}"/>
 				</Widget>
+				<Widget type="EditBox" skin="EditBoxEmpty" position="176 410 336 52" name="TrackDesc2">
+					<Property key="ReadOnly" value="false"/>
+					<Property key="MultiLine" value="true"/>
+					<Property key="WordWrap" value="true"/>
+					<Property key="VisibleHScroll" value="false"/>
+					<Property key="VisibleVScroll" value="true"/>
+					<Property key="FontName" value="font.small"/>
+					<Property key="TextColour" value="0.6 1.0 0.8"/>
+					<Property key="Colour" value="0.4 1 0.7"/>
+					<UserString key="tip" value="#{TipTrackDesc}"/>
+				</Widget>				
 
 				<Widget type="Widget" skin="PanelSkin" position="524 95 256 172">
 					<Property key="Colour" value="0.6 0.73 0.85"/>

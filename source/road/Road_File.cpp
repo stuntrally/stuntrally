@@ -32,9 +32,13 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame)
 void SplineRoad::Defaults()
 {
 	river = false;  trail = false;  trailSegId = -1;
-	sTxtDesc = "";  fScRot = 1.8f;  fScHit = 0.8f;
-	for (int i=0; i<MTRs; ++i)
+	sTxtDescr = "";  sTxtAdvice = "";
+	fScRot = 1.8f;  fScHit = 0.8f;
+	
+	for (int i=0; i < MTRs; ++i)
 	{	sMtrRoad[i] = "";  sMtrPipe[i] = "";  bMtrPipeGlass[i] = true;  }
+	sMtrRoad[0] = "roadNgravel";
+	sMtrPipe[0] = "pipeGlass";
 	sMtrWall = "road_wall";  sMtrCol = "road_col";  sMtrWallPipe = "pipe_wall";
 	
 	g_tcMul = 0.1f;  g_tcMulW = 0.2f;  g_tcMulP = 0.1f;  g_tcMulPW = 0.3f;  g_tcMulC = 0.2f;
@@ -273,7 +277,10 @@ bool SplineRoad::LoadFile(String fname, bool build)
 		  a = n->Attribute("bnkMax");  if (a)  st.bankMax = s2r(a);
 	}	
 	n = root->FirstChildElement("txt");	if (n)  {
-		a = n->Attribute("desc");		if (a)  sTxtDesc = String(a);
+		a = n->Attribute("desc");		if (a)  sTxtDescr = String(a);
+	}
+	n = root->FirstChildElement("adv");	if (n)  {
+		a = n->Attribute("ice");		if (a)  sTxtAdvice = String(a);
 	}
 
 	n = root->FirstChildElement("P");	//  points
@@ -404,8 +411,11 @@ bool SplineRoad::SaveFile(String fname)
 	root.InsertEndChild(ste);
 		
 	TiXmlElement txt("txt");
-		txt.SetAttribute("desc",	sTxtDesc.c_str());
+		txt.SetAttribute("desc",	sTxtDescr.c_str());
 	root.InsertEndChild(txt);
+	TiXmlElement adv("adv");
+		adv.SetAttribute("ice",		sTxtAdvice.c_str());
+	root.InsertEndChild(adv);
 
 	for (int i=0; i < num; ++i)		//  points
 	{

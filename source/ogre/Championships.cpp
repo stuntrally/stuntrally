@@ -395,14 +395,16 @@ void CGui::ChampFillStageInfo(bool finished)
 	{
 		int id = data->tracks->trkmap[trk.name];
 		if (id > 0)
-		{
-			const TrackInfo* ti = &data->tracks->trks[id-1];
+		{	const TrackInfo* ti = &data->tracks->trks[id-1];
+			auto rd = app->scn->road;
+
 			s += "#A0D0FF"+ TR("#{Difficulty}:  ") + gcom->getClrDiff(ti->diff) + TR("#{Diff"+toStr(ti->diff)+"}") + "\n";
-			if (app->scn->road)
-			{	Real len = app->scn->road->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
+			if (rd)
+			{	Real len = rd->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
 				s += "#A0D0FF"+ TR("#{Distance}:  ") + "#B0E0FF" + 
 					fToStr(len, 1,4) + (pSet->show_mph ? TR(" #{UnitMi}") : TR(" #{UnitKm}")) + "\n\n";
-				s += "#A8B8C8"+ app->scn->road->sTxtDesc;
+				
+				s += "\n#C8C8B8"+ rd->sTxtAdvice + "\n#B8C8B8"+ rd->sTxtDescr;
 		}	}
 	}
 

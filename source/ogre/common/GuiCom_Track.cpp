@@ -502,8 +502,9 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	if (app->gui->trkName)  //
 		app->gui->trkName->setCaption(sTrack.c_str());
 #endif
-	if (trkDesc[ch])  // desc
-		trkDesc[ch]->setCaption(rd->sTxtDesc.c_str());
+  	//  advice, descr
+	if (trkDesc[ch])     trkDesc[ch]->setCaption(rd->sTxtDescr);
+	if (trkAdvice[ch]) trkAdvice[ch]->setCaption(rd->sTxtAdvice);
 
 	
 	//  preview images

@@ -110,7 +110,7 @@ public:
 	void TrackListUpd(bool resetNotFound=false);
 
 	Mli2 trkList;
-	Ed trkDesc[2];  // description
+	Ed trkDesc[2], trkAdvice[2];  // description, advice
 	bool needSort(Mli2 li);
 
 	Img imgPrv[2], imgMini[2], imgTer[2];  // view,  mini: road, terrain

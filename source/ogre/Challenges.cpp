@@ -539,11 +539,13 @@ void CGui::ChallFillStageInfo(bool finished)
 	}
 	else
 	{	///  Pass needed  --------------
-		s += "#F0F060"+TR("#{Needed}") +"\n";
+		s += "#F0F060"+ TR("#{Needed}") +"\n";
 		if (trk.timeNeeded > 0.f)	s += TR("  #D8C0FF#{TBTime}: ") + StrTime(trk.timeNeeded) +"\n";
 		if (trk.passPoints > 0.f)	s += TR("  #D8C0FF#{TBPoints}: ") + fToStr(trk.passPoints,1) +"\n";
 		if (trk.passPos > 0)		s += TR("  #D8C0FF#{TBPosition}: ") + toStr(trk.passPos) +"\n";
-		if (app->scn->road)			s += "\n#A8B8C8"+ app->scn->road->sTxtDesc;
+		auto rd = app->scn->road;
+		if (rd)
+			s += "\n#C8C8B8"+ rd->sTxtAdvice + "\n#B8C8B8"+ rd->sTxtDescr;
 	}
 
 	edChallStage->setCaption(s);

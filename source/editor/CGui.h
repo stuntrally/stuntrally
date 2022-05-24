@@ -380,7 +380,7 @@ public:
 	void msgTrackDel(MyGUI::Message* sender, MyGUI::MessageBoxStyle result);
 	void btnNewGame(WP);  // load track
 
-	Ed trkName;  void editTrkDesc(Ed);
+	Ed trkName;  void editTrkDescr(Ed), editTrkAdvice(Ed);
 	
 
 	//  system, utils

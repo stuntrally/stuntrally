@@ -316,7 +316,8 @@ public:
 	Ogre::Real g_P_il_mul, g_P_iw_mul;   // length,width steps multipliers for pipe
 
 
-	Ogre::String  sTxtDesc;  // track description text
+	Ogre::String sTxtDescr;   // track description text, how it looks
+	Ogre::String sTxtAdvice;  // track advice text, how to drive
 
 	//  for editor tool: align terrain to road
 	float ed_Wadd, ed_Wmul;  // const added width and width multipler for whole road

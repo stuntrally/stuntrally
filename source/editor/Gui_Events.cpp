@@ -244,9 +244,13 @@ void CGui::Upd3DView(String mesh)
 //  [Road]
 //-----------------------------------------------------------------------------------------------------------
 
-void CGui::editTrkDesc(Ed ed)
+void CGui::editTrkDescr(Ed ed)
 {
-	app->scn->road->sTxtDesc = ed->getCaption();
+	app->scn->road->sTxtDescr = ed->getCaption();
+}
+void CGui::editTrkAdvice(Ed ed)
+{
+	app->scn->road->sTxtAdvice = ed->getCaption();
 }
 
 void CGui::comboPipeMtr(Cmb cmb, size_t val)
