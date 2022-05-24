@@ -82,11 +82,11 @@ void CGui::GetMaterialsMat(String filename, bool clear, String type)
 				if (StringUtil::startsWith(line, type/*"material"*/))
 				{
 					//LogO(line);
-					Ogre::vector<String>::type vec = StringUtil::split(line," \t:");
+					auto vec = StringUtil::split(line," \t:");
 					bool skipFirst = true;
-					for (Ogre::vector<String>::type::iterator it = vec.begin(); it < vec.end(); ++it)
+					for (auto it : vec)
 					{
-						std::string match = (*it);
+						std::string match = it;
 						StringUtil::trim(match);
 						if (!match.empty())
 						{

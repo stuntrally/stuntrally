@@ -272,7 +272,7 @@ void App::MouseObjects()
 	}	}
 
 	//  selection, picked or new
-	std::set<int>::iterator it = vObjSel.begin();
+	auto it = vObjSel.begin();
 	int i = sel ? *it : iObjCur;
 	while (i == -1 || (i >= 0 && i < scn->sc->objects.size()))
 	{

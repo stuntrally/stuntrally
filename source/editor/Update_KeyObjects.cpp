@@ -114,10 +114,9 @@ void App::keyPressObjects(SDL_Scancode skey)
 				if (!vObjSel.empty())
 				{
 					vObjCopy.clear();
-					for (std::set<int>::iterator it = vObjSel.begin();
-						it != vObjSel.end(); ++it)
+					for (auto it : vObjSel)
 					{
-						vObjCopy.push_back(scn->sc->objects[*it]);
+						vObjCopy.push_back(scn->sc->objects[it]);
 					}
 					gui->Status("#{Copy}", 0.6,0.8,1.0);
 			}	}
@@ -127,9 +126,9 @@ void App::keyPressObjects(SDL_Scancode skey)
 				{
 					vObjSel.clear();  // unsel
 					Object o = objNew;
-					for (int i=0; i < vObjCopy.size(); ++i)
+					for (auto i : vObjCopy)
 					{
-						objNew = vObjCopy[i];
+						objNew = i;
 						AddNewObj(false);
 						vObjSel.insert(scn->sc->objects.size()-1);  // add it to sel
 					}
