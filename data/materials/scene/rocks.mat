@@ -342,7 +342,7 @@ material rock_L4
 
 //  newest rocks
 //--------------------------------------------------------------------------------------------------------------
-material rock01
+material rock01brown1up
 {
     parent base
 	diffuseMap rock01.jpg
@@ -350,7 +350,7 @@ material rock01
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock02
+material rock02brown2flat
 {
     parent base
 	diffuseMap rock02.jpg
@@ -358,7 +358,7 @@ material rock02
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock03
+material rock03can1flat
 {
     parent base
 	diffuseMap rock03.jpg
@@ -366,7 +366,7 @@ material rock03
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock04
+material rock04can2flat
 {
     parent base
 	diffuseMap rock04.jpg
@@ -374,7 +374,7 @@ material rock04
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock05
+material rock05can3round
 {
     parent base
 	diffuseMap rock05.jpg
@@ -382,7 +382,7 @@ material rock05
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock06
+material rock06white1flat
 {
     parent base
 	diffuseMap rock06.jpg
@@ -390,7 +390,7 @@ material rock06
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock07
+material rock07white2rnd
 {
     parent base
 	diffuseMap rock07.jpg
@@ -398,7 +398,7 @@ material rock07
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock08
+material rock08white3tall
 {
     parent base
 	diffuseMap rock08.jpg
@@ -406,7 +406,7 @@ material rock08
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock09
+material rock09tallHarshWh
 {
     parent base
 	diffuseMap rock09.jpg
@@ -414,7 +414,7 @@ material rock09
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock10
+material rock10red1round
 {
     parent base
 	diffuseMap rock10.jpg
@@ -422,7 +422,7 @@ material rock10
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock11
+material rock11red2
 {
     parent base
 	diffuseMap rock11.jpg
@@ -430,7 +430,7 @@ material rock11
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock12
+material rock12orange
 {
     parent base
 	diffuseMap rock12.jpg
@@ -438,7 +438,7 @@ material rock12
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock13
+material rock13orange2
 {
     parent base
 	diffuseMap rock13.jpg
@@ -446,7 +446,7 @@ material rock13
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock14
+material rock14tall1cgr
 {
     parent base
 	diffuseMap rock14.jpg
@@ -454,7 +454,7 @@ material rock14
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock15
+material rock15ironSpecks
 {
     parent base
 	diffuseMap rock15.jpg
@@ -462,7 +462,7 @@ material rock15
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock16
+material rock16black1
 {
     parent base
 	diffuseMap rock16.jpg
@@ -470,7 +470,7 @@ material rock16
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock17
+material rock17black2wh
 {
     parent base
 	diffuseMap rock17.jpg
@@ -478,7 +478,7 @@ material rock17
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock18
+material rock18black3
 {
     parent base
 	diffuseMap rock18.jpg
@@ -486,7 +486,7 @@ material rock18
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock19
+material rock19harshWhite
 {
     parent base
 	diffuseMap rock19.jpg
@@ -494,7 +494,7 @@ material rock19
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock20
+material rock20liGrayTall
 {
     parent base
 	diffuseMap rock20.jpg
@@ -502,7 +502,7 @@ material rock20
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock21
+material rock21triEdgeSpeck
 {
     parent base
 	diffuseMap rock21.jpg
@@ -510,7 +510,7 @@ material rock21
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock22
+material rock22jng1Harsh
 {
     parent base
 	diffuseMap rock22.jpg
@@ -518,7 +518,7 @@ material rock22
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock23
+material rock23dark1block
 {
     parent base
 	diffuseMap rock23.jpg
@@ -526,7 +526,7 @@ material rock23
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock24
+material rock24triangle
 {
     parent base
 	diffuseMap rock24.jpg
@@ -534,7 +534,7 @@ material rock24
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock25
+material rock25dark2Harsh2
 {
     parent base
 	diffuseMap rock25.jpg
@@ -542,7 +542,7 @@ material rock25
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock26
+material rock26grayBlue
 {
     parent base
 	diffuseMap rock26.jpg
@@ -550,7 +550,7 @@ material rock26
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock27
+material rock27winter
 {
     parent base
 	diffuseMap rock27.jpg
@@ -558,7 +558,7 @@ material rock27
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock28
+material rock28grayWhite
 {
     parent base
 	diffuseMap rock28.jpg
@@ -566,7 +566,7 @@ material rock28
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock30
+material rock30grayGreen
 {
     parent base
 	diffuseMap rock30.jpg
@@ -574,7 +574,7 @@ material rock30
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock32
+material rock32red2block
 {
     parent base
 	diffuseMap rock32.jpg
@@ -582,7 +582,7 @@ material rock32
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock33
+material rock33grayBlue2
 {
     parent base
 	diffuseMap rock33.jpg
@@ -590,7 +590,7 @@ material rock33
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock34
+material rock34brGr2block
 {
     parent base
 	diffuseMap rock34.jpg
@@ -598,7 +598,7 @@ material rock34
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock35
+material rock35red1edgy
 {
     parent base
 	diffuseMap rock35.jpg
@@ -606,7 +606,7 @@ material rock35
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock37
+material rock37brGr1tall
 {
     parent base
 	diffuseMap rock37.jpg
@@ -614,7 +614,7 @@ material rock37
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock39
+material rock39brGr3edgy
 {
     parent base
 	diffuseMap rock39.jpg
@@ -622,7 +622,7 @@ material rock39
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock40
+material rock40red3flat
 {
     parent base
 	diffuseMap rock40.jpg
@@ -630,7 +630,7 @@ material rock40
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock41
+material rock41grayWh
 {
     parent base
 	diffuseMap rock41.jpg
@@ -638,15 +638,7 @@ material rock41
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock42
-{
-    parent base
-	diffuseMap rock42.jpg
-	normalMap rock42_norm.jpg
-	terrain_light_map true
-	specular 0.3 0.3 0.3 32
-}
-material rock43
+material rock43winter
 {
     parent base
 	diffuseMap rock43.jpg
@@ -654,7 +646,7 @@ material rock43
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock44
+material rock44red4rndWh
 {
     parent base
 	diffuseMap rock44.jpg
@@ -662,7 +654,7 @@ material rock44
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock45
+material rock45stains
 {
     parent base
 	diffuseMap rock45.jpg
@@ -670,7 +662,7 @@ material rock45
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock46
+material rock46grayWhite2
 {
     parent base
 	diffuseMap rock46.jpg

@@ -47,7 +47,7 @@ friction = 0.4
 #  engine
 #---------------------------
 [ engine ]
-sound = engine360
+sound = engine
 position = 0.0, 0.9, 0.2
 mass = 190.0
 rpm-limit = 6700
