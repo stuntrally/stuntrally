@@ -10,6 +10,6 @@ Exec=stuntrally
 Icon=stuntrally
 StartupNotify=false
 Terminal=false
+PrefersNonDefaultGPU=true
 Type=Application
-Categories=Application;Game;SportsGame;
-
+Categories=Game;SportsGame;
