@@ -313,7 +313,7 @@ public:
 
 	//  [Objects]  ----
 	//  gui lists
-	Li objListDyn, objListSt, objListRck, objListBld, objListCat;
+	Li objListDyn, objListSt, objListBld, objListCat;
 	void listObjsChng(Li, size_t), listObjsNext(int rel);
 	void listObjsCatChng(Li, size_t);
 	

@@ -485,7 +485,6 @@ void CGui::listObjsChng(MyGUI::List* l, size_t t)
 	//  unselect other
 	if (l != objListDyn)  objListDyn->setIndexSelected(ITEM_NONE);
 	if (l != objListSt)	  objListSt->setIndexSelected(ITEM_NONE);
-	if (l != objListRck)  objListRck->setIndexSelected(ITEM_NONE);
 	if (l != objListBld)  objListBld->setIndexSelected(ITEM_NONE);
 
 	if (t == ITEM_NONE)  //  sel default
@@ -506,7 +505,6 @@ void CGui::listObjsNext(int rel)
 	Li li = 0;
 	if (objListDyn->getIndexSelected()!= ITEM_NONE)  li = objListDyn; //else
 	if (objListSt->getIndexSelected() != ITEM_NONE)  li = objListSt;
-	if (objListRck->getIndexSelected()!= ITEM_NONE)  li = objListRck;
 	if (objListBld->getIndexSelected()!= ITEM_NONE)  li = objListBld;
 	if (li)
 	{

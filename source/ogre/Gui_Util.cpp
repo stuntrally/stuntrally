@@ -506,6 +506,7 @@ void CGui::toggleGui(bool toggle)
 	app->mWndHelp->setVisible(   gui && mnu == MN_Help);
 	app->mWndOpts->setVisible(   gui && mnu == MN_Options);
 	if (!gui)  app->mWndTrkFilt->setVisible(false);
+
 	
 	//  fill help editboxes from text files
 	if (app->mWndHelp->getVisible() && loadReadme)

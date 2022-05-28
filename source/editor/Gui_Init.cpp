@@ -641,7 +641,6 @@ void CGui::InitGui()
 	
 	objListDyn = fLi("ObjListDyn");  Lev(objListDyn, ObjsChng);
 	objListSt  = fLi("ObjListSt");   Lev(objListSt,  ObjsChng);
-	objListRck = fLi("ObjListRck");  Lev(objListRck, ObjsChng);
 	objListBld = fLi("ObjListBld");  Lev(objListBld, ObjsChng);
 	objListCat = fLi("ObjListCat");  Lev(objListCat, ObjsCatChng);
 	objPan = fWP("objPan");
@@ -650,23 +649,23 @@ void CGui::InitGui()
 	{	const string& name = app->vObjNames[u];
 		if (name != "sphere")
 		{
-			if (StringUtil::startsWith(name,"rock",false)||StringUtil::startsWith(name,"cave",false))
+			/*if (StringUtil::startsWith(name,"rock",false)||StringUtil::startsWith(name,"cave",false))
 				objListRck->addItem("#E0B070"+name);  // rocks
-			else 
+			else*/
 			if (boost::filesystem::exists(sData+"/objects/"+ name + ".bullet"))
 				objListDyn->addItem("#A0E0FF"+name);  // dynamic
 			else
 				objListSt->addItem("#C8C8C8"+name);
 	}	}
 	
-	//  buildings  ----
+	//  buildings, group categories, more witbh same prefix  ----
 	using std::map;
 	map<string, int> cats;  // yeah cats are fun
 	lo.clear();
 	app->vBuildings.clear();
 	PATHMANAGER::DirList(sData + "/objects0", lo);
-	PATHMANAGER::DirList(sData + "/objectsC", lo);//-
-	PATHMANAGER::DirList(sData + "/rocks", lo);  //too?
+	PATHMANAGER::DirList(sData + "/objectsC", lo);
+	PATHMANAGER::DirList(sData + "/rocks", lo);  //not all?
 	for (auto q : lo)
 		if (StringUtil::endsWith(q,".mesh"))
 		{
@@ -678,7 +677,6 @@ void CGui::InitGui()
 		}
 	//  get cats  ----
 	objListCat->removeAllItems();
-	//objListCat->addItem("#E0A0A0"+TR("#{Other}"));  //all
 	for (auto it : cats)
 	{
 		string cat = it.first;  int n = it.second;
@@ -694,9 +692,9 @@ void CGui::InitGui()
 		if (cats[cat] <= 1)
 			objListSt->addItem("#D0D0C8"+name);
 	}
-	if (cats.size() > 0)
-	{	objListCat->setIndexSelected(0);
-		listObjsCatChng(objListCat,0);  // fill buildings
+	{	int il = objListCat->findItemIndexWith("#E09090"+pSet->objGroup);
+		objListCat->setIndexSelected(il);
+		listObjsCatChng(objListCat, il);
 	}
 
 

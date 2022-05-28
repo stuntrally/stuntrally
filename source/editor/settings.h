@@ -49,7 +49,7 @@ public:
 	bool trk_reverse, show_mph;
 
 	//  tweak
-	std::string tweak_mtr;
+	std::string tweak_mtr, objGroup;
 	//  pick
 	bool pick_setpar;
 

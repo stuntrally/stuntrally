@@ -1,4 +1,6 @@
 #pragma once
+#include <OgreString.h>
+#include <OgreStringVector.h>
 
 namespace Ogre  {  class FileStreamDataStream;  }
 class SoundBase;  class SoundBaseMgr;

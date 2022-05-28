@@ -66,8 +66,9 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "teralign.w_add", al_w_add);
 
 	Param(c,w, "tweak.mtr", tweak_mtr);
-	Param(c,w, "pick.set_par", pick_setpar);
+	Param(c,w, "pick.set_par", pick_setpar);		Param(c,w, "pick.objGroup", objGroup);
 }
+
 
 SETTINGS::SETTINGS()  ///  Defaults
 	:version(100)  // old
@@ -98,7 +99,7 @@ SETTINGS::SETTINGS()  ///  Defaults
 	//  tweak
 	,tweak_mtr("")
 	//  pick
-	,pick_setpar(1)
+	,pick_setpar(1), objGroup("rock")
 {
 
 	//  track common

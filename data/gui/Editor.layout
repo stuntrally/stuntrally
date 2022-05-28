@@ -2531,13 +2531,14 @@
 <!-- ============================================================================================================================================= -->
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#D0D0D0#{Objects}"/>
-				<Widget type="TextBox" skin="TextBox" position="14 16 120 24">
+				<Widget type="TextBox" skin="TextBox" position="14 16 128 24">
 					<Property key="Caption" value="#{ObjDynamic}"/>
 					<Property key="TextColour" value="0.6 0.82 1.0"/>
 				</Widget>
 				<Widget type="ListBox" skin="ListBox" position="12 40 116 500" name="ObjListDyn">
 					<Property key="Colour" value="0.6 0.8 1"/>
 				</Widget>
+
 				<Widget type="TextBox" skin="TextBox" position="138 16 128 24">
 					<Property key="Caption" value="#{ObjStatic}"/>
 					<Property key="TextColour" value="0.92 0.92 0.92"/>
@@ -2545,27 +2546,24 @@
 				<Widget type="ListBox" skin="ListBox" position="136 40 116 500" name="ObjListSt">
 					<Property key="Colour" value="0.8 0.8 0.8"/>
 				</Widget>
+
 				<Widget type="TextBox" skin="TextBox" position="260 16 90 24">
-					<Property key="Caption" value="#{ObjRocks}"/>
-					<Property key="TextColour" value="0.95 0.75 0.5"/>
+					<Property key="Caption" value="#{Group}"/>
+					<Property key="TextColour" value="0.95 0.7 0.7"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="258 40 90 500" name="ObjListRck">
+				<Widget type="ListBox" skin="ListBox" position="258 40 86 400" name="ObjListCat">
 					<Property key="Colour" value="0.9 0.8 0.7"/>
+					<Property key="FontName" value="font.big"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="358 16 128 24">
-					<Property key="Caption" value="#{ObjBuildings}"/>
+				
+				<Widget type="TextBox" skin="TextBox" position="358 16 168 24">
+					<Property key="Caption" value="#{ObjBuildings}, #{ObjRocks}"/>
 					<Property key="TextColour" value="0.95 0.95 0.5"/>
 				</Widget>
 				<Widget type="ListBox" skin="ListBox" position="356 40 128 500" name="ObjListBld">
 					<Property key="Colour" value="0.9 0.9 0.7"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="498 16 128 24">
-					<Property key="Caption" value="#{Group}"/>
-					<Property key="TextColour" value="0.95 0.7 0.7"/>
-				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="498 40 88 166" name="ObjListCat">
-					<Property key="Colour" value="0.9 0.8 0.8"/>
-				</Widget>
+
 			</Widget>
 		</Widget>
 	</Widget>
