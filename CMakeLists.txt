@@ -1,5 +1,5 @@
 project(StuntRally CXX C)
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.12)
 
 # Allows disabling building of components
 option(BUILD_GAME             "Build the game binary."    ON)
@@ -162,4 +162,3 @@ add_subdirectory(source)
 add_subdirectory(config)
 add_subdirectory(dist)
 add_subdirectory(data)
-

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.12)
 
 set(SHINY_MAJOR_VERSION 0)
 set(SHINY_MINOR_VERSION 3)

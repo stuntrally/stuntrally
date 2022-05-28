@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.12)
 
 # Install data files
 # TODO: make this use all data/* subdirs without tracks, not entered by hand ..
@@ -12,4 +12,3 @@ if (EXISTS "${CMAKE_SOURCE_DIR}/data/tracks")
 else()
 	message("WARNING: No tracks could be found for installation.")
 endif()
-
