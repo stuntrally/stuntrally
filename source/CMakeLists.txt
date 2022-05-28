@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.12)
 
 # Linux prefers lower-case exe names
 if (WIN32 OR APPLE)
@@ -170,4 +170,3 @@ if (MSVC)
 		COMPILE_FLAGS "/Ycpch.h"
 	)
 endif (MSVC)
-

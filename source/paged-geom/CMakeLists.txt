@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.12)
 
 set(LIBNAME "paged-geom")
 
@@ -9,4 +9,3 @@ file(GLOB SOURCE_FILES *.cpp)
 add_library(${LIBNAME} STATIC ${SOURCE_FILES})
 
 link_directories(${CMAKE_CURRENT_BINARY_DIR})
-

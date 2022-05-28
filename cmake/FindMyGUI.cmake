@@ -26,26 +26,26 @@ IF (WIN32) #Windows
 		STRING(REGEX REPLACE "[\\]" "/" MYGUISDK "${MYGUISDK}" )
 
 		find_path ( MYGUI_INCLUDE_DIRS
-		  MyGUI.h 
+		  MyGUI.h
 		  "${MYGUISDK}/MyGUIEngine/include"
 		  NO_DEFAULT_PATH )
-		  
+
 		find_path ( MYGUI_PLATFORM_INCLUDE_DIRS
 		  MyGUI_OgrePlatform.h
 		  "${MYGUISDK}/Platforms/Ogre/OgrePlatform/include"
-		  NO_DEFAULT_PATH )		  
+		  NO_DEFAULT_PATH )
 
 		SET ( MYGUI_LIB_DIR ${MYGUISDK}/*/lib )
-		
+
 		find_library ( MYGUI_LIBRARIES_REL NAMES
-		MyGUIEngine.lib 
+		MyGUIEngine.lib
 		MyGUI.OgrePlatform.lib
 		HINTS
 		${MYGUI_LIB_DIR}
 		PATH_SUFFIXES "" release relwithdebinfo minsizerel )
 
 		find_library ( MYGUI_LIBRARIES_DBG NAMES
-		MyGUIEngine_d.lib 
+		MyGUIEngine_d.lib
 		MyGUI.OgrePlatform_d.lib
 		HINTS
 		${MYGUI_LIB_DIR}
@@ -62,10 +62,10 @@ IF (WIN32) #Windows
 		HINTS
 		${MYGUI_LIB_DIR}
 		PATH_SUFFIXES "" debug )
-		
+
 		make_library_set ( MYGUI_LIBRARIES )
 		make_library_set ( MYGUI_PLATFORM_LIBRARIES )
-		
+
 		MESSAGE ("${MYGUI_LIBRARIES}")
 		MESSAGE ("${MYGUI_PLATFORM_LIBRARIES}")
 
@@ -80,7 +80,7 @@ IF (WIN32) #Windows
         SET(MYGUI_LIBRARIES debug Debug/MyGUIEngine_d optimized Release/MyGUIEngine)
     ENDIF (OGRESOURCE)
 ELSE (WIN32) #Unix
-    CMAKE_MINIMUM_REQUIRED(VERSION 2.4.7 FATAL_ERROR)
+    CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12 FATAL_ERROR)
     FIND_PACKAGE(PkgConfig)
     PKG_SEARCH_MODULE(MYGUI MYGUI MyGUI)
     IF (MYGUI_INCLUDE_DIRS)
