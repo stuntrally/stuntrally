@@ -13,6 +13,6 @@ Exec=sr-editor
 Icon=sr-editor
 StartupNotify=false
 Terminal=false
+PrefersNonDefaultGPU=true
 Type=Application
-Categories=Application;Game;SportsGame;
-
+Categories=Game;SportsGame;
