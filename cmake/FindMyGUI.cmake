@@ -50,36 +50,35 @@ find_library(MyGUI_OgrePlatform_LIBRARY_DBG NAMES MyGUI.OgrePlatform_d MyGUI.Ogr
 set(MyGUI_INCLUDE_DIRS ${MyGUI_INCLUDE_DIR})
 set(MyGUI_LIBRARIES)
 if (MyGUI_MyGUIEngine_LIBRARY_REL OR MyGUI_OgrePlatform_LIBRARY_REL)
-	list(APPEND MyGUI_LIBRARIES optimized ${MyGUI_MyGUIEngine_LIBRARY_REL} ${MyGUI_OgrePlatform_LIBRARY_REL})
+    list(APPEND MyGUI_LIBRARIES optimized ${MyGUI_MyGUIEngine_LIBRARY_REL} ${MyGUI_OgrePlatform_LIBRARY_REL})
 endif ()
 if (MyGUI_MyGUIEngine_LIBRARY_DBG OR MyGUI_OgrePlatform_LIBRARY_DBG)
-	list(APPEND MyGUI_LIBRARIES debug ${MyGUI_MyGUIEngine_LIBRARY_DBG} ${MyGUI_OgrePlatform_LIBRARY_DBG})
+    list(APPEND MyGUI_LIBRARIES debug ${MyGUI_MyGUIEngine_LIBRARY_DBG} ${MyGUI_OgrePlatform_LIBRARY_DBG})
 endif ()
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(MyGUI FOUND_VAR MyGUI_FOUND
-		REQUIRED_VARS MyGUI_INCLUDE_DIRS MyGUI_LIBRARIES
-		)
+find_package_handle_standard_args(MyGUI DEFAULT_MSG MyGUI_INCLUDE_DIRS MyGUI_LIBRARIES)
+set(MyGUI_FOUND ${MYGUI_FOUND})
 
 if (MyGUI_FOUND)
-	add_library(MyGUI::MyGUI INTERFACE IMPORTED)
-	set_target_properties(MyGUI::MyGUI PROPERTIES
-			INTERFACE_LINK_LIBRARIES
-			"$<$<CONFIG:Debug>:${MyGUI_MyGUIEngine_LIBRARY_DBG}>$<$<NOT:$<CONFIG:Debug>>:${MyGUI_MyGUIEngine_LIBRARY_REL}>"
-			INTERFACE_INCLUDE_DIRECTORIES "${MyGUI_INCLUDE_DIRS}"
-			)
-	add_library(MyGUI::OgrePlatform INTERFACE IMPORTED)
-	set_target_properties(MyGUI::OgrePlatform PROPERTIES
-			INTERFACE_LINK_LIBRARIES
-			"$<$<CONFIG:Debug>:${MyGUI_OgrePlatform_LIBRARY_DBG}>$<$<NOT:$<CONFIG:Debug>>:${MyGUI_OgrePlatform_LIBRARY_REL}>"
-			INTERFACE_INCLUDE_DIRECTORIES "${MyGUI_INCLUDE_DIRS}"
-			)
-	set_property(TARGET MyGUI::OgrePlatform APPEND PROPERTY INTERFACE_LINK_LIBRARIES MyGUI::MyGUI)
+    add_library(MyGUI::MyGUI INTERFACE IMPORTED)
+    set_target_properties(MyGUI::MyGUI PROPERTIES
+            INTERFACE_LINK_LIBRARIES
+            "$<$<CONFIG:Debug>:${MyGUI_MyGUIEngine_LIBRARY_DBG}>$<$<NOT:$<CONFIG:Debug>>:${MyGUI_MyGUIEngine_LIBRARY_REL}>"
+            INTERFACE_INCLUDE_DIRECTORIES "${MyGUI_INCLUDE_DIRS}"
+            )
+    add_library(MyGUI::OgrePlatform INTERFACE IMPORTED)
+    set_target_properties(MyGUI::OgrePlatform PROPERTIES
+            INTERFACE_LINK_LIBRARIES
+            "$<$<CONFIG:Debug>:${MyGUI_OgrePlatform_LIBRARY_DBG}>$<$<NOT:$<CONFIG:Debug>>:${MyGUI_OgrePlatform_LIBRARY_REL}>"
+            INTERFACE_INCLUDE_DIRECTORIES "${MyGUI_INCLUDE_DIRS}"
+            )
+    set_property(TARGET MyGUI::MyGUI APPEND PROPERTY INTERFACE_LINK_LIBRARIES MyGUI::OgrePlatform)
 endif ()
 
 mark_as_advanced(
-		MyGUI_MyGUIEngine_LIBRARY_REL
-		MyGUI_OgrePlatform_LIBRARY_REL
-		MyGUI_MyGUIEngine_LIBRARY_DBG
-		MyGUI_OgrePlatform_LIBRARY_DBG
+        MyGUI_MyGUIEngine_LIBRARY_REL
+        MyGUI_OgrePlatform_LIBRARY_REL
+        MyGUI_MyGUIEngine_LIBRARY_DBG
+        MyGUI_OgrePlatform_LIBRARY_DBG
 )

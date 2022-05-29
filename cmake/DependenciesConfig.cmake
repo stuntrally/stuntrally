@@ -17,7 +17,7 @@ add_external_lib(
         REQUIRED
         CONAN_PKG_NAME OGRE
         CONAN_OPTIONS ogre3d:nodeless_positioning=True ogre3d:resourcemanager_strict=off
-        # PKG_CONFIG "OGRE = 1.11.6"
+        PKG_CONFIG "OGRE, OGRE-Terrain, OGRE-Paging, OGRE-Overlay"
         FIND_PACKAGE_OPTIONS CONFIG COMPONENTS Bites Overlay Paging RTShaderSystem MeshLodGenerator Terrain
 )
 
