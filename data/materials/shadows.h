@@ -1,4 +1,11 @@
-
+#ifdef SH_FRAGMENT_SHADER
+// Interleaved Gradient Noise
+// https://www.iryoku.com/next-generation-post-processing-in-call-of-duty-advanced-warfare
+float quick_hash(float2 pos) {
+	const float3 magic = float3(0.06711056f, 0.00583715f, 52.9829189f);
+	return fract(magic.z * fract(dot(pos, magic.xy)));
+}
+#endif
 
 #if SHADOWS_DEPTH
 
@@ -43,6 +50,15 @@ float pssmDepthShadow(
 
 {
 	float shadow;
+
+#ifdef SH_FRAGMENT_SHADER
+	float2 dither = -float2(0.5) + quick_hash(gl_FragCoord.xy);
+	// Higher values of `dither_factor` result in a more diffuse but noisier shadow.
+	const float dither_factor = 150.0;
+	lightSpacePos0.xy += dither * invShadowmapSize0 * dither_factor;
+	lightSpacePos1.xy += dither * invShadowmapSize1 * dither_factor;
+	lightSpacePos2.xy += dither * invShadowmapSize2 * dither_factor;
+#endif
 
 	float pcf1 = depthShadowPCF(shadowMap0, lightSpacePos0, invShadowmapSize0, bias);
 	float pcf2 = depthShadowPCF(shadowMap1, lightSpacePos1, invShadowmapSize1, bias);
