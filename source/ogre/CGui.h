@@ -38,11 +38,11 @@ public:
 	App* app =0;  GAME* pGame =0;  SETTINGS* pSet =0;
 	Scene* sc =0;  CData* data =0;
 	CHud* hud =0;  MyGUI::Gui* mGui =0;  CGuiCom* gcom =0;
-	
+
 	CGui(App* ap1);
 	~CGui();
 	//friend class CarModel;
-	
+
 	typedef std::list <std::string> strlist;
 
 
@@ -68,7 +68,7 @@ public:
 	void AddCarL(std::string name, const CarInfo* ci);
 	std::list<CarL> liCar;
 	void FillCarList();
-	
+
 	const static int colCar[16],colCh[16],colChL[16],colSt[16];
 
 
@@ -76,7 +76,7 @@ public:
 	void toggleGui(bool toggle=true);
 	void GuiShortcut(EMenu menu, int tab, int subtab=-1);
 	bool loadReadme = 1;  void FillHelpTxt();
-	
+
 
 	//  hints
 	Ck ckShowWelcome;
@@ -88,7 +88,7 @@ public:
 	void btnHintPrev(WP), btnHintNext(WP);
 	void btnHintScreen(WP), btnHintInput(WP), btnHintClose(WP);
 	void btnHowToBack(WP), btnLesson(WP);
-	
+
 	struct Subtitle  // for replay lessons
 	{
 		std::string txt;
@@ -172,7 +172,7 @@ public:
 	void listTwkTiresUser(Li, size_t), listTwkTiresOrig(Li, size_t);
 	void btnTweakTireLoad(WP), btnTweakTireReset(WP), btnTweakTireDelete(WP);
 	void FillTweakLists();  Ogre::String sTireLoad;
-	
+
 	///  surface
 	Li liTwkSurfaces =0;  void listTwkSurfaces(Li, size_t);
 	int idTwkSurf = -1;  void btnTwkSurfPick(WP), updSld_TwkSurf(int id);
@@ -207,7 +207,7 @@ public:
 	//  hud view
 	SV svSizeGaug;
 	SV svTypeGaug, svLayoutGaug;
-	
+
 	SV svSizeMinimap, svZoomMinimap;
 	void slHudSize(SV*), slHudCreate(SV*);
 
@@ -220,8 +220,8 @@ public:
 	SV svVolEngine, svVolTires, svVolSusp, svVolEnv;
 	SV svVolFlSplash, svVolFlCont, svVolCarCrash, svVolCarScrap;
 	Ck ckSndChk, ckSndChkWr, ckReverb;
-	
-	
+
+
 	///  Checks  . . . . . . . . . . . . . . . . . . . .
 	CK(Reverse);  // track
 
@@ -238,7 +238,7 @@ public:
 	//  Camera
 	Ck ckCamInfo, ckCamTilt, ckCamLoop;
 	Ck ckCamBnc;  SV svCamBnc;
-	SV svFov, svFovMax, svFovSm;
+	SV svFov, svFovBoost, svFovSm;
 	//  Pacenotes
 	Ck ckPaceShow;  SV svPaceDist, svPaceSize, svPaceNext;
 	SV svPaceNear, svPaceAlpha;
@@ -252,7 +252,7 @@ public:
 	SV svTC_r, svTC_xr;
 	SV svTE_yf, svTE_xfx, svTE_xfy, svTE_xpow;
 	Ck ckTE_Common, ckTE_Reference;  void chkTEupd(Ck*);
-	
+
 	//  Hud dbg,other
 	Ck ckFps;  CK(Wireframe);
 	//  profiler
@@ -268,10 +268,9 @@ public:
 	Ck ckBltLines, ckShowPics;
 	Ck ckMouseCapture, ckDevKeys, ckScreenPng;
 	void chkMultiThread(WP);
-	
+
 	//  [Effects]
 	CK(AllEffects);
-	Ck ckBoostFOV;
 	Ck ckBloom, ckBlur, ckSoftPar, ckSSAO, ckGodRays, ckDoF, ckHDR;
 	void chkEffUpd(Ck*), chkEffUpdShd(Ck*);
 
@@ -291,7 +290,7 @@ public:
 	wraps::RenderBoxScene* viewBox =0;  Ogre::Vector3 viewSc;
 	MyGUI::IntCoord GetViewSize();
 	void InitCarPrv();
-	
+
 	WP graphV =0, graphS =0;
 	MyGUI::PolygonalSkin* graphVel =0,*graphVGrid =0, *graphSSS =0,*graphSGrid =0;
 
@@ -320,7 +319,7 @@ public:
 	void btnSSSReset(WP), btnSteerReset(WP), slSSS(SV*);
 
 	void imgBtnCarClr(WP), btnCarClrRandom(WP);  Img imgCarClr =0;
-	
+
 	//  radios
 	Btn bRkmh =0, bRmph =0;  // km/h, mph
 	void radKmh(WP), radMph(WP), radUpd(bool kmh);
@@ -345,7 +344,7 @@ public:
 	//  cur rpl stats gui
 	Txt valRplName =0, valRplInfo =0,
 		valRplName2 =0,valRplInfo2 =0;
-	
+
 	//  controls percent and time info
 	Txt valRplPerc =0, valRplCur =0, valRplLen =0;
 
@@ -355,7 +354,7 @@ public:
 	void btnRplLoad(WP), btnRplSave(WP), btnRplLoadFile(std::string file);
 	void btnRplDelete(WP), btnRplRename(WP);
 	bool bLesson =0;
-	
+
 	//  chk, options
 	Ck ckRplAutoRec, ckRplBestOnly, ckRplGhost, ckRplParticles;
 	Ck ckRplRewind, ckRplGhostOther, ckRplTrackGhost;
@@ -375,7 +374,7 @@ public:
 	void btnRplBackDn(WP,int,int,MyGUI::MouseButton), btnRplBackUp(WP,int,int,MyGUI::MouseButton);
 	void btnRplFwdDn(WP,int,int, MyGUI::MouseButton), btnRplFwdUp(WP,int,int, MyGUI::MouseButton);
 	void msgRplDelete(MyGUI::Message*, MyGUI::MessageBoxStyle);
-	
+
 
 	//  Game
 	///---------------------------------------
@@ -430,21 +429,21 @@ public:
 	Img imgTut =0, imgChamp =0, imgChall =0;
 	//  tabs
 	Tab tabTut =0, tabChamp =0, tabChall =0;
-	
+
 	void tabTutType(Tab, size_t), tabChampType(Tab, size_t);
 	void tabChallType(Tab, size_t);
 
 	//  stages
 	Ed edChInfo =0, edChDesc =0;  WP panCh =0;
 	Txt txtCh =0, valCh =0, txtChP[3] ={0,0,0}, valChP[3] ={0,0,0};  // stages info, pass/progress
-	
+
 	void btnStageNext(WP), btnStagePrev(WP);  Txt valStageNum =0;
 	void StageListAdd(int n, Ogre::String name, int laps, Ogre::String progress);
-	
+
 	//  xml  [1]= reversed  L= challenge
 	ProgressXml progress[2];
 	ProgressLXml progressL[2];
-	
+
 	void ProgressSave(bool upgGui=true), ProgressLSave(bool upgGui=true);
 	Chall* pChall =0;  // current challenge or 0 if not
 
@@ -454,7 +453,7 @@ public:
 	//  const
 	const static Ogre::String StrPrize(int i/*0 none..3 gold*/), strPrize[4],clrPrize[4];
 	const static int ciAddPos[3];  const static float cfSubPoints[3];
-	
+
 	//  common
 	Mli2 liStages =0, liNetEnd =0;  void listStageChng(Mli2, size_t);
 	Mli2 liChamps =0;  void listChampChng(Mli2, size_t);
