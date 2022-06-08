@@ -244,7 +244,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 	Vector3 pp = camPosFinal;
 	if (bounce)
 		pp += posIn.camOfs * ca->mOfsMul
-			* gPar.camBncScale * pSet->cam_bnc_mul;
+			* gPar.camBncScale * pSet->cam_bnc_mul * 0.25;
 	
 	Vector3 p = posGoal;  p.y += 1.f;  //up
 	//Vector3 d = camRotFinal * Vector3::UNIT_Z;  d.normalise();
