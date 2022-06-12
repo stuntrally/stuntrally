@@ -63,7 +63,7 @@ void SplitScr::CleanUp()
 		mWindow->removeViewport( (*vpIt)->getZOrder() );
 	}
 	mViewports.clear();
-	
+
 	for (std::list<Camera*>::iterator it=mCameras.begin(); it != mCameras.end(); ++it)
 		mSceneMgr->destroyCamera(*it);
 	mCameras.clear();
@@ -76,7 +76,7 @@ void SplitScr::Align()
 {
 	CleanUp();
 	LogO("-- Screen Align");
-	
+
 	for (int i=0; i < 4; ++i)
 		mDims[i].Default();
 
@@ -86,7 +86,7 @@ void SplitScr::Align()
 		//  set dimensions for the viewports
 		float dims[4];  // left,top, width,height
 		#define dim_(l,t,w,h)  {  dims[0]=l;  dims[1]=t;  dims[2]=w;  dims[3]=h;  }
-		
+
 		if (mNumViewports == 1)
 		{
 			dim_(0.0, 0.0, 1.0, 1.0);
@@ -142,7 +142,7 @@ void SplitScr::Align()
 		mCameras.back()->lookAt(Vector3(0,-100,10));
 		mCameras.back()->setFarClipDistance(pSet->view_distance*1.1f);
 		mCameras.back()->setNearClipDistance(0.2f);
-		
+
 		// Create viewport, use i as Z order
 		mViewports.push_back(mWindow->addViewport( mCameras.back(), i+5, dims[0], dims[1], dims[2], dims[3]));
 	}
@@ -155,7 +155,7 @@ void SplitScr::Align()
 		mCameras.back()->setFarClipDistance(pSet->view_distance*1.1f);
 		mCameras.back()->setNearClipDistance(0.2f);
 	}
-		
+
 	// Create gui viewport if not already existing
 	if (!mGuiViewport)
 	{
@@ -164,9 +164,9 @@ void SplitScr::Align()
 		mGuiViewport = mWindow->addViewport(guiCam, 100);
 		mGuiViewport->setVisibilityMask(RV_Hud);
 	}
-	
+
 	AdjustRatio();
-	
+
 	// Add compositing filters for the new viewports
 	if (pApp)  pApp->recreateCompositor();
 }
@@ -193,7 +193,7 @@ void SplitScr::preViewportUpdate(const RenderTargetViewportEvent& evt)
 	//  What kind of viewport is being updated?
 	const String& vpName = evt.source->getCamera()->getName();
 	//*H*/LogO(vpName);  //GuiCam1  PlayerCamera0,1..
-	
+
 	if (evt.source != mGuiViewport)
 	{
 		//  scene viewport
@@ -209,7 +209,7 @@ void SplitScr::preViewportUpdate(const RenderTargetViewportEvent& evt)
 		//  idea: with compositor this needs separate sky nodes (own sky for each player) and showing 1 sky for 1 player
 		if (pApp->ndSky)
 			pApp->ndSky->setPosition(evt.source->getCamera()->getPosition());
-			
+
 
 		//  road lod for each viewport
 		if (mNumViewports > 1)
@@ -218,7 +218,7 @@ void SplitScr::preViewportUpdate(const RenderTargetViewportEvent& evt)
 			pApp->scn->road->mCamera = evt.source->getCamera();
 			pApp->scn->road->UpdLodVis(pSet->road_dist);
 		}
-		
+
 		//  Update rain/snow - depends on camera
 		//  todo: every player/viewport needs own weather particles  pr[carId]
 		if (pSet->particles)
@@ -236,18 +236,14 @@ void SplitScr::preViewportUpdate(const RenderTargetViewportEvent& evt)
 					if (c->ndNextChk)
 						c->ndNextChk->setVisible(i==carId);
 			}	}
-				
+
 			//  change FOV when boosting
-			if (pApp->pSet->boost_fov)
+			CAR* pCar = cm->pCar;
+			if (pCar)
 			{
-				CAR* pCar = cm->pCar;
-				if (pCar)
-				{
-					float fov = pSet->fov_min + (pSet->fov_max - pSet->fov_min) * pCar->dynamics.fBoostFov;
-					evt.source->getCamera()->setFOVy(Degree(0.5f*fov));
-				}
-			}else
-				evt.source->getCamera()->setFOVy(Degree(0.5f*pSet->fov_min));
+				float fov = pSet->fov_min + pSet->fov_boost * pCar->dynamics.fBoostFov;
+				evt.source->getCamera()->setFOVy(Degree(0.5f*fov));
+			}
 		}
 
 		//  update soft particle Depth Target
@@ -265,7 +261,7 @@ void SplitScr::preViewportUpdate(const RenderTargetViewportEvent& evt)
 	{	//  Gui viewport - hide stuff we don't want
 		pApp->hud->Update(-1, 1.f / mWindow->getStatistics().lastFPS);
 		pApp->hud->ShowVp(false);
-		
+
 		// no mouse in key capture mode
 		//if (pApp->bAssignKey)  hideMouse();
 	}

@@ -60,14 +60,14 @@ public:
 	float size_gauges, size_minimap, size_minipos, size_arrow, zoom_minimap;
 	int gauges_type, gauges_layout;
 	//  cam
-	float fov_min, fov_max, fov_smooth;
+	float fov_min, fov_boost, fov_smooth;
 	bool cam_loop_chng;  int cam_in_loop;
 	bool cam_bounce;  float cam_bnc_mul;
 	//  pacenotes
 	bool pace_show;  int pace_next;
 	float pace_dist, pace_size, pace_near, pace_alpha;
 	bool trail_show;
-	
+
 	eGraphType graphs_type;
 	int car_dbgtxtclr, car_dbgtxtcnt;
 	bool sounds_info;
@@ -103,7 +103,7 @@ public:
 	public:
 		std::string track;  bool track_user;
 		float trees;  // common
-		
+
 		bool trackreverse;
 		std::vector<std::string> car;  //[4] local players
 		std::vector<float> car_hue, car_sat, car_val, car_gloss, car_refl;  //[6] also for ghosts
@@ -117,12 +117,12 @@ public:
 
 		float boost_power, boost_max, boost_min, boost_per_km, boost_add_sec;
 		void BoostDefault();
-		
+
 		bool rpl_rec;
 		//  champ
 		int champ_num, chall_num;  // -1 none
 		bool champ_rev;
-		
+
 		float pre_time;  int start_order;
 
 		GameSet();
@@ -130,11 +130,11 @@ public:
 		gui;  // gui only config
 	//---------------
 
-	
+
 	//  misc
 	bool dev_keys, dev_no_prvs;  // dev
 	bool split_vertically;
-	
+
 	//  startup, other
 	bool bltDebug, bltLines, bltProfilerTxt, profilerTxt;
 	bool loadingbackground, show_welcome;
@@ -145,17 +145,17 @@ public:
 		vol_fl_splash,vol_fl_cont, vol_car_crash,vol_car_scrap;
 	bool snd_chk, snd_chkwr;  // play hud
 	bool snd_reverb;  std::string snd_device;
-	
+
 	//  sim freq (1/interval timestep)
 	float game_fq, blt_fq,  perf_speed;
 	int blt_iter, dyn_iter,  multi_thr, thread_sleep, gui_sleep;
-	
+
 	//  graphs vis
 	float tc_r, tc_xr;  // tire circles max
 	float te_yf, te_xfx, te_xfy, te_xf_pow;  // tire edit max
 	bool te_reference, te_common;
 
-	
+
 	//  effects
 	bool all_effects, bloom, blur, hdr;
 	float bloom_int, bloom_orig, blur_int;  // intensity
@@ -173,7 +173,7 @@ public:
 	bool rpl_ghostpar, rpl_ghostrewind, rpl_listghosts;
 	int rpl_listview, rpl_numViews;
 	float ghoHideDist, ghoHideDistTrk;  // ghost hide dist, when close
-	
+
 	//  network
 	std::string nickname, netGameName;
 	std::string master_server_address, connect_address;
@@ -182,7 +182,7 @@ public:
 	// not in gui
 	int net_local_plr;
 
-	
+
 //------------------------------------------
 	SETTINGS();
 

@@ -72,7 +72,7 @@ void CGui::InitGui()
 	app->mWndNetEnd = fWnd("WndNetEnd");  app->mWndNetEnd->setVisible(false);
 	app->mWndTweak = fWnd("WndTweak");    app->mWndTweak->setVisible(false);
 	app->mWndTweak->setPosition(0,40);
-	
+
 
 	//  for find defines
 	Btn btn, bchk;  Cmb cmb;
@@ -103,7 +103,7 @@ void CGui::InitGui()
 	if (pSet->iMenu >= MN_Tutorial && pSet->iMenu <= MN_Chall)
 		app->mWndTabsGame->setIndexSelected(TAB_Champs);
 
-	
+
 	//  replay
 	app->mWndRpl = fWnd("RplControlsWnd");
 	app->mWndRplTxt = fWnd("RplLessonTextWnd");
@@ -145,7 +145,7 @@ void CGui::InitGui()
 
 	///  Sliders
 	//------------------------------------------------------------------------
-	    
+
 	//  Hud view sizes  ----
 	sv= &svSizeGaug;	sv->Init("SizeGaug",	&pSet->size_gauges,    0.1f, 0.3f,  1.f, 3,4);  sv->DefaultF(0.19f);  Sev(HudSize);
 	sv= &svTypeGaug;	sv->Init("TypeGaug",	&pSet->gauges_type,    0, 5);  sv->DefaultI(5);  Sev(HudCreate);
@@ -271,20 +271,20 @@ void CGui::InitGui()
 	sv= &svCamBnc;		sv->Init("CamBnc",		&pSet->cam_bnc_mul, 0.f, 2.f);
 
 	sv= &svFov;			sv->Init("Fov",			&pSet->fov_min,   50.f, 180.f, 1.f, 1,4);  sv->DefaultF(90.f);
-	sv= &svFovMax;		sv->Init("FovMax",		&pSet->fov_max,   50.f, 180.f, 1.f, 1,4);  sv->DefaultF(120.f);
+	sv= &svFovBoost;	sv->Init("FovBoost",	&pSet->fov_boost,  0.f, 15.f, 1.f, 1,4);  sv->DefaultF(5.f);
 	sv= &svFovSm;		sv->Init("FovSm",		&pSet->fov_smooth, 0.f, 15.f, 1.5f);  sv->DefaultF(5.f);
-	
+
 	//  pacenotes
 	ck= &ckPaceShow;	ck->Init("ChkPace",		&pSet->pace_show);
 	sv= &svPaceNext;	sv->Init("PaceNext",	&pSet->pace_next,   2,8);  sv->DefaultI(4);
 	sv= &svPaceDist;	sv->Init("PaceDist",	&pSet->pace_dist,   20.f,1000.f, 2.f, 0,3);  sv->DefaultF(200.f);
-	
+
 	sv= &svPaceSize;	sv->Init("PaceSize",	&pSet->pace_size,   0.1f,2.f);  sv->DefaultF(1.f);  Sev(Upd_Pace);
 	sv= &svPaceNear;	sv->Init("PaceNear",	&pSet->pace_near,   0.1f,2.f);  sv->DefaultF(1.f);  Sev(Upd_Pace);
 	sv= &svPaceAlpha;	sv->Init("PaceAlpha",	&pSet->pace_alpha,  0.3f,1.f);  sv->DefaultF(1.f);  Sev(Upd_Pace);
 	//slUpd_Pace(0);
 	ck= &ckTrailShow;	ck->Init("ChkTrail",	&pSet->trail_show);  Cev(TrailShow);
-	
+
 
 	//  times, opp
 	ck= &ckTimes;		ck->Init("Times",       &pSet->show_times);      Cev(HudShow);
@@ -405,7 +405,6 @@ void CGui::InitGui()
 
 	//  effects
 	ck= &ckAllEffects;	ck->Init("AllEffects",	&pSet->all_effects);  Cev(AllEffects);
-	ck= &ckBoostFOV;	ck->Init("BoostFOV",	&pSet->boost_fov);
 
 	ck= &ckBloom;		ck->Init("Bloom",		&pSet->bloom);  Cev(EffUpd);
 	sv= &svBloomInt;	sv->Init("BloomInt",	&pSet->bloom_int);   sv->DefaultF(0.13f);  Sev(EffUpd);
@@ -512,7 +511,7 @@ void CGui::InitGui()
 	for (i=0; i < iCarSt; ++i)
 	{	txCarStTxt[i] = fTxt("cst"+toStr(i));
 		txCarStVals[i] = fTxt("csv"+toStr(i));
-		barCarSt[i] = fImg("cb"+toStr(i));  
+		barCarSt[i] = fImg("cb"+toStr(i));
 	}
 	txCarSpeed = fTxt("CarSpeed");  txCarType = fTxt("CarType");  txCarYear = fTxt("CarYear");
 	txCarRating = fTxt("CarRating");  txCarDiff = fTxt("CarDiff");  txCarWidth = fTxt("CarWidth");
@@ -613,7 +612,7 @@ void CGui::InitGui()
 		edCar[i] = fEd("EdCar"+toStr(i));
 	edPerfTest = fEd("TweakPerfTest");
 	tabEdCar = fTab("TabEdCar");  Tev(tabEdCar, CarEdChng);  tabEdCar->setIndexSelected(pSet->car_ed_tab);
-	
+
 	tabTweak = fTab("TabTweak");  Tev(tabTweak, TweakChng);  tabTweak->setIndexSelected(pSet->tweak_tab);
 	txtTweakPath = fTxt("TweakPath");
 	Btn("TweakCarSave", btnTweakCarSave);
