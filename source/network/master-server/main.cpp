@@ -6,20 +6,22 @@
 #include <string>
 #include <map>
 #include <ctime>
+#include <fstream>
 #include <boost/algorithm/string/replace.hpp>
 #include "../enet-wrapper.hpp"
 #include "../protocol.hpp"
 #ifdef __linux
-#include <unistd.h> // for daemon()
+#include <unistd.h>  // for daemon()
 #endif
 
 #define VERSIONSTRING "0.7.1"
 
+//  How many seconds without update until a game becomes zombie
 #define DEFAULT_ZOMBIE_TIMEOUT 5
-unsigned g_zombieTimeout = DEFAULT_ZOMBIE_TIMEOUT;  // How many seconds without update until a game becomes zombie
+unsigned g_zombieTimeout = DEFAULT_ZOMBIE_TIMEOUT;
+
 
 // TODO: Linux syslog support for daemon
-
 enum LogLevel
 {
 	ERROR   = 0,
@@ -44,20 +46,20 @@ struct Stats
 g_stats;
 
 
-/// This prints the current time, but only if enough seconds has passed since last time
+///  This prints the current time, but only if enough seconds has passed since last time
 void handleTimePrinting(int silencetime = 60)
 {
 	static uint32_t logSilenceTimer = 0;
 	if ((uint32_t)std::time(NULL) > logSilenceTimer + silencetime)
 	{
 		time_t t = std::time(NULL);
-		std::cout << "Time: " << ctime(&t); // endl comes from ctime()
+		std::cout << "Time: " << ctime(&t);  // endl comes from ctime()
 	}
 	logSilenceTimer = (uint32_t)std::time(NULL);
 }
 
 
-/// Use this function as std::cout, giving it the message's log level as parameter
+///  Use this function as std::cout, giving it the message's log level as parameter
 std::ostream& out(LogLevel level)
 {
 	if (level == VERBOSE)
@@ -67,60 +69,61 @@ std::ostream& out(LogLevel level)
 	if (g_loglevel >= level)
 		return std::cout;
 	
-	static std::ostringstream oss; // Sink for discarded messages
+	static std::ostringstream oss;  // Sink for discarded messages
 	oss.clear();
 	return oss;
 }
 
 
-/// Class for managing the available games
+///  Class for managing the available games
+//--------------------------------------------------------------------------------
 class GameListManager
 {
 public:
 
-	/// Constructor.
+	///  Constructor
 	GameListManager()
 		: m_mutex(), m_next_id(1)
 	{
 	}
 
-	/// Update or announce a game.
-	/// @param game the game's information
+	///  Update or announce a game.
+	///  @param game the game's information
 	void updateGame(protocol::GameInfo& game)
 	{
 		if (game.id == 0)
 		{
-			// Assign ID
+			//  Assign ID
 			game.id = m_next_id;
 			++m_next_id;
 			g_stats.gamesCreated++;
 		}
-		// Update timestamp
+		//  Update timestamp
 		game.timestamp = (uint32_t)std::time(NULL);
-		// Save
+		//  Save
 		boost::mutex::scoped_lock lock(m_mutex);
 		m_games[game.id] = game;
 		g_stats.gamesWaiting = m_games.size();
 	}
 
-	/// Gets the games.
-	/// @return a packet containing the games in a serialized form
+	///  Gets the games.
+	///  @return a packet containing the games in a serialized form
 	const protocol::GameList getGames() const
 	{
 		return m_games;
 	}
 
-	/// Removes outdated games from the list.
+	///  Removes outdated games from the list.
 	void purgeGames()
 	{
 		int removecount = 0;
 		{
 			boost::mutex::scoped_lock lock(m_mutex);
 			protocol::GameList::iterator it = m_games.begin();
-			// Loop through the games
+			//  Loop through the games
 			while (it != m_games.end())
 			{
-				// Check condition
+				//  Check condition
 				if ((uint32_t)std::time(NULL) > it->second.timestamp + g_zombieTimeout)
 				{
 					out(VERBOSE) << "Zombie game: \"" << it->second.name << "\"" << std::endl;
@@ -142,7 +145,8 @@ private:
 };
 
 
-/// Network listener for handling the traffic
+///  Network listener for handling the traffic
+//--------------------------------------------------------------------------------
 class Server: public net::NetworkListener
 {
 public:
@@ -231,6 +235,7 @@ private:
 };
 
 
+//--------------------------------------------------------------------------------
 class StatusPage
 {
 public:
@@ -260,13 +265,14 @@ public:
 
 private:
 	enum
-	{ FORMAT_PLAIN, FORMAT_HTML, NUM_FORMATS }
+	{	FORMAT_PLAIN, FORMAT_HTML, NUM_FORMATS  }
 	m_format;
 	std::string m_fileName;
 	static const std::string m_templates[];
 };
 
 
+//--------------------------------------------------------------------------------
 const std::string StatusPage::m_templates[] =
 {
 	"Stunt Rally Master Server Status Page\n"
@@ -301,7 +307,8 @@ const std::string StatusPage::m_templates[] =
 };
 
 
-/// Program entry point
+///  Program entry point
+//--------------------------------------------------------------------------------
 int main(int argc, char** argv)
 {
 	std::cout << "Stunt Rally Master Server - version " << VERSIONSTRING << std::endl;
@@ -309,13 +316,13 @@ int main(int argc, char** argv)
 	bool daemonize = false;
 	std::string statusFile;
 
-	// Command line handling
+	//  Command line handling
 	for (int i = 1; i < argc; ++i)
 	{
 		std::string arg(argv[i]);
 		if (arg == "--version" || arg == "-v")
 		{
-			return 0; // Already printed version
+			return 0;  // Already printed version
 		}
 		else if (arg == "--help" || arg == "-h")
 		{
@@ -334,8 +341,7 @@ int main(int argc, char** argv)
 				<< "  -p, --port <portnumber>     listen given port for connections" << std::endl
 				<< "                              default: " << protocol::DEFAULT_PORT << std::endl
 				<< "  -s, --status <file>         periodically dump status to given file" << std::endl
-				<< "                              uses HTML if file name has .html extension" << std::endl
-				;
+				<< "                              uses HTML if file name has .html extension" << std::endl;
 			return 0;
 		}
 		else if (arg == "--verbose" || arg == "-V")
@@ -374,11 +380,11 @@ int main(int argc, char** argv)
 	}
 
 #ifdef __linux
-	// Daemonization
+	//  Daemonization
 	if (daemonize)
 	{
 		if (daemon(1, 0))
-		{	// keep working dir, close streams
+		{	//  keep working dir, close streams
 			out(ERROR) << "Daemonization failed" << std::endl;
 			return EXIT_FAILURE;
 		}
@@ -396,13 +402,13 @@ int main(int argc, char** argv)
 	try
 	{
 		GameListManager games;
-		Server server(games, port); // Launches a thread for listening the traffic
+		Server server(games, port);  // Launches a thread for listening the traffic
 
 		while (true)
 		{
 			status.write(g_stats);
 
-			// Periodically remove zombie games
+			//  Periodically remove zombie games
 			boost::this_thread::sleep(boost::posix_time::milliseconds(g_zombieTimeout * 1000));
 			games.purgeGames();
 		}
