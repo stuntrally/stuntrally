@@ -728,11 +728,13 @@ void CGui::InitGui()
 	valTrkNet = fTxt("TrackText");
 
 	//  preview images
-	gcom->imgPrv[1] = fImg("TrackImg2");   gcom->imgPrv[1]->setImageTexture("PrvView");
-	gcom->imgTer[1] = fImg("TrkTerImg2");  gcom->imgTer[1]->setImageTexture("PrvTer");
-	gcom->imgMini[1] = fImg("TrackMap2");  gcom->imgMini[1]->setImageTexture("PrvRoad");
-	gcom->initMiniPos(1);
-
+	for (i=1; i < 3; ++i)
+	{	string s = toStr(i+1);
+		gcom->imgPrv[i] = fImg("TrackImg"+s);   gcom->imgPrv[i]->setImageTexture("PrvView");
+		gcom->imgTer[i] = fImg("TrkTerImg"+s);  gcom->imgTer[i]->setImageTexture("PrvTer");
+		gcom->imgMini[i] = fImg("TrackMap"+s);  gcom->imgMini[i]->setImageTexture("PrvRoad");
+		gcom->initMiniPos(i);
+	}
 	//  track stats text
 	int st = gcom->StTrk;
 	for (i=0; i < st; ++i)   gcom->stTrk[1][i] = fTxt("2st"+toStr(i));

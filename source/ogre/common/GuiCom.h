@@ -113,7 +113,7 @@ public:
 	Ed trkDesc[2], trkAdvice[2];  // description, advice
 	bool needSort(Mli2 li);
 
-	Img imgPrv[2], imgMini[2], imgTer[2];  // view,  mini: road, terrain
+	Img imgPrv[3], imgMini[3], imgTer[3];  // view,  mini: road, terrain
 	Img imgTrkIco1,imgTrkIco2, imgMiniPos[2];
 	MyGUI::RotatingSkin* imgMiniRot[2];
 

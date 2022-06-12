@@ -46,10 +46,13 @@ CGuiCom::CGuiCom(App* app1)
 	pathTrk[1] = PATHMANAGER::TracksUser() + "/";
 	
 	int t,i;
+	for (t=0; t < 3; ++t)
+	{	
+		imgPrv[t] = 0;  imgMini[t] = 0;  imgTer[t] = 0;
+	}
 	for (t=0; t < 2; ++t)
 	{	
 		trkDesc[t] = 0;  trkAdvice[t] = 0;
-		imgPrv[t] = 0;  imgMini[t] = 0;  imgTer[t] = 0;
 		imgMiniPos[t] = 0;  imgMiniRot[t] = 0;
 
 		for (i=0; i < StTrk; ++i)  stTrk[t][i] = 0;
@@ -80,7 +83,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnN["Jng"] = "Jungle";        scnN["JngD"]= "JungleDark";
 	scnN["Des"] = "Desert";        scnN["DesM"]= "DesertMud";
 	scnN["Sav"] = "Savanna";       scnN["SavD"]= "SavannaDry";
-	scnN["Wnt"] = "Winter";        scnN["Wet"]= "WinterWet";
+	scnN["Wnt"] = "Winter";        scnN["Wet"] = "WinterWet";
 	scnN["For"] = "Forest";        scnN["ForM"]= "ForestMntn";
 	scnN["ForY"]= "ForestYellow";  scnN["Fin"] = "Finland";
 	scnN["Isl"] = "Island";        scnN["IslD"]= "IslandDark";
