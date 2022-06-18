@@ -432,6 +432,14 @@ void BaseApp::setupResources()
 	gpm.createProgram("Ogre/ShadowBlendVP", "OgreInternal", "unified", GPT_VERTEX_PROGRAM);
 	gpm.createProgram("Ogre/ShadowBlendFP", "OgreInternal", "unified", GPT_FRAGMENT_PROGRAM);
 #endif
+#if defined(OGRE_MIN_VERSION) && OGRE_MIN_VERSION(13, 3, 0)
+	auto& matm = MaterialManager::getSingleton();
+	for(auto name : {"Ogre/Debug/ShadowVolumes", "Ogre/StencilShadowVolumes", "Ogre/StencilShadowModulationPass", "Ogre/TextureShadowCaster"})
+	{
+		auto mat = matm.create(name, "OgreInternal");
+		mat->createTechnique()->createPass()->setVertexProgram("Ogre/ShadowBlendVP");
+	}
+#endif
 }
 
 void BaseApp::createResourceListener()
