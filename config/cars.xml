@@ -16,7 +16,7 @@
 	<car id="OT"  o="4" m="Turtle"      v="2.1" r="1" w="3" d="1" s="0.4" y="1965" t="Slow"      e="0.66" n="0.67"  a="irokrhus" />
  
 	<car id="FR4" o="4" m="Elephant"    v="2.1" r="1" w="3" d="2" s="1.8" y="1986" t="Terrain"   e="0.86" n="0.90"  a="computergeekman" />
-	<car id="HR"  o="4" m="Aligator"    v="2.1" r="1" w="3" d="2" s="2.4" y="1996" t="Terrain"   e="0.88" n="0.93"  a="thiagohenrinrique" />
+	<car id="HR"  o="4" m="Alligator"   v="2.1" r="1" w="3" d="2" s="2.4" y="1996" t="Terrain"   e="0.88" n="0.93"  a="thiagohenrinrique" />
 	<car id="LK4" o="4" m="Bison"       v="2.0" r="1" w="3" d="2" s="2.7" y="2008" t="Terrain"   e="0.89" n="0.94"  a="clarabox" />
  
     <car id="U8"  o="8" m="Caterpillar" v="2.7" r="2" w="3" d="4" s="3.0" y="2123" t="Slow"      e="0.80" n="0.885" a="stundif" />

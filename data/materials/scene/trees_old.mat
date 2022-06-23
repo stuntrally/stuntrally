@@ -1,5 +1,5 @@
 
-// Jungle trees  (old stuff)
+// Jungle trees  (oldest, todo: replace ..)
 
 material tree.07.branch1.mat/ALPHA/TEX/tree.07.png/VertCol/TWOSIDE
 {
@@ -192,33 +192,3 @@ material 3D-Diggers/shroom2
 	diffuseMap shroom2.png
 	normalMap shroom2_norm.png
 }
-
-// rocks
-material rock.05.mat/SOLID/TEX/rockW05.png
-{
-    parent base
-	diffuseMap rock.05w.jpg
-	normalMap rock.05_norm.png
-	terrain_light_map true
-	specular 0.5 0.5 0.5 32
-}
-
-material rock.07.mat/SOLID/TEX/rockW05.png
-{
-	parent rock.05.mat/SOLID/TEX/rockW05.png
-}
-
-material rock.05.mat/SOLID/TEX/rock.05.png
-{
-    parent base
-	diffuseMap rock.05.jpg
-	normalMap rock.05_norm.png
-	terrain_light_map true
-	specular 0.5 0.5 0.5 32
-}
-
-material rock.07.mat/SOLID/TEX/rock.05.png
-{
-	parent rock.05.mat/SOLID/TEX/rock.05.png
-}
-

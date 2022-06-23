@@ -381,6 +381,7 @@
 <v sc="X"  p="gum_tree"             sa="1.45" sb="2.22"  wx="0.30" wy="0.004"  ab="20.48" rd="1" fd="0.0" z="AX" />
 
 <v sc="S"  p="jungle_tree"          sa="1.61" sb="2.05"  wx="0.40" wy="0.002"  ab="29.26" rd="1" fd="0.0" z="JOSV" />
+<v sc="S"  p="jungle_tall"          sa="1.61" sb="2.05"  wx="0.40" wy="0.002"  ab="29.26" rd="1" fd="0.0" z="JOSV" />
 
 <v sc="D"  p="palm"                 sa="1.78" sb="2.74"  wx="0.60" wy="0.010"  ab="15.07" rd="1" fd="0.0" z="DGIJV" />
 <v sc="D"  p="palm2"                sa="2.34" sb="3.31"  wx="0.30" wy="0.115"  ab="30.03" rd="1" fd="0.0" z="DGIJV" />
@@ -410,13 +411,7 @@
 <v sc="J"  p="plant_tropical"       sa="1.51" sb="1.89"  wx="0.06" wy="0.015"  ab="27.49" rd="1" fd="0.5" z="IJO" />
 
 
-<v sc="J"  p="rock.05"              sa="0.15" sb="0.22"  wx="0.00" wy="0.000"  ab="28.37" rd="1" fd="2.0" z="ACDFIJMST" />
-<v sc="W"  p="rock.05w"             sa="0.03" sb="0.15"  wx="0.00" wy="0.000"  ab="40.00" rd="1" fd="2.0" z="W" />
-
-<v sc="S"  p="rock.07"              sa="0.03" sb="0.21"  wx="0.00" wy="0.000"  ab="50.00" rd="1" fd="2.0" z="ACDFIJMOS" />
-<v sc="W"  p="rock.07w"             sa="0.04" sb="0.14"  wx="0.00" wy="0.000"  ab="44.88" rd="1" fd="2.0" z="W" />
 <v sc="M"  p="rock"                 sa="0.74" sb="1.10"  wx="0.00" wy="0.000"  ab="34.34" rd="1" fd="2.0" z="CEFMORTVWX" />
-
 <v sc="F"  p="rock_B01"             sa="0.75" sb="1.26"  wx="0.00" wy="0.000"  ab="25.14" rd="1" fd="2.0" z="F" />
 <v sc="F"  p="rock_B02"             sa="0.51" sb="1.07"  wx="0.00" wy="0.000"  ab="19.70" rd="1" fd="2.0" z="F" />
 <v sc="E"  p="rock_B03"             sa="0.71" sb="1.27"  wx="0.00" wy="0.000"  ab="37.74" rd="1" fd="2.0" z="E" />
@@ -458,6 +453,49 @@
 
 <v sc="W"  p="rock_n5v-W"           sa="0.82" sb="1.34"  wx="0.00" wy="0.000"  ab="50.00" rd="1" fd="2.0" z="W" />
 <v sc="X"  p="rock_n5v-W"           sa="1.05" sb="1.43"  wx="0.00" wy="0.000"  ab="15.33" rd="1" fd="2.0" z="X" />
+
+
+<v sc="F"  p="rock01brown1up"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
+<v sc="F"  p="rock02brown2flat"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
+<v sc="C"  p="rock03can1flat"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="C" />
+<v sc="C"  p="rock04can2flat"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="C" />
+<v sc="C"  p="rock05can3round"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="C" />
+<v sc="W"  p="rock06white1flat"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="W" />
+<v sc="W"  p="rock07white2rnd"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="W" />
+<v sc="W"  p="rock08white3tall"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="W" />
+<v sc="W"  p="rock09tallHarshWh"	sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="W" />
+<v sc="A"  p="rock10red1round"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="A" />
+<v sc="A"  p="rock11red2"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="A" />
+<v sc="C"  p="rock12orange"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="C" />
+<v sc="C"  p="rock13orange2"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="C" />
+<v sc="C"  p="rock14tall1cgr"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="C" />
+<v sc="F"  p="rock15ironSpecks"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
+<v sc="J"  p="rock16black1"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="J" />
+<v sc="J"  p="rock17black2wh"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="J" />
+<v sc="J"  p="rock18black3"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="J" />
+<v sc="F"  p="rock19harshWhite"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
+<v sc="F"  p="rock20liGrayTall"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
+<v sc="F"  p="rock21triEdgeSpeck"	sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
+<v sc="J"  p="rock22jng1Harsh"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="J" />
+<v sc="Z"  p="rock23dark1block"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="Z" />
+<v sc="F"  p="rock24triangle"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
+<v sc="J"  p="rock25dark2Harsh2"	sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="J" />
+<v sc="F"  p="rock26grayBlue"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
+<v sc="W"  p="rock27winter"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="W" />
+<v sc="W"  p="rock28grayWhite"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="W" />
+<v sc="J"  p="rock30grayGreen"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="J" />
+<v sc="A"  p="rock32red2block"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="A" />
+<v sc="F"  p="rock33grayBlue2"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
+<v sc="F"  p="rock34brGr2block"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
+<v sc="A"  p="rock35red1edgy"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="A" />
+<v sc="F"  p="rock37brGr1tall"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
+<v sc="F"  p="rock39brGr3edgy"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
+<v sc="A"  p="rock40red3flat"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="A" />
+<v sc="S"  p="rock41grayWh"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="S" />
+<v sc="W"  p="rock43winter"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="W" />
+<v sc="A"  p="rock44red4rndWh"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="A" />
+<v sc="S"  p="rock45stains"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="S" />
+<v sc="S"  p="rock46grayWhite2"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="S" />
 
 
 <v sc="F"  p="shroom1_2"            sa="0.15" sb="0.25"  wx="0.00" wy="0.000"  ab="21.14" rd="1" fd="0.0" z="F" />
