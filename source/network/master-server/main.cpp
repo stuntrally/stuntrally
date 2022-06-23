@@ -3,6 +3,7 @@
 // See License.txt for more info on licensing.
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <map>
 #include <ctime>
