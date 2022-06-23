@@ -550,14 +550,14 @@ material rock26grayBlue
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock27winter
-{
-    parent base
-	diffuseMap rock27.jpg
-	normalMap rock27_norm.jpg
-	terrain_light_map true
-	specular 0.3 0.3 0.3 32
-}
+// material rock27winter
+// {
+//     parent base
+// 	diffuseMap rock27.jpg
+// 	normalMap rock27_norm.jpg
+// 	terrain_light_map true
+// 	specular 0.3 0.3 0.3 32
+// }
 material rock28grayWhite
 {
     parent base
@@ -638,14 +638,14 @@ material rock41grayWh
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock43winter
-{
-    parent base
-	diffuseMap rock43.jpg
-	normalMap rock43_norm.jpg
-	terrain_light_map true
-	specular 0.3 0.3 0.3 32
-}
+// material rock43winter
+// {
+//     parent base
+// 	diffuseMap rock43.jpg
+// 	normalMap rock43_norm.jpg
+// 	terrain_light_map true
+// 	specular 0.3 0.3 0.3 32
+// }
 material rock44red4rndWh
 {
     parent base
@@ -654,14 +654,14 @@ material rock44red4rndWh
 	terrain_light_map true
 	specular 0.3 0.3 0.3 32
 }
-material rock45stains
-{
-    parent base
-	diffuseMap rock45.jpg
-	normalMap rock45_norm.jpg
-	terrain_light_map true
-	specular 0.3 0.3 0.3 32
-}
+// material rock45stains
+// {
+//     parent base
+// 	diffuseMap rock45.jpg
+// 	normalMap rock45_norm.jpg
+// 	terrain_light_map true
+// 	specular 0.3 0.3 0.3 32
+// }
 material rock46grayWhite2
 {
     parent base

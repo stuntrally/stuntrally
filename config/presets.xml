@@ -3,6 +3,33 @@
 <!-- skies -->
 <!-- m - material name from sky.mat  c - color (for list)  y - sun yaw  p - pitch -->
 
+<s m="001_empty_blue"       c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="002_clouded_gray"     c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="003_clouded_white"    c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="004_clouds_dark"      c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="004_clouds_gray"      c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="005_clouds_blue"      c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="006_clouds_half"      c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="007_clouded"          c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="008_clouded_grayblue" c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="008_clouded_gray"     c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="009_clouded_half"     c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="013_empty_pink"       c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="013_empty_sunset"     c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="014_clouded_dark"     c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="014_clouded_gray"     c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="014_clouded_halfgray" c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="015_clouds_blue"      c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="016_foggy_dark"       c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="016_foggy_graydark"   c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="016_foggy_gray"       c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="016_foggy_white"      c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="016_foggy_yellow"     c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="019_empty_blue"       c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="019_strange_green"    c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="020_empty_orange"     c="#C0D8F8"   p="84"  y=" 13"  />
+<s m="100_kloppenheim_06"   c="#C0D8F8"   p="84"  y=" 13"  />
+
 <s m="sky/day_blue"        c="#C0D8F8"   p="84"  y=" 13"  />
 <s m="sky/day_blue2"       c="#D0E0F8"   p="60"  y="-40"  />
 <s m="sky/day_clouds"      c="#B0C0D0"   p="33"  y="-40"  />
@@ -481,7 +508,7 @@
 <v sc="F"  p="rock24triangle"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
 <v sc="J"  p="rock25dark2Harsh2"	sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="J" />
 <v sc="F"  p="rock26grayBlue"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
-<v sc="W"  p="rock27winter"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="W" />
+<!-- <v sc="W"  p="rock27winter"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="W" /> -->
 <v sc="W"  p="rock28grayWhite"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="W" />
 <v sc="J"  p="rock30grayGreen"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="J" />
 <v sc="A"  p="rock32red2block"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="A" />
@@ -492,9 +519,9 @@
 <v sc="F"  p="rock39brGr3edgy"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="F" />
 <v sc="A"  p="rock40red3flat"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="A" />
 <v sc="S"  p="rock41grayWh"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="S" />
-<v sc="W"  p="rock43winter"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="W" />
+<!-- <v sc="W"  p="rock43winter"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="W" /> -->
 <v sc="A"  p="rock44red4rndWh"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="A" />
-<v sc="S"  p="rock45stains"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="S" />
+<!-- <v sc="S"  p="rock45stains"			sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="S" /> -->
 <v sc="S"  p="rock46grayWhite2"		sa="0.70" sb="1.20"  wx="0.00" wy="0.000"  ab="34.34" rd="2" fd="1.0" z="S" />
 
 
