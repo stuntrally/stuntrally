@@ -1,17 +1,12 @@
 #--  transl
-locale/translation*
+#locale/translation/
+*.po
 #.tx
-#/*
 tx
 *.pot
 sr.log
-#*.xml
-#*.layout
-#core_lang*
-data/gui/core_language_*_tag.xml
-!*/core_language_en_tag.xml
-#source/ogre/BaseApp_Create.cpp
-#source/editor/BaseApp_Create.cpp
+#data/gui/core_language_*_tag.xml
+#!*/core_language_en_tag.xml
 
 #--  build
 *build
@@ -26,6 +21,7 @@ CMakeLists.txt.user*
 *.dll
 *.pdb
 *.exe
+*.lnk
 
 #-- vs crap
 .cache
@@ -33,19 +29,21 @@ CMakeLists.txt.user*
 *.suo
 *.user
 
-*.lnk
 #-- binaries
 StuntRally*.*
 SR?Editor*.*
-stuntrally*
+#stuntrally*
 sr-editor*
 
 #--  sr data
 data/ghosts/original
 data/tracks
-data/car*/
-#data/skies
-#data/objects*
+data/cars/
+data/skies
+data/objects*
+#data/trees
+#data/rocks
+#data/materials/
 #data
 #.vscode
 #tracks.ini
