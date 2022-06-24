@@ -1,18 +1,20 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
 	<!--  Languages  not translated  -->
-	<Tag name="LANG_EN">English</Tag>
-	<Tag name="LANG_DE">Deutsch</Tag>
-	<Tag name="LANG_FI">Suomi</Tag>
-	<Tag name="LANG_PL">Polski</Tag>
-	<Tag name="LANG_RO">Română</Tag>
-	<Tag name="LANG_FR">Français</Tag>
-	<Tag name="LANG_RU">Русский</Tag>
-	<Tag name="LANG_PT">Português</Tag>
-	<Tag name="LANG_IT">Italiano</Tag>
-	<Tag name="LANG_SK">Slovenský</Tag>
-	<Tag name="LANG_ES">Español</Tag>
-	<Tag name="LANG_CS">Čeština</Tag>
+	<Tag name="LANG_en">English</Tag>
+	<Tag name="LANG_de">Deutsch</Tag>
+	<Tag name="LANG_fi">Suomi</Tag>
+	<Tag name="LANG_pl">Polski</Tag>
+	<Tag name="LANG_ro">Română</Tag>
+	<Tag name="LANG_fr">Français</Tag>
+	<Tag name="LANG_ru">Русский</Tag>
+	<Tag name="LANG_pt_BR">Português (Brasil)</Tag>
+	<Tag name="LANG_it">Italiano</Tag>
+	<Tag name="LANG_sk">Slovenský</Tag>
+	<Tag name="LANG_es_AR">Español (Argentina)</Tag>
+	<Tag name="LANG_cs">Čeština</Tag>
+	<Tag name="LANG_nl_NL">Nederlands</Tag>
+	<Tag name="LANG_hu_HU">Magyar</Tag>
 
 	<!--  General  -->
 	<Tag name="Language">Language</Tag>
@@ -1594,7 +1596,7 @@
 	<!--  Game  User Path  -->
 	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
 	<!--  MAIN  Game  Quick Help  (@ is used for new line)  -->
-	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@If you have a game controller see:@https://stuntrally.tuxfamily.org/wiki/doku.php?id=running#controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@https://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.@</Tag>
+	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@@If you have a game controller see:@https://stuntrally.tuxfamily.org/wiki/doku.php?id=running##controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@https://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.</Tag>
 	<!--  TIP  Slider  -->
 	<Tag name="TipSliderReset">RMB on slider - reset to default value.</Tag>
 
