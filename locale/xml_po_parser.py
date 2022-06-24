@@ -23,7 +23,7 @@ msgstr \"\"\n\
 \"Content-Type: text/plain; charset=CHARSET\"\n\
 \"Content-Transfer-Encoding: 8bit\"\n"
 
-ignore_tags = ["GameVersion", "PageURL", "LANG_EN", "LANG_DE", "LANG_FI", "LANG_PL", "LANG_RO", "LANG_FR", "LANG_RU", "LANG_PT", "LANG_IT", "LANG_SK" ]
+ignore_tags = ["GameVersion", "PageURL"]
 
 def usage():
 	print("Usage: " + sys.argv[0] + " someFile.xml someFile.pot")
@@ -52,8 +52,8 @@ if file1.endswith(".xml") and file2.endswith(".pot"):
 		if line.strip().startswith("<Tag name="):
 			msgid = line.split("=\"")[1].split("\"")[0]
 			msgstr = line.split(">")[1].split("<")[0]
-			# ignore
-			if msgid not in ignore_tags:
+			# ignored
+			if not(msgid[0:5] == 'LANG_' or msgid in ignore_tags):
 				msgs[msgid] = msgstr
 			
 	# write pot

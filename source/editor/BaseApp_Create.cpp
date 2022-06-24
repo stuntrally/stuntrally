@@ -481,7 +481,7 @@ void BaseApp::baseInitGui()
 	
 	if (!boost::filesystem::exists(PATHMANAGER::Data() + "/gui/core_language_" + pSet->language + "_tag.xml"))
 		pSet->language = "en";  // use en if not found
-		
+	
 	LanguageManager::getInstance().setCurrentLanguage(pSet->language);
 	//------------------------
 

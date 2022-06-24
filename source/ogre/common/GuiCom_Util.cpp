@@ -348,18 +348,27 @@ void CGuiCom::boundedMove(Widget* moving, const IntPoint& point)
 void CGuiCom::GuiInitLang()
 {
 	if (languages.empty())
-	{	languages["en"] = TR("#{LANG_EN}");  languages["de"] = TR("#{LANG_DE}");
-		languages["fr"] = TR("#{LANG_FR}");  languages["pl"] = TR("#{LANG_PL}");
-		languages["ru"] = TR("#{LANG_RU}");  languages["fi"] = TR("#{LANG_FI}");
-		languages["pt"] = TR("#{LANG_PT}");  languages["ro"] = TR("#{LANG_RO}");
-		languages["it"] = TR("#{LANG_IT}");  languages["sk"] = TR("#{LANG_SK}");
-		languages["es"] = TR("#{LANG_ES}");  languages["cs"] = TR("#{LANG_CS}");
+	{	//  add new in core_language.xml too
+		auto AddLang = [&](string s){  languages[s] = TR("#{LANG_"+s+"}");  };
+		AddLang("en");
+		AddLang("de");
+		AddLang("fr");
+		AddLang("pl");
+		AddLang("ru");
+		AddLang("fi");
+		AddLang("pt_BR");
+		AddLang("it");
+		AddLang("ro");
+		AddLang("sk");
+		AddLang("cs");
+		AddLang("es_AR");
+		AddLang("nl_NL");
+		AddLang("hu_HU");
 	}
 	ComboBoxPtr combo = fCmb("Lang");
 	if (!combo)  return;
 	combo->eventComboChangePosition += newDelegate(this, &CGuiCom::comboLanguage);
-	for (auto it = languages.cbegin();
-		it != languages.end(); ++it)
+	for (auto it = languages.cbegin(); it != languages.end(); ++it)
 	{
 		combo->addItem(it->second);
 		if (it->first == pSet->language)
@@ -372,8 +381,7 @@ void CGuiCom::comboLanguage(ComboBox* wp, size_t val)
 	if (val == ITEM_NONE)  return;
 	UString sel = wp->getItemNameAt(val);
 	
-	for (auto it = languages.cbegin();
-		it != languages.end(); ++it)
+	for (auto it = languages.cbegin(); it != languages.end(); ++it)
 	{
 		if (it->second == sel)
 			pSet->language = it->first;
