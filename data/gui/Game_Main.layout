@@ -165,8 +165,8 @@
 		</Widget>
 		<Widget type="Button" skin="Button" position="108 240 404 50" align="Left" name="BtnRace3">
 			<Property key="Caption" value="#{Challenge}"/>
-			<Property key="Colour" value="0.4 1 0.8"/>
-			<Property key="TextColour" value="0.4 1 0.8"/>
+			<Property key="Colour" value="0.8 0.8 1"/>
+			<Property key="TextColour" value="0.8 0.8 1"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.big"/>
 		</Widget>

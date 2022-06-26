@@ -518,7 +518,9 @@ void CGui::toggleGui(bool toggle)
 	bool game = mnu == MN_Single,   champ = mnu == MN_Champ,
 		tutor = mnu == MN_Tutorial, chall = mnu == MN_Chall,
 		chAny = champ || tutor || chall, gc = game || chAny;
-	UString sCh = chall ? TR("#90FFD0#{Challenge}") : (tutor ? TR("#FFC020#{Tutorial}") : TR("#80C0FF#{Championship}"));
+	
+	UString sCh = tutor ? TR("#FFC020#{Tutorial}") :
+		champ ? TR("#B0FFB0#{Championship}") : TR("#C0C0FF#{Challenge}");
 
 	UpdChampTabVis();
 	
@@ -526,8 +528,16 @@ void CGui::toggleGui(bool toggle)
 	bool vis = notMain && gc;
 	app->mWndGame->setVisible(vis);
 	if (vis)
-	{
+	{	const static float clrs[4][3] = {
+			{0.9,0.9,0.6},  // single
+			{1.0,0.6,0.3},  // tutor
+			{0.6,1.0,0.6},  // champ
+			{0.6,0.6,1.0},  // chall
+		};
+		const int c = tutor ? 1 : champ ? 2 : chall ? 3 : 0;
+		app->mWndGame->setColour(Colour(clrs[c][0], clrs[c][1], clrs[c][2]));
 		app->mWndGame->setCaption(chAny ? sCh : TR("#{SingleRace}"));
+		
 		TabItem* t = app->mWndTabsGame->getItemAt(TAB_Champs);
 		t->setCaption(sCh);
 	}
@@ -536,7 +546,9 @@ void CGui::toggleGui(bool toggle)
 		Tab t = app->mWndTabsGame;
 		size_t id = t->getIndexSelected();
 		t->setButtonWidthAt(TAB_Track, chAny ? 1 :-1);  if (id == TAB_Track && chAny)  t->setIndexSelected(TAB_Champs);
+		t->setButtonWidthAt(TAB_Split, chAny ? 1 :-1);  if (id == TAB_Split && chAny)  t->setIndexSelected(TAB_Champs);
 		t->setButtonWidthAt(TAB_Multi, chAny ? 1 :-1);  if (id == TAB_Multi && chAny)  t->setIndexSelected(TAB_Champs);
+		
 		t->setButtonWidthAt(TAB_Champs,chAny ?-1 : 1);  if (id == TAB_Champs && !chAny)  t->setIndexSelected(TAB_Track);
 		t->setButtonWidthAt(TAB_Stages,chAny ?-1 : 1);  if (id == TAB_Stages && !chAny)  t->setIndexSelected(TAB_Track);
 		t->setButtonWidthAt(TAB_Stage, chAny ?-1 : 1);  if (id == TAB_Stage  && !chAny)  t->setIndexSelected(TAB_Track);

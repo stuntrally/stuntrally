@@ -129,8 +129,8 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(Q):	gui->GuiShortcut(MN_Single, TAB_Track); return true;  // Q Track
 			case key(C):	gui->GuiShortcut(MN_Single, TAB_Car);	return true;  // C Car
 
-			case key(W):	gui->GuiShortcut(MN_Single, TAB_Setup); return true;  // W Car Setup
-			case key(G):	gui->GuiShortcut(MN_Single, TAB_Game);	return true;  // G Game Setup
+			case key(W):	gui->GuiShortcut(MN_Single, TAB_Setup); return true;  // W Setup
+			case key(G):	gui->GuiShortcut(MN_Single, TAB_Split);	return true;  // G SplitScreen
 
 			case key(J):	gui->GuiShortcut(MN_Tutorial, TAB_Champs);	return true;  // J Tutorials
 			case key(H):	gui->GuiShortcut(MN_Champ,    TAB_Champs);	return true;  // H Champs

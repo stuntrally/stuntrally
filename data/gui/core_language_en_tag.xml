@@ -388,6 +388,17 @@
 	<Tag name="Game">Game</Tag>
 	<Tag name="Setup">Setup</Tag>
 
+	<!--  Game  Split screen  -->
+	<Tag name="SplitScreen">Split Screen</Tag>
+	<Tag name="NumLocalPlayers">Number of local players</Tag>
+	<Tag name="SplitVertically">Split Vertically</Tag>
+	<Tag name="ReverseStartOrder">Reverse starting order</Tag>
+	<Tag name="NumLaps">Number of laps</Tag>
+
+	<!--  MAIN  Game  Simulation  -->
+	<Tag name="Simulation">Simulation</Tag>
+
+	
 	<!--  Setup  ABS,TCS  -->
 	<Tag name="NotRecommended">Not recommended</Tag>
 	<Tag name="ABS">ABS (antilock brakes)</Tag>
@@ -440,20 +451,7 @@
 	<Tag name="FuelLap">Fuel each lap</Tag>
 	<Tag name="FuelTime">Fuel over time</Tag>
 	<Tag name="FuelBoost">Boost Fuel</Tag>
-
-	<!--  Game  Split screen  -->
-	<Tag name="NumLocalPlayers">Number of local players</Tag>
-	<Tag name="SplitVertically">Split Vertically</Tag>
-	<Tag name="ReverseStartOrder">Reverse starting order</Tag>
-	<Tag name="NumLaps">Number of laps</Tag>
-
-	<!--  MAIN  Game  Simulation  -->
-	<Tag name="Simulation">Simulation</Tag>
-	<Tag name="SimMode">Simulation mode (difficulty)</Tag>
-	<Tag name="SimModeEasy">Easy (beginner)</Tag>
-	<Tag name="SimModeNormal">Normal (simulation)</Tag>
-	<Tag name="SimModeHard">Hard (difficult)</Tag>
-			
+	
 
 	<!--  Replay  -->
 	<Tag name="Replay">Replay</Tag>
