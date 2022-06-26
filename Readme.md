@@ -38,7 +38,7 @@
 
 ## Description
 
-Stunt Rally features 182 tracks in 35 sceneries and 24 vehicles.  
+Stunt Rally features 196 tracks in 36 sceneries and 25 vehicles.  
 Game modes include:
 * Single Race (with Ghost drive, track guide, or Replays),
 * Challenges, Championships, Tutorials,
