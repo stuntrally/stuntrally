@@ -364,6 +364,8 @@ material rock03can1flat
 	diffuseMap rock03.jpg
 	normalMap rock03_norm.jpg
 	terrain_light_map true
+	ambient 1.0 0.8 0.7
+	diffuse 1.0 0.8 0.7
 	specular 0.3 0.3 0.3 32
 }
 material rock04can2flat
@@ -372,6 +374,8 @@ material rock04can2flat
 	diffuseMap rock04.jpg
 	normalMap rock04_norm.jpg
 	terrain_light_map true
+	ambient 1.1 1.0 0.8
+	diffuse 1.1 1.0 0.8
 	specular 0.3 0.3 0.3 32
 }
 material rock05can3round
@@ -380,6 +384,8 @@ material rock05can3round
 	diffuseMap rock05.jpg
 	normalMap rock05_norm.jpg
 	terrain_light_map true
+	ambient 1.0 0.8 0.7
+	diffuse 1.0 0.8 0.7
 	specular 0.3 0.3 0.3 32
 }
 material rock06white1flat
@@ -420,6 +426,8 @@ material rock10red1round
 	diffuseMap rock10.jpg
 	normalMap rock10_norm.jpg
 	terrain_light_map true
+	ambient 1.2 0.9 0.7
+	diffuse 1.0 0.7 0.5
 	specular 0.3 0.3 0.3 32
 }
 material rock11red2
@@ -428,6 +436,8 @@ material rock11red2
 	diffuseMap rock11.jpg
 	normalMap rock11_norm.jpg
 	terrain_light_map true
+	ambient 1.2 0.9 0.7
+	diffuse 1.0 0.7 0.5
 	specular 0.3 0.3 0.3 32
 }
 material rock12orange
@@ -436,6 +446,8 @@ material rock12orange
 	diffuseMap rock12.jpg
 	normalMap rock12_norm.jpg
 	terrain_light_map true
+	ambient 1.0 0.8 0.6
+	diffuse 1.0 0.8 0.6
 	specular 0.3 0.3 0.3 32
 }
 material rock13orange2
@@ -444,6 +456,8 @@ material rock13orange2
 	diffuseMap rock13.jpg
 	normalMap rock13_norm.jpg
 	terrain_light_map true
+	ambient 1.0 0.8 0.6
+	diffuse 1.0 0.8 0.6
 	specular 0.3 0.3 0.3 32
 }
 material rock14tall1cgr
@@ -452,6 +466,8 @@ material rock14tall1cgr
 	diffuseMap rock14.jpg
 	normalMap rock14_norm.jpg
 	terrain_light_map true
+	ambient 1.0 0.8 0.7
+	diffuse 1.0 0.8 0.7
 	specular 0.3 0.3 0.3 32
 }
 material rock15ironSpecks
@@ -580,6 +596,8 @@ material rock32red2block
 	diffuseMap rock32.jpg
 	normalMap rock32_norm.jpg
 	terrain_light_map true
+	ambient 1.2 0.9 0.7
+	diffuse 1.0 0.7 0.5
 	specular 0.3 0.3 0.3 32
 }
 material rock33grayBlue2
@@ -604,6 +622,8 @@ material rock35red1edgy
 	diffuseMap rock35.jpg
 	normalMap rock35_norm.jpg
 	terrain_light_map true
+	ambient 1.2 0.9 0.7
+	diffuse 1.0 0.7 0.5
 	specular 0.3 0.3 0.3 32
 }
 material rock37brGr1tall
@@ -628,6 +648,8 @@ material rock40red3flat
 	diffuseMap rock40.jpg
 	normalMap rock40_norm.jpg
 	terrain_light_map true
+	ambient 1.2 0.9 0.7
+	diffuse 1.0 0.7 0.5
 	specular 0.3 0.3 0.3 32
 }
 material rock41grayWh
@@ -652,6 +674,8 @@ material rock44red4rndWh
 	diffuseMap rock44.jpg
 	normalMap rock44_norm.jpg
 	terrain_light_map true
+	ambient 1.2 0.9 0.7
+	diffuse 1.0 0.7 0.5
 	specular 0.3 0.3 0.3 32
 }
 // material rock45stains
