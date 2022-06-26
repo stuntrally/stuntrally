@@ -42,7 +42,7 @@ public:
 	
 	bool bGI;  // gui inited  set values
 	void InitGui(), GuiUpdate();
-	void UpdGuiAfterPreset();
+	void UpdGuiAfterPreset(), FillPickLists();
 
 	Txt valTrk[2];
 	std::vector<Tab> vSubTabsTrack, vSubTabsEdit, vSubTabsHelp, vSubTabsOpts;
@@ -358,7 +358,8 @@ public:
 	Ck ckPickSetPar;  WP panPick;
 	Mli2 liSky, liTex, liGrs, liVeg, liRd;
 	enum EPick { P_Sky=0, P_Tex, P_Grs, P_Veg, P_Rd, P_All };
-	int liPickW[P_All];
+	float liPickX[P_All];  int liPickW[P_All];  // start pos x, width
+	
 	void PickShow(EPick n, bool toggleVis=true);
 	int liNext(Mli2 li, int rel);  void keyPickNext(int rel);
 

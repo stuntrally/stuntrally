@@ -1,6 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
 
+	<Widget type="ImageBox" skin="ImageBox" position="174 15 336 336" name="TrackImg3">
+		<UserString key="tip" value="#{TipTrackImg}"/>
+	</Widget>
+	<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrkTerImg3">
+		<UserString key="tip" value="#{TipTrkTerImg}"/>
+	</Widget>
+	<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrackMap3">
+		<UserString key="tip" value="#{TipTrackMap}"/>
+		<Widget type="ImageBox" skin="RotatingSkin" position="64 64 16 16" name="TrackPos3">
+			<Property key="ImageTexture" value="carpos0.png"/>
+		</Widget>
+	</Widget>
+
 	<Widget type="Window" skin="WindowC" position="28 1360 744 440" align="Center" layer="Popup" name="WndChampStage">
 		<Property key="Caption" value="#{Championship}"/>
 		<Property key="Alpha" value="0.8"/>

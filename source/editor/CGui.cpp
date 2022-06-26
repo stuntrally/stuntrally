@@ -101,7 +101,7 @@ CGui::CGui(App* app1)  //  gui wigdets--
 	for (i=0; i<EMT_TXT;++i)  emtTxt[i]=0;
 	
 	for (i=0; i < 4; ++i)  {  btnRoad[i]=0;  cmbPipeMtr[i]=0;  }
-	for (i=0; i < 4; ++i)  liPickW[i] = 280;
+	for (i=0; i < P_All; ++i)  {  liPickX[i] = 0.4f;  liPickW[i] = 300;  }
 
 	sc = app1->scn->sc;
 	scn = app1->scn;

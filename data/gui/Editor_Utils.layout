@@ -47,6 +47,7 @@
 			<Property key="TextColour" value="1 1 0.5"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.small"/>
+			<UserString key="tip" value="#{PickSetParam}"/>
 		</Widget>
 		<Widget type="Widget" skin="" position="306 36 160 400" name="PanelPick">
 			<Property key="Colour" value="0.5 0.75 1.0"/>

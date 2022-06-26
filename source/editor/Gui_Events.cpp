@@ -549,30 +549,25 @@ void CGui::btnPickRoad(WP wp)
 	PickShow(P_Rd, idRdOld==idRdPick);
 }
 
-//  show Pick window
+
+//  Pick window show
+//----------------------------------------------------
 void CGui::PickShow(EPick n, bool toggleVis)
 {
 	liSky->setVisible(n==P_Sky);  liTex->setVisible(n==P_Tex);
 	liGrs->setVisible(n==P_Grs);  liVeg->setVisible(n==P_Veg);  liRd->setVisible(n==P_Rd);
-	panPick->setPosition(liPickW[n], 36);
+	panPick->setPosition(liPickW[n], 0);
 
 	const int wx = pSet->windowx, wy = pSet->windowy;
-	//if (pSet->pick_center
-	switch (n)  ///pick dim
-	{
-		case P_Sky:  app->mWndPick->setCoord(wx*0.45f, 0.04f*wy, 300, 0.95f*wy);  break;
-		case P_Tex:  app->mWndPick->setCoord(wx*0.45f, 0.04f*wy, 300, 0.95f*wy);  break;
-		case P_Grs:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 280, 0.95f*wy);  break;
-		case P_Veg:  app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 300, 0.95f*wy);  break;
-		case P_Rd:   app->mWndPick->setCoord(wx*0.36f, 0.04f*wy, 300, 0.95f*wy);  break;
-	}
-	if (n==P_Rd)  // upd pick road
+	///  pick dim
+	app->mWndPick->setCoord(wx * liPickX[n], 12.f, liPickW[n], 0.95f*wy);
+	
+	if (n==P_Rd)  //  upd pick road
 	{	UString s = btnRoad[idRdPick]->getCaption();
 		for (int i=0; i < liRd->getItemCount(); ++i)
 			if (liRd->getSubItemNameAt(1,i).substr(7) == s)
 				liRd->setIndexSelected(i);
 	}
-
 	bool vis = app->mWndPick->getVisible();
 	if (n != P_Rd || toggleVis || !vis)
 		app->mWndPick->setVisible(!vis);
@@ -653,14 +648,16 @@ void CGui::listPickGrs(Mli2 li, size_t pos)
 	{	liGrs->setIndexSelected(0);  pos = 0;  }
 	
 	string s = liGrs->getSubItemNameAt(1,pos);
+	if (s.length() < 8)  return;
 	s = s.substr(7);
-	const PGrass* p = data->pre->GetGrass(s);
+	if (s[0] == '-' || s[0] == '=')  return;  // sep
 
 	//  set
 	SGrassLayer& l = sc->grLayersAll[idGrLay];
 	l.material = s;
 	
 	//  preset
+	const PGrass* p = data->pre->GetGrass(s);
 	if (pSet->pick_setpar && p)
 	{	l.minSx = p->minSx;  svGrMinX.Upd();
 		l.maxSx = p->maxSx;  svGrMaxX.Upd();
@@ -679,15 +676,16 @@ void CGui::listPickVeg(Mli2 li, size_t pos)
 	{	liVeg->setIndexSelected(0);  pos = 0;  }
 	
 	string s = liVeg->getSubItemNameAt(1,pos);
+	if (s.length() < 8)  return;
 	s = s.substr(7);
+	if (s[0] == '-' || s[0] == '=')  return;  // sep
+		
+	//  set
 	const PVeget* p = data->pre->GetVeget(s);
-
-	//  upd
 	btnVeget->setCaption(s);
 	s += ".mesh";
 
-	//  set
-	PagedLayer& l = sc->pgLayersAll[idPgLay];
+	auto& l = sc->pgLayersAll[idPgLay];
 	l.name = s;
 	
 	//  preset
@@ -710,11 +708,14 @@ void CGui::listPickRd(Mli2 li, size_t pos)
 	{	liRd->setIndexSelected(0);  pos = 0;  }
 	
 	string s = liRd->getSubItemNameAt(1,pos);
+	if (s.length() < 8)  return;
 	s = s.substr(7);
-	const PRoad* p = data->pre->GetRoad(s);
+	if (s[0] == '-' || s[0] == '=')  return;  // sep
 
 	//  set
+	const PRoad* p = data->pre->GetRoad(s);
 	scn->road->sMtrRoad[idRdPick] = s;
+	
 	//  preset
 	if (pSet->pick_setpar && p)
 	{	TerLayer& l = scn->sc->td.layerRoad[idRdPick];

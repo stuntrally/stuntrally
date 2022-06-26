@@ -625,9 +625,18 @@ void CGui::InitGui()
 	{	const String& s = vsMaterials[u];
 		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_"))
 			for (int n=0; n<4; ++n)  cmbPipeMtr[n]->addItem(s);
-		if (StringUtil::startsWith(s,"road_wall"))  cmbRoadWMtr->addItem(s);
-		if (StringUtil::startsWith(s,"pipe_wall"))  cmbPipeWMtr->addItem(s);
-		if (StringUtil::startsWith(s,"road_col"))  cmbRoadColMtr->addItem(s);
+		// if (StringUtil::startsWith(s,"road_wall"))  cmbRoadWMtr->addItem(s);
+		// if (StringUtil::startsWith(s,"pipe_wall"))  cmbPipeWMtr->addItem(s);
+		// if (StringUtil::startsWith(s,"road_col"))  cmbRoadColMtr->addItem(s);
+		if (StringUtil::startsWith(s,"road_wall") ||
+			StringUtil::startsWith(s,"pipe_wall") ||
+			StringUtil::startsWith(s,"road_col") ||
+			StringUtil::startsWith(s,"road_univ"))
+		{
+			cmbRoadWMtr->addItem(s);
+  			cmbPipeWMtr->addItem(s);
+			cmbRoadColMtr->addItem(s);
+		}
 	}
 
 
@@ -658,7 +667,7 @@ void CGui::InitGui()
 				objListSt->addItem("#C8C8C8"+name);
 	}	}
 	
-	//  buildings, group categories, more witbh same prefix  ----
+	//  buildings, group categories, more with same prefix  ----
 	using std::map;
 	map<string, int> cats;  // yeah cats are fun
 	lo.clear();
@@ -735,128 +744,8 @@ void CGui::InitGui()
 	}
 	ck= &ckPickSetPar;	ck->Init("PickSetPar",	&pSet->pick_setpar);
 	panPick = fWP("PanelPick");
-	//"PickRadAll" "PickRadCur" "PickRadFilter"
 
-
-	///  Sky Mtr  --------
-	Mli2 lp;  int l;
-	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
-	liSky = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickSky);
-	lp->setColour(Colour(0.7,0.85,1.0));  lp->setInheritsAlpha(false);
-	
-	lp->removeAllColumns();  lp->removeAllItems();
-	lp->addColumn("#90C0F0", 15);
-	lp->addColumn("#E0F0FF"+TR("#{Sky}"), 170);
-	lp->addColumn("#E0F0FF"+TR("#{Pitch}"), 60);
-	lp->addColumn(" ", 20);
-	liPickW[P_Sky] = 280;
-
-	for (u=0; u < data->pre->sky.size(); ++u)
-	{	const PSky& s = data->pre->sky[u];
-		String c = s.clr;
-		lp->addItem(c, 0);  l = lp->getItemCount()-1;
-
-		//lp->setSubItemNameAt(1,l, c+ s.mtr.substr(4, s.mtr.length()));  // no sky/
-		lp->setSubItemNameAt(1,l, c+ s.mtr);
-		lp->setSubItemNameAt(2,l, c+ fToStr( s.ldPitch, 0,2));
-	}
-
-	///  Tex Diff  --------
-	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
-	liTex = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickTex);
-	lp->setColour(Colour(0.8,0.9,0.7));  lp->setInheritsAlpha(false);
-	
-	lp->removeAllColumns();  lp->removeAllItems();
-	lp->addColumn("#90C0F0", 25);  //+TR("#{Scenery}")
-	lp->addColumn("#E0FFE0"+TR("#{Diffuse}"), 160);  ///pick dim
-	lp->addColumn("#80FF80"+TR("#{Scale}"), 40);
-	//lp->addColumn("#80FF80/", 40);
-	lp->addColumn("#80FF80|"/*+TR("#{HighestSlopes}")*/, 27);
-	lp->addColumn(" ", 20);
-	liPickW[P_Tex] = 280;
-
-	for (u=0; u < data->pre->ter.size(); ++u)
-	{	const PTer& t = data->pre->ter[u];
-		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
-		lp->addItem(c+ t.sc, 0);  l = lp->getItemCount()-1;
-
-		lp->setSubItemNameAt(1,l, c+ t.texFile.substr(0, t.texFile.length()-2));  // no _d
-		lp->setSubItemNameAt(2,l, c+ fToStr( t.tiling, 0,2)); //1,3
-		//lp->setSubItemNameAt(3,l, c+ fToStr( t.angMin, 0,2));
-		lp->setSubItemNameAt(3,l, c+ (t.triplanar?"1":"0"));
-	}
-
-	///  Grass  --------
-	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
-	liGrs = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickGrs);
-	lp->setColour(Colour(0.7,0.9,0.7));  lp->setInheritsAlpha(false);
-	
-	lp->removeAllColumns();  lp->removeAllItems();
-	lp->addColumn("#90C0F0", 25);
-	lp->addColumn("#E0FFE0"+TR("#{GrMaterial}"), 152);
-	//lp->addColumn("#E0FFE0"+TR("#{GrColorMap}"), 120);
-	lp->addColumn(" ", 20);
-	liPickW[P_Grs] = 205;
-
-	for (u=0; u < data->pre->gr.size(); ++u)
-	{	const PGrass& t = data->pre->gr[u];
-		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
-		lp->addItem(c+ t.sc, 0);  l = lp->getItemCount()-1;
-
-		lp->setSubItemNameAt(1,l, c+ t.mtr);
-		//lp->setSubItemNameAt(2,l, c+ t.clr.substr(5));
-	}
-
-	///  Veget  --------
-	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
-	liVeg = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickVeg);
-	lp->setColour(Colour(0.7,0.9,0.9));  lp->setInheritsAlpha(false);
-	
-	lp->removeAllColumns();  lp->removeAllItems();
-	lp->addColumn("#90C0F0", 25);
-	lp->addColumn("#E0FFE0"+TR("#{Model}"), 157);
-	lp->addColumn("#80E0E0"+TR("#{MaxScale}"), 40);
-	lp->addColumn("#80E080/"/*+TR("#{AngleMax}")*/, 30);
-	lp->addColumn(" ", 20);
-	liPickW[P_Veg] = 280;
-
-	for (u=0; u < data->pre->veg.size(); ++u)
-	{	const PVeget& t = data->pre->veg[u];
-		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
-		lp->addItem(c+ t.sc, 0);  l = lp->getItemCount()-1;
-
-		lp->setSubItemNameAt(1,l, c+ t.name);
-		//lp->setSubItemNameAt(2,l, c+ fToStr( t.minScale, 1,3));
-		lp->setSubItemNameAt(2,l, c+ fToStr( t.maxScale, 1,3));
-		lp->setSubItemNameAt(3,l, c+ fToStr( t.maxTerAng, 0,2));
-	}
-
-	///  Road  --------
-	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
-	liRd = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickRd);
-	lp->setColour(Colour(0.9,0.8,0.7));  lp->setInheritsAlpha(false);
-	
-	lp->removeAllColumns();  lp->removeAllItems();
-	lp->addColumn("#90C0F0", 25);
-	lp->addColumn("#FFE0D0"+TR("#{GrMaterial}"), 157);
-	lp->addColumn("#80E0E0"+TR("#{Surface}"), 80);
-	lp->addColumn(" ", 20);
-	liPickW[P_Rd] = 280;
-	lp->addItem("#102030J", 0);  lp->setSubItemNameAt(1,0, "#102030");  // ""
-
-	for (u=0; u < data->pre->rd.size(); ++u)
-	{	const PRoad& t = data->pre->rd[u];
-		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
-		lp->addItem(c+ t.sc, 0);  l = lp->getItemCount()-1;
-
-		lp->setSubItemNameAt(1,l, c+ t.mtr);
-		String su = t.surfName;  if (su.substr(0,4)=="road")  su = su.substr(4, su.length());
-		lp->setSubItemNameAt(2,l, c+ su);
-	}
-	
-	// todo: sort,filter pick lists..
-	//lp->mSortColumnIndex = pSet->tracks_sort;
-	//lp->mSortUp = pSet->tracks_sortup;
+	FillPickLists();
 
     //TrackListUpd(true);  //upd
 	//listTrackChng(trkList,0);
@@ -915,4 +804,137 @@ IntCoord CGui::GetViewSize()
 {
 	IntCoord ic = app->mWndEdit->getClientCoord();
 	return IntCoord(ic.width*0.63f, ic.height*0.45f, ic.width*0.34f, ic.height*0.45f);
+}
+
+
+///  Fill Pick Lists
+///------------------------------------------------------------------------------------------------------------
+void CGui::FillPickLists()
+{
+	///  Sky Mtr  --------
+	Mli2 lp;  int l,u;
+	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
+	liSky = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickSky);
+	lp->setColour(Colour(0.7,0.85,1.0));  lp->setInheritsAlpha(false);
+	const int rt = 22, sl = 21;
+	
+	lp->removeAllColumns();  lp->removeAllItems();
+	lp->addColumn("#90C0F0", 15);
+	lp->addColumn("#E0F0FF"+TR("#{Sky}"), 200);
+	lp->addColumn("#E0F0FF"+TR("#{Pitch}"), 60);
+	lp->addColumn(" ", sl);
+	liPickX[P_Sky] = 0.45f;  liPickW[P_Sky] = 280;
+
+	for (u=0; u < data->pre->sky.size(); ++u)
+	{	const PSky& s = data->pre->sky[u];
+		String c = s.clr;
+		lp->addItem(c, 0);
+		l = lp->getItemCount()-1;
+
+		lp->setSubItemNameAt(1,l, c+ s.mtr);
+		lp->setSubItemNameAt(2,l, c+ fToStr( s.ldPitch, 0,2));
+	}
+
+	///  Terrain  Tex Diff  --------
+	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
+	liTex = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickTex);
+	lp->setColour(Colour(0.8,0.9,0.7));  lp->setInheritsAlpha(false);
+	
+	lp->removeAllColumns();  lp->removeAllItems();
+	lp->addColumn("#90C0F0*", rt);
+	lp->addColumn("#E0FFE0"+TR("#{Diffuse}"), 190);
+	lp->addColumn("#80E0E0"+TR("#{Scale}"), 40);
+	lp->addColumn("#80FF80|", 27);
+	lp->addColumn(" ", sl);
+	liPickX[P_Tex] = 0.45f;  liPickW[P_Tex] = 330;
+
+	for (u=0; u < data->pre->ter.size(); ++u)
+	{	const PTer& t = data->pre->ter[u];
+		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
+		lp->addItem(
+			t.rate ? gcom->getClrRating(t.rate) + toStr(t.rate) : c, 0);
+		l = lp->getItemCount()-1;
+
+		lp->setSubItemNameAt(1,l, c+ t.texFile.substr(0, t.texFile.length()-2));  // no _d
+		if (t.rate)
+		{	lp->setSubItemNameAt(2,l, gcom->getClrLong(t.tiling * 0.15f) + fToStr(t.tiling, 0,2));
+			lp->setSubItemNameAt(3,l, (t.triplanar ? "#E0E0E01" : "#6565650"));
+	}	}
+
+	///  Grass  --------
+	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
+	liGrs = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickGrs);
+	lp->setColour(Colour(0.7,0.9,0.7));  lp->setInheritsAlpha(false);
+	
+	lp->removeAllColumns();  lp->removeAllItems();
+	lp->addColumn("#90C0F0*", rt);
+	lp->addColumn("#E0FFE0"+TR("#{GrMaterial}"), 152);
+	lp->addColumn("#D0FFD0-", 41);  lp->addColumn("#C0F0C0|", 41);
+	lp->addColumn(" ", sl);
+	liPickX[P_Grs] = 0.36f;  liPickW[P_Grs] = 310;
+
+	for (u=0; u < data->pre->gr.size(); ++u)
+	{	const PGrass& t = data->pre->gr[u];
+		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
+		lp->addItem(
+			t.rate ? gcom->getClrRating(t.rate) + toStr(t.rate) : c, 0);
+		l = lp->getItemCount()-1;
+
+		lp->setSubItemNameAt(1,l, c+ t.mtr);
+		if (t.rate)
+		{	lp->setSubItemNameAt(2,l, c+ fToStr(t.maxSx, 1,3));
+			lp->setSubItemNameAt(3,l, c+ fToStr(t.maxSy, 1,3));
+	}	}
+
+	///  Veget  --------------------------------
+	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
+	liVeg = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickVeg);
+	lp->setColour(Colour(0.7,0.9,0.9));  lp->setInheritsAlpha(false);
+	
+	lp->removeAllColumns();  lp->removeAllItems();
+	lp->addColumn("#90C0F0*", rt);
+	lp->addColumn("#E0FFE0"+TR("#{Model}"), 207);
+	lp->addColumn("#80E0E0"+TR("#{Scale}"), 40);
+	lp->addColumn(" ", sl);
+	liPickX[P_Veg] = 0.36f;  liPickW[P_Veg] = 320;
+
+	for (u=0; u < data->pre->veg.size(); ++u)
+	{	const PVeget& t = data->pre->veg[u];
+		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
+		lp->addItem(
+			t.rate ? gcom->getClrRating(t.rate) + toStr(t.rate) : c, 0);
+		l = lp->getItemCount()-1;
+
+		lp->setSubItemNameAt(1,l, c+ t.name);
+		if (t.rate)
+			lp->setSubItemNameAt(2,l, c+ fToStr(t.maxScale, 1,3));
+			//lp->setSubItemNameAt(3,l, c+ fToStr(t.maxTerAng, 0,2));
+	}
+
+	///  Road  --------------------------------
+	lp = app->mWndPick->createWidget<MultiList2>("MultiListBox",8,8,400,800, Align::Left | Align::VStretch);
+	liRd = lp;  lp->eventListChangePosition += newDelegate(this, &CGui::listPickRd);
+	lp->setColour(Colour(0.9,0.8,0.7));  lp->setInheritsAlpha(false);
+	
+	lp->removeAllColumns();  lp->removeAllItems();
+	lp->addColumn("#90C0F0*", rt);
+	lp->addColumn("#FFE0D0"+TR("#{GrMaterial}"), 177);
+	lp->addColumn("#80E0E0"+TR("#{Surface}"), 80);
+	lp->addColumn(" ", sl);
+	liPickX[P_Rd] = 0.36f;  liPickW[P_Rd] = 320;
+
+	for (u=0; u < data->pre->rd.size(); ++u)
+	{	const PRoad& t = data->pre->rd[u];
+		String c = gcom->scnClr[gcom->scnN[t.sc]];  if (c.empty())  c = "#000000";
+		lp->addItem(
+			t.rate ? gcom->getClrRating(t.rate) + toStr(t.rate) : c, 0);
+		l = lp->getItemCount()-1;
+
+		lp->setSubItemNameAt(1,l, c+ t.mtr);
+		String su = t.surfName;  if (su.substr(0,4)=="road")  su = su.substr(4, su.length());
+		if (t.rate && t.mtr.substr(0,5) != "River")
+			lp->setSubItemNameAt(2,l, c+ su);
+	}
+	
+	// todo: auto groups chks gui to filter pick lists..
 }

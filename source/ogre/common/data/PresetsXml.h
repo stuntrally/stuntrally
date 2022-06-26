@@ -3,68 +3,74 @@
 #include <OgreString.h>
 
 
-//  Presets xml  for editor
-//  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+//  Presets xml  for editor Pick lists
+//-----------------------------------------------------------
 
 ///----  Sky
 struct PSky
 {
-	Ogre::String mtr, clr;
-	float ldYaw, ldPitch;  // sun dir
-	PSky();
+	int rate = 0;  // rating  for quality, popular
+	Ogre::String mtr = "sky", clr = "#C0E0FF";
+	float ldYaw = 0.f, ldPitch = 0.f;  // sun dir
 };
 
 ///----  Terrain layer
 struct PTer
 {
+	int rate = 0;
 	Ogre::String texFile, texNorm, sc;
-	std::string surfName, scn;
-	float tiling;  bool triplanar;
+	std::string surfName = "Default", scn;
 
-	float dust, mud, dustS;
-	SColor tclr;  // trail
+	float tiling = 8.f;  bool triplanar = false;
 
-	float angMin,angMax;
-	float dmg;
-	PTer();
+	float dust = 0.f, mud = 0.2f, dustS = 0.f;
+	SColor tclr = SColor(0.2f, 0.2f, 0.1f, 0.6f);  // trail
+
+	float angMin = 0.f, angMax = 90.f;
+	float dmg = 0.f;
 };
 
 ///----  Road
 struct PRoad
 {
+	int rate = 0;
 	Ogre::String mtr, sc;
 	std::string surfName, scn;
 
-	float dust, mud, dustS;
-	SColor tclr;
-	PRoad();
+	float dust = 0.f, mud = 0.2f, dustS = 0.f;
+	SColor tclr = SColor(0.2f, 0.2f, 0.1f, 0.6f);  // trail
 };
 
 ///----  Grass
 struct PGrass
 {
-	Ogre::String mtr, clr, sc;  // material, colormap
+	int rate = 0;
+	//  material, colormap, scenery
+	Ogre::String mtr, clr = "GrassClrJungle", sc;
 	std::string scn;
-	float minSx,minSy, maxSx,maxSy;  // sizes
-	PGrass();
+
+	float minSx = 1.2f, minSy = 1.2f;
+	float maxSx = 1.6f, maxSy = 1.6f;  // sizes
 };
 
 ///----  Veget model
 struct PVeget
 {
+	int rate = 0;
 	Ogre::String sc;
 	std::string name, scn;
-	float minScale, maxScale;
-	float windFx, windFy;
 
-	int addRdist;  // road dist
-	float maxTerAng;  // terrain
-	float maxDepth;  // in fluid
-	PVeget();
+	float minScale = 0.6f, maxScale = 1.2f;
+	float windFx = 0.02f, windFy = 0.002f;
+
+	int addRdist = 1;  // road dist
+	float maxTerAng = 30.f;  // terrain
+	float maxDepth = 0.f;  // in fluid
 };
 
 
 ///  Presets xml  with common params setup
+//-----------------------------------------------------------
 class Presets
 {
 public:
