@@ -246,23 +246,6 @@ void CGui::radKmh(WP wp){	radUpd(true);   }
 void CGui::radMph(WP wp){	radUpd(false);  }
 
 
-void CGui::setSimMode(std::string mode)
-{
-	pSet->gui.sim_mode = mode;  bReloadSim = true;
-
-	bRsimEasy->setStateSelected(mode == "easy");
-	bRsimNorm->setStateSelected(mode == "normal");
-	if (bRsimHard)
-		bRsimHard->setStateSelected(mode == "hard");
-
-	tabTireSet(0,iTireSet);  listCarChng(carList,0);
-}
-
-void CGui::radSimEasy(WP){	setSimMode("easy");  }
-void CGui::radSimNorm(WP){	setSimMode("normal");  }
-void CGui::radSimHard(WP){	setSimMode("hard");  }
-
-
 void CGui::btnNumPlayers(WP wp)
 {
 	if      (wp->getName() == "btnPlayers1")  pSet->gui.local_players = 1;
@@ -506,8 +489,8 @@ void CGui::btnLesson(WP wp)
 		Add(1.f,  8.f,  22);
 		Add(10.f, 21.f, 1 );
 		Add(23.f, 30.f, 17);
-		Add(32.f, 40.f, 3 );
-		Add(41.f, 55.f, 18);
+		Add(32.f, 44.f, 3 );
+		Add(46.f, 62.f, 18);
 		break;
 	case 2:  file = "2";  //  damage  flip  rewind
 		Add(0.1f, 11.f, 4 );

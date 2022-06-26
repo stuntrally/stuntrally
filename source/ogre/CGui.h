@@ -50,6 +50,7 @@ public:
 	void InitMainMenu();
 	void btnMainMenu(WP);  void tabMainMenu(Tab tab, size_t id);
 
+	Cmb simList;  void comboSim(CMB);
 	Cmb diffList;  void comboDiff(CMB);
 
 
@@ -324,9 +325,6 @@ public:
 	Btn bRkmh =0, bRmph =0;  // km/h, mph
 	void radKmh(WP), radMph(WP), radUpd(bool kmh);
 
-	Btn bRsimEasy =0, bRsimNorm =0, bRsimHard =0;  // sim mode
-	void radSimEasy(WP), radSimNorm(WP), radSimHard(WP);
-	void setSimMode(std::string mode);
 	bool bReloadSim = 1;
 
 	//  [Game] setup

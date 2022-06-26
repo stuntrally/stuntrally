@@ -77,7 +77,7 @@ void CGui::InitMainMenu()
 	wnd->setPosition((wx-w.width)*0.5f, (wy-w.height)*0.5f);
 
 
-	//  difficulty
+	//  Difficulty  ---
 	Cmb(diffList, "DiffList", comboDiff);
 
 	auto add = [&](int diff)
@@ -87,6 +87,20 @@ void CGui::InitMainMenu()
 	};
 	add(1);  add(2);  add(3);  add(4);  add(5);  add(6);
 	diffList->setIndexSelected(pSet->difficulty);
+
+	//  Simulation  ---
+	Cmb(simList, "SimList", comboSim);
+	auto sim = [&](int clrDiff, int diff, String s)
+	{
+		auto clr = gcom->getClrDiff(clrDiff);
+		simList->addItem(clr+ TR("#{Diff"+toStr(diff)+"}"));
+		
+		StringUtil::toLowerCase(s);
+		if (pSet->gui.sim_mode == s)
+			simList->setIndexSelected(simList->getItemCount()-1);
+	};
+	sim(1,2,"Easy");  sim(4,3,"Normal");
+	//sim(6,4,"Hard");  // WIP test .. car HI
 }
 
 
@@ -112,6 +126,7 @@ void CGui::btnMainMenu(WP wp)
 			case Race_Tutorial:   pSet->iMenu = MN_Tutorial;  break;
 			case Race_Champ:      pSet->iMenu = MN_Champ;  break;
 			case Race_Challenge:  pSet->iMenu = MN_Chall;  break;
+			
 			case Race_HowToPlay:  pSet->iMenu = MN_HowTo;  break;
 			case Race_Back:       pSet->iMenu = MN1_Main;  break;
 			}
@@ -151,7 +166,26 @@ void CGui::tabMainMenu(Tab tab, size_t id)
 }
 
 
-//  Game difficulty change  Race menu
+//  Game Simulation change  Race menu
+//---------------------------------------------------------
+void CGui::comboSim(Cmb cmb, size_t val)
+{
+	int damage = 0;
+	switch (val)
+	{
+	case 0:  pSet->gui.sim_mode = "easy";    damage = 1;  break;
+	case 1:  pSet->gui.sim_mode = "normal";  damage = 2;  break;
+	case 2:  pSet->gui.sim_mode = "hard";    damage = 2;  break;
+	}
+	//  game
+	pSet->gui.damage_type = damage;  cmbDamage->setIndexSelected(damage);
+
+	bReloadSim = true;
+	tabTireSet(0,iTireSet);  listCarChng(carList,0);
+}
+
+
+//  Game Difficulty change  Race menu
 //----------------------------------------------------------------------------------------------------------------
 void CGui::comboDiff(Cmb cmb, size_t val)
 {
@@ -166,8 +200,9 @@ void CGui::comboDiff(Cmb cmb, size_t val)
 	}	};
 
 	auto SetDiff = [&](bool sortUp, int sortCol,  bool filter, int diffMax,
-		int pipes, int jumps, int len,  bool beam, bool arrow, bool trail, bool minimap,
-		bool easy, int damage,  string car, string track)
+		int pipes, int jumps, int len,
+		bool beam, bool arrow, bool trail, bool minimap,
+		string car, string track)
 	{
 		//  tracks
 		gcom->trkList->mSortColumnIndex = pSet->tracks_sort = sortCol;
@@ -184,23 +219,19 @@ void CGui::comboDiff(Cmb cmb, size_t val)
 		for (int i=0; i < carList->getItemCount(); ++i)
 			if (carList->getItemNameAt(i).substr(7) == car)
 				carList->setIndexSelected(i);
-		//  game
-		pSet->gui.sim_mode = easy ? "easy" : "normal";
-		bRsimEasy->setStateSelected(easy);  bRsimNorm->setStateSelected(!easy);
-		pSet->gui.damage_type = damage;  cmbDamage->setIndexSelected(damage);
 		//  hud
 		ckBeam.SetValue(beam);  ckArrow.SetValue(arrow);
 		ckTrailShow.SetValue(trail);  ckMinimap.SetValue(minimap);
 	};
 
 	switch (val)
-	{// up,col, filt,diff, pipes,jmp,len  bm,ar,tr, sim,dmg  car,trk
-	case 0:  SetDiff(1,6,  1,2, 0,0, 3,  1,1,1,1, 1,1, "V2", "Isl2-Sandy");  break;
-	case 1:  SetDiff(1,6,  1,3, 1,1, 6,  0,1,1,1, 1,1, "ES", "Isl12-Beach");  break;  //Isl5-Shore
-	case 2:  SetDiff(1,6,  1,4, 2,2, 9,  0,0,1,1, 0,2, "HI", "Jng6-Fun");  break;  // Isl6-Flooded
-	case 3:  SetDiff(0,3,  1,5, 4,4,14,  0,0,1,1, 0,2, "HI", "Isl14-Ocean");  break;
-	case 4:  SetDiff(0,3,  0,6, 4,4,24,  0,0,0,1, 0,2, "SX", "Grc9-Oasis");  break;
-	case 5:  SetDiff(0,17, 0,6, 4,4,24,  0,0,0,0, 0,2, "U6", "Uni7-GlassStairs");  break;
+	{// up,col, filt,diff, pipes,jmp,len  bm,ar,tr,mi  car,trk
+	case 0:  SetDiff(1,6,  1,2, 0,0, 3,  1,1,1,1, "V2", "Isl2-Sandy");  break;
+	case 1:  SetDiff(1,6,  1,3, 1,1, 6,  0,1,1,1, "ES", "Isl12-Beach");  break;  //Isl5-Shore
+	case 2:  SetDiff(1,6,  1,4, 2,2, 9,  0,0,1,1, "HI", "Jng6-Fun");  break;  // Isl6-Flooded
+	case 3:  SetDiff(0,3,  1,5, 4,4,14,  0,0,1,1, "HI", "Isl14-Ocean");  break;
+	case 4:  SetDiff(0,3,  0,6, 4,4,24,  0,0,0,1, "SX", "Grc9-Oasis");  break;
+	case 5:  SetDiff(0,17, 0,6, 4,4,24,  0,0,0,0, "U6", "Uni7-GlassStairs");  break;
 	}
 	gcom->TrackListUpd(true);  gcom->listTrackChng(gcom->trkList,0);
 	listCarChng(carList,0);

@@ -20,8 +20,11 @@
 		<Widget type="EditBox" skin="WordWrapEmpty" position="4 4 320 96">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.96 1.0"/>
+			<Property key="ReadOnly" value="true"/>
 			<Property key="WordWrap" value="true"/>
+			<Property key="MultiLine" value="true"/>
 			<Property key="Static" value="true"/>
+			<Property key="MaxTextLength" value="2000"/>
 			<Property key="TextAlign" value="Left Top"/>
 			<Property key="FontName" value="font.small"/>
 			<UserString key="NotSized" value="1"/>

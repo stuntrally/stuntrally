@@ -92,7 +92,7 @@
 
 <!-- 0 pan +8 img +12 btn   +72  12 84 156 228 300  336 408 480 -->
 
-	<Widget type="Window" skin="WindowC" position="1768 156 600 650" align="Center" layer="Overlapped" name="RaceMenuWnd">
+	<Widget type="Window" skin="WindowC" position="1768 156 600 700" align="Center" layer="Overlapped" name="RaceMenuWnd">
 		<Property key="MinSize" value="500 400"/>
 		<Property key="Caption" value="#{NewGame}"/>
 		<Property key="Alpha" value="0.7"/>
@@ -171,6 +171,7 @@
 			<Property key="FontName" value="font.big"/>
 		</Widget>
 
+		
 		<Widget type="ImageBox" skin="ImageBox" position="32 340 56 56">
 			<Property key="ImageCoord" value="0 0 32 32"/>
 			<Property key="ImageTexture" value="track_icons.png"/>
@@ -181,14 +182,15 @@
 			<Property key="Alpha" value="0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="TextBoxS" position="118 354 144 50" align="Left" name="BtnRace4">
+		<Widget type="Button" skin="TextBox" position="108 354 144 50" align="Left" name="BtnRace4">
 			<Property key="Caption" value="#{Difficulty}"/>
 			<Property key="Colour" value="0.6 0.7 0.8"/>
-			<Property key="TextColour" value="0.7 0.8 0.9"/>
+			<Property key="TextColour" value="0.8 0.9 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.big"/>
+			<UserString key="tip" value="#{DifficultyHelp}"/>
 		</Widget>
-		<Widget type="ComboBox" skin="ComboBox" position="272 348 220 50" name="DiffList">
+		<Widget type="ComboBox" skin="ComboBox" position="302 348 210 50" name="DiffList">
 			<Property key="Static" value="true"/>
 			<Property key="ReadOnly" value="true"/>
 			<Property key="Colour" value="0.7 0.86 1"/>
@@ -196,20 +198,62 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="FontName" value="font.big"/>
 		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" position="522 350 50 50">
+			<Property key="ImageCoord" value="0 640 128 128"/>
+			<Property key="Alpha" value="0.7"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+			<UserString key="tip" value="#{DifficultyHelp}"/>
+		</Widget>
 
-		<Widget type="ImageBox" skin="ImageBox" position="32 412 56 56">
-			<!-- <Property key="ImageCoord" value="0 640 128 128"/> ?-->
+		<Widget type="ImageBox" skin="ImageBox" position="40 412 56 56">
+			<Property key="ImageCoord" value="384 640 128 128"/>
+			<Property key="Alpha" value="1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+		</Widget>
+		<Widget type="Widget" skin="PanelSkin" position="92 408 436 72" name="PanRace5">
+			<Property key="Colour" value="0.7 0.85 1.0"/>
+			<Property key="Alpha" value="0.9"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+		<Widget type="Button" skin="TextBox" position="108 426 144 50" align="Left" name="BtnRace5">
+			<Property key="Caption" value="#{Simulation}"/>
+			<Property key="Colour" value="0.6 0.7 0.8"/>
+			<Property key="TextColour" value="0.8 0.9 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.big"/>
+			<UserString key="tip" value="#{SimulationHelp}"/>
+		</Widget>
+		<Widget type="ComboBox" skin="ComboBox" position="302 420 210 50" name="SimList">
+			<Property key="Static" value="true"/>
+			<Property key="ReadOnly" value="true"/>
+			<Property key="Colour" value="0.7 0.86 1"/>
+			<Property key="TextColour" value="0.7 0.9 1"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="FontName" value="font.big"/>
+		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" position="522 422 50 50">
+			<Property key="ImageCoord" value="0 640 128 128"/>
+			<Property key="Alpha" value="0.7"/>
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+			<UserString key="tip" value="#{SimulationHelp}"/>
+		</Widget>
+
+
+		<Widget type="ImageBox" skin="ImageBox" position="32 484 56 56">
 			<Property key="ImageCoord" value="128 768 128 128"/>
 			<Property key="Alpha" value="0.8"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="92 408 436 72" name="PanRace5">
+		<Widget type="Widget" skin="PanelSkin" position="92 480 436 72" name="PanRace6">
 			<Property key="Colour" value="0.5 0.75 1"/>
 			<Property key="Alpha" value="0.95"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="108 420 404 47" name="BtnRace5">
+		<Widget type="Button" skin="Button" position="108 492 404 47" name="BtnRace6">
 			<Property key="Caption" value="#{HowToPlay}"/>
 			<Property key="Colour" value="0.5 0.75 1"/>
 			<Property key="TextColour" value="0.5 0.8 1"/>
@@ -217,17 +261,17 @@
 			<Property key="FontName" value="font.big"/>
 		</Widget>
 
-		<Widget type="ImageBox" skin="ImageBox" position="32 508 56 56">
+		<Widget type="ImageBox" skin="ImageBox" position="32 580 56 56">
 			<Property key="ImageCoord" value="256 896 128 128"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
-		<Widget type="Widget" skin="PanelSkin" position="92 500 436 72" name="PanRace6">
+		<Widget type="Widget" skin="PanelSkin" position="92 572 436 72" name="PanRace7">
 			<Property key="Colour" value="0.9 0.9 0.9"/>
 			<Property key="Alpha" value="1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="108 512 404 50" name="BtnRace6">
+		<Widget type="Button" skin="Button" position="108 584 404 50" name="BtnRace7">
 			<Property key="Caption" value="&lt;#{BackMenu}"/>
 			<Property key="Colour" value="0.8 0.8 0.8"/>
 			<Property key="TextColour" value="0.9 0.9 0.9"/>

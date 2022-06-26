@@ -654,7 +654,6 @@ void CGui::LNext(int rel)
 		switch (app->mWndTabsGame->getIndexSelected())
 		{	case TAB_Track:  gcom->listTrackChng(gcom->trkList,  LNext(gcom->trkList, rel, 11));  return;
 			case TAB_Car:	 listCarChng(carList,    LNext(carList, rel, 5));  return;
-			case TAB_Game:	 if (rel > 0)  radSimNorm(0);  else  radSimEasy(0);  return;
 			case TAB_Champs:
 				if (isChallGui())
 				      listChallChng(liChalls, LNext(liChalls, rel, 8));

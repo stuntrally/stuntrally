@@ -1615,10 +1615,6 @@
 							<Property key="TextColour" value="0.7 0.9 0.75"/>
 						</Widget>
 
-						<Widget type="Button" skin="RadioButton" position="16 424 426 28" name="SimModeHard">
-							<Property key="Caption" value="#{Simulation}: #{SimModeHard} - #{Test}, HI"/>
-							<Property key="TextColour" value="1.0 0.6 0.3"/>
-						</Widget>
 					</Widget>
 				</Widget>
 			</Widget>

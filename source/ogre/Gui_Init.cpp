@@ -378,12 +378,6 @@ void CGui::InitGui()
 	if (valLocPlayers)  valLocPlayers->setCaption(toStr(pSet->gui.local_players));
 
 
-	//  sim mode radio
-	Btn("SimModeEasy", radSimEasy);  bRsimEasy = btn;  btn->setStateSelected(pSet->gui.sim_mode == "easy");
-	Btn("SimModeNorm", radSimNorm);	 bRsimNorm = btn;  btn->setStateSelected(pSet->gui.sim_mode == "normal");
-	if (mGui->findWidget<Button>("SimModeHard",false))
-	{	Btn("SimModeHard", radSimHard);	 bRsimHard = btn;  btn->setStateSelected(pSet->gui.sim_mode == "hard");  }
-
 	//  kmh/mph radio
 	Btn("kmh", radKmh);  bRkmh = btn;  bRkmh->setStateSelected(!pSet->show_mph);
 	Btn("mph", radMph);	 bRmph = btn;  bRmph->setStateSelected( pSet->show_mph);
