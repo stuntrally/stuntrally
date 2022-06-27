@@ -67,6 +67,13 @@
 					<Property key="TextColour" value="0.9 0.9 0.7"/>
 					<Property key="Colour" value="0.9 0.9 0.7"/>
 				</Widget>
+				<Widget type="Button" skin="Button" position="432 180 300 28" name="OpenWikiInput">
+					<Property key="Caption" value="#{GameControllers}"/>
+					<Property key="TextAlign" value="Center"/>
+					<Property key="TextColour" value="0.9 0.9 0.6"/>
+					<Property key="Colour" value="0.9 0.9 0.6"/>
+				</Widget>
+
 				<Widget type="Button" skin="Button" position="32 220 300 28" name="OpenForum">
 					<Property key="Caption" value="#{Forum}"/>
 					<Property key="TextAlign" value="Center"/>
@@ -97,6 +104,22 @@
 					<Property key="TextColour" value="0.9 0.7 1.0"/>
 					<Property key="Colour" value="0.9 0.7 1.0"/>
 				</Widget>
+
+				<Widget type="TextBox" skin="TextBox" position="32 406 600 24">
+					<Property key="Caption" value="#{UserDir}"/>
+					<Property key="TextColour" value="0.7 0.85 1"/>
+				</Widget>
+				<Widget type="EditBox" skin="EditBox" position="32 430 600 24" name="EdUserDir">
+					<Property key="ReadOnly" value="true"/>
+					<Property key="MultiLine" value="false"/>
+					<Property key="WordWrap" value="false"/>
+					<Property key="VisibleHScroll" value="false"/>
+					<Property key="VisibleVScroll" value="true"/>
+					<Property key="MaxTextLength" value="260"/>
+					<Property key="TextColour" value="0.86 0.94 1"/>
+					<Property key="Colour" value="0.5 0.6 0.7"/>
+				</Widget>
+
 				<Widget type="TextBox" skin="TextBox" position="32 513 180 24">
 					<Property key="Caption" value="#{Language}"/>
 					<Property key="TextColour" value="0.6 0.8 1"/>
@@ -113,38 +136,7 @@
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
 			</Widget>
-			<Widget type="TabItem" skin="" position="2 24 794 562">
-				<Property key="Caption" value="#80C0FF#{Help}"/>
-				<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
-					<Property key="ImageCoord" value="0 640 128 128"/>
-					<Property key="Alpha" value="0.6"/>
-					<Property key="ImageTexture" value="gui_icons.png"/>
-				</Widget>
-				<Widget type="EditBox" skin="EditBoxStretch" position="32 16 600 360" name="QuickHelpText">
-					<Property key="ReadOnly" value="true"/>
-					<Property key="MultiLine" value="true"/>
-					<Property key="WordWrap" value="true"/>
-					<Property key="VisibleHScroll" value="false"/>
-					<Property key="VisibleVScroll" value="true"/>
-					<Property key="MaxTextLength" value="8000"/>
-					<Property key="TextColour" value="0.86 0.94 1.0"/>
-					<Property key="Colour" value="0.5 0.66 0.8"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="32 406 600 24">
-					<Property key="Caption" value="#{UserDir}"/>
-					<Property key="TextColour" value="0.7 0.85 1"/>
-				</Widget>
-				<Widget type="EditBox" skin="EditBox" position="32 430 600 24" name="EdUserDir">
-					<Property key="ReadOnly" value="true"/>
-					<Property key="MultiLine" value="false"/>
-					<Property key="WordWrap" value="false"/>
-					<Property key="VisibleHScroll" value="false"/>
-					<Property key="VisibleVScroll" value="true"/>
-					<Property key="MaxTextLength" value="260"/>
-					<Property key="TextColour" value="0.86 0.94 1"/>
-					<Property key="Colour" value="0.5 0.6 0.7"/>
-				</Widget>
-			</Widget>
+
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#F0E8DC#{Readme}"/>
 				<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
@@ -186,6 +178,7 @@
 					<Property key="Colour" value="0.6 0.65 0.65"/>
 				</Widget>
 			</Widget>
+
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#C0A0B0#{Credits}"/>
 				<Widget type="ImageBox" skin="ImageBox" position="660 48 96 96">
@@ -204,6 +197,7 @@
 					<Property key="Colour" value="0.65 0.65 0.65"/>
 				</Widget>
 			</Widget>
+
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#D0C0FF#{About}"/>
 				<Widget type="ImageBox" skin="ImageBox" position="2 0 790 269">
@@ -259,6 +253,7 @@
 			</Widget>
 		</Widget>
 	</Widget>
+
 
 	<Widget type="Window" skin="WindowC" position="1732 844 800 600" align="Center" layer="Popup" name="WelcomeWnd">
 		<Property key="MinSize" value="500 400"/>
@@ -351,6 +346,7 @@
 			</Widget>
 		</Widget>
 	</Widget>
+
 
 	<Widget type="Window" skin="WindowC" position="1732 844 800 600" align="Center" layer="Popup" name="HowToPlayWnd">
 		<Property key="MinSize" value="500 400"/>

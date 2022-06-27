@@ -73,6 +73,7 @@
 	<Tag name="Sources">Sources</Tag>
 	<Tag name="TrackEditorTutorial">Track Editor Tutorials</Tag>
 	<Tag name="Translations">Translations</Tag>
+	<Tag name="GameControllers">Game Controllers</Tag>
 	<Tag name="Donations">Donations</Tag>
 
 
@@ -584,6 +585,8 @@
 	<Tag name="NetMasterPort">Master Server Port</Tag>
 	<Tag name="NetLocalPort">Local Port</Tag>
 	<Tag name="NetRouterTip">Router port forwarding configuration might be required in order to allow peers to connect to the local port.</Tag>
+	<Tag name="MultiplayerTip">Hosting a multiplayer game requires port forwarding. Connecting to existing game doesn't need it, provided other players have it.</Tag>
+
 
 
 	<!--  Effects  Main -->
@@ -1596,8 +1599,7 @@
 
 	<!--  Game  User Path  -->
 	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
-	<!--  MAIN  Game  Quick Help  (@ is used for new line)  -->
-	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@@If you have a game controller see:@https://stuntrally.tuxfamily.org/wiki/doku.php?id=running##controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@https://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.</Tag>
+
 	<!--  TIP  Slider  -->
 	<Tag name="TipSliderReset">RMB on slider - reset to default value.</Tag>
 

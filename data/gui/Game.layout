@@ -1371,37 +1371,27 @@
 							<Property key="Colour" value="0.4 1 1"/>
 							<Property key="TextColour" value="0.5 1 1.0"/>
 						</Widget>
-						<Widget type="EditBox" skin="WordWrapEmpty" position="20 128 588 64" name="RouterTip">
+
+						<Widget type="EditBox" skin="WordWrapEmpty" position="20 128 488 70" name="MultiplayerTip">
 							<Property key="ReadOnly" value="true"/>
 							<Property key="MultiLine" value="true"/>
 							<Property key="WordWrap" value="true"/>
 							<Property key="VisibleHScroll" value="false"/>
 							<Property key="VisibleVScroll" value="true"/>
-							<Property key="TextColour" value="0.8 0.6 0.45"/>
+							<Property key="TextColour" value="0.8 0.8 1.0"/>
+							<Property key="Caption" value="#{MultiplayerTip}"/>
+						</Widget>
+						<Widget type="EditBox" skin="WordWrapEmpty" position="20 208 488 70" name="RouterTip">
+							<Property key="ReadOnly" value="true"/>
+							<Property key="MultiLine" value="true"/>
+							<Property key="WordWrap" value="true"/>
+							<Property key="VisibleHScroll" value="false"/>
+							<Property key="VisibleVScroll" value="true"/>
+							<Property key="TextColour" value="0.8 0.7 0.6"/>
 							<Property key="Caption" value="#{NetRouterTip}"/>
 						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 320 156 24">
-							<Property key="Caption" value="#{NetMasterIp}"/>
-							<Property key="TextColour" value="0.6 0.6 0.8"/>
-							<Property key="Alpha" value="0.7"/>
-						</Widget>
-						<Widget type="TextBox" skin="TextBox" position="20 358 156 24">
-							<Property key="Caption" value="#{NetMasterPort}"/>
-							<Property key="TextColour" value="0.6 0.6 1.0"/>
-							<Property key="Alpha" value="0.7"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="180 316 136 26" name="edNetServerIP">
-							<Property key="Colour" value="0.8 0.8 1"/>
-							<Property key="TextColour" value="0.8 0.8 1"/>
-							<Property key="Caption" value="127.0.0.1"/>
-							<Property key="Alpha" value="0.7"/>
-						</Widget>
-						<Widget type="EditBox" skin="EditBox" position="180 354 136 24" name="edNetServerPort">
-							<Property key="Colour" value="0.7 0.7 1"/>
-							<Property key="TextColour" value="0.7 0.7 1"/>
-							<Property key="Alpha" value="0.7"/>
-						</Widget>
 					</Widget>
+
 					<Widget type="TabItem" skin="" position="2 24 738 469">
 						<Property key="Caption" value="#604040#{NetServer}"/>
 						<Widget type="ImageBox" skin="ImageBox" position="660 2 56 56">
@@ -1437,6 +1427,28 @@
 						<Widget type="Widget" skin="PanelSkin" position="0 0 800 500" layer="Popup" name="panelNetServer2">
 							<Property key="Colour" value="0.8 0.96 1"/>
 							<Property key="Alpha" value="0.8"/>
+						</Widget>
+
+						<Widget type="TextBox" skin="TextBox" position="20 320 156 24">
+							<Property key="Caption" value="#{NetMasterIp}"/>
+							<Property key="TextColour" value="0.6 0.6 0.8"/>
+							<Property key="Alpha" value="0.7"/>
+						</Widget>
+						<Widget type="TextBox" skin="TextBox" position="20 358 156 24">
+							<Property key="Caption" value="#{NetMasterPort}"/>
+							<Property key="TextColour" value="0.6 0.6 1.0"/>
+							<Property key="Alpha" value="0.7"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 316 136 26" name="edNetServerIP">
+							<Property key="Colour" value="0.8 0.8 1"/>
+							<Property key="TextColour" value="0.8 0.8 1"/>
+							<Property key="Caption" value="127.0.0.1"/>
+							<Property key="Alpha" value="0.7"/>
+						</Widget>
+						<Widget type="EditBox" skin="EditBox" position="180 354 136 24" name="edNetServerPort">
+							<Property key="Colour" value="0.7 0.7 1"/>
+							<Property key="TextColour" value="0.7 0.7 1"/>
+							<Property key="Alpha" value="0.7"/>
 						</Widget>
 					</Widget>
 				</Widget>

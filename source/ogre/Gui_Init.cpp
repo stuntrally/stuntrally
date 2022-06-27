@@ -576,12 +576,6 @@ void CGui::InitGui()
 	Edt(edNetLocalPort,	"edNetLocalPort",	evEdNetLocalPort);	edNetLocalPort->setCaption(	toStr(pSet->local_port));
 
 
-	//  quick help text  ----
-	Ed edHelp = fEd("QuickHelpText");
-	String s = TR("#{QuickHelpText}");
-	s = StringUtil::replaceAll(s, "@", "\n");
-	edHelp->setCaption(s);
-
 	//  user dir
 	Ed edUserDir = fEd("EdUserDir");
 	edUserDir->setCaption(PATHMANAGER::UserConfigDir());
@@ -850,14 +844,11 @@ void CGui::InitGui()
 
 
 	//  open url btns  -------------
-	Btn("OpenWelcome", btnWelcome);
-	Btn("OpenWebsite", btnWebsite);
-	Btn("OpenWiki", btnWiki);
-	Btn("OpenForum", btnForum);
-	Btn("OpenEdTut", btnEdTut);
-	Btn("OpenTransl", btnTransl);
-	Btn("OpenDonations", btnDonations);
-
+	Btn("OpenWelcome", btnWelcome);  Btn("OpenWebsite", btnWebsite);
+	Btn("OpenForum", btnForum);  Btn("OpenDonations", btnDonations);
+	//  wiki
+	Btn("OpenWiki", btnWiki);  Btn("OpenWikiInput", btnWikiInput);
+	Btn("OpenEdTut", btnEdTut);  Btn("OpenTransl", btnTransl);  // mplr?
 
 	bGI = true;  // gui inited, gui events can now save vals
 

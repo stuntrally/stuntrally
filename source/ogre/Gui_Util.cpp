@@ -731,6 +731,11 @@ void CGui::btnWiki(WP)
 {
 	gcom->OpenBrowserUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=features");
 }
+void CGui::btnWikiInput(WP)
+{
+	gcom->OpenBrowserUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=running##controllers");
+}
+
 void CGui::btnForum(WP)
 {
 	gcom->OpenBrowserUrl("https://forum.freegamedev.net/viewforum.php?f=77");

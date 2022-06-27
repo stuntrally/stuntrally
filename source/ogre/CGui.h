@@ -540,6 +540,6 @@ public:
 	Ed edNetServerPort =0, edNetServerIP =0;   void evEdNetServerPort(Ed), evEdNetServerIP(Ed);
 
 	//  open urls
-	void btnWelcome(WP), btnWebsite(WP), btnWiki(WP);
+	void btnWelcome(WP), btnWebsite(WP), btnWiki(WP), btnWikiInput(WP);
 	void btnForum(WP), btnEdTut(WP), btnTransl(WP), btnDonations(WP);
 };
