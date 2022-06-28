@@ -319,10 +319,6 @@
 	<Tag name="ReverseStartOrder">Odwróć pozycje startowe</Tag>
 	<Tag name="NumLaps">Liczba okrążeń</Tag>
 	<Tag name="Simulation">Symulacja</Tag>
-	<Tag name="SimMode">Typ symulacji (trudność)</Tag>
-	<Tag name="SimModeEasy">Łatwy (początkujący)</Tag>
-	<Tag name="SimModeNormal">Normalny (symulacja)</Tag>
-	<Tag name="SimModeHard">Trudny</Tag>
 	<Tag name="Replay">Powtórka</Tag>
 	<Tag name="RplLoad">Wczytaj</Tag>
 	<Tag name="RplSave">Zapisz</Tag>
@@ -1025,15 +1021,15 @@
 	<Tag name="CarDesc_UV">Ten pojazd użytkowy z wielkimi kołami, napędzają 4 silniki elektryczne. Dobry na większość tras gdy nie jest wąsko. Świetny do zwiedzania innych planet. Ale ma złą aerodynamikę i utyka w błocie.</Tag>
 	<Tag name="CarDesc_MO">Wielki i ciężki monster truck. Radzi sobie bardzo dobrze z terenem i skokami. Ale przez rozmiar, ma problemy wszędzie gdzie ciasno, nawet na mostach.</Tag>
 	<Tag name="CarDesc_U8">Wielki i ciężki pojazd do eksploracji z napędem na 8 kół. Świetny na każdej planecie dla całego zespołu.</Tag>
-	<Tag name="CarDesc_3B">Very fast, futuristic racing vehicle. Uses 3 stabilized spheres to drive. Not the best for bridges, mud or pipes.</Tag>
+	<Tag name="CarDesc_3B">Bardzo szybki, futurystyczny pojazd wyśligowy. Napęd składa się z 3 stabilizowanych sfer. Nie najlepszy do mostów, błota i rur.</Tag>
 	<Tag name="CarDesc_BE">Normalnej wielkości motor. Lekki i szybki.</Tag>
 	<Tag name="CarDesc_BV">Wielki motor z zaawansowanym silnikiem elektrycznym. Ekstremalnie szybki i lekki. Również świetny do zwiedzania innych planet. Nie daje rady złym lądowaniom po skoku ani wybojom.</Tag>
-	<Tag name="CarDesc_U6">Extremely fast, 6 wheels driving with advanced electric engine. Great for racing on all planets. Quite heavy but agile. Caution: it can spin wheels easily, it has 1 gear only.</Tag>
+	<Tag name="CarDesc_U6">Ekstremalnie szybki pojazd z zaawansowanym elektrycznym napędem na 6 kół. Świetny do wyścigów na wszystkich planetach. Dość ciężki ale zwrotny. Uwaga: może łatwo kręcić kołami w miejscu, ma tylko 1 bieg.</Tag>
 	<Tag name="CarDesc_SZ">Najszybsze auto na szuter. Lekkie i z mocnym silnikiem. Ma świetną aerodynamikę i sterowność.</Tag>
 	<Tag name="CarDesc_XZ">Auto z bardzo mocnym silnikiem, na większość tras. Niedobre na wyboje z powodu niskiego i sztywnego zawieszenia. Dodatkowo tak duży moment obrotowy powoduje więcej buksowania kół.</Tag>
-	<Tag name="CarDesc_SX">Very tuned and powerful car. Drivable on all tracks. Not best on bumps. Can spin wheels easily.</Tag>
+	<Tag name="CarDesc_SX">Bardzo dostosowany i mocny samochód. Może jeździć na wszystkich trasach. Nie najlepszy na wyboje. Może łatwo kręcić kołami w miejscu.</Tag>
 	<Tag name="CarDesc_Y7">Ekstremalnie szybkie auto. Nie trzymaj gazu za długo. Jeździ dobrze tylko po szybkich, gładkich trasach.</Tag>
-	<Tag name="CarDesc_PH">Another extremely powerful and fast car. Don't press throttle for too long. Drivable only on fast smooth tracks. Due to length and low suspension.</Tag>
+	<Tag name="CarDesc_PH">Kolejny ekstremalnie mocny i szybki samochód. Nie dodawaj gazu zbyt długo. Jeździ tylko na szybkich i gładkich trasach. Z powodu gługości i niskiego zawieszenia.</Tag>
 	<Tag name="CarDesc_V1">Statek kosmiczny przerobiony na poduszkowiec. Bardzo szybki i łatwy w prowadzeniu. Nie przeszkadają mu wyboje terenu. Ale jest mały i ślizga się bokiem.</Tag>
 	<Tag name="CarDesc_V2">Kolejny unoszący się statek. Trochę cięższy i wolniejszy, ale nie ślizga się bokiem tak łatwo.</Tag>
 	<Tag name="CarDesc_V3">Duży i ciężki statek. Bardzo dobre przyśpieszenie na początku i mocne hamowanie. Ale nie osiąga dużych prędkości.</Tag>
@@ -1074,7 +1070,6 @@
 	<Tag name="Hint-16">Kamera</Tag>
 	<Tag name="Hint-16text">Naciśnij [C] dla następnego lub [X] dla poprzedniego widoku kamery. Przytrzymaj shift by przełączać tylko między głównymi kamerami.</Tag>
 	<Tag name="UserDir">Katalog użytkownika (logi, konfigi, dane, itp.)</Tag>
-	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@@If you have a game controller see:@https://stuntrally.tuxfamily.org/wiki/doku.php?id=running##controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@https://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.</Tag>
 	<Tag name="TipSliderReset">Prawy przycisk myszy na suwaku - ustaw domyślną wartość.</Tag>
 	<Tag name="TipLoadTrkEditor">Wczytaj trasę (po zmianie) lub Przeładuj obecną.</Tag>
 	<Tag name="TipTrkScreenEditor">Zrzut z gry dla wybranej trasy.</Tag>
@@ -1204,8 +1199,13 @@
 	<Tag name="LANG_nl_NL">Nederlands</Tag>
 	<Tag name="LANG_hu_HU">Magyar</Tag>
 	<Tag name="HowToPlay">How To Play</Tag>
+	<Tag name="GameControllers">Game Controllers</Tag>
+	<Tag name="DifficultyHelp">Changing difficulty does set: Tracks list filter and sorting, selected Vehicle and Track, visible HUD elements and driving aids. All can be changed manually later.</Tag>
+	<Tag name="SimulationHelp">Simulation mode does change how realistic vehicles are and how difficult driving is. It also changes damage mode and how fast vehicles break after hits. In Easy mode - vehicles are slow, feel heavy and cars don't slide much. In Medium - they are fast, slide and will spin wheels on snow and can on gravel. In Hard - cars rotate easier, and wheels spin already on gravel, good control is required.</Tag>
 	<Tag name="Alligator">Alligator</Tag>
 	<Tag name="SC_GreeceRocky">GreeceRocky</Tag>
+	<Tag name="SplitScreen">Split Screen</Tag>
+	<Tag name="MultiplayerTip">Hosting a multiplayer game requires port forwarding. Connecting to existing game doesn't need it, provided other players have it.</Tag>
 	<Tag name="RacingLine">Racing Line (trail)</Tag>
 	<Tag name="InputToggleFog">G - toggle Fog</Tag>
 	<Tag name="InputToggleWeather">I - toggle Weather</Tag>

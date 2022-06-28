@@ -319,10 +319,6 @@
 	<Tag name="ReverseStartOrder">Reverse starting order</Tag>
 	<Tag name="NumLaps">Kierrosten lukumäärä</Tag>
 	<Tag name="Simulation">Simulaatio</Tag>
-	<Tag name="SimMode">Simulaatio (vaikeusaste)</Tag>
-	<Tag name="SimModeEasy">Helppo (aloittelija)</Tag>
-	<Tag name="SimModeNormal">Tavallinen (simulaatio)</Tag>
-	<Tag name="SimModeHard">Hard (difficult)</Tag>
 	<Tag name="Replay">Uusinta</Tag>
 	<Tag name="RplLoad">Lataa</Tag>
 	<Tag name="RplSave">Tallenna</Tag>
@@ -1074,7 +1070,6 @@
 	<Tag name="Hint-16">Camera</Tag>
 	<Tag name="Hint-16text">Press [C] for next or [X] for previous camera view. Hold shift for main cameras only.</Tag>
 	<Tag name="UserDir">User Path (logs, configs, user data, etc)</Tag>
-	<Tag name="QuickHelpText">----  Quick help  ----@@Use mouse or Up,Down,Enter,Backspace to navigate through menu.@@To adjust resolution go to Options tab Screen,@use Graphics presets to quickly adjust graphics to your hardware.@@To see all keys used in game and configure input goto Options, tab Input.@@If you have a game controller see:@https://stuntrally.tuxfamily.org/wiki/doku.php?id=running##controllers@@Hosting a multiplayer game requires port forwarding.@Connecting to existing game doesn't need it, provided other players have it.@@If you have problems or suggestions use our Forum:@https://forum.freegamedev.net/viewforum.php?f=77@@For more info see Readme and our project's Wiki pages.</Tag>
 	<Tag name="TipSliderReset">RMB on slider - reset to default value.</Tag>
 	<Tag name="TipLoadTrkEditor">Lataa rata (muutoksien jälkeen) tai uudelleen lataa nykyinen rata.</Tag>
 	<Tag name="TipTrkScreenEditor">Kuvankaappaus pelitilanteesta valitulla radalla.</Tag>
@@ -1204,8 +1199,13 @@
 	<Tag name="LANG_nl_NL">Nederlands</Tag>
 	<Tag name="LANG_hu_HU">Magyar</Tag>
 	<Tag name="HowToPlay">How To Play</Tag>
+	<Tag name="GameControllers">Game Controllers</Tag>
+	<Tag name="DifficultyHelp">Changing difficulty does set: Tracks list filter and sorting, selected Vehicle and Track, visible HUD elements and driving aids. All can be changed manually later.</Tag>
+	<Tag name="SimulationHelp">Simulation mode does change how realistic vehicles are and how difficult driving is. It also changes damage mode and how fast vehicles break after hits. In Easy mode - vehicles are slow, feel heavy and cars don't slide much. In Medium - they are fast, slide and will spin wheels on snow and can on gravel. In Hard - cars rotate easier, and wheels spin already on gravel, good control is required.</Tag>
 	<Tag name="Alligator">Alligator</Tag>
 	<Tag name="SC_GreeceRocky">GreeceRocky</Tag>
+	<Tag name="SplitScreen">Split Screen</Tag>
+	<Tag name="MultiplayerTip">Hosting a multiplayer game requires port forwarding. Connecting to existing game doesn't need it, provided other players have it.</Tag>
 	<Tag name="RacingLine">Racing Line (trail)</Tag>
 	<Tag name="InputToggleFog">G - toggle Fog</Tag>
 	<Tag name="InputToggleWeather">I - toggle Weather</Tag>
