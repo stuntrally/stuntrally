@@ -12,44 +12,45 @@
 	<!-- global multipliers for vehicle factors, magic - see App::GetRacePos -->
 	<global easy="0.94" norm="0.95" magic="0.010"/>
 
-<!-- id  o wheels  m name  v created in sr version  w width  d difficulty  s speed  y year  t type  e easy  n normal  a author  -->
-	<car id="OT"  o="4" m="Turtle"      v="2.1" r="1" w="3" d="1" s="0.4" y="1965" t="Slow"      e="0.66" n="0.67"  a="irokrhus" />
+<!-- id  o wheels  m name         v created in SR version                       b bumps  j jumps  l loops  p pipes - intolerances for GetTrkDrivability
+                          r rating*  w width  d difficulty  s speed  y year  t type                                 e easy  n normal   a author  -->
+<c id="OT"  o="4" m="Turtle"      v="2.1" r="1" w="3" d="1" s="0.4" y="1965" t="Slow"      b="1" j="3" l="4" p="2"  e="0.66" n="0.67"  a="irokrhus" />
  
-	<car id="FR4" o="4" m="Elephant"    v="2.1" r="1" w="3" d="2" s="1.8" y="1986" t="Terrain"   e="0.86" n="0.90"  a="computergeekman" />
-	<car id="HR"  o="4" m="Alligator"   v="2.1" r="1" w="3" d="2" s="2.4" y="1996" t="Terrain"   e="0.88" n="0.93"  a="thiagohenrinrique" />
-	<car id="LK4" o="4" m="Bison"       v="2.0" r="1" w="3" d="2" s="2.7" y="2008" t="Terrain"   e="0.89" n="0.94"  a="clarabox" />
+<c id="FR4" o="4" m="Elephant"    v="2.1" r="1" w="3" d="2" s="1.8" y="1986" t="Terrain"   b="0" j="2" l="2" p="1"  e="0.86" n="0.90"  a="computergeekman" />
+<c id="HR"  o="4" m="Alligator"   v="2.1" r="1" w="3" d="2" s="2.4" y="1996" t="Terrain"   b="1" j="1" l="1" p="1"  e="0.88" n="0.93"  a="thiagohenrinrique" />
+<c id="LK4" o="4" m="Bison"       v="2.0" r="1" w="3" d="2" s="2.7" y="2008" t="Terrain"   b="1" j="1" l="2" p="2"  e="0.89" n="0.94"  a="clarabox" />
  
-    <car id="U8"  o="8" m="Caterpillar" v="2.7" r="2" w="3" d="4" s="3.0" y="2123" t="Slow"      e="0.80" n="0.885" a="stundif" />
-	<car id="MO"  o="4" m="Rhino"       v="2.7" r="1" w="6" d="6" s="3.5" y="2005" t="Extreme"   e="0.77" n="0.85"  a="aleksandr.yatsenco" />
-	<car id="UV"  o="4" m="Bear"        v="2.1" r="2" w="5" d="5" s="4.0" y="2008" t="Extreme"   e="0.87" n="0.965" a="greyoxide" />
+<c id="U8"  o="8" m="Caterpillar" v="2.7" r="2" w="3" d="4" s="3.0" y="2123" t="Slow"      b="1" j="1" l="4" p="3"  e="0.80" n="0.885" a="stundif" />
+<c id="MO"  o="4" m="Rhino"       v="2.7" r="1" w="6" d="6" s="3.5" y="2005" t="Extreme"   b="1" j="0" l="3" p="3"  e="0.77" n="0.85"  a="aleksandr.yatsenco" />
+<c id="UV"  o="4" m="Bear"        v="2.1" r="2" w="5" d="5" s="4.0" y="2008" t="Extreme"   b="1" j="0" l="1" p="1"  e="0.87" n="0.965" a="greyoxide" />
  
-	<car id="FN"  o="4" m="Coyote"      v="2.4" r="2" w="3" d="3" s="5.5" y="2000" t="Gravel"    e="1.00" n="1.005" a="Neubi" />
-	<car id="S8"  o="4" m="Squirrel"    v="2.0" r="3" w="3" d="3" s="6.0" y="2008" t="Gravel"    e="0.96" n="1.00"  a="lubomircenovsky" />
-	<car id="ES"  o="4" m="Fox"         v="1.2" r="4" w="3" d="3" s="6.1" y="2006" t="Gravel"    e="1.00" n="1.01"  a="VeTi" />
-	<car id="HI"  o="4" m="Hyena"       v="2.7" r="5" w="3" d="3" s="6.2" y="2014" t="Gravel"    e="1.00" n="1.01"  a="ANDREO12" />
+<c id="FN"  o="4" m="Coyote"      v="2.4" r="2" w="3" d="3" s="5.5" y="2000" t="Gravel"    b="0" j="0" l="0" p="0"  e="1.00" n="1.005" a="Neubi" />
+<c id="S8"  o="4" m="Squirrel"    v="2.0" r="3" w="3" d="3" s="6.0" y="2008" t="Gravel"    b="0" j="0" l="0" p="0"  e="0.96" n="1.00"  a="lubomircenovsky" />
+<c id="ES"  o="4" m="Fox"         v="1.2" r="4" w="3" d="3" s="6.1" y="2006" t="Gravel"    b="0" j="0" l="0" p="0"  e="1.00" n="1.01"  a="VeTi" />
+<c id="HI"  o="4" m="Hyena"       v="2.7" r="5" w="3" d="3" s="6.2" y="2014" t="Gravel"    b="0" j="0" l="0" p="0"  e="1.00" n="1.01"  a="ANDREO12" />
  
  
-	<car id="TW"  o="4" m="Gorilla"     v="2.1" r="3" w="6" d="5" s="7.0" y="2011" t="Extreme"   e="0.93" n="0.94"  a="irokrhus" />
-	<car id="TU"  o="4" m="Lizard"      v="2.4" r="3" w="5" d="4" s="7.3" y="2012" t="Extreme"   e="0.96" n="0.99"  a="carlospanganiban" />
+<c id="TW"  o="4" m="Gorilla"     v="2.1" r="3" w="6" d="5" s="7.0" y="2011" t="Extreme"   b="0" j="0" l="0" p="0"  e="0.93" n="0.94"  a="irokrhus" />
+<c id="TU"  o="4" m="Lizard"      v="2.4" r="3" w="5" d="4" s="7.3" y="2012" t="Extreme"   b="0" j="0" l="0" p="0"  e="0.96" n="0.99"  a="carlospanganiban" />
  
-	<car id="SZ"  o="4" m="Weasel"      v="2.4" r="4" w="3" d="3" s="8.0" y="1996" t="Gravel"    e="0.97" n="1.03"  a="cobe571" />
-	<car id="XZ"  o="4" m="Wolf"        v="2.0" r="4" w="3" d="3" s="8.4" y="2007" t="Asphalt"   e="1.02" n="1.04"  a="Neubi" />
-
-	<car id="3B"  o="3" m="Scorpion"    v="2.7" r="2" w="6" d="6" s="8.5" y="2773" t="Extreme"   e="1.00" n="1.025" a="Valery Kharitonov" />
-	<car id="BV"  o="2" m="Buffalo"     v="2.6" r="3" w="2" d="3" s="8.6" y="2381" t="Extreme"   e="1.01" n="1.04"  a="gakpoenya" />
-	<car id="BE"  o="2" m="Gazelle"     v="2.7" r="3" w="1" d="3" s="8.6" y="2334" t="Gravel"    e="1.01" n="1.04"  a="TooManyDemons" />
-
-	<car id="SX"  o="4" m="Jaguar"      v="2.0" r="5" w="3" d="3" s="8.7" y="2017" t="Asphalt"   e="1.02" n="1.04"  a="Socksthecat" />
-	<car id="PH"  o="4" m="Puma"        v="2.7" r="4" w="3" d="4" s="8.8" y="2017" t="Asphalt"   e="1.06" n="1.05"  a="Abhay Singh" />
-	<car id="Y7"  o="4" m="Leopard"     v="2.6" r="4" w="3" d="4" s="8.8" y="2013" t="Asphalt"   e="1.06" n="1.05"  a="hasapeta" />
+<c id="SZ"  o="4" m="Weasel"      v="2.4" r="4" w="3" d="3" s="8.0" y="1996" t="Gravel"    b="0" j="0" l="0" p="0"  e="0.97" n="1.03"  a="cobe571" />
+<c id="XZ"  o="4" m="Wolf"        v="2.0" r="4" w="3" d="3" s="8.4" y="2007" t="Asphalt"   b="1" j="0" l="0" p="0"  e="1.02" n="1.04"  a="Neubi" />
  
-    <car id="U6"  o="6" m="Beetle"      v="2.7" r="3" w="4" d="4" s="9.0" y="2412" t="Extreme"   e="1.01" n="1.04"  a="gakpoenya, carlospanganiban, CryHam" />
-
-	<car id="V2"  o="0" m="Swan"        v="2.4" r="3" w="2" d="2" s="9.4" y="2516" t="Spaceship" e="1.00" n="1.13"  a="sypro" />
-	<car id="V1"  o="0" m="Duck"        v="2.4" r="2" w="2" d="3" s="9.6" y="2523" t="Spaceship" e="1.04" n="1.16"  a="benja" />
-	<car id="V3"  o="0" m="Hawk"        v="2.4" r="3" w="2" d="3" s="9.8" y="2548" t="Spaceship" e="1.10" n="1.20"  a="jumahsafarty" />
-
-	<car id="O"   o="1" m="Rabbit"      v="2.4" r="4" w="2" d="3" s="10.2" y="2785" t="Other"    e="1.10" n="1.17"  a="CryHam" />
+<c id="3B"  o="3" m="Scorpion"    v="2.7" r="2" w="6" d="6" s="8.5" y="2773" t="Extreme"   b="1" j="1" l="2" p="4"  e="1.00" n="1.025" a="Valery Kharitonov" />
+<c id="BV"  o="2" m="Buffalo"     v="2.6" r="3" w="2" d="3" s="8.6" y="2381" t="Extreme"   b="0" j="0" l="0" p="1"  e="1.01" n="1.04"  a="gakpoenya" />
+<c id="BE"  o="2" m="Gazelle"     v="2.7" r="3" w="1" d="3" s="8.6" y="2334" t="Gravel"    b="1" j="0" l="0" p="1"  e="1.01" n="1.04"  a="TooManyDemons" />
+ 
+<c id="SX"  o="4" m="Jaguar"      v="2.0" r="5" w="3" d="3" s="8.7" y="2017" t="Asphalt"   b="1" j="0" l="0" p="0"  e="1.02" n="1.04"  a="Socksthecat" />
+<c id="PH"  o="4" m="Puma"        v="2.7" r="4" w="3" d="4" s="8.8" y="2017" t="Asphalt"   b="2" j="1" l="0" p="0"  e="1.06" n="1.05"  a="Abhay Singh" />
+<c id="Y7"  o="4" m="Leopard"     v="2.6" r="4" w="3" d="4" s="8.8" y="2013" t="Asphalt"   b="2" j="1" l="0" p="0"  e="1.06" n="1.05"  a="hasapeta" />
+ 
+<c id="U6"  o="6" m="Beetle"      v="2.7" r="3" w="4" d="4" s="9.0" y="2412" t="Extreme"   b="0" j="0" l="0" p="0"  e="1.01" n="1.04"  a="gakpoenya, carlospanganiban, CryHam" />
+ 
+<c id="V2"  o="0" m="Swan"        v="2.4" r="3" w="2" d="2" s="9.4" y="2516" t="Spaceship" b="0" j="0" l="4" p="4"  e="1.00" n="1.13"  a="sypro" />
+<c id="V1"  o="0" m="Duck"        v="2.4" r="2" w="2" d="3" s="9.6" y="2523" t="Spaceship" b="0" j="0" l="4" p="4"  e="1.04" n="1.16"  a="benja" />
+<c id="V3"  o="0" m="Hawk"        v="2.4" r="3" w="2" d="3" s="9.8" y="2548" t="Spaceship" b="0" j="0" l="4" p="4"  e="1.10" n="1.20"  a="jumahsafarty" />
+ 
+<c id="O"   o="1" m="Rabbit"      v="2.4" r="4" w="2" d="3" s="10.2" y="2785" t="Other"    b="0" j="0" l="4" p="4"  e="1.10" n="1.17"  a="CryHam" />
 
 	<!-- e and n - are the vehicle time multipliers for simultation modes - easy and normal
 		Less means bigger track time (more points, easier to qualify).

@@ -219,6 +219,8 @@
 	<Tag name="CarSpeed">Speed</Tag>
 	<Tag name="CarYear">Year</Tag>
 	<Tag name="CarType">Type</Tag>
+	<Tag name="TrackDrivability">Track Drivability</Tag>
+	<Tag name="Undrivable">Undrivable</Tag>
 	
 	<!--  MAIN  Car Stats  -->
 	<Tag name="Car_Mass">Mass</Tag>
@@ -360,8 +362,8 @@
 	<!--  TIP  Track  -->
 	<Tag name="TipTrackDesc">Track description text.</Tag>
 	<Tag name="TipTrackImg">In game screenshot for selected track.</Tag>
-	<Tag name="TipTrkTerImg">Minimap of selected track, view from top.</Tag>
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
+	<Tag name="TipClickMax">Click to maximize. Then click to close.</Tag>
 	<Tag name="TipTrkViewShort">Short list view.</Tag>
 	<Tag name="TipTrkViewDetailed">Detailed list view.</Tag>
 

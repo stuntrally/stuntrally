@@ -507,9 +507,10 @@ void CGui::InitGui()
 		txCarStVals[i] = fTxt("csv"+toStr(i));
 		barCarSt[i] = fImg("cb"+toStr(i));
 	}
-	txCarSpeed = fTxt("CarSpeed");  txCarType = fTxt("CarType");  txCarYear = fTxt("CarYear");
+	txCarSpeed = fTxt("CarSpeed");  barCarSpeed = fImg("CarSpeedBar");
+	txCarType = fTxt("CarType");  txCarYear = fTxt("CarYear");
 	txCarRating = fTxt("CarRating");  txCarDiff = fTxt("CarDiff");  txCarWidth = fTxt("CarWidth");
-	barCarSpeed = fImg("CarSpeedBar");
+	txTrkDrivab = fTxt("txTrkDrivab");  imgTrkDrivab = fImg("imgTrkDrivab");
 	txCarAuthor = fTxt("CarAuthor");  txTrackAuthor = fTxt("TrackAuthor");
 
 	tbPlr  = fTab("SubTabPlayer");   Tev(tbPlr, Player);
@@ -659,8 +660,9 @@ void CGui::InitGui()
 	li->addColumn("#C0C0E0""!"/*+TR("#{Difficulty}")*/, colCar[n++]);
 	li->addColumn("#80A0E0""-"/*+TR("#{Road_Width}")*/, colCar[n++]);
 	li->addColumn("#B0B0B0""o", colCar[n++]);
-	li->addColumn("#B0B8C0"+TR("#{CarYear}"), colCar[n++]);
-	// li->addColumn("#C0C0E0"+TR("#{CarType}"), colCar[n++]);
+	li->addColumn("#B0B8C0""%", colCar[n++]);  // drivability
+	//li->addColumn("#B0B8C0"+TR("#{CarYear}"), colCar[n++]);
+	//li->addColumn("#C0C0E0"+TR("#{CarType}"), colCar[n++]);
 	li->addColumn(" ", colCar[n++]);
 	carList = li;
 
@@ -682,7 +684,7 @@ void CGui::InitGui()
 	///  tracks list, text, chg btn
 	//------------------------------------------------------------------------
 
-	gcom->trkDesc[0] = fEd("TrackDesc");  gcom->trkAdvice[0] = fEd("TrackAdvice");
+	gcom->trkDesc[0] = fEd("TrackDesc0");  gcom->trkAdvice[0] = fEd("TrackAdvice0");
 	gcom->sListTrack = pSet->gui.track;
 
 	gcom->GuiInitTrack();
@@ -703,32 +705,45 @@ void CGui::InitGui()
 	//<UserString key="RelativeTo" value="OptionsWnd"/>
 
 	//  new game
-	for (i=1; i<=4; ++i)
-	{	Btn("NewGame"+toStr(i), btnNewGame);  if (i==2)  btNewGameCar = btn;  }
+	for (i=0; i <= 3; ++i)
+	{	Btn("NewGame"+toStr(i), btnNewGame);  if (i==1)  btNewGameCar = btn;  }
 
 
 	//  championships
 	//------------------------------------------------------------------------
 
 	//  track stats 2nd set
-	gcom->trkDesc[1] = fEd("TrackDesc2");  gcom->trkAdvice[1] = fEd("TrackAdvice2");
+	gcom->trkDesc[1] = fEd("TrackDesc1");  gcom->trkAdvice[1] = fEd("TrackAdvice1");
 	valTrkNet = fTxt("TrackText");
 
 	//  preview images
-	for (i=1; i < 3; ++i)
-	{	string s = toStr(i+1);
-		gcom->imgPrv[i] = fImg("TrackImg"+s);   gcom->imgPrv[i]->setImageTexture("PrvView");
-		gcom->imgTer[i] = fImg("TrkTerImg"+s);  gcom->imgTer[i]->setImageTexture("PrvTer");
-		gcom->imgMini[i] = fImg("TrackMap"+s);  gcom->imgMini[i]->setImageTexture("PrvRoad");
+	for (i=0; i < 3; ++i)
+	{	string s = toStr(i);
+		if (i < 2)
+		{	ImgB(gcom->imgPrv[i], "TrackImg" +s, ImgPrvClk);
+			ImgB(gcom->imgTer[i], "TrkTerImg"+s, ImgTerClk);
+			ImgB(gcom->imgMini[i],"TrackMap" +s, ImgTerClk);
+		}else{
+			ImgB(gcom->imgPrv[i], "TrackImg" +s, ImgPrvClose);
+			ImgB(gcom->imgTer[i], "TrkTerImg"+s, ImgPrvClose);
+			ImgB(gcom->imgMini[i],"TrackMap" +s, ImgPrvClose);
+		}
 		gcom->initMiniPos(i);
 	}
+	for (i=0; i < 3; ++i)
+	{	gcom->imgPrv[i]->setImageTexture("PrvView");
+  		gcom->imgTer[i]->setImageTexture("PrvTer");
+  		gcom->imgMini[i]->setImageTexture("PrvRoad");
+	}
+
 	//  track stats text
-	int st = gcom->StTrk;
-	for (i=0; i < st; ++i)   gcom->stTrk[1][i] = fTxt("2st"+toStr(i));
-	for (i=0; i < 4; ++i)  gcom->imStTrk[1][i] = fImg("2ist"+toStr(i));
+	for (i=0; i < gcom->StTrk; ++i)    gcom->stTrk[1][i] = fTxt("2st"+toStr(i));
+	for (i=0; i < gcom->ImStTrk; ++i)  gcom->imStTrk[1][i] = fImg("2ist"+toStr(i));
 	for (i=0; i < gcom->InfTrk; ++i)
 	{	gcom->infTrk[1][i] = fTxt("2ti"+toStr(i));  gcom->imInfTrk[1][i] = fImg("2iti"+toStr(i));  }
 
+
+	//  champ
 	edChInfo = fEd("ChampInfo");
 	if (edChInfo)  edChInfo->setVisible(pSet->champ_info);
 	Btn("btnChampInfo",btnChampInfo);

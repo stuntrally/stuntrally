@@ -113,15 +113,20 @@ public:
 	Ed trkDesc[2], trkAdvice[2];  // description, advice
 	bool needSort(Mli2 li);
 
-	Img imgPrv[3], imgMini[3], imgTer[3];  // view,  mini: road, terrain
-	Img imgTrkIco1,imgTrkIco2, imgMiniPos[2];
-	MyGUI::RotatingSkin* imgMiniRot[2];
-
+	Img imgPrv[3], imgMini[3], imgTer[3];  // view,  mini: road, terrain, [2] is fullscr
+	Img imgMiniPos[3];  MyGUI::RotatingSkin* imgMiniRot[3];
+	Img imgTrkIco1 =0, imgTrkIco2 =0;
+	
 
 	//  st - road stats,dim  inf - tracks.ini ratings
-	const static int StTrk = 14, InfTrk = 13;
+	const static int InfTrk = 13, ImStTrk = 4,
+	#ifdef SR_EDITOR
+		StTrk = 9;
+	#else
+		StTrk = 14;
+	#endif
 	Txt stTrk[2][StTrk], infTrk[2][InfTrk];  // [2] 2nd set is for champs
-	Img imStTrk[2][4], imInfTrk[2][InfTrk];
+	Img imStTrk[2][ImStTrk], imInfTrk[2][InfTrk];
 
 	void UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const Ogre::String& sTrack,
 		float timeCur, bool reverse=false, int champ=0);

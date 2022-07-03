@@ -24,23 +24,6 @@ string dt2s(const Date& dt)
 }
 
 
-//-------------------------------------------------------------------------------------
-TrackInfo::TrackInfo()
-	:n(-1), crtver(0.f), ver(0)
-	,name("none"), scenery("none"), author("none")
-	,objects(0), fluids(0), bumps(0)
-	,jumps(0), loops(0), pipes(0)
-	,banked(0), frenzy(0), longn(0)
-	,diff(0), rating(0), obstacles(0), sum(0)
-	,nn(0), test(0), testC(0)
-{	}
-
-UserTrkInfo::UserTrkInfo()
-	:name("") //last()
-	,rating(0), laps(0), time(0)
-{	}
-
-
 ///  User Load
 ///------------------------------------------------------------------------------------
 
@@ -67,7 +50,6 @@ bool UserXml::LoadXml(string file)
 		a = eTrk->Attribute("date");	if (a)  t.last = s2dt(a);
 		a = eTrk->Attribute("rate");	if (a)  t.rating = s2i(a);
 		a = eTrk->Attribute("laps");	if (a)  t.laps = s2i(a);
-		a = eTrk->Attribute("time");	if (a)  t.time = s2r(a);
 
 		trks.push_back(t);
 		trkmap[t.name] = trks.size();  //i++;
@@ -93,7 +75,6 @@ bool UserXml::SaveXml(string file)
 		trk.SetAttribute("date",	dt2s(t.last).c_str());
 		trk.SetAttribute("rate",	toStrC( t.rating ));
 		trk.SetAttribute("laps",	toStrC( t.laps ));
-		trk.SetAttribute("time",	toStrC( t.time ));
 		
 		root.InsertEndChild(trk);
 	}
@@ -131,14 +112,14 @@ bool TracksXml::LoadIni(string file, bool check)
 		{
 		//114,Fin1-Lakes  v=2.0 06/04/13 07/04/13 :Finland  |o0 w1 ~1 J2 L0 P0 /1 s1 l2 !2 *4  T=107.8  a:CH
 			sscanf(s,
-			"%d,%s v%f %d/%d/%d %d/%d/%d :%s |o%d c%d w%d ~%d J%d L%d P%d /%d s%d l%d !%d *%d  T=%f a:%s"
+			"%d,%s v%f %d/%d/%d %d/%d/%d :%s |o%d c%d w%d ~%d J%d L%d P%d /%d s%d n%d l%d !%d *%d  T=%f a:%s"
 				,&t.n, name, &t.crtver
 					,&t.created.day, &t.created.month, &t.created.year
 					,&t.modified.day, &t.modified.month, &t.modified.year
 				,scenery
 				,&t.objects, &t.obstacles
 				,&t.fluids, &t.bumps, &t.jumps, &t.loops, &t.pipes
-				,&t.banked, &t.frenzy, &t.longn, &t.diff, &t.rating
+				,&t.banked, &t.frenzy, &t.narrow, &t.longn, &t.diff, &t.rating
 				,&time, author);
 
 			t.name = name;
@@ -255,19 +236,11 @@ bool TracksXml::LoadIni(string file, bool check)
 		}
 		LogO("");
 	}
-		
 	return true;
 }
-
 //--------------------------------------------------------------------------------------------------------------------------------------
 
 
-
-CarInfo::CarInfo()
-	:id("AA"), name("Other"), type("Other")
-	,speed(5.f), year(2005), wheels(4), rating(5), width(3), diff(3)
-	,easy(0.96f), norm(1.f), author("")
-{	}
 
 ///  Load  cars.xml
 //-------------------------------------------------------------------------------------
@@ -300,7 +273,7 @@ bool CarsXml::LoadXml(string file)
 
 	///  cars
 	int i=1;  //0 = none
-	XMLElement* eCar = root->FirstChildElement("car");
+	XMLElement* eCar = root->FirstChildElement("c");
 	while (eCar)
 	{
 		CarInfo c;
@@ -321,9 +294,14 @@ bool CarsXml::LoadXml(string file)
 		
 		a = eCar->Attribute("a");  if (a)  c.author = string(a);
 
+		a = eCar->Attribute("b");  if (a)  c.bumps = s2i(a);
+		a = eCar->Attribute("j");  if (a)  c.jumps = s2i(a);
+		a = eCar->Attribute("l");  if (a)  c.loops = s2i(a);
+		a = eCar->Attribute("p");  if (a)  c.pipes = s2i(a);
+
 		cars.push_back(c);
 		carmap[c.id] = i++;
-		eCar = eCar->NextSiblingElement("car");
+		eCar = eCar->NextSiblingElement("c");
 	}
 
 	//  type colors

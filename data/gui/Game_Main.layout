@@ -182,7 +182,7 @@
 			<Property key="Alpha" value="0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="TextBox" position="108 354 144 50" align="Left" name="BtnRace4">
+		<Widget type="Button" skin="TextBox" position="108 354 194 50" align="Left" name="BtnRace4">
 			<Property key="Caption" value="#{Difficulty}"/>
 			<Property key="Colour" value="0.6 0.7 0.8"/>
 			<Property key="TextColour" value="0.8 0.9 1.0"/>
@@ -217,7 +217,7 @@
 			<Property key="Alpha" value="0.9"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
-		<Widget type="Button" skin="TextBox" position="108 426 144 50" align="Left" name="BtnRace5">
+		<Widget type="Button" skin="TextBox" position="108 426 194 50" align="Left" name="BtnRace5">
 			<Property key="Caption" value="#{Simulation}"/>
 			<Property key="Colour" value="0.6 0.7 0.8"/>
 			<Property key="TextColour" value="0.8 0.9 1.0"/>

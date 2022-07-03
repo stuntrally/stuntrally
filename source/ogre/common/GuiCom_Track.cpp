@@ -62,7 +62,7 @@ const String CGuiCom::getClrSum(int i)    {  return clrsSum   [std::min(iClrsSum
 const int wi = 15;            // id name nm   N  scn ver
 const int CGuiCom::colTrk[33] = {40, 90, 80, 25, 76, 25, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, wi, 22, 22, 24};
 #ifndef SR_EDITOR
-const int CGui::colCar[16] = {34, 80, 27, wi, wi, wi, wi, 37, 52, 24};  // car
+const int CGui::colCar[16] = {34, 80, 27, wi, wi, wi, wi, 37, 45, 24};  // car
 const int CGui::colCh [16] = {16, 200, 120, 50, 80, 80, 60, 40};  // champs
 const int CGui::colChL[16] = {16, 180, 90, 100, 50, 60, 60, 60, 50};  // challs
 const int CGui::colSt [16] = {30, 170, 100, 90, 50, 80, 70};  // stages
@@ -158,7 +158,7 @@ void CGuiCom::AddTrkL(std::string name, int user, const TrackInfo* ti)
 
 void CGuiCom::initMiniPos(int i)
 {
-	imgMiniPos[i] = fImg(i==0 ? "TrackPos" : "TrackPos2");
+	imgMiniPos[i] = fImg("TrackPos" + toStr(i));
 	imgMiniRot[i] = imgMiniPos[i]->getSubWidgetMain()->castType<RotatingSkin>();
 	IntSize si = imgMiniPos[i]->getSize();
 	imgMiniRot[i]->setCenter(IntPoint(si.width*0.7f, si.height*0.7f));  //0.5?
@@ -177,20 +177,17 @@ void CGuiCom::GuiInitTrack()
    	li->setVisible(false);
 	
 	//  preview images
-	imgPrv[0] = fImg("TrackImg");   imgPrv[0]->setImageTexture("PrvView");
-	imgTer[0] = fImg("TrkTerImg");  imgTer[0]->setImageTexture("PrvTer");
-	imgMini[0] = fImg("TrackMap");  imgMini[0]->setImageTexture("PrvRoad");
+	#ifdef SR_EDITOR  // game in Gui_Init
+	imgPrv[0] = fImg("TrackImg0");   imgPrv[0]->setImageTexture("PrvView");
+	imgTer[0] = fImg("TrkTerImg0");  imgTer[0]->setImageTexture("PrvTer");
+	imgMini[0] = fImg("TrackMap0");  imgMini[0]->setImageTexture("PrvRoad");
 	initMiniPos(0);
+	#endif
 
 	//  stats text
-	int i, st;
-	#ifdef SR_EDITOR
-	st = 9;
-	#else
-	st = StTrk;
-	#endif
-	for (i=0; i < st; ++i)   stTrk[0][i] = fTxt("st"+toStr(i));
-	for (i=0; i < 4; ++i)  imStTrk[0][i] = fImg("ist"+toStr(i));
+	int i;
+	for (i=0; i < StTrk; ++i)     stTrk[0][i] = fTxt("st"+toStr(i));
+	for (i=0; i < ImStTrk; ++i) imStTrk[0][i] = fImg("ist"+toStr(i));
 	for (i=0; i < InfTrk; ++i){  infTrk[0][i] = fTxt("ti"+toStr(i));  imInfTrk[0][i] =  fImg("iti"+toStr(i));  }
 		
 	EdC(edTrkFind, "TrkFind", editTrkFind);
@@ -525,6 +522,7 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 
 	//  start pos on minimap
 	//---------------------------------------------------------------------------
+	if (!imgTer[ch])  return;
 	int i = !rd->isLooped && reverse ? 1 : 0;
 	float t = sc->td.fTerWorldSize,  // todo: end too?
 		xp = sc->startPos[i][1]/t, yp = sc->startPos[i][0]/t;

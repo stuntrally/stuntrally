@@ -124,20 +124,20 @@ void App::KeyTxtRoad(Real q)
 			rdTxtSt[9]->setCaption("vis");
 			rdTxtSt[10]->setCaption("tris");
 		}			
-		rdValSt[0]->setCaption(fToStr(road->st.Length,0,4));
-		rdValSt[1]->setCaption(fToStr(road->st.WidthAvg,2,5));
-		rdValSt[2]->setCaption(fToStr(road->st.HeightDiff,2,5));
+		rdValSt[0]->setCaption(fToStr(road->st.Length, 0,4));
+		rdValSt[1]->setCaption(fToStr(road->st.WidthAvg, 2,5));
+		rdValSt[2]->setCaption(fToStr(road->st.HeightDiff, 2,5));
 
-		rdValSt[3]->setCaption(fToStr(road->st.OnTer,1,4)+"%");
-		rdValSt[4]->setCaption(fToStr(road->st.Pipes,1,4)+"%");
-		rdValSt[5]->setCaption(fToStr(road->st.OnPipe,1,4)+"%");
-		rdValSt[6]->setCaption(fToStr(road->st.bankAvg,0,2)+" /"+fToStr(road->st.bankMax,0,2));
+		rdValSt[3]->setCaption(fToStr(road->st.OnTer, 1,4)+"%");
+		rdValSt[4]->setCaption(fToStr(road->st.Pipes, 1,4)+"%");
+		rdValSt[5]->setCaption(fToStr(road->st.OnPipe, 1,4)+"%");
+		rdValSt[6]->setCaption(fToStr(road->st.bankAvg, 0,2)+" /"+fToStr(road->st.bankMax, 0,2));
 
 		int lp = !bCur ? -1 : road->vSegs[road->iChosen].lpos.size();
 		rdValSt[7]->setCaption(toStr(lp));
-		rdValSt[8]->setCaption(fToStr(road->st.segsMrg+1,0,2));
-		rdValSt[9]->setCaption(fToStr(road->st.iVis,0,2));
-		rdValSt[10]->setCaption(fToStr(road->st.iTris/1000.f,1,4)+"k");
+		rdValSt[8]->setCaption(fToStr(road->st.segsMrg+1, 0,2)+" "+fToStr(road->st.segsMrgW+1, 0,2));
+		rdValSt[9]->setCaption(fToStr(road->st.iVis, 0,2));
+		rdValSt[10]->setCaption(fToStr(road->st.iTris/1000.f, 1,4)+"k");
 	}
 
 	//  edit  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

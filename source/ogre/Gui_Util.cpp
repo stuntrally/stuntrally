@@ -103,11 +103,17 @@ void CGui::AddCarL(string name, const CarInfo* ci)
 	li->addItem(clr+ name);  int l = li->getItemCount()-1;
 	li->setSubItemNameAt(1,l, clr+ TR("#{"+ ci->name +"}"));
 	li->setSubItemNameAt(2,l, gcom->getClrDiff(ci->speed *0.76f)+ fToStr(ci->speed,1,3));
+
 	li->setSubItemNameAt(3,l, gcom->getClrRating(ci->rating)+ " "+toStr(ci->rating));
 	li->setSubItemNameAt(4,l, gcom->getClrDiff(ci->diff )+ " "+toStr(ci->diff));
+
 	li->setSubItemNameAt(5,l, gcom->getClrLong(ci->width *2.f)+ " "+toStr(ci->width));
 	li->setSubItemNameAt(6,l, gcom->getClrSum(ci->wheels *2.f)+ " "+toStr(ci->wheels));
-	li->setSubItemNameAt(7,l, gcom->getClrRating(min(4, max(0,1+(ci->year-1990)/10))) + toStr(ci->year));
+
+	float drv = GetTrkDrivability(name, gcom->sListTrack, gcom->bListTrackU);
+	float drvp = (1.f - drv) * 100.f;  int fd = 1 + drv * 6.f;
+	li->setSubItemNameAt(7,l, gcom->getClrDiff(fd)+" "+ fToStr(drvp, 0,3));
+	//li->setSubItemNameAt(7,l, gcom->getClrRating(min(4, max(0,1+(ci->year-1990)/10))) + toStr(ci->year));
 	//li->setSubItemNameAt(7,l, clr+ TR("#{CarType_"+ci->type+"}"));
 }
 
@@ -118,7 +124,7 @@ void CGui::FillCarList()
 	PATHMANAGER::DirList(PATHMANAGER::Cars(), li);
 	for (strlist::iterator i = li.begin(); i != li.end(); ++i)
 	{
-		if (boost::filesystem::exists(PATHMANAGER::Cars() + "/" + *i + "/about.txt"))
+		if (PATHMANAGER::FileExists(PATHMANAGER::Cars() + "/" + *i + "/about.txt"))
 		{	String s = *i;
 			CarL c;  c.name = *i;  //c.pA = this;
 			int id = data->cars->carmap[*i];
@@ -243,9 +249,11 @@ void CGui::listCarChng(MultiList2* li, size_t)
 		txCarType->setCaption(data->cars->colormap[ci.type]+ TR("#{CarType_"+ci.type+"}"));
 		txCarYear->setCaption(gcom->getClrRating(min(4, max(0,1+(ci.year-1990)/10))) + toStr(ci.year));
 		
-		txCarWidth->setCaption(gcom->getClrLong(ci.width *2)+ toStr(ci.width));
 		txCarDiff->setCaption(gcom->getClrDiff(ci.diff)+ toStr(ci.diff) +TR("  #{Diff"+toStr(ci.diff)+"}"));
 		txCarRating->setCaption(gcom->getClrRating(ci.rating)+ toStr(ci.rating));
+		txCarWidth->setCaption(gcom->getClrDiff(ci.width)+ toStr(ci.width));
+
+		updCarDrivability();
 
 		if (ci.type == "Spaceship" || ci.type == "Other")
 		{	car = false;  sd += TR("#E0E060 \n#{CarDesc_Pipes}");  }
@@ -264,6 +272,48 @@ void CGui::changeCar()
 {
 	if (iCurCar < 4)
 		pSet->gui.car[iCurCar] = sListCar;
+}
+
+
+//  Drivability  ------------------------
+void CGui::updCarDrivability()
+{
+	float drv = GetTrkDrivability(sListCar, gcom->sListTrack, gcom->bListTrackU);
+	float drvp = (1.f - drv) * 100.f;  int fd = 1 + drv * 6.f;
+	auto sdrv = drv > 0.85f ? TR("#{Undrivable}") : TR("#{Diff"+toStr(fd)+"}");
+	// txCarTrkdrv->setCaption(drv < 0.f ? "" : gcom->getClrDiff(fd)+ fToStr(drv, 1,3) +"   " +sdrv);
+	txTrkDrivab->setCaption(drv < 0.f ? "" : gcom->getClrDiff(fd)+ fToStr(drvp, 0,3) +"%   " +sdrv);
+	imgTrkDrivab->setColour(Colour(1.f, 1.f - drv*drv*0.8f, 1.f - drv*0.7f, drv));
+}
+
+//  get drivability, vehicle on track fitness
+float CGui::GetTrkDrivability(std::string car, std::string trk, bool track_user)
+{
+	if (track_user)  return -1.f;  // unknown
+
+	int cid = data->cars->carmap[car];
+	if (cid == 0)  return -1.f;
+	const CarInfo& ci = data->cars->cars[cid-1];
+
+	int tid = data->tracks->trkmap[trk];
+	if (tid == 0)  return -1.f;
+	const TrackInfo& ti = data->tracks->trks[tid-1];
+
+	float undrv = 0.f;  // 0 drivable .. 1 undrivable
+	int w = std::max(0, ci.width - 3);
+	undrv += 0.8f * w/3.f * ti.narrow /5.f;
+	undrv += 0.2f * w/3.f * ti.obstacles /4.f;
+	undrv += 0.7f * ci.bumps /3.f * ti.bumps /4.f;  // * tweak params
+
+	undrv += 1.1f * ci.jumps /3.f * ti.jumps /4.f;
+	undrv += 1.1f * ci.loops /4.f * ti.loops; // /5.f;
+	undrv += 1.4f * ci.pipes /4.f * ti.pipes /4.f;
+
+	bool wnt = (ti.scenery == "Winter") || (ti.scenery == "WinterWet");
+	if (wnt && ci.wheels >= 2)  // too slippery for fast cars
+		undrv += 0.7f * ci.speed /10.f;
+
+	return std::min(1.f, undrv);
 }
 
 
@@ -288,7 +338,7 @@ void CGui::UpdCarStats(bool car)
 
 	for (i=0; i < iCarSt; ++i)	vis(i,true);
 
-	//  read xml  --------
+	//  read xml  ------------------------
 	XMLElement* e;  const char* a;
 	float mass=0.f, comFront=0.f,  maxTrq=0.f, rpmMaxTq=0.f, maxPwr=0.f, rpmMaxPwr=0.f, bhpPerTon=0.f,
 		maxVel=0.f, tiMaxVel=0.f,  t0to60=0.f, t0to100=0.f, t0to160=0.f, t0to200=0.f,
@@ -394,7 +444,7 @@ void CGui::UpdCarStats(bool car)
 	graphVGrid->setPoints(grid);
 	
 
-	//  upd text  --------
+	//  upd gui texts  ------------------------
 	bool kmh = !pSet->show_mph;  float k2m = 0.621371f;
 	String s[iCarSt], v[iCarSt];
 	float sm = pSet->gui.sim_mode == "easy" ? 0.75f : 1.f;
@@ -507,6 +557,11 @@ void CGui::toggleGui(bool toggle)
 	app->mWndOpts->setVisible(   gui && mnu == MN_Options);
 	if (!gui)  app->mWndTrkFilt->setVisible(false);
 
+	if (!gui && gcom->imgPrv[2])  // hide fullscr prv
+	{	gcom->imgPrv[2]->setVisible(false);
+		gcom->imgTer[2]->setVisible(false);
+		gcom->imgMini[2]->setVisible(false);
+	}
 	
 	//  fill help editboxes from text files
 	if (app->mWndHelp->getVisible() && loadReadme)
@@ -836,4 +891,20 @@ void CGui::FillHelpTxt()
 		ed->setCaption(UString(text));
 		ed->setVScrollPosition(0);
 	}
+}
+
+void CGui::ImgPrvClk(WP)
+{
+	gcom->imgPrv[2]->setVisible(true);
+}
+void CGui::ImgTerClk(WP)
+{
+	gcom->imgTer[2]->setVisible(true);
+	gcom->imgMini[2]->setVisible(true);
+}
+void CGui::ImgPrvClose(WP)
+{
+	gcom->imgPrv[2]->setVisible(false);
+	gcom->imgTer[2]->setVisible(false);
+	gcom->imgMini[2]->setVisible(false);
 }

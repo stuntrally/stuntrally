@@ -24,25 +24,25 @@
 					<Property key="TextColour" value="0.4 1.0 0.5"/>
 					<UserString key="tip" value="#{TipTrkNameEditor}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="368 498 140 32" name="NewGame1">
+				<Widget type="Button" skin="Button" position="368 498 140 32" name="NewGame0">
 					<Property key="Caption" value="#{LoadTrack}"/>
 					<Property key="Colour" value="0.6 1.0 0.3"/>
 					<Property key="TextColour" value="0.3 1 0.2"/>
 					<UserString key="tip" value="#{TipLoadTrkEditor}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="174 15 336 336" name="TrackImg">
+				<Widget type="ImageBox" skin="ImageBox" position="174 15 336 336" name="TrackImg0">
 					<UserString key="tip" value="#{TipTrkScreenEditor}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="526 238 252 252" name="TrkTerImg">
+				<Widget type="ImageBox" skin="ImageBox" position="526 238 252 252" name="TrkTerImg0">
 					<UserString key="tip" value="#{TipMinimapScrnEditor}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="526 238 252 252" name="TrackMap">
+				<Widget type="ImageBox" skin="ImageBox" position="526 238 252 252" name="TrackMap0">
 					<UserString key="tip" value="#{TipMinimapScrnEditor}"/>
-					<Widget type="ImageBox" skin="RotatingSkin" position="64 64 16 16" name="TrackPos">
+					<Widget type="ImageBox" skin="RotatingSkin" position="64 64 16 16" name="TrackPos0">
 						<Property key="ImageTexture" value="carpos0.png"/>
 					</Widget>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="176 360 336 52" name="TrackAdvice">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="176 360 336 52" name="TrackAdvice0">
 					<Property key="ReadOnly" value="false"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
@@ -53,7 +53,7 @@
 					<Property key="FontName" value="font.small"/>
 					<UserString key="tip" value="#{TipTrackDescEditor}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="176 410 336 52" name="TrackDesc">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="176 410 336 52" name="TrackDesc0">
 					<Property key="ReadOnly" value="false"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>

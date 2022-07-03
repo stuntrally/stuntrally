@@ -249,6 +249,7 @@ bool App::frameStart(Real time)
 	{	bRecreateHUD = false;
 		
 		hud->Destroy();  hud->Create();
+		bSizeHUD = true;
 	}
 	if (bSizeHUD)
 	{	bSizeHUD = false;

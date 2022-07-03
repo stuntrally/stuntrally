@@ -24,21 +24,19 @@ struct Date
 class TrackInfo
 {
 public:
-	int n;  // unique id for track, from ini
-	float crtver;  // created in ver
-	int ver;  // x10
-	std::string name, nshrt,  scenery, author;
+	int n = -1;  // unique id for track, from ini
+	float crtver = 0.f;  // created in ver
+	int ver = 0;  // x10
+	std::string name = "none", nshrt,  scenery = "none", author = "none";
 	Date created, modified;
 
-	//  track characteristics  (char)
-	int fluids,bumps, jumps,loops,pipes;
-	int	banked,frenzy,longn, objects,obstacles;
-	int diff, rating, sum;
+	//  track characteristics  (byte)
+	int fluids =0, bumps =0,  jumps =0, loops =0, pipes =0;
+	int	banked =0, frenzy =0,  narrow =0, longn =0,  objects =0, obstacles =0;
+	int diff =0, rating =0,  sum =0;
 
-	int nn;  // number got from name eg. for Des15-.. it is 15
-	bool test,testC;  // starts with Test.. or TestC..
-
-	TrackInfo();
+	int nn =0;  // number got from name eg. for Des15-.. it is 15
+	bool test =0, testC =0;  // starts with Test.. or TestC..
 };
 
 
@@ -51,26 +49,21 @@ public:
 	std::map<std::string, int> trkmap;  // 0 if not found
 	std::map<std::string, float> times;  // track times
 	
-	int cntAll;
+	int cntAll =0;
 	bool LoadIni(std::string file, bool check);
-	TracksXml()
-		:cntAll(0)
-	{	}
 };
 
 
 //  user Track's info
-//  rating, stats todo: ...  not yet used
+//  rating, stats todo: not used yet ..
 //-------------------------------------
 class UserTrkInfo
 {
 public:
 	std::string name;
-	int rating;
+	int rating =0, bookm =0;
 	Date last;  // driven
-	int laps;  float time;
-
-	UserTrkInfo();
+	int laps =0;
 };
 
 
@@ -81,29 +74,29 @@ public:
 	std::vector<UserTrkInfo> trks;
 	std::map<std::string, int> trkmap;  // 0 if not found
 	
-	//  methods
 	bool LoadXml(std::string file), SaveXml(std::string file);
-	UserXml() {  }
 };
 
 
-//  Car's additional info
+//  Car's additional info  (all Car = Vehicle)
 //  shown on gui [Car] tab, in detailed view
 //  for sorting by speed, type, etc.
 //--------------------------------------------------------------------
 class CarInfo
 {
 public:
-	std::string id, name;  // id = cars/subdir, name = animal nick
-	std::string type, author;
+	std::string id = "AA", name = "Other";  // id = cars/subdir, name = animal nick
+	std::string type = "Other", author;
 
-	float speed;
-	int year, wheels, width, rating, diff;
+	float speed = 5.f;
+	int year = 2015, wheels = 4;
+	int width = 3, rating = 5, diff = 3;
+	
+	//  intolerance of these, for track fitness
+	int bumps = 0, jumps = 0, loops = 0, pipes = 0;
 	
 	//  time mul factors, for race postion, in sim modes
-	float easy, norm;
-
-	CarInfo();
+	float easy = 0.96f, norm = 1.f;
 };
 
 
@@ -115,13 +108,9 @@ public:
 	std::vector<CarInfo> cars;
 	std::map<std::string, int> carmap;  // 0 if not found
 	std::map<std::string, std::string> colormap;  // car type to list color
-	float magic;
+	float magic =0.010f;
 	
-	//  methods
 	bool LoadXml(std::string file);
-	CarsXml()
-		:magic(0.010f)
-	{	}
 };
 
 
@@ -139,13 +128,9 @@ class ColorsXml
 {
 public:
 	std::vector<CarColor> v;
-	int perRow, imgSize;  // gui params
+	int perRow = 12, imgSize = 18;  // gui params
 	
-	//  methods
 	bool LoadIni(std::string file);
-	ColorsXml()
-		:perRow(12), imgSize(18)
-	{	}
 };
 
 
@@ -164,9 +149,6 @@ public:
 	std::vector<ReverbSet> revs;
 	std::map<std::string, int> revmap;  // 0 if not found
 	
-	//  methods
 	bool LoadXml(std::string file);
 	void GetParams(tinyxml2::XMLElement* e, ReverbSet& r);
-	ReverbsXml()
-	{	}
 };

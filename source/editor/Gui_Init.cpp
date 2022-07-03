@@ -760,8 +760,8 @@ void CGui::InitGui()
 	bCopyTrackU = 0;
 	
 	//  text desc
-	Edt(gcom->trkDesc[0], "TrackDesc", editTrkDescr);
-	Edt(gcom->trkAdvice[0], "TrackAdvice", editTrkAdvice);
+	Edt(gcom->trkDesc[0], "TrackDesc0", editTrkDescr);
+	Edt(gcom->trkAdvice[0], "TrackAdvice0", editTrkAdvice);
 	trkName = fEd("TrackName");
 	if (trkName)  trkName->setCaption(pSet->gui.track);
 
@@ -775,7 +775,7 @@ void CGui::InitGui()
 	Btn("OpenEdTut", btnEdTut);
 
     //  load = new game
-    for (i=1; i<=3; ++i)
+    for (i=0; i <= 2; ++i)
     {	Btn("NewGame"+toStr(i), btnNewGame);  }
 
 	CreateGUITweakMtr();

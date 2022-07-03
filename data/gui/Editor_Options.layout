@@ -174,7 +174,7 @@
 							<Property key="Alpha" value="0.6"/>
 							<Property key="Caption" value="#{GraphicsRightHQ}"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="276 360 160 32" name="NewGame2">
+						<Widget type="Button" skin="Button" position="276 360 160 32" name="NewGame1">
 							<Property key="Caption" value="#{LoadTrack}"/>
 							<Property key="Colour" value="0.6 1.0 0.3"/>
 							<Property key="TextColour" value="0.3 1 0.2"/>
@@ -330,7 +330,7 @@
 							<Property key="Alpha" value="0.6"/>
 							<Property key="Caption" value="#{GraphicsRightHQ}"/>
 						</Widget>
-						<Widget type="Button" skin="Button" position="276 360 160 32" name="NewGame3">
+						<Widget type="Button" skin="Button" position="276 360 160 32" name="NewGame2">
 							<Property key="Caption" value="#{LoadTrack}"/>
 							<Property key="Colour" value="0.6 1.0 0.3"/>
 							<Property key="TextColour" value="0.3 1 0.2"/>

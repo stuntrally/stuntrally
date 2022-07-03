@@ -426,10 +426,8 @@
 				<Property key="InheritsAlpha" value="false"/>
 			</Widget>
 		</Widget>
-		<Widget type="EditBox" skin="EditBoxEmpty" position="22 416 254 24" name="HintTitle">
+		<Widget type="EditBox" skin="EditBoxEmpty" position="22 416 354 24" name="HintTitle">
 			<Property key="ReadOnly" value="true"/>
-			<Property key="MultiLine" value="true"/>
-			<Property key="WordWrap" value="true"/>
 			<Property key="Colour" value="0.5 0.56 0.6"/>
 			<Property key="TextColour" value="0.9 0.95 1.0"/>
 			<Property key="TextAlign" value="Left Top"/>
@@ -445,11 +443,11 @@
 			<Property key="FontName" value="font.big"/>
 			<Property key="TextShadow" value="true"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="288 410 42 26" name="btnHintPrev">
+		<Widget type="Button" skin="Button" position="388 410 42 26" name="btnHintPrev">
 			<Property key="Colour" value="0.9 0.95 1.0"/>
 			<Property key="Caption" value="#B0D0FF&lt;"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="334 410 42 26" name="btnHintNext">
+		<Widget type="Button" skin="Button" position="434 410 42 26" name="btnHintNext">
 			<Property key="Colour" value="0.9 0.95 1.0"/>
 			<Property key="Caption" value="#B0D0FF&gt;"/>
 		</Widget>

@@ -381,6 +381,23 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				if (isFocGui && mWndGame->getVisible() &&
 					mWndTabsGame->getIndexSelected())
 					gui->ckReverse.Invert();
+				break;
+			
+			case key(INSERT):		// toggle fullscreen preview
+				if (gcom->imgPrv[2]->getVisible())
+				{	gcom->imgPrv[2]->setVisible(false);
+					gcom->imgTer[2]->setVisible(true);  gcom->imgMini[2]->setVisible(true);
+				}else
+				if (gcom->imgTer[2]->getVisible())
+				{	gcom->imgTer[2]->setVisible(false);  gcom->imgMini[2]->setVisible(false);
+				}else
+				if (mWndGame->getVisible())
+				{	switch (mWndTabsGame->getIndexSelected())
+					{
+					case TAB_Track: case TAB_Stage:
+						gcom->imgPrv[2]->setVisible(true);  break;
+				}	}
+				break;
 		}
 	}
 

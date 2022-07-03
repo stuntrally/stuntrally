@@ -35,13 +35,13 @@
 					</Widget>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="174 15 336 336" name="TrackImg">
-					<UserString key="tip" value="#{TipTrackImg}"/>
+					<UserString key="tip" value="#{TipTrackImg} #{TipClickMax}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrkTerImg">
-					<UserString key="tip" value="#{TipTrkTerImg}"/>
+					<UserString key="tip" value="#{TipTrackMap} #{TipClickMax}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrackMap">
-					<UserString key="tip" value="#{TipTrackMap}"/>
+					<UserString key="tip" value="#{TipTrackMap} #{TipClickMax}"/>
 					<Widget type="ImageBox" skin="RotatingSkin" position="64 64 16 16" name="TrackPos">
 						<Property key="ImageTexture" value="carpos0.png"/>
 					</Widget>
@@ -64,10 +64,10 @@
 					<Property key="TextColour" value="0.9 0.9 0.6"/>
 					<Property key="Colour" value="0.9 0.9 0.6"/>
 					<Property key="FontName" value="font.small"/>
-					<UserString key="tip" value="#{TipTrackDesc}"/>
+					<UserString key="tip" value="#{TipTrackDesc} #{ClickMax}"/>
 				</Widget>
 				<Widget type="EditBox" skin="EditBoxEmpty" position="176 420 336 52" name="TrackDesc">
-					<Property key="ReadOnly" value="false"/>
+					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
 					<Property key="VisibleHScroll" value="false"/>
@@ -75,7 +75,7 @@
 					<Property key="FontName" value="font.small"/>
 					<Property key="TextColour" value="0.6 1.0 0.8"/>
 					<Property key="Colour" value="0.4 1 0.7"/>
-					<UserString key="tip" value="#{TipTrackDesc}"/>
+					<UserString key="tip" value="#{TipTrackDesc} #{ClickMax}"/>
 				</Widget>				
 
 				<Widget type="Widget" skin="PanelSkin" position="524 95 256 172">
@@ -682,53 +682,71 @@
 					<UserString key="tip" value="#{TipCarYear}"/>
 				</Widget>
 
-				<Widget type="ImageBox" skin="ImageBox" position="250 132 32 20">
-					<Property key="InheritsAlpha" value="false"/>
-					<Property key="ImageCoord" value="0 40 32 20"/>
-					<Property key="ImageTexture" value="track_icons.png"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="284 132 80 22">
-					<Property key="Caption" value="#{Road_Width}"/>
-					<Property key="TextColour" value="0.5 0.7 0.8"/>
-					<Property key="Alpha" value="0.8"/>
-					<Property key="FontName" value="font.small"/>
-				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="364 132 124 22" name="CarWidth">
-					<Property key="TextColour" value="0.54 0.7 0.84"/>
-					<Property key="Alpha" value="0.95"/>
-					<Property key="FontName" value="font.small"/>
-				</Widget>
-
-				<Widget type="ImageBox" skin="ImageBox" position="250 142 32 32">
+				<Widget type="ImageBox" skin="ImageBox" position="250 122 32 32">
 					<Property key="ImageTexture" value="track_icons.png"/>
 					<Property key="ImageCoord" value="0 0 32 32"/>
 					<Property key="Alpha" value="0.8"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="284 152 80 22">
+				<Widget type="TextBox" skin="TextBox" position="284 132 80 22">
 					<Property key="Caption" value="#{Difficulty}"/>
 					<Property key="TextColour" value="0.8 0.7 0.6"/>
 					<Property key="Alpha" value="0.8"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="364 152 124 22" name="CarDiff">
+				<Widget type="TextBox" skin="TextBox" position="364 132 124 22" name="CarDiff">
 					<Property key="TextColour" value="0.84 0.74 0.64"/>
 					<Property key="Alpha" value="0.95"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
 
-				<Widget type="ImageBox" skin="ImageBox" position="250 164 32 32">
+				<Widget type="ImageBox" skin="ImageBox" position="250 144 32 32">
 					<Property key="ImageTexture" value="track_icons.png"/>
 					<Property key="ImageCoord" value="32 0 32 32"/>
 					<Property key="Alpha" value="0.8"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="284 172 80 22">
+				<Widget type="TextBox" skin="TextBox" position="284 152 80 22">
 					<Property key="Caption" value="#{rating}"/>
 					<Property key="TextColour" value="0.7 0.7 0.8"/>
-					<Property key="Alpha" value="0.8"/>
+					<Property key="Alpha" value="0.9"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="364 172 124 22" name="CarRating">
+				<Widget type="TextBox" skin="TextBox" position="364 152 124 22" name="CarRating">
 					<Property key="TextColour" value="0.74 0.74 0.84"/>
+					<Property key="Alpha" value="0.95"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+
+				<Widget type="ImageBox" skin="ImageBox" position="250 172 32 20">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="ImageCoord" value="0 40 32 20"/>
+					<Property key="ImageTexture" value="track_icons.png"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="284 172 80 22">
+					<Property key="Caption" value="#{Road_Width}"/>
+					<Property key="TextColour" value="0.5 0.7 0.8"/>
+					<Property key="Alpha" value="0.9"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="364 172 124 22" name="CarWidth">
+					<Property key="TextColour" value="0.54 0.7 0.84"/>
+					<Property key="Alpha" value="0.95"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+
+				<Widget type="ImageBox" skin="ImageBox" position="256 192 24 24" name="ImgTrkFit">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="ImageCoord" value="640 384 128 128"/>
+					<Property key="Alpha" value="0.8"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="284 202 160 22">
+					<Property key="Caption" value="#{TrackDrivability}"/>
+					<Property key="TextColour" value="0.7 0.8 0.9"/>
+					<Property key="Alpha" value="0.9"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="304 224 124 22" name="CarTrkFit">
+					<Property key="TextColour" value="0.8 0.8 0.9"/>
 					<Property key="Alpha" value="0.95"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
@@ -950,7 +968,7 @@
 
 						<Widget type="ImageBox" skin="ImageBox" position="12 224 32 32">
 							<Property key="ImageCoord" value="640 384 128 128"/>
-							<Property key="Alpha" value="1.0"/>
+							<Property key="Alpha" value="0.6"/>
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="52 232 264 24">
@@ -1643,7 +1661,7 @@
 					<UserString key="tip" value="#{TipTrackImg}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrkTerImg2">
-					<UserString key="tip" value="#{TipTrkTerImg}"/>
+					<UserString key="tip" value="#{TipTrackMap}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrackMap2">
 					<UserString key="tip" value="#{TipTrackMap}"/>

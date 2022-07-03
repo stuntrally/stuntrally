@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
 
-	<Widget type="ImageBox" skin="ImageBox" position="174 15 336 336" name="TrackImg3">
-		<UserString key="tip" value="#{TipTrackImg}"/>
+	<!-- full screen track preview  -->
+	<Widget type="ImageBox" skin="ImageBox" position="174 15 336 336" layer="Popup" name="TrackImg2">
+		<Property key="Visible" value="false"/>
 	</Widget>
-	<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrkTerImg3">
-		<UserString key="tip" value="#{TipTrkTerImg}"/>
+	<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" layer="Popup" name="TrkTerImg2">
+		<Property key="Visible" value="false"/>
 	</Widget>
-	<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrackMap3">
-		<UserString key="tip" value="#{TipTrackMap}"/>
-		<Widget type="ImageBox" skin="RotatingSkin" position="64 64 16 16" name="TrackPos3">
+	<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" layer="Popup" name="TrackMap2">
+		<Property key="Visible" value="false"/>
+		<Widget type="ImageBox" skin="RotatingSkin" position="64 64 16 16" name="TrackPos2">
 			<Property key="ImageTexture" value="carpos0.png"/>
 		</Widget>
 	</Widget>

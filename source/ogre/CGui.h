@@ -77,6 +77,7 @@ public:
 	void toggleGui(bool toggle=true);
 	void GuiShortcut(EMenu menu, int tab, int subtab=-1);
 	bool loadReadme = 1;  void FillHelpTxt();
+	void ImgPrvClk(WP), ImgTerClk(WP), ImgPrvClose(WP);
 
 
 	//  hints
@@ -385,7 +386,7 @@ public:
 	Ck ckSplitVert;
 	void chkStartOrd(WP);
 
-	//  [Car] list
+	//  [Car] list  (all Car = Vehicle)
 	int iCurCar = 0;  // current
 	Ogre::String sListCar;
 
@@ -397,15 +398,16 @@ public:
 
 	//  [Car] stats
 	const static int iCarSt = 10;
-	Img barCarSt[iCarSt];
+	Img barCarSt[iCarSt], imgTrkDrivab =0;
 	Txt txCarStTxt[iCarSt], txCarStVals[iCarSt],
 		txCarSpeed =0, txCarType =0, txCarYear =0,
-		txCarRating =0, txCarDiff =0, txCarWidth =0,
+		txCarRating =0, txCarDiff =0, txCarWidth =0, txTrkDrivab =0,
 		txCarAuthor =0, txTrackAuthor =0;
 	Img barCarSpeed =0;
 	Tab tbPlr =0, tbPlr2 =0;
-	void UpdCarStats(bool car);
-	std::vector<Ogre::String> vsu; //CarStatsUnits
+
+	void UpdCarStats(bool car), updCarDrivability();
+	float GetTrkDrivability(std::string car, std::string trk, bool track_user);  // 0 drivable .. 1 unfit
 
 	Img imgCar =0;  Ed carDesc =0;
 	Cmb cmbBoost =0, cmbFlip =0, cmbDamage =0, cmbRewind =0;

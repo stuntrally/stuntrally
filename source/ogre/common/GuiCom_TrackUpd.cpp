@@ -207,6 +207,8 @@ void CGuiCom::listTrackChng(Mli2 li, size_t pos)
 
 #ifndef SR_EDITOR
 	app->gui->changeTrack();
+	app->gui->CarListUpd(false);  // upd % col
+	app->gui->updCarDrivability();
 #endif
 #ifdef SR_EDITOR
 	if (app->gui->iLoadNext==0)
@@ -284,9 +286,10 @@ void CGuiCom::ChangeTrackView()
 {
 	bool full = pSet->tracks_view;
 
-	if (!imgPrv[0])  return;
-	imgPrv[0]->setVisible(!full);   imgTrkIco1->setVisible(full);
-	trkDesc[0]->setVisible(!full);  imgTrkIco2->setVisible(full);
+	imgTrkIco1->setVisible(full);  imgTrkIco2->setVisible(full);
+	if (imgPrv[0])
+		imgPrv[0]->setVisible(!full);
+	trkDesc[0]->setVisible(!full);
 	trkAdvice[0]->setVisible(!full);
 
 	ChkUpd_Col();
@@ -361,7 +364,7 @@ void CGuiCom::updTrkListDim()
 	for (c=0; c < cnt; ++c)  sum += app->gui->colCar[c];
 	for (c=0; c < cnt; ++c)
 	{
-		float wf = float(app->gui->colCar[c]) / sum * 0.36/*width*/ * wi.width * 0.97/*frame*/;
+		float wf = float(app->gui->colCar[c]) / sum * 0.34/*width*/ * wi.width * 0.97/*frame*/;
 		int w = c==cnt-1 ? (full ? 18 : 36) : (full || c < 4 || c==cnt-1 ? wf : 0);
 		app->gui->carList->setColumnWidthAt(c, w);
 		sw += w;
