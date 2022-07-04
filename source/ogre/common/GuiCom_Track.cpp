@@ -161,7 +161,7 @@ void CGuiCom::initMiniPos(int i)
 	imgMiniPos[i] = fImg("TrackPos" + toStr(i));
 	imgMiniRot[i] = imgMiniPos[i]->getSubWidgetMain()->castType<RotatingSkin>();
 	IntSize si = imgMiniPos[i]->getSize();
-	imgMiniRot[i]->setCenter(IntPoint(si.width*0.7f, si.height*0.7f));  //0.5?
+	imgMiniRot[i]->setCenter(IntPoint(si.width*0.9f, si.height*0.9f));  //0.7
 }
 
 
@@ -522,20 +522,28 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 
 	//  start pos on minimap
 	//---------------------------------------------------------------------------
-	if (!imgTer[ch])  return;
-	int i = !rd->isLooped && reverse ? 1 : 0;
-	float t = sc->td.fTerWorldSize,  // todo: end too?
-		xp = sc->startPos[i][1]/t, yp = sc->startPos[i][0]/t;
-	const IntSize& si = imgTer[ch]->getSize(), st = imgMiniPos[ch]->getSize();
-	int x = (xp + 0.5f) * si.width  - st.width *0.5f,
-		y = (yp + 0.5f) * si.height - st.height*0.5f;
-	imgMiniPos[ch]->setPosition(IntPoint(x,y));
+	#ifndef SR_EDITOR  // game
+	for (int id : {ch, 2})  // also fullscr
+	#else
+	int id = ch;
+	#endif
+	{
+		if (!imgTer[id])  return;
+		int i = !rd->isLooped && reverse ? 1 : 0;
+		float t = sc->td.fTerWorldSize,  // todo: end too?
+			xp = sc->startPos[i][1]/t, yp = sc->startPos[i][0]/t;
+		
+		const IntSize& si = imgTer[id]->getSize(), st = imgMiniPos[id]->getSize();
+		int x = (xp + 0.5f) * si.width  - st.width *0.5f,
+			y = (yp + 0.5f) * si.height - st.height*0.5f;
+		imgMiniPos[id]->setPosition(IntPoint(x,y));
 
-	//  rot
-	const float* rot = &sc->startRot[i][0];
-	Quaternion q(rot[0],rot[1],rot[2],rot[3]);
-	a = q.getPitch().valueRadians();
-	if (reverse)  a += PI_d;
-	//static float a=0.f; a+=0.1f;  //test center
-	imgMiniRot[ch]->setAngle(a);
+		//  rot
+		const float* rot = &sc->startRot[i][0];
+		Quaternion q(rot[0],rot[1],rot[2],rot[3]);
+		a = q.getPitch().valueRadians();
+		if (reverse)  a += PI_d;
+		static float a=0.f; a+=0.1f;  //test center
+		imgMiniRot[id]->setAngle(a);
+	}
 }

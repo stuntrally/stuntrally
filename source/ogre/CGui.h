@@ -428,10 +428,10 @@ public:
 	Btn btStTut =0, btStChamp =0, btStChall =0;
 	Img imgTut =0, imgChamp =0, imgChall =0;
 	//  tabs
-	Tab tabTut =0, tabChamp =0, tabChall =0;
+	Tab /*tabTut =0,*/ tabChamp =0, tabChall =0;
 
-	void tabTutType(Tab, size_t), tabChampType(Tab, size_t);
-	void tabChallType(Tab, size_t);
+	//void tabTutType(Tab, size_t);
+	void tabChampType(Tab, size_t), tabChallType(Tab, size_t);
 
 	//  stages
 	Ed edChInfo =0, edChDesc =0;  WP panCh =0;

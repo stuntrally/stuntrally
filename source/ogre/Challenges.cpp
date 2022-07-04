@@ -48,12 +48,17 @@ void CGui::ChallsListUpdate()
 	//  0 Rally  1 Scenery  2 Endurance  3 Chase  4 Stunts  5 Extreme  6 Special  7 Test
 		"#A0D0FF","#80FF80","#C0FF60","#FFC060","#FF8080","#C0A0E0", "#60B0FF","#909090" };
 
-	liChalls->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
-	int p = pSet->gui.champ_rev ? 1 : 0;
-	for (int i=0; i < data->chall->all.size(); ++i,++n)
+	liChalls->removeAllItems();
+	const int p = pSet->gui.champ_rev ? 1 : 0;
+ 	const int all = data->chall->all.size();
+
+	int n=1;  size_t sel = ITEM_NONE;
+ 	for (int i=0; i < all; ++i,++n)
 	{
 		const Chall& chl = data->chall->all[i];
-		if (chl.type == pSet->chall_type)
+		if (chl.type == pSet->chall_type &&
+			chl.diff >= pSet->difficulty &&  // one below too
+			chl.diff <= pSet->difficulty+1)
 		{
 			const ProgressChall& pc = progressL[p].chs[i];
 			int ntrks = pc.trks.size(), ct = pc.curTrack;
@@ -75,6 +80,24 @@ void CGui::ChallsListUpdate()
 			if (n-1 == pSet->gui.chall_num)  sel = l;
 	}	}
 	liChalls->setIndexSelected(sel);
+	// todo: ?gui chk, all / cur diff only
+
+	//  hide empty tabs  ----
+	const int tabs = tabChall->getItemCount();
+	for (int t=0; t < tabs; ++t)
+	{	int cnt = 0;
+
+		if (t < tabs-1 || pSet->dev_keys)  // hide Test
+		for (int i=0; i < all; ++i)
+		{
+			const Chall& chl = data->chall->all[i];
+			if (chl.type == t &&
+				chl.diff >= pSet->difficulty &&  // one below too
+				chl.diff <= pSet->difficulty+1)
+				++cnt;
+		}
+		tabChall->setButtonWidthAt(t, cnt == 0 ? 1 : -1);
+	}
 }
 
 

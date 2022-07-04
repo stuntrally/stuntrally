@@ -792,24 +792,24 @@ void CGui::InitGui()
 
 	li->removeAllColumns();  c=0;
 	li->addColumn("#80A080N", colSt[c++]);
-	li->addColumn(TR("#50F050#{Track}"), colSt[c++]);		li->addColumn(TR("#80FF80#{Scenery}"), colSt[c++]);
-	li->addColumn(TR("#F0F040#{Difficulty}"), colSt[c++]);	li->addColumn(TR("#60E0A0#{Laps}"), colSt[c++]);
-	li->addColumn(TR("#80E0FF#{Time} #{TimeMS}"), colSt[c++]);	li->addColumn(TR("#F0E0F0#{Score}"), colSt[c++]);
+	li->addColumn(TR("#50F050#{Track}"),          colSt[c++]);  li->addColumn(TR("#80FF80#{Scenery}"), colSt[c++]);
+	li->addColumn(TR("#F0F040#{Difficulty}"),     colSt[c++]);  li->addColumn(TR("#60E0A0#{Laps}"), colSt[c++]);
+	li->addColumn(TR("#80E0FF#{Time} #{TimeMS}"), colSt[c++]);  li->addColumn(TR("#F0E0F0#{Score}"), colSt[c++]);
 	li->addColumn(" ", colSt[c++]);
 	liStages = li;
 
-	updChampListDim();
-	ChampsListUpdate();  listChampChng(liChamps, liChamps->getIndexSelected());
-	ChallsListUpdate();  listChallChng(liChalls, liChalls->getIndexSelected());
-
 
 	//  tabs
-	tabTut   = fTab("TutType");    Tev(tabTut,   TutType);    tabTut->setIndexSelected(pSet->tut_type);
-	tabChamp = fTab("ChampType");  Tev(tabChamp, ChampType);  tabChamp->setIndexSelected(pSet->champ_type);
+	//tabTut   = fTab("TutType");          Tev(tabTut,   TutType);    tabTut->setIndexSelected(pSet->tut_type);
+	tabChamp = fTab("ChampType");        Tev(tabChamp, ChampType);  tabChamp->setIndexSelected(pSet->champ_type);
 	tabChall = fTab("SubTabChallType");  Tev(tabChall, ChallType);  tabChall->setIndexSelected(pSet->chall_type);
 	imgTut   = fImg("imgTut");
 	imgChamp = fImg("imgChamp");
 	imgChall = fImg("imgChall");
+
+	updChampListDim();
+	ChampsListUpdate();  listChampChng(liChamps, liChamps->getIndexSelected());
+	ChallsListUpdate();  listChallChng(liChalls, liChalls->getIndexSelected());
 
 	Btn("btnTutStart",  btnChampStart);  btStTut = btn;
 	Btn("btnChampStart",btnChampStart);  btStChamp = btn;
@@ -838,9 +838,9 @@ void CGui::InitGui()
 	imgChampStage = fImg("ChampStageImg");  imgChampStage->setImageTexture("PrvStCh");
 	imgChallStage = fImg("ChallStageImg");	imgChallStage->setImageTexture("PrvStCh");
 
-	imgChampEndCup = fImg("ChampEndImgCup"); txChampEndF = fTxt("ChampEndFinished");
-	imgChallFail = fImg("ChallEndImgFail");  txChallEndF = fTxt("ChallEndFinished");
-	imgChallCup  = fImg("ChallEndImgCup");   txChallEndC = fTxt("ChallEndCongrats");
+	imgChampEndCup = fImg("ChampEndImgCup");   txChampEndF = fTxt("ChampEndFinished");
+	imgChallFail   = fImg("ChallEndImgFail");  txChallEndF = fTxt("ChallEndFinished");
+	imgChallCup    = fImg("ChallEndImgCup");   txChallEndC = fTxt("ChallEndCongrats");
 
 	UpdChampTabVis();
 
@@ -860,9 +860,9 @@ void CGui::InitGui()
 
 	//  open url btns  -------------
 	Btn("OpenWelcome", btnWelcome);  Btn("OpenWebsite", btnWebsite);
-	Btn("OpenForum", btnForum);  Btn("OpenDonations", btnDonations);
+	Btn("OpenForum",   btnForum);    Btn("OpenDonations", btnDonations);
 	//  wiki
-	Btn("OpenWiki", btnWiki);  Btn("OpenWikiInput", btnWikiInput);
+	Btn("OpenWiki",  btnWiki);   Btn("OpenWikiInput", btnWikiInput);
 	Btn("OpenEdTut", btnEdTut);  Btn("OpenTransl", btnTransl);  // mplr?
 
 	bGI = true;  // gui inited, gui events can now save vals

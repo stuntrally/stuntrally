@@ -235,4 +235,7 @@ void CGui::comboDiff(Cmb cmb, size_t val)
 	}
 	gcom->TrackListUpd(true);  gcom->listTrackChng(gcom->trkList,0);
 	listCarChng(carList,0);
+
+	ChampsListUpdate();
+	ChallsListUpdate();
 }

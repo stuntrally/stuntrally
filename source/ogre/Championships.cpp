@@ -25,11 +25,11 @@ void CGui::chkChampRev(Ck*)
 	ChallsListUpdate();
 }
 
-void CGui::tabTutType(Tab wp, size_t id)
+/*void CGui::tabTutType(Tab wp, size_t id)
 {
 	pSet->tut_type = id;
 	ChampsListUpdate();
-}
+}*/
 void CGui::tabChampType(Tab wp, size_t id)
 {
 	pSet->champ_type = id;
@@ -45,13 +45,18 @@ void CGui::ChampsListUpdate()
 	//  0 tutorial  1 tutorial hard  // 2 normal  3 hard  4 very hard  // 5 scenery  6 scenery2  7 test
 		"#FFFFA0", "#E0E000",   "#A0F0FF", "#60C0FF", "#A0A0E0",   "#80FF80", "#A0D080",  "#909090"  };
 
-	liChamps->removeAllItems();  int n=1;  size_t sel = ITEM_NONE;
-	int p = pSet->gui.champ_rev ? 1 : 0;
-	for (int i=0; i < data->champs->all.size(); ++i,++n)
+	liChamps->removeAllItems();
+	const int p = pSet->gui.champ_rev ? 1 : 0;
+	const int all = data->champs->all.size();
+
+	int n=1;  size_t sel = ITEM_NONE;
+	for (int i=0; i < all; ++i,++n)
 	{
 		const Champ& ch = data->champs->all[i];
-		if (pSet->iMenu == MN_Tutorial && ch.type == pSet->tut_type ||
-			pSet->iMenu == MN_Champ && ch.type - 2 == pSet->champ_type)
+		if ((pSet->iMenu == MN_Tutorial && ch.type < 2 || //== pSet->tut_type*/ ||
+			pSet->iMenu == MN_Champ && ch.type - 2 == pSet->champ_type) &&
+			ch.diff >= pSet->difficulty &&
+			ch.diff <= pSet->difficulty+1)
 		{
 			const ProgressChamp& pc = progress[p].chs[i];
 			int ntrks = pc.trks.size(), ct = pc.curTrack;
@@ -70,6 +75,24 @@ void CGui::ChampsListUpdate()
 			if (n-1 == pSet->gui.champ_num)  sel = l;
 	}	}
 	liChamps->setIndexSelected(sel);
+
+	//  hide empty tabs  ----
+	const int tabs = tabChamp->getItemCount();
+	for (int t=0; t < tabs; ++t)
+	{	int cnt = 0;
+
+		if (t < tabs-1 || pSet->dev_keys)  // hide Test
+		for (int i=0; i < all; ++i)
+		{
+			const Champ& ch = data->champs->all[i];
+			if (//pSet->iMenu == MN_Tutorial && t == pSet->tut_type ||
+				ch.type - 2 == t &&
+				ch.diff >= pSet->difficulty &&
+				ch.diff <= pSet->difficulty+1)
+				++cnt;
+		}
+		tabChamp->setButtonWidthAt(t, cnt == 0 ? 1 : -1);
+	}
 }
 
 ///  upd dim  champ,chall,stages lists  ----------

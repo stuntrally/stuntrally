@@ -22,7 +22,7 @@
 					<Property key="TextColour" value="0.8 1 0.5"/>
 					<UserString key="tip" value="#{TipReverse}"/>
 				</Widget>
-				<Widget type="Button" skin="Button" position="176 516 160 32" name="NewGame1">
+				<Widget type="Button" skin="Button" position="176 516 160 32" name="NewGame0">
 					<Property key="Caption" value="#{NewGame}"/>
 					<Property key="Colour" value="0.6 1.0 0.3"/>
 					<Property key="TextColour" value="0.3 1 0.2"/>
@@ -34,15 +34,15 @@
 						<Property key="NeedMouse" value="false"/>
 					</Widget>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="174 15 336 336" name="TrackImg">
+				<Widget type="ImageBox" skin="ImageBox" position="174 15 336 336" name="TrackImg0">
 					<UserString key="tip" value="#{TipTrackImg} #{TipClickMax}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrkTerImg">
+				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrkTerImg0">
 					<UserString key="tip" value="#{TipTrackMap} #{TipClickMax}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrackMap">
+				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrackMap0">
 					<UserString key="tip" value="#{TipTrackMap} #{TipClickMax}"/>
-					<Widget type="ImageBox" skin="RotatingSkin" position="64 64 16 16" name="TrackPos">
+					<Widget type="ImageBox" skin="RotatingSkin" position="64 64 16 16" name="TrackPos0">
 						<Property key="ImageTexture" value="carpos0.png"/>
 					</Widget>
 				</Widget>
@@ -55,7 +55,7 @@
 					<Property key="TextColour" value="0.45 0.55 0.65"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 52" name="TrackAdvice">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 52" name="TrackAdvice0">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
@@ -64,9 +64,9 @@
 					<Property key="TextColour" value="0.9 0.9 0.6"/>
 					<Property key="Colour" value="0.9 0.9 0.6"/>
 					<Property key="FontName" value="font.small"/>
-					<UserString key="tip" value="#{TipTrackDesc} #{ClickMax}"/>
+					<UserString key="tip" value="#{TipTrackDesc}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="176 420 336 52" name="TrackDesc">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="176 420 336 52" name="TrackDesc0">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
@@ -75,7 +75,7 @@
 					<Property key="FontName" value="font.small"/>
 					<Property key="TextColour" value="0.6 1.0 0.8"/>
 					<Property key="Colour" value="0.4 1 0.7"/>
-					<UserString key="tip" value="#{TipTrackDesc} #{ClickMax}"/>
+					<UserString key="tip" value="#{TipTrackDesc}"/>
 				</Widget>				
 
 				<Widget type="Widget" skin="PanelSkin" position="524 95 256 172">
@@ -436,7 +436,7 @@
 					<UserString key="tip" value="#{TipTrkViewDetailed}"/>
 				</Widget>
 
-				<Widget type="Button" skin="Button" position="176 516 160 32" name="NewGame2">
+				<Widget type="Button" skin="Button" position="176 516 160 32" name="NewGame1">
 					<Property key="Caption" value="#{NewGame}"/>
 					<Property key="Colour" value="0.6 1.0 0.3"/>
 					<Property key="TextColour" value="0.3 1 0.2"/>
@@ -733,7 +733,7 @@
 					<Property key="FontName" value="font.small"/>
 				</Widget>
 
-				<Widget type="ImageBox" skin="ImageBox" position="256 192 24 24" name="ImgTrkFit">
+				<Widget type="ImageBox" skin="ImageBox" position="256 196 24 24" name="imgTrkDrivab">
 					<Property key="InheritsAlpha" value="false"/>
 					<Property key="ImageCoord" value="640 384 128 128"/>
 					<Property key="Alpha" value="0.8"/>
@@ -745,7 +745,7 @@
 					<Property key="Alpha" value="0.9"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="304 224 124 22" name="CarTrkFit">
+				<Widget type="TextBox" skin="TextBox" position="284 224 124 22" name="txTrkDrivab">
 					<Property key="TextColour" value="0.8 0.8 0.9"/>
 					<Property key="Alpha" value="0.95"/>
 					<Property key="FontName" value="font.small"/>
@@ -1474,7 +1474,7 @@
 			
 			<Widget type="TabItem" skin="" position="2 24 794 562" name="TabChamps">
 				<Property key="Caption" value="#80C0FF#{Championship}"/>
-				<Widget type="TabControl" skin="TabControl" position="24 26 567 36" name="TutType">
+				<!-- <Widget type="TabControl" skin="TabControl" position="24 26 567 36" name="TutType">
 					<Property key="Colour" value="1.0 0.9 0.8"/>
 					<Widget type="TabItem" skin="" position="2 24 532 8">
 						<Property key="Caption" value="#FFFFA0#{Diff2}"/>
@@ -1482,7 +1482,7 @@
 					<Widget type="TabItem" skin="" position="2 24 532 8">
 						<Property key="Caption" value="#E0E000#{Diff3}"/>
 					</Widget>
-				</Widget>
+				</Widget> -->
 				<Widget type="TabControl" skin="TabControl" position="24 26 567 36" name="ChampType">
 					<Property key="Colour" value="0.8 0.9 1.0"/>
 					<Widget type="TabItem" skin="" position="2 24 532 8">
@@ -1657,19 +1657,19 @@
 					<Property key="Caption" value="#{Track}"/>
 					<Property key="TextColour" value="0.4 1.0 0.5"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="174 15 336 336" name="TrackImg2">
-					<UserString key="tip" value="#{TipTrackImg}"/>
+				<Widget type="ImageBox" skin="ImageBox" position="174 15 336 336" name="TrackImg1">
+					<UserString key="tip" value="#{TipTrackImg} #{TipClickMax}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrkTerImg2">
-					<UserString key="tip" value="#{TipTrackMap}"/>
+				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrkTerImg1">
+					<UserString key="tip" value="#{TipTrackMap} #{TipClickMax}"/>
 				</Widget>
-				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrackMap2">
-					<UserString key="tip" value="#{TipTrackMap}"/>
-					<Widget type="ImageBox" skin="RotatingSkin" position="64 64 16 16" name="TrackPos2">
+				<Widget type="ImageBox" skin="ImageBox" position="526 270 252 252" name="TrackMap1">
+					<UserString key="tip" value="#{TipTrackMap} #{TipClickMax}"/>
+					<Widget type="ImageBox" skin="RotatingSkin" position="64 64 16 16" name="TrackPos1">
 						<Property key="ImageTexture" value="carpos0.png"/>
 					</Widget>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 52" name="TrackAdvice2">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="176 367 336 52" name="TrackAdvice1">
 					<Property key="ReadOnly" value="true"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>
@@ -1680,7 +1680,7 @@
 					<Property key="FontName" value="font.small"/>
 					<UserString key="tip" value="#{TipTrackDesc}"/>
 				</Widget>
-				<Widget type="EditBox" skin="EditBoxEmpty" position="176 420 336 52" name="TrackDesc2">
+				<Widget type="EditBox" skin="EditBoxEmpty" position="176 420 336 52" name="TrackDesc1">
 					<Property key="ReadOnly" value="false"/>
 					<Property key="MultiLine" value="true"/>
 					<Property key="WordWrap" value="true"/>

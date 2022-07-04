@@ -305,7 +305,7 @@ void CGui::UpdChampTabVis()
 		tutor = pSet->iMenu == MN_Tutorial, chall = pSet->iMenu == MN_Chall;
 	bool any = tutor || champ || chall;
 
-	tabTut->setVisible(tutor);    imgTut->setVisible(tutor);    btStTut->setVisible(tutor);
+	/*tabTut->setVisible(tutor);*/    imgTut->setVisible(tutor);    btStTut->setVisible(tutor);
 	tabChamp->setVisible(champ);  imgChamp->setVisible(champ);  btStChamp->setVisible(champ);
 	tabChall->setVisible(chall);  imgChall->setVisible(chall);  btStChall->setVisible(chall);
 	btNewGameCar->setVisible(!any);
