@@ -253,32 +253,6 @@ void CGui::editTrkAdvice(Ed ed)
 	app->scn->road->sTxtAdvice = ed->getCaption();
 }
 
-void CGui::comboPipeMtr(Cmb cmb, size_t val)
-{
-	String sn = cmb->getName().substr(String("RdMtrP").length(), cmb->getName().length());
-	int id = atoi(sn.c_str())-1;  if (id < 0 || id >= MTRs)  return;
-
-	String s = cmb->getItemNameAt(val);
-	app->scn->road->SetMtrPipe(id, s);  app->scn->road->Rebuild(true);  scn->UpdPSSMMaterials();
-	UpdSurfList();
-}
-
-void CGui::comboRoadWMtr(Cmb cmb, size_t val)
-{
-	String s = cmb->getItemNameAt(val);
-	app->scn->road->sMtrWall = s;  app->scn->road->Rebuild(true);  scn->UpdPSSMMaterials();
-}
-void CGui::comboPipeWMtr(Cmb cmb, size_t val)
-{
-	String s = cmb->getItemNameAt(val);
-	app->scn->road->sMtrWallPipe = s;  app->scn->road->Rebuild(true);  scn->UpdPSSMMaterials();
-}
-void CGui::comboRoadColMtr(Cmb cmb, size_t val)
-{
-	String s = cmb->getItemNameAt(val);
-	app->scn->road->sMtrCol = s;  app->scn->road->Rebuild(true);  scn->UpdPSSMMaterials();
-}
-
 void CGui::editRoad(Ed ed)
 {
 	if (!app->scn->road)  return;
@@ -530,10 +504,10 @@ void CGui::wheelSky(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickSky(liS
 void CGui::wheelTex(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickTex(liTex, liNext(liTex, r));  }
 void CGui::wheelGrs(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickGrs(liGrs, liNext(liGrs, r));  }
 void CGui::wheelVeg(WP wp, int rel){  int r = rel < 0 ? 1 : -1;  listPickVeg(liVeg, liNext(liVeg, r));  }
+
 void CGui::wheelRd(WP wp, int rel)
 {
-	String sn = wp->getName().substr(String("RdMtr").length(), wp->getName().length());
-	idRdPick = atoi(sn.c_str())-1;
+	idRdPick = atoi(wp->getName().substr(0,1).c_str());
 	int r = rel < 0 ? 1 : -1;  listPickRd(liRd, liNext(liRd, r));
 }
 
@@ -541,12 +515,46 @@ void CGui::btnPickSky(WP){    PickShow(P_Sky);  }
 void CGui::btnPickTex(WP){    PickShow(P_Tex);  }
 void CGui::btnPickGrass(WP){  PickShow(P_Grs);  }
 void CGui::btnPickVeget(WP){  PickShow(P_Veg);  }
+
+void CGui::btnPickRd(WP wp)
+{
+	if (!wp) {  PickShow(P_Rd, true);  return;  }
+	// int old = idRdPick;
+	idRdPick = atoi(wp->getName().substr(0,1).c_str());
+	PickShow(P_Rd, false); //old==idRdPick);
+}
 void CGui::btnPickRoad(WP wp)
-{	if (!wp) {
-		PickShow(P_Rd, true);  return;  }
-	String sn = wp->getName().substr(String("RdMtr").length(), wp->getName().length());
-	int idRdOld = idRdPick;  idRdPick = atoi(sn.c_str())-1;
-	PickShow(P_Rd, idRdOld==idRdPick);
+{
+	idRdType = RdPk_Road;
+	btnPickRd(wp);
+}
+// Btn btnRoad[4], btnPipe[4], btnRoadW =0, btnPipeW =0, btnRoadCol =0;
+void CGui::btnPickPipe(WP wp)
+{
+	idRdType = RdPk_Pipe;
+	btnPickRd(wp);
+	// String sn = cmb->getName().substr(0,1);
+	// int id = atoi(sn.c_str())-1;  if (id < 0 || id >= MTRs)  return;
+
+	// String s = cmb->getItemNameAt(val);
+	// app->scn->road->SetMtrPipe(id, s);  app->scn->road->Rebuild(true);  scn->UpdPSSMMaterials();
+	// UpdSurfList();
+}
+
+void CGui::btnPickRoadW(WP wp)
+{
+	idRdType = RdPk_Wall;
+	btnPickRd(wp);
+}
+void CGui::btnPickPipeW(WP wp)
+{
+	idRdType = RdPk_PipeW;
+	btnPickRd(wp);
+}
+void CGui::btnPickRoadCol(WP wp)
+{
+	idRdType = RdPk_Col;
+	btnPickRd(wp);
 }
 
 
@@ -554,15 +562,15 @@ void CGui::btnPickRoad(WP wp)
 //----------------------------------------------------
 void CGui::PickShow(EPick n, bool toggleVis)
 {
-	liSky->setVisible(n==P_Sky);  liTex->setVisible(n==P_Tex);
-	liGrs->setVisible(n==P_Grs);  liVeg->setVisible(n==P_Veg);  liRd->setVisible(n==P_Rd);
+	liSky->setVisible(n == P_Sky);  liTex->setVisible(n == P_Tex);
+	liGrs->setVisible(n == P_Grs);  liVeg->setVisible(n == P_Veg);
+	liRd->setVisible(n == P_Rd);
 	panPick->setPosition(liPickW[n], 0);
 
-	const int wx = pSet->windowx, wy = pSet->windowy;
-	///  pick dim
+	const int wx = pSet->windowx, wy = pSet->windowy;  ///  pick dim
 	app->mWndPick->setCoord(wx * liPickX[n], 12.f, liPickW[n], 0.95f*wy);
 	
-	if (n==P_Rd)  //  upd pick road
+	if (n == P_Rd)  //  upd pick road
 	{	UString s = btnRoad[idRdPick]->getCaption();
 		for (int i=0; i < liRd->getItemCount(); ++i)
 			if (liRd->getSubItemNameAt(1,i).substr(7) == s)
@@ -571,6 +579,53 @@ void CGui::PickShow(EPick n, bool toggleVis)
 	bool vis = app->mWndPick->getVisible();
 	if (n != P_Rd || toggleVis || !vis)
 		app->mWndPick->setVisible(!vis);
+}
+
+
+///  Road  -------------------------------------------------
+void CGui::listPickRd(Mli2 li, size_t pos)
+{
+	if (pos==ITEM_NONE || pos > data->pre->rd.size())
+	{	liRd->setIndexSelected(0);  pos = 0;  }
+	
+	string s = liRd->getSubItemNameAt(1,pos);
+	if (s.length() < 8)  return;
+	s = s.substr(7);
+	if (s[0] == '-' || s[0] == '=')  return;  // sep
+
+	//  set
+	const PRoad* p = data->pre->GetRoad(s);
+	// Btn btnRoad[4], btnPipe[4], btnRoadW =0, btnPipeW =0, btnRoadCol =0;
+	switch (idRdType)
+	{
+	case RdPk_Road:
+		scn->road->sMtrRoad[idRdPick] = s;
+		btnRoad[idRdPick]->setCaption(s);  break;
+	case RdPk_Pipe:
+		app->scn->road->SetMtrPipe(idRdPick, s);
+		btnPipe[idRdPick]->setCaption(s);  break;
+
+	case RdPk_Wall:
+		scn->road->sMtrWall = s;
+		btnRoadW->setCaption(s);  break;
+	case RdPk_PipeW:
+		scn->road->sMtrWallPipe = s;
+		btnPipeW->setCaption(s);  break;
+	case RdPk_Col:
+		scn->road->sMtrCol = s;
+		btnRoadCol->setCaption(s);  break;
+	}	
+	//  preset
+	if (pSet->pick_setpar && p && idRdType == RdPk_Road)
+	{	TerLayer& l = scn->sc->td.layerRoad[idRdPick];
+		l.surfName = p->surfName;
+		l.dust = p->dust;  l.dustS = p->dustS;
+		l.mud = p->mud;  l.tclr = p->tclr;
+		listSurf(surfList, idSurf);
+	}
+	//  upd
+	app->scn->road->Rebuild(true);  scn->UpdPSSMMaterials();
+	UpdSurfList();
 }
 
 
@@ -699,33 +754,4 @@ void CGui::listPickVeg(Mli2 li, size_t pos)
 		l.addRdist = p->addRdist;  svLTrRdDist.Upd();
 	}
 	Upd3DView(s);
-}
-
-///  Road  -------------------------------------------------
-void CGui::listPickRd(Mli2 li, size_t pos)
-{
-	if (pos==ITEM_NONE || pos > data->pre->rd.size())
-	{	liRd->setIndexSelected(0);  pos = 0;  }
-	
-	string s = liRd->getSubItemNameAt(1,pos);
-	if (s.length() < 8)  return;
-	s = s.substr(7);
-	if (s[0] == '-' || s[0] == '=')  return;  // sep
-
-	//  set
-	const PRoad* p = data->pre->GetRoad(s);
-	scn->road->sMtrRoad[idRdPick] = s;
-	
-	//  preset
-	if (pSet->pick_setpar && p)
-	{	TerLayer& l = scn->sc->td.layerRoad[idRdPick];
-		l.surfName = p->surfName;
-		l.dust = p->dust;  l.dustS = p->dustS;
-		l.mud = p->mud;  l.tclr = p->tclr;
-		listSurf(surfList, idSurf);
-	}
-	//  upd
-	btnRoad[idRdPick]->setCaption(s);
-	app->scn->road->Rebuild(true);  scn->UpdPSSMMaterials();
-	UpdSurfList();
 }

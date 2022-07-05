@@ -135,7 +135,7 @@ void App::KeyTxtRoad(Real q)
 
 		int lp = !bCur ? -1 : road->vSegs[road->iChosen].lpos.size();
 		rdValSt[7]->setCaption(toStr(lp));
-		rdValSt[8]->setCaption(fToStr(road->st.segsMrg+1, 0,2)+" "+fToStr(road->st.segsMrgW+1, 0,2));
+		rdValSt[8]->setCaption(fToStr(road->st.segsMrg+1, 0,2));//+" "+fToStr(road->st.segsMrgW+1, 0,2));
 		rdValSt[9]->setCaption(fToStr(road->st.iVis, 0,2));
 		rdValSt[10]->setCaption(fToStr(road->st.iTris/1000.f, 1,4)+"k");
 	}

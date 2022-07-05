@@ -98,11 +98,17 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 	if (skey==key(TAB) && editGui)
 	{
 		switch (tab->getIndexSelected())
-		{	case TAB_Sun:    /*if (sub->getIndexSelected()==0)*/ {  gui->btnPickSky(0);  return true;  }  break;
+		{	case TAB_Sun:  /*if (sub->getIndexSelected()==0)*/ {  gui->btnPickSky(0);  return true;  }  break;
 			case TAB_Layers:  gui->btnPickTex(0);  return true;
 			case TAB_Grass:  if (sub->getIndexSelected()==1) {  gui->btnPickGrass(0);  return true;  }  break;
 			case TAB_Veget:  if (sub->getIndexSelected()==1) {  gui->btnPickVeget(0);  return true;  }  break;
-			case TAB_Road:   if (sub->getIndexSelected()==0) {  gui->btnPickRoad(0);   return true;  }  break;
+			case TAB_Road:
+				switch (sub->getIndexSelected())
+				{
+				case 0:  gui->btnPickRoad(0);   return true;
+				case 1:  gui->btnPickPipe(0);   return true;
+				case 2:  gui->btnPickRoadCol(0);   return true;
+				}	break;
 		}
 		mWndPick->setVisible(false);
 	}

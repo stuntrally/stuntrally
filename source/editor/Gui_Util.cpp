@@ -105,9 +105,11 @@ void CGui::SetGuiRoadFromXml()
 	SplineRoad* rd = scn->road;
 	for (int i=0; i < 4/*MTRs*/; ++i)
 	{	btnRoad[i]->setCaption(rd->sMtrRoad[i]);
-		_Cmb(cmbPipeMtr[i], rd->sMtrPipe[i]);  }
-	_Cmb(cmbRoadWMtr, rd->sMtrWall);  _Cmb(cmbRoadColMtr, rd->sMtrCol);
-	_Cmb(cmbPipeWMtr, rd->sMtrWallPipe);
+		btnPipe[i]->setCaption(rd->sMtrPipe[i]);
+	}
+	btnRoadW->setCaption(rd->sMtrWall);
+	btnPipeW->setCaption(rd->sMtrWallPipe);
+	btnRoadCol->setCaption(rd->sMtrCol);
 
 	_Ed(RdHeightOfs, rd->g_Height);
 	_Ed(RdSkirtLen, rd->g_SkirtLen);  _Ed(RdSkirtH, rd->g_SkirtH);

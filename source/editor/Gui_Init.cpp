@@ -608,38 +608,6 @@ void CGui::InitGui()
 	}
 
 
-	//---------------------  Roads  ---------------------
-	GetMaterialsMat(sMat+"road.mat");
-	GetMaterialsMat(sMat+"pipe.mat",false);
-	GetMaterialsMat(sMat+"water.mat",false/*, "material River_"*/);
-	for (u=0; u<4; ++u)
-	{
-		Cmb(cmbPipeMtr[u], "RdMtrP"+toStr(u+1), comboPipeMtr);
-		if (u>0)  {  cmbPipeMtr[u]->addItem("");  }
-	}
-	Cmb(cmbRoadWMtr, "RdMtrW1", comboRoadWMtr);
-	Cmb(cmbPipeWMtr, "RdMtrPW1", comboPipeWMtr);
-	Cmb(cmbRoadColMtr, "RdMtrC1", comboRoadColMtr);
-
-	for (u=0; u < vsMaterials.size(); ++u)
-	{	const String& s = vsMaterials[u];
-		if (StringUtil::startsWith(s,"pipe") && !StringUtil::startsWith(s,"pipe_"))
-			for (int n=0; n<4; ++n)  cmbPipeMtr[n]->addItem(s);
-		// if (StringUtil::startsWith(s,"road_wall"))  cmbRoadWMtr->addItem(s);
-		// if (StringUtil::startsWith(s,"pipe_wall"))  cmbPipeWMtr->addItem(s);
-		// if (StringUtil::startsWith(s,"road_col"))  cmbRoadColMtr->addItem(s);
-		if (StringUtil::startsWith(s,"road_wall") ||
-			StringUtil::startsWith(s,"pipe_wall") ||
-			StringUtil::startsWith(s,"road_col") ||
-			StringUtil::startsWith(s,"road_univ"))
-		{
-			cmbRoadWMtr->addItem(s);
-  			cmbPipeWMtr->addItem(s);
-			cmbRoadColMtr->addItem(s);
-		}
-	}
-
-
 	//---------------------  Objects  ---------------------
 	app->vObjNames.clear();  strlist lo;
 	PATHMANAGER::DirList(sData + "/objects2", lo);
@@ -738,10 +706,16 @@ void CGui::InitGui()
 	Btn("PickTex", btnPickTex);      btn->eventMouseWheel += newDelegate(this, &CGui::wheelTex);  btnTexDiff = btn;
 	Btn("PickGrass", btnPickGrass);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelGrs);  btnGrassMtr = btn;
 	Btn("PickVeget", btnPickVeget);  btn->eventMouseWheel += newDelegate(this, &CGui::wheelVeg);  btnVeget = btn;
+	
+	auto btnWhRd = [&](){  btn->eventMouseWheel += newDelegate(this, &CGui::wheelRd);  };
 	for (n=0; n < 4; ++n)
-	{	Btn("RdMtr"+toStr(n+1), btnPickRoad);  btnRoad[n] = btn;
-		btnRoad[n]->eventMouseWheel += newDelegate(this, &CGui::wheelRd);
+	{	Btn(toStr(n)+"RdMtr",  btnPickRoad);  btnRoad[n] = btn;  btnWhRd();
+		Btn(toStr(n)+"RdMtrP", btnPickPipe);  btnPipe[n] = btn;  btnWhRd();
 	}
+	Btn("0RdMtrW",  btnPickRoadW);    btnRoadW = btn;    btnWhRd();
+	Btn("0RdMtrPW", btnPickPipeW);    btnPipeW = btn;    btnWhRd();
+	Btn("0RdMtrC",  btnPickRoadCol);  btnRoadCol = btn;  btnWhRd();
+
 	ck= &ckPickSetPar;	ck->Init("PickSetPar",	&pSet->pick_setpar);
 	panPick = fWP("PanelPick");
 

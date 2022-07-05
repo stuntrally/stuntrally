@@ -525,7 +525,7 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 	#ifndef SR_EDITOR  // game
 	for (int id : {ch, 2})  // also fullscr
 	#else
-	int id = ch;
+	id = ch;
 	#endif
 	{
 		if (!imgTer[id])  return;

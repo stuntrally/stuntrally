@@ -1,10 +1,10 @@
 <presets>
 <!-- This is the file with all that is available in SR Track Editor's  Pick Lists.
-	 Add any new content here, to be available.  -->
+     Add any new content here, to be available.  -->
 
 
 <!--  Skies  ================================================================
-	  m - material name from sky.mat  c - color (for list)  y - sun yaw  p - pitch -->
+      m - material name from sky.mat  c - color (for list)  y - sun yaw  p - pitch -->
 
 <!--  new todo:
 <s m="001_empty_blue"       c="#C0D8F8"   p="84"  y=" 13"  />
@@ -38,24 +38,24 @@
 <s m="sky/day_blue"        c="#C0D8F8"   p="84"  y=" 13"  />
 <s m="sky/day_blue2"       c="#D0E0F8"   p="60"  y="-40"  />
 <s m="sky/day_clouds"      c="#B0C0D0"   p="33"  y="-40"  />
-								   
+
 <s m="sky/cloudy"          c="#90B0D0"   p="23"  y=" 59"  />
 <s m="sky/gray_clouded"    c="#A8B0B8"   p="40"  y="105"  />
-								   
+
 <s m="sky/foggy_gen"       c="#90B0D0"   p="24"  y=" 47"  />
 <s m="sky/big_clouds_gen"  c="#7890A8"   p="16"  y=" 45"  />
 <s m="sky/big_clouds2_gen" c="#6080A0"   p="12"  y="  0"  />
-								   
+
 <s m="sky/dawn_bright"     c="#D0D0B0"   p="21"  y="-45"  />
 <s m="sky/dawn_cloudy"     c="#B0B090"   p="16"  y=" 88"  />
 
 <s m="sky/sunset_rays_gen" c="#D06010"   p=" 8"  y="  0"  />
 <s m="sky/sunset_blue_gen" c="#E09060"   p="16"  y=" 57"  />
 <s m="sky/sunset_gen"      c="#E080A0"   p="16"  y=" 45"  />
-								   
+
 <s m="sky/morning_gen"     c="#C0B0A0"   p="30"  y=" -8"  />
 <s m="sky/morning2_gen"    c="#D0D090"   p="30"  y="  8"  />
-								   
+
 <s m="sky/twighlight_gen"  c="#806030"   p=" 8"  y=" 48"  />
 <s m="sky/night_blue"      c="#3070B0"   p="12"  y=" 78"  />
 <s m="sky/offworld_gen"    c="#B0A090"   p="14"  y=" 27"  />
@@ -63,19 +63,19 @@
 <!--  skies, oldest  (lowest quality)  -->
 <s m="sky/dust"            c="#C0C090"   p="32"  y=" 60"  />
 <s m="sky/duskred"         c="#903820"   p="27"  y=" 15"  />
-											
+
 <s m="sky/white"           c="#B0C0D0"   p="26"  y=" 60"  />
 <s m="sky/white2"          c="#D0D0D0"   p="40"  y=" 60"  />
-											
+
 <s m="sky/light_blue"      c="#80C0FF"   p="20"  y=" 60"  />
 <s m="sky/blue_clouds"     c="#C0E0FF"   p="57"  y=" 62"  />
 <s m="sky/gray_clouds"     c="#A0A0A0"   p="38"  y=" 41"  />
 <s m="sky/dark_clouds"     c="#707070"   p="36"  y=" 41"  />
-											
+
 <s m="sky/sunset"          c="#E8B0C0"   p="40"  y="-40"  />
 <s m="sky/dawn"            c="#D4D090"   p="28"  y=" -7"  />
 <s m="sky/duskstormy"      c="#A09040"   p="17"  y=" 18"  />
-											
+
 <s m="sky/dayovercast"     c="#A0C0D0"   p="30"  y="124"  />
 <s m="sky/magic"           c="#A0A0FF"   p="30"  y="-41"  />
 <s m="sky/magicdark"       c="#7070B0"   p="31"  y="-30"  />
@@ -86,8 +86,8 @@
 <!--  common:  sc - "short scenery name" (name color)  z - appears on sceneries (not used, for filters)  -->
 
 <!--  Terrain textures  ================================================================================================================================
-	  t - diff tex  n - norm tex  (t,n filename no ext)
-	  s - scale  su - surface  tp - triplanar   du - dust  ds - dust size  md - mud   tr - trail color   aa,ab - min,max ter angle  d - damage -->
+      t - diff tex  n - norm tex  (t,n filename no ext)
+      s - scale  su - surface  tp - triplanar   du - dust  ds - dust size  md - mud   tr - trail color   aa,ab - min,max ter angle  d - damage -->
 
 <t sc="Aus"  t="---- Australia ------"  r="0" />
 <t sc="Aus"  t="adesert_cracks_d"   n="desert_cracks_n"    s="10.50" r="2" su="DesertFast"     tp="0" du="0.6" ds="1.0" md="0.5" tr="0.48 0.30 0.20 0.8"  aa="13" ab="27" z="AV" />
@@ -240,47 +240,47 @@
 
 
 <!--  Roads  ================================================================================================================================
-	  m - road material  rest same as for t (above) -->
+      m - road material  rest same as for t (above) -->
 
-<r sc="JngD" m="roadJDark"       r="4" su="roadJungle"   du="0.0" ds="0.2" md="0.2" tr="0.40 0.36 0.16 0.8" z="J" />
-<r sc="Blk"  m="roadJDarkD"      r="3" su="roadDesert"   du="0.0" ds="0.1" md="0.0" tr="0.20 0.20 0.10 0.9" z="V" />
-<r sc="Blk"  m="roadJDarkDs"     r="2" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.30 0.1" z="V" />
-<r sc="For"  m="roadJungle"      r="4" su="roadForest"   du="0.0" ds="0.2" md="0.2" tr="0.30 0.26 0.16 0.8" z="CFGJT" />
-						
-<r sc="Mos"  m="roadMoss"        r="3" su="roadJungle"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" z="O" />
-<r sc="Mud"  m="roadMud"         r="3" su="roadGravel"   du="0.0" ds="1.0" md="0.8" tr="0.21 0.13 0.00 0.8" z="DJMTV" />
-						
-<r sc="Fin"  m="roadNdirt"       r="5" su="roadGravel"   du="0.0" ds="1.0" md="0.6" tr="0.13 0.13 0.13 0.8" z="EVW" />
-<r sc="Fin"  m="roadNgravel"     r="5" su="roadGravel"   du="0.0" ds="1.0" md="0.6" tr="0.13 0.13 0.13 0.8" z="EF" />
+<r sc="JngD" m="roadJDark"            r="4" su="roadJungle"   du="0.0" ds="0.2" md="0.2" tr="0.40 0.36 0.16 0.8" z="J" />
+<r sc="Blk"  m="roadJDarkD"           r="3" su="roadDesert"   du="0.0" ds="0.1" md="0.0" tr="0.20 0.20 0.10 0.9" z="V" />
+<r sc="Blk"  m="roadJDarkDs"          r="2" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.30 0.1" z="V" />
+<r sc="For"  m="roadJungle"           r="4" su="roadForest"   du="0.0" ds="0.2" md="0.2" tr="0.30 0.26 0.16 0.8" z="CFGJT" />
 
-<r sc="Sav"  m="roadSavannah"    r="2" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="ST" />
-<r sc="Stn"  m="roadStone"       r="3" su="roadForest"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.20 0.10 0.7" z="DT" />
+<r sc="Mos"  m="roadMoss"             r="3" su="roadJungle"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" z="O" />
+<r sc="Mud"  m="roadMud"              r="3" su="roadGravel"   du="0.0" ds="1.0" md="0.8" tr="0.21 0.13 0.00 0.8" z="DJMTV" />
 
-<r sc="Wnt"  m="roadSnow"        r="3" su="roadSnow"     du="0.9" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
-<r sc="Wet"  m="roadSnowGrn"     r="3" su="roadSnow"     du="0.4" ds="0.5" md="0.2" tr="0.30 0.40 0.30 0.8" z="W" />
-<r sc="Wnt"  m="roadIce"         r="2" su="roadSnow"     du="0.3" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
+<r sc="Fin"  m="roadNdirt"            r="5" su="roadGravel"   du="0.0" ds="1.0" md="0.6" tr="0.13 0.13 0.13 0.8" z="EVW" />
+<r sc="Fin"  m="roadNgravel"          r="5" su="roadGravel"   du="0.0" ds="1.0" md="0.6" tr="0.13 0.13 0.13 0.8" z="EF" />
 
-<r sc="Des"  m="---- Sand ----"  r="0" />
-<r sc="Aus"  m="roadAdesert"     r="5" su="roadAdesert"  du="0.5" ds="0.6" md="0.0" tr="0.54 0.30 0.22 0.7" z="ACR" />
-<r sc="Aus"  m="roadAdesertDark" r="4" su="roadAdesert"  du="0.5" ds="0.6" md="0.0" tr="0.44 0.30 0.22 0.7" z="ACR" />
-<r sc="Can"  m="roadCdesert"     r="3" su="roadDesert"   du="0.5" ds="0.6" md="0.0" tr="0.44 0.30 0.22 0.7" z="C" />
-<r sc="Can"  m="roadCanyon1"     r="3" su="roadForest"   du="0.0" ds="0.0" md="0.0" tr="0.09 0.19 0.15 0.8" z="C" />
-<r sc="Can"  m="roadCanyon2"     r="3" su="roadForest"   du="0.0" ds="0.0" md="0.0" tr="0.30 0.20 0.10 0.7" z="C" />
-						
-<r sc="Des"  m="roadDesert"      r="5" su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="D" />
-<r sc="Des"  m="roadDesertOrn"   r="3" su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.70 0.61 0.36 0.7" z="D" />
-<r sc="Grc"  m="roadDesertD"     r="4" su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="G" />
-<r sc="Grc"  m="roadGDesert"     r="3" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.40 0.36 0.26 0.5" z="G" />
+<r sc="Sav"  m="roadSavannah"         r="2" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="ST" />
+<r sc="Stn"  m="roadStone"            r="3" su="roadForest"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.20 0.10 0.7" z="DT" />
 
-<r sc="Isl"  m="roadSand"        r="2" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.35 0.5" z="DIV" />
-<r sc="Des"  m="roadSand2"       r="2" su="roadDesert"   du="0.4" ds="0.8" md="0.0" tr="0.50 0.46 0.26 0.7" z="DI" />
-<r sc="Vlc"  m="roadSandDark"    r="2" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.30 0.1" z="IV" />
-						
-<r sc="Isl"  m="roadSandSet"     r="1" su="roadGravel"   du="1.3" ds="0.5" md="0.0" tr="0.48 0.32 0.22 0.7" z="I" />
-<r sc="GrcR" m="roadSandShore"   r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.20 0.13 0.06 0.7" z="FIT" />
-<r sc="Wnt"  m="roadSandWhite"   r="1" su="roadDesert"   du="0.6" ds="0.6" md="0.0" tr="0.70 0.70 0.70 0.7" z="G" />
+<r sc="Wnt"  m="roadSnow"             r="3" su="roadSnow"     du="0.9" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
+<r sc="Wet"  m="roadSnowGrn"          r="3" su="roadSnow"     du="0.4" ds="0.5" md="0.2" tr="0.30 0.40 0.30 0.8" z="W" />
+<r sc="Wnt"  m="roadIce"              r="2" su="roadSnow"     du="0.3" ds="0.6" md="0.2" tr="0.60 0.60 0.60 0.5" z="W" />
 
-<r sc="Uni"  m="---- Space ----"      r="0" />
+<r sc="Des"  m="---- Sand ----"       r="0" />
+<r sc="Aus"  m="roadAdesert"          r="5" su="roadAdesert"  du="0.5" ds="0.6" md="0.0" tr="0.54 0.30 0.22 0.7" z="ACR" />
+<r sc="Aus"  m="roadAdesertDark"      r="4" su="roadAdesert"  du="0.5" ds="0.6" md="0.0" tr="0.44 0.30 0.22 0.7" z="ACR" />
+<r sc="Can"  m="roadCdesert"          r="3" su="roadDesert"   du="0.5" ds="0.6" md="0.0" tr="0.44 0.30 0.22 0.7" z="C" />
+<r sc="Can"  m="roadCanyon1"          r="3" su="roadForest"   du="0.0" ds="0.0" md="0.0" tr="0.09 0.19 0.15 0.8" z="C" />
+<r sc="Can"  m="roadCanyon2"          r="3" su="roadForest"   du="0.0" ds="0.0" md="0.0" tr="0.30 0.20 0.10 0.7" z="C" />
+
+<r sc="Des"  m="roadDesert"           r="5" su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="D" />
+<r sc="Des"  m="roadDesertOrn"        r="3" su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.70 0.61 0.36 0.7" z="D" />
+<r sc="Grc"  m="roadDesertD"          r="4" su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.70 0.66 0.36 0.7" z="G" />
+<r sc="Grc"  m="roadGDesert"          r="3" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.40 0.36 0.26 0.5" z="G" />
+
+<r sc="Isl"  m="roadSand"             r="2" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.35 0.5" z="DIV" />
+<r sc="Des"  m="roadSand2"            r="2" su="roadDesert"   du="0.4" ds="0.8" md="0.0" tr="0.50 0.46 0.26 0.7" z="DI" />
+<r sc="Vlc"  m="roadSandDark"         r="2" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.50 0.44 0.30 0.1" z="IV" />
+
+<r sc="Isl"  m="roadSandSet"          r="1" su="roadGravel"   du="1.3" ds="0.5" md="0.0" tr="0.48 0.32 0.22 0.7" z="I" />
+<r sc="GrcR" m="roadSandShore"        r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.20 0.13 0.06 0.7" z="FIT" />
+<r sc="Wnt"  m="roadSandWhite"        r="1" su="roadDesert"   du="0.6" ds="0.6" md="0.0" tr="0.70 0.70 0.70 0.7" z="G" />
+
+<r sc="Spc"  m="---- Space ----"      r="0" />
 <r sc="Uni"  m="roadSandMagic"        r="3" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.32 0.46 0.8" z="U" />     
 <r sc="Uni"  m="roadMagicMirror"      r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.32 0.46 0.8" z="U" />     
 <r sc="Cry"  m="roadCrystal"          r="3" su="roadDesert"   du="0.0" ds="0.0" md="0.0" tr="0.00 0.10 0.20 0.5" z="Y" />     
@@ -291,7 +291,7 @@
 <r sc="Oth"  m="roadMetal1"           r="2" su="roadForest"   du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="H" />
 <r sc="Oth"  m="roadMetal2"           r="1" su="roadAsphalt"  du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="H" />
 
-<r sc="Stn"  m="roadAsphalt"	      r="3" su="Asphalt"      du="0.0" ds="0.9" md="0.0" tr="0.00 0.00 0.00 0.0" z="D" />
+<r sc="Stn"  m="roadAsphalt"          r="3" su="Asphalt"      du="0.0" ds="0.9" md="0.0" tr="0.00 0.00 0.00 0.0" z="D" />
 <r sc="Oth"  m="roadAsphaltSpace"     r="1" su="roadAsphalt"  du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="H" />
 <r sc="Oth"  m="roadAsphaltSpaceBlue" r="1" su="roadAsphalt"  du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" z="H" />
 
@@ -299,6 +299,88 @@
 <r sc="Aln"  m="roadAlien"            r="1" su="roadJungle"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" z="L" />
 <r sc="Aln"  m="roadAlienStone"       r="1" su="roadForest"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.20 0.10 0.7" z="L" />
 <r sc="Blk"  m="roadDesertBlack"      r="1" su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+
+<r sc="Wnt"  m="---- pipe glass ----" r="0" />
+<!-- <r sc="Oth"  m="pipe_glass"           r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" /> -->
+<r sc="Oth"  m="pipeGlass"            r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Grc"  m="pipeGlassCyan"        r="5" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Cry"  m="pipeGlassBlue"        r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Jng"  m="pipeGlassGreen"       r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Aus"  m="pipeGlassRed"         r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Can"  m="pipeGlassOrange"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Cry"  m="pipeGlassBlueD"       r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Wnt"  m="pipeGlassWhiteB"      r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Wnt"  m="pipeGlassWhiteV"      r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Uni"  m="pipeGlassViolet"      r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Des"  m="pipeGlassYellow"      r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+
+<r sc="Wnt"  m="---- pipe glass2 ----" r="0" />
+<r sc="Cry"  m="pipeGlassCrystal"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Spc"  m="pipeGlassAlien"       r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Cry"  m="pipeGlassAlienBlue"   r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Jng"  m="pipeGlassAlienGreen"  r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Aln"  m="pipeGlassAlienLime"   r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+
+<r sc="Oth"  m="pipeAsphalt"          r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Aus"  m="pipeAsphaltRed"       r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Oth"  m="pipeMetal"            r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Can"  m="pipeMetalOrn"         r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Oth"  m="pipeMetalBlue"        r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+
+<r sc="Wnt"  m="---- pipe wall ----"  r="0" />
+<r sc="Oth"  m="road_wall"            r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="JngD" m="road_wall_JDark"      r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Jng"  m="road_wall_Jungle"     r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Wnt"  m="road_wall_Winter"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Can"  m="road_wall_Red"        r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Des"  m="road_wall_Desert"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Cry"  m="road_wall_crystal"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Aln"  m="road_wall_Alien"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+
+<r sc="Oth"  m="pipe_wall"            r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="JngD" m="pipe_wall_JDark"      r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Jng"  m="pipe_wall_Jungle"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Aus"  m="pipe_wall_Red"        r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Can"  m="pipe_wall_Orange"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Des"  m="pipe_wall_Yellow"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Wnt"  m="pipe_wall_Winter"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Cry"  m="pipe_wall_crystal"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Aln"  m="pipe_wall_Alien"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+
+<r sc="Wnt"  m="---- column ----"     r="0" />
+<r sc="Oth"  m="road_col"             r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="JngD" m="road_col_Dark"        r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Grc"  m="road_col_Blue"        r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Wnt"  m="road_col_Winter"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Can"  m="road_col_Red"         r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Des"  m="road_col_Desert"      r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Cry"  m="road_col_crystal"     r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Aln"  m="road_col_Alien"       r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+
+<r sc="Wnt"  m="---- wall universal"  r="0" />
+<r sc="Spc"  m="wall_space_diam"      r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Spc"  m="wall_space_dots"      r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Can"  m="wall_space_dots_orn"  r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Spc"  m="wall_space_gray"      r="5" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Cry"  m="wall_space_grayblue"  r="5" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Spc"  m="wall_space_metal"     r="5" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Spc"  m="wall_space_metaldark" r="5" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Spc"  m="wall_space_x"         r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Oth"  m="wall_metal_01"        r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<!-- <r sc="Oth"  m="wall_metal_02_dark"   r="1" su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" /> -->
+<r sc="Oth"  m="wall_metal_03_gray"   r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Des"  m="wall_metal_03_yellow" r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Aus"  m="wall_metal_03_red"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Aln"  m="wall_metal_03_green"  r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Spc"  m="wall_metal_04_x"      r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Uni"  m="wall_metal_04_x_viol" r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Oth"  m="wall_metal_05_bars"   r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Spc"  m="wall_metal_06_plates" r="5" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Des"  m="wall_metal_06_yellow" r="5" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Spc"  m="wall_metal_07_worn"   r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Oth"  m="wall_metal_08_hex"    r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Spc"  m="wall_metal_12_dots"   r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Cry"  m="wall_metal_12_blue"   r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 
 
 <!--  Rivers  -->
@@ -325,7 +407,7 @@
 
 
 <!--  Grasses  ================================================================================================================================
-	  g - grass material  c - colormap .png  xa,xb - min,max width  ya,yb - min,max height  -->
+      g - grass material  c - colormap .png  xa,xb - min,max width  ya,yb - min,max height  -->
 
 <g sc="Sav"  g="grass12s"          c="grClrForest2"   r="4" xa="1.07" xb="2.69" ya="1.03" yb="1.67" z="S" />
 <g sc="Sav"  g="grass12w"          c="grClrJungle2"   r="2" xa="1.07" xb="2.25" ya="1.03" yb="1.87" z="S" />
@@ -406,7 +488,7 @@
 
 
 <!--  Vegetation  ================================================================================================================================
-	  p - .mesh name  r - rating  sa,sb - min,max scale  wx,wy - wind fx,fy  ab - max ter angle  rd - min road dist  fd - max fluid depth -->
+      p - .mesh name  r - rating  sa,sb - min,max scale  wx,wy - wind fx,fy  ab - max ter angle  rd - min road dist  fd - max fluid depth -->
 
 <!--  Palms  Desert  -->
 <v sc="For"  p="---- common ----"     r="0" />
@@ -464,54 +546,54 @@
 
 <!--  Rocks 40x  ================  -->
 <!--  rocks  brown  For,Jng -->
-<v sc="Stn"  p="=== ROCKS ==="          r="0" />
-<v sc="Jng"  p="rock01brown1up"			r="5" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="24" rd="2" fd="1.0" z="JMF" />
-<v sc="Mud"  p="rock02brown2flat"		r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="24" rd="2" fd="1.0" z="MJS" />
+<v sc="Stn"  p="=== ROCKS ==="        r="0" />
+<v sc="Jng"  p="rock01brown1up"       r="5" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="24" rd="2" fd="1.0" z="JMF" />
+<v sc="Mud"  p="rock02brown2flat"     r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="24" rd="2" fd="1.0" z="MJS" />
 
-<v sc="JngD" p="rock16black1"			r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="J" />
-<v sc="JngD" p="rock18black3"			r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="J" />
-<v sc="For"  p="rock23dark1block"		r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="FZ" />
+<v sc="JngD" p="rock16black1"         r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="J" />
+<v sc="JngD" p="rock18black3"         r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="J" />
+<v sc="For"  p="rock23dark1block"     r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="FZ" />
 
-<v sc="Jng"  p="rock22jng1Harsh"		r="4" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="J" />
-<v sc="For"  p="rock24triangle"			r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="F" />
-<v sc="Jng"  p="rock25dark2Harsh2"		r="5" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="J" />
-<v sc="Jng"  p="rock30grayGreen"		r="5" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="J" />
+<v sc="Jng"  p="rock22jng1Harsh"      r="4" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="J" />
+<v sc="For"  p="rock24triangle"       r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="F" />
+<v sc="Jng"  p="rock25dark2Harsh2"    r="5" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="J" />
+<v sc="Jng"  p="rock30grayGreen"      r="5" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="J" />
 
-<v sc="Vlc"  p="rock15ironSpecks"		r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="27" rd="2" fd="1.0" z="FMSV" />
-<v sc="Vlc"  p="rock21triEdgeSpeck"		r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="F" />
+<v sc="Vlc"  p="rock15ironSpecks"     r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="27" rd="2" fd="1.0" z="FMSV" />
+<v sc="Vlc"  p="rock21triEdgeSpeck"   r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="F" />
 
 <!--  rocks  gray  Sav,For  -->
-<v sc="Stn"  p="rock26grayBlue"			r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="F" />
-<v sc="Stn"  p="rock33grayBlue2"		r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="SF" />
-<v sc="Stn"  p="rock34brGr2block"		r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="SF" />
-<v sc="Stn"  p="rock37brGr1tall"		r="4" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="SF" />
-<v sc="Stn"  p="rock39brGr3edgy"		r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="SF" />
+<v sc="Stn"  p="rock26grayBlue"       r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="F" />
+<v sc="Stn"  p="rock33grayBlue2"      r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="SF" />
+<v sc="Stn"  p="rock34brGr2block"     r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="SF" />
+<v sc="Stn"  p="rock37brGr1tall"      r="4" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="SF" />
+<v sc="Stn"  p="rock39brGr3edgy"      r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="SF" />
 <!--  rocks  white  Sav,Mos  -->
-<v sc="Mos"  p="rock17black2wh"			r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="OJ" />
-<v sc="Wnt"  p="rock20liGrayTall"		r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="WO" />
-<v sc="GrcR" p="rock06white1flat"		r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="GIS" />
-<v sc="GrcR" p="rock07white2rnd"		r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="GIS" />
-<v sc="GrcR" p="rock08white3tall"		r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="GS" />
-<v sc="Isl"  p="rock09tallHarshWh"		r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="IO" />
-<v sc="Mos"  p="rock19harshWhite"		r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="OG" />
-<v sc="Mos"  p="rock28grayWhite"		r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="OG" />
-<v sc="Wnt"  p="rock41grayWh"			r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="SF" />
-<v sc="Wnt"  p="rock46grayWhite2"		r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="GSW" />
+<v sc="Mos"  p="rock17black2wh"       r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="OJ" />
+<v sc="Wnt"  p="rock20liGrayTall"     r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="WO" />
+<v sc="GrcR" p="rock06white1flat"     r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="GIS" />
+<v sc="GrcR" p="rock07white2rnd"      r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="GIS" />
+<v sc="GrcR" p="rock08white3tall"     r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="GS" />
+<v sc="Isl"  p="rock09tallHarshWh"    r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="IO" />
+<v sc="Mos"  p="rock19harshWhite"     r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="OG" />
+<v sc="Mos"  p="rock28grayWhite"      r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="OG" />
+<v sc="Wnt"  p="rock41grayWh"         r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="SF" />
+<v sc="Wnt"  p="rock46grayWhite2"     r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="GSW" />
 
 <!--  rocks  orng,red  Can,Aus  -->
-<v sc="Can"  p="rock03can1flat"			r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="CDI" />
-<v sc="Can"  p="rock04can2flat"			r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="CD" />
-<v sc="Can"  p="rock05can3round"		r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="CDI" />
-<v sc="Can"  p="rock12orange"			r="4" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="C" />
-<v sc="Can"  p="rock13orange2"			r="4" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="C" />
-<v sc="Can"  p="rock14tall1cgr"			r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="C" />
+<v sc="Can"  p="rock03can1flat"       r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="CDI" />
+<v sc="Can"  p="rock04can2flat"       r="3" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="CD" />
+<v sc="Can"  p="rock05can3round"      r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="CDI" />
+<v sc="Can"  p="rock12orange"         r="4" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="C" />
+<v sc="Can"  p="rock13orange2"        r="4" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="C" />
+<v sc="Can"  p="rock14tall1cgr"       r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="C" />
 
-<v sc="Aus"  p="rock10red1round"		r="4" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="A" />
-<v sc="Aus"  p="rock11red2"				r="5" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="A" />
-<v sc="Aus"  p="rock32red2block"		r="4" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="A" />
-<v sc="Aus"  p="rock35red1edgy"			r="5" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="A" />
-<v sc="Aus"  p="rock40red3flat"			r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="A" />
-<v sc="Aus"  p="rock44red4rndWh"		r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="A" />
+<v sc="Aus"  p="rock10red1round"      r="4" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="A" />
+<v sc="Aus"  p="rock11red2"           r="5" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="A" />
+<v sc="Aus"  p="rock32red2block"      r="4" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="A" />
+<v sc="Aus"  p="rock35red1edgy"       r="5" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="A" />
+<v sc="Aus"  p="rock40red3flat"       r="2" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="A" />
+<v sc="Aus"  p="rock44red4rndWh"      r="1" sa="0.70" sb="1.20"  wx="0" wy="0"  ab="34" rd="2" fd="1.0" z="A" />
 
 
 <!--  Rocks old  ================  -->

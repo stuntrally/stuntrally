@@ -301,7 +301,7 @@ float CGui::GetTrkDrivability(std::string car, std::string trk, bool track_user)
 
 	float undrv = 0.f;  // 0 drivable .. 1 undrivable
 	int w = std::max(0, ci.width - 3);
-	undrv += 0.8f * w/3.f * ti.narrow /5.f;
+	undrv += 0.8f * w/3.f * ti.narrow /3.f;
 	undrv += 0.2f * w/3.f * ti.obstacles /4.f;
 	undrv += 0.7f * ci.bumps /3.f * ti.bumps /4.f;  // * tweak params
 
@@ -311,7 +311,7 @@ float CGui::GetTrkDrivability(std::string car, std::string trk, bool track_user)
 
 	bool wnt = (ti.scenery == "Winter") || (ti.scenery == "WinterWet");
 	if (wnt && ci.wheels >= 2)  // too slippery for fast cars
-		undrv += 0.7f * ci.speed /10.f;
+		undrv += 0.7f * std::max(0.f, ci.speed -7.f) /2.f;  // /10.f;
 
 	return std::min(1.f, undrv);
 }

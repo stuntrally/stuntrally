@@ -877,3 +877,263 @@ material pipeGlassAlienLime
 	normalMap normal_3.jpg
 	bump_scale 0.15
 }
+
+
+//  universal  any road,pipe,wall,column
+//--------------------------------------------------------------------------------------
+//  univ space
+material wall_space_diam
+{
+	parent road_wall
+	ambient 1.1 1.1 1.1
+	diffuse 1.1 1.1 1.1
+	specular 0.9 0.9 0.9 24
+	diffuseMap space_diam_d.jpg
+	normalMap space_diam_n.jpg
+	specMap space_diam_s.jpg
+	bump_scale 1.0
+}
+material wall_space_dots
+{
+	parent road_wall
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.9 0.9 0.9 24
+	diffuseMap space_dots_d.jpg
+	normalMap space_dots_n.jpg
+	specMap space_dots_s.jpg
+	bump_scale 1.0
+}
+material wall_space_dots_orn
+{
+	parent road_wall
+	ambient 0.9 0.7 0.5
+	diffuse 0.9 0.7 0.5
+	specular 0.9 0.7 0.5 24
+	diffuseMap space_dots_d.jpg
+	normalMap space_dots_n.jpg
+	specMap space_dots_s.jpg
+	bump_scale 1.0
+}
+material wall_space_gray
+{
+	parent road_wall
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.9 0.9 0.9 24
+	diffuseMap space_gray_d.jpg
+	normalMap space_gray_n.jpg
+	specMap space_gray_s.jpg
+	bump_scale 1.0
+}
+material wall_space_grayblue
+{
+	parent road_wall
+	ambient 0.6 0.9 1.1
+	diffuse 0.6 0.9 1.1
+	specular 0.9 0.9 0.9 24
+	diffuseMap space_gray_d.jpg
+	normalMap space_gray_n.jpg
+	specMap space_gray_s.jpg
+	bump_scale 1.0
+}
+material wall_space_metal
+{
+	parent road_wall
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.9 0.9 0.9 24
+	diffuseMap space_metal_d.jpg
+	normalMap space_metal_n.jpg
+	specMap space_metal_s.jpg
+	bump_scale 1.0
+}
+
+material wall_space_metaldark
+{
+	parent wall_space_metal
+	ambient 0.7 0.7 0.7
+	diffuse 0.7 0.7 0.7
+	specular 0.8 0.8 0.8 24
+}
+// material wall_space_octagons
+// {
+// 	parent road_wall
+// 	ambient 0.9 0.9 0.9
+// 	diffuse 0.9 0.9 0.9
+// 	specular 0.9 0.9 0.9 24
+// 	diffuseMap space_octagons_d.jpg
+// 	normalMap space_octagons_n.jpg
+// 	specMap space_octagons_s.jpg
+// 	bump_scale 1.0
+// }
+material wall_space_x
+{
+	parent road_wall
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.9 0.9 0.9 24
+	diffuseMap space_x_d.jpg
+	normalMap space_x_n.jpg
+	specMap space_x_s.jpg
+	bump_scale 1.0
+}
+
+//  univ metal
+material wall_metal_01
+{
+	parent road_wall
+	ambient 1.1 1.1 1.1
+	diffuse 1.1 1.1 1.1
+	specular 0.9 0.9 0.9 24
+	diffuseMap metal_01.jpg
+	normalMap metal_01_norm.jpg
+	specMap metal_01_spec.jpg
+	bump_scale 1.0
+}
+// material wall_metal_02_dark
+// {
+// 	parent road_wall
+// 	ambient 1.1 1.1 1.1
+// 	diffuse 1.1 1.1 1.1
+// 	specular 0.9 0.9 0.9 24
+// 	diffuseMap metal_02_dark.jpg
+// 	normalMap metal_02_norm.jpg
+// 	specMap metal_02_spec.jpg
+// 	bump_scale 1.0
+// }
+material wall_metal_03_red
+{
+	parent road_wall
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 1 1 1 24
+	diffuseMap metal_03_red.jpg
+	normalMap metal_03_norm.jpg
+	specMap metal_03_red_spec.jpg
+	bump_scale 1.0
+}
+material wall_metal_03_gray
+{
+	parent wall_metal_03_red
+	ambient 0.7 1.1 1.1
+	diffuse 0.7 1.1 1.1
+	specular 0.7 1 1 24
+}
+
+material wall_metal_03_green
+{
+	parent road_wall
+	ambient 0.7 0.9 0.9
+	diffuse 0.7 0.9 0.9
+	specular 0.7 0.7 0.7 24
+	diffuseMap metal_03_green.jpg
+	normalMap metal_03_norm.jpg
+	specMap metal_03_green_spec.jpg
+	bump_scale 1.0
+}
+material wall_metal_03_yellow
+{
+	parent wall_metal_03_green
+	ambient 1.1 0.7 0.7
+	diffuse 1.1 0.7 0.7
+	specular 1 1 0.7 24
+}
+
+material wall_metal_04_x
+{
+	parent road_wall
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.9 0.9 0.9 24
+	diffuseMap metal_04.jpg
+	normalMap metal_04_norm.jpg
+	specMap metal_04_spec.jpg
+	bump_scale 1.0
+}
+material wall_metal_04_x_viol
+{
+	parent wall_metal_04_x
+	ambient 0.9 0.8 1.1
+	diffuse 0.9 0.8 1.1
+	specular 0.9 0.9 0.9 24
+}
+
+material wall_metal_05_bars
+{
+	parent road_wall
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.9 0.9 0.9 24
+	diffuseMap metal_05.jpg
+	normalMap metal_05_norm.jpg
+	specMap metal_05_spec.jpg
+	bump_scale 1.0
+}
+material wall_metal_06_plates
+{
+	parent road_wall
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.9 0.9 0.9 24
+	diffuseMap metal_06.jpg
+	normalMap metal_06_norm.jpg
+	specMap metal_06_spec.jpg
+	bump_scale 1.0
+}
+material wall_metal_06_yellow
+{
+	parent wall_metal_06_plates
+	ambient 0.9 0.9 0.5
+	diffuse 0.9 0.9 0.5
+	specular 0.9 0.9 0.5 24
+}
+
+material wall_metal_07_worn
+{
+	parent road_wall
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.9 0.9 0.9 24
+	diffuseMap metal_07.jpg
+	normalMap metal_07_norm.jpg
+	specMap metal_07_spec.jpg
+	bump_scale 1.0
+}
+material wall_metal_08_hex
+{
+	parent road_wall
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.9 0.9 0.9 24
+	diffuseMap metal_08.jpg
+	normalMap metal_08_norm.png
+	specMap metal_08_spec.jpg
+	bump_scale 1.0
+}
+
+material wall_metal_12_dots
+{
+	parent road_wall
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.9 0.9 0.9 24
+	diffuseMap metal_12.jpg
+	normalMap metal_12_norm.jpg
+	specMap metal_12_spec.jpg
+	bump_scale 1.0
+}
+material wall_metal_12_blue
+{
+	parent wall_metal_12_dots
+	ambient 0.4 0.7 1.1
+	diffuse 0.4 0.7 1.1
+	specular 0.7 0.8 1.0 24
+}
+material wall_metal_12_blue
+{
+	parent wall_metal_12_dots
+	ambient 0.4 0.7 1.1
+	diffuse 0.4 0.7 1.1
+	specular 0.7 0.8 1.0 24
+}

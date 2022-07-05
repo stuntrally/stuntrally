@@ -232,9 +232,9 @@ void CGui::ToolSceneXml()
 			if (!s.empty() && !data->pre->GetRoad(s))
 				LogO("Road: " + trk + " Not Found in presets !!!  " + s);
 
-			s = rd.sMtrPipe[n];
-			if (!s.empty() && cmbPipeMtr[0]->findItemIndexWith(s) == MyGUI::ITEM_NONE)
-				LogO("Road: " + trk + " Not Found !!!  " + s);
+			// s = rd.sMtrPipe[n];
+			// if (!s.empty() && cmbPipeMtr[0]->findItemIndexWith(s) == MyGUI::ITEM_NONE)
+				// LogO("Road: " + trk + " Not Found !!!  " + s);
 
 			//if (!s.empty() && !data->pre->GetRoad(s))
 			//	LogO("Pipe: " + trk + " Not Found in presets !!!  " + s);
