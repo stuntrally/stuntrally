@@ -1,4 +1,4 @@
-Car/StatsExt
+overlay Car/StatsExt
 {
 	zorder 500
 	container BorderPanel(Car/StatsPanelExt)
@@ -72,7 +72,7 @@ Car/StatsExt
 	}
 }
 
-Car/StatsTxt
+overlay Car/StatsTxt
 {
 	zorder 600
 	container BorderPanel(Car/StatsPanelTxt)
@@ -146,7 +146,7 @@ Car/StatsTxt
 	}
 }
 
-Car/Stats
+overlay Car/Stats
 {
 	zorder 600
 	container BorderPanel(Car/StatsPanel)

@@ -1,5 +1,5 @@
 
-Editor/BrushPrvOverlay
+overlay Editor/BrushPrvOverlay
 {
 	zorder 500
 	container BorderPanel(Editor/BrushPrvPanel)
@@ -14,7 +14,7 @@ Editor/BrushPrvOverlay
 	}
 }
 
-Editor/TerPrvOverlay
+overlay Editor/TerPrvOverlay
 {
 	zorder 500
 	container BorderPanel(Editor/TerPrvPanel)
