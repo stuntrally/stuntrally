@@ -711,6 +711,7 @@ void CGui::InitGui()
 
 	//  championships
 	//------------------------------------------------------------------------
+	app->mWndRaceBtns[1]->setVisible(pSet->difficulty < 4);  // tutorials
 
 	//  track stats 2nd set
 	gcom->trkDesc[1] = fEd("TrackDesc1");  gcom->trkAdvice[1] = fEd("TrackAdvice1");
@@ -800,7 +801,6 @@ void CGui::InitGui()
 
 
 	//  tabs
-	//tabTut   = fTab("TutType");          Tev(tabTut,   TutType);    tabTut->setIndexSelected(pSet->tut_type);
 	tabChamp = fTab("ChampType");        Tev(tabChamp, ChampType);  tabChamp->setIndexSelected(pSet->champ_type);
 	tabChall = fTab("SubTabChallType");  Tev(tabChall, ChallType);  tabChall->setIndexSelected(pSet->chall_type);
 	imgTut   = fImg("imgTut");

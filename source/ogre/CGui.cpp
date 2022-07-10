@@ -85,7 +85,7 @@ void CGui::InitMainMenu()
 		auto clr = gcom->getClrDiff(diff);
 		diffList->addItem(clr+ TR("#{Diff"+toStr(diff)+"}"));
 	};
-	add(1);  add(2);  add(3);  add(4);  add(5);  add(6);
+	add(1);  add(2);  add(3);  add(4);  add(5);  add(6);  add(7);
 	diffList->setIndexSelected(pSet->difficulty);
 
 	//  Simulation  ---
@@ -231,8 +231,10 @@ void CGui::comboDiff(Cmb cmb, size_t val)
 	case 2:  SetDiff(1,6,  1,4, 2,2, 9,  0,0,1,1, "HI", "Jng6-Fun");  break;  // Isl6-Flooded
 	case 3:  SetDiff(0,3,  1,5, 4,4,14,  0,0,1,1, "HI", "Isl14-Ocean");  break;
 	case 4:  SetDiff(0,3,  0,6, 4,4,24,  0,0,0,1, "SX", "Grc9-Oasis");  break;
-	case 5:  SetDiff(0,17, 0,6, 4,4,24,  0,0,0,0, "U6", "Uni7-GlassStairs");  break;
+	case 5:  SetDiff(0,17, 0,6, 4,4,24,  0,0,0,0, "SX", "Mos5-Factory");  break;  // Isl17-AdapterIslands
+	case 6:  SetDiff(0,17, 0,6, 4,4,24,  0,0,0,0, "U6", "Uni7-GlassStairs");  break;
 	}
+	app->mWndRaceBtns[1]->setVisible(val < 4);  // tutorials
 	gcom->TrackListUpd(true);  gcom->listTrackChng(gcom->trkList,0);
 	listCarChng(carList,0);
 

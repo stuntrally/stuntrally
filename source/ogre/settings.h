@@ -73,7 +73,7 @@ public:
 	bool sounds_info;
 	//  gui
 	bool cars_sortup;  int cars_view, cars_sort;
-	int tut_type, champ_type, chall_type;
+	int champ_type, chall_type;
 	bool champ_info;
 	int car_ed_tab, tweak_tab;
 
