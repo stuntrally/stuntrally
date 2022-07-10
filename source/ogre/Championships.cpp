@@ -13,23 +13,22 @@
 #include "common/MultiList2.h"
 #include "../sound/SoundMgr.h"
 #include <OgreTextureManager.h>
-using namespace std;
+using namespace std;  using std::vector;
 using namespace Ogre;
 using namespace MyGUI;
 
 
 
+void CGui::chkCh_All(Ck* ck)
+{
+	chkChampRev(ck);
+}
 void CGui::chkChampRev(Ck*)
 {
 	ChampsListUpdate();
 	ChallsListUpdate();
 }
 
-/*void CGui::tabTutType(Tab wp, size_t id)
-{
-	pSet->tut_type = id;
-	ChampsListUpdate();
-}*/
 void CGui::tabChampType(Tab wp, size_t id)
 {
 	pSet->champ_type = id;
@@ -41,59 +40,90 @@ void CGui::tabChampType(Tab wp, size_t id)
 //----------------------------------------------------------------------------------------------------------------------
 void CGui::ChampsListUpdate()
 {
+	const int all = data->champs->all.size();
+
+	if (pSet->iMenu == MN_Tutorial)
+	{
+		std::vector<int> vIds;
+		for (int id = 0; id < all; ++id)
+		{
+			const Champ& ch = data->champs->all[id];
+			if (ch.type < 2 && (pSet->ch_all ||
+				ch.diff >= pSet->difficulty &&
+				ch.diff <= pSet->difficulty+1))  vIds.emplace_back(id);
+		}
+		fillChampsList(vIds);
+		return;
+	}
+	//if (pSet->iMenu == MN_Champ)
+
+
+	std::vector<int> vIds[8];  // cur diff ids for champ [types]
+	for (int id = 0; id < all; ++id)
+	{
+		const Champ& ch = data->champs->all[id];
+		if (pSet->ch_all || (
+			ch.diff >= pSet->difficulty &&
+			ch.diff <= pSet->difficulty+1))  vIds[ch.type].emplace_back(id);
+	}
+
+	int cntCur = vIds[pSet->champ_type + 2].size();
+
+	//  hide empty tabs  ----
+	const int tabs = tabChamp->getItemCount();
+	for (int t = 0; t < tabs; ++t)
+	{
+		int cnt = vIds[t + 2].size();  // skip tut 0,1
+
+		if (t == tabs-1 && !pSet->dev_keys)  // hide Test
+			cnt = 0;
+
+		tabChamp->setButtonWidthAt(t, cnt == 0 ? 1 : -1);
+
+		//  if none visible, set 1st nonempty
+		if (cntCur == 0 && cnt > 0)
+		{
+			pSet->champ_type = t;  cntCur = cnt;
+			tabChamp->setIndexSelected(t);
+	}	}
+
+	fillChampsList(vIds[pSet->champ_type + 2]);
+}
+
+
+void CGui::fillChampsList(std::vector<int> vIds)
+{
 	const char clrCh[8][8] = {
 	//  0 tutorial  1 tutorial hard  // 2 normal  3 hard  4 very hard  // 5 scenery  6 scenery2  7 test
 		"#FFFFA0", "#E0E000",   "#A0F0FF", "#60C0FF", "#A0A0E0",   "#80FF80", "#A0D080",  "#909090"  };
 
 	liChamps->removeAllItems();
-	const int p = pSet->gui.champ_rev ? 1 : 0;
-	const int all = data->champs->all.size();
+	const int rev = pSet->gui.champ_rev ? 1 : 0;
 
-	int n=1;  size_t sel = ITEM_NONE;
-	for (int i=0; i < all; ++i,++n)
+	size_t sel = ITEM_NONE;
+	for (int i : vIds)
 	{
 		const Champ& ch = data->champs->all[i];
-		if ((pSet->iMenu == MN_Tutorial && ch.type < 2 || //== pSet->tut_type*/ ||
-			pSet->iMenu == MN_Champ && ch.type - 2 == pSet->champ_type) &&
-			ch.diff >= pSet->difficulty &&
-			ch.diff <= pSet->difficulty+1)
-		{
-			const ProgressChamp& pc = progress[p].chs[i];
-			int ntrks = pc.trks.size(), ct = pc.curTrack;
-			const String& clr = clrCh[ch.type];
+		const ProgressChamp& pc = progress[rev].chs[i];
+		const int ntrks = pc.trks.size(), ct = pc.curTrack;
+		const String& clr = clrCh[ch.type];
 
-			liChamps->addItem(""/*clr+ toStr(n/10)+toStr(n%10)*/, n);  int l = liChamps->getItemCount()-1;
-			liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
-			liChamps->setSubItemNameAt(2,l, gcom->getClrDiff(ch.diff)+ TR("#{Diff"+toStr(ch.diff)+"}"));
+		liChamps->addItem(""/*clr+ toStr(i)*/, i+1);  int l = liChamps->getItemCount()-1;
+		liChamps->setSubItemNameAt(1,l, clr+ ch.name.c_str());
+		liChamps->setSubItemNameAt(2,l, gcom->getClrDiff(ch.diff)+ TR("#{Diff"+toStr(ch.diff)+"}"));
 
-			liChamps->setSubItemNameAt(3,l, gcom->getClrDiff(ntrks*2/3+1)+ iToStr(ntrks,3));
-			liChamps->setSubItemNameAt(4,l, gcom->getClrDiff(ch.time/3.f/60.f)+" "+ StrTime2(ch.time));
-			liChamps->setSubItemNameAt(5,l, ct == 0 || ct == ntrks ? "" :
-				clr+ fToStr(100.f * ct / ntrks,0,3)+" %");
+		liChamps->setSubItemNameAt(3,l, gcom->getClrDiff(ntrks*2/3+1)+ iToStr(ntrks,3));
+		liChamps->setSubItemNameAt(4,l, gcom->getClrDiff(ch.time/3.f/60.f)+" "+ StrTime2(ch.time));
+		liChamps->setSubItemNameAt(5,l, ct == 0 || ct == ntrks ? "" :
+			clr+ fToStr(100.f * ct / ntrks,0,3)+" %");
 
-			liChamps->setSubItemNameAt(6,l, pc.points > 0.f ? clr+ fToStr(pc.points,1,5) : "");
-			if (n-1 == pSet->gui.champ_num)  sel = l;
-	}	}
-	liChamps->setIndexSelected(sel);
-
-	//  hide empty tabs  ----
-	const int tabs = tabChamp->getItemCount();
-	for (int t=0; t < tabs; ++t)
-	{	int cnt = 0;
-
-		if (t < tabs-1 || pSet->dev_keys)  // hide Test
-		for (int i=0; i < all; ++i)
-		{
-			const Champ& ch = data->champs->all[i];
-			if (//pSet->iMenu == MN_Tutorial && t == pSet->tut_type ||
-				ch.type - 2 == t &&
-				ch.diff >= pSet->difficulty &&
-				ch.diff <= pSet->difficulty+1)
-				++cnt;
-		}
-		tabChamp->setButtonWidthAt(t, cnt == 0 ? 1 : -1);
+		liChamps->setSubItemNameAt(6,l, pc.points > 0.f ? clr+ fToStr(pc.points,1,5) : "");
+		if (i == pSet->gui.champ_num)
+			sel = l;
 	}
+	liChamps->setIndexSelected(sel);
 }
+
 
 ///  upd dim  champ,chall,stages lists  ----------
 void CGui::updChampListDim()

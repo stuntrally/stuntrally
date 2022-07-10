@@ -1547,6 +1547,10 @@
 					<Property key="ImageTexture" value="gui_icons.png"/>
 				</Widget>
 
+				<Widget type="Button" skin="CheckBox" position="32 411 120 24" name="Ch_All">
+					<Property key="Caption" value="#{RplAll}"/>
+					<Property key="TextColour" value="0.75 0.7 0.85"/>
+				</Widget>
 				<Widget type="Button" skin="CheckBox" position="630 411 120 24" name="ChampRev">
 					<Property key="Caption" value="#{Reverse}"/>
 					<Property key="Colour" value="0.8 1 0.6"/>

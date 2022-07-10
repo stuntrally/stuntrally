@@ -471,10 +471,11 @@ public:
 	int iChSnd = 0;  // snd id to play
 
 	//  main
+	void fillChampsList(std::vector<int> vIds), fillChallsList(std::vector<int> vIds);  // Ids from champs/challs .all
 	void ChampsListUpdate(), ChampFillStageInfo(bool finished), ChampionshipAdvance(float timeCur);
 	void ChallsListUpdate(), ChallFillStageInfo(bool finished), ChallengeAdvance(float timeCur);
 	void btnChampInfo(WP), UpdChampTabVis();
-	CK(ChampRev);
+	CK(ChampRev);  CK(Ch_All);
 
 	void ReadTrkStatsChamp(Ogre::String track,bool reverse);
 	void updChampListDim();

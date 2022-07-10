@@ -44,60 +44,75 @@ void CGui::tabChallType(Tab wp, size_t id)
 //----------------------------------------------------------------------------------------------------------------------
 void CGui::ChallsListUpdate()
 {
+	const int all = data->chall->all.size();
+
+	std::vector<int> vIds[8];  // cur diff ids for chall [types]
+	for (int id = 0; id < all; ++id)
+	{
+		const Chall& chl = data->chall->all[id];
+		if (pSet->ch_all || (
+			chl.diff >= pSet->difficulty &&
+			chl.diff <= pSet->difficulty+1))  vIds[chl.type].emplace_back(id);
+	}
+
+	int cntCur = vIds[pSet->chall_type].size();
+
+	//  hide empty tabs  ----
+	const int tabs = tabChall->getItemCount();
+	for (int t = 0; t < tabs; ++t)
+	{
+		int cnt = vIds[t].size();  // skip tut 0,1
+
+		if (t == tabs-1 && !pSet->dev_keys)  // hide Test
+			cnt = 0;
+
+		tabChall->setButtonWidthAt(t, cnt == 0 ? 1 : -1);
+
+		//  if none visible, set 1st nonempty
+		if (cntCur == 0 && cnt > 0)
+		{
+			pSet->chall_type = t;  cntCur = cnt;
+			tabChall->setIndexSelected(t);
+	}	}
+
+	fillChallsList(vIds[pSet->chall_type]);
+}
+
+
+void CGui::fillChallsList(std::vector<int> vIds)
+{
 	const char clrCh[8][8] = {
 	//  0 Rally  1 Scenery  2 Endurance  3 Chase  4 Stunts  5 Extreme  6 Special  7 Test
 		"#A0D0FF","#80FF80","#C0FF60","#FFC060","#FF8080","#C0A0E0", "#60B0FF","#909090" };
 
 	liChalls->removeAllItems();
 	const int p = pSet->gui.champ_rev ? 1 : 0;
- 	const int all = data->chall->all.size();
 
-	int n=1;  size_t sel = ITEM_NONE;
- 	for (int i=0; i < all; ++i,++n)
+	size_t sel = ITEM_NONE;
+ 	for (int i : vIds)
 	{
 		const Chall& chl = data->chall->all[i];
-		if (chl.type == pSet->chall_type &&
-			chl.diff >= pSet->difficulty &&  // one below too
-			chl.diff <= pSet->difficulty+1)
-		{
-			const ProgressChall& pc = progressL[p].chs[i];
-			int ntrks = pc.trks.size(), ct = pc.curTrack;
-			const String& clr = clrCh[chl.type];
-			//String cars = data->carsXml.colormap[chl.ci->type];  if (cars.length() != 7)  clr = "#C0D0E0";
-			
-			liChalls->addItem(""/*clr+ toStr(n/10)+toStr(n%10)*/, n);  int l = liChalls->getItemCount()-1;
-			liChalls->setSubItemNameAt(1,l, clr+ chl.name.c_str());
-			liChalls->setSubItemNameAt(2,l, gcom->clrsDiff[chl.diff]+ TR("#{Diff"+toStr(chl.diff)+"}"));
-			liChalls->setSubItemNameAt(3,l, StrChallCars(chl));
-			
-			liChalls->setSubItemNameAt(4,l, gcom->clrsDiff[std::min(8,ntrks*2/3+1)]+ iToStr(ntrks,3));
-			liChalls->setSubItemNameAt(5,l, gcom->clrsDiff[std::min(8,int(chl.time/3.f/60.f))]+ StrTime2(chl.time));
-			liChalls->setSubItemNameAt(6,l, ct == 0 || ct == ntrks ? "" :
-				clr+ fToStr(100.f * ct / ntrks,0,3)+" %");
+		const ProgressChall& pc = progressL[p].chs[i];
+		const int ntrks = pc.trks.size(), ct = pc.curTrack;
+		const String& clr = clrCh[chl.type];
+		//String cars = data->carsXml.colormap[chl.ci->type];  if (cars.length() != 7)  clr = "#C0D0E0";
+		
+		liChalls->addItem(""/*clr+ toStr(n/10)+toStr(n%10)*/, i+1);  int l = liChalls->getItemCount()-1;
+		liChalls->setSubItemNameAt(1,l, clr+ chl.name.c_str());
+		liChalls->setSubItemNameAt(2,l, gcom->clrsDiff[chl.diff]+ TR("#{Diff"+toStr(chl.diff)+"}"));
+		liChalls->setSubItemNameAt(3,l, StrChallCars(chl));
+		
+		liChalls->setSubItemNameAt(4,l, gcom->clrsDiff[std::min(8,ntrks*2/3+1)]+ iToStr(ntrks,3));
+		liChalls->setSubItemNameAt(5,l, gcom->clrsDiff[std::min(8,int(chl.time/3.f/60.f))]+ StrTime2(chl.time));
+		liChalls->setSubItemNameAt(6,l, ct == 0 || ct == ntrks ? "" :
+			clr+ fToStr(100.f * ct / ntrks,0,3)+" %");
 
-			liChalls->setSubItemNameAt(7,l, " "+ StrPrize(pc.fin+1));
-			liChalls->setSubItemNameAt(8,l, clr+ (pc.fin >= 0 ? fToStr(pc.avgPoints,1,5) : ""));
-			if (n-1 == pSet->gui.chall_num)  sel = l;
-	}	}
-	liChalls->setIndexSelected(sel);
-	// todo: ?gui chk, all / cur diff only
-
-	//  hide empty tabs  ----
-	const int tabs = tabChall->getItemCount();
-	for (int t=0; t < tabs; ++t)
-	{	int cnt = 0;
-
-		if (t < tabs-1 || pSet->dev_keys)  // hide Test
-		for (int i=0; i < all; ++i)
-		{
-			const Chall& chl = data->chall->all[i];
-			if (chl.type == t &&
-				chl.diff >= pSet->difficulty &&  // one below too
-				chl.diff <= pSet->difficulty+1)
-				++cnt;
-		}
-		tabChall->setButtonWidthAt(t, cnt == 0 ? 1 : -1);
+		liChalls->setSubItemNameAt(7,l, " "+ StrPrize(pc.fin+1));
+		liChalls->setSubItemNameAt(8,l, clr+ (pc.fin >= 0 ? fToStr(pc.avgPoints,1,5) : ""));
+		if (i == pSet->gui.chall_num)
+			sel = l;
 	}
+	liChalls->setIndexSelected(sel);
 }
 
 

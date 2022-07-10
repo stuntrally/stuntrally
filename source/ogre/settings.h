@@ -55,7 +55,8 @@ public:
 		show_times, show_opponents, opplist_sort,
 		show_cam, cam_tilt,
 		car_dbgbars, car_dbgtxt, car_dbgsurf,
-		car_tirevis, show_graphs;
+		car_tirevis, show_graphs,
+		ch_all =0;  // show all champs/challs
 
 	float size_gauges, size_minimap, size_minipos, size_arrow, zoom_minimap;
 	int gauges_type, gauges_layout;

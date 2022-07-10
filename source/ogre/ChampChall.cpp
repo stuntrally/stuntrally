@@ -300,12 +300,11 @@ void CGui::Ch_XmlLoad()
 void CGui::UpdChampTabVis()
 {
 	if (!liChamps || !tabChamp || !btStChamp)  return;
-	static int oldMenu = pSet->iMenu;
 	bool game = pSet->iMenu == MN_Single,   champ = pSet->iMenu == MN_Champ,
 		tutor = pSet->iMenu == MN_Tutorial, chall = pSet->iMenu == MN_Chall;
 	bool any = tutor || champ || chall;
 
-	/*tabTut->setVisible(tutor);*/    imgTut->setVisible(tutor);    btStTut->setVisible(tutor);
+	imgTut->setVisible(tutor);    btStTut->setVisible(tutor);
 	tabChamp->setVisible(champ);  imgChamp->setVisible(champ);  btStChamp->setVisible(champ);
 	tabChall->setVisible(chall);  imgChall->setVisible(chall);  btStChall->setVisible(chall);
 	btNewGameCar->setVisible(!any);
@@ -314,18 +313,16 @@ void CGui::UpdChampTabVis()
 	liChalls->setVisible( chall);  liChalls->setColour(Colour(0.74,0.7,0.82));
 	panCh->setColour(tutor ? Colour(0.9,0.8,0.7) : champ ? Colour(0.7,0.9,0.8) : Colour(0.77,0.75,0.92));
 
-	if (oldMenu != pSet->iMenu && any)
-	{	oldMenu = pSet->iMenu;
-		if (chall)  ChallsListUpdate();
-		else        ChampsListUpdate();
-	}
+	if (chall)  ChallsListUpdate();
+	else        ChampsListUpdate();
+
 	//if (pSet->inRace == Race_Single)
 	//	BackFromChs();
 	
 	if (edChInfo->getVisible())  // info texts
 		edChInfo->setCaption(
 			chall ? TR("#{ChallInfo2}")+"\n"+TR("#{ChallInfo}") :
-			 tutor ? TR("#{TutorInfo}")+"\n"+TR("#{ChampInfo}") :
+			tutor ? TR("#{TutorInfo}")+"\n"+TR("#{ChampInfo}") :
 					TR("#{ChampInfo2}")+"\n"+TR("#{ChampInfo}"));
 	
 	btChRestart->setVisible(false);

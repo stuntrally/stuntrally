@@ -819,6 +819,7 @@ void CGui::InitGui()
 
 	//  ch other
 	ck= &ckChampRev;	ck->Init("ChampRev",    &pSet->gui.champ_rev);   Cev(ChampRev);
+	ck= &ckCh_All;  	ck->Init("Ch_All",      &pSet->ch_all);          Cev(Ch_All);
 
 	Btn("btnChampStageBack", btnChampStageBack);
 	Btn("btnChampStageStart",btnChampStageStart);  btChampStage = btn;
