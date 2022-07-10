@@ -228,10 +228,9 @@ bool TracksXml::LoadIni(string file, bool check)
 		//  not in tracks.ini
 		strlist li;
 		PATHMANAGER::DirList(PATHMANAGER::Tracks(), li);
-		for (auto i = li.begin(); i != li.end(); ++i)
+		for (auto s : li)
 		{
-			string s = *i;
-			if (trkmap[s]==0)
+			if (trkmap[s]==0 && s.find('-') != string::npos)
 				LogO("!! Track not in ini: " + s);
 		}
 		LogO("");

@@ -543,7 +543,7 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 		Quaternion q(rot[0],rot[1],rot[2],rot[3]);
 		a = q.getPitch().valueRadians();
 		if (reverse)  a += PI_d;
-		static float a=0.f; a+=0.1f;  //test center
+		//static float a = 0.f;  a += 0.1f;  //test center
 		imgMiniRot[id]->setAngle(a);
 	}
 }

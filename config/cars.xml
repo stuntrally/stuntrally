@@ -27,7 +27,7 @@
 <c id="FN"  o="4" m="Coyote"      v="2.4" r="2" w="3" d="3" s="5.5" y="2000" t="Gravel"    b="0" j="0" l="0" p="0"  e="1.00" n="1.005" a="Neubi" />
 <c id="S8"  o="4" m="Squirrel"    v="2.0" r="3" w="3" d="3" s="6.0" y="2008" t="Gravel"    b="0" j="0" l="0" p="0"  e="0.96" n="1.00"  a="lubomircenovsky" />
 <c id="ES"  o="4" m="Fox"         v="1.2" r="4" w="3" d="3" s="6.1" y="2006" t="Gravel"    b="0" j="0" l="0" p="0"  e="1.00" n="1.01"  a="VeTi" />
-<c id="HI"  o="4" m="Hyena"       v="2.7" r="5" w="3" d="3" s="6.2" y="2014" t="Gravel"    b="0" j="0" l="0" p="0"  e="1.00" n="1.01"  a="ANDREO12" />
+<c id="HI"  o="4" m="Hyena"       v="2.7" r="5" w="3" d="3" s="6.2" y="2014" t="Gravel"    b="0" j="0" l="0" p="0"  e="0.95" n="1.01"  a="ANDREO12" />
  
  
 <c id="TW"  o="4" m="Gorilla"     v="2.1" r="3" w="6" d="5" s="7.0" y="2011" t="Extreme"   b="0" j="0" l="0" p="0"  e="0.93" n="0.94"  a="irokrhus" />
@@ -36,15 +36,15 @@
 <c id="SZ"  o="4" m="Weasel"      v="2.4" r="4" w="3" d="3" s="8.0" y="1996" t="Gravel"    b="0" j="0" l="0" p="0"  e="0.97" n="1.03"  a="cobe571" />
 <c id="XZ"  o="4" m="Wolf"        v="2.0" r="4" w="3" d="3" s="8.4" y="2007" t="Asphalt"   b="1" j="0" l="0" p="0"  e="1.02" n="1.04"  a="Neubi" />
  
-<c id="3B"  o="3" m="Scorpion"    v="2.7" r="2" w="6" d="6" s="8.5" y="2773" t="Extreme"   b="0" j="1" l="2" p="4"  e="1.00" n="1.025" a="Valery Kharitonov" />
+<c id="3B"  o="3" m="Scorpion"    v="2.7" r="2" w="6" d="6" s="8.5" y="2773" t="Extreme"   b="0" j="1" l="2" p="4"  e="1.00" n="1.07"  a="Valery Kharitonov" />
+<c id="BE"  o="2" m="Gazelle"     v="2.7" r="3" w="1" d="3" s="8.6" y="2334" t="Gravel"    b="1" j="0" l="0" p="1"  e="0.97" n="1.01"  a="TooManyDemons" />
 <c id="BV"  o="2" m="Buffalo"     v="2.6" r="3" w="2" d="3" s="8.6" y="2381" t="Extreme"   b="0" j="0" l="0" p="1"  e="1.01" n="1.04"  a="gakpoenya" />
-<c id="BE"  o="2" m="Gazelle"     v="2.7" r="3" w="1" d="3" s="8.6" y="2334" t="Gravel"    b="1" j="0" l="0" p="1"  e="1.01" n="1.04"  a="TooManyDemons" />
  
 <c id="SX"  o="4" m="Jaguar"      v="2.0" r="5" w="3" d="3" s="8.7" y="2017" t="Asphalt"   b="1" j="0" l="0" p="0"  e="1.02" n="1.04"  a="Socksthecat" />
 <c id="PH"  o="4" m="Puma"        v="2.7" r="4" w="3" d="4" s="8.8" y="2017" t="Asphalt"   b="2" j="1" l="1" p="0"  e="1.06" n="1.05"  a="Abhay Singh" />
 <c id="Y7"  o="4" m="Leopard"     v="2.6" r="4" w="3" d="4" s="8.8" y="2013" t="Asphalt"   b="2" j="1" l="1" p="0"  e="1.06" n="1.05"  a="hasapeta" />
  
-<c id="U6"  o="6" m="Beetle"      v="2.7" r="3" w="4" d="4" s="9.0" y="2412" t="Extreme"   b="0" j="0" l="0" p="0"  e="1.01" n="1.04"  a="gakpoenya, carlospanganiban, CryHam" />
+<c id="U6"  o="6" m="Beetle"      v="2.7" r="3" w="4" d="4" s="9.0" y="2412" t="Extreme"   b="0" j="0" l="0" p="0"  e="1.08" n="1.13"  a="gakpoenya, carlospanganiban, CryHam" />
  
 <c id="V2"  o="0" m="Swan"        v="2.4" r="3" w="4" d="2" s="9.4" y="2516" t="Spaceship" b="0" j="0" l="4" p="6"  e="1.00" n="1.13"  a="sypro" />
 <c id="V1"  o="0" m="Duck"        v="2.4" r="2" w="3" d="3" s="9.6" y="2523" t="Spaceship" b="0" j="0" l="4" p="6"  e="1.04" n="1.16"  a="benja" />
