@@ -329,6 +329,7 @@
 	<Tag name="TipCarSpeed">Car speed rating, more means faster car. Warning, on gravel too fast cars won't be faster because they don't have enough grip.</Tag>
 	<Tag name="TipCarType">Car type, primary destination. But some cars can be used on gravel even if not meant for it.</Tag>
 	<Tag name="TipCarYear">Year when this car's production started.</Tag>
+	<Tag name="TipDrivability">Drivability tells how well will vehicle drive on track. If undrivable, best to change vehicle. Many vehicles can't handle certain track properties. Gravel type cars handle all tracks well.</Tag>
 
 	<!--  Championship  end  -->
 	<Tag name="ChampEndCongrats">Congratulations !</Tag>
@@ -361,6 +362,7 @@
 
 	<!--  TIP  Track  -->
 	<Tag name="TipTrackDesc">Track description text.</Tag>
+	<Tag name="TipTrackAdvice">Track driving advices and warnings.</Tag>
 	<Tag name="TipTrackImg">In game screenshot for selected track.</Tag>
 	<Tag name="TipTrackMap">Minimap of selected track, view from top.</Tag>
 	<Tag name="TipClickMax">Click to maximize. Then click to close.</Tag>

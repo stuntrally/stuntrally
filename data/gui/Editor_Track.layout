@@ -42,6 +42,12 @@
 						<Property key="ImageTexture" value="carpos0.png"/>
 					</Widget>
 				</Widget>
+
+				<Widget type="Widget" skin="PanelSkin" position="176 360 336 52">
+					<Property key="Colour" value="0.6 0.6 0.3"/>
+					<Property key="Alpha" value="0.3"/>
+					<UserString key="tip" value="#{TipTrackAdvice}"/>
+				</Widget>
 				<Widget type="EditBox" skin="EditBoxEmpty" position="176 360 336 52" name="TrackAdvice0">
 					<Property key="ReadOnly" value="false"/>
 					<Property key="MultiLine" value="true"/>
@@ -52,6 +58,18 @@
 					<Property key="Colour" value="0.9 0.9 0.6"/>
 					<Property key="FontName" value="font.small"/>
 					<UserString key="tip" value="#{TipTrackDescEditor}"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="488 390 24 24">
+					<Property key="ImageCoord" value="768 768 128 128"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Alpha" value="0.5"/>
+					<UserString key="tip" value="#{TipTrackAdvice}"/>
+				</Widget>
+				<Widget type="Widget" skin="PanelSkin" position="176 410 336 52">
+					<Property key="Colour" value="0.3 0.6 0.3"/>
+					<Property key="Alpha" value="0.3"/>
+					<UserString key="tip" value="#{TipTrackDesc}"/>
 				</Widget>
 				<Widget type="EditBox" skin="EditBoxEmpty" position="176 410 336 52" name="TrackDesc0">
 					<Property key="ReadOnly" value="false"/>
@@ -64,6 +82,13 @@
 					<Property key="Colour" value="0.4 1 0.7"/>
 					<UserString key="tip" value="#{TipTrackDescEditor}"/>
 				</Widget>				
+				<Widget type="ImageBox" skin="ImageBox" position="488 440 24 24">
+					<Property key="ImageCoord" value="384 256 128 128"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Alpha" value="0.6"/>
+					<UserString key="tip" value="#{TipTrackDescEditor}"/>
+				</Widget>
 
 				<Widget type="Widget" skin="PanelSkin" position="524 65 256 172">
 					<Property key="Colour" value="0.6 0.73 0.85"/>
