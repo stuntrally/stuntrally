@@ -77,10 +77,12 @@ My license is also  CC-0
 112 stones_color
 218 stones_brown
 
-1   space_x
 9   space_diam
+240 space_dots
 10  space_gray
 128 space_metal
+space_octagons
+1   space_x
 
 245 ycrystals_fine
 249 ycrystals_med

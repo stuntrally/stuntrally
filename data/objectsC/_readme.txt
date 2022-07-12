@@ -37,12 +37,33 @@ https://www.blendswap.com/blends/view/69593
 textures used:
 Calinou's high-resolution texture pack (with normal maps)
 Author: Calinou
-License(s): CC-BY-SA 3.0
+License: CC-BY-SA 3.0
 https://opengameart.org/content/calinous-high-resolution-texture-pack-with-normal-maps
 
 ----  alien_*
 Alien-building/base set
 Author: rubberduck
-License(s): CC0
+License: CC0
 https://opengameart.org/content/alien-buildingbase-set
-textures by nobiax/yughues, CC0
+
+----  Textures
+Author: nobiax/yughues
+License: CC0
+https://opengameart.org/users/yughues
+
+Used also for road,wall,pipe,column etc.
+space_*  in terrain/about.txt
+
+139  metal_01   .
+140  metal_02   -
+141  metal_03_red
+37   metal_04   x
+38   metal_05   bars
+41   metal_06   plates
+
+241  metal_241  diam
+212  metal_212  scr
+213  metal_213  rust  
+4    metal_4a   box
+40   metal_40   grid
+29   metal_29   inst
