@@ -1148,6 +1148,8 @@
 	<Tag name="Road_Loop">Loop</Tag>
 	<Tag name="Road_OnPipe">On Pipe</Tag>
 	<Tag name="Road_NotReal">Not Real</Tag>
+	<Tag name="Road_Merged">Merged</Tag>
+	<Tag name="Road_NotLooped">Not looped</Tag>
 
 	<!--  Road Point  short: checkpoint radius  -->
 	<Tag name="Road_ChkR">ChkR</Tag>

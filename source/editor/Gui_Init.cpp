@@ -148,7 +148,7 @@ void CGui::InitGui()
 
 	//  tool window texts  ----------------------
 	int i;
-	for (i=0; i<MAX_TXT; ++i)
+	for (i=0; i < RD_TXT/*MAX*/; ++i)
 	{	String s = toStr(i);
 		if (i<BR_TXT){  brTxt[i] = fTxt("brTxt"+s);  brVal[i] = fTxt("brVal"+s);  brKey[i] = fTxt("brKey"+s);  }
 		if (i<RD_TXT){  rdTxt[i] = fTxt("rdTxt"+s);  rdVal[i] = fTxt("rdVal"+s);  rdKey[i] = fTxt("rdKey"+s);  rdImg[i] = fImg("rdImg"+s);  }
@@ -892,8 +892,8 @@ void CGui::FillPickLists()
 	
 	lp->removeAllColumns();  lp->removeAllItems();
 	lp->addColumn("#90C0F0*", rt);
-	lp->addColumn("#FFE0D0"+TR("#{GrMaterial}"), 177);
-	lp->addColumn("#80E0E0"+TR("#{Surface}"), 80);
+	lp->addColumn("#FFE0D0"+TR("#{GrMaterial}"), 257);
+	//lp->addColumn("#80E0E0"+TR("#{Surface}"), 80);
 	lp->addColumn(" ", sl);
 	liPickX[P_Rd] = 0.36f;  liPickW[P_Rd] = 320;
 
@@ -905,10 +905,10 @@ void CGui::FillPickLists()
 		l = lp->getItemCount()-1;
 
 		lp->setSubItemNameAt(1,l, c+ t.mtr);
-		String su = t.surfName;  if (su.substr(0,4)=="road")  su = su.substr(4, su.length());
+		/*String su = t.surfName;  if (su.substr(0,4)=="road")  su = su.substr(4, su.length());
 		if (t.rate && t.mtr.substr(0,5) != "River")
-			lp->setSubItemNameAt(2,l, c+ su);
+			lp->setSubItemNameAt(2,l, c+ su);*/
 	}
 	
-	// todo: auto groups chks gui to filter pick lists..
+	// todo: auto groups chks gui? to filter pick lists
 }

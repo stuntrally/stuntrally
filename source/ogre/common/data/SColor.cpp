@@ -79,6 +79,14 @@ void SColor::Load(const char* ss)
 {
 	h=0.f; s=1.f; v=1.f; a=1.f; n=0.f;
 	int i = sscanf(ss, "%f %f %f %f %f", &h,&s,&v,&a,&n);
+#if 0  // test bad values
+	if (h < 0.f || h > 1.f ||
+		s < 0.f || s > 1.f ||
+		v < 0.f || v > 4.f || // 3
+		a < 0.f || a > 3.f || // 2
+		n < 0.f || n > 1.f)
+		LogO("!! BAD SColor: "+fToStr(h)+" "+fToStr(s)+" "+fToStr(v)+" "+fToStr(a)+" "+fToStr(n));
+#endif
 	if (i == 5)
 		return;  // new
 

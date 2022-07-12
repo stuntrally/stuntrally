@@ -475,7 +475,7 @@
 	</Widget>
 
 <!-- ============================================================================================================================================= -->
-	<Widget type="Window" skin="WindowC" position="244 648 250 353" layer="Back" name="RoadCur">
+	<Widget type="Window" skin="WindowC" position="244 648 250 383" layer="Back" name="RoadCur">
 		<Property key="Colour" value="1.0 0.9 0.8"/>
 		<Property key="Alpha" value="0.5"/>
 		<Property key="Caption" value="R - #{RoadPoint}"/>
@@ -692,15 +692,16 @@
 			<Property key="ImageCoord" value="32 4 32 32"/>
 			<Property key="Alpha" value="0.7"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBoxS" position="34 215 140 25" name="rdTxt8">
+		<Widget type="TextBox" skin="TextBoxS" position="34 215 145 25" name="rdTxt8">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 0.96"/>
+			<Property key="FontHeight" value="18"/>
 		</Widget>
 		<Widget type="TextBox" skin="TextBoxS" position="110 215 70 25" name="rdVal8">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 0.86"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBoxS" position="184 215 70 25" name="rdKey8">
+		<Widget type="TextBox" skin="TextBoxS" position="194 215 70 25" name="rdKey8">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.7 0.86 0.86"/>
 		</Widget>
@@ -724,7 +725,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.9 0.8 1.0"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBoxS" position="184 245 70 25" name="rdKey9">
+		<Widget type="TextBox" skin="TextBoxS" position="194 245 70 25" name="rdKey9">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.75 0.64 0.96"/>
 		</Widget>
@@ -748,7 +749,7 @@
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 
-		<Widget type="ImageBox" skin="ImageBox" position="0 274 26 26" name="rdImg11">  <!--cur / all-->
+		<Widget type="ImageBox" skin="ImageBox" position="0 268 26 26" name="rdImg11">  <!--cur / all-->
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ImageCoord" value="256 384 128 128"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
@@ -764,6 +765,25 @@
 		</Widget>
 		<Widget type="TextBox" skin="TextBoxS" position="199 295 100 25" name="rdKey11">
 			<Property key="TextColour" value="0.9 0.96 1.0"/>
+			<Property key="InheritsAlpha" value="false"/>
+		</Widget>
+
+		<Widget type="ImageBox" skin="ImageBox" position="0 324 26 26" name="rdImg13">  <!--roads, mrg, loop-->
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ImageCoord" value="384 768 128 128"/>
+			<Property key="ImageTexture" value="gui_icons.png"/>
+			<Property key="Alpha" value="0.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBoxS" position="34 325 120 25" name="rdTxt13">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.5 0.75 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBoxS" position="120 325 105 25" name="rdVal13">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="TextColour" value="0.5 0.95 1.0"/>
+		</Widget>
+		<Widget type="TextBox" skin="TextBoxS" position="160 325 100 25" name="rdKey13">
+			<Property key="TextColour" value="1.0 0.5 0.5"/>
 			<Property key="InheritsAlpha" value="false"/>
 		</Widget>
 	</Widget>

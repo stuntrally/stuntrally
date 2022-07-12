@@ -44,19 +44,19 @@ void App::KeyTxtRoad(Real q)
 	static bool first = true;
 	if (first)  // once, static text
 	{	first = false;
-														rdKey[0]->setCaption("+ - Home");
-		rdTxt[1]->setCaption(TR("#{Road_Width}"));		rdKey[1]->setCaption("/ *");
-		rdTxt[2]->setCaption(TR("#{Road_Roll}"));		rdKey[2]->setCaption("1 2");
-		rdTxt[3]->setCaption(TR("#{Road_Yaw}"));		rdKey[3]->setCaption("3 4");
-														rdKey[4]->setCaption(TR("#{InputRoadAngType}"));
-		rdTxt[5]->setCaption(TR("#{Road_Snap}"));		rdKey[5]->setCaption("5");
-		rdTxt[6]->setCaption(TR("#{Road_Pipe}"));		rdKey[6]->setCaption("O P#E07030 8");//[ ]
-		rdTxt[7]->setCaption(TR("#{Road_Column}"));		rdKey[7]->setCaption("End");
-														rdKey[8]->setCaption("9 0");//- =
-		rdTxt[9]->setCaption(TR("#{Road_ChkR}"));		rdKey[9]->setCaption("K L");
-														rdKey[10]->setCaption("#80E0E0       7");
-														//rdKey[11]->setCaption("#C060E0 sh-8");
-		rdTxt[12]->setCaption(TR("#{Wall}"));	rdKey[12]->setCaption("ctrl 9 0");
+													rdKey[0]->setCaption("+ - Home");
+		rdTxt[1]->setCaption(TR("#{Road_Width}"));	rdKey[1]->setCaption("/ *");
+		rdTxt[2]->setCaption(TR("#{Road_Roll}"));	rdKey[2]->setCaption("1 2");
+		rdTxt[3]->setCaption(TR("#{Road_Yaw}"));	rdKey[3]->setCaption("3 4");
+													rdKey[4]->setCaption(TR("#{InputRoadAngType}"));
+		rdTxt[5]->setCaption(TR("#{Road_Snap}"));	rdKey[5]->setCaption("5");
+		rdTxt[6]->setCaption(TR("#{Road_Pipe}"));	rdKey[6]->setCaption("O P#E07030 8");//[ ]
+		rdTxt[7]->setCaption(TR("#{Road_Column}"));	rdKey[7]->setCaption("End");
+													rdKey[8]->setCaption("9 0");//- =
+		rdTxt[9]->setCaption(TR("#{Road_ChkR}"));	rdKey[9]->setCaption("K L");
+													rdKey[10]->setCaption("#80E0E0       7");
+													//rdKey[11]->setCaption("#C060E0 sh-8");
+		rdTxt[12]->setCaption(TR("#{Wall}"));		rdKey[12]->setCaption("ctrl 9 0");
 	}
 
 	bool ter = road->river ? true : !ok ? false :
@@ -101,7 +101,10 @@ void App::KeyTxtRoad(Real q)
 	rdTxt[11]->setCaption(TR(bCur ? "#{Road_Cur}" : "#{Road_New}"));
 	rdTxt[11]->setTextColour(bCur ? MyGUI::Colour(0.85,0.75,1) : MyGUI::Colour(0.3,1,0.1));
 
-	rdKey[11]->setCaption(road->bMerge ? "Mrg": toStr(scn->rdCur+1)+"/"+toStr(scn->roads.size()));
+	rdKey[11]->setCaption(toStr(scn->rdCur+1)+"/"+toStr(scn->roads.size()));
+
+	rdKey[13]->setCaption(road->bMerge ? TR("#{Road_Merged}"): "");
+	rdTxt[13]->setCaption(road->isLooped ? "": TR("#{Road_NotLooped}"));
 
 
 	//  road stats  --------------------------------

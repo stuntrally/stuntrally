@@ -154,9 +154,10 @@ void CGui::ToolSceneXml()
 	ResourceGroupManager& rg = ResourceGroupManager::getSingleton();
 
 	int i,n;
-	for (i=0; i < data->tracks->trks.size(); ++i)
-	{	//  foreach track
-		string trk = data->tracks->trks[i].name, path = gcom->pathTrk[0] +"/"+ trk +"/";
+	for (auto trkinf : data->tracks->trks)
+	{
+		//  load each track xmls
+		string trk = trkinf.name, path = gcom->pathTrk[0] +"/"+ trk +"/";
 		Scene sc;  sc.LoadXml(path +"scene.xml");
 		SplineRoad rd(app);  rd.LoadFile(path +"road.xml");
 		bool modif = false;
@@ -164,21 +165,23 @@ void CGui::ToolSceneXml()
 		int l = 17-trk.length();  // align
 		for (n=0; n < l; ++n)  trk += " ";
 
-		///  sound
+		///  sound  ---
 		if (sc.sReverbs=="")
 			LogO("No reverb! "+trk);
 		else
 		{	int id = data->reverbs->revmap[sc.sReverbs]-1;
 			if (id==-1)  LogO("Reverb not found! "+trk+"  "+sc.sReverbs);
 		}		
-		///  sky clrs
+		
+		///  sky clrs  ---
 		string s;
 		s += sc.lAmb.Check("amb");  s += sc.lDiff.Check("dif");  s += sc.lSpec.Check("spc");
 		s += sc.fogClr.Check("fog");  s += sc.fogClr2.Check("fog2");  s += sc.fogClrH.Check("foh");
 		if (!s.empty())
 			LogO("CLR CHK! "+trk+"  "+s);
 		
-		///  terrain
+		
+		///  terrain  --------
 		#if 0  // used
 		for (n=0; n < sc.td.layers.size(); ++n)
 		{	const TerLayer& l = sc.td.layersAll[sc.td.layers[n]];
@@ -214,7 +217,7 @@ void CGui::ToolSceneXml()
 			#endif
 		}
 		
-		///  road
+		///  road  ----
 		int iLch = 0;
 		for (n=0; n < rd.mP.size(); ++n)
 			if (rd.mP[n].chkR > 0.f && rd.mP[n].loop > 0)
@@ -226,24 +229,19 @@ void CGui::ToolSceneXml()
 		for (n=0; n < MTRs; ++n)
 		{
 			String s = rd.sMtrRoad[n];
-			//if (!s.empty() && cmbRoadMtr[0]->findItemIndexWith(s) == MyGUI::ITEM_NONE)
-			//	LogO("Road: " + trk + " Not Found !!!  " + s);
-
 			if (!s.empty() && !data->pre->GetRoad(s))
 				LogO("Road: " + trk + " Not Found in presets !!!  " + s);
 
-			// s = rd.sMtrPipe[n];
-			// if (!s.empty() && cmbPipeMtr[0]->findItemIndexWith(s) == MyGUI::ITEM_NONE)
-				// LogO("Road: " + trk + " Not Found !!!  " + s);
-
-			//if (!s.empty() && !data->pre->GetRoad(s))
-			//	LogO("Pipe: " + trk + " Not Found in presets !!!  " + s);
+			s = rd.sMtrPipe[n];
+			if (!s.empty() && !data->pre->GetRoad(s))
+				LogO("Pipe: " + trk + " Not Found in presets !!!  " + s);
 	
-			//sMtrWall,sMtrWallPipe, sMtrCol
 			//sc.td.layerRoad
 		}
+		//sMtrWall,sMtrWallPipe, sMtrCol
+
 		
-		///  grass
+		///  grass  ----
 		for (n=0; n < Scene::ciNumGrLay; ++n)
 		{	const SGrassLayer& l = sc.grLayersAll[n];
 
@@ -252,7 +250,7 @@ void CGui::ToolSceneXml()
 				LogO("Grs: " + trk + " Not Found in presets !!!  " + s);
 		}
 
-		///  veget
+		///  veget  --------
 		for (n=0; n < Scene::ciNumPgLay; ++n)
 		{
 			const PagedLayer& l = sc.pgLayersAll[n];
