@@ -510,7 +510,11 @@ void CGui::InitGui()
 	txCarSpeed = fTxt("CarSpeed");  barCarSpeed = fImg("CarSpeedBar");
 	txCarType = fTxt("CarType");  txCarYear = fTxt("CarYear");
 	txCarRating = fTxt("CarRating");  txCarDiff = fTxt("CarDiff");  txCarWidth = fTxt("CarWidth");
-	txTrkDrivab = fTxt("txTrkDrivab");  imgTrkDrivab = fImg("imgTrkDrivab");
+	for (i=0; i < 2; ++i)
+	{	auto s = toStr(i);
+		txTrkDrivab[i] = fTxt("txTrkDrivab"+s);
+		imgTrkDrivab[i] = fImg("imgTrkDrivab"+s);
+	}
 	txCarAuthor = fTxt("CarAuthor");  txTrackAuthor = fTxt("TrackAuthor");
 
 	tbPlr  = fTab("SubTabPlayer");   Tev(tbPlr, Player);

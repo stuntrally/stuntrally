@@ -73,8 +73,8 @@ public:
 	
 
 	//  tool windows texts  ----
-	const static int MAX_TXT=13,
-		BR_TXT=9, RD_TXT=13, RDS_TXT=11,  //  brush, road, road stats
+	const static int
+		BR_TXT=9, RD_TXT=14, RDS_TXT=11,  //  brush, road, road stats
 		ST_TXT=6, FL_TXT=6, OBJ_TXT=6,  //  start, fluids, objects
 		EMT_TXT=8;  //  emitters
 

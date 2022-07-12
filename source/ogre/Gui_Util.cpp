@@ -282,9 +282,11 @@ void CGui::updCarDrivability()
 	float drvp = (1.f - drv) * 100.f;  int fd = 1 + drv * 6.f;
 	auto sdrv = drv > 0.85f ? TR("#{Undrivable}") : TR("#{Diff"+toStr(fd)+"}");
 	// txCarTrkdrv->setCaption(drv < 0.f ? "" : gcom->getClrDiff(fd)+ fToStr(drv, 1,3) +"   " +sdrv);
-	txTrkDrivab->setCaption(drv < 0.f ? "" : gcom->getClrDiff(fd)+ fToStr(drvp, 0,3) +"%   " +sdrv);
-	imgTrkDrivab->setColour(Colour(1.f, 1.f - drv*drv*0.8f, 1.f - drv*0.7f, drv));
-}
+	
+	for (int i=0; i < 2; ++i)
+	{	txTrkDrivab[i]->setCaption(drv < 0.f ? "" : gcom->getClrDiff(fd)+ fToStr(drvp, 0,3) +"%   " +sdrv);
+		imgTrkDrivab[i]->setColour(Colour(1.f, 1.f - drv*drv*0.8f, 1.f - drv*0.7f, drv));
+}	}
 
 //  get drivability, vehicle on track fitness
 float CGui::GetTrkDrivability(std::string car, std::string trk, bool track_user)

@@ -415,6 +415,24 @@
 						<Property key="NeedMouse" value="false"/>
 					</Widget>
 				</Widget>
+
+				<Widget type="ImageBox" skin="ImageBox" position="176 486 24 24" name="imgTrkDrivab0">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="ImageCoord" value="640 384 128 128"/>
+					<Property key="Alpha" value="0.8"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="206 492 160 22">
+					<Property key="Caption" value="#{TrackDrivability}"/>
+					<Property key="TextColour" value="0.7 0.8 0.9"/>
+					<Property key="Alpha" value="0.9"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="366 492 124 22" name="txTrkDrivab0">
+					<Property key="TextColour" value="0.8 0.8 0.9"/>
+					<Property key="Alpha" value="0.95"/>
+					<Property key="FontName" value="font.small"/>
+				</Widget>
 			</Widget>
 
 			<Widget type="TabItem" skin="" position="2 24 794 562" name="TabCar">
@@ -733,7 +751,7 @@
 					<Property key="FontName" value="font.small"/>
 				</Widget>
 
-				<Widget type="ImageBox" skin="ImageBox" position="256 196 24 24" name="imgTrkDrivab">
+				<Widget type="ImageBox" skin="ImageBox" position="256 196 24 24" name="imgTrkDrivab1">
 					<Property key="InheritsAlpha" value="false"/>
 					<Property key="ImageCoord" value="640 384 128 128"/>
 					<Property key="Alpha" value="0.8"/>
@@ -745,7 +763,7 @@
 					<Property key="Alpha" value="0.9"/>
 					<Property key="FontName" value="font.small"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="284 224 124 22" name="txTrkDrivab">
+				<Widget type="TextBox" skin="TextBox" position="284 224 124 22" name="txTrkDrivab1">
 					<Property key="TextColour" value="0.8 0.8 0.9"/>
 					<Property key="Alpha" value="0.95"/>
 					<Property key="FontName" value="font.small"/>

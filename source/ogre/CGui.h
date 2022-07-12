@@ -398,10 +398,10 @@ public:
 
 	//  [Car] stats
 	const static int iCarSt = 10;
-	Img barCarSt[iCarSt], imgTrkDrivab =0;
+	Img barCarSt[iCarSt], imgTrkDrivab[2] ={0,0};
 	Txt txCarStTxt[iCarSt], txCarStVals[iCarSt],
 		txCarSpeed =0, txCarType =0, txCarYear =0,
-		txCarRating =0, txCarDiff =0, txCarWidth =0, txTrkDrivab =0,
+		txCarRating =0, txCarDiff =0, txCarWidth =0, txTrkDrivab[2] ={0,0},
 		txCarAuthor =0, txTrackAuthor =0;
 	Img barCarSpeed =0;
 	Tab tbPlr =0, tbPlr2 =0;
