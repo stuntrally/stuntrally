@@ -2538,7 +2538,7 @@
 
 				<Widget type="TextBox" skin="TextBox" position="138 16 128 24">
 					<Property key="Caption" value="#{ObjStatic}"/>
-					<Property key="TextColour" value="0.92 0.92 0.92"/>
+					<Property key="TextColour" value="0.82 0.82 0.82"/>
 				</Widget>
 				<Widget type="ListBox" skin="ListBox" position="136 40 116 500" name="ObjListSt">
 					<Property key="Colour" value="0.8 0.8 0.8"/>
@@ -2548,14 +2548,14 @@
 					<Property key="Caption" value="#{Group}"/>
 					<Property key="TextColour" value="0.95 0.7 0.7"/>
 				</Widget>
-				<Widget type="ListBox" skin="ListBox" position="258 40 86 400" name="ObjListCat">
+				<Widget type="ListBox" skin="ListBox" position="258 40 86 500" name="ObjListCat">
 					<Property key="Colour" value="0.9 0.8 0.7"/>
 					<Property key="FontName" value="font.big"/>
 				</Widget>
 				
-				<Widget type="TextBox" skin="TextBox" position="358 16 168 24">
-					<Property key="Caption" value="#{ObjBuildings}, #{ObjRocks}"/>
-					<Property key="TextColour" value="0.95 0.95 0.5"/>
+				<Widget type="TextBox" skin="TextBox" position="358 16 268 24">
+					<Property key="Caption" value="#{Group} - #{ObjStatic}"/>
+					<Property key="TextColour" value="0.95 0.95 0.7"/>
 				</Widget>
 				<Widget type="ListBox" skin="ListBox" position="356 40 128 500" name="ObjListBld">
 					<Property key="Colour" value="0.9 0.9 0.7"/>

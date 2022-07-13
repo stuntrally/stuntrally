@@ -15,18 +15,18 @@
 		</Widget>
 	</Widget>
 
-	<Widget type="Window" skin="WindowC" position="28 1360 744 440" align="Center" layer="Popup" name="WndChampStage">
+	<Widget type="Window" skin="WindowC" position="28 1360 948 590" align="Center" layer="Popup" name="WndChampStage">
 		<Property key="Caption" value="#{Championship}"/>
 		<Property key="Alpha" value="0.8"/>
 		<Property key="Colour" value="0.4 1 0.4"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="Button" skin="Button" position="160 344 144 40" name="btnChampStageBack">
+		<Widget type="Button" skin="Button" position="160 444 144 40" name="btnChampStageBack">
 			<Property key="Colour" value="0.47 0.47 0.47"/>
 			<Property key="TextColour" value="0.9 0.9 1"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="#{BackMenu}"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="344 344 144 40" name="btnChampStageStart">
+		<Widget type="Button" skin="Button" position="344 444 144 40" name="btnChampStageStart">
 			<Property key="Caption" value="#{Start}"/>
 			<Property key="Colour" value="0.6 0.8 1"/>
 			<Property key="TextColour" value="0.8 0.9 1"/>
@@ -35,28 +35,30 @@
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
 		</Widget>
-		<Widget type="EditBox" skin="EditBoxEmpty" position="28 24 392 308" name="ChampStageText">
+		<Widget type="EditBox" skin="EditBox" position="28 24 532 448" name="ChampStageText">
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
 			<Property key="FontName" value="font.small"/>
 			<Property key="WordWrap" value="true"/>
+			<Property key="TextAlign" value="Left Top"/>
 		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="428 24 288 288" name="ChampStageImg"/>
+		<Widget type="ImageBox" skin="ImageBox" position="588 24 320 320" name="ChampStageImg"/>
 	</Widget>
 
-	<Widget type="Window" skin="WindowC" position="796 1356 536 456" align="Center" layer="Popup" name="WndChampEnd">
+	<Widget type="Window" skin="WindowC" position="796 1356 536 486" align="Center" layer="Popup" name="WndChampEnd">
 		<Property key="Caption" value="#{Championship}"/>
 		<Property key="Alpha" value="0.9"/>
 		<Property key="Colour" value="0.4 1 1"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="EditBox" skin="EditBoxEmpty" position="24 272 500 124" name="ChampEndText">
+		<Widget type="EditBox" skin="EditBox" position="24 272 520 124" name="ChampEndText">
 			<Property key="TextColour" value="0.6 0.9 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
+			<Property key="TextAlign" value="Left Top"/>
 		</Widget>
 		<Widget type="TextBox" skin="TextBox" position="4 16 520 32">
 			<Property key="TextAlign" value="Center"/>
@@ -84,18 +86,18 @@
 		</Widget>
 	</Widget>
 
-	<Widget type="Window" skin="WindowC" position="28 1860 748 490" align="Center" layer="Popup" name="WndChallStage">
+	<Widget type="Window" skin="WindowC" position="28 1860 948 590" align="Center" layer="Popup" name="WndChallStage">
 		<Property key="Caption" value="#{Challenge}"/>
 		<Property key="Alpha" value="0.8"/>
 		<Property key="Colour" value="0.4 1 0.7"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="Button" skin="Button" position="204 384 144 40" name="btnChallStageBack">
+		<Widget type="Button" skin="Button" position="304 484 144 40" name="btnChallStageBack">
 			<Property key="Colour" value="0.45 0.46 0.47"/>
 			<Property key="TextColour" value="0.8 0.9 1"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="Caption" value="#{BackMenu}"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="388 384 144 40" name="btnChallStageStart">
+		<Widget type="Button" skin="Button" position="488 484 144 40" name="btnChallStageStart">
 			<Property key="Caption" value="#{Start}"/>
 			<Property key="Colour" value="0.6 1 0.8"/>
 			<Property key="TextColour" value="0.8 1 0.9"/>
@@ -104,53 +106,55 @@
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
 		</Widget>
-		<Widget type="EditBox" skin="EditBoxEmpty" position="28 24 392 348" name="ChallStageText">
+		<Widget type="EditBox" skin="EditBoxEmpty" position="28 24 532 448" name="ChallStageText">
 			<Property key="TextColour" value="0.6 0.8 1.0"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
 			<Property key="FontName" value="font.small"/>
+			<Property key="TextAlign" value="Left Top"/>
 		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="428 24 288 288" name="ChallStageImg"/>
+		<Widget type="ImageBox" skin="ImageBox" position="588 24 320 320" name="ChallStageImg"/>
 	</Widget>
 
-	<Widget type="Window" skin="WindowC" position="796 1856 536 516" align="Center" layer="Popup" name="WndChallEnd">
+	<Widget type="Window" skin="WindowC" position="796 1856 576 556" align="Center" layer="Popup" name="WndChallEnd">
 		<Property key="Caption" value="#{Challenge}"/>
 		<Property key="Alpha" value="0.9"/>
 		<Property key="Colour" value="0.8 0.6 1.0"/>
 		<UserString key="NotSized" value="1"/>
-		<Widget type="EditBox" skin="EditBoxEmpty" position="24 236 500 220" name="ChallEndText">
+		<Widget type="EditBox" skin="EditBox" position="24 236 545 240" name="ChallEndText">
 			<Property key="TextColour" value="0.8 0.8 1.0"/>
 			<Property key="TextShadow" value="true"/>
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="ReadOnly" value="true"/>
 			<Property key="MultiLine" value="true"/>
 			<Property key="WordWrap" value="true"/>
+			<Property key="TextAlign" value="Left Top"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 16 520 32" name="ChallEndCongrats">
+		<Widget type="TextBox" skin="TextBox" position="4 16 565 32" name="ChallEndCongrats">
 			<Property key="TextAlign" value="Center"/>
 			<Property key="TextColour" value="0.96 0.97 1"/>
 			<Property key="TextShadow" value="true"/>
 			<Property key="Caption" value="#{ChampEndCongrats}"/>
 			<Property key="FontName" value="font.big"/>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position="4 56 520 32" name="ChallEndFinished">
+		<Widget type="TextBox" skin="TextBox" position="4 56 565 32" name="ChallEndFinished">
 			<Property key="TextAlign" value="Center"/>
 			<Property key="TextColour" value="0.8 0.7 1"/>
 			<Property key="TextShadow" value="true"/>
 			<Property key="Caption" value="#{ChallEndFinished}"/>
 			<Property key="FontName" value="font.big"/>
 		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="200 106 128 128" name="ChallEndImgFail">
+		<Widget type="ImageBox" skin="ImageBox" position="220 106 128 128" name="ChallEndImgFail">
 			<Property key="ImageCoord" value="0 384 128 128"/>
 			<Property key="ImageTexture" value="gui_icons.png"/>
 		</Widget>
-		<Widget type="ImageBox" skin="ImageBox" position="200 56 128 256" name="ChallEndImgCup">
+		<Widget type="ImageBox" skin="ImageBox" position="220 56 128 256" name="ChallEndImgCup">
 			<Property key="ImageCoord" value="0 0 128 256"/>
 			<Property key="ImageTexture" value="ico_champ.png"/>
 		</Widget>
-		<Widget type="Button" skin="Button" position="192 420 144 40" name="btnChallEndClose">
+		<Widget type="Button" skin="Button" position="212 470 144 40" name="btnChallEndClose">
 			<Property key="Caption" value="#{Close}"/>
 			<Property key="Colour" value="0.7 0.6 0.9"/>
 			<Property key="TextColour" value="0.9 0.8 1"/>

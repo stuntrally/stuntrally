@@ -622,57 +622,64 @@ void CGui::InitGui()
 	objListCat = fLi("ObjListCat");  Lev(objListCat, ObjsCatChng);
 	objPan = fWP("objPan");
 
+
 	for (u=0; u < app->vObjNames.size(); ++u)
 	{	const string& name = app->vObjNames[u];
-		if (name != "sphere")
-		{
-			/*if (StringUtil::startsWith(name,"rock",false)||StringUtil::startsWith(name,"cave",false))
-				objListRck->addItem("#E0B070"+name);  // rocks
-			else*/
-			if (boost::filesystem::exists(sData+"/objects/"+ name + ".bullet"))
-				objListDyn->addItem("#A0E0FF"+name);  // dynamic
-			else
-				objListSt->addItem("#C8C8C8"+name);
-	}	}
+		if (name != "sphere" && PATHMANAGER::FileExists(sData+"/objects/"+ name + ".bullet"))
+			objListDyn->addItem("#A0E0FF"+name);  // dynamic
+	}
 	
 	//  buildings, group categories, more with same prefix  ----
-	using std::map;
-	map<string, int> cats;  // yeah cats are fun
-	lo.clear();
 	app->vBuildings.clear();
-	PATHMANAGER::DirList(sData + "/objects0", lo);
-	PATHMANAGER::DirList(sData + "/objectsC", lo);
-	PATHMANAGER::DirList(sData + "/rocks", lo);  //not all?
-	for (auto q : lo)
-		if (StringUtil::endsWith(q,".mesh"))
-		{
-			string name = q.substr(0, q.length()-5);  //no .ext
-			string cat = name.substr(0,4);
-			++cats[cat];
-			app->vBuildings.push_back(name);
-			app->vObjNames.push_back(name);  // in -,=
-		}
-	//  get cats  ----
 	objListCat->removeAllItems();
-	for (auto it : cats)
+
+	auto AddPath = [&](auto path)
 	{
-		string cat = it.first;  int n = it.second;
-		//LogO(cat+" "+toStr(n));
-		if (n > 1)  // add category (> 1 Bld with this prefix)
-			objListCat->addItem("#E09090"+cat);
-	}
-	//  push Bld back to Obj list (if <= 1, rare cat)
-	for (u=0; u < app->vBuildings.size(); ++u)
-	{
-		const string& name = app->vBuildings[u];
-		string cat = name.substr(0,4);
-		if (cats[cat] <= 1)
-			objListSt->addItem("#D0D0C8"+name);
-	}
-	{	int il = objListCat->findItemIndexWith("#E09090"+pSet->objGroup);
-		objListCat->setIndexSelected(il);
-		listObjsCatChng(objListCat, il);
-	}
+		std::map<string, int> cats;  // yeah cats are fun
+		lo.clear();
+		int b0 = app->vBuildings.size();
+		PATHMANAGER::DirList(sData + path, lo);
+		for (auto q : lo)
+			if (StringUtil::endsWith(q,".mesh"))
+			{
+				string name = q.substr(0, q.length()-5);  //no .ext
+				if (name != "sphere" && !PATHMANAGER::FileExists(sData+"/objects/"+ name + ".bullet"))
+				{	// no dynamic
+					// auto id = name.find('_') ?..
+					string cat = name.substr(0,4);
+					++cats[cat];
+					app->vBuildings.push_back(name);
+					app->vObjNames.push_back(name);  // in -,=
+			}	}
+		//  get cats  ----
+		for (auto it : cats)
+		{
+			string cat = it.first;  int n = it.second;
+			//LogO(cat+" "+toStr(n));
+			if (n > 1)  // add category (> 1 Bld with this prefix)
+				objListCat->addItem("#F0B0B0"+cat);
+		}
+		//  push Bld back to Obj list (if <= 1, rare cat)
+		for (u = b0; u < app->vBuildings.size(); ++u)
+		{
+			const string& name = app->vBuildings[u];
+			string cat = name.substr(0,4);
+			if (cats[cat] <= 1)
+				objListSt->addItem("#D0D0C8"+name);
+		}
+		{	int il = objListCat->findItemIndexWith("#E09090"+pSet->objGroup);
+			objListCat->setIndexSelected(il);
+			listObjsCatChng(objListCat, il);
+		}
+	};
+	AddPath("/objects");
+	AddPath("/objects2");
+	objListCat->addItem("#FFB060---- "+TR("#{ObjRocks}"));
+	AddPath("/rocks");
+	objListCat->addItem("#C0C8C0---- City");
+	AddPath("/objectsC");
+	objListCat->addItem("#E0E0A0---- 0 A.D.");
+	AddPath("/objects0");
 
 
 	//---------------------  Surfaces  ---------------------
