@@ -284,6 +284,8 @@ void CGui::btnChallStageBack(WP)
 void CGui::btnChallEndClose(WP)
 {
 	app->mWndChallEnd->setVisible(false);
+	app->isFocGui = true;  // show back gui
+	toggleGui(false);
 }
 
 
@@ -583,7 +585,7 @@ void CGui::ChallFillStageInfo(bool finished)
 		if (trk.passPos > 0)		s += TR("  #D8C0FF#{TBPosition}: ") + toStr(trk.passPos) +"\n";
 		auto rd = app->scn->road;
 		if (rd)
-			s += "\n#C8C8B8"+ rd->sTxtAdvice + "\n#B8C8B8"+ rd->sTxtDescr;
+			s += "\n#DDDDBB"+ rd->sTxtAdvice + "\n#ABDDAB"+ rd->sTxtDescr;
 	}
 
 	edChallStage->setCaption(s);

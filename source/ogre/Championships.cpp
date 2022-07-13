@@ -455,9 +455,9 @@ void CGui::ChampFillStageInfo(bool finished)
 			if (rd)
 			{	Real len = rd->st.Length*0.001f * (pSet->show_mph ? 0.621371f : 1.f);
 				s += "#A0D0FF"+ TR("#{Distance}:  ") + "#B0E0FF" + 
-					fToStr(len, 1,4) + (pSet->show_mph ? TR(" #{UnitMi}") : TR(" #{UnitKm}")) + "\n\n";
+					fToStr(len, 1,4) + (pSet->show_mph ? TR(" #{UnitMi}") : TR(" #{UnitKm}")) + "\n";
 				
-				s += "\n#C8C8B8"+ rd->sTxtAdvice + "\n#B8C8B8"+ rd->sTxtDescr;
+				s += "\n#DDDDBB"+ rd->sTxtAdvice + "\n#ABDDAB"+ rd->sTxtDescr;
 		}	}
 	}
 

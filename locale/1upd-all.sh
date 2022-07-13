@@ -6,8 +6,8 @@
 echo --- Generating new template .pot
 echo
 
-../build/sr-translator
-# ./sr-translator
+#../build/sr-translator
+./sr-translator
 
 echo
 echo --- Uploading new template

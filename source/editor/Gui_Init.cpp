@@ -613,8 +613,11 @@ void CGui::InitGui()
 	PATHMANAGER::DirList(sData + "/objects2", lo);
 	PATHMANAGER::DirList(sData + "/objects", lo);
 	for (auto q : lo)
-		if (StringUtil::endsWith(q, ".mesh") && !StringUtil::startsWith(q, "sphere"))
-			app->vObjNames.push_back(q.substr(0,q.length()-5));  //no .ext
+		if (StringUtil::endsWith(q, ".mesh"))
+		{	string name = q.substr(0, q.length()-5);  //no .ext
+			if (name != "sphere")
+				app->vObjNames.push_back(name);
+		}
 	
 	objListDyn = fLi("ObjListDyn");  Lev(objListDyn, ObjsChng);
 	objListSt  = fLi("ObjListSt");   Lev(objListSt,  ObjsChng);
@@ -636,15 +639,16 @@ void CGui::InitGui()
 	auto AddPath = [&](auto path)
 	{
 		std::map<string, int> cats;  // yeah cats are fun
-		lo.clear();
 		int b0 = app->vBuildings.size();
+		lo.clear();
 		PATHMANAGER::DirList(sData + path, lo);
+
 		for (auto q : lo)
 			if (StringUtil::endsWith(q,".mesh"))
-			{
-				string name = q.substr(0, q.length()-5);  //no .ext
+			{	string name = q.substr(0, q.length()-5);  //no .ext
 				if (name != "sphere" && !PATHMANAGER::FileExists(sData+"/objects/"+ name + ".bullet"))
 				{	// no dynamic
+
 					// auto id = name.find('_') ?..
 					string cat = name.substr(0,4);
 					++cats[cat];

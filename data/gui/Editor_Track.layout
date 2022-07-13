@@ -208,7 +208,7 @@
 						<Widget type="ImageBox" skin="ImageBox" position="34 60 32 32" name="iti10">
 							<Property key="ImageTexture" value="track_icons.png"/>
 							<Property key="ImageCoord" value="32 0 32 32"/>
-							<UserString key="tip" value="#{rating}"/>
+							<UserString key="tip" value="#{TipRating}"/>
 						</Widget>
 						<Widget type="ImageBox" skin="ImageBox" position="76 66 26 26" name="iti11">
 							<Property key="ImageTexture" value="track_icons.png"/>
@@ -310,7 +310,7 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="46 92 32 20" name="ti10">
 							<Property key="TextColour" value="0.86 0.93 1.0"/>
-							<UserString key="tip" value="#{rating}"/>
+							<UserString key="tip" value="#{TipRating}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="70 92 32 20" name="ti11">
 							<Property key="TextAlign" value="Top HCenter"/>

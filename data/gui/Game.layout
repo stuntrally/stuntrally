@@ -220,7 +220,7 @@
 						<Widget type="ImageBox" skin="ImageBox" position="34 60 32 32" name="iti10">
 							<Property key="ImageTexture" value="track_icons.png"/>
 							<Property key="ImageCoord" value="32 0 32 32"/>
-							<UserString key="tip" value="#{rating}"/>
+							<UserString key="tip" value="#{TipRating}"/>
 						</Widget>
 						<Widget type="ImageBox" skin="ImageBox" position="76 66 26 26" name="iti11">
 							<Property key="ImageTexture" value="track_icons.png"/>
@@ -322,7 +322,7 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="46 92 32 20" name="ti10">
 							<Property key="TextColour" value="0.86 0.93 1.0"/>
-							<UserString key="tip" value="#{rating}"/>
+							<UserString key="tip" value="#{TipRating}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="70 92 32 20" name="ti11">
 							<Property key="TextAlign" value="Top HCenter"/>
@@ -488,7 +488,7 @@
 					<UserString key="tip" value="#{TipNewGameCar}"/>
 					<Widget type="ImageBox" skin="ImageBox" position="2 4 24 24">
 						<Property key="ImageCoord" value="256 0 128 128"/>
-						<Property key="Alpha" value="0.6"/>
+						<Property key="Alpha" value="0.7"/>
 						<Property key="ImageTexture" value="gui_icons.png"/>
 						<Property key="NeedMouse" value="false"/>
 					</Widget>
@@ -498,12 +498,6 @@
 					<Property key="Colour" value="0.7 0.8 0.6"/>
 					<Property key="Alpha" value="0.0"/>
 					<Property key="InheritsAlpha" value="false"/>
-				</Widget>
-				<Widget type="Widget" skin="PanelSkin" position="14 448 420 64" name="PanCarDesc">
-					<Property key="Colour" value="0.6 0.7 0.8"/>
-					<Property key="Alpha" value="0.2"/>
-					<Property key="InheritsAlpha" value="false"/>
-					<UserString key="tip" value="#{TipCarDesc}"/>
 				</Widget>
 				<Widget type="Widget" skin="PanelSkin" position="14 292 420 154" name="PanCarStats">
 					<Property key="Colour" value="0.1 0.4 0.7"/>
@@ -673,10 +667,23 @@
 					<Property key="WordWrap" value="true"/>
 					<Property key="VisibleHScroll" value="false"/>
 					<Property key="VisibleVScroll" value="true"/>
-					<Property key="TextColour" value="0.75 0.83 0.9"/>
+					<Property key="TextColour" value="0.8 0.9 1.0"/>
 					<Property key="Colour" value="0.3 0.5 0.7"/>
 					<Property key="TextAlign" value="Left Top"/>
 					<Property key="FontName" value="font.small"/>
+					<UserString key="tip" value="#{TipCarDesc}"/>
+				</Widget>
+				<Widget type="Widget" skin="PanelSkin" position="14 448 420 64" name="PanCarDesc">
+					<Property key="Colour" value="0.5 0.6 0.7"/>
+					<Property key="Alpha" value="0.5"/>
+					<Property key="InheritsAlpha" value="false"/>
+					<UserString key="tip" value="#{TipCarDesc}"/>
+				</Widget>
+				<Widget type="ImageBox" skin="ImageBox" position="410 478 24 24">
+					<Property key="ImageCoord" value="768 768 128 128"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="Alpha" value="0.5"/>
 					<UserString key="tip" value="#{TipCarDesc}"/>
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="448 196 328 328" name="CarImg"/>
@@ -692,6 +699,7 @@
 					<Property key="TextColour" value="0.45 0.55 0.6"/>
 				</Widget>
 
+				
 				<Widget type="TextBox" skin="TextBox" position="284 62 80 22">
 					<Property key="Caption" value="#{CarSpeed}"/>
 					<Property key="TextColour" value="0.76 0.73 0.7"/>
@@ -705,6 +713,7 @@
 					<Property key="TextColour" value="0.76 0.73 0.7"/>
 					<UserString key="tip" value="#{TipCarSpeed}"/>
 				</Widget>
+
 				<Widget type="TextBox" skin="TextBox" position="284 82 80 22">
 					<Property key="Caption" value="#{CarType}"/>
 					<Property key="TextColour" value="0.8 0.84 0.86"/>
@@ -714,6 +723,7 @@
 					<Property key="TextColour" value="0.8 0.84 0.86"/>
 					<UserString key="tip" value="#{TipCarType}"/>
 				</Widget>
+
 				<Widget type="TextBox" skin="TextBox" position="284 102 80 22">
 					<Property key="Caption" value="#{CarYear}"/>
 					<Property key="TextColour" value="0.7 0.7 0.6"/>
@@ -727,6 +737,7 @@
 					<UserString key="tip" value="#{TipCarYear}"/>
 				</Widget>
 
+
 				<Widget type="ImageBox" skin="ImageBox" position="250 122 32 32">
 					<Property key="ImageTexture" value="track_icons.png"/>
 					<Property key="ImageCoord" value="0 0 32 32"/>
@@ -737,11 +748,13 @@
 					<Property key="TextColour" value="0.8 0.7 0.6"/>
 					<Property key="Alpha" value="0.8"/>
 					<Property key="FontName" value="font.small"/>
+					<UserString key="tip" value="#{TipCarDifficulty}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="364 132 124 22" name="CarDiff">
 					<Property key="TextColour" value="0.84 0.74 0.64"/>
 					<Property key="Alpha" value="0.95"/>
 					<Property key="FontName" value="font.small"/>
+					<UserString key="tip" value="#{TipCarDifficulty}"/>
 				</Widget>
 
 				<Widget type="ImageBox" skin="ImageBox" position="250 144 32 32">
@@ -754,11 +767,13 @@
 					<Property key="TextColour" value="0.7 0.7 0.8"/>
 					<Property key="Alpha" value="0.9"/>
 					<Property key="FontName" value="font.small"/>
+					<UserString key="tip" value="#{TipRating}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="364 152 124 22" name="CarRating">
 					<Property key="TextColour" value="0.74 0.74 0.84"/>
 					<Property key="Alpha" value="0.95"/>
 					<Property key="FontName" value="font.small"/>
+					<UserString key="tip" value="#{TipRating}"/>
 				</Widget>
 
 				<Widget type="ImageBox" skin="ImageBox" position="250 172 32 20">
@@ -771,12 +786,15 @@
 					<Property key="TextColour" value="0.5 0.7 0.8"/>
 					<Property key="Alpha" value="0.9"/>
 					<Property key="FontName" value="font.small"/>
+					<UserString key="tip" value="#{TipCarWidth}"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="364 172 124 22" name="CarWidth">
 					<Property key="TextColour" value="0.54 0.7 0.84"/>
 					<Property key="Alpha" value="0.95"/>
 					<Property key="FontName" value="font.small"/>
+					<UserString key="tip" value="#{TipCarWidth}"/>
 				</Widget>
+
 
 				<Widget type="ImageBox" skin="ImageBox" position="256 196 24 24" name="imgTrkDrivab1">
 					<Property key="InheritsAlpha" value="false"/>
@@ -1862,7 +1880,7 @@
 						<Widget type="ImageBox" skin="ImageBox" position="34 60 32 32" name="2iti10">
 							<Property key="ImageTexture" value="track_icons.png"/>
 							<Property key="ImageCoord" value="32 0 32 32"/>
-							<UserString key="tip" value="#{rating}"/>
+							<UserString key="tip" value="#{TipRating}"/>
 						</Widget>
 						<Widget type="ImageBox" skin="ImageBox" position="76 66 26 26" name="2iti11">
 							<Property key="ImageTexture" value="track_icons.png"/>
@@ -1964,7 +1982,7 @@
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="46 92 32 20" name="2ti10">
 							<Property key="TextColour" value="0.86 0.93 1.0"/>
-							<UserString key="tip" value="#{rating}"/>
+							<UserString key="tip" value="#{TipRating}"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="70 92 32 20" name="2ti11">
 							<Property key="TextAlign" value="Top HCenter"/>

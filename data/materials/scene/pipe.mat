@@ -1007,9 +1007,9 @@ material wallP_space_x
 material wall_metal_01
 {
 	parent road_wall
-	ambient 1.1 1.1 1.1
-	diffuse 1.1 1.1 1.1
-	specular 1.1 1.1 1.1 24
+	ambient 0.9 0.9 0.9
+	diffuse 0.9 0.9 0.9
+	specular 0.7 0.7 0.7 128
 	diffuseMap metal_01_spec.jpg
 	normalMap metal_01_norm.jpg
 	specMap metal_01_spec.jpg

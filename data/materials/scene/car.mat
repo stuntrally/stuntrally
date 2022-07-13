@@ -857,7 +857,7 @@ material 3B_wheel
 material BE_body
 {
 	parent car_body
-	carPaintMap body00_red.png
+	carPaintMap BE_body00_red.png
 	normalMap BE_norm.jpg
 	specular 1 1 1  8
 }
@@ -923,4 +923,75 @@ material SX_wheel
 	specular 1 1 1 24
 	env_map true
 	refl_amount 0.2
+}
+
+//  PH  -------------------------------
+material PH_glass
+{
+	parent car_glass
+	diffuseMap PH_glass.png
+}
+material PH_interior
+{
+	parent car_base
+	diffuseMap PH_interior.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.9 0.9 0.9 24
+}
+material PH_engine
+{
+	parent car_base
+	diffuseMap PH_engine.png
+	normalMap PH_engine_norm.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.9 0.9 0.9 24
+}
+material PH_engineA
+{
+	parent car_base
+	diffuseMap PH_engine.png
+	normalMap PH_engine_norm.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.9 0.9 0.9 24
+}
+
+material PH_exterior
+{
+	parent car_base
+	diffuseMap PH_interior.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.9 0.9 0.9 24
+}
+
+material CSR2_Interior
+{
+	parent car_base
+	diffuseMap PH_interior2.png
+	normalMap PH_interior2_norm.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.9 0.9 0.9 24
+}
+material CSR2_InteriorA_Zone1
+{
+	parent car_base
+	diffuseMap PH_interior2.png
+	normalMap PH_interior2_norm.png
+	ambient 0.6 0.6 0.6
+	diffuse 0.6 0.6 0.6
+	specular 0.9 0.9 0.9 24
+}
+
+material PH_wheel
+{
+	parent car_base
+	diffuseMap PH_wheel.png
+	normalMap PH_wheel_norm.png
+	ambient 1 1 1
+	diffuse 1 1 1
+	specular 0.8 0.8 0.8 16
 }
