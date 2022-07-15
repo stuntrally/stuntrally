@@ -58,6 +58,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	//  game
 	Param(c,w, "game.pre_time", gui.pre_time);			Param(c,w, "game.chall_num", gui.chall_num);  //rem-
 	Param(c,w, "game.champ_num", gui.champ_num);		Param(c,w, "game.champ_rev", gui.champ_rev);
+	Param(c,w, "game.ch_all", ch_all);
 	Param(c,w, "game.boost_type", gui.boost_type);		Param(c,w, "game.flip_type", gui.flip_type);
 	Param(c,w, "game.rewind_type", gui.rewind_type);
 	Param(c,w, "game.damage_type", gui.damage_type);	Param(c,w, "game.damage_dec", gui.damage_dec);

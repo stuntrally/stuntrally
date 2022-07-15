@@ -1594,6 +1594,9 @@
 						<Property key="Caption" value="#60B0FF#{Chall_Special}"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 578 8">
+						<Property key="Caption" value="#D0A0FF#{Vehicle}"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 578 8">
 						<Property key="Caption" value="#909090#{Test}"/>
 					</Widget>
 				</Widget>
@@ -1668,8 +1671,8 @@
 						<Property key="NeedMouse" value="false"/>
 					</Widget>
 				</Widget>
-				<Widget type="Button" skin="Button" position="120 405 144 30" name="btnChRestart">
-					<Property key="Caption" value="#{Restart}"/>
+				<Widget type="Button" skin="Button" position="150 405 144 30" name="btnChRestart">
+					<Property key="Caption" value="#{Delete}"/>
 					<Property key="Colour" value="0.75 0.6 0.6"/>
 					<Property key="TextColour" value="0.75 0.6 0.6"/>
 					<Property key="Alpha" value="0.8"/>

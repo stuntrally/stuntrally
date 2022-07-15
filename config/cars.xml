@@ -12,7 +12,7 @@
 	<!-- global multipliers for vehicle factors, magic - see App::GetRacePos -->
 	<global easy="0.94" norm="0.95" magic="0.010"/>
 
-<!-- id  o wheels  m name         v created in SR version                       b bumps  j jumps  l loops  p pipes - intolerances for GetTrkDrivability
+<!-- id  o wheels  m name         v created in SR version                       b bumps  j jumps  l loops  p pipes - intolerances for GetDrivability
                           r rating*  w width  d difficulty  s speed  y year  t type                                 e easy  n normal   a author  -->
 <c id="OT"  o="4" m="Turtle"      v="2.1" r="1" w="3" d="1" s="0.4" y="1965" t="Slow"      b="1" j="3" l="4" p="2"  e="0.66" n="0.67"  a="irokrhus" />
  

@@ -208,7 +208,7 @@ void CGuiCom::listTrackChng(Mli2 li, size_t pos)
 #ifndef SR_EDITOR
 	app->gui->changeTrack();
 	app->gui->CarListUpd(false);  // upd % col
-	app->gui->UpdDrivability();
+	app->gui->UpdDrivability(sListTrack, bListTrackU);
 #endif
 #ifdef SR_EDITOR
 	if (app->gui->iLoadNext==0)

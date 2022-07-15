@@ -465,10 +465,6 @@
 
 	<Tag name="RplLoad">Load</Tag>
 	<Tag name="RplSave">Save</Tag>
-	<Tag name="RplDelete">Delete</Tag>
-	<Tag name="RplRename">Rename</Tag>
-	<Tag name="RenameAllOld">Rename All Old</Tag>
-	<Tag name="ConvertAllRpl">Convert All (smaller size)</Tag>
 	<Tag name="ToolsTime">Warning: May take several minutes!</Tag>
 
 	<Tag name="AlreadyExists">Already exists</Tag>

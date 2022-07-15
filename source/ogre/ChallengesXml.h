@@ -9,55 +9,53 @@
 class ChallTrack
 {
 public:
-	std::string name;  bool reversed;  // track
-	int laps;  // number of laps
+	std::string name = "Jng1-Curly";
+	bool reversed = 0;  // track
+	int laps = 1;  // number of laps
 
 	//  pass  -1 means not needed, you can use one or more conditions
-	float passPoints, timeNeeded;  int passPos;
+	float passPoints = -1, timeNeeded = -1;  int passPos = -1;
 
-	//todo: bronze, silver, gold ?percent or val
-	ChallTrack();
+	//? bronze, silver, gold percent or val
 };
+
 
 ///  one Challenge setup
 class Chall
 {
 public:
-	std::string name, descr;  // description text
-	int diff;  // difficulty
-	int ver;  // version, if changed resets progress
+	std::string name = "none", descr = "none";  // description text
+	int diff = 1;  // difficulty
+	int ver = 1;   // version, if changed resets progress
 
-	float length;  // stats for display
-	int type;  // easy, normal etc, for gui tab
-	float time;  // total computed (sum all tracks)
-	int prizes;  // 0 only gold  1 gold,silver  2 gold,silver,bronze
-	float factor;  // multiplier for silver,bronze points/pos prizes
+	float length = 0.f; // stats for display
+	int type = 0;       // easy, normal etc, for gui tab
+	float time = 0.f;   // total computed (sum all tracks)
+	int prizes = 2;     // 0 only gold  1 gold,silver  2 gold,silver,bronze
+	float factor = 1.f; // multiplier for silver,bronze points/pos prizes
 	
-	//  allowed types or cars 1 or more
+	//  Allowed type(s) or specific vehicle(s), 1 or more
 	Ogre::StringVector carTypes, cars;
 
 	std::vector<ChallTrack> trks;
 
-	//  game setup
+	//  Game setup
 	//  if empty or -1 then allows any
-	std::string sim_mode;
-	int damage_type, boost_type, flip_type, rewind_type;
-	int dmg_lap;  // dmg repair on lap
+	std::string sim_mode = "normal";
+	int damage_type = 2, boost_type = 1, flip_type = 2, rewind_type = 1;
+	int dmg_lap = 40;  // dmg repair on lap
 
-	//  hud
-	bool minimap, chk_arr, chk_beam,
-		trk_ghost, pacenotes;  // deny using it if false
-	bool abs,tcs;  // deny if false
+	//  Hud
+	bool minimap = 1, chk_arr = 0, chk_beam = 0,
+		trk_ghost = 1, pacenotes = 1, trail = 1;  // deny using it if false
+	bool abs = 0, tcs = 0;  // deny if false
 	
-	//  pass  -1 means not needed, you can use one or more conditions
-	float totalTime, avgPoints, avgPos;
-	bool carChng;  // allow car change
+	//  Pass  -1 means not needed, you can use one or more conditions
+	float totalTime = -1.f, avgPoints = -1.f, avgPos = -1.f;
+	bool carChng = 0;  // allow car change
 
-	// autoshift, autorear
-	// max dmg%, off road time-
-	//..int retries;  // max track restart/reset
-
-	Chall();
+	// todo: int retries;  // max track restart/reset
+	// todo: max rewinds count or time ..
 };
 
 
@@ -69,7 +67,6 @@ public:
 	std::vector<Chall> all;
 	
 	bool LoadXml(std::string file, class TracksXml* times, bool check);
-	ChallXml();
 };
 
 
@@ -77,24 +74,22 @@ public:
 class ProgressTrackL
 {
 public:
-	float points, time;  int pos;  // got after stage
-	ProgressTrackL();
+	float points = 0.f, time = 0.f;  int pos = 0;  // got after stage
 };
 
 //  progress on championship
 class ProgressChall
 {
 public:
-	std::string car;  // picked car at start
-	int curTrack;  // index to trks
-	float avgPoints, totalTime, avgPos;  // computed from all stages
-	int fin;  // final prize -1 none, 0 bronze, 1 silver, 2 gold
+	std::string car;   // picked car at start
+	int curTrack = 0;  // index to trks
+	float avgPoints = 0.f, totalTime = 0.f, avgPos = 0;  // computed from all stages
+	int fin = -1;      // final prize  -1 none, 0 bronze, 1 silver, 2 gold
 	
 	std::string name;
-	int ver;
+	int ver = 0;
 	
 	std::vector<ProgressTrackL> trks;
-	ProgressChall();
 };
 
 

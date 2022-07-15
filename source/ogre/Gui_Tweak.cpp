@@ -178,7 +178,7 @@ void CGui::btnTweakTireDelete(WP)
 
 	if (PATHMANAGER::FileExists(path))
 	{	fs::remove(path);
-		txtTweakTire->setCaption(TR("#FF8080#{RplDelete}: "+name));
+		txtTweakTire->setCaption(TR("#FF8080#{Delete}: "+name));
 		pGame->reloadSimNeed = true;  // to remove from list
 	}
 }

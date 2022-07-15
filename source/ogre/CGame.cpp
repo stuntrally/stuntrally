@@ -38,7 +38,7 @@ App::App(SETTINGS *settings, GAME *game)
 	,carIdWin(-1), iRplCarOfs(0)
 	// other
 	,newGameRpl(0), curLoadState(0), dstTrk(1)
-	,bHideHudArr(0), bHideHudBeam(0), bHideHudPace(0)
+	,bHideHudArr(0), bHideHudBeam(0), bHideHudPace(0), bHideHudTrail(0)
 	,bRplPlay(0),bRplPause(0), bRplRec(0), bRplWnd(1), iRplSkip(0)
 	,iEdTire(0), iTireLoad(0), iCurLat(0),iCurLong(0),iCurAlign(0), iUpdTireGr(0)
 	,fLastFrameDT(0.001f)

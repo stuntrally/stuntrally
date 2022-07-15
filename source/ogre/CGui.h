@@ -406,8 +406,8 @@ public:
 	Img barCarSpeed =0;
 	Tab tbPlr =0, tbPlr2 =0;
 
-	void UpdCarStats(bool car), updCarDrivability();
-	float GetTrkDrivability(std::string car, std::string trk, bool track_user);  // 0 drivable .. 1 unfit
+	void UpdCarStats(bool car), UpdDrivability(std::string trk, bool track_user);
+	float GetDrivability(std::string car, std::string trk, bool track_user);  // 0 drivable .. 1 unfit
 
 	Img imgCar =0;  Ed carDesc =0;
 	Cmb cmbBoost =0, cmbFlip =0, cmbDamage =0, cmbRewind =0;

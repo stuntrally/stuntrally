@@ -9,28 +9,6 @@ using namespace tinyxml2;
 using namespace std;
 
 
-ChallTrack::ChallTrack()  //  defaults
-	:name("J1-Curly"), laps(1), reversed(0)
-	,passPoints(-1.f), timeNeeded(-1.f), passPos(-1.f)  // pass
-{	}
-
-Chall::Chall()  //  defaults
-	:ver(1), diff(1), length(0.f), type(0), time(0.f)
-	,name("none"), descr("none")
-	,sim_mode("normal")
-	,damage_type(2), boost_type(1), flip_type(2), rewind_type(1)
-	,dmg_lap(40)
-	,minimap(1), chk_arr(0), chk_beam(0)
-	,trk_ghost(1), pacenotes(1)
-	,abs(0),tcs(0)
-	,avgPoints(-1.f), totalTime(-1.f), avgPos(-1.f)  // pass
-	,carChng(0), prizes(2), factor(1.f)
-{	}
-
-ChallXml::ChallXml()
-{	}
-
-
 //  Load challenges
 //-------------------------------------------------------------------------------------------------------------
 bool ChallXml::LoadXml(std::string file, TracksXml* trks, bool check)
@@ -102,6 +80,7 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks, bool check)
 			a = eHud->Attribute("chkBeam");		if (a)  c.chk_beam = s2i(a) > 0;
 			a = eHud->Attribute("trkGhost");	if (a)  c.trk_ghost = s2i(a) > 0;
 			a = eHud->Attribute("pacenotes");	if (a)  c.pacenotes = s2i(a) > 0;
+			a = eHud->Attribute("trail");		if (a)  c.trail = s2i(a) > 0;
 		}
 		XMLElement* ePass = eCh->FirstChildElement("pass");
 		if (ePass)
@@ -175,18 +154,6 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks, bool check)
 	}	}
 	return true;
 }
-
-//  progress
-//-------------------------------------------------------------------------------------------------------------
-
-ProgressTrackL::ProgressTrackL() :
-	points(0.f), time(0.f), pos(0)
-{	}
-
-ProgressChall::ProgressChall() :
-	curTrack(0), ver(0),
-	avgPoints(0.f), totalTime(0.f), avgPos(0), fin(-1)
-{	}
 
 
 //  Load progress

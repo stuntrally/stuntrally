@@ -265,7 +265,7 @@ void CGui::btnRplDelete(WP)
 	String name = getRplName();  if (name.empty())  return;
 
 	Message* message = Message::createMessageBox(
-		"Message", TR("#{Replay} - #{RplDelete} ?"), name,
+		"Message", TR("#{Replay} - #{Delete} ?"), name,
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
 	message->eventMessageBoxResult += newDelegate(this, &CGui::msgRplDelete);
 }
@@ -289,7 +289,7 @@ void CGui::btnRplRename(WP)
 
 	if (name == edit)  // same name
 	{	Message::createMessageBox(
-			"Message", TR("#{Replay} - #{RplRename}"), TR("#{AlreadyExists}."),
+			"Message", TR("#{Replay} - #{Rename}"), TR("#{AlreadyExists}."),
 			MessageBoxStyle::IconInfo | MessageBoxStyle::Ok);
 		return;  }
 	
@@ -298,7 +298,7 @@ void CGui::btnRplRename(WP)
 
 	if (fs::exists(fileNew))
 	{	Message::createMessageBox(
-			"Message", TR("#{Replay} - #{RplRename}"), TR("#{AlreadyExists}."),
+			"Message", TR("#{Replay} - #{Rename}"), TR("#{AlreadyExists}."),
 			MessageBoxStyle::IconInfo | MessageBoxStyle::Ok);
 		return;  }
 
