@@ -319,11 +319,10 @@ void CGui::UpdChampTabVis()
 	//if (pSet->inRace == Race_Single)
 	//	BackFromChs();
 	
-	if (edChInfo->getVisible())  // info texts
-		edChInfo->setCaption(
-			chall ? TR("#{ChallInfo2}")+"\n"+TR("#{ChallInfo}") :
-			tutor ? TR("#{TutorInfo}")+"\n"+TR("#{ChampInfo}") :
-					TR("#{ChampInfo2}")+"\n"+TR("#{ChampInfo}"));
+	edChInfo->setCaption(
+		chall ? TR("#{ChallInfo2}")+"\n"+TR("#{ChallInfo}") :
+		tutor ? TR("#{TutorInfo}")+"\n"+TR("#{ChampInfo}") :
+				TR("#{ChampInfo2}")+"\n"+TR("#{ChampInfo}"));
 	
 	btChRestart->setVisible(false);
 }
@@ -341,10 +340,11 @@ void CGui::StageListAdd(int n, String name, int laps, String progress)
 {
 	String clr = gcom->GetSceneryColor(name);
 	liStages->addItem(clr+ toStr(n/10)+toStr(n%10), 0);  int l = liStages->getItemCount()-1;
-	liStages->setSubItemNameAt(1,l, clr+ name.c_str());
 
 	int id = data->tracks->trkmap[name]-1;  if (id < 0)  return;
 	const TrackInfo& ti = data->tracks->trks[id];
+
+	liStages->setSubItemNameAt(1,l, clr+ ti.nshrt.c_str()); //name.c_str());
 
 	float carMul = app->GetCarTimeMul(pSet->game.car[0], pSet->game.sim_mode);
 	float time = (data->tracks->times[name] * laps /*laps > 1 -1*/) / carMul;
@@ -388,6 +388,8 @@ void CGui::listStageChng(MyGUI::MultiList2* li, size_t pos)
 	if (valTrkNet)  valTrkNet->setCaption(TR("#{Track}: ") + trk);
 	ReadTrkStatsChamp(trk, rev);
 	UpdDrivability(trk, 0);
+	gcom->sListTrack = trk;  gcom->bListTrackU = 0;
+	CarListUpd();
 	if (valStageNum)  valStageNum->setCaption(toStr(pos+1) +" / "+ toStr(all));
 }
 

@@ -1540,15 +1540,6 @@
 			
 			<Widget type="TabItem" skin="" position="2 24 794 562" name="TabChamps">
 				<Property key="Caption" value="#80C0FF#{Championship}"/>
-				<!-- <Widget type="TabControl" skin="TabControl" position="24 26 567 36" name="TutType">
-					<Property key="Colour" value="1.0 0.9 0.8"/>
-					<Widget type="TabItem" skin="" position="2 24 532 8">
-						<Property key="Caption" value="#FFFFA0#{Diff2}"/>
-					</Widget>
-					<Widget type="TabItem" skin="" position="2 24 532 8">
-						<Property key="Caption" value="#E0E000#{Diff3}"/>
-					</Widget>
-				</Widget> -->
 				<Widget type="TabControl" skin="TabControl" position="24 26 567 36" name="ChampType">
 					<Property key="Colour" value="0.8 0.9 1.0"/>
 					<Widget type="TabItem" skin="" position="2 24 532 8">
@@ -1724,7 +1715,7 @@
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 794 562" name="TabTrack">
 				<Property key="Caption" value="#60E060#{Track}"/>
-				<Widget type="TextBox" skin="TextBox" position="176 506 200 24" name="TrackText">
+				<Widget type="TextBox" skin="TextBox" position="176 516 200 24" name="TrackText">
 					<Property key="InheritsAlpha" value="true"/>
 					<Property key="Colour" value="0 0 0"/>
 					<Property key="Caption" value="#{Track}"/>
@@ -2021,6 +2012,27 @@
 							<Property key="TextColour" value="0.7 1 0.7"/>
 						</Widget>
 					</Widget>
+				</Widget>
+
+				<Widget type="ImageBox" skin="ImageBox" position="176 486 24 24" name="imgTrkDrivab2">
+					<Property key="InheritsAlpha" value="false"/>
+					<Property key="ImageCoord" value="640 384 128 128"/>
+					<Property key="Alpha" value="0.8"/>
+					<Property key="ImageTexture" value="gui_icons.png"/>
+					<UserString key="tip" value="#{TipDrivability}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="206 492 160 22">
+					<Property key="Caption" value="#{TrackDrivability}"/>
+					<Property key="TextColour" value="0.7 0.8 0.9"/>
+					<Property key="Alpha" value="0.9"/>
+					<Property key="FontName" value="font.small"/>
+					<UserString key="tip" value="#{TipDrivability}"/>
+				</Widget>
+				<Widget type="TextBox" skin="TextBox" position="366 492 124 22" name="txTrkDrivab2">
+					<Property key="TextColour" value="0.8 0.8 0.9"/>
+					<Property key="Alpha" value="0.95"/>
+					<Property key="FontName" value="font.small"/>
+					<UserString key="tip" value="#{TipDrivability}"/>
 				</Widget>
 
 				<Widget type="Button" skin="Button" position="30 295 36 30" name="btnStagePrev">

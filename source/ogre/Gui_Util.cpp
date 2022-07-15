@@ -283,7 +283,7 @@ void CGui::UpdDrivability(std::string trk, bool user)
 	auto sdrv = drv > 0.85f ? TR("#{Undrivable}") : TR("#{Diff"+toStr(fd)+"}");
 	// txCarTrkdrv->setCaption(drv < 0.f ? "" : gcom->getClrDiff(fd)+ fToStr(drv, 1,3) +"   " +sdrv);
 	
-	for (int i=0; i < 2; ++i)
+	for (int i=0; i < iDrvSt; ++i)
 	{	txTrkDrivab[i]->setCaption(drv < 0.f ? "" : gcom->getClrDiff(fd)+ fToStr(drvp, 0,3) +"%   " +sdrv);
 		imgTrkDrivab[i]->setColour(Colour(1.f, 1.f - drv*drv*0.8f, 1.f - drv*0.7f, drv));
 }	}

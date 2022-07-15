@@ -266,7 +266,7 @@
                 <Widget type="Button" skin="Button" position="20 656 132 28" name="TweakTireDelete">
                     <Property key="Colour" value="1 0.6 0.6"/>
                     <Property key="TextColour" value="1 0.6 0.6"/>
-                    <Property key="Caption" value="#{RplDelete}"/>
+                    <Property key="Caption" value="#{Delete}"/>
                 </Widget>
 			</Widget>
 			<Widget type="TabItem" skin="" position="2 24 522 692">

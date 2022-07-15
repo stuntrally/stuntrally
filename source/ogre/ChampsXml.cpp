@@ -80,10 +80,13 @@ bool ChampsXml::LoadXml(std::string file, TracksXml* trks, bool check)
 				//if (check)
 				if (!trks->trkmap[trk.name])
 					LogO("!!  Champ: "+ch.name+" not found track: "+trk.name);
-				++trkUse[trk.name];
-				if (ch.type !=5 && ch.type !=6)  // not scenery champs
-					++trkU[trk.name];
-
+				
+				if (ch.name.substr(0,3) != "ALL")  // skip ALL tracks champs
+				{
+					++trkUse[trk.name];
+					if (ch.type !=5 && ch.type !=6)  // not Scenery champs
+						++trkU[trk.name];
+				}
 				float time = trks->times[trk.name] * trk.laps;
 				allTime += time;  // sum trk time, total champ time
 			}

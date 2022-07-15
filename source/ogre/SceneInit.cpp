@@ -243,13 +243,15 @@ void App::LoadCleanUp()  // 1 first
 	
 	DestroyGraphs();  hud->Destroy();
 	
-	//  hide hud arrow,beam,pace
+	//  hide hud arrow,beam,pace,trail
 	bool morePlr = pSet->game.local_players > 1;
 	bool rplRd = bRplPlay /*|| scn->road && scn->road->getNumPoints() < 2/**/;
 	bHideHudBeam = rplRd;
 	bHideHudArr = rplRd || morePlr;
 	bool denyPace = gui->pChall && !gui->pChall->pacenotes;
 	bHideHudPace = morePlr || denyPace;
+	bool denyTrail = gui->pChall && !gui->pChall->trail;
+	bHideHudTrail = denyTrail;
 
 
 	// rem old track
@@ -683,10 +685,10 @@ void App::LoadTrees()  // 8
 void App::LoadMisc()  // 9 last
 {
 	bool rev = pSet->game.trackreverse;	
-	if (pGame && !pGame->cars.empty())  //todo: move this into gui track tab chg evt, for cur game type
+	/**/if (pGame && !pGame->cars.empty())  //todo: move this into gui track tab chg evt, for cur game type
 		gcom->UpdGuiRdStats(scn->road, scn->sc, gcom->sListTrack,
 			pGame->timer.GetBestLap(0, rev), rev, 0);  // current
-
+	/**/
 
 	hud->Create();
 	hud->Show(true);  // hide
@@ -919,7 +921,7 @@ void App::CreateTrail(Camera* cam)
 	if (!PATHMANAGER::FileExists(file))
 		LogO("Trail trk gho not found: "+file);
 	else
-	{	gho.LoadFile(file, false);
+	{	gho.LoadFile(file, 0);
 		frames = gho.getNumFrames();
 	}
 	if (frames == 0 || !scn->terrain)  return;
@@ -1013,6 +1015,6 @@ void App::CreateTrail(Camera* cam)
 	tr->Rebuild(true);
 	tr->RebuildRoadInt();
 	scn->trail = tr;
-	if (!pSet->trail_show)
+	if (!pSet->trail_show || bHideHudTrail)
 		tr->SetVisTrail(false);
 }

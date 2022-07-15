@@ -397,13 +397,14 @@ public:
 	void changeCar(), changeTrack();
 
 	//  [Car] stats
-	const static int iCarSt = 10;
-	Img barCarSt[iCarSt], imgTrkDrivab[2] ={0,0};
+	const static int iCarSt = 10, iDrvSt = 3;
+	Img barCarSt[iCarSt], barCarSpeed =0;
 	Txt txCarStTxt[iCarSt], txCarStVals[iCarSt],
 		txCarSpeed =0, txCarType =0, txCarYear =0,
-		txCarRating =0, txCarDiff =0, txCarWidth =0, txTrkDrivab[2] ={0,0},
-		txCarAuthor =0, txTrackAuthor =0;
-	Img barCarSpeed =0;
+		txCarRating =0, txCarDiff =0, txCarWidth =0,
+		txCarAuthor =0, txTrackAuthor =0,
+		txTrkDrivab[iDrvSt] = {0,0,0};
+	Img imgTrkDrivab[iDrvSt] = {0,0,0};
 	Tab tbPlr =0, tbPlr2 =0;
 
 	void UpdCarStats(bool car), UpdDrivability(std::string trk, bool track_user);
