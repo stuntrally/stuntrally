@@ -39,6 +39,8 @@ void CGui::tabChallType(Tab wp, size_t id)
 	ChallsListUpdate();
 }
 
+#define MAX_CHL_TYP 9
+
 
 ///  Challenges list  fill
 //----------------------------------------------------------------------------------------------------------------------
@@ -46,7 +48,7 @@ void CGui::ChallsListUpdate()
 {
 	const int all = data->chall->all.size();
 
-	std::vector<int> vIds[8];  // cur diff ids for chall [types]
+	std::vector<int> vIds[MAX_CHL_TYP];  // cur diff ids for chall [types]
 	for (int id = 0; id < all; ++id)
 	{
 		const Chall& chl = data->chall->all[id];
@@ -61,7 +63,7 @@ void CGui::ChallsListUpdate()
 	const int tabs = tabChall->getItemCount();
 	for (int t = 0; t < tabs; ++t)
 	{
-		int cnt = vIds[t].size();  // skip tut 0,1
+		int cnt = vIds[t].size();
 
 		if (t == tabs-1 && !pSet->dev_keys)  // hide Test
 			cnt = 0;
@@ -81,9 +83,9 @@ void CGui::ChallsListUpdate()
 
 void CGui::fillChallsList(std::vector<int> vIds)
 {
-	const char clrCh[8][8] = {
-	//  0 Rally  1 Scenery  2 Endurance  3 Chase  4 Stunts  5 Extreme  6 Special  7 Test
-		"#A0D0FF","#80FF80","#C0FF60","#FFC060","#FF8080","#C0A0E0", "#60B0FF","#909090" };
+	const char clrCh[MAX_CHL_TYP][8] = {
+	//  0 Rally  1 Scenery  2 Endurance  3 Chase  4 Stunts  5 Extreme  6 Special  7 Vehicle  8 Test
+		"#A0D0FF","#80FF80","#C0FF60", "#FFC060","#FF8080","#C0A0E0",  "#60B0FF","#D0A0FF", "#909090" };
 
 	liChalls->removeAllItems();
 	const int p = pSet->gui.champ_rev ? 1 : 0;
@@ -242,10 +244,6 @@ void CGui::btnChallStageStart(WP)
 	if (last)
 	{	//  show end window, todo: start particles..
 		app->mWndChallStage->setVisible(false);
-		// tutorial, tutorial hard, normal, hard, very hard, scenery, test
-		const int ui[8] = {0,1,2,3,4,5,0,0};
-		//if (imgChallEnd)
-		//	imgChallEnd->setImageCoord(IntCoord(ui[std::min(7, std::max(0, ch.type))]*128,0,128,256));
 		app->mWndChallEnd->setVisible(true);
 		
 		///  sounds  //)
@@ -491,7 +489,7 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 
 	//  upd chall end [window]
 	imgChallFail->setVisible(!passed);
-	imgChallCup->setVisible( passed);  const int ui[8] = {2,3,4};
+	imgChallCup->setVisible( passed);  const int ui[3] = {2,3,4};
 	imgChallCup->setImageCoord(IntCoord(ui[std::min(2, std::max(0, pc.fin))]*128,0,128,256));
 
 	txChallEndC->setCaption(passed ? TR("#{ChampEndCongrats}") : "");

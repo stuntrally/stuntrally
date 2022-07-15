@@ -387,6 +387,7 @@ void CGui::listStageChng(MyGUI::MultiList2* li, size_t pos)
 
 	if (valTrkNet)  valTrkNet->setCaption(TR("#{Track}: ") + trk);
 	ReadTrkStatsChamp(trk, rev);
+	UpdDrivability(trk, 0);
 	if (valStageNum)  valStageNum->setCaption(toStr(pos+1) +" / "+ toStr(all));
 }
 
