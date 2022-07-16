@@ -27,7 +27,8 @@ public:
 	int n = -1;  // unique id for track, from ini
 	float crtver = 0.f;  // created in ver
 	int ver = 0;  // x10
-	std::string name = "none", nshrt,  scenery = "none", author = "none";
+	std::string name = "none", nshrt, // short name, no prefix
+		scenery = "none", author = "none";
 	Date created, modified;
 
 	//  track characteristics  (byte)

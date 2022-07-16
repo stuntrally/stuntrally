@@ -54,6 +54,7 @@ bool SplineRoad::RebuildRoadInt(bool editorAlign, bool bulletFull)
 	if (!rebuild && !(editorAlign || bulletFull))  return false;
 	rebuild = false;
 
+	updMtrRoadTer();
 	UpdRot(); //
 
 	Ogre::Timer ti;	
@@ -244,7 +245,7 @@ void SplineRoad::PrepassLod(
 		//  mtr changes
 		int hid = mP[seg].idMtr, hid1 = mP[seg1].idMtr, hid0 = mP[seg0].idMtr;
 
-		if (trail)
+		if (IsTrail())
 		{
 			int ck = mP[seg].nCk;
 			bool mrg = oldCk != ck;  oldCk = ck;

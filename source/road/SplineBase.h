@@ -29,14 +29,13 @@ public:
 	Ogre::Vector3 pos, tan;  // position, tangent (computed)
 	Ogre::Real width, wtan;  // road width
 
-	Ogre::Real mYaw,mRoll;  // manual angles, if not auto
+	Ogre::Real mYaw,mRoll;   // manual angles, if not auto
 	AngType aType;
-	Ogre::Real aYaw,aRoll;  // working angles (from auto)
-	Ogre::Real tYaw,tRoll;  //- angles+tan interp, not used yet
-	Ogre::Real aY,aR;   // after prepass+
+	Ogre::Real aYaw,aRoll;   // working angles (from auto)
+	Ogre::Real aY,aR;        // after prepass+
 	
 	Ogre::Vector4 clr;  // trail color
-	int nCk = -1;  // trail, checkpoint id
+	int nCk;            // trail, checkpoint id
 
 	//  on/off
 	bool onTer;   // sticked on terrain
@@ -68,11 +67,11 @@ class CheckSphere
 {
 public:
 	Ogre::Vector3 pos;
-	Ogre::Real r,r2;  // radius, r*r
-	bool loop;  // for car camera change
+	Ogre::Real r = 1.f, r2 = 1.f;  // radius, r*r
+	bool loop = false;  // for car camera change
 	
 	//  for drive progress %
-	Ogre::Real dist[2];  // summed distances (cur to next)
+	Ogre::Real dist[2] = {1.f, 1.f};  // summed distances (cur to next)
 		// [0] normal, [1] reversed track
 };
 
@@ -84,11 +83,9 @@ public:
 class SplineBase
 {
 public:
-	SplineBase();
-	~SplineBase();
 	friend class CGui;
 
-	
+
 	//  points
 	void clear();
 	inline int getNumPoints() const {  return (int)mP.size();  }
@@ -125,7 +122,7 @@ public:
 	static Ogre::Vector3 GetRot(Ogre::Real ayaw, Ogre::Real ang);
 
 
-	bool isLooped;  ///=closed, if false begin and end are not connected
+	bool isLooped = true;  ///=closed, if false begin and end are not connected
 protected:
 
 	std::deque<SplinePoint> mP;  // points
@@ -141,17 +138,8 @@ protected:
 class SplineEdit : public SplineBase
 {
 public:
-	SplineEdit()
-		:mTerrain(0)
-		,iSelPoint(-1), iChosen(-1)
-		,bSelChng(0)
-		,rebuild(false), iDirtyId(-1)
-		,g_Height(0.1f)
-	{	}
-	
-	
 	//  terrain helpers
-	Ogre::Terrain* mTerrain;  // for on terrain, height snap
+	Ogre::Terrain* mTerrain =0;  // for on terrain, height snap
 
 	Ogre::Real getTerH(const Ogre::Vector3& p);
 
@@ -201,28 +189,26 @@ protected:
 
 	//  selection  ----
 	//  chosen stays, SelPoint is under mouse Pick
-	int iChosen, iSelPoint;  // -1 if none
+	int iChosen = -1, iSelPoint = -1;  // -1 if none
 	std::set<int> vSel;  // selected points
 
-	bool bSelChng;  // rebuild road after end of selection change
+	bool bSelChng = 0;  // rebuild road after end of selection change
 
 
 	//  rebuild, mark only  ----
-	bool rebuild;
-	int iDirtyId;
-	void Rebuild(bool full=false);
+	bool rebuild = false;
+	int iDirtyId = -1;
+	void Rebuild(bool full = false);
 
 
-	Ogre::Real g_Height;	 ///geom  above terrain global,  ?for each point-
+	Ogre::Real g_Height = 0.1f;	 ///geom  above terrain global
 
 	
 	struct Mark  // marker node  ----
 	{
-		Ogre::SceneNode* nd; //,*ndC;
-		Ogre::Entity* ent; //,*entC;
+		Ogre::SceneNode* nd =0; //,*ndC;
+		Ogre::Entity* ent =0; //,*entC;
 		
-		Mark() : nd(0),ent(0) //, ndC(0),entC(0)
-		{	}
 		void setPos(Ogre::Vector3 pos);
 		void setVis(bool vis);
 	};
@@ -237,11 +223,6 @@ protected:
 class SplineEditChk : public SplineEdit
 {
 public:
-	SplineEditChk()
-		:chksRoadLen(1.f)
-		,iDir(0), iChkId1(0), iChkId1Rev(0)
-	{	}
-
 	//  edit chks
 	void AddChkR(Ogre::Real relR, bool dontCheckR=false);  // change radius
 	void AddBoxW(Ogre::Real rel), AddBoxH(Ogre::Real rel);  // start dim
@@ -251,12 +232,11 @@ public:
 //  checkpoint spheres  ----
 	std::vector<CheckSphere> mChks;
 	Ogre::Vector3 vStBoxDim;   // start/finish box, half dimensions
-	///TODO: vStPos for !isLooped, vStBoxDim at end, ed mode..
 
-	int iDir;     // -1 or +1  if road points go +/-1 with car start orientation
-	int iChkId1, iChkId1Rev;   // 1st chekpoint index (and for reversed) for mChks[]
+	int iDir = 1;     // -1 or +1  if road points go +/-1 with car start orientation
+	int iChkId1 = 0, iChkId1Rev = 0;   // 1st chekpoint index (and for reversed) for mChks[]
 
-	Ogre::Real chksRoadLen;    // for %, sum of all mChks[].dist (without last)
+	Ogre::Real chksRoadLen = 1.f;      // for %, sum of all mChks[].dist (without last)
 };
 
 
@@ -267,8 +247,6 @@ public:
 class SplineMarkEd : public SplineEditChk
 {
 public:
-	SplineMarkEd();
-
 	//  Setup, call this on Init
 	void Setup(Ogre::String sMarkerMeshFile, Ogre::Real scale,
 		Ogre::Terrain* terrain, Ogre::SceneManager* sceneMgr,  Ogre::Camera* camera, int idx);
@@ -284,15 +262,15 @@ public:
 
 
 //  ogre vars
-	Ogre::SceneManager* mSceneMgr;
-	Ogre::Camera* mCamera;
+	Ogre::SceneManager* mSceneMgr =0;
+	Ogre::Camera* mCamera =0;
 
 	//  setup vars
-	int idRd;  // index for more roads
+	int idRd = 0;  // index for more roads
 	Ogre::String sMarkerMesh;
-	Ogre::Real fMarkerScale, fScRot,fScHit;  // scale
+	Ogre::Real fMarkerScale = 1.f, fScRot = 1.8f, fScHit = 0.8f;  // scales
 
-	Ogre::SceneNode *ndSel,*ndChosen,*ndRot,*ndHit,*ndChk;
-	int lastNdSel, lastNdChosen;
-	Ogre::Entity* entSel,*entChs,*entRot,*entHit,*entChk;
+	int lastNdSel = -2, lastNdChosen = -2;
+	Ogre::SceneNode *ndSel =0, *ndChosen =0, *ndRot =0, *ndHit =0, *ndChk =0;
+	Ogre::Entity   *entSel =0, *entChs =0, *entRot =0, *entHit =0, *entChk =0;
 };

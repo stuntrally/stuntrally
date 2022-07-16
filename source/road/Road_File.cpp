@@ -20,10 +20,6 @@ SplineRoad::SplineRoad(App* papp) : pApp(papp)
 #else
 SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame)
 #endif
-	,posHit(Vector3::UNIT_SCALE), bHitTer(0)
-	,idStr(0), fLodBias(1.f)
-	,bCastShadow(0), bRoadWFullCol(0)
-	,ed_Wadd(0.f),ed_Wmul(1.f)
 {
 	Defaults();
 	st.Reset();
@@ -31,13 +27,13 @@ SplineRoad::SplineRoad(GAME* pgame) : pGame(pgame)
 }
 void SplineRoad::Defaults()
 {
-	river = false;  trail = false;  trailSegId = -1;
+	type = RD_Road;  trailSegId = -1;
 	sTxtDescr = "";  sTxtAdvice = "";
 	fScRot = 1.8f;  fScHit = 0.8f;
 	
 	for (int i=0; i < MTRs; ++i)
-	{	sMtrRoad[i] = "";  sMtrPipe[i] = "";  bMtrPipeGlass[i] = true;  }
-	sMtrRoad[0] = "roadNgravel";
+	{	sMtrRoad[i] = "";  sMtrPipe[i] = "";  bMtrPipeGlass[i] = true;  bMtrRoadTer[0] = false;  }
+	sMtrRoad[0] = "roadNgravel";  bMtrRoadTer[0] = true;
 	sMtrPipe[0] = "pipeGlass";
 	sMtrWall = "road_wall";  sMtrCol = "road_col";  sMtrWallPipe = "pipe_wall";
 	
@@ -55,11 +51,6 @@ void SplineRoad::Defaults()
 }
 
 //  ctor stats
-SplineRoad::Stats::Stats()
-	:iVis(0), iTris(0)
-{
-	Reset();
-}
 void SplineRoad::Stats::Reset()
 {
 	iMrgSegs = 0;  segsMrg = 0;
@@ -67,9 +58,6 @@ void SplineRoad::Stats::Reset()
 	OnTer = 0.f;   Pipes = 0.f;  OnPipe = 0.f;
 	bankAvg = 0.f;  bankMax = 0.f;
 }
-
-SplineRoad::~SplineRoad()
-{	}
 
 
 void SplineRoad::ToggleMerge()
@@ -107,7 +95,7 @@ void SplineRoad::UpdLodVis(float fBias, bool bFull)
 			bool vis;
 			if (bFull)  vis = i==0;  else  // all in 1st lod for preview
 			vis = d >= fDist[i] * fBias && d < fDist[i+1] * fBias;  // normal
-			if (trail && vis)  // ->--
+			if (IsTrail() && vis)  // ->--
 				vis = mP[seg].nCk >= trailSegId -1
 				   && mP[seg].nCk <= trailSegId +3;  // par vis -1..5 far
 
@@ -224,7 +212,9 @@ bool SplineRoad::LoadFile(String fname, bool build)
 	
 	Defaults();
 	n = root->FirstChildElement("mtr");	if (n)  {
-		a = n->Attribute("river");  if (a)  river = s2i(a) > 0;
+		a = n->Attribute("river");  if (a)  if (s2i(a) > 0)  type = RD_River;  // old attr
+		a = n->Attribute("type");   if (a)  type = (RoadType)s2i(a);
+
 		for (int i=0; i<MTRs; ++i)  {	String si = i==0 ? "" : toStr(i+1);
 			a = n->Attribute(String("road"+si).c_str());	if (a)  sMtrRoad[i] = String(a);
 			a = n->Attribute(String("pipe"+si).c_str());	if (a)  SetMtrPipe(i, String(a));	}
@@ -347,7 +337,7 @@ bool SplineRoad::SaveFile(String fname)
 	TiXmlDocument xml;	TiXmlElement root("SplineRoad");
 
 	TiXmlElement mtr("mtr");
-		mtr.SetAttribute("river",		river ? "1" : "0");
+		mtr.SetAttribute("type",		toStrC( type ));
 		for (int i=0; i<MTRs; ++i)  {	String si = i==0 ? "" : toStr(i+1);
 			if (sMtrRoad[i] != "")	mtr.SetAttribute(String("road"+si).c_str(),	sMtrRoad[i].c_str());
 			if (sMtrPipe[i] != "")	mtr.SetAttribute(String("pipe"+si).c_str(),	sMtrPipe[i].c_str());  }

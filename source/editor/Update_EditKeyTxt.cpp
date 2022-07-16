@@ -59,8 +59,11 @@ void App::KeyTxtRoad(Real q)
 		rdTxt[12]->setCaption(TR("#{Wall}"));		rdKey[12]->setCaption("ctrl 9 0");
 	}
 
-	bool ter = road->river ? true : !ok ? false :
+	bool ter = road->IsRiver() ? true : !ok ? false :
 		!(!sp.onTer || !road->getPoint(road->getNext(ic)).onTer);
+
+	const static String rdt[RD_ALL] = {"#{Road}", "#{Rivers}", "#{RacingLine}", "#{Wall}"};  // type
+	mWndRoadCur->setCaption(TR("R - " + rdt[road->type]));
 
 	rdTxt[0]->setCaption(TR(sp.onTer ? "#{Road_OnTerrain}" : "#{Road_Height}"));
 	rdVal[0]->setCaption(sp.onTer ? "" : fToStr(sp.pos.y,1,3));

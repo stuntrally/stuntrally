@@ -12,14 +12,6 @@ using namespace Ogre;
 
 //  Setup
 //---------------------------------------------------------------------------------------------------------------
-SplineMarkEd::SplineMarkEd()
-	:mSceneMgr(0),mCamera(0), idRd(0)
-	,ndSel(0), ndChosen(0), ndRot(0), ndHit(0), ndChk(0)
-	,entSel(0), entChs(0), entRot(0), entHit(0), entChk(0)
-	,lastNdSel(-2),lastNdChosen(-2)
-	,fMarkerScale(1.f), fScRot(1.8f),fScHit(0.8f)
-{	}
-
 void SplineMarkEd::createMarker(String name, String mat, Entity*& ent, SceneNode*& nd)
 {
 	ent = mSceneMgr->createEntity(name, sMarkerMesh);

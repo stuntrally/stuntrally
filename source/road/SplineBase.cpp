@@ -50,15 +50,6 @@ float TerUtil::GetAngle(float x, float y)
 }
 
 
-//  ctor
-SplineBase::SplineBase() :
-	isLooped(1/**/)
-{	}
-
-SplineBase::~SplineBase()
-{	}
-
-
 //  seg length
 //---------------------------------------------------------------------
 Real SplineBase::GetSegLen(int seg)
@@ -191,11 +182,12 @@ SplinePoint::SplinePoint()
 void SplinePoint::SetDefault()
 {
 	pos = Vector3::ZERO;  tan = Vector3::ZERO;  onTer = 1;
-	width = 7;  aYaw = 0;  aRoll = 0;
+	width = 7.f;  aYaw = 0;  aRoll = 0;  wtan = 0.f;
 	mYaw = 0;  mRoll = 0;  aType = AT_Both;
-	cols = 1;  pipe = 0;
-	idMtr = 0;  idWall = 0;  chkR = 0;
+	cols = 1;  pipe = 0.f;
+	idMtr = 0;  idWall = 0;  chkR = 0.f;
 	onPipe = 0;  loop = 0;
 	chk1st = false;  notReal = false;
+	nCk = -1;
 }
 

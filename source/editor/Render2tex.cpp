@@ -225,7 +225,7 @@ void App::preRenderTargetUpdate(const RenderTargetEvent &evt)
 		rt[RT_View].cam->setDirection(mCamera->getDirection());
 	}
 	else for (auto r : scn->roads)
-		if (!r->river)
+		if (!r->IsRiver())
 			r->SetForRnd(num == RT_Road ? "render_clr" : "render_grass");
 }
 
@@ -237,7 +237,7 @@ void App::postRenderTargetUpdate(const RenderTargetEvent &evt)
 	if (num == RT_View)  // full
 	{	}
 	else for (auto r : scn->roads)
-	{	if (!r->river)  r->UnsetForRnd();
+	{	if (!r->IsRiver())  r->UnsetForRnd();
 		r->UpdLodVis(pSet->road_dist);
 	}
 

@@ -163,7 +163,8 @@ void CGui::btnCopyRoadPars(WP)
 	r->g_MergeLen = rd.g_MergeLen;  r->g_LodPntLen = rd.g_LodPntLen;
 	r->g_VisDist = rd.g_VisDist;    r->g_VisBehind = rd.g_VisBehind;
 
-	SetGuiFromXmls();	scn->road->Rebuild(true);
+	SetGuiFromXmls();
+	scn->road->Rebuild(true);
 	scn->UpdPSSMMaterials();	scn->road->UpdAllMarkers();
 }
 

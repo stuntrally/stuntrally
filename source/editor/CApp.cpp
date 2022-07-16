@@ -132,7 +132,7 @@ void App::materialCreated(sh::MaterialInstance* m, const std::string& configurat
 		sh::retrieveValue<sh::StringValue>(m->getProperty("cull_hardware"), 0).get() == "none")
 	{
 		// Crash !?
-		assert(!MaterialManager::getSingleton().getByName("PSSM/shadow_caster_nocull").isNull ());
+		assert(!MaterialManager::getSingleton().getByName("PSSM/shadow_caster_nocull").isNull());
 		t->setShadowCasterMaterial("shadowcaster_nocull");
 	}*/
 

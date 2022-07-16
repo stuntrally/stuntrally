@@ -188,7 +188,7 @@ void SplineRoad::DestroySeg(int id)
 	for (int l=0; l < LODs; ++l)
 	{
 		rs.road[l].node->detachAllObjects();
-		if (trail)
+		if (IsTrail())
 			mSceneMgr->destroyEntity(rs.road[l].ent);
 		#ifdef SR_EDITOR  //_crash in game (destroy all ents is before)
 		mSceneMgr->destroyEntity(rs.road[l].ent);

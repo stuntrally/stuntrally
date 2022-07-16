@@ -6,6 +6,7 @@
 #include <OgreCamera.h>
 #include <OgreTerrain.h>
 #include <OgreSceneNode.h>
+#include <OgreMaterialManager.h>
 using namespace Ogre;
 
 
@@ -446,6 +447,7 @@ bool SplineRoad::isPipe(int seg)
 	return mP[seg].pipe > 0.f || mP[seg1].pipe > 0.f;
 }
 
+//  materials
 //  info text only
 const String& SplineRoad::getMtrStr(int seg)
 {
@@ -478,6 +480,13 @@ void SplineRoad::SetMtrPipe(int i, String sMtr)
 {
 	sMtrPipe[i] = sMtr;  // check if glass in mtr name
 	bMtrPipeGlass[i] = strstr(sMtr.c_str(), "lass") != 0;
+}
+
+void SplineRoad::updMtrRoadTer()
+{
+	auto& mm = MaterialManager::getSingleton();
+	for (int i=0; i < MTRs; ++i)
+		bMtrRoadTer[i] = !mm.getByName(sMtrRoad[i] + "_ter").isNull();
 }
 
 

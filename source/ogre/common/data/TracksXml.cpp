@@ -208,8 +208,10 @@ bool TracksXml::LoadIni(string file, bool check)
 				string file = PATHMANAGER::TrkGhosts()+"/"+ s + sRev + ".gho";
 				if (!ti.test && !ti.testC)
 				if (!PATHMANAGER::FileExists(file))
-				{	if (r==1)	LogO("!Rev Missing trk gho for: " + s);
-					else		LogO("! Missing trk gho for: " + s);
+				{	if (r==1)
+					{	if (s != "Des14-JumpCrazy")  //denyReversed)
+							LogO("!Rev Missing trk gho for: " + s);
+					}else	LogO("! Missing trk gho for: " + s);
 				}else
 				{	//  check time  can take few sec
 					TrackGhost gho;  gho.LoadFile(file, false);

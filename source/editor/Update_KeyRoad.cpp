@@ -105,8 +105,8 @@ void App::keyPressRoad(SDL_Scancode skey)
 		//  more roads  ------
 		case key(KP_ENTER):  case key(RETURN):
 			if (alt)
-			{	//  river
-				scn->road->river = !scn->road->river;
+			{	//  road, river, decor cycle  not RD_ALL
+				scn->road->type = (RoadType)((scn->road->type + (shift ? -1 : 1) + RD_Trail) % RD_Trail);
 				scn->road->Rebuild(true);
 			}
 			else if (ctrl && shift)

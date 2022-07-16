@@ -102,10 +102,11 @@ void SplineRoad::BuildSeg(
 
 
 	//  material
-	String suffix = !river && DS.onTer ? "_ter" :"";
-	int mid = mP[seg].idMtr;
-	DS.mtrId = max(0,mid);
-	DS.wallId = river ? -1 : mP[seg].idWall;
+	const int mid = mP[seg].idMtr;
+	DS.mtrId = max(0,mid);  // on terrain use _ter mtr if it exists
+	const String suffix = IsRoad() && DS.onTer && bMtrRoadTer[DS.mtrId] ? "_ter" :"";
+
+	DS.wallId = IsRiver() ? -1 : mP[seg].idWall;
 	DS.pipe = isPipe(seg);
 	rs.sMtrRd = DS.pipe ? sMtrPipe[DS.mtrId]
 						: (sMtrRoad[DS.mtrId] + suffix);
@@ -128,10 +129,10 @@ void SplineRoad::BuildSeg(
 	const int iwC = g_ColNSides;  // column  polygon steps
 				
 	//  steps len
-	int il = DL.v_iL[seg];
-	int il0= DL0.v0_iL[seg];
-	Real la = 1.f / il;
-	Real la0= 1.f / il0 * skLen;
+	const int il = DL.v_iL[seg];
+	const int il0= DL0.v0_iL[seg];
+	const Real la = 1.f / il;
+	const Real la0= 1.f / il0 * skLen;
 	Real l = -la0;
 
 	//  width
@@ -154,7 +155,7 @@ void SplineRoad::BuildSeg(
 	//  Length  vertices
 	//------------------------------------------------------------------------------------
 	//LogR( " __len");
-	bool vis = mP[seg].idMtr >= 0;  // visible, -1 hides segment
+	const bool vis = mP[seg].idMtr >= 0;  // visible, -1 hides segment
 	if (vis || DL.isPace)
 	for (int i = -1; i <= il+1; ++i)  // length +1  +2-gap
 	{
@@ -298,7 +299,7 @@ void SplineRoad::BuildSeg(
 				Vector4 c;
 				///  color  for minimap preview
 				//  ---~~~====~~~---
-				if (!trail)
+				if (!IsTrail())
 				{
 					Real brdg = min(1.f, std::abs(vP.y - yTer) * 0.4f);  //par ] height diff mul
 					Real h = max(0.f, 1.f - std::abs(vP.y - yTer) / 30.f);  // for grass dens tex
@@ -350,7 +351,7 @@ void SplineRoad::BuildSeg(
 			Real uv = 0.f;  // tc
 			bool onP = mP[seg].onPipe==2;
 
-			if (!river && !DS.onTer && DS.wallId >= 0)
+			if (HasWall(DS.onTer) && DS.wallId >= 0)
 			if (i >= 0 && i <= il)  // length +1
 			{
 				++DLM.iLmrgW;
@@ -382,7 +383,7 @@ void SplineRoad::BuildSeg(
 			
 			///  columns |
 			//------------------------------------------------------------------------------------
-			if (!river && !DS.onTer && mP[seg].cols > 0)
+			if (HasColumns() && !DS.onTer && mP[seg].cols > 0)
 			if (i == il/2)  // middle-
 			{	
 				++DLM.iLmrgC;
@@ -426,7 +427,7 @@ void SplineRoad::BuildSeg(
 	//------------------------------------------------------------------------------------
 	
 
-	/// []()  pace
+	/// []()  pacenotes
 	if (DL.isPace)
 		return;  // no mesh
 		
@@ -466,8 +467,7 @@ void SplineRoad::BuildSeg(
 		}
 
 		//  bullet trimesh  at lod 0
-		if (DL.isLod0 && blt && !river)  /// todo:
-		//if (DL.isLod0 && blt && !trail)  /// todo:
+		if (DL.isLod0 && blt && IsRoad())  /// todo: river too..
 			createSeg_Collision(DLM,DS);
 	}
 }
@@ -669,9 +669,9 @@ void SplineRoad::createSeg_Meshes(
 	//  road
 	AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
 	ent->setRenderQueueGroup(
-		trail ? /*RQG_RoadBlend :*/ RQG_Hud1 :
-		pipeGlass || river ? RQG_PipeGlass : RQG_Road);
-	if (trail)
+		IsTrail() ? /*RQG_RoadBlend :*/ RQG_Hud1 :
+		pipeGlass || IsRiver() ? RQG_PipeGlass : RQG_Road);
+	if (IsTrail())
 		ent->setVisibilityFlags(RV_Hud);
 
 	if (wall)
@@ -692,7 +692,7 @@ void SplineRoad::createSeg_Meshes(
 		entB->setRenderQueueGroup(RQG_RoadBlend);
 	}
 
-	if (bCastShadow && !DS.onTer && !river)
+	if (bCastShadow && !DS.onTer && !IsRiver())
 		ent->setCastShadows(true);
 
 	
@@ -731,7 +731,7 @@ void SplineRoad::createSeg_Collision(
 	//  Road  ~
 	btCollisionShape* shape = new btBvhTriangleMeshShape(trimesh, true);
 	
-	size_t su = river ? SU_Fluid : (DS.pipe ? SU_Pipe : SU_Road) + DS.mtrId;
+	size_t su = IsRiver() ? SU_Fluid : (DS.pipe ? SU_Pipe : SU_Road) + DS.mtrId;
 	shape->setUserPointer((void*)su);  // mark as road/pipe + mtrId
 	shape->setMargin(0.01f);  //?
 	
@@ -743,13 +743,13 @@ void SplineRoad::createSeg_Collision(
 	bco->setFriction(0.8f);   //+
 	bco->setRestitution(0.f);
 	bco->setCollisionFlags(bco->getCollisionFlags() |
-		(river ? btCollisionObject::CF_NO_CONTACT_RESPONSE : 0) |
+		(IsRiver() ? btCollisionObject::CF_NO_CONTACT_RESPONSE : 0) |
 		btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT/**/);
 	#ifdef SR_EDITOR
 		pApp->world->addCollisionObject(bco);
 		bco->setUserPointer((void*)111);  // mark road
 	#else
-	if (river)
+	if (IsRiver())
 	{	FluidBox& fb = pGame->app->scn->sc->fluids[0];  /// todo: .. depth in river how
 		bco->setUserPointer(new ShapeData(ST_Fluid, 0, &fb));  ///~~
 	}

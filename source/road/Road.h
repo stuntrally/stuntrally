@@ -5,6 +5,7 @@
 #include <deque>
 #include <set>
 
+// #include <Ogre.h>
 #include <OgreString.h>
 #include <OgreVector2.h>
 #include <OgreVector3.h>
@@ -52,8 +53,13 @@ struct RoadSeg
 	{	for (int i=0; i<LODs; ++i)  nTri[i] = 0;  }
 };
 
+
 //  insert before first, after chosen, after last
-enum eIns{  INS_Begin, INS_Cur, INS_CurPre, INS_End  };
+enum eIns
+{	INS_Begin, INS_Cur, INS_CurPre, INS_End  };
+
+enum RoadType
+{	RD_Road, RD_River, RD_Trail, RD_Decor, RD_ALL  };
 
 
 class SplineRoad : public SplineMarkEd
@@ -66,31 +72,47 @@ public:
 		class GAME* pGame;  ///*
 		SplineRoad(GAME* pgame);
 	#endif
-	virtual ~SplineRoad();
 	void Defaults();
 	
-	bool river;  // has no wall, column, no _ter materials
-	bool trail;  // as river, but has colors per vertex
+	//  types
+	RoadType type = RD_Road;
+	bool IsRoad()    // all: road, _ter, pipe, bridge wall, column etc
+	{	return type == RD_Road;  }
+	bool IsRiver()   // just road,  no wall, no column, no _ter materials
+	{	return type == RD_River;  }
+	bool IsDecor()   // just wall,  for platforms and decorations
+	{	return type == RD_Decor;  }
+	
+	bool IsTrail()   // just road (like river), but has colors per vertex
+	{	return type == RD_Trail;  }
 	int trailSegId;  // for current road trace only
 
+	bool HasRoad()
+	{	return !IsDecor();  }
+	bool HasWall(bool onTer)
+	{	return (IsRoad() && !onTer) || IsDecor();  }
+	bool HasColumns()
+	{	return IsRoad();  }
+
+
 	//  File
-	bool LoadFile(Ogre::String fname, bool build=true), SaveFile(Ogre::String fname);
+	bool LoadFile(Ogre::String fname, bool build = true), SaveFile(Ogre::String fname);
 	
 	//  Rebuild
-	bool RebuildRoadInt(bool editorAlign=false, bool edBulletFull=false);
+	bool RebuildRoadInt(bool editorAlign = false, bool edBulletFull = false);
 	void RebuildRoadPace();  ///  Rebuild road only for pacenotes, after RebuildRoadInt
 	void Destroy(), DestroyRoad(), DestroySeg(int id);
 
 
 	//  Update
-	void UpdLodVis(float fBias=1.f, bool bFull=false);
-	void UpdLodVisMarks(Ogre::Real distSq, bool vis=false), HideMarks();
+	void UpdLodVis(float fBias = 1.f, bool bFull = false);
+	void UpdLodVisMarks(Ogre::Real distSq, bool vis = false), HideMarks();
 	void SetForRnd(Ogre::String sMtr), UnsetForRnd();
 	void SetVisTrail(bool vis);
 
 	void Pick(Ogre::Camera* mCamera, Ogre::Real mx, Ogre::Real my,
-			bool bRay=true, bool bAddH=false, bool bHide=false);
-	void SelectMarker(bool bHide=false);
+			bool bRay = true, bool bAddH = false, bool bHide = false);
+	void SelectMarker(bool bHide = false);
 	void ToggleMerge();
 
 
@@ -99,7 +121,7 @@ public:
 	void Delete(), DelSel();
 
 	bool CopySel();
-	void Paste(bool reverse=false);
+	void Paste(bool reverse = false);
 
 
 	//  other
@@ -123,13 +145,13 @@ private:
 	std::vector<Ogre::Vector3>   posBt;       // for bullet trimesh
 	std::vector<btTriangleMesh*> vbtTriMesh;  // for delete
 
-	const std::vector<Ogre::Vector3>*  at_pos;
+	const std::vector<Ogre::Vector3>*  at_pos =0;
 
 	//  add triangle, with index check
 	void addTri(int f1, int f2, int f3, int i);
 
 	int at_size, at_ilBt;
-	bool bltTri, blendTri;  // pars for addTri
+	bool bltTri, blendTri;  // params for addTri
 	
 	
 ///  ***  Rebuild Geom DATA  ***
@@ -137,14 +159,13 @@ private:
 	
 	struct DataRoad  // global
 	{
-		int segs;        // count
-		int sMin, sMax;  // range
+		int segs = 0;            // count
+		int sMin = 0, sMax = 0;  // range
 		
 		bool editorAlign, bulletFull;  // ed,options
 		
 		DataRoad(bool edAlign, bool bltFull)
 			:editorAlign(edAlign), bulletFull(bltFull)
-			,segs(0), sMin(0), sMax(0)
 		{	}
 	};
 
@@ -163,6 +184,7 @@ private:
 	DL0;  // stays after build since N is used for SetChecks
 	void SetChecks();  // Init  1st in file load, 2nd time for N
 
+
 	struct DataLod   // for current Lod
 	{
 		//>  data at cur lod
@@ -175,41 +197,29 @@ private:
 		std::vector<std::vector <int> >  v_iWL;  //  width steps per length point, for each seg
 		std::vector<int>  v_iwEq;	   // 1 if equal width steps at whole length, in seg, 0 has transition
 
-		Ogre::Real tcLen;      // total tex coord length u
-		Ogre::Real sumLenMrg;  // total length to determine merging
-		int mrgCnt;            // stats, merges counter
+		Ogre::Real tcLen = 0.f;      // total tex coord length u
+		Ogre::Real sumLenMrg = 0.f;  // total length to determine merging
+		int mrgCnt = 0;              // stats, merges counter
 
 		//  LOD vars
-		int lod, iLodDiv;  //.
-		Ogre::Real fLenDim;
-		bool isLod0, isPace;
-		
-		DataLod()
-			:tcLen(0.f), sumLenMrg(0.f), mrgCnt(0)
-			,lod(0), iLodDiv(1), fLenDim(1.f),
-			isLod0(true), isPace(false)
-		{	}
+		int lod = 0, iLodDiv = 1;  //.
+		Ogre::Real fLenDim = 1.f;
+		bool isLod0 = true, isPace = false;
 	};
 	
 	struct StatsLod   // stats for current Lod
 	{	//#  stats
-		Ogre::Real roadLen, rdOnT, rdPipe, rdOnPipe;
-		Ogre::Real avgWidth, stMaxH, stMinH;
-		Ogre::Real bankAvg, bankMax;
-		bool stats;
-
-		StatsLod()
-			:roadLen(0.f), rdOnT(0.f), rdPipe(0.f), rdOnPipe(0.f)
-			,avgWidth(0.f), stMaxH(FLT_MIN), stMinH(FLT_MAX)
-			,bankAvg(0.f), bankMax(0.f)
-			,stats(0)
-		{	}
+		Ogre::Real roadLen = 0.f, rdOnT = 0.f, rdPipe = 0.f, rdOnPipe = 0.f;
+		Ogre::Real avgWidth = 0.f, stMaxH = FLT_MIN, stMinH = FLT_MAX;
+		Ogre::Real bankAvg = 0.f, bankMax = 0.f;
+		bool stats = false;
 	};
 	
 	void PrepassLod(
 		const DataRoad& DR,
 		DataLod0& DL0, DataLod& DL, StatsLod& ST,
 		int lod, bool editorAlign);
+
 
 	struct DataLodMesh   // mesh data for lod  (from merged segs)
 	{
@@ -218,11 +228,8 @@ private:
 		std::vector<Ogre::Vector3>  pos,norm, posW,normW, posC,normC, posLod, posB,normB;
 		std::vector<Ogre::Vector2>  tcs, tcsW, tcsC, tcsB;
 
-		int iLmrg, iLmrgW, iLmrgC, iLmrgB;
+		int iLmrg = 0, iLmrgW = 0, iLmrgC = 0, iLmrgB = 0;
 		
-		DataLodMesh()
-			:iLmrg(0), iLmrgW(0), iLmrgC(0), iLmrgB(0)
-		{	}
 		void Clear();
 	};
 
@@ -248,7 +255,8 @@ private:
 		bool jfw0,jfw1,jfw2;  // jump front walls
 	};
 	
-	//  Build Segment Geometry
+
+	//  Build Segment Geometry  ----
 	void BuildSeg(
 		const DataRoad& DR,
 		const DataLod0& DL0, DataLod& DL, StatsLod& ST,
@@ -269,15 +277,15 @@ private:
 	friend class App;
 	friend class CGui;
 public:
-	Ogre::Vector3 posHit;  bool bHitTer;
+	Ogre::Vector3 posHit;  bool bHitTer = false;
 	
-	int iOldHide, idStr;  // upd var
+	int iOldHide = -1, idStr = 0;  // upd var
 
 	bool bMerge;
-	float fLodBias;      // upd par, detail
+	float fLodBias = 1.f;     // upd par, detail
 	
-	bool bCastShadow;    // true for depth shadows
-	bool bRoadWFullCol;  // road wall full collision (all triangles, or just side)
+	bool bCastShadow = 0;    // true for depth shadows
+	bool bRoadWFullCol = 0;  // road wall full collision (all triangles, or just side)
 
 
 	//  road data Segments
@@ -290,6 +298,8 @@ public:
 	bool bMtrPipeGlass[MTRs];  // glass in mtr name
 
 	Ogre::String  sMtrRoad[MTRs], sMtrWall,sMtrWallPipe, sMtrCol;
+	bool bMtrRoadTer[MTRs];  // if _ter material present in .mat
+	void updMtrRoadTer();
 	void SetMtrPipe(int i, Ogre::String sMtr);
 
 
@@ -320,20 +330,19 @@ public:
 	Ogre::String sTxtAdvice;  // track advice text, how to drive
 
 	//  for editor tool: align terrain to road
-	float ed_Wadd, ed_Wmul;  // const added width and width multipler for whole road
+	float ed_Wadd = 0.f, ed_Wmul = 1.f;  // const added width and width multipler for whole road
 
 
 	//  stats  ----
 	struct Stats  // for info only
 	{
-		int iMrgSegs, segsMrg;
-		int iVis, iTris;  // in upd vis
+		int iMrgSegs = 0, segsMrg = 0;
+		int iVis = 0, iTris = 0;  // in upd vis
 
-		Ogre::Real Length, WidthAvg, HeightDiff;
-		Ogre::Real OnTer, Pipes, OnPipe;
-		Ogre::Real bankAvg, bankMax;  // banking angle
+		Ogre::Real Length = 0.f, WidthAvg = 0.f, HeightDiff = 0.f;
+		Ogre::Real OnTer = 0.f, Pipes = 0.f, OnPipe = 0.f;
+		Ogre::Real bankAvg = 0.f, bankMax = 0.f;  // banking angle
 		
-		Stats();
 		void Reset();
 	} st;
 
