@@ -437,6 +437,7 @@ void BaseApp::onCursorChange(const string &name)
 
 void BaseApp::windowResized(int x, int y)
 {
+	pSet->windowx = x;  pSet->windowy = y;
 	bWindowResized = true;
 
 	// adjust camera asp. ratio

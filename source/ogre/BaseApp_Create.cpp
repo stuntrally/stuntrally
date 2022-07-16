@@ -640,7 +640,9 @@ void BaseApp::onCursorChange(const std::string &name)
 
 void BaseApp::windowResized(int x, int y)
 {
+	pSet->windowx = x;  pSet->windowy = y;
 	bWindowResized = true;
+	
 	// Adjust viewports
 	mSplitMgr->Align();
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);

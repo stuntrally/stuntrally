@@ -2,6 +2,8 @@
 #include "common/Def_Str.h"
 #include "common/Gui_Def.h"
 #include "common/GuiCom.h"
+#include "common/data/CData.h"
+#include "common/data/TracksXml.h"
 #include "../vdrift/pathmanager.h"
 #include "../vdrift/game.h"
 #include "CGame.h"
@@ -142,18 +144,30 @@ void CGui::listRplChng(List* li, size_t pos)
 		const ReplayHeader2& rh = rpl.header;
 		String ss = String(TR("#{Track}: ")) + gcom->GetSceneryColor(rh.track) +
 			rh.track + (rh.track_user ? "  *"+TR("#{TweakUser}")+"*" : "");
-		valRplName->setCaption(ss);
-		char pp = rh.numPlayers, netw = rh.networked, n;
+		char plrs = rh.numPlayers, netw = rh.networked, n;
 
-		ss = String(TR("#{Vehicles}: "));
-		for (n=0; n < pp; ++n)  ss += rh.cars[n] + "  ";
-		ss += //(netw == 0 ? "" : "M") +  //TR("#{Multiplayer}")
+		ss += String(TR("\n#C0D8F0#{Vehicles}: "));
+		for (n=0; n < plrs; ++n)
+		{	auto car = rh.cars[n];
+
+			int cid = data->cars->carmap[car];
+			if (cid == 0)
+				ss += car;
+			else
+			{	auto ci = data->cars->cars[cid-1];
+				ss += ci.name;  // nicks
+			}
+			ss += "  ";
+		}
+		valRplName->setCaption(ss);
+
+		ss = //(netw == 0 ? "" : "M") +  //TR("#{Multiplayer}")
 			"\n#C0D8F0" + TR("#{RplTime}: ") + StrTime(rpl.GetTimeLength()) +
 			"\n#90A0B0" + TR("#{Simulation}: ") + rh.sim_mode;
 
 		if (netw == 1)  // list nicks
 		{	ss += String("\n#90C0E0");
-			for (n=0; n < pp; ++n)
+			for (n=0; n < plrs; ++n)
 				ss += rh.nicks[n]+"  ";
 		}
 		valRplInfo->setCaption(ss);

@@ -931,8 +931,8 @@ void App::CreateTrail(Camera* cam)
 	//  setup trail road
 	SplineRoad* tr = new SplineRoad(pGame);
 	tr->Setup("", 0.7, scn->terrain, mSceneMgr, cam, 100);
-	tr->sMtrRoad[0] = "trailRoad";
-	tr->river = true;  tr->trail = true;  tr->isLooped = false;
+	tr->sMtrRoad[0] = "trailRoad";  tr->bMtrRoadTer[0] = false;
+	tr->type = RD_Trail;  tr->isLooped = false;
 
 	//tr->g_LenDim0 = 2.f;  tr->g_iWidthDiv0 = 1;  //  high quality
 	tr->g_LenDim0 = 3.f;  tr->g_iWidthDiv0 = 1;  //  ok

@@ -30,7 +30,7 @@
 				<Widget type="Button" skin="RadioButton" position="224 400 160 24" name="RplBtnCur">
 					<Property key="Colour" value="0.6 0.8 1"/>
 					<Property key="TextColour" value="0.6 0.76 0.9"/>
-					<Property key="Caption" value="#{RplCurrent}"/>
+					<Property key="Caption" value="#{RplCurrent} (#{Track})"/>
 				</Widget>
 				<Widget type="Button" skin="CheckBox" position="224 432 160 24" name="RplBtnGhosts">
 					<Property key="Colour" value="0.7 0.8 1"/>
@@ -57,7 +57,7 @@
 					<Property key="Colour" value="1 0.8 0.4"/>
 					<Property key="Caption" value="#{Rename}"/>
 				</Widget>
-				<Widget type="TextBox" skin="TextBox" position="224 16 384 24" name="RplName">
+				<Widget type="TextBox" skin="TextBox" position="224 16 384 32" name="RplName">
 					<Property key="TextColour" value="0.84 0.8 1"/>
 				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="224 44 204 64" name="RplInfo">
@@ -90,6 +90,7 @@
 					<UserString key="tip" value="#{TipFind}"/>
 				</Widget>
 			</Widget>
+			
 			<Widget type="TabItem" skin="" position="2 24 794 562">
 				<Property key="Caption" value="#FFF060#{View}"/>
 				<Widget type="Button" skin="CheckBox" position="32 60 380 24" name="RplChkGhost">
