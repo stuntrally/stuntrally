@@ -13,7 +13,7 @@ add_external_lib(
 
 add_external_lib(
         OGRE
-        ogre3d/13.3.3@anotherfoxguy/stable
+        ogre3d/13.4.2@anotherfoxguy/stable
         REQUIRED
         CONAN_PKG_NAME OGRE
         CONAN_OPTIONS ogre3d:nodeless_positioning=True ogre3d:resourcemanager_strict=off
