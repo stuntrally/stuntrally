@@ -358,6 +358,7 @@ void CGui::InitGui()
 	Cmb(cmb, "CmbRewind", comboRewind);	cmbRewind = cmb;
 		cmb->removeAllItems();
 		cmb->addItem(TR("#{None}"));		cmb->addItem(TR("#{Always}"));
+		cmb->addItem(TR("#{GoBackTime}"));
 		//cmb->addItem(TR("#{FuelLap}"));		cmb->addItem(TR("#{FuelTime}"));
 		cmb->setIndexSelected(pSet->gui.rewind_type);
 

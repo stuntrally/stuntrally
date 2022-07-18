@@ -22,24 +22,25 @@
 using namespace Ogre;
 using std::vector;  using std::min;  using std::max;
 
-
-//  2-1	 6-5
-//  | 0--7 |
-//  3______4  front wall indices
+//  road       decor
+//  2-1	 6-5   2--1--0
+//  | 0--7 |   3     7
+//  3______4   4__5__6
+//  front wall indices
 const static int WFid[6][3] = {{2,1,0},{3,2,0},{5,4,7},{6,5,7}, {7,3,0},{4,3,7}};
 
 struct stWiPntW {  Real x,y, uv, nx,ny;  };  // wall width points
 const static int ciwW = 7;  // wall  width steps - types..
-const static stWiPntW wiPntW[ciwW+1][3] = {  // section shape
-	//  normal road                     //  pipe wall
-	{{-0.5f, -0.0f, 0.0f,  1.0f, 0.0f}, {-0.28f, 0.68f,0.0f, -1.0f, 0.0f}, {-0.14f, 1.5f, 0.0f, -1.0f, 0.0f}},
-	{{-0.5f,  1.2f, 0.5f,  0.5f, 0.5f}, {-0.28f, 0.5f, 0.2f, -0.5f, 0.5f}, {-0.14f, 1.4f, 0.2f, -0.5f, 0.5f}},
-	{{-0.56f, 1.2f, 0.2f, -0.5f, 0.5f}, {-0.28f, 0.0f, 0.2f, -0.5f, 0.0f}, {-0.14f, 1.3f, 0.2f, -0.5f, 0.0f}},
-	{{-0.56f,-0.9f, 1.6f, -0.5f,-0.5f}, {-0.2f, -0.9f, 0.5f, -0.1f,-0.5f}, {-0.1f,  1.2f, 0.5f, -0.1f,-0.5f}},
-	{{ 0.56f,-0.9f, 3.0f,  0.5f,-0.5f}, { 0.2f, -0.9f, 0.5f,  0.1f,-0.5f}, { 0.1f,  1.2f, 0.5f,  0.1f,-0.5f}},
-	{{ 0.56f, 1.2f, 1.6f,  0.5f, 0.5f}, { 0.28f, 0.0f, 0.2f,  0.5f, 0.0f}, { 0.14f, 1.3f, 0.2f,  0.5f, 0.0f}},
-	{{ 0.5f,  1.2f, 0.2f, -0.5f, 0.5f}, { 0.28f, 0.5f, 0.2f,  0.5f, 0.5f}, { 0.14f, 1.4f, 0.2f,  0.5f, 0.5f}},
-	{{ 0.5f, -0.0f, 0.5f, -1.0f, 0.0f}, { 0.28f, 0.68f,0.2f,  1.0f, 0.0f}, { 0.14f, 1.5f, 0.2f,  1.0f, 0.0f}}};
+const static stWiPntW wiPntW[ciwW+1][4] = {  // section shape
+	//  normal road                     //  pipe wall                                                         //  wall decor
+	{{-0.5f, -0.0f, 0.0f,  1.0f, 0.0f}, {-0.28f, 0.68f,0.0f, -1.0f, 0.0f}, {-0.14f, 1.5f, 0.0f, -1.0f, 0.0f}, { 0.5f,  0.0f, 0.0f,  0.0f,-1.0f}},
+	{{-0.5f,  1.2f, 0.5f,  0.5f, 0.5f}, {-0.28f, 0.5f, 0.2f, -0.5f, 0.5f}, {-0.14f, 1.4f, 0.2f, -0.5f, 0.5f}, { 0.0f,  0.0f, 1.0f,  0.0f,-1.0f}},
+	{{-0.56f, 1.2f, 0.2f, -0.5f, 0.5f}, {-0.28f, 0.0f, 0.2f, -0.5f, 0.0f}, {-0.14f, 1.3f, 0.2f, -0.5f, 0.0f}, {-0.5f,  0.0f, 2.0f, -0.5f, 0.5f}},
+	{{-0.56f,-0.9f, 1.6f, -0.5f,-0.5f}, {-0.2f, -0.9f, 0.5f, -0.1f,-0.5f}, {-0.1f,  1.2f, 0.5f, -0.1f,-0.5f}, {-0.5f, -0.5f, 2.5f, -1.0f, 0.0f}},
+	{{ 0.56f,-0.9f, 3.0f,  0.5f,-0.5f}, { 0.2f, -0.9f, 0.5f,  0.1f,-0.5f}, { 0.1f,  1.2f, 0.5f,  0.1f,-0.5f}, {-0.5f, -1.0f, 3.0f, -0.5f,-0.5f}},
+	{{ 0.56f, 1.2f, 1.6f,  0.5f, 0.5f}, { 0.28f, 0.0f, 0.2f,  0.5f, 0.0f}, { 0.14f, 1.3f, 0.2f,  0.5f, 0.0f}, { 0.0f, -1.0f, 4.0f,  0.0f, 1.0f}},
+	{{ 0.5f,  1.2f, 0.2f, -0.5f, 0.5f}, { 0.28f, 0.5f, 0.2f,  0.5f, 0.5f}, { 0.14f, 1.4f, 0.2f,  0.5f, 0.5f}, { 0.5f, -1.0f, 5.2f,  0.5f, 0.5f}},
+	{{ 0.5f, -0.0f, 0.5f, -1.0f, 0.0f}, { 0.28f, 0.68f,0.2f,  1.0f, 0.0f}, { 0.14f, 1.5f, 0.2f,  1.0f, 0.0f}, { 0.5f, -0.5f, 5.5f,  1.0f, 0.0f}}};
 
 
 
@@ -294,7 +295,7 @@ void SplineRoad::BuildSeg(
 					vPace.push_back(pm);
 				}
 
-			}else if (vis)
+			}else if (vis)// && HasRoad())
 			{
 				Vector4 c;
 				///  color  for minimap preview
@@ -358,7 +359,8 @@ void SplineRoad::BuildSeg(
 				Real tcLW = tc * (DS.pipe ? g_tcMulPW : g_tcMulW);
 				for (int w=0; w <= ciwW; ++w)  // width +1
 				{
-					int pp = (p1 > 0.f || p2 > 0.f) ? (onP ? 2 : 1) : 0;  //  pipe wall
+					int pp = IsDecor() ? 3 :
+						(p1 > 0.f || p2 > 0.f) ? (onP ? 2 : 1) : 0;  //  pipe wall
 					stWiPntW wP = wiPntW[w][pp];
 
 					if (trans)
@@ -573,12 +575,15 @@ void SplineRoad::createSeg_Meshes(
 	if (!meshOld.isNull())  LogR("Mesh exists !!!" + sMesh);
 
 	AxisAlignedBox aabox;
-	MeshPtr mesh = MeshManager::getSingleton().createManual(sMesh,"General");
-	SubMesh* sm = mesh->createSubMesh();
-	
-	CreateMesh(sm, aabox, DLM.pos,DLM.norm,DLM.clr,DLM.tcs, idx, rs.sMtrRd);
+	SubMesh* sm;
+	MeshPtr mesh, meshW, meshC, meshB;  // ] | >
+	if (HasRoad())
+	{
+		mesh = MeshManager::getSingleton().createManual(sMesh,"General");
+		sm = mesh->createSubMesh();
+		CreateMesh(sm, aabox, DLM.pos,DLM.norm,DLM.clr,DLM.tcs, idx, rs.sMtrRd);
+	}
 
-	MeshPtr meshW, meshC, meshB;  // ] | >
 	bool wall = !DLM.posW.empty();
 	if (wall)
 	{
@@ -667,13 +672,18 @@ void SplineRoad::createSeg_Meshes(
 	SceneNode* node = 0, *nodeW = 0, *nodeC = 0, *nodeB = 0;
 
 	//  road
-	AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
-	ent->setRenderQueueGroup(
-		IsTrail() ? /*RQG_RoadBlend :*/ RQG_Hud1 :
-		pipeGlass || IsRiver() ? RQG_PipeGlass : RQG_Road);
-	if (IsTrail())
-		ent->setVisibilityFlags(RV_Hud);
+	if (HasRoad())
+	{
+		AddMesh(mesh, sMesh, aabox, &ent, &node, "."+sEnd);
+		ent->setRenderQueueGroup(
+			IsTrail() ? /*RQG_RoadBlend :*/ RQG_Hud1 :
+			pipeGlass || IsRiver() ? RQG_PipeGlass : RQG_Road);
+		if (IsTrail())
+			ent->setVisibilityFlags(RV_Hud);
 
+		if (bCastShadow && !DS.onTer && !IsRiver())
+			ent->setCastShadows(true);
+	}
 	if (wall)
 	{
 		AddMesh(meshW, sMeshW, aabox, &entW, &nodeW, "W."+sEnd);
@@ -691,9 +701,6 @@ void SplineRoad::createSeg_Meshes(
 		AddMesh(meshB, sMeshB, aabox, &entB, &nodeB, "B."+sEnd);
 		entB->setRenderQueueGroup(RQG_RoadBlend);
 	}
-
-	if (bCastShadow && !DS.onTer && !IsRiver())
-		ent->setCastShadows(true);
 
 	
 	//>>  store ogre data  ------------

@@ -104,17 +104,17 @@ void SplineRoad::UpdLodVis(float fBias, bool bFull)
 			
 			#ifdef SR_EDITOR
 			if (vis)  //  road mark selected segments, vSel, SELECTED_GLOW, isSelected in main.shader
-			{	rs.road[i].ent->getSubEntity(0)->setCustomParameter(1, Vector4(bSel ? 1 : 0, 0,0,0));
+			{
+				if (rs.road[i].ent)
+					rs.road[i].ent->getSubEntity(0)->setCustomParameter(1, Vector4(bSel ? 1 : 0, 0,0,0));
 				if (rs.blend[i].ent)
-				rs.blend[i].ent->getSubEntity(0)->setCustomParameter(1, Vector4(bSel ? 1 : 0, 0,0,0));
+					rs.blend[i].ent->getSubEntity(0)->setCustomParameter(1, Vector4(bSel ? 1 : 0, 0,0,0));
 			}
 			#endif
 			
-			rs.road[i].ent->setVisible(vis);
-			if (rs.wall[i].ent)
-				rs.wall[i].ent->setVisible(vis);
-			if (rs.blend[i].ent)
-				rs.blend[i].ent->setVisible(vis);
+			if (rs.road[i].ent)  rs.road[i].ent->setVisible(vis);
+			if (rs.wall[i].ent)  rs.wall[i].ent->setVisible(vis);
+			if (rs.blend[i].ent) rs.blend[i].ent->setVisible(vis);
 			//if (rs.col.ent && i==0)
 			//	rs.col.ent->setVisible(vis);
 			if (vis) {  ++st.iVis;  st.iTris += rs.nTri[i];  }
@@ -154,8 +154,10 @@ void SplineRoad::SetForRnd(String sMtr)
 		
 		for (int i=0; i < LODs; ++i)
 		{
-			rs.road[i].ent->setVisible(i==0);
-			rs.road[i].ent->setMaterial(mat);
+			if (rs.road[i].ent)
+			{	rs.road[i].ent->setVisible(i==0);
+				rs.road[i].ent->setMaterial(mat);
+			}
 			if (rs.wall[i].ent)
 				rs.wall[i].ent->setVisible(false);
 			if (rs.blend[i].ent)
@@ -175,7 +177,8 @@ void SplineRoad::UnsetForRnd()
 			rs.sMtrRd);
 		for (int i=0; i < LODs; ++i)
 		{
-			rs.road[i].ent->setMaterial(mat);
+			if (rs.road[i].ent)
+				rs.road[i].ent->setMaterial(mat);
 			// wall auto in updLodVis
 		}
 		if (rs.col.ent)

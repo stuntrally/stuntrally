@@ -62,8 +62,13 @@ void App::KeyTxtRoad(Real q)
 	bool ter = road->IsRiver() ? true : !ok ? false :
 		!(!sp.onTer || !road->getPoint(road->getNext(ic)).onTer);
 
-	const static String rdt[RD_ALL] = {"#{Road}", "#{Rivers}", "#{RacingLine}", "#{Wall}"};  // type
-	mWndRoadCur->setCaption(TR("R - " + rdt[road->type]));
+  	//  type
+	const static String rdt[RD_ALL] = {"#{Road}", "#{Rivers}", "#{Wall}", "#{RacingLine}"};
+	const static Colour clr[RD_ALL] = {
+		Colour(1.0,0.8,0.5), Colour(0.5,0.8,1.0), Colour(0.9,0.95,1.0), Colour(0.5,1.0,0.0),};
+	int t = road->type;
+	mWndRoadCur->setCaption(TR("R - " + rdt[t]));
+	mWndRoadCur->setColour(clr[t]);  mWndRoadCur->setAlpha(t == 0 ? 0.5f : 0.8f);
 
 	rdTxt[0]->setCaption(TR(sp.onTer ? "#{Road_OnTerrain}" : "#{Road_Height}"));
 	rdVal[0]->setCaption(sp.onTer ? "" : fToStr(sp.pos.y,1,3));

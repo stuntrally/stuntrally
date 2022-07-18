@@ -186,6 +186,7 @@ void SplineRoad::DestroySeg(int id)
 		Ogre::MeshManager::getSingleton().remove(rs.col.smesh);
 	}
 	for (int l=0; l < LODs; ++l)
+	if (rs.road[l].ent)
 	{
 		rs.road[l].node->detachAllObjects();
 		if (IsTrail())

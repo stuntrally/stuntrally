@@ -18,24 +18,28 @@
 			//  damage:  "0" None   "1" Reduced           "2" Normal (default)
 			//  boost:   "0" Never  "1" FuelLap (default) "2" FuelTime  "3" Always
 			//  flip:    "0" Never  "1" FuelBoost         "2" Always (default)
-			//  rewind:  "0" None   "1" Always (default)  // todo: "2" FuelLap   "3" FuelTime
+			//  rewind:  "0" None   "1" Always (default)
 			//  dmg_lap:  0..100  damage repair on lap, default 40
 			//  car change:  "1" allow  "0" deny (default) picked once at start
-			//  abs,tcs:  "1" allow  "0" deny (default)  // todo: autogbox
+			//  abs,tcs:  "1" allow  "0" deny (default)
+
+			// todo: rewind "2" FuelLap   "3" FuelTime
 			// todo: track retries/resets limit
 
 		<sim mode="normal" damage="2" boost="1" flip="2" rewind="1" carChng="0" abs="0" tcs="0" />
 
-			//  *** Cars ***
+			//  *** Cars i.e. Vehicles ***
 			//  you can put either cartype or car  or both
 			//  if more than 1, separate with |
 			//  see in cars.xml (or in Gui) for all type names and cars id
 			//  only those types or cars you put here will be available
-			//  allowed vehicle wheels count range: [whMin .. whMax]
-			//  order of check is car names, wheels range, car type, (see IsChallCar)
+			//  optional:
+			//    deny=".." disallow specific vehicles
+			//    allowed vehicle wheels count range: [whMin .. whMax]
+			//  order of check is car names, deny, wheels range, car type, (see IsChallCar)
 
 		<cartype names="Gravel" whMin="2" whMax="4" />
-		<car names="HI|ES" />
+		<car names="HI|ES" deny="3B" />
 
 			//  *** Hud ***
 			//  not allowed when "0", "1" means user can choose
@@ -969,8 +973,8 @@ descr="Fastest racing cars on some interesting and still drivable, medium stunt 
 	</challenge>
 
 	<challenge name="#FF9070Red #90A0B0blue stunts" ver="1" difficulty="4" type="5"
-descr="Highest banked tracks.">
-		<cartype names="Gravel|Asphalt" />
+descr="Alternating series of stunt tracks in red desert and blueish islands.">
+		<cartype names="Gravel|Asphalt" whMin="4" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Aus1-StuntPark"     passPoints="9" />
@@ -1049,6 +1053,7 @@ descr="Extreme cars in interesting places outside earth.">
 descr="Rather unrealistic, but great looking outer space environments.">
 		<sim boost="1" />
 		<cartype names="Gravel|Extreme" />
+		<car deny="3B|MO" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Sur4-BlueWinter"  passPoints="8" />
@@ -1074,7 +1079,7 @@ descr="Alternating series of tracks on dark violet and lime green alien planets.
 	</challenge>
 
 	<challenge name="#A04840Red #4090F0blue space #9090E0stunts" ver="1" difficulty="5" type="6"
-descr="Highest banked tracks.">
+descr="Switching between Mars and Crystal Moon stunt tracks.">
 		<cartype names="Gravel|Asphalt" />
 		<pass avgPoints="11" />
 		<tracks>
@@ -1092,6 +1097,7 @@ descr="Highest banked tracks.">
 descr="Very fast chase. Great stunts on other planets. Need to use the rechargable boost to be faster.">
 		<sim boost="2" />
 		<cartype names="Gravel|Asphalt|Extreme" />
+		<car deny="3B|MO" />
 		<pass avgPoints="14" />
 		<tracks>
 			<t name="Mrs1-Mars"       passPoints="12" />
@@ -1104,6 +1110,7 @@ descr="Very fast chase. Great stunts on other planets. Need to use the rechargab
 	<challenge name="#D0FFA0Alien #4090F0Stunts #A04840Extreme" ver="1" difficulty="6" type="6"
 descr="The new outside earth stunt tracks. Continuation of Outer Stunts.">
 		<cartype names="Gravel|Asphalt|Extreme" />
+		<car deny="3B|MO" />
 		<pass avgPoints="12" />
 		<tracks>
 			<t name="Mrs4-Platforms"  passPoints="9" />
@@ -1319,6 +1326,7 @@ descr="Challenging bus drive in outer space locations. Great for the team of exp
 			<t name="Mrs3-Hot"        passPoints="5" />
 			<t name="Uni3-Cloud"      passPoints="8" />
 			<t name="Spc1-Minerals"   passPoints="10" />
+			<t name="Uni6-Wild"       passPoints="9" />
 			<t name="Uni4-Pipeline"   passPoints="4" />
 		</tracks>
 	</challenge>
@@ -1423,69 +1431,65 @@ descr="Big wheeled, extreme cars in narrow tracks with lots of rocks near road. 
 	<challenge name="#D0D8D8Get a grip, #F0A0A0fast" ver="1" difficulty="3" type="8"
 descr="The fastest super car on very slippery snowy roads in winter. Nonsense and without traction control pretty challenging. Release throttle whenever you notice spinning wheels to regain grip.">
 		<car names="Y7" />
-		<pass avgPoints="11" />
+		<pass avgPoints="12" />
 		<tracks>
-			<t name="Wnt1-Cross"     passPoints="8" />
-			<t name="Wnt2-Wet"       passPoints="12" />
+			<t name="Wnt1-Cross"     passPoints="11" />
+			<t name="Wnt2-Wet"       passPoints="11" />
 			<t name="Wnt11-Glacier"  passPoints="9" />
 		</tracks>
 	</challenge>
 
 	<challenge name="#D0D8D8Get a grip, #80E0E0slowly" ver="1" difficulty="3" type="8"
-descr="The fastest super car, on smallest icy tracks. Extreme nonsense and thus a challenge. Release throttle whenever you notice spinning wheels. Using boosters is even more practical to go forward rather than engine and wheels. And landing in snow near road may be a better way of braking.">
+descr="The fastest super car, on smallest icy tracks. Extreme nonsense and thus a challenge. Using boosters is even more practical to go forward rather than engine and wheels. And landing in snow near road may be a better way of braking.">
 		<car names="Y7" />
-		<pass avgPoints="10" />
+		<sim boost="2" />
+		<pass avgPoints="16" />
 		<tracks>
-			<t name="Wnt7-LJs-Mntn"  passPoints="9" />
-			<t name="Wnt4-IceSlip"   passPoints="9" />
+			<t name="Wnt7-LJs-Mntn"  passPoints="14" />
+			<t name="Wnt4-IceSlip"   passPoints="14" />
 		</tracks>
 	</challenge>
 
-	<challenge name="Nice motorbike trip" ver="1" difficulty="2" type="8"
-descr="Nice drive with regular motorbike.">
-		<car names="BE" />
+	<challenge name="#A0C080Nice motorbike trip" ver="1" difficulty="2" type="8"
+descr="Nice drive with regular motorbike on easy tracks.">
+		<car names="BE|BV" />
 		<pass avgPoints="10" />
 		<tracks>
+			<t name="Atm1-Autumn"         passPoints="9" />
+			<t name="For15-ForestTrip"    passPoints="9" />
+			<t name="Mos4-MossyMntn"      passPoints="9" />
+			<t name="Grc12-KapabaRivers"  passPoints="8" />
 		</tracks>
 	</challenge>
 
-	<challenge name="Long motorbike trip" ver="1" difficulty="3" type="8"
+	<challenge name="#B0F080Long motorbike trip" ver="1" difficulty="3" type="8"
 descr="Nice drive with regular motorbike.">
-		<car names="BE" />
+		<car names="BE|BV" />
 		<pass avgPoints="10" />
 		<tracks>
+			<t name="Isl16-SandyMountain" passPoints="8" />
+			<t name="Grc5-Climb"          passPoints="9" />
+			<t name="For20-LakoPine"      passPoints="8" />
+			<t name="For19-CrolKarstMntn" passPoints="8" />
+			<t name="Uni6-Wild"           passPoints="9" />
 		</tracks>
 	</challenge>
 
 	<challenge name="Motorbike stunts" ver="1" difficulty="4" type="8"
-descr="Nice drive with regular motorbike.">
-		<car names="BE" />
+descr="Stunts with motorbikes.">
+		<car names="BE|BV" />
 		<pass avgPoints="10" />
 		<tracks>
+			<t name="Aus1-StuntPark"       passPoints="9" />
+			<t name="Isl11-StuntIslands"   passPoints="9" />
+			<t name="Aus10-PreythCity"     passPoints="8" />
+			<t name="Sur8-BloCorcle"       passPoints="8" />
+			<t name="Grc9-Oasis"           passPoints="9" />
+			<t name="Atm9-SchwabAutumn"    passPoints="9" />
+			<t name="Isl17-AdapterIslands" passPoints="9" />
+			<t name="Grc13-YeleyStunts"    passPoints="9" />
 		</tracks>
 	</challenge>
-
-*	U6|BV
-
-	wild
-	IcyRiv
-	citywal
-
-	Vlc10-MtSulphur
-	Vlc9-uncer
-	Can6-Aby
-
-	BadCa  mos4-mntn
-	des14-jmpcrz
-	beach  sunset  dawn  scary
-
-	autum 	sandst
-	toptw 	hairp
-	phara 	jngcan	whirl`
-
-	magic  dark
-	frenzy  OSquar  pass hole
-	-curly rocky  snail lowjum  sandy
 
 
 <!--  Test  -->
