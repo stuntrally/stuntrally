@@ -9,27 +9,27 @@
 <!--  Tutorials  -->
 <!--========================================================================================================================-->
 
-	<champ name="Tutorial Basic" ver="1" difficulty="1" type="0" 
-			descr="Basic tutorial on simplest tracks. One lap on each track. To learn different road surfaces: gravel, wet gravel, snow.">
+	<champ name="Tutorial Basic" ver="1" difficulty="1" type="0"
+descr="Basic tutorial on simplest tracks. One lap on each track. To learn different road surfaces: gravel, wet gravel, snow.">
 		<t name="Jng3-Rocky"/>
 		<t name="For1-Slippery"/>
 		<t name="Wnt1-Cross"/>
 	</champ>
 
-	<champ name="Tutorial Banked" ver="1" difficulty="1" type="0" 
-			descr="Easy tutorial with short tracks having banked turns.">
+	<champ name="Tutorial Banked" ver="1" difficulty="1" type="0"
+descr="Easy tutorial with short tracks having banked turns.">
 		<t name="For7-Blur"/>
 		<t name="For6-Banked"/>
 	</champ>
 
-	<champ name="Tutorial Bridges" ver="1" difficulty="2" type="0" 
-			descr="Tutorial on medium length tracks with bridges.">
+	<champ name="Tutorial Bridges" ver="1" difficulty="2" type="0"
+descr="Tutorial on medium length tracks with bridges.">
 		<t name="Des4-SBridge"/>
 		<t name="Sav4-Hills"/>
 	</champ>
 
-	<champ name="Tutorial Terrain" ver="1" difficulty="2" type="0" 
-			descr="Tutorial with short tracks having hilly or bumpy terrain.">
+	<champ name="Tutorial Terrain" ver="1" difficulty="2" type="0"
+descr="Tutorial with short tracks having hilly or bumpy terrain.">
 		<t name="For11-Dawn"/>
 		<t name="Jng1-Curly"/>
 		<t name="Des1-Dunes"/>
@@ -37,29 +37,29 @@
 
 <!--  Tutorials Hard  -->
 
-	<champ name="Tutorial Curly" ver="1" difficulty="3" type="1" 
-			descr="Tutorial with very tiny but curly tracks. Requires a lot of steering.">
+	<champ name="Tutorial Curly" ver="1" difficulty="3" type="1"
+descr="Tutorial with very tiny but curly tracks. Requires a lot of steering.">
 		<t name="Isl12-Beach"/>
 		<t name="Grc4-River"/>
 		<t name="Isl6-Flooded"/>
 		<t name="Jng18-Tiny"/>
 	</champ>
 
-	<champ name="Tutorial Jumps" ver="2" difficulty="3" type="1" 
-			descr="Tutorial for training jumps. Car velocity before jump is most important. In easy mode, you need to use boost to reach it.">
+	<champ name="Tutorial Jumps" ver="2" difficulty="3" type="1"
+descr="Tutorial for training jumps. Car velocity before jump is most important. In easy mode, you need to use boost to reach it.">
 		<t name="Des5-LowJumps"/>
 		<t name="Des6-HighJumps"/>
 		<t name="Des8-Technical"/>
 	</champ>
 
-	<champ name="Tutorial Loops" ver="1" difficulty="4" type="1" 
-			descr="Tutorial for driving in loops. Loops and side loops will appear as well as simple pipe turns and some twists.">
+	<champ name="Tutorial Loops" ver="1" difficulty="4" type="1"
+descr="Tutorial for driving in loops. Loops and side loops will appear as well as simple pipe turns and some twists.">
 		<t name="Sav5-LoopBasic"/>
 		<t name="Sav3-Loops"/>
 	</champ>
 
-	<champ name="Tutorial Pipes" ver="1" difficulty="4" type="1" 
-			descr="Tutorial for road pipes. Mostly driving inside glass pipes. Some tracks are twisted.">
+	<champ name="Tutorial Pipes" ver="1" difficulty="4" type="1"
+descr="Tutorial for road pipes. Mostly driving inside glass pipes. Some tracks are twisted.">
 		<t name="Jng5-Pipes"/>
 		<t name="Sav10-PipeCurl"/>
 		<t name="Sav6-PipeCrazy"/>
@@ -70,10 +70,10 @@
 <!--  champs  -->
 <!--========================================================================================================================-->
 
-<!--  Easy  -->
+<!--  Medium  -->
 
-	<champ name="Short Rally" ver="4" difficulty="2" type="2" 
-			descr="Best short tracks in game, for rally fans, in interesting sceneries.">
+	<champ name="Short Rally" ver="4" difficulty="2" type="2"
+descr="Best short tracks in game, for rally fans, in interesting sceneries.">
 		<t name="Isl4-Sunset"/>
 		<t name="For11-Dawn"/>
 		<t name="For8-Stain"/>
@@ -81,8 +81,8 @@
 		<t name="Jng12-Fog"/>
 	</champ>
 
-	<champ name="Beauty Rally" ver="1" difficulty="2" type="2" 
-			descr="The best long, beautiful, scenic rally tracks in game.">
+	<champ name="Beauty Rally" ver="1" difficulty="2" type="2"
+descr="The best long, beautiful, scenic rally tracks in game.">
 		<t name="Atm1-Autumn"/>
 		<t name="Isl10-Treasure"/>
 		<t name="Jng21-Paradise"/>
@@ -90,8 +90,8 @@
 		<t name="Mos4-MossyMntn"/>
 	</champ>
 
-	<champ name="Yet more rally" ver="2" difficulty="2" type="2" 
-			descr="Other short tracks in game. Some quite circullar.">
+	<champ name="Yet more rally" ver="2" difficulty="2" type="2"
+descr="Other short tracks in game. Some quite circullar.">
 		<t name="Grc3-Butterfly"/>
 		<t name="Grc4-River"/>
 		<t name="For4-OSquare"/>
@@ -101,8 +101,8 @@
 		<t name="Atm6-Sunset"/>
 	</champ>
 
-	<champ name="Fast fun" ver="3" difficulty="3" type="2" 
-			descr="Fast, short tracks in game. Some quite curly and banked. Driven flat-out.">
+	<champ name="Fast fun" ver="3" difficulty="3" type="2"
+descr="Fast, short tracks in game. Some quite curly and banked. Driven flat-out.">
 		<t name="Des1-Dunes"/>
 		<t name="For7-Blur"/>
 		<t name="Atm3-Orange"/>
@@ -114,8 +114,8 @@
 		<t name="Can6-Abyss"/>
 	</champ>
 
-	<champ name="Bumpy shorts" ver="2" difficulty="4" type="2" 
-			descr="The most bumpy tracks. Difficult to keep on road, if you drive too fast.">
+	<champ name="Bumpy shorts" ver="2" difficulty="4" type="2"
+descr="The most bumpy tracks. Difficult to keep on road, if you drive too fast.">
 		<t name="Mud2-Bumps"/>
 		<t name="Des2-Mntn"/>
 		<t name="Isl10-Treasure"/>
@@ -126,8 +126,8 @@
 		<t name="Vlc8-Uncertain"/>
 	</champ>
 
-	<champ name="Long trip" ver="1" difficulty="4" type="2" 
-			descr="The longest rally tracks, for those who want to drive a lot, in nice sceneries.">
+	<champ name="Long trip" ver="1" difficulty="4" type="2"
+descr="The longest rally tracks, for those who want to drive a lot, in nice sceneries.">
 		<t name="For15-ForestTrip"/>
 		<t name="Jng17-JungleCanyons"/>
 		<t name="Can3-Vast"/>
@@ -141,8 +141,8 @@
 		<t name="Mud4-Taiga"/>
 	</champ>
 
-	<champ name="Curly shorts" ver="3" difficulty="3" type="2" 
-			descr="Short, curly and tricky tracks with sharp turns.">
+	<champ name="Curly shorts" ver="3" difficulty="3" type="2"
+descr="Short, curly and tricky tracks with sharp turns.">
 		<t name="Fin2-Serpent"/>
 		<t name="Isl12-Beach"/>
 		<t name="Mos2-Mouse"/>
@@ -154,8 +154,8 @@
 		<t name="Des13-Winding"/>
 	</champ>
 
-	<champ name="Fancy circles" ver="4" difficulty="2" type="2" 
-			descr="The most circullar tracks. Usualy banked, sometimes with easy pipe turns. Require much steering but mostly in same direction.">
+	<champ name="Fancy circles" ver="4" difficulty="2" type="2"
+descr="The most circullar tracks. Usualy banked, sometimes with easy pipe turns. Require much steering but mostly in same direction.">
 		<t name="Jng10-Spiral"/>
 		<t name="Sav9-Short"/>
 		<t name="Jng19-ShortFun"/>
@@ -167,8 +167,8 @@
 		<t name="For17-BadCamber"/>
 	</champ>
 
-	<champ name="Ancient cities" ver="4" difficulty="3" type="2" 
-			descr="Driving in peaceful small towns with many buildings, frozen in ancient times. Sometimes quite narrow and with sharp turns.">
+	<champ name="Ancient cities" ver="4" difficulty="3" type="2"
+descr="Driving in peaceful small towns with many buildings, frozen in ancient times. Sometimes quite narrow and with sharp turns.">
 		<t name="Des11-PersianCity"/>
 		<t name="Des14-JumpCrazy"/>
 		<t name="Des15-CityWall"/>
@@ -178,20 +178,29 @@
 		<t name="Spc2-SpaceMine"/>
 	</champ>
 
-	<champ name="Easy jumps" ver="4" difficulty="2" type="2" 
-			descr="Short easy tracks with single jumps.">
+	<champ name="Easy jumps" ver="4" difficulty="2" type="2"
+descr="Short easy tracks with single jumps.">
 		<t name="Mos3-Air"       laps="2"/>
 		<t name="Wnt15-SkiJump"/>
 		<t name="Des3-Passage"   laps="2"/>
 		<t name="Des16-AsphaltJumps"/>
 	</champ>
 
-	
-<!--  Normal  -->
+	<champ name="Rocks nearby" ver="1" difficulty="2" type="2"
+descr="Medium tracks with plenty of close by rocks.">
+		<t name="Mos3-Air"/>
+		<t name="Des2-Mntn"/>
+		<t name="For6-Banked"/>
+		<t name="Can4-Sway"/>
+		<t name="Stn1-StoneQuarry"/>
+	</champ>
+
+
+<!--  Hard  -->
 <!--........................................................................................................................-->
 
-	<champ name="Master of Rally" ver="2" difficulty="2" type="3" 
-			descr="Great, medium long tracks in game, for rally fans, with great views.">
+	<champ name="Master of Rally" ver="2" difficulty="2" type="3"
+descr="Great, medium long tracks in game, for rally fans, with great views.">
 		<t name="Fin1-Lakes"/>
 		<t name="Grc2-Coast"/>
 		<t name="Jng13-Tropic"/>
@@ -199,8 +208,8 @@
 		<t name="Isl5-Shore"/>
 	</champ>
 
-	<champ name="Mud and water fan" ver="3" difficulty="3" type="3" 
-			descr="A collection of tracks that have either water or mud drive through areas. Mostly in jungle, some are slippery and tricky.">
+	<champ name="Mud and water fan" ver="3" difficulty="3" type="3"
+descr="A collection of tracks that have either water or mud drive through areas. Mostly in jungle, some are slippery and tricky.">
 		<t name="Isl3-Islands"/>
 		<t name="Jng11-Temple"/>
 		<t name="Jng12-Fog"/>
@@ -214,8 +223,8 @@
 		<t name="Mud5-Mudflats"/>
 	</champ>
 
-	<champ name="Mountain adventure" ver="5" difficulty="4" type="3" 
-			descr="Tracks placed in mountains and with highest height differences, also with good views.">
+	<champ name="Mountain adventure" ver="5" difficulty="4" type="3"
+descr="Tracks placed in mountains and with highest height differences, also with good views.">
 		<t name="Grc5-Climb"/>
 		<t name="For12-HighPeaks"/>
 		<t name="Jng20-JungleMaze"/>
@@ -225,7 +234,7 @@
 	</champ>
 
 	<champ name="Mountain Trails" ver="1" difficulty="3" type="3"
-			descr="Many tracks in mountain environments.">
+descr="Many tracks in mountain environments.">
 		<t name="Mos4-MossyMntn"/>
 		<t name="Jng20-JungleMaze"/>
 		<t name="For10-MntnTrail"/>
@@ -237,8 +246,8 @@
 		<t name="Wnt13-MtFog"/>
 	</champ>
 
-	<champ name="Frenzy fellow" ver="4" difficulty="4" type="3" 
-			descr="Curly tracks, sometimes banked, frequently changing directions. Require lots of steering.">
+	<champ name="Frenzy fellow" ver="4" difficulty="4" type="3"
+descr="Curly tracks, sometimes banked, frequently changing directions. Require lots of steering.">
 		<t name="Sav2-Frenzy"/>
 		<t name="Wnt9-IceFrenzy"/>
 		<t name="Can4-Sway"/>
@@ -250,8 +259,8 @@
 		<t name="Aus8-Cliff"/>
 	</champ>
 
-	<champ name="Extreme weather" ver="2" difficulty="4" type="3" 
-			descr="Short tracks in difficult conditions. Heavy rain, snow, fog or dark.">
+	<champ name="Extreme weather" ver="2" difficulty="4" type="3"
+descr="Short tracks in difficult conditions. Heavy rain, snow, fog or dark.">
 		<t name="Des12-Sandstorm"/>
 		<t name="Atm5-Twister"/>
 		<t name="Jng18-Tiny"/>
@@ -262,8 +271,8 @@
 		<t name="Wnt13-MtFog"/>
 	</champ>
 
-	<champ name="Dark chase" ver="1" difficulty="3" type="3" 
-			descr="The darkest tracks. Short ones with 2 laps.">
+	<champ name="Dark chase" ver="1" difficulty="3" type="3"
+descr="The darkest tracks. Short ones with 2 laps.">
 		<t name="Vlc1-Dark"		laps="2"/>
 		<t name="Uni1-Magic"	laps="2"/>
 		<t name="Atm4-Scary"/>
@@ -274,21 +283,20 @@
 		<t name="Cry1-CrystalMoon"/>
 	</champ>
 
-	<champ name="Hot and cold" ver="1" difficulty="4" type="3" 
-			descr="Extreme Volcanic and Winter tracks.">
+	<champ name="Hot and cold" ver="2" difficulty="4" type="3"
+descr="Extreme Volcanic and Winter tracks.">
 		<t name="Tox2-AcidLakes"/>
 		<t name="Wnt16-IcyRiver"/>
 		<t name="Vlc12-LavaPools"/>
 		<t name="Wnt17-FrozenGarden"/>
-		<t name="Stn1-StoneQuarry"/>
 		<t name="Vlc9-Craters"/>
 		<t name="Wnt12-Peaks"/>
+		<t name="Mrs3-Hot"		laps="2"/>
 	</champ>
 
-	<champ name="Colorful planets" ver="1" difficulty="4" type="3" 
-			descr="Best, colorful sceneries on other planets.">
+	<champ name="Colorful planets" ver="2" difficulty="4" type="3"
+descr="Best, colorful sceneries on other planets.">
 		<t name="Uni3-Cloud"/>
-		<t name="Mrs3-Hot"		laps="2"/>
 		<t name="Sur1-Surreal"/>
 		<t name="Sur2-GreenStar"/>
 		<t name="Cry2-MagicFog"/>
@@ -300,11 +308,11 @@
 	</champ>
 
 
-<!--  Hard  -->
+<!--  Very Hard  -->
 <!--........................................................................................................................-->
 
-	<champ name="Master of Stunts" ver="2" difficulty="5" type="4" 
-			descr="Best stunt tracks in game, very twisted and difficult. With plenty of loops, jumps and twisted bridges. Lets you master your stunt driving.">
+	<champ name="Master of Stunts" ver="2" difficulty="5" type="4"
+descr="Best stunt tracks in game, very twisted and difficult. With plenty of loops, jumps and twisted bridges. Lets you master your stunt driving.">
 		<t name="Sav3-Loops"/>
 		<t name="Jng6-Fun"/>
 		<t name="Sav7-HighMadness"/>
@@ -312,8 +320,8 @@
 		<t name="Isl11-StuntIslands"/>
 	</champ>
 
-	<champ name="Pipes mastery" ver="3" difficulty="5" type="4" 
-			descr="Only pipe tracks with high difficulty, extremely curly. Don't drive too fast, it damages car. Lets you master your pipe driving.">
+	<champ name="Pipes mastery" ver="3" difficulty="5" type="4"
+descr="Only pipe tracks with high difficulty, extremely curly. Don't drive too fast, it damages car. Lets you master your pipe driving.">
 		<t name="Sav6-PipeCrazy"/>
 		<t name="Aus2-PipeCoil"/>
 		<t name="Uni2-Swirl"/>
@@ -322,8 +330,8 @@
 		<t name="Can5-Obstacles"/>
 	</champ>
 
-	<champ name="Curly master" ver="2" difficulty="5" type="4" 
-			descr="Curly tracks, driven mad. Require lots of steering, determination and experience.">
+	<champ name="Curly master" ver="2" difficulty="5" type="4"
+descr="Curly tracks, driven mad. Require lots of steering, determination and experience.">
 		<t name="Aus4-Snake"/>
 		<t name="For16-Clew"/>
 		<t name="Jng22-Knotted"/>
@@ -333,8 +341,8 @@
 		<t name="Oth1-FogCity"/>
 	</champ>
 
-	<champ name="Jump mania" ver="2" difficulty="4" type="4" 
-			descr="Tracks with lots of jumps. Fast cars are needed (or boosting to reach jump speeds).">
+	<champ name="Jump mania" ver="2" difficulty="4" type="4"
+descr="Tracks with lots of jumps. Fast cars are needed (or boosting to reach jump speeds).">
 		<t name="Des6-HighJumps"/>
 		<t name="Des7-CrossJumps"/>
 		<t name="Aus5-TopTwist"/>
@@ -342,8 +350,8 @@
 		<t name="Uni5-PipeJumps"/>
 	</champ>
 
-	<champ name="Alien stunts" ver="2" difficulty="6" type="4" 
-			descr="New stunt tracks, also on alien planet, later quite difficult.">
+	<champ name="Alien stunts" ver="2" difficulty="6" type="4"
+descr="New stunt tracks, also on alien planet, later quite difficult.">
 		<t name="Isl14-Ocean"/>
 		<t name="Aln1-AlienBase"/>
 		<t name="Des18-Shuttle"/>
@@ -352,8 +360,8 @@
 		<t name="Cry3-BlueHell"/>
 	</champ>
 
-	<champ name="Insane stunts" ver="2" difficulty="6" type="4" 
-			descr="The very difficult, insanely twisted tracks. Require the most skills and determination. Recommended to do both Stunts and Pipes mastery before.">
+	<champ name="Insane stunts" ver="2" difficulty="5" type="4"
+descr="The very difficult, insanely twisted tracks. Require the most skills and determination. Recommended to do both Stunts and Pipes mastery before.">
 		<t name="Aus1-StuntPark"/>
 		<t name="Sav14-Refinery"/>
 		<t name="Isl9-Web"/>
@@ -361,17 +369,66 @@
 		<t name="Vlc6-Crematoria"/>
 	</champ>
 
-	<champ name="Stunt madness" ver="2" difficulty="7" type="4" 
-			descr="The most difficult and complicated stunt tracks. Require great skills and determination. Recommended to do after all others.">
+	<champ name="Stunt madness" ver="2" difficulty="7" type="4"
+descr="The most difficult and complicated stunt tracks. Require great skills and determination.">
 		<t name="Grc7-Spider"/>
 		<t name="Mos5-Factory"/>
 		<t name="Wnt14-DangerRoad"/>
 	</champ>
 
-	<champ name="Longest stunts" ver="2" difficulty="6" type="4" 
-			descr="Very long and twisted tracks. Quite exhausting to drive.">
+	<champ name="Long odd roads" ver="1" difficulty="6" type="4"
+descr="Very long and twisted tracks. Quite exhausting to drive.">
 		<t name="Atm8-Ultima"/>
 		<t name="Atm7-Industrial"/>
+	</champ>
+
+	<champ name="Longest stunts" ver="2" difficulty="5" type="4"
+descr="Very long, difficult and tricky stunt tracks. For experienced and professional stunt drivers. Recommended to do after all others.">
+		<t name="Grc9-Oasis"/>
+		<t name="Atm9-SchwabAutumn"/>
+		<t name="Isl17-AdapterIslands"/>
+	</champ>
+
+	<champ name="Outer space surreal" ver="1" difficulty="4" type="4"
+descr="Newest surreal space stunt tracks.">
+		<t name="Sur4-BlueWinter"/>
+		<t name="Sur5-FreshBreeze"/>
+		<t name="Aln3-MushroomBeach"/>
+	</champ>
+
+<champ name="Outer space stunts" ver="1" difficulty="4" type="4"
+descr="Newest space stunt tracks.">
+		<t name="Sur8-BloCorcle"/>
+		<t name="Sur6-AkkaPadre"/>
+		<t name="Uni7-GlassStairs"/>
+	</champ>
+
+	<!--
+		<t name="Oth2-BlackWinter"/>
+		<t name="Aus9-RedDesert"/>
+
+		<t name="Grc12-KapabaRivers"/>
+		<t name="Grc10-BeachCity"/>
+		<t name="Isl15-IslandVillages"/>
+		<t name="Jng23-FollowValley"/>
+
+		<t name="Jng24-NightJungle"/>
+		<t name="For18-MountCaro"/>
+		<t name="Wnt18-MountPen"/>
+
+		<t name="Jng25-CantorJungle"/>
+		<t name="Vlc13-BorVolcano"/>
+
+		<t name="Aus10-PreythCity"/>
+		<t name="Mos6-TaraMosses"/>
+	-->
+	<champ name="Various mountains" ver="2" difficulty="2" type="5"
+descr="Desert championship. Part 1.">
+		<t name="For20-LakoPine"/>
+		<t name="Isl16-SandyMountain"/>
+		<t name="Grc11-PickCave"/>
+		<t name="For19-CrolKarstMntn"/>
+		<!-- <t name="Sur7-UaraHills"/> -->
 	</champ>
 
 
@@ -379,8 +436,8 @@
 <!--  Senery champs  part 1, big  -->
 <!--========================================================================================================================-->
 
-	<champ name="Desert" ver="2" difficulty="3" type="5" 
-			descr="Desert championship. Part 1.">
+	<champ name="Desert" ver="2" difficulty="3" type="5"
+descr="Desert championship. Part 1.">
 		<t name="Des1-Dunes"/>
 		<t name="Des2-Mntn"/>
 		<t name="Des3-Passage"/>
@@ -390,8 +447,8 @@
 		<t name="Des7-CrossJumps"/>
 		<t name="Des8-Technical"/>
 	</champ>
-	<champ name="Desert 2nd" ver="3" difficulty="3" type="5" 
-			descr="Desert champ. Part 2.">
+	<champ name="Desert 2nd" ver="3" difficulty="3" type="5"
+descr="Desert champ. Part 2.">
 		<t name="Des10-MudBath"/>
 		<t name="Des11-PersianCity"/>
 		<t name="Des12-Sandstorm"/>
@@ -402,8 +459,9 @@
 		<t name="Des17-NileCity"/>
 		<t name="Des18-Shuttle"/>
 	</champ>
-	<champ name="Jungle" ver="4" difficulty="2" type="5" 
-			descr="Jungle championship. Part 1.">
+
+	<champ name="Jungle" ver="4" difficulty="2" type="5"
+descr="Jungle championship. Part 1.">
 		<t name="Jng1-Curly"/>
 		<t name="Jng3-Rocky"/>
 		<t name="Jng5-Pipes"/>
@@ -414,8 +472,8 @@
 		<t name="Jng11-Temple"/>
 		<t name="Jng12-Fog"/>
 	</champ>
-	<champ name="Jungle 2nd" ver="3" difficulty="4" type="5" 
-			descr="Jungle championship. Part 2.">
+	<champ name="Jungle 2nd" ver="3" difficulty="4" type="5"
+descr="Jungle championship. Part 2.">
 		<t name="Jng13-Tropic"/>
 		<t name="Jng14-Muddy"/>
 		<t name="Jng15-Swamp"/>
@@ -427,8 +485,15 @@
 		<t name="Jng21-Paradise"/>
 		<t name="Jng22-Knotted"/>
 	</champ>
-	<champ name="Savanna" ver="1" difficulty="4" type="5" 
-			descr="Savanna championship. Part 1.">
+	<champ name="Jungle 3rd" ver="1" difficulty="4" type="5"
+descr="Jungle championship. Part 3.">
+		<t name="Jng23-FollowValley"/>
+		<t name="Jng24-NightJungle"/>
+		<t name="Jng25-CantorJungle"/>
+	</champ>
+
+	<champ name="Savanna" ver="1" difficulty="4" type="5"
+descr="Savanna championship. Part 1.">
 		<t name="Sav2-Frenzy"/>
 		<t name="Sav3-Loops"/>
 		<t name="Sav4-Hills"/>
@@ -439,15 +504,16 @@
 		<t name="Sav9-Short"/>
 		<t name="Sav10-PipeCurl"/>
 	</champ>
-	<champ name="Savanna 2nd" ver="1" difficulty="5" type="5" 
-			descr="Savanna championship. Part 2.">
+	<champ name="Savanna 2nd" ver="1" difficulty="5" type="5"
+descr="Savanna championship. Part 2.">
 		<t name="Sav12-Infinity"/>
 		<t name="Sav13-Hole"/>
 		<t name="Sav14-Refinery"/>
 		<t name="Sav15-Scorpio"/>
 	</champ>
-	<champ name="Winter" ver="2" difficulty="3" type="5" 
-			descr="Winter championship. Part 1.">
+
+	<champ name="Winter" ver="2" difficulty="3" type="5"
+descr="Winter championship. Part 1.">
 		<t name="Wnt1-Cross"/>
 		<t name="Wnt2-Wet"/>
 		<t name="Wnt4-IceSlip"/>
@@ -458,8 +524,8 @@
 		<t name="Wnt9-IceFrenzy"/>
 		<t name="Wnt10-Whirl"/>
 	</champ>
-	<champ name="Winter 2nd" ver="1" difficulty="5" type="5" 
-			descr="Winter championship. Part 2.">
+	<champ name="Winter 2nd" ver="1" difficulty="5" type="5"
+descr="Winter championship. Part 2.">
 		<t name="Wnt11-Glacier"/>
 		<t name="Wnt12-Peaks"/>
 		<t name="Wnt13-MtFog"/>
@@ -467,9 +533,11 @@
 		<t name="Wnt15-SkiJump"/>
 		<t name="Wnt16-IcyRiver"/>
 		<t name="Wnt17-FrozenGarden"/>
+		<t name="Wnt18-MountPen"/>
 	</champ>
-	<champ name="Forest" ver="1" difficulty="4" type="5" 
-			descr="Forest championship. Part 1.">
+
+	<champ name="Forest" ver="1" difficulty="4" type="5"
+descr="Forest championship. Part 1.">
 		<t name="For1-Slippery"/>
 		<t name="For3-Snail"/>
 		<t name="For4-OSquare"/>
@@ -479,8 +547,8 @@
 		<t name="For9-MadMntn"/>
 		<t name="For10-MntnTrail"/>
 	</champ>
-	<champ name="Forest 2nd" ver="1" difficulty="4" type="5" 
-			descr="Forest championship. Part 2.">
+	<champ name="Forest 2nd" ver="1" difficulty="4" type="5"
+descr="Forest championship. Part 2.">
 		<t name="For11-Dawn"/>
 		<t name="For12-HighPeaks"/>
 		<t name="For13-Castle"/>
@@ -489,8 +557,15 @@
 		<t name="For16-Clew"/>
 		<t name="For17-BadCamber"/>
 	</champ>
-	<champ name="Island" ver="1" difficulty="3" type="5" 
-			descr="Island championship. Part 1.">
+	<champ name="Forest 3rd" ver="1" difficulty="3" type="5"
+descr="Forest championship. Part 3.">
+		<t name="For18-MountCaro"/>
+		<t name="For19-CrolKarstMntn"/>
+		<t name="For20-LakoPine"/>
+	</champ>
+
+	<champ name="Island" ver="1" difficulty="3" type="5"
+descr="Island championship. Part 1.">
 		<t name="Isl2-Sandy"/>
 		<t name="Isl3-Islands"/>
 		<t name="Isl4-Sunset"/>
@@ -500,26 +575,30 @@
 		<t name="Isl8-Pharaoh"/>
 		<t name="Isl9-Web"/>
 	</champ>
-	<champ name="Island 2nd" ver="1" difficulty="3" type="5" 
-			descr="Island championship. Part 2.">
+	<champ name="Island 2nd" ver="1" difficulty="5" type="5"
+descr="Island championship. Part 2.">
 		<t name="Isl10-Treasure"/>
 		<t name="Isl11-StuntIslands"/>
 		<t name="Isl12-Beach"/>
 		<t name="Isl13-Beauty"/>
 		<t name="Isl14-Ocean"/>
+		<t name="Isl15-IslandVillages"/>
+		<t name="Isl16-SandyMountain"/>
+		<t name="Isl17-AdapterIslands"/>
 	</champ>
-	
-	
+
+
 <!--  Senery champs,  part 2  -->
-	<champ name="Mud" ver="2" difficulty="2" type="6" 
-			descr="Mud championship.">
+<!--========================================================================================================================-->
+<champ name="Mud" ver="2" difficulty="2" type="6"
+descr="Mud championship.">
 		<t name="Mud2-Bumps"/>
 		<t name="Mud3-Mudlake"/>
 		<t name="Mud4-Taiga"/>
 		<t name="Mud5-Mudflats"/>
 	</champ>
-	<champ name="Canyon" ver="1" difficulty="3" type="6" 
-			descr="Canyon championship.">
+	<champ name="Canyon" ver="1" difficulty="3" type="6"
+descr="Canyon championship.">
 		<t name="Can1-Hairpins"/>
 		<t name="Can2-CanyonRun"/>
 		<t name="Can3-Vast"/>
@@ -528,8 +607,8 @@
 		<t name="Can6-Abyss"/>
 		<t name="Can7-RedWavy"/>
 	</champ>
-	<champ name="Australia" ver="1" difficulty="4" type="6" 
-			descr="Australia championship.">
+	<champ name="Australia" ver="2" difficulty="4" type="6"
+descr="Australia championship.">
 		<t name="Aus1-StuntPark"/>
 		<t name="Aus2-PipeCoil"/>
 		<t name="Aus3-Canyon"/>
@@ -538,9 +617,12 @@
 		<t name="Aus6-Cannon"/>
 		<t name="Aus7-MiningCity"/>
 		<t name="Aus8-Cliff"/>
+		<t name="Aus9-RedDesert"/>
+		<t name="Aus10-PreythCity"/>
 	</champ>
-	<champ name="Greece" ver="1" difficulty="3" type="6" 
-			descr="Greece championship.">
+
+	<champ name="Greece" ver="1" difficulty="3" type="6"
+descr="Greece championship.">
 		<t name="Grc1-Long"/>
 		<t name="Grc2-Coast"/>
 		<t name="Grc3-Butterfly"/>
@@ -550,31 +632,46 @@
 		<t name="Grc7-Spider"/>
 		<t name="Grc8-SlopeCity"/>
 	</champ>
-	<champ name="Finland" ver="1" difficulty="1" type="6" 
-			descr="Finland championship.">
+	<champ name="Greece 2nd" ver="1" difficulty="4" type="6"
+descr="Greece championship, Part 2.">
+		<t name="Grc9-Oasis"/>
+		<t name="Grc10-BeachCity"/>
+		<t name="Grc11-PickCave"/>
+		<t name="Grc12-KapabaRivers"/>
+		<t name="Grc13-YeleyStunts"/>
+	</champ>
+
+	<champ name="Finland" ver="1" difficulty="1" type="6"
+descr="Finland championship.">
 		<t name="Fin1-Lakes"/>
 		<t name="Fin2-Serpent"/>
 	</champ>
-	<champ name="Autumn" ver="1" difficulty="6" type="6" 
-			descr="Autumn championship.">
+	<champ name="Autumn" ver="2" difficulty="3" type="6"
+descr="Autumn championship.">
 		<t name="Atm1-Autumn"/>
 		<t name="Atm2-RedOakPark"/>
 		<t name="Atm3-Orange"/>
 		<t name="Atm4-Scary"/>
 		<t name="Atm5-Twister"/>
 		<t name="Atm6-Sunset"/>
+	</champ>
+	<champ name="Autumn 2nd" ver="1" difficulty="6" type="6"
+descr="Autumn championship, Part 2.">
 		<t name="Atm7-Industrial"/>
 		<t name="Atm8-Ultima"/>
+		<t name="Atm9-SchwabAutumn"/>
 	</champ>
-	<champ name="Moss" ver="2" difficulty="5" type="6" 
-			descr="Moss championship.">
+
+	<champ name="Moss" ver="2" difficulty="5" type="6"
+descr="Moss championship.">
 		<t name="Mos2-Mouse"/>
 		<t name="Mos3-Air"/>
 		<t name="Mos4-MossyMntn"/>
 		<t name="Mos5-Factory"/>
+		<t name="Mos6-TaraMosses"/>
 	</champ>
-	<champ name="Volcanic" ver="2" difficulty="4" type="6" 
-			descr="Volcanic championship.">
+	<champ name="Volcanic" ver="3" difficulty="4" type="6"
+descr="Volcanic championship.">
 		<t name="Vlc1-Dark"/>
 		<t name="Vlc2-Volcanic"/>
 		<t name="Vlc4-Spikeland"/>
@@ -584,79 +681,309 @@
 		<t name="Vlc9-Craters"/>
 		<t name="Vlc10-MtSulphur"/>
 		<t name="Vlc12-LavaPools"/>
+		<t name="Vlc13-BorVolcano"/>
 	</champ>
-	<champ name="Unidentified" ver="1" difficulty="4" type="6" 
-			descr="Unidentified championship.">
+
+	<champ name="Unidentified" ver="2" difficulty="5" type="6"
+descr="Unidentified championship.">
 		<t name="Uni1-Magic"/>
 		<t name="Uni2-Swirl"/>
 		<t name="Uni3-Cloud"/>
 		<t name="Uni4-Pipeline"/>
 		<t name="Uni5-PipeJumps"/>
 		<t name="Uni6-Wild"/>
+		<t name="Uni7-GlassStairs"/>
 	</champ>
-	<champ name="Mars" ver="1" difficulty="4" type="6" 
-			descr="Mars championship.">
+	<champ name="Mars" ver="1" difficulty="4" type="6"
+descr="Mars championship.">
 		<t name="Mrs1-Mars"/>
 		<t name="Mrs2-Red"/>
 		<t name="Mrs3-Hot"/>
 		<t name="Mrs4-Platforms"/>
 	</champ>
-	<champ name="Toxic" ver="1" difficulty="3" type="6" 
-			descr="Toxic championship.">
+
+	<champ name="Toxic" ver="1" difficulty="3" type="6"
+descr="Toxic championship.">
 		<t name="Tox1-Radioactive"/>
 		<t name="Tox2-AcidLakes"/>
 	</champ>
-	<champ name="Crystals" ver="1" difficulty="3" type="6" 
-			descr="Crystals championship.">
+	<champ name="Crystals" ver="1" difficulty="3" type="6"
+descr="Crystals championship.">
 		<t name="Cry1-CrystalMoon"/>
 		<t name="Cry2-MagicFog"/>
 		<t name="Cry3-BlueHell"/>
 	</champ>
-	<champ name="Surreal" ver="1" difficulty="3" type="6" 
-			descr="Surreal championship.">
+	<champ name="Surreal" ver="2" difficulty="2" type="6"
+descr="Surreal championship.">
 		<t name="Sur1-Surreal"/>
-		<t name="Sur2-GreenStar"/>
 		<t name="Sur3-Chaotic"/>
 	</champ>
-	<champ name="Alien" ver="1" difficulty="5" type="6" 
-			descr="Alien championship.">
+	<champ name="SurrealSpace" ver="1" difficulty="5" type="6"
+descr="SurrealSpace championship.">
+		<t name="Sur2-GreenStar"/>
+		<t name="Sur4-BlueWinter"/>
+		<t name="Sur5-FreshBreeze"/>
+		<t name="Sur6-AkkaPadre"/>
+		<t name="Sur7-UaraHills"/>
+		<t name="Sur8-BloCorcle"/>
+	</champ>
+
+	<champ name="Alien" ver="1" difficulty="5" type="6"
+descr="Alien championship.">
 		<t name="Aln1-AlienBase"/>
 		<t name="Aln2-Freefall"/>
+		<t name="Aln3-MushroomBeach"/>
+		<t name="Aln4-EjeloOutpost"/>
+		<t name="Aln5-WhiteLemon"/>
 	</champ>
-	<champ name="Other" ver="1" difficulty="2" type="6" 
-			descr="Single sceneries, championship.">
-		<t name="Oth1-FogCity"/>
+	<champ name="Other" ver="2" difficulty="3" type="6"
+descr="Championship of single track sceneries.">
 		<t name="Stn1-StoneQuarry"/>
+		<t name="Oth1-FogCity"/>
+		<t name="Oth2-BlackWinter"/>
+	</champ>
+	<champ name="Other, Space" ver="1" difficulty="3" type="6"
+descr="Championship of single track sceneries in Space.">
 		<t name="Spc1-Minerals"/>
 		<t name="Spc2-SpaceMine"/>
 		<t name="Blk1-Darkness"/>
 	</champ>
-	
-	
 
+
+
+<!--========================================================================================================================-->
 <!--  Test  -->
 <!--========================================================================================================================-->
 
-	<champ name="Test-1" ver="1" difficulty="0" type="7" 
-			descr="Fastest 1 track, to test logic.">
-		<t name="TestC6-temp"/>
+	<champ name="Test-1" ver="1" difficulty="0" type="7"
+descr="Fastest 1 track, to test logic.">
+		<t name="TestC6-Temp"/>
 	</champ>
-	<champ name="Test-3" ver="1" difficulty="0" type="7" 
-			descr="Fastest 3 tracks, to test logic.">
-		<t name="TestC6-temp" reversed="0"/>
-		<t name="TestC4-ow"/>
-		<t name="TestC1-circle"/>
+	<champ name="Test-3" ver="1" difficulty="0" type="7"
+descr="Fastest 3 tracks, to test logic.">
+		<t name="TestC6-Temp" reversed="0"/>
+		<t name="TestC4-Ow"/>
+		<t name="TestC1-Circle"/>
 	</champ>
-	<champ name="Test tracks" ver="1" difficulty="1" type="7" 
-			descr="Really short and circular tracks. 2 Laps on each.">
-		<t name="TestC1-circle"		laps="2"/>
-		<t name="TestC2-pipe-half"	laps="2"/>
-		<t name="TestC3-pipe-big"	laps="2"/>
-		<t name="TestC4-ow"			laps="2"/>
-		<t name="TestC5-egg"		laps="2"/>
-		<t name="TestC6-temp"		laps="2"/>
-		<t name="TestC7-oc"			laps="2"/>
-		<t name="TestC8-align"		laps="2"/>
+	<champ name="Test tracks" ver="1" difficulty="1" type="7"
+descr="Really short and circular tracks. 2 Laps on each.">
+		<t name="TestC1-Circle"		laps="2"/>
+		<t name="TestC2-PipeHalf"	laps="2"/>
+		<t name="TestC3-PipeBig"	laps="2"/>
+		<t name="TestC4-Ow"			laps="2"/>
+		<t name="TestC5-Egg"		laps="2"/>
+		<t name="TestC6-Temp"		laps="2"/>
+		<t name="TestC7-Oc"			laps="2"/>
+		<t name="TestC8-Align"		laps="2"/>
+	</champ>
+
+
+<!--  ALL  -->
+<!--========================================================================================================================-->
+	<champ name="ALL Rally tracks" ver="1" difficulty="4" type="3"
+descr="Absolutely all rally tracks from game. Some easy pipes might appear.">
+		<t name="Jng1-Curly"/>
+		<t name="Des1-Dunes"/>
+		<t name="Sav2-Frenzy"/>
+		<t name="Des2-Mntn"/>
+		<t name="Jng3-Rocky"/>
+		<t name="Sav4-Hills"/>
+		<t name="Des4-SBridge"/>
+		<t name="Wnt1-Cross"/>
+		<t name="Wnt2-Wet"/>
+		<t name="For1-Slippery"/>
+		<t name="For3-Snail"/>
+		<t name="For4-OSquare"/>
+		<t name="For6-Banked"/>
+		<t name="Sav8-SlowFrenzy"/>
+		<t name="Wnt4-IceSlip"/>
+		<t name="Wnt5-Circles"/>
+		<t name="Sav9-Short"/>
+		<t name="Jng7-Hilly"/>
+		<t name="Wnt6-SnowyEights"/>
+		<t name="For7-Blur"/>
+		<t name="For8-Stain"/>
+		<t name="Jng8-Round"/>
+		<t name="Wnt7-LJs-Mntn"/>
+		<t name="Jng10-Spiral"/>
+		<t name="Isl2-Sandy"/>
+		<t name="Wnt8-PipeCross"/>
+		<t name="Mud2-Bumps"/>
+		<t name="Grc1-Long"/>
+		<t name="For10-MntnTrail"/>
+		<t name="Isl3-Islands"/>
+		<t name="Jng11-Temple"/>
+		<t name="Grc2-Coast"/>
+		<t name="Aus3-Canyon"/>
+		<t name="Jng12-Fog"/>
+		<t name="Jng13-Tropic"/>
+		<t name="For11-Dawn"/>
+		<t name="Isl4-Sunset"/>
+		<t name="Vlc1-Dark"/>
+		<t name="Isl5-Shore"/>
+		<t name="Uni1-Magic"/>
+		<t name="Jng14-Muddy"/>
+		<t name="Wnt9-IceFrenzy"/>
+		<t name="Jng15-Swamp"/>
+		<t name="For12-HighPeaks"/>
+		<t name="Des10-MudBath"/>
+		<t name="Grc3-Butterfly"/>
+		<t name="Isl6-Flooded"/>
+		<t name="Jng16-MudMad"/>
+		<t name="Can1-Hairpins"/>
+		<t name="Wnt10-Whirl"/>
+		<t name="For13-Castle"/>
+		<t name="Isl7-Moses"/>
+		<t name="Jng17-JungleCanyons"/>
+		<t name="Isl8-Pharaoh"/>
+		<t name="Can2-CanyonRun"/>
+		<t name="Vlc2-Volcanic"/>
+		<t name="Jng18-Tiny"/>
+		<t name="Grc4-River"/>
+		<t name="For14-Maze"/>
+		<t name="Can3-Vast"/>
+		<t name="For15-ForestTrip"/>
+		<t name="Des11-PersianCity"/>
+		<t name="Aus5-TopTwist"/>
+		<t name="Uni3-Cloud"/>
+		<t name="Atm5-Twister"/>
+		<t name="Vlc4-Spikeland"/>
+		<t name="Vlc5-Sad"/>
+		<t name="Grc5-Climb"/>
+		<t name="Isl10-Treasure"/>
+		<t name="Des12-Sandstorm"/>
+		<t name="Atm1-Autumn"/>
+		<t name="Atm2-RedOakPark"/>
+		<t name="Atm3-Orange"/>
+		<t name="Mos2-Mouse"/>
+		<t name="Atm4-Scary"/>
+		<t name="Aus6-Cannon"/>
+		<t name="Wnt11-Glacier"/>
+		<t name="Jng20-JungleMaze"/>
+		<t name="Fin1-Lakes"/>
+		<t name="Wnt12-Peaks"/>
+		<t name="Atm6-Sunset"/>
+		<t name="Wnt13-MtFog"/>
+		<t name="Mos3-Air"/>
+		<t name="Isl12-Beach"/>
+		<t name="Can4-Sway"/>
+		<t name="Jng21-Paradise"/>
+		<t name="Isl13-Beauty"/>
+		<t name="Mos4-MossyMntn"/>
+		<t name="Des15-CityWall"/>
+		<t name="Uni6-Wild"/>
+		<t name="Mrs3-Hot"/>
+		<t name="Vlc8-Uncertain"/>
+		<t name="For17-BadCamber"/>
+		<t name="Wnt15-SkiJump"/>
+		<t name="Fin2-Serpent"/>
+		<t name="Vlc9-Craters"/>
+		<t name="Vlc10-MtSulphur"/>
+		<t name="Cry1-CrystalMoon"/>
+		<t name="Des17-NileCity"/>
+		<t name="Grc8-SlopeCity"/>
+		<t name="Aus7-MiningCity"/>
+		<t name="Oth1-FogCity"/>
+		<t name="Tox2-AcidLakes"/>
+		<t name="Stn1-StoneQuarry"/>
+		<t name="Spc1-Minerals"/>
+		<t name="Mud4-Taiga"/>
+		<t name="Wnt16-IcyRiver"/>
+		<t name="Wnt17-FrozenGarden"/>
+		<t name="Aus8-Cliff"/>
+		<t name="Sur3-Chaotic"/>
+		<t name="Grc10-BeachCity"/>
+		<t name="Isl15-IslandVillages"/>
+		<t name="Jng23-FollowValley"/>
+		<t name="Isl16-SandyMountain"/>
+		<t name="For18-MountCaro"/>
+		<t name="Wnt18-MountPen"/>
+		<t name="Jng25-CantorJungle"/>
+		<t name="Vlc13-BorVolcano"/>
+		<t name="For19-CrolKarstMntn"/>
+		<t name="Sur7-UaraHills"/>
+		<t name="For20-LakoPine"/>
+		<t name="Grc12-KapabaRivers"/>
+		<t name="Aln4-EjeloOutpost"/>
+	</champ>
+
+	<champ name="ALL Stunt tracks" ver="1" difficulty="6" type="4"
+descr="Complete set of all stunt tracks from game.">
+		<t name="Sav3-Loops"/>
+		<t name="Des3-Passage"/>
+		<t name="Jng5-Pipes"/>
+		<t name="Des5-LowJumps"/>
+		<t name="Des6-HighJumps"/>
+		<t name="Sav5-LoopBasic"/>
+		<t name="Des7-CrossJumps"/>
+		<t name="Des8-Technical"/>
+		<t name="Sav6-PipeCrazy"/>
+		<t name="Sav7-HighMadness"/>
+		<t name="Jng6-Fun"/>
+		<t name="Sav10-PipeCurl"/>
+		<t name="Sav12-Infinity"/>
+		<t name="For9-MadMntn"/>
+		<t name="Aus1-StuntPark"/>
+		<t name="Aus2-PipeCoil"/>
+		<t name="Sav13-Hole"/>
+		<t name="Aus4-Snake"/>
+		<t name="Uni2-Swirl"/>
+		<t name="Jng19-ShortFun"/>
+		<t name="Isl9-Web"/>
+		<t name="Sav14-Refinery"/>
+		<t name="For16-Clew"/>
+		<t name="Isl11-StuntIslands"/>
+		<t name="Uni4-Pipeline"/>
+		<t name="Mrs1-Mars"/>
+		<t name="Sav15-Scorpio"/>
+		<t name="Mrs2-Red"/>
+		<t name="Uni5-PipeJumps"/>
+		<t name="Mud3-Mudlake"/>
+		<t name="Vlc6-Crematoria"/>
+		<t name="Des13-Winding"/>
+		<t name="Des14-JumpCrazy"/>
+		<t name="Can5-Obstacles"/>
+		<t name="Wnt14-DangerRoad"/>
+		<t name="Tox1-Radioactive"/>
+		<t name="Jng22-Knotted"/>
+		<t name="Grc6-Halfpipes"/>
+		<t name="Des16-AsphaltJumps"/>
+		<t name="Can6-Abyss"/>
+		<t name="Grc7-Spider"/>
+		<t name="Mos5-Factory"/>
+		<t name="Sur1-Surreal"/>
+		<t name="Cry2-MagicFog"/>
+		<t name="Atm7-Industrial"/>
+		<t name="Des18-Shuttle"/>
+		<t name="Atm8-Ultima"/>
+		<t name="Aln1-AlienBase"/>
+		<t name="Blk1-Darkness"/>
+		<t name="Aln2-Freefall"/>
+		<t name="Can7-RedWavy"/>
+		<t name="Vlc12-LavaPools"/>
+		<t name="Mrs4-Platforms"/>
+		<t name="Isl14-Ocean"/>
+		<t name="Sur2-GreenStar"/>
+		<t name="Spc2-SpaceMine"/>
+		<t name="Mud5-Mudflats"/>
+		<t name="Cry3-BlueHell"/>
+		<t name="Grc9-Oasis"/>
+		<t name="Oth2-BlackWinter"/>
+		<t name="Aus9-RedDesert"/>
+		<t name="Sur4-BlueWinter"/>
+		<t name="Sur5-FreshBreeze"/>
+		<t name="Jng24-NightJungle"/>
+		<t name="Isl17-AdapterIslands"/>
+		<t name="Grc11-PickCave"/>
+		<t name="Uni7-GlassStairs"/>
+		<t name="Aln3-MushroomBeach"/>
+		<t name="Atm9-SchwabAutumn"/>
+		<t name="Sur6-AkkaPadre"/>
+		<t name="Aus10-PreythCity"/>
+		<t name="Mos6-TaraMosses"/>
+		<t name="Grc13-YeleyStunts"/>
+		<t name="Sur8-BloCorcle"/>
+		<t name="Aln5-WhiteLemon"/>
 	</champ>
 
 </championships>

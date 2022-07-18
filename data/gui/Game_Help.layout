@@ -192,7 +192,7 @@
 					<Property key="WordWrap" value="true"/>
 					<Property key="VisibleHScroll" value="false"/>
 					<Property key="VisibleVScroll" value="true"/>
-					<Property key="MaxTextLength" value="80000"/>
+					<Property key="MaxTextLength" value="120000"/>
 					<Property key="TextColour" value="0.85 0.85 0.85"/>
 					<Property key="Colour" value="0.65 0.65 0.65"/>
 				</Widget>
@@ -235,7 +235,7 @@
 				</Widget>
 				<Widget type="ImageBox" skin="ImageBox" position="4 470 256 128">
 					<Property key="ImageTexture" value="ogre-logo.png"/>
-					<UserString key="tip" value="www.ogre3d.org"/>
+					<UserString key="tip" value="ogre3d.org"/>
 					<Property key="Alpha" value="0.5"/>
 				</Widget>
 

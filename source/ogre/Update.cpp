@@ -296,7 +296,7 @@ bool App::frameStart(Real time)
 		
 		//  keys up/dn, for lists
 		static float dirU = 0.f,dirD = 0.f;
-		if (isFocGui && pSet->iMenu == MN_Single && !isTweak())
+		if (isFocGui && pSet->iMenu >= MN_Single && pSet->iMenu <= MN_Chall && !isTweak())
 		{
 			if (isKey(SDL_SCANCODE_UP)  ||isKey(SDL_SCANCODE_KP_8))	dirD += time;  else
 			if (isKey(SDL_SCANCODE_DOWN)||isKey(SDL_SCANCODE_KP_2))	dirU += time;  else
@@ -416,7 +416,7 @@ bool App::frameStart(Real time)
 						r->UpdLodVis(pSet->road_dist);
 					
 					//  trail upd lods
-					if (scn->trail && pSet->trail_show)
+					if (scn->trail && pSet->trail_show && !bHideHudTrail)
 						scn->trail->UpdLodVis();
 				}
 			}

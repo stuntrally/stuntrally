@@ -96,8 +96,8 @@ public:
 		std::string txt;
 		float beg, end;  // time
 		int hintImg;
-		Subtitle(float begingTime, float endTime, int imgId, std::string text)
-			:txt(text), beg(begingTime), end(endTime), hintImg(imgId)
+		Subtitle(float beginTime, float endTime, int imgId, std::string text)
+			:txt(text), beg(beginTime), end(endTime), hintImg(imgId)
 		{	}
 	};
 	std::list<Subtitle> rplSubtitles;
@@ -429,7 +429,7 @@ public:
 	Btn btStTut =0, btStChamp =0, btStChall =0;
 	Img imgTut =0, imgChamp =0, imgChall =0;
 	//  tabs
-	Tab /*tabTut =0,*/ tabChamp =0, tabChall =0;
+	Tab tabChamp =0, tabChall =0;
 
 	//void tabTutType(Tab, size_t);
 	void tabChampType(Tab, size_t), tabChallType(Tab, size_t);

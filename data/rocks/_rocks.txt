@@ -25,7 +25,7 @@ Artist:		OliverMH
 License:    CC-BY
 Date:		05/12/2013
 
-Low Poly Rock Formation #2
+Low Poly Rock Formation 2
 Url:		https://www.blendswap.com/blend/11147
 Artist:		OliverMH
 License:    CC-0

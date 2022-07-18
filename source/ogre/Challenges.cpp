@@ -39,7 +39,7 @@ void CGui::tabChallType(Tab wp, size_t id)
 	ChallsListUpdate();
 }
 
-#define MAX_CHL_TYP 9
+#define MAX_CHL_TYP 10
 
 
 ///  Challenges list  fill
@@ -84,8 +84,8 @@ void CGui::ChallsListUpdate()
 void CGui::fillChallsList(std::vector<int> vIds)
 {
 	const char clrCh[MAX_CHL_TYP][8] = {
-	//  0 Rally  1 Scenery  2 Endurance  3 Chase  4 Stunts  5 Extreme  6 Special  7 Vehicle  8 Test
-		"#A0D0FF","#80FF80","#C0FF60", "#FFC060","#FF8080","#C0A0E0",  "#60B0FF","#D0A0FF", "#909090" };
+	//  0 Rally  1 Scenery  2 Endurance  3 Chase  4 Stunts  5 Extreme  6 Space    7 Special  8 Vehicle  9 Test
+		"#A0D0FF","#80FF80","#C0FF60", "#FFC060","#FF8080","#C0A0E0",  "#7070F0", "#60B0FF", "#E0A0C0", "#909090" };
 
 	liChalls->removeAllItems();
 	const int p = pSet->gui.champ_rev ? 1 : 0;
@@ -100,7 +100,7 @@ void CGui::fillChallsList(std::vector<int> vIds)
 		//String cars = data->carsXml.colormap[chl.ci->type];  if (cars.length() != 7)  clr = "#C0D0E0";
 		
 		liChalls->addItem(""/*clr+ toStr(n/10)+toStr(n%10)*/, i+1);  int l = liChalls->getItemCount()-1;
-		liChalls->setSubItemNameAt(1,l, clr+ chl.name.c_str());
+		liChalls->setSubItemNameAt(1,l, clr+ chl.nameGui.c_str());
 		liChalls->setSubItemNameAt(2,l, gcom->clrsDiff[chl.diff]+ TR("#{Diff"+toStr(chl.diff)+"}"));
 		liChalls->setSubItemNameAt(3,l, StrChallCars(chl));
 		
@@ -410,7 +410,7 @@ void CGui::ChallengeAdvance(float timeCur/*total*/)
 
 	LogO("|] Chall finished");
 	String s = "\n\n"+
-		TR("#C0D0F0#{Challenge}") + ": #C0D0FF" + ch.name +"\n";
+		TR("#C0D0F0#{Challenge}") + ": #C0D0FF" + ch.nameGui +"\n";
 	#define sPass(pa)  (pa ? TR("  #00FF00#{Passed}") : TR("  #FF8000#{DidntPass}"))
 
 
@@ -529,7 +529,7 @@ void CGui::ChallFillStageInfo(bool finished)
 	bool last = pc.curTrack+1 == ch.trks.size();
 
 	String s =
-		"#80FFE0"+ TR("#{Challenge}") + ":  " + ch.name + "\n\n" +
+		"#80FFE0"+ TR("#{Challenge}") + ":  " + ch.nameGui + "\n\n" +
 		"#80FFC0"+ TR("#{Stage}") + ":  " + toStr(pc.curTrack+1) + " / " + toStr(ch.trks.size()) + "\n" +
 		"#80FF80"+ TR("#{Track}") + ":  " + trk.name + "\n\n";
 

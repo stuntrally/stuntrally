@@ -24,7 +24,8 @@ public:
 class Chall
 {
 public:
-	std::string name = "none", descr = "none";  // description text
+	//  clean name,  description text,  nameGui with colors for Gui only
+	std::string name = "none", descr = "none", nameGui = "none";
 	int diff = 1;  // difficulty
 	int ver = 1;   // version, if changed resets progress
 

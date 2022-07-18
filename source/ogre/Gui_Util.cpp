@@ -110,7 +110,7 @@ void CGui::AddCarL(string name, const CarInfo* ci)
 	li->setSubItemNameAt(5,l, gcom->getClrLong(ci->width *2.f)+ " "+toStr(ci->width));
 	li->setSubItemNameAt(6,l, gcom->getClrSum(ci->wheels *2.f)+ " "+toStr(ci->wheels));
 
-	float drv = GetDrivability(name, gcom->sListTrack, gcom->bListTrackU);
+	float drv = fabs(GetDrivability(name, gcom->sListTrack, gcom->bListTrackU));
 	float drvp = (1.f - drv) * 100.f;  int fd = 1 + drv * 6.f;
 	li->setSubItemNameAt(7,l, gcom->getClrDiff(fd)+" "+ fToStr(drvp, 0,3));
 	//li->setSubItemNameAt(7,l, gcom->getClrRating(min(4, max(0,1+(ci->year-1990)/10))) + toStr(ci->year));
@@ -278,7 +278,7 @@ void CGui::changeCar()
 //  Drivability  ------------------------
 void CGui::UpdDrivability(std::string trk, bool user)
 {
-	float drv = GetDrivability(sListCar, trk, user);
+	float drv = fabs(GetDrivability(sListCar, trk, user));
 	float drvp = (1.f - drv) * 100.f;  int fd = std::min(7.f, 1.f + drv * 8.f);
 	auto sdrv = drv > 0.85f ? TR("#{Undrivable}") : TR("#{Diff"+toStr(fd)+"}");
 	// txCarTrkdrv->setCaption(drv < 0.f ? "" : gcom->getClrDiff(fd)+ fToStr(drv, 1,3) +"   " +sdrv);
@@ -545,6 +545,7 @@ void CGui::btnNewGameStart(WP wp)
 
 void CGui::toggleGui(bool toggle)
 {
+	Ogre::Timer ti;
 	if (toggle)
 		app->isFocGui = !app->isFocGui;
 	const bool gui = app->isFocGui;
@@ -586,11 +587,8 @@ void CGui::toggleGui(bool toggle)
 	app->mWndGame->setVisible(vis);
 	if (vis)
 	{	const static float clrs[4][3] = {
-			{0.9,0.9,0.6},  // single
-			{1.0,0.6,0.3},  // tutor
-			{0.6,1.0,0.6},  // champ
-			{0.6,0.6,1.0},  // chall
-		};
+			// single      tutor          champ          chall
+			{0.9,0.9,0.6}, {1.0,0.6,0.3}, {0.6,1.0,0.6}, {0.6,0.6,1.0} };
 		const int c = tutor ? 1 : champ ? 2 : chall ? 3 : 0;
 		app->mWndGame->setColour(Colour(clrs[c][0], clrs[c][1], clrs[c][2]));
 		app->mWndGame->setCaption(chAny ? sCh : TR("#{SingleRace}"));
@@ -626,6 +624,7 @@ void CGui::toggleGui(bool toggle)
 	{	first = false;
 		gcom->GuiCenterMouse();
 	}
+	LogO(String(":::: Time gui upd: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
 
 
@@ -722,7 +721,7 @@ void CGui::LNext(int rel)
 	if (app->mWndGame->getVisible())
 		switch (app->mWndTabsGame->getIndexSelected())
 		{	case TAB_Track:  gcom->listTrackChng(gcom->trkList,  LNext(gcom->trkList, rel, 11));  return;
-			case TAB_Car:	 listCarChng(carList,    LNext(carList, rel, 5));  return;
+			case TAB_Car:	 listCarChng(carList, LNext(carList, rel, 5));  return;
 			case TAB_Champs:
 				if (isChallGui())
 				      listChallChng(liChalls, LNext(liChalls, rel, 8));
@@ -851,7 +850,7 @@ void CGui::FillHelpTxt()
 
 	ed = fEd("Credits");
 	if (ed)
-	{	string data = PATHMANAGER::Data()+"/";
+	{	string dir = PATHMANAGER::Data()+"/";
 		String text = "", sep = "-------------------------------------------------------";
 
 		auto Sep = [&](String title)
@@ -860,7 +859,7 @@ void CGui::FillHelpTxt()
 		};
 		auto ReadTxt = [&](string path)
 		{
-			path = data + path;
+			path = dir + path;
 			text += "\n#F0F0C0====  File: " + path + "#D0D0D0\n\n";
 			std::ifstream fi(path.c_str());
 			if (fi.good())
@@ -873,15 +872,15 @@ void CGui::FillHelpTxt()
 		auto ReadTxts = [&](string path)
 		{
 			strlist lo;
-			PATHMANAGER::DirList(data + path, lo, "txt");
+			PATHMANAGER::DirList(dir + path, lo, "txt");
 			
 			Sep(path);
 			for (auto p:lo)
 				ReadTxt(path +"/"+ p);
 		};
 		Sep("Vehicles");
-		for (auto c:liCar)
-			ReadTxt("cars/" + c.name + "/about.txt");
+		for (auto c:data->cars->cars)
+			ReadTxt("cars/" + c.id + "/about.txt");
 
 		//  gui- hud-  particles-
 		ReadTxts("objects");  ReadTxts("objects2");  ReadTxts("objectsC");  ReadTxts("objects0");

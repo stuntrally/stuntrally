@@ -27,7 +27,7 @@
 							<Property key="ImageTexture" value="gui_icons.png"/>
 						</Widget>
 						<Widget type="TextBox" skin="TextBox" position="164 56 192 24">
-							<Property key="Caption" value="#{Resolution}"/>
+							<Property key="Caption" value="#{Resolution} **"/>
 							<Property key="Colour" value="0 0 0"/>
 							<Property key="TextColour" value="0.8 0.92 1"/>
 							<Property key="FontName" value="font.big"/>

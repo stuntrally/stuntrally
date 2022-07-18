@@ -4,6 +4,7 @@
 #include "ChallengesXml.h"
 #include "tinyxml.h"
 #include "tinyxml2.h"
+#include <regex>
 using namespace Ogre;
 using namespace tinyxml2;
 using namespace std;
@@ -29,7 +30,12 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks, bool check)
 	while (eCh)
 	{
 		Chall c;  // defaults in ctor
-		a = eCh->Attribute("name");			if (a)  c.name = std::string(a);
+		a = eCh->Attribute("name");
+		if (a)
+		{	c.nameGui = std::string(a);
+			regex re("#[0-9a-fA-F]{6}");  // remove colors from name
+			c.name = regex_replace(c.nameGui, re, "");
+		}
 		a = eCh->Attribute("descr");		if (a)  c.descr = std::string(a);
 		a = eCh->Attribute("ver");			if (a)  c.ver = s2i(a);
 		a = eCh->Attribute("difficulty");	if (a)  c.diff = s2i(a);

@@ -1576,10 +1576,13 @@
 						<Property key="Caption" value="#FFC060#{Chall_Chase}"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 578 8">
+						<Property key="Caption" value="#A08060#{Chall_Extreme}"/>
+					</Widget>
+					<Widget type="TabItem" skin="" position="2 24 578 8">
 						<Property key="Caption" value="#FF8080#{Chall_Stunts}"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 578 8">
-						<Property key="Caption" value="#D0C0F0#{Chall_Extreme}"/>
+						<Property key="Caption" value="#7070F0#{SC_Space}"/>
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 578 8">
 						<Property key="Caption" value="#60B0FF#{Chall_Special}"/>

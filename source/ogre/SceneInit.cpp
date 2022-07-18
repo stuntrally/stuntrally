@@ -249,9 +249,9 @@ void App::LoadCleanUp()  // 1 first
 	bHideHudBeam = rplRd;
 	bHideHudArr = rplRd || morePlr;
 	bool denyPace = gui->pChall && !gui->pChall->pacenotes;
-	bHideHudPace = morePlr || denyPace;
+	bHideHudPace = morePlr || denyPace;  // todo: ? pace, trail for splitscreen
 	bool denyTrail = gui->pChall && !gui->pChall->trail;
-	bHideHudTrail = denyTrail;
+	bHideHudTrail = morePlr || denyTrail;
 
 
 	// rem old track
@@ -1015,6 +1015,6 @@ void App::CreateTrail(Camera* cam)
 	tr->Rebuild(true);
 	tr->RebuildRoadInt();
 	scn->trail = tr;
-	if (!pSet->trail_show || bHideHudTrail)
-		tr->SetVisTrail(false);
+	bool vis = !pSet->trail_show || bHideHudTrail;
+	tr->SetVisTrail(!vis);
 }
