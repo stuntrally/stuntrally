@@ -178,39 +178,14 @@ String CGui::StrChallCars(const Chall& ch)
 	return str;
 }
 
-//  test if car is in challenge allowed cars or types
+//  chall allows car
 bool CGui::IsChallCar(String name)
 {
 	if (!liChalls || liChalls->getIndexSelected()==ITEM_NONE)  return true;
 
 	int chId = *liChalls->getItemDataAt<int>(liChalls->getIndexSelected())-1;
-	const Chall& ch = data->chall->all[chId];
 
-	int i,s;
-	if (!ch.cars.empty())
-		for (auto& c : ch.cars)  // allow specified
-			if (c == name)  return true;
-	
-	if (!ch.carsDeny.empty())
-		for (auto& c : ch.carsDeny)  // deny specified
-			if (c == name)  return false;
-
-	if (!ch.carTypes.empty())
-	{	s = ch.carTypes.size();
-
-		int id = data->cars->carmap[name]-1;
-		if (id >= 0)
-		{
-			const auto& ci = data->cars->cars[id];
-			String type = ci.type;
-
-			if (ci.wheels < ch.whMin || ci.wheels > ch.whMax)
-				return false;  // deny type if wheels not allowed
-
-			for (i=0; i < s; ++i)
-				if (type == ch.carTypes[i])  return true;
-	}	}
-	return false;
+	return data->IsChallCar(&data->chall->all[chId], name);
 }
 
 

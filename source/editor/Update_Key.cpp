@@ -350,7 +350,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				return true;
 			}	break;
 
-		//  roads, rivers
+		//  road
 		case key(R):  if (bEdit()){  SetEdMode(ED_Road);	UpdEditWnds();  }	break;
 		case key(B):  if (road)  {  road->UpdPointsH();  road->Rebuild(true);  }  break;
 		case key(T):  if (edMode == ED_Road && mWndRoadStats)

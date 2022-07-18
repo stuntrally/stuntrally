@@ -133,13 +133,11 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks, bool check)
 	if (trks)
 	{	std::map<string, int> trkUse;
 	
-		for (int c=0; c < all.size(); ++c)
+		for (Chall& l : all)
 		{
-			Chall& l = all[c];
 			float allTime = 0.f;
-			for (int i=0; i < l.trks.size(); ++i)
+			for (const ChallTrack& trk : l.trks)
 			{
-				const ChallTrack& trk = l.trks[i];
 				//if (check)
 				if (!trks->trkmap[trk.name])
 					LogO("!!  Chall: "+l.name+", not found track: "+trk.name);
@@ -153,11 +151,10 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks, bool check)
 		if (check)
 		{
 			std::stringstream ss;  int n=0,i;
-			for (i=0; i < trks->trks.size(); ++i)
+			for (const TrackInfo& ti : trks->trks)
 			{
-				const TrackInfo& ti = trks->trks[i];
 				const string& s = ti.name;
-				if (!ti.test && !ti.testC && s.substr(0,3)!="Vdr")
+				if (!ti.test && !ti.testC)
 				if (!trkUse[s])
 				{	ss << "\t\t\t<t name=\"" << s << "\"/>\n";  ++n;  }
 			}

@@ -1110,6 +1110,7 @@
 	<Tag name="Road">Road</Tag>
 	<Tag name="Pipe">Pipe</Tag>
 	<Tag name="Wall">Wall</Tag>
+	<Tag name="River">River</Tag>
 	<Tag name="Hidden">Hidden</Tag>
 	<Tag name="Column">Column</Tag>
 	<Tag name="Advanced">Advanced</Tag>
@@ -1488,10 +1489,6 @@
 	<Tag name="InputParticlesMode">A - edit Particles</Tag>
 	<Tag name="InputParticlesDensity">[,] - change density (emission rate)</Tag>
 	<Tag name="InputParticlesStatic">Enter - toggle static</Tag>
-
-
-	<!--  Rivers  part of roads  -->
-	<Tag name="Rivers">Rivers</Tag>
 
 
 <!--  ............................................................................................................................  -->

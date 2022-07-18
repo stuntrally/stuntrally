@@ -99,7 +99,7 @@ bool ChampsXml::LoadXml(std::string file, TracksXml* trks, bool check)
 			{
 				const TrackInfo& ti = trks->trks[i];
 				const string& s = ti.name;
-				if (!ti.test && !ti.testC && s.substr(0,3)!="Vdr")
+				if (!ti.test && !ti.testC)
 				{	if (!trkUse[s])
 					{	ss << "\t\t<t name=\"" << s << "\"/>\n";  ++n;  }
 					if (!trkU[s])

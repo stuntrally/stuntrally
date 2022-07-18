@@ -63,7 +63,7 @@ void App::KeyTxtRoad(Real q)
 		!(!sp.onTer || !road->getPoint(road->getNext(ic)).onTer);
 
   	//  type
-	const static String rdt[RD_ALL] = {"#{Road}", "#{Rivers}", "#{Wall}", "#{RacingLine}"};
+	const static String rdt[RD_ALL] = {"#{Road}", "#{River}", "#{Wall}", "#{RacingLine}"};
 	const static Colour clr[RD_ALL] = {
 		Colour(1.0,0.8,0.5), Colour(0.5,0.8,1.0), Colour(0.9,0.95,1.0), Colour(0.5,1.0,0.0),};
 	int t = road->type;
@@ -87,7 +87,6 @@ void App::KeyTxtRoad(Real q)
 	bool vis = !ter && !sp.isnt();
 	rdTxt[7]->setVisible(vis);	rdVal[7]->setVisible(vis);  rdKey[7]->setVisible(vis);
 	rdVal[7]->setCaption(ter ? "" : toStr(sp.cols));  // column
-	// TR("#{Rivers}")
 
 	rdTxt[12]->setVisible(vis);  rdKey[12]->setVisible(vis);  
 	rdTxt[12]->setCaption(toStr(sp.idWall)+" "+road->getWallMtrStr(ic));  // wall mtr

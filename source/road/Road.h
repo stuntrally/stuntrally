@@ -59,7 +59,7 @@ enum eIns
 {	INS_Begin, INS_Cur, INS_CurPre, INS_End  };
 
 enum RoadType
-{	RD_Road, RD_River, RD_Trail, RD_Decor, RD_ALL  };
+{	RD_Road, RD_River, RD_Decor, RD_Trail, RD_ALL  };
 
 
 class SplineRoad : public SplineMarkEd

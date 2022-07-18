@@ -110,7 +110,7 @@ void CGui::AddCarL(string name, const CarInfo* ci)
 	li->setSubItemNameAt(5,l, gcom->getClrLong(ci->width *2.f)+ " "+toStr(ci->width));
 	li->setSubItemNameAt(6,l, gcom->getClrSum(ci->wheels *2.f)+ " "+toStr(ci->wheels));
 
-	float drv = max(0.f, GetDrivability(name, gcom->sListTrack, gcom->bListTrackU));
+	float drv = max(0.f, data->GetDrivability(name, gcom->sListTrack, gcom->bListTrackU));
 	float drvp = (1.f - drv) * 100.f;  int fd = 1 + drv * 7.f;
 	li->setSubItemNameAt(7,l, gcom->getClrDiff(fd)+" "+ fToStr(drvp, 0,3));
 	//li->setSubItemNameAt(7,l, gcom->getClrRating(min(4, max(0,1+(ci->year-1990)/10))) + toStr(ci->year));
@@ -278,7 +278,7 @@ void CGui::changeCar()
 //  Drivability  ------------------------
 void CGui::UpdDrivability(std::string trk, bool user)
 {
-	float drv = max(0.f, GetDrivability(sListCar, trk, user));
+	float drv = max(0.f, data->GetDrivability(sListCar, trk, user));
 	float drvp = (1.f - drv) * 100.f;  int fd = std::min(7.f, 1.f + drv * 7.f);
 	auto sdrv = drv > 0.85f ? TR("#{Undrivable}") : TR("#{Diff"+toStr(fd)+"}");
 	// txCarTrkdrv->setCaption(drv < 0.f ? "" : gcom->getClrDiff(fd)+ fToStr(drv, 1,3) +"   " +sdrv);
@@ -287,36 +287,6 @@ void CGui::UpdDrivability(std::string trk, bool user)
 	{	txTrkDrivab[i]->setCaption(drv < 0.f ? "" : gcom->getClrDiff(fd)+ fToStr(drvp, 0,3) +"%   " +sdrv);
 		imgTrkDrivab[i]->setColour(Colour(1.f, 1.f - drv*drv*0.8f, 1.f - drv*0.7f, drv));
 }	}
-
-//  get drivability, vehicle on track fitness
-float CGui::GetDrivability(std::string car, std::string trk, bool track_user)
-{
-	if (track_user)  return -1.f;  // unknown
-
-	int cid = data->cars->carmap[car];
-	if (cid == 0)  return -1.f;
-	const CarInfo& ci = data->cars->cars[cid-1];
-
-	int tid = data->tracks->trkmap[trk];
-	if (tid == 0)  return -1.f;
-	const TrackInfo& ti = data->tracks->trks[tid-1];
-
-	float undrv = 0.f;  // 0 drivable .. 1 undrivable
-	int w = std::max(0, ci.width - 3);
-	undrv += 0.8f * w/3.f * ti.narrow /3.f;
-	undrv += 0.2f * w/3.f * ti.obstacles /4.f;
-	undrv += 0.7f * ci.bumps /3.f * ti.bumps /4.f;  // * tweak params
-
-	undrv += 1.1f * ci.jumps /3.f * ti.jumps /4.f;
-	undrv += 1.1f * ci.loops /4.f * ti.loops; // /5.f;
-	undrv += 1.4f * ci.pipes /4.f * ti.pipes /4.f;
-
-	bool wnt = (ti.scenery == "Winter") || (ti.scenery == "WinterWet");
-	if (wnt && ci.wheels >= 2)  // too slippery for fast cars
-		undrv += 0.7f * std::max(0.f, ci.speed -7.f) /2.f;  // /10.f;
-
-	return std::min(1.f, undrv);
-}
 
 
 ///  load car stats xml

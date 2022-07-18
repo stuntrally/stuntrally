@@ -109,7 +109,7 @@ public:
 	std::vector<CarInfo> cars;
 	std::map<std::string, int> carmap;  // 0 if not found
 	std::map<std::string, std::string> colormap;  // car type to list color
-	float magic =0.010f;
+	float magic = 0.010f;
 	
 	bool LoadXml(std::string file);
 };
