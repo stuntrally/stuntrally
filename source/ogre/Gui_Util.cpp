@@ -110,8 +110,8 @@ void CGui::AddCarL(string name, const CarInfo* ci)
 	li->setSubItemNameAt(5,l, gcom->getClrLong(ci->width *2.f)+ " "+toStr(ci->width));
 	li->setSubItemNameAt(6,l, gcom->getClrSum(ci->wheels *2.f)+ " "+toStr(ci->wheels));
 
-	float drv = fabs(GetDrivability(name, gcom->sListTrack, gcom->bListTrackU));
-	float drvp = (1.f - drv) * 100.f;  int fd = 1 + drv * 6.f;
+	float drv = max(0.f, GetDrivability(name, gcom->sListTrack, gcom->bListTrackU));
+	float drvp = (1.f - drv) * 100.f;  int fd = 1 + drv * 7.f;
 	li->setSubItemNameAt(7,l, gcom->getClrDiff(fd)+" "+ fToStr(drvp, 0,3));
 	//li->setSubItemNameAt(7,l, gcom->getClrRating(min(4, max(0,1+(ci->year-1990)/10))) + toStr(ci->year));
 	//li->setSubItemNameAt(7,l, clr+ TR("#{CarType_"+ci->type+"}"));
@@ -278,8 +278,8 @@ void CGui::changeCar()
 //  Drivability  ------------------------
 void CGui::UpdDrivability(std::string trk, bool user)
 {
-	float drv = fabs(GetDrivability(sListCar, trk, user));
-	float drvp = (1.f - drv) * 100.f;  int fd = std::min(7.f, 1.f + drv * 8.f);
+	float drv = max(0.f, GetDrivability(sListCar, trk, user));
+	float drvp = (1.f - drv) * 100.f;  int fd = std::min(7.f, 1.f + drv * 7.f);
 	auto sdrv = drv > 0.85f ? TR("#{Undrivable}") : TR("#{Diff"+toStr(fd)+"}");
 	// txCarTrkdrv->setCaption(drv < 0.f ? "" : gcom->getClrDiff(fd)+ fToStr(drv, 1,3) +"   " +sdrv);
 	

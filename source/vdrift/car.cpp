@@ -422,7 +422,8 @@ void CAR::ResetPos(bool fromStart)
 
 		dynamics.boostFuel = dynamics.boostFuelStart;  // restore boost fuel
 		dynamics.fDamage = 0.f;  // clear damage
-		pApp->scn->pace->Reset();  //
+		if (pApp->scn->pace)
+			pApp->scn->pace->Reset();  //
 	}else
 		dynamics.fDamage = dmgLastCheck;
 

@@ -150,7 +150,7 @@ void COLLISION_WORLD::Update(double dt, bool profiling)
 		///----  damage normal
 		MATHVECTOR<Dbl,3> pos(hit.pos.getX(), hit.pos.getY(), hit.pos.getZ()),
 			cN = pos - cd->GetPosition(),
-			f = cN * force;
+			f = cN * force * 1000000.f / cd->body_mass;
 			f[0] *= gPar.camBncFHit;  f[1] *= gPar.camBncFHit;  f[2] *= gPar.camBncFHitY;
 			cd->cam_force = cd->cam_force + f;  // cam bounce hit ++
 

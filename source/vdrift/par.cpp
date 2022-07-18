@@ -32,7 +32,7 @@ SParams::SParams()
 
 //  camera bounce, force factors
 	camBncF  = -0.0016f;  camBncFo = -0.0016f;  camBncFof = -0.0016f;
-	camBncFHit = 1500.f;  camBncFHitY = 1000.f;
+	camBncFHit = 4.5f;  camBncFHitY = 1.0f;
 	camBncSpring = -1500.f;  camBncDamp = -150.f;
 	camBncScale = 10.f;  camBncMass = 0.02f;
 }

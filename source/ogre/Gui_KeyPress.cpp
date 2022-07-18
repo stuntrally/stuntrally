@@ -157,26 +157,18 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		string t;
 		switch (skey)
 		{
-			case key(1):  t = "Test2-Asphalt";  break;
-			case key(2):  t = "TestC9-jumps";  break;
-			case key(3):  t = "Test3-Bumps";  break;
-			case key(4):  t = "TestC4-ow";  break;
-			case key(5):  t = "TestC7-oc";  break;
-			case key(6):  t = "TestC6-temp";  break;
-			case key(7):  t = "Test10-FlatPerf";  break;
+			case key(1):  t = "Test2-Asphalt";  break;		case key(2):  t = "TestC9-Jumps";  break;
+			case key(3):  t = "Test3-Bumps";  break;		case key(4):  t = "TestC4-Ow";  break;
+			case key(5):  t = "TestC7-Oc";  break;
+			case key(6):  t = "TestC6-Temp";  break;		case key(7):  t = "Test10-FlatPerf";  break;
 			
-			case key(Q):  t = "Test6-Fluids";  break;
-			case key(W):  t = "Test4-TerrainBig";  break;
-			case key(E):  t = "TestC8-align";  break;
-			case key(R):  t = "Test12-Snow";  break;
+			case key(Q):  t = "Test6-Fluids";  break;		case key(W):  t = "Test4-TerrainBig";  break;
+			case key(E):  t = "TestC8-Align";  break;		case key(R):  t = "Test12-Snow";  break;
 
-			case key(A):  t = "Test1-Flat";  break;
-			case key(S):  t = "Test7-FluidsSmall";  break;
-			case key(D):  t = "Test3-Bumps";  break;
-			case key(F):  t = "TestC6-temp";  break;
+			case key(A):  t = "Test1-Flat";  break;			case key(S):  t = "Test7-FluidsSmall";  break;
+			case key(D):  t = "TestC13-Rivers";  break;		case key(F):  t = "Test3-Bumps";  break;
 
-			case key(X):  t = "Test8-Objects";  break;
-			case key(C):  t = "TestC10-pace";  break;
+			case key(X):  t = "Test8-Objects";  break;		case key(C):  t = "TestC10-Pace";  break;
 		} 
 		if (!t.empty())
 		{
