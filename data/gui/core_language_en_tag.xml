@@ -458,7 +458,7 @@
 	<Tag name="FuelLap">Fuel each lap</Tag>
 	<Tag name="FuelTime">Fuel over time</Tag>
 	<Tag name="FuelBoost">Boost Fuel</Tag>
-	
+	<Tag name="GoBackTime">Go back time</Tag>
 
 	<!--  Replay  -->
 	<Tag name="Replay">Replay</Tag>

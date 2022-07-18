@@ -4,7 +4,7 @@
 SParams::SParams()
 {
 
-/// _Tool_  go back time rewind  (1 for making best ghosts),  saves ghost always
+/// _Tool_  force go back time rewind
 	backTime = 0;  //0 !in release
 
 //  GAME

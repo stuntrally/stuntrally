@@ -140,7 +140,7 @@ void App::newPoses(float time)  // time only for camera update
 			gtime = std::max(0.0, gtime - time * gPar.rewindSpeed);
 			double& ghtim = pGame->timer.GetRewindTimeGh(c);
 			ghtim = std::max(0.0, ghtim - time * gPar.rewindSpeed);  //rewind ghost time too
-			if (gPar.backTime)
+			if (pSet->game.rewind_type == 2 || gPar.backTime)
 			{	pGame->timer.Back(c, - time * gPar.rewindSpeed);
 				ghost.DeleteFrames(0, ghtim);
 			}
@@ -292,7 +292,7 @@ void App::newPoses(float time)  // time only for camera update
 
 						///  new best lap, save ghost
 						bool newbest = false;
-						if (!pSet->rpl_bestonly || best || gPar.backTime)
+						if (!pSet->rpl_bestonly || best || pSet->game.rewind_type == 2 || gPar.backTime)
 						if (c==0 && pSet->rpl_rec)  // for many, only 1st car
 						{
 							ghost.SaveFile(gui->GetGhostFile());  //,boost_type?
