@@ -187,23 +187,29 @@ bool CGui::IsChallCar(String name)
 	const Chall& ch = data->chall->all[chId];
 
 	int i,s;
+	if (!ch.cars.empty())
+		for (auto& c : ch.cars)  // allow specified
+			if (c == name)  return true;
+	
+	if (!ch.carsDeny.empty())
+		for (auto& c : ch.carsDeny)  // deny specified
+			if (c == name)  return false;
+
 	if (!ch.carTypes.empty())
 	{	s = ch.carTypes.size();
 
 		int id = data->cars->carmap[name]-1;
 		if (id >= 0)
 		{
-			String type = data->cars->cars[id].type;
+			const auto& ci = data->cars->cars[id];
+			String type = ci.type;
+
+			if (ci.wheels < ch.whMin || ci.wheels > ch.whMax)
+				return false;  // deny type if wheels not allowed
 
 			for (i=0; i < s; ++i)
 				if (type == ch.carTypes[i])  return true;
 	}	}
-	if (!ch.cars.empty())
-	{	s = ch.cars.size();
-
-		for (i=0; i < s; ++i)
-			if (name == ch.cars[i])  return true;
-	}
 	return false;
 }
 

@@ -66,8 +66,11 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks, bool check)
 			{	String s = a;
 				c.carTypes = StringUtil::split(s, "|");
 			}
+			//  wheels
+			a = eCarT->Attribute("whMin");	if (a)  c.whMin = s2i(a);
+			a = eCarT->Attribute("whMax");	if (a)  c.whMax = s2i(a);
 		}
-		//<car names="ES|S1" />
+		//<car names="ES|HI" />
 		XMLElement* eCar = eCh->FirstChildElement("car");
 		if (eCar)
 		{
@@ -76,7 +79,11 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks, bool check)
 			{	String s = a;
 				c.cars = StringUtil::split(s, "|");
 			}
-		}
+			a = eCar->Attribute("deny");
+			if (a)
+			{	String s = a;
+				c.carsDeny = StringUtil::split(s, "|");
+		}	}
 		
 		XMLElement* eHud = eCh->FirstChildElement("hud");
 		if (eHud)
@@ -116,9 +123,8 @@ bool ChallXml::LoadXml(std::string file, TracksXml* trks, bool check)
 
 				c.trks.push_back(t);
 				eTr = eTr->NextSiblingElement("t");
-			}
-		}
-
+		}	}
+		
 		all.push_back(c);
 		eCh = eCh->NextSiblingElement("challenge");
 	}

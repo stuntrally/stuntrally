@@ -87,7 +87,7 @@ void App::Ch_NewGame()
 
 		pSet->game.boost_type = 1;  // from trk.?
 		pSet->game.flip_type = 2;
-		pSet->game.rewind_type = 1;
+		pSet->game.rewind_type = 1; // gui.rewind_type?
 		pSet->game.BoostDefault();  //
 		//pSet->game.damage_dec = 40.f;  //?
 		//pSet->game.trees = 1.f;  // >=1 ?

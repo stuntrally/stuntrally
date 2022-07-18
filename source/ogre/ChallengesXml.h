@@ -36,7 +36,8 @@ public:
 	float factor = 1.f; // multiplier for silver,bronze points/pos prizes
 	
 	//  Allowed type(s) or specific vehicle(s), 1 or more
-	Ogre::StringVector carTypes, cars;
+	Ogre::StringVector carTypes, cars, carsDeny;
+	int whMin = 0, whMax = 10;  // allowed vehicle wheels count range [min..max]
 
 	std::vector<ChallTrack> trks;
 
