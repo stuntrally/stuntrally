@@ -6,7 +6,7 @@ find_package(Threads REQUIRED)
 
 add_external_lib(
         Boost
-        boost/1.76.0
+        boost/1.79.0
         REQUIRED
         FIND_PACKAGE_OPTIONS COMPONENTS system thread filesystem wave
 )
@@ -23,7 +23,7 @@ add_external_lib(
 
 add_external_lib(
         BULLET
-        bullet3/3.17
+        bullet3/3.24
         REQUIRED
         FIND_PACKAGE
         CONAN_OPTIONS bullet3:extras=True bullet3:network_support=True
@@ -49,7 +49,7 @@ add_external_lib(
 
 add_external_lib(
         OGG
-        ogg/1.3.4
+        ogg/1.3.5
         REQUIRED
         PKG_CONFIG "ogg >= 1.2"
         FIND_PACKAGE
@@ -65,7 +65,7 @@ add_external_lib(
 
 add_external_lib(
         OpenAL
-        openal/1.19.1
+        openal/1.21.1
         PKG_CONFIG "openal >= 1.18"
         FIND_PACKAGE_OPTIONS CONFIG
 )
@@ -88,7 +88,7 @@ add_external_lib(
 
 add_external_lib(
         tinyxml2
-        tinyxml2/8.0.0
+        tinyxml2/9.0.0
         REQUIRED
         PKG_CONFIG "tinyxml2 >= 6"
         FIND_PACKAGE
