@@ -11,11 +11,12 @@
 #include <iostream>
 
 #ifdef _WIN32
-#include <windows.h>
-#include <shlobj.h>
+	#include <windows.h>
+	#include <shlobj.h>
+	#include <shellapi.h>
 #else
-#include <sys/types.h>
-#include <dirent.h>
+	#include <sys/types.h>
+	#include <dirent.h>
 #endif
 
 // Should come from CMake
@@ -59,6 +60,7 @@ void PATHMANAGER::Init(bool log_paths)
 			#endif
 		}
 	}
+	//ogre_plugin = "/usr/lib/x86_64-linux-gnu/OGRE-1.9.0";
 
 	fs::path stuntrally = "stuntrally";
 	// Figure out the user's home directory
@@ -388,7 +390,7 @@ namespace
 void PATHMANAGER::OpenUrl(const string& url)
 {
 #ifdef WIN32
-	ShellExecute(0, 0, url.c_str(), 0, 0 , SW_SHOW);
+	ShellExecuteA(0, 0, url.c_str(), 0, 0 , SW_SHOW);
 #else
 	string cmd = "xdg-open " + url;
 	system(cmd.c_str());
