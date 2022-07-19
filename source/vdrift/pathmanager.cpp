@@ -382,3 +382,15 @@ namespace
 	}
 #endif
 }
+
+
+//  open web browser with url
+void PATHMANAGER::OpenUrl(const string& url)
+{
+#ifdef WIN32
+	ShellExecute(0, 0, url.c_str(), 0, 0 , SW_SHOW);
+#else
+	string cmd = "xdg-open " + url;
+	system(cmd.c_str());
+#endif
+}

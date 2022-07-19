@@ -5,6 +5,7 @@
 #include "../ogre/common/RenderConst.h"
 #include "../ogre/common/GuiCom.h"
 #include "../ogre/common/CScene.h"
+#include "../vdrift/pathmanager.h"
 #include "settings.h"
 #include "CApp.h"
 #include "CGui.h"
@@ -128,7 +129,7 @@ void CGui::btnNewGame(WP)
 
 void CGui::btnEdTut(WP)
 {
-	gcom->OpenBrowserUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=editor");
+	PATHMANAGER::OpenUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=editor");
 }
 
 

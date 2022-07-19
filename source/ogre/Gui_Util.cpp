@@ -751,32 +751,36 @@ void CGui::btnWelcome(WP)
 }
 void CGui::btnWebsite(WP)
 {
-	gcom->OpenBrowserUrl("https://stuntrally.tuxfamily.org/");
+	PATHMANAGER::OpenUrl("https://stuntrally.tuxfamily.org/");
 }
 void CGui::btnWiki(WP)
 {
-	gcom->OpenBrowserUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=features");
+	PATHMANAGER::OpenUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=features");
 }
 void CGui::btnWikiInput(WP)
 {
-	gcom->OpenBrowserUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=running##controllers");
+	PATHMANAGER::OpenUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=running#controllers");
 }
 
 void CGui::btnForum(WP)
 {
-	gcom->OpenBrowserUrl("https://forum.freegamedev.net/viewforum.php?f=77");
+	PATHMANAGER::OpenUrl("https://forum.freegamedev.net/viewforum.php?f=77");
+}
+void CGui::btnSources(WP)
+{
+	PATHMANAGER::OpenUrl("https://github.com/stuntrally/stuntrally");
 }
 void CGui::btnEdTut(WP)
 {
-	gcom->OpenBrowserUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=editor");
+	PATHMANAGER::OpenUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=editor");
 }
 void CGui::btnTransl(WP)
 {
-	gcom->OpenBrowserUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=features");
+	PATHMANAGER::OpenUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=localization");
 }
 void CGui::btnDonations(WP)
 {
-	gcom->OpenBrowserUrl("https://cryham.tuxfamily.org/donate/");
+	PATHMANAGER::OpenUrl("https://cryham.tuxfamily.org/donate/");
 }
 
 
@@ -806,17 +810,18 @@ void CGui::FillHelpTxt()
 			ed->setCaption(UString(text));
 			ed->setVScrollPosition(0);
 	}	};
-	
-	ed = fEd("Readme");
-	if (ed)
-	{	path = PATHMANAGER::Data()+"/../Readme.md";
+
+	auto PathMd = [&](string file)
+	{	path = PATHMANAGER::Data() +"/../"+ file;
+		if (!PATHMANAGER::FileExists(path))
+			path = PATHMANAGER::Data() +"/"+ file;
+		if (!PATHMANAGER::FileExists(path))
+			LogO("Can't locate file: " + file);
 		ReadMd();
-	}
-	ed = fEd("Contributing");
-	if (ed)
-	{	path = PATHMANAGER::Data()+"/../Contributing.md";
-		ReadMd();
-	}
+	};
+
+	ed = fEd("Readme");        if (ed)  PathMd("Readme.md");
+	ed = fEd("Contributing");  if (ed)  PathMd("Contributing.md");
 
 	ed = fEd("Credits");
 	if (ed)

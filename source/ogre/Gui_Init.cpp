@@ -866,7 +866,7 @@ void CGui::InitGui()
 
 
 	//  open url btns  -------------
-	Btn("OpenWelcome", btnWelcome);  Btn("OpenWebsite", btnWebsite);
+	Btn("OpenWelcome", btnWelcome);  Btn("OpenWebsite", btnWebsite);   Btn("OpenSources", btnSources);
 	Btn("OpenForum",   btnForum);    Btn("OpenDonations", btnDonations);
 	//  wiki
 	Btn("OpenWiki",  btnWiki);   Btn("OpenWikiInput", btnWikiInput);

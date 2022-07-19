@@ -55,4 +55,7 @@ public:
 	static bool FileExists(const std::string & filename);
 
 	static bool CreateDir(const std::string& path);
+
+	static void OpenUrl(const std::string& url);
+
 };

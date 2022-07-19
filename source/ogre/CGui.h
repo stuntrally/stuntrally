@@ -544,5 +544,5 @@ public:
 
 	//  open urls
 	void btnWelcome(WP), btnWebsite(WP), btnWiki(WP), btnWikiInput(WP);
-	void btnForum(WP), btnEdTut(WP), btnTransl(WP), btnDonations(WP);
+	void btnForum(WP), btnSources(WP), btnEdTut(WP), btnTransl(WP), btnDonations(WP);
 };

@@ -457,16 +457,3 @@ void CGuiCom::CreateFonts()
 
 	LogO("-- Font sizes:  "+inf);
 }
-
-
-//  util
-void CGuiCom::OpenBrowserUrl(string url)
-{
-#ifdef WIN32
-	string cmd = "system ";
-#else
-	string cmd = "xdg-open ";
-#endif
-	string s = cmd + url;
-	system(s.c_str());
-}
