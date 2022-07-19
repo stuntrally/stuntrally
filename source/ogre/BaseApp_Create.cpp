@@ -24,7 +24,7 @@
 
 #include <MyGUI.h>
 #include <MyGUI_OgrePlatform.h>
-#include "common/MyGUI_D3D11.h"
+//#include "common/MyGUI_D3D11.h"
 
 #include <OgreTimer.h>
 #include <OgreOverlayManager.h>
@@ -659,12 +659,7 @@ void BaseApp::windowClosed()
 void BaseApp::baseInitGui()
 {
 	using namespace MyGUI;
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	mPlatform = new MyGUI::OgreD3D11Platform();
-	#else
 	mPlatform = new MyGUI::OgrePlatform();
-	#endif
-	
 	mPlatform->initialise(mWindow, mSceneMgr, "General", PATHMANAGER::UserConfigDir() + "/MyGUI.log");
 	mGui = new MyGUI::Gui();
 

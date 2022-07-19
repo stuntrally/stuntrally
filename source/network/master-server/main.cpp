@@ -9,11 +9,15 @@
 #include <ctime>
 #include <fstream>
 #include <boost/algorithm/string/replace.hpp>
+#include <fstream>
 #include "../enet-wrapper.hpp"
 #include "../protocol.hpp"
 #ifdef __linux
 #include <unistd.h>  // for daemon()
 #endif
+
+// Fix error define in windows header
+#undef ERROR
 
 #define VERSIONSTRING "0.7.1"
 

@@ -106,12 +106,8 @@ protected:
 	bool bGuiFocus =0;  // gui shown
 	MyGUI::Gui* mGui =0;
 	void baseInitGui();
-	
-	#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-	MyGUI::OgreD3D11Platform* mPlatform =0;
-	#else
-	MyGUI::OgrePlatform* mPlatform =0;
-	#endif
+
+	MyGUI::OgrePlatform* mPlatform;
 	Wnd mWndBrush =0, mWndCam =0, mWndStart =0,  // tool windows
 		mWndRoadCur =0, mWndRoadStats =0,
 		mWndFluids =0, mWndObjects =0, mWndParticles =0;
