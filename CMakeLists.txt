@@ -97,3 +97,5 @@ add_subdirectory(source)
 add_subdirectory(config)
 add_subdirectory(dist)
 add_subdirectory(data)
+
+install(FILES Contributing.md Readme.md License.txt DESTINATION ${SHARE_INSTALL})
