@@ -1,28 +1,28 @@
-Number in loading*.jpg   new`
+Number in loading*.jpg   new track`
  |       Track       Vehicles   close+* far-=
 ----------------------------------------------
  1  Grc2 - Coast        BV+
  2  Jng13- Tropic       SX+
  3  For12- HighPeaks    LK4+
  4  For4 - OSquare      SX*
- 5  Jng20- JungleMaze   SX BE ES
+ 5  Jng20- JungleMaze   SX BE ES-
  
  6  Mos2 - Mouse        FR4*
- 7  Atm3 - Orange       SZ
- 8  Isl13- Beauty       V1 V3
- 9  Sur1 - Surreal      SZ U8
+ 7  Atm3 - Orange       SZ*
+ 8  Isl13- Beauty       V1- V3-
+ 9  Sur1 - Surreal      SZ U8-
   
 10  Can6 - Abyss        O Y7 ES-
-11  Aus6 - Cannon       XZ+ ES+-
+11  Aus6 - Cannon       XZ* ES+-
 12  Mrs4 - Platforms    ES+ BE+
 13  Atm7 - Industrial   TU-
   
 14  Vlc6 - Crematoria   U6=
 15  Vlc12- LavaPools    ES
-16  Vlc5 - Sad          Y7+
+16  Vlc5 - Sad          Y7*
 17  Spc2 - SpaceMine    Y7=
   
-18  Uni4 - Pipeline     UV+-
+18  Uni4 - Pipeline     U8*
 19  Cry3 - BlueHell     S8+
 20  Aln2 - Freefall     ES=
 21  Sur2 - GreenStar    V3=
@@ -30,13 +30,13 @@ Number in loading*.jpg   new`
   
 23  Mos5 - Factory      FN+ HI+
 24  Sav14- Refinery     SZ= ES=
-25  Sav12- Infinity     360-
+25  Sav12- Infinity     SX-
 26  Atm8 - Ultima       XZ*
  
-27  Des17- NileCity     TU* ES+ TW+
+27  Des17- NileCity     TU* ES* TW+
 28  Grc8 - SlopeCity    U8= ES= TW=
  
-29  Wnt11- Glacier      MO
+29  Wnt11- Glacier      MO+
 30  Isl5 - Shore        3B+ ES
 31  Sav2 - Frenzy       TU*
  
@@ -48,17 +48,17 @@ Number in loading*.jpg   new`
 36` Isl17- AdapterIslands =
  
 37` Sur6 - AkkaPadre    =
-38` Sur5 - FreshBreeze  SX+- UV+ ES-
+38` Sur5 - FreshBreeze  SX+ UV+ ES=
  
 39` Mos6 - TaraMosses   TU=
 40` For20- LakoPine     HI-
-41` Jng23- FollowValley U6+ SX+
+41` Jng23- FollowValley U6* SX*
  
 42  Vlc9 - Craters      3B+ ES HI
 43  Grc6 - Halfpipes    SX+
 44  For9 - MadMntn      ES Y7+ SX+
 45` Atm9 - SchwabAutumn HI=
  
-46  Uni6 - Wild         O-
+46  Uni6 - Wild         BE=
 47  Aus2 - PipeCoil     SX- ES-
 48  Sav7 - HighMadness  HI=
