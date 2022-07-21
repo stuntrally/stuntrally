@@ -1058,7 +1058,7 @@ descr="Rather unrealistic, but great looking outer space environments.">
 		<tracks>
 			<t name="Sur4-BlueWinter"  passPoints="8" />
 			<t name="Sur5-FreshBreeze" passPoints="8" />
-			<t name="Sur6-AkkaPadre"   passPoints="8" />
+			<t name="Sur6-AkkaPadre"   passPoints="7" />
 		</tracks>
 	</challenge>
 		
@@ -1081,7 +1081,7 @@ descr="Alternating series of tracks on dark violet and lime green alien planets.
 	<challenge name="#A04840Red #4090F0blue space #9090E0stunts" ver="1" difficulty="5" type="6"
 descr="Switching between Mars and Crystal Moon stunt tracks.">
 		<cartype names="Gravel|Asphalt" />
-		<pass avgPoints="11" />
+		<pass avgPoints="13" />
 		<tracks>
 			<t name="Mrs1-Mars"          passPoints="9" />
 			<t name="Cry1-CrystalMoon"   passPoints="9" />

@@ -6,11 +6,12 @@
 #include <OgreStringConverter.h>
 #include <OgreLogManager.h>
 
+#if 1  // set 0, if build errors 
 namespace Ogre
 {
     template <typename T> class MapIterator;
     /** Struct for holding the script context while parsing. */
-    struct MaterialScriptContext 
+    struct MaterialScriptContext
     {
         MaterialPtr material;
         Pass* pass;
@@ -18,6 +19,7 @@ namespace Ogre
         AliasTextureNamePairList textureAliases;
     };
 }
+#endif
 
 #include <OgreLodStrategyManager.h>
 #include <OgreDistanceLodStrategy.h>

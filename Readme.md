@@ -38,11 +38,11 @@
 
 ## Description
 
-Stunt Rally features 196 tracks in 36 sceneries and 25 vehicles.  
+Stunt Rally features 198 tracks in 36 sceneries and 25 vehicles.  
 Game modes include:
-* Single Race (with Ghost drive, track guide, or Replays),
+* Single Race (with your Ghost drive, track car guide), Replays,
 * Challenges, Championships, Tutorials,
-* Multiplayer (no official server) and Split Screen.  
+* Multiplayer (info [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=multiplayer), no official server) and Split Screen.  
 
 The Track Editor allows creating and modifying tracks.  
 Both run on GNU/Linux and Windows.  
@@ -51,7 +51,7 @@ The game has a **rally** style of driving, mostly on gravel (like Richard Burns 
 with possible **stunt** elements (jumps, loops, pipes) and generated roads from 3D spline.  
 It also features few Sci-Fi vehicles and planets.
 
-Full features list on [our Wiki](https://stuntrally.tuxfamily.org/wiki/doku.php?id=features). Page about Multiplayer [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=multiplayer).
+Full features list on [our Wiki](https://stuntrally.tuxfamily.org/wiki/doku.php?id=features).
 
 ------------------------------------------------------------------------------
 
@@ -68,20 +68,19 @@ Integrated GPUs and old laptops don't handle the game well or at all.
 
 ## Game
 
-Localized help for new users, is on the Welcome screen, shown at game start.  
-Or press Ctrl-F1 to show it. It also has game related Hints.  
+In game - Esc or Tab key shows/hides GUI.
 
-In game - Esc/Tab key shows/hides GUI.
-
-At first, open Options to adjust Screen resolution, pick graphics preset according to your GPU and do restart.  
-Open Options tab Input, to see or reassign keys, or configure a game controller. Info on wiki [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=running#input).
+Quick setup help is on the Welcome screen, shown at game start, or by Ctrl-F1.  
+At first, open Options to adjust Screen resolution, pick graphics preset according to your GPU and *do* restart.  
+Open Options tab Input, to see or reassign keys, or configure a game controller, info [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=running#input).  
+Game related Hints are available in menu: How to drive, with few driving lessons.  
 
 Have fun 😀
 
 ### Troubleshooting
 
-If you have problems running, read Wiki page [Running](https://stuntrally.tuxfamily.org/wiki/doku.php?id=running).  
-All settings and logs are saved to user folder, see [Paths](https://stuntrally.tuxfamily.org/wiki/doku.php?id=paths).
+If you have problems running, check Wiki page [Running](https://stuntrally.tuxfamily.org/wiki/doku.php?id=running).  
+All settings and logs are saved to user folder, see [Paths](https://stuntrally.tuxfamily.org/wiki/doku.php?id=paths). It is also shown on 1st Help page.
 
 ------------------------------------------------------------------------------
 
@@ -105,9 +104,9 @@ Editor Tutorial page with more info and videos [here](https://stuntrally.tuxfami
 Before reporting bugs or issues, be sure to [Read before posting](https://forum.freegamedev.net/viewtopic.php?f=78&t=3814) topic first ;)
 
 Then create a topic on Forum [SR Bugs & Help](https://forum.freegamedev.net/viewforum.php?f=78)  
-or a [new issue on github](https://github.com/stuntrally/stuntrally/issues/new) (if not present).  
+or a [new issue on github](https://github.com/stuntrally/stuntrally/issues/new) (if not present). PRs are welcome too.  
 
-IRC is *not* used now: #stuntrally on freenode.
+IRC *was* used: #stuntrally on freenode. But now I'm not checking it.
 
 ------------------------------------------------------------------------------
 
