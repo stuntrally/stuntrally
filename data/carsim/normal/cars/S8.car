@@ -157,6 +157,7 @@ position = -0.3, 0.4, 0.2
 mass = 50.0
 view-position = 0.2, -0.4, 0.35
 hood-position = -0.55, 0, 0.46
+ground-position = -1.02, 0, 0.4
 
 
 #  aerodynamics

@@ -166,9 +166,9 @@ handbrake = 2.1
 [ driver ]
 position = -0.02, -0.15, -0.2
 mass = 80.0
-view-position = -0.41, -0.43, 0.13
-#hood-position = -1.15, 0, 0.19
+view-position = -0.42, -0.43, 0.13
 hood-position = -1.31, 0, 0.13
+ground-position = -0.92, 0, 0.4
 
 
 #  aerodynamics

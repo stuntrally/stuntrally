@@ -197,8 +197,9 @@ handbrake = 5.1
 position = 0.0, 0.0, 0.05
 mass = 10.0
 dist = 1.1
-view-position = 0.70, -0.01, 0.77
-hood-position = -0.63, 0, 0.50
+view-position = 1.70, 0.0, 0.77
+hood-position = -0.31, 0, 0.65
+ground-position = -1.1, 0, 0.6
 
 
 #  aerodynamics

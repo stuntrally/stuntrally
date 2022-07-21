@@ -55,7 +55,7 @@ public:
 	
 	
 	///----  model params  from .car
-	float driver_view[3], hood_view[3];  // mounted cameras
+	float driver_view[3], hood_view[3], ground_view[3];  // mounted cameras
 	float interiorOffset[3], boostOffset[3],boostSizeZ;
 	float thrusterOfs[PAR_THRUST][3],thrusterSizeZ[PAR_THRUST];
 

@@ -161,6 +161,7 @@ mass = 50.0
 dist = 1.1
 view-position = 0.70, -0.01, 0.77
 hood-position = -0.63, 0, 0.50
+ground-position = -1.3, 0, 0.4
 
 
 #  aerodynamics

@@ -171,7 +171,8 @@ position = -0.0, -0.15, -0.2
 mass = 10.0
 dist = 0.7
 view-position = 1.78, 0.0, 0.72
-hood-position = 0.12, 0, 0.50
+hood-position = -0.10, 0, 0.40
+ground-position = -0.35, 0, 0.4
 
 
 #  aerodynamics

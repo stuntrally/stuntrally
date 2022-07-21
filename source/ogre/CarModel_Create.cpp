@@ -85,7 +85,7 @@ void CarModel::Defaults()
 	int i,w;
 	for (i=0; i < 3; ++i)
 	{
-		driver_view[i] = 0.f;  hood_view[i] = 0.f;
+		driver_view[i] = 0.f;  hood_view[i] = 0.f;  ground_view[i] = 0.f;
 		interiorOffset[i] = 0.f;  boostOffset[i] = 0.f;  exhaustPos[i] = 0.f;
 	}
 	camDist = 1.f;
@@ -303,6 +303,11 @@ void CarModel::LoadConfig(const string & pathCar)
 	cf.GetParamE("driver.hood-position", pos);
 	hood_view[0]=pos[1]; hood_view[1]=-pos[0]; hood_view[2]=pos[2];
 
+	if (cf.GetParam("driver.ground-position", pos))
+	{	ground_view[0]=pos[1]; ground_view[1]=-pos[0]; ground_view[2]=pos[2];  }
+	else
+	{	ground_view[0]=0.f; ground_view[1]=1.6; ground_view[2]=0.4f;  }
+
 	cf.GetParam("driver.dist", camDist);
 
 
@@ -428,8 +433,9 @@ void CarModel::Create()
 				cam->mOffset = Vector3(driver_view[0], driver_view[2], -driver_view[1]);
 			else if (cam->mName == "Car bonnet")
 				cam->mOffset = Vector3(hood_view[0], hood_view[2], -hood_view[1]);
-		}
-	}
+			else if (cam->mName == "Car ground")
+				cam->mOffset = Vector3(ground_view[0], ground_view[2], -ground_view[1]);
+	}	}
 	
 	CreateReflection();
 	
