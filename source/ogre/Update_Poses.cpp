@@ -19,7 +19,9 @@
 #include "SplitScreen.h"
 #include "settings.h"
 #include <OgreCamera.h>
+#include <OgreQuaternion.h>
 #include <OgreSceneNode.h>
+#include <OgreVector3.h>
 using namespace Ogre;
 
 
@@ -421,7 +423,8 @@ void App::newPoses(float time)  // time only for camera update
 			carPoses[qn][c] = pi;
 			//  update camera
 			if (carM->fCam)
-				carM->fCam->update(time, pi, &carPoses[qn][c], &pGame->collision, !bRplPlay && pSet->cam_bounce);
+				carM->fCam->update(time, pi, &carPoses[qn][c], &pGame->collision,
+					!bRplPlay && pSet->cam_bounce, carM->vtype == V_Sphere);
 			iCurPoses[c] = qn;  // atomic, set new index in queue
 			
 			///))  upd sound camera

@@ -17,6 +17,7 @@
 #include <OgreCamera.h>
 #include <OgreSceneNode.h>
 #include <OgreTerrainGroup.h>
+#include <OgreVector3.h>
 
 #if OGRE_VERSION_MAJOR >= 13
 #include <OgreDeprecated.h>
@@ -41,7 +42,7 @@ static float GetAngle(float x, float y)
 ///  Update
 //-----------------------------------------------------------------------------------------------------
 
-void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLLISION_WORLD* world, bool bounce)
+void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLLISION_WORLD* world, bool bounce, bool sphere)
 {
 	if (!ca || !posOut)  return;
 
@@ -52,15 +53,19 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 	Quaternion camRotFinal;
 
 	const static Quaternion
-		qO = Quaternion(Degree(180),Vector3::UNIT_Z) * Quaternion(Degree(-90),Vector3::UNIT_Y),
-		qR = Quaternion(Degree(90),Vector3(0,1,0));
+		qOrFix = Quaternion(Degree(180), Vector3::UNIT_Z) * Quaternion(Degree(-90), Vector3::UNIT_Y),
+		qOrRot = Quaternion(Degree(90), Vector3::UNIT_Y),
+		qTop = Quaternion(Degree(-90), Vector3::UNIT_X), qSphFix = Quaternion(Degree(180), Vector3::UNIT_Z);
 
-	Quaternion  orient = orientGoal * qO;
-	Vector3  ofs = orient * ca->mOffset,  goalLook = posGoal + ofs;
+	Quaternion  orient = orientGoal * qOrFix;
+	Vector3  caOfs = (ca->mType == CAM_Car && sphere ? Vector3(-ca->mOffset.x, -ca->mOffset.y, ca->mOffset.z) : ca->mOffset);
+	Vector3  ofs = orient * caOfs, 	goalLook = posGoal + ofs;
 
 	first = iFirst < 2;  ///par few first frames after reset
 	if (iFirst < 10)  // after reset
-	{	++iFirst;	mDistReduce = 0.f;  mATilt = 0.f;  }
+	{	++iFirst;
+		mDistReduce = 0.f;  mATilt = 0.f;
+	}
 
 	///  Camera Tilt from terrain/road slope under car
 	//-------------------------------------------------------------------------------------------
@@ -124,7 +129,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
     if (ca->mType == CAM_Car)	/* 3 Car - car pos & rot full */
     {
 		camPosFinal = goalLook;
-		camRotFinal = orient;
+		camRotFinal = sphere ? orient * qSphFix : orient;
 
 		posOut->camPos = camPosFinal;  // save result in out posInfo
 		posOut->camRot = camRotFinal;
@@ -160,13 +165,13 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 			break;
 			
 		case CAM_Follow:	/* 0 Follow - car rotY & pos from behind car, smooth */
-		{	Quaternion  orient = orientGoal * qR;
+		{	Quaternion  orient = orientGoal * qOrRot;
 			orient.FromAngleAxis(orient.getYaw(), Vector3::UNIT_Y);
 			goalPos += orient * xyz;
 		}	break;
 		
 		case CAM_ExtAng:    /* 4 Extended Angle - car in center, angle smooth */
-		{	Quaternion  orient = orientGoal * qR;
+		{	Quaternion  orient = orientGoal * qOrRot;
 			Quaternion  ory;  ory.FromAngleAxis(orient.getYaw(), Vector3::UNIT_Y);
 
 			if (first)  {  qq = ory;  }

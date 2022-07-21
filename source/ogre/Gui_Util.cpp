@@ -594,7 +594,7 @@ void CGui::toggleGui(bool toggle)
 	{	first = false;
 		gcom->GuiCenterMouse();
 	}
-	LogO(String(":::: Time gui upd: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
+	//LogO(String(":::: Time gui upd: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");
 }
 
 

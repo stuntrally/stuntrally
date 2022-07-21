@@ -64,7 +64,7 @@ public:
 	#endif
 
 	///  update, simulates camera
-	void update(Ogre::Real time, const PosInfo& posInPrev, PosInfo* posOut, COLLISION_WORLD* world, bool bounce);
+	void update(Ogre::Real time, const PosInfo& posInPrev, PosInfo* posOut, COLLISION_WORLD* world, bool bounce, bool sphere);
 	bool updInfo(Ogre::Real time = 0);  char ss[512];
 	Ogre::String sName;  bool updName;
 

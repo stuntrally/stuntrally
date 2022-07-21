@@ -1,66 +1,66 @@
 material pipe_glass
 {
-	ambient 1.0 1.0 1.0
-	diffuse 1.0 1.0 1.0 1.0
-	specular 1 1 1 24
-	emissive 0 0 0
-	//if env_map true, spec power gets mul by x4
+    ambient 1.0 1.0 1.0
+    diffuse 1.0 1.0 1.0 1.0
+    specular 1 1 1 24
+    emissive 0 0 0
+    //if env_map true, spec power gets mul by x4
 
-	scene_blend alpha_blend
-	depth_write off
-	depth_bias 3
-	alpha_rejection default
-	cull_hardware default
-	
+    scene_blend alpha_blend
+    depth_write off
+    depth_bias 3
+    alpha_rejection default
+    cull_hardware default
+
     lighting true
-	terrain_light_map false
-	terrain_light_map_toggleable false
-	motionblur_mask true
+    terrain_light_map false
+    terrain_light_map_toggleable false
+    motionblur_mask true
     receives_shadows true
-			
-	bump_scale 1
-	env_map false
-	fresnelScaleBiasPower 0.79 0.07 4
-	fresnel false
-	refl_amount 0.1  // only used when fresnel off
-	
+            
+    bump_scale 1
+    env_map false
+    fresnelScaleBiasPower 0.79 0.07 4
+    fresnel false
+    refl_amount 0.1  // only used when fresnel off
+
     //  extras1
-	tree_wind false
-	grass_wind false
-	vertex_colour false
-	soft_particles false
+    tree_wind false
+    grass_wind false
+    vertex_colour false
+    soft_particles false
 
-	transparent false  // for shadowcaster
-	mrt_output true
-	diffuse_address_mode wrap
-	fog_en true
-	instancing false
+    transparent false  // for shadowcaster
+    mrt_output true
+    diffuse_address_mode wrap
+    fog_en true
+    instancing false
 
-	//  extras2
-	twoside_diffuse true
-	road_blend false
-	shadowBias 0
+    //  extras2
+    twoside_diffuse true
+    road_blend false
+    shadowBias 0
     water_particles_lit false
-		
-	//  car body only
-	glossiness 0.5
-	reflectiveness 1.0
+        
+    //  car body only
+    glossiness 0.5
+    reflectiveness 1.0
     fresnelScaleBiasPower2 0.79 0.07 4
-	specular2 0 0 0  32
-	//  glass only
+    specular2 0 0 0  32
+    //  glass only
     specular_alpha true
     env_alpha 0 0 0 0
 
     //  use true for rgb only
     specMap_rgb false
 
-	normalMap
-	reflMap
-	alphaMap
-	carPaintMap
-	specMap
+    normalMap
+    reflMap
+    alphaMap
+    carPaintMap
+    specMap
 
-	pass
+    pass
 	{
 		vertex_program main_vertex
 		fragment_program main_fragment

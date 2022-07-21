@@ -4,7 +4,7 @@
 		0 Follow (rotY)  4 ExtAng (rotY)
 		1 Free (orient)  2 Arena (free pos&or)
 	-->
-	<!-- on="0" - off  on="2" - main -->
+	<!-- on:  0 off  1 on  2 main -->
 
 	<Camera on="1" name="Car ground"        type="3"  bounce="0.0" offset="0  0.4 -1.6" />
 	<Camera on="2" name="Car bonnet"        type="3"  bounce="0.1" offset="0  0.5 -0.8" />
