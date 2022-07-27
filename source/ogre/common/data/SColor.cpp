@@ -20,7 +20,7 @@ string SColor::Check(string t)
 	if (h > 1.f)  e += " h>1";  if (h < 0.f)  e += " h<0";
 	if (s > 1.f)  e += " s>1";  if (s < 0.f)  e += " s<0";
 	if (v > 3.f)  e += " v>3";  if (v < 0.f)  e += " v<0";
-	if (a > 2.f)  e += " a>2";  if (a < 0.f)  e += " a<0";
+	if (a > 3.f)  e += " a>2";  if (a < 0.f)  e += " a<0";
 	if (n > 1.f)  e += " n>1";  if (n < 0.f)  e += " n<0";
 	if (!e.empty())  e += "  " + t + "  " + Save();
 	return e;

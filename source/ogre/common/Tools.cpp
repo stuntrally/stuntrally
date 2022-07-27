@@ -162,7 +162,7 @@ void CGui::ToolSceneXml()
 		SplineRoad rd(app);  rd.LoadFile(path +"road.xml");
 		bool modif = false;
 
-		int l = 17-trk.length();  // align
+		int l = 20 - trk.length();  // align
 		for (n=0; n < l; ++n)  trk += " ";
 
 		///  sound  ---
@@ -273,11 +273,12 @@ void CGui::ToolSceneXml()
 				}
 				#endif
 
-				if (l.minScale < 0.3f && minSc[s]==0)
+				/*if (l.minScale < 0.3f && minSc[s]==0)
 				{	minSc[s] = 1;
 					LogO("Veg: " + trk + " scale < 0.3  model  " + s + "  val " + fToStr(l.minScale,2,4) +" "+ fToStr(l.maxScale,2,4));
-				}
-				//if (lay.maxScale > 4.f)   LogO("All: " + trk + "  scale > 4  model  "   + s + "  val " + fToStr(lay.maxScale,2,4));
+				}*/
+				if (l.maxScale > 4.f)
+					LogO("All: " + trk + "  scale > 4  model  "   + s + "  val " + fToStr(l.maxScale,2,4));
 				
 				//  rescale for pagedgeom
 				/**if (s.substr(0,3)=="fir")

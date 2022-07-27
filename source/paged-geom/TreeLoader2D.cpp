@@ -50,7 +50,7 @@ TreeLoader2D::TreeLoader2D(PagedGeometry *geom, const TBounds &bounds)
 	colorMapFilter = MAPFILTER_NONE;
 
 	//Default scale range
-	maximumScale = 2.0f;
+	maximumScale = 4.0f;
 	minimumScale = 0.0f;
 }
 
