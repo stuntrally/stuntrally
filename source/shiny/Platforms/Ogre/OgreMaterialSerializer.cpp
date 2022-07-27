@@ -6,7 +6,7 @@
 #include <OgreStringConverter.h>
 #include <OgreLogManager.h>
 
-#if 0  // set to 0, if build errors, for Ogre 1.9
+#if 1  // set to 0, if build errors, for Ogre 1.9 only
 namespace Ogre
 {
     template <typename T> class MapIterator;
