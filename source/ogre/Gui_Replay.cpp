@@ -83,16 +83,15 @@ void CGui::btnRplLoadFile(std::string file)
 				MessageBoxStyle::IconError | MessageBoxStyle::Ok);
 			return;
 		}
-		//trackreverse 	num_laps
 		//collis_veget, collis_cars, collis_roadw, dyn_objects;
 		//int boost_type, flip_type;  float boost_power;
-		//float pre_time;
+		//float pre_time;  num_laps
 
 		//  set game config from replay
 		pSet->game = pSet->gui;
 		pSet->game.track = trk;  pSet->game.track_user = usr;
 		pSet->game.sim_mode = h.sim_mode;  //?
-		//todo: pSet->game.trackreverse = h.trackreverse;
+		pSet->game.trackreverse = file.find("_r") != string::npos;
 
 		pSet->game.trees = h.trees;
 		pSet->game.local_players = h.numPlayers;

@@ -209,7 +209,7 @@ void App::newPoses(float time)  // time only for camera update
 
 		//  checkpoints, lap start
 		//-----------------------------------------------------------------------
-		if (bGhost || bRplPlay && !gui->bLesson)   // dont check for replay or ghost
+		if (bGhost /*&& !gui->bLesson*/)   // dont check for ghost
 			carM->bWrongChk = false;
 		else
 		{
@@ -527,6 +527,10 @@ void App::updatePoses(float time)
 		gui->valRplLen->setCaption(StrTime(len));
 
 		float v = pos/len;  gui->slRplPos->setValue(v);
+
+		if (pos < 0.05)  // rpl trail end
+		for (auto& carM : carModels)
+			carM->ResetChecks();
 
 
 		//  lessons  >> >
