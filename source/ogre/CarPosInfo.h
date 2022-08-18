@@ -1,6 +1,7 @@
 #pragma once
-#include <OgreVector3.h>
-#include <OgreQuaternion.h>
+#include <Ogre.h>
+// #include <OgreVector3.h>
+// #include <OgreQuaternion.h>
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
 #include "../vdrift/cardefs.h"

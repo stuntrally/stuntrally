@@ -7,9 +7,10 @@
  * or no cube map at all (static map loaded from file)
  */
 #pragma once
-#include <OgreVector3.h>
-#include <OgreString.h>
-#include <OgreTexture.h>
+#include <Ogre.h>
+// #include <OgreVector3.h>
+// #include <OgreString.h>
+// #include <OgreTexture.h>
 #include <vector>
 
 

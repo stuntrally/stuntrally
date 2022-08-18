@@ -1,10 +1,11 @@
 #pragma once
-#include <OgreVector2.h>
-#include <OgreVector3.h>
-#include <OgreQuaternion.h>
-#include <OgreVector4.h>
-#include <OgreMatrix4.h>
-#include <OgreColourValue.h>
+#include <Ogre.h>
+// #include <OgreVector2.h>
+// #include <OgreVector3.h>
+// #include <OgreQuaternion.h>
+// #include <OgreVector4.h>
+// #include <OgreMatrix4.h>
+// #include <OgreColourValue.h>
 #include "../vdrift/mathvector.h"
 #include "../vdrift/quaternion.h"
 #include "../shiny/Main/MaterialInstance.hpp"

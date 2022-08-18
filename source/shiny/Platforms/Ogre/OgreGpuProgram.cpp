@@ -6,9 +6,9 @@
 
 #include <boost/lexical_cast.hpp>
 
+#include <Ogre.h>
 #include <OgreHighLevelGpuProgramManager.h>
 #include <OgreGpuProgramManager.h>
-#include <OgreVector4.h>
 
 namespace sh
 {

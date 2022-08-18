@@ -1,6 +1,6 @@
 #pragma once
 #include <AL/al.h>
-#include <OgreVector3.h>
+#include <Ogre.h>
 
 enum RecomputeSource {
 	REASON_PLAY, REASON_STOP, REASON_GAIN, REASON_LOOP, REASON_PTCH, REASON_POS, REASON_VEL, REASON_SEEK };

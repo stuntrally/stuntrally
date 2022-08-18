@@ -6,12 +6,13 @@
 #include "../ogre/common/data/SceneXml.h"  //Object-
 #include "../ogre/common/PreviewTex.h"
 
-#include <OgreCommon.h>
-#include <OgreVector3.h>
-#include <OgreString.h>
-#include <OgreRenderTargetListener.h>
-#include <OgreShadowCameraSetup.h>
-#include <OgreTexture.h>
+#include <Ogre.h>
+// #include <OgreCommon.h>
+// #include <OgreVector3.h>
+// #include <OgreString.h>
+// #include <OgreRenderTargetListener.h>
+// #include <OgreShadowCameraSetup.h>
+// #include <OgreTexture.h>
 #include "../shiny/Main/Factory.hpp"
 
 #define BrushMaxSize  512

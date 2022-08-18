@@ -5,12 +5,7 @@
 #include <deque>
 #include <set>
 
-// #include <Ogre.h>
-#include <OgreString.h>
-#include <OgreVector2.h>
-#include <OgreVector3.h>
-#include <OgreVector4.h>
-
+#include <Ogre.h>
 #include <OgreMesh.h>
 #include <OgreAxisAlignedBox.h>
 

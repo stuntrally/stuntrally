@@ -1,10 +1,11 @@
 #pragma once
 #include "PreviewTex.h"
-#include <OgreVector3.h>
-#include <OgreVector4.h>
-#include <OgreString.h>
-#include <OgreTexture.h>
-#include <OgreShadowCameraSetup.h>
+#include <Ogre.h>
+// #include <OgreVector3.h>
+// #include <OgreVector4.h>
+// #include <OgreString.h>
+// #include <OgreTexture.h>
+// #include <OgreShadowCameraSetup.h>
 
 namespace Forests {  class PagedGeometry;  }
 namespace Ogre  {  class Terrain;  class TerrainGlobalOptions;  class TerrainGroup;  class StaticGeometry;

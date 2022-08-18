@@ -1,7 +1,8 @@
 #pragma once
-#include <OgreVector3.h>
-#include <OgreQuaternion.h>
-#include <OgreString.h>
+#include <Ogre.h>
+// #include <OgreVector3.h>
+// #include <OgreQuaternion.h>
+// #include <OgreString.h>
 #include <vector>
 
 

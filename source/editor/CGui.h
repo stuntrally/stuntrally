@@ -4,9 +4,10 @@
 #include "../ogre/common/Gui_Def.h"
 #include "../ogre/common/SliderValue.h"
 
-#include <OgreCommon.h>
-#include <OgreVector3.h>
-#include <OgreString.h>
+#include <Ogre.h>
+// #include <OgreCommon.h>
+// #include <OgreVector3.h>
+// #include <OgreString.h>
 
 #include <MyGUI_Types.h>
 #include <MyGUI_WidgetToolTip.h>

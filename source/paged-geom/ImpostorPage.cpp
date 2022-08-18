@@ -13,15 +13,16 @@ Permission is granted to anyone to use this software for any purpose, including 
 //ImposterPage is an extension to PagedGeometry which displays entities as imposters.
 //-------------------------------------------------------------------------------------
 #include "pch.h"
-#include <OgreRoot.h>
-#include <OgreTimer.h>
-#include <OgreCamera.h>
-#include <OgreVector3.h>
-#include <OgreQuaternion.h>
-#include <OgreEntity.h>
-#include <OgreSubEntity.h>
-#include <OgreHardwarePixelBuffer.h>
-#include <OgreViewport.h>
+#include <Ogre.h>
+// #include <OgreRoot.h>
+// #include <OgreTimer.h>
+// #include <OgreCamera.h>
+// #include <OgreVector3.h>
+// #include <OgreQuaternion.h>
+// #include <OgreEntity.h>
+// #include <OgreSubEntity.h>
+// #include <OgreHardwarePixelBuffer.h>
+// #include <OgreViewport.h>
 
 #include "ImpostorPage.h"
 #include "StaticBillboardSet.h"

@@ -1,6 +1,5 @@
 #pragma once
-#include <OgreVector3.h>
-#include <OgreString.h>
+#include <Ogre.h>
 #include <AL/al.h>
 #include <AL/alc.h>
 #include <AL/efx.h>

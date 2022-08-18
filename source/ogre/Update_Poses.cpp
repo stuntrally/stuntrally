@@ -18,10 +18,11 @@
 #include "common/Slider.h"
 #include "SplitScreen.h"
 #include "settings.h"
-#include <OgreCamera.h>
-#include <OgreQuaternion.h>
-#include <OgreSceneNode.h>
-#include <OgreVector3.h>
+#include <Ogre.h>
+// #include <OgreCamera.h>
+// #include <OgreQuaternion.h>
+// #include <OgreSceneNode.h>
+// #include <OgreVector3.h>
 using namespace Ogre;
 
 

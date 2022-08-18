@@ -2,7 +2,7 @@
 #include "../vdrift/dbl.h"
 #include "../ogre/common/Def_Str.h"
 #include "SplineBase.h"
-#include <OgreVector4.h>
+#include <Ogre.h>
 #include <OgreLogManager.h>
 #include <OgreTerrain.h>
 using namespace Ogre;

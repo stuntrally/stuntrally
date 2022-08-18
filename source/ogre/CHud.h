@@ -114,7 +114,7 @@ public:
 
 	struct OvrDbg
 	{
-		Ogre::OverlayElement* oL,*oR,*oS, *oU,*oX;
+		Ogre::OverlayElement* oL=0,*oR=0,*oS=0, *oU=0,*oX=0;
 		OvrDbg();
 	};
 	std::vector<OvrDbg> ov;
