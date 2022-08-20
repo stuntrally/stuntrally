@@ -2,7 +2,7 @@
 overlay Editor/BrushPrvOverlay
 {
 	zorder 500
-	container BorderPanel(Editor/BrushPrvPanel)
+	overlay_element Editor/BrushPrvPanel Panel
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -17,7 +17,7 @@ overlay Editor/BrushPrvOverlay
 overlay Editor/TerPrvOverlay
 {
 	zorder 500
-	container BorderPanel(Editor/TerPrvPanel)
+	overlay_element Editor/TerPrvPanel Panel
 	{
 		metrics_mode pixels
 		vert_align bottom

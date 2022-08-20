@@ -1,11 +1,11 @@
 overlay Car/StatsExt
 {
 	zorder 500
-	container BorderPanel(Car/StatsPanelExt)
+	overlay_element Car/StatsPanelExt Panel
 	{
 
 	//---------------------------------------  U
-	container TextArea(X_1)
+	overlay_element X_1 TextArea
 	{
 		metrics_mode pixels
 		vert_align top
@@ -18,7 +18,7 @@ overlay Car/StatsExt
 		colour 0.9 1 1
 	}
 
-	container TextArea(X_2)
+	overlay_element X_2 TextArea
 	{
 		metrics_mode pixels
 		vert_align top
@@ -31,7 +31,7 @@ overlay Car/StatsExt
 		colour 0.9 1 1
 	}
 
-	container TextArea(X_3)
+	overlay_element X_3 TextArea
 	{
 		metrics_mode pixels
 		vert_align top
@@ -44,7 +44,7 @@ overlay Car/StatsExt
 		colour 0.9 1 1
 	}
 
-	container TextArea(X_4)
+	overlay_element X_4 TextArea
 	{
 		metrics_mode pixels
 		vert_align top
@@ -57,7 +57,7 @@ overlay Car/StatsExt
 		colour 0.9 1 1
 	}
 
-	container TextArea(X_5)
+	overlay_element X_5 TextArea
 	{
 		metrics_mode pixels
 		vert_align top
@@ -75,11 +75,11 @@ overlay Car/StatsExt
 overlay Car/StatsTxt
 {
 	zorder 600
-	container BorderPanel(Car/StatsPanelTxt)
+	overlay_element Car/StatsPanelTxt Panel
 	{
 
 	//---------------------------------------  U
-	container TextArea(U_1)
+	overlay_element U_1 TextArea
 	{
 		metrics_mode pixels
 		vert_align top
@@ -92,7 +92,7 @@ overlay Car/StatsTxt
 		colour 1 1 1
 	}
 
-	container TextArea(U_2)
+	overlay_element U_2 TextArea
 	{
 		metrics_mode pixels
 		vert_align top
@@ -105,7 +105,7 @@ overlay Car/StatsTxt
 		colour 1 1 1
 	}
 
-	container TextArea(U_3)
+	overlay_element U_3 TextArea
 	{
 		metrics_mode pixels
 		vert_align top
@@ -118,7 +118,7 @@ overlay Car/StatsTxt
 		colour 1 1 1
 	}
 
-	container TextArea(U_4)
+	overlay_element U_4 TextArea
 	{
 		metrics_mode pixels
 		vert_align top
@@ -131,7 +131,7 @@ overlay Car/StatsTxt
 		colour 1 1 1
 	}
 
-	container TextArea(U_5)
+	overlay_element U_5 TextArea
 	{
 		metrics_mode pixels
 		vert_align top
@@ -149,11 +149,11 @@ overlay Car/StatsTxt
 overlay Car/Stats
 {
 	zorder 600
-	container BorderPanel(Car/StatsPanel)
+	overlay_element Car/StatsPanel Panel
 	{
 
 	//---------------------------------------  L
-	container TextArea(L_1)
+	overlay_element L_1 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -167,7 +167,7 @@ overlay Car/Stats
 		caption |
 	}
 
-	container TextArea(L_2)
+	overlay_element L_2 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -181,7 +181,7 @@ overlay Car/Stats
 		caption |
 	}
 
-	container TextArea(L_3)
+	overlay_element L_3 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -195,7 +195,7 @@ overlay Car/Stats
 		caption |
 	}
 
-	container TextArea(L_4)
+	overlay_element L_4 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -209,7 +209,7 @@ overlay Car/Stats
 		caption |
 	}
 
-	container TextArea(L_5)
+	overlay_element L_5 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -225,7 +225,7 @@ overlay Car/Stats
 
 
 	//---------------------------------------  R
-	container TextArea(R_1)
+	overlay_element R_1 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -239,7 +239,7 @@ overlay Car/Stats
 		caption |
 	}
 
-	container TextArea(R_2)
+	overlay_element R_2 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -253,7 +253,7 @@ overlay Car/Stats
 		caption |
 	}
 
-	container TextArea(R_3)
+	overlay_element R_3 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -267,7 +267,7 @@ overlay Car/Stats
 		caption |
 	}
 
-	container TextArea(R_4)
+	overlay_element R_4 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -281,7 +281,7 @@ overlay Car/Stats
 		caption |
 	}
 
-	container TextArea(R_5)
+	overlay_element R_5 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -296,7 +296,7 @@ overlay Car/Stats
 
 
 	//---------------------------------------  S
-	container TextArea(S_1)
+	overlay_element S_1 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -310,7 +310,7 @@ overlay Car/Stats
 		caption |
 	}
 
-	container TextArea(S_2)
+	overlay_element S_2 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -324,7 +324,7 @@ overlay Car/Stats
 		caption |
 	}
 
-	container TextArea(S_3)
+	overlay_element S_3 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -338,7 +338,7 @@ overlay Car/Stats
 		caption |
 	}
 
-	container TextArea(S_4)
+	overlay_element S_4 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
@@ -352,7 +352,7 @@ overlay Car/Stats
 		caption |
 	}
 
-	container TextArea(S_5)
+	overlay_element S_5 TextArea
 	{
 		metrics_mode pixels
 		vert_align bottom
