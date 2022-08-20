@@ -585,6 +585,8 @@ descr="Island championship. Part 2.">
 		<t name="Isl15-IslandVillages"/>
 		<t name="Isl16-SandyMountain"/>
 		<t name="Isl17-AdapterIslands"/>
+		<t name="Isl18-RoupaIsland"/>
+		<t name="Isl19-Shocacosh"/>
 	</champ>
 
 
@@ -606,6 +608,7 @@ descr="Canyon championship.">
 		<t name="Can5-Obstacles"/>
 		<t name="Can6-Abyss"/>
 		<t name="Can7-RedWavy"/>
+		<t name="Can8-RedoPoka"/>
 	</champ>
 	<champ name="Australia" ver="2" difficulty="4" type="6"
 descr="Australia championship.">
