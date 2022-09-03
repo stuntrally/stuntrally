@@ -229,6 +229,9 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 			case key(BACKSPACE):
 				if (editFocus)
 					break;
+				if (rpl && mWndRpl)
+				{	bRplWnd = !bRplWnd;  return true;  }  // replay controls
+
 				if (mWndHowTo->getVisible())
 				{	pSet->iMenu = MN1_Race;  gui->toggleGui(false);  return true;  }
 				else if (mWndChampStage->getVisible())	// back from champs stage wnd
@@ -244,7 +247,6 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 				case MN_Single: case MN_Tutorial: case MN_Champ: case MN_Chall:
 					pSet->iMenu = MN1_Race;  break;
 				case MN_Replays:
-					if (mWndRpl && !isFocGui)	bRplWnd = !bRplWnd;  // replay controls
 					if (isFocGui)  pSet->iMenu = MN1_Main;
 					break;
 				case MN_Help: case MN_Options:
