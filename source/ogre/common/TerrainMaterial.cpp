@@ -61,7 +61,7 @@ void TerrainMaterial::Profile::createMaterial(const String& matName, const Terra
 	sh::Factory::getInstance().destroyMaterialInstance(matName);
 
 	MaterialPtr mat = MaterialManager::getSingleton().getByName(matName);
-	if (!mat.isNull())
+	if (mat)
 		MaterialManager::getSingleton().remove(matName);
 
 	mMaterial = sh::Factory::getInstance().createMaterialInstance(matName);

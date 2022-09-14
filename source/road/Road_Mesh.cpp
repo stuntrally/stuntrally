@@ -152,8 +152,8 @@ void SplineRoad::DestroySeg(int id)
 	//LogO("DestroySeg" + toStr(id));
 	RoadSeg& rs = vSegs[id];
 	if (rs.empty)  return;
-//try
-//{
+try
+{
 	for (int l=0; l < LODs; ++l)
 	{
 		if (rs.wall[l].ent)  // ] wall
@@ -198,11 +198,11 @@ void SplineRoad::DestroySeg(int id)
 		Ogre::MeshManager::getSingleton().remove(rs.road[l].smesh);
 		//Resource* r = ResourceManae::getSingleton().remove(rs.road[l].smesh);
 	}
-//}catch(...)
-//{
-//	LogO("Error!! DestroySeg");
-//}
-	//LogO("Destroyed.");
+}catch(...)
+{
+	LogO("Error!! DestroySeg");
+}
+	LogO("Destroyed.");
 	rs.empty = true;
 	rs.lpos.clear();
 }

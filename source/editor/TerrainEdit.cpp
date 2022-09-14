@@ -59,7 +59,7 @@ static float GetAngle(float x, float y)
 void App::updateBrushPrv(bool first)
 {
 	if (!first && (!ovBrushPrv || edMode >= ED_Road /*|| bMoveCam/*|| !bEdit()*/))  return;
-	if (!pSet->brush_prv || brushPrvTex.isNull())  return;
+	if (!pSet->brush_prv || !brushPrvTex)  return;
 
 	//  Lock texture and fill pixel data
 	HardwarePixelBufferSharedPtr pbuf = brushPrvTex->getBuffer();
@@ -326,7 +326,7 @@ void CGui::btnTerGenerate(WP wp)
 void App::updateTerPrv(bool first)
 {
 	if (!first && !ovTerPrv)  return;
-	if (terPrvTex.isNull())  return;
+	if (!terPrvTex)  return;
 
 	HardwarePixelBufferSharedPtr pbuf = terPrvTex->getBuffer();
 	pbuf->lock(HardwareBuffer::HBL_DISCARD);

@@ -75,25 +75,27 @@ void CScene::CreateBlendTex()
 {
 	uint size = sc->td.iTerSize-1;
 	TextureManager& texMgr = TextureManager::getSingleton();
-	texMgr.remove(sHmap);  texMgr.remove(sAng);
-	texMgr.remove(sBlend);  texMgr.remove(sGrassDens);
+	try {	if (texMgr.resourceExists(sHmap     )) texMgr.remove(sHmap);       }catch(...) {	LogO("Error: remove sHmap  in CreateBlendTex");  }
+	try {	if (texMgr.resourceExists(sAng      )) texMgr.remove(sAng);        }catch(...) {	LogO("Error: remove sAng   in CreateBlendTex");  }
+	try {	if (texMgr.resourceExists(sBlend    )) texMgr.remove(sBlend);      }catch(...) {	LogO("Error: remove sBlend in CreateBlendTex");  }
+	try {	if (texMgr.resourceExists(sGrassDens)) texMgr.remove(sGrassDens);  }catch(...) {	LogO("Error: remove sGrassDens in CreateBlendTex");  }
 
 	//  Hmap tex
 	heightTex = texMgr.createManual( sHmap, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_FLOAT32_R, TU_DYNAMIC_WRITE_ONLY); //TU_STATIC_WRITE_ONLY?
-	if (heightTex.isNull())
+	if (!heightTex)
 		LogO("Error: Can't create Float32 (HMap) texture!");
 	
 	//  Angles rtt
 	angleRTex = texMgr.createManual( sAng, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_FLOAT32_R, TU_RENDERTARGET);
-	if (angleRTex.isNull())
+	if (!angleRTex)
 		LogO("Error: Can't create Float32 (Angles) RenderTarget!");
 	
 	//  Blendmap rtt
 	blendRTex = texMgr.createManual( sBlend, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_BYTE_BGRA, TU_RENDERTARGET);
-	if (blendRTex.isNull())
+	if (!blendRTex)
 		LogO("Error: Can't create BGRA (Blendmap) RenderTarget!");
 
 	//  rtt copy  (not needed)
@@ -103,7 +105,7 @@ void CScene::CreateBlendTex()
 	//  Grass Density rtt
 	grassDensRTex = texMgr.createManual( sGrassDens, rgDef, TEX_TYPE_2D,
 		size, size, 0, PF_R8G8B8A8, TU_RENDERTARGET);
-	if (grassDensRTex.isNull())
+	if (!grassDensRTex)
 		LogO("Error: Can't create RGBA (GrassDens) RenderTarget!");
 	
 	blendRTT.Setup(app->mRoot, "bl", blendRTex, sBlendMat);

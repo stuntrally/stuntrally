@@ -55,7 +55,8 @@ void App::Rnd2TexSetup()
 		{
 			String sTex = "RttTex"+si, sCam = "RttCam"+si;
 
-			TextureManager::getSingleton().remove(sTex);
+			if (TextureManager::getSingleton().resourceExists(sTex))
+				TextureManager::getSingleton().remove(sTex);
 			mSceneMgr->destroyCamera(sCam);  // dont destroy old - const tex sizes opt..
 			
 			///  rnd to tex - same dim as Hmap	// after track load
@@ -93,7 +94,7 @@ void App::Rnd2TexSetup()
 		else if (i == RT_Last)
 			mt->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTexture(texture[3]);
 	#endif
-		if (!mt.isNull())  mt->reload();
+		if (mt)  mt->reload();
 
 		r.mini = new Rectangle2D(true);  // screen rect preview
 		if (i == RT_Last)  r.mini->setCorners(-1/asp, 1, 1/asp, -1);  // fullscr,square
@@ -306,7 +307,7 @@ void App::SaveWaterDepth()
 
 	try {
 	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");
-	if (!tex.isNull())
+	if (tex)
 		tex->reload();
 	else  // 1st fluid after start, refresh matdef ?..
 		TextureManager::getSingleton().load("waterDepth.png", rgDef);

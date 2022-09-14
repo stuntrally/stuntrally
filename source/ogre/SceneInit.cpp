@@ -703,7 +703,7 @@ void App::LoadMisc()  // 9 last
 	if (dstTrk)
 	try
 	{	TexturePtr tex = Ogre::TextureManager::getSingleton().getByName("waterDepth.png");
-		if (!tex.isNull())
+		if (tex)
 			tex->reload();
 	} catch(...)
 	{	}

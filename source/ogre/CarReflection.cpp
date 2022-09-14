@@ -44,7 +44,8 @@ CarReflection::~CarReflection()
 
 	// destroy cube tex - only if created by ourself
 	if ( !(pSet->refl_mode == 1 && iIndex != 0) )
-		TextureManager::getSingleton().remove(cubetexName);
+		if (TextureManager::getSingleton().resourceExists(cubetexName))
+			TextureManager::getSingleton().remove(cubetexName);
 }
 
 void CarReflection::Create()

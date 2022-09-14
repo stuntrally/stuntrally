@@ -2,6 +2,7 @@
 #include "RenderConst.h"
 #include "PreviewTex.h"
 #include "Def_Str.h"
+#include <OgreException.h>
 #include <fstream>
 #include <OgreHardwarePixelBuffer.h>
 #include <OgreResourceGroupManager.h>
@@ -34,13 +35,22 @@ bool PreviewTex::Create(int x, int y, String texName)
 		PF_BYTE_BGRA, TU_DEFAULT);  //TU_DYNAMIC_WRITE_ONLY_DISCARDABLE
 		
 	//Clear();
-	return !prvTex.isNull();
+	return !!prvTex;//.isNull();
 }
 
 //  3 destroy
 void PreviewTex::Destroy()
 {
-	TextureManager::getSingleton().remove(sName);
+	if (!TextureManager::getSingleton().resourceExists(sName))
+		return;
+	try
+	{
+		TextureManager::getSingleton().remove(sName);
+	}
+	catch (Exception ex)
+	{
+		LogO(std::string("! PRV TEX dest:") + sName +" exc:" + ex.what());
+	}
 }
 
 
@@ -64,7 +74,7 @@ bool PreviewTex::Load(String path, bool force,  uint8 b, uint8 g, uint8 r, uint8
 			Image img;
 			img.load(data, ext);
 
-			if (prvTex.isNull())
+			if (!prvTex)
 				Create(img.getWidth(), img.getHeight(), sName);
 				
 			//LogO(path+" "+toStr(img.getWidth())+" "+toStr(img.getHeight()));
@@ -98,7 +108,7 @@ bool PreviewTex::Load(String path, bool force)
 
 void PreviewTex::Clear(const uint8 b, const uint8 g, const uint8 r, const uint8 a)
 {
-	if (prvTex.isNull())  return;
+	if (!prvTex)  return;
 	//  fill texture
 	HardwarePixelBufferSharedPtr pb = prvTex->getBuffer();
 	pb->lock(HardwareBuffer::HBL_DISCARD);

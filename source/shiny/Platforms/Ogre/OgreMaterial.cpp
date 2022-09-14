@@ -44,8 +44,12 @@ namespace sh
 
 	OgreMaterial::~OgreMaterial()
 	{
-		if (!mMaterial.isNull())
-			Ogre::MaterialManager::getSingleton().remove(mMaterial->getName());
+		try
+		{
+		if (mMaterial)
+		 	Ogre::MaterialManager::getSingleton().remove(mMaterial);
+		}catch(...)
+		{	}
 	}
 
 	boost::shared_ptr<Pass> OgreMaterial::createPass (const std::string& configuration, unsigned short lodIndex)
