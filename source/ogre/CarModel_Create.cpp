@@ -15,6 +15,7 @@
 #include "../road/Road.h"
 #include "../shiny/Main/Factory.hpp"
 #include "../network/gameclient.hpp"
+#include <OgreException.h>
 #include <OgreTerrain.h>
 #include <OgreEntity.h>
 #include <OgreManualObject.h>
@@ -178,7 +179,8 @@ void CarModel::Destroy()
 
 	//  destroy cloned materials
 	for (i=0; i < NumMaterials; ++i)
-		MaterialManager::getSingleton().remove(sMtr[i]);
+		if (MaterialManager::getSingleton().resourceExists(sMtr[i]))
+			MaterialManager::getSingleton().remove(sMtr[i]);
 
 	s = vDelEnt.size();
 	for (i=0; i < s; ++i)  mSceneMgr->destroyEntity(vDelEnt[i]);
@@ -197,8 +199,8 @@ void CarModel::Destroy()
 	//if (pMainNode)  mSceneMgr->destroySceneNode(pMainNode);  //last?
 
 	//  destroy resource group, will also destroy all resources in it
-	if (ResourceGroupManager::getSingleton().resourceGroupExists(resGrpId))
-		ResourceGroupManager::getSingleton().destroyResourceGroup(resGrpId);
+	// if (ResourceGroupManager::getSingleton().resourceGroupExists(resGrpId))
+	// 	ResourceGroupManager::getSingleton().destroyResourceGroup(resGrpId);
 }
 
 CarModel::~CarModel()
@@ -377,7 +379,17 @@ void CarModel::CreatePart(SceneNode* ndCar, Vector3 vPofs,
 	AxisAlignedBox* bbox, String stMtr, bool bLogInfo)
 {
 	if (!FileExists(sCar2 + sMesh))  return;
-	Entity* ent = mSceneMgr->createEntity(sCarI + sEnt, sDirname + sMesh, sCarI);  ToDel(ent);
+	LogO("CreatePart " + sCarI + sEnt + " " + sDirname +  sMesh + " r "+  sCarI);
+	Entity* ent =0;
+	try
+	{
+		ent = mSceneMgr->createEntity(sCarI + sEnt, sDirname + sMesh, sCarI);
+	}
+	catch (Ogre::Exception ex)
+	{
+		LogO(String("CreatePart exc! ") + ex.what());
+	}
+	ToDel(ent);
 
 	if (bbox)  *bbox = ent->getBoundingBox();
 	if (ghost)  {  ent->setRenderQueueGroup(RQG_CarGhost);  ent->setCastShadows(false);  }
@@ -397,6 +409,7 @@ void CarModel::Create()
 	String strI = toStr(iIndex)+ (eType == CT_TRACK ? "Z" : (eType == CT_GHOST2 ? "V" :""));
 	mtrId = strI;
 	String sCarI = "Car" + strI;
+	//resGrpId = "General";  // ?
 	resGrpId = sCarI;
 
 	String sCars = PATHMANAGER::Cars() + "/" + sDirname;
@@ -456,7 +469,7 @@ void CarModel::Create()
 
 	///()  grass sphere test
 	#if 0
-	Entity* es = mSceneMgr->createEntity(sCarI+"s", "sphere.mesh", sCarI);  ToDel(es);
+	Entity* es = mSceneMgr->createEntity(sCarI+"s", "sphere.mesh");  ToDel(es);
 	es->setRenderQueueGroup(RQG_CarGhost);
 	MaterialPtr mtr = MaterialManager::getSingleton().getByName("pipeGlass");
 	es->setMaterial(mtr);
@@ -475,18 +488,20 @@ void CarModel::Create()
 		ndCar->setOrientation(Quaternion(Degree(90),Vector3::UNIT_Y)*Quaternion(Degree(180),Vector3::UNIT_X));
 
 
-	CreatePart(ndCar, vPofs, sCar, sCarI, "_body.mesh",     "",  ghost, RV_Car,  &bodyBox,  sMtr[Mtr_CarBody],  bLogInfo);
+	//const String& res = "General"; //ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME;
+	const String& res = resGrpId;
+	CreatePart(ndCar, vPofs, sCar, res, "_body.mesh",     "",  ghost, RV_Car,  &bodyBox,  sMtr[Mtr_CarBody],  bLogInfo);
 
 	vPofs = Vector3(interiorOffset[0],interiorOffset[1],interiorOffset[2]);  //x+ back y+ down z+ right
 	if (!ghost)
-	CreatePart(ndCar, vPofs, sCar, sCarI, "_interior.mesh", "i", ghost, RV_Car,      0, sMtr[Mtr_CarBody]+"i",  bLogInfo);
+	CreatePart(ndCar, vPofs, sCar, res, "_interior.mesh", "i", ghost, RV_Car,      0, sMtr[Mtr_CarBody]+"i",  bLogInfo);
 
 	vPofs = Vector3::ZERO;
-	CreatePart(ndCar, vPofs, sCar, sCarI, "_glass.mesh",    "g", ghost, RV_CarGlass, 0, sMtr[Mtr_CarBody]+"g",  bLogInfo);
+	CreatePart(ndCar, vPofs, sCar, res, "_glass.mesh",    "g", ghost, RV_CarGlass, 0, sMtr[Mtr_CarBody]+"g",  bLogInfo);
 	
 
 	//  wheels  ----------------------
-	int w2 = numWheels==2 ? 1 : 2;
+	// int w2 = numWheels==2 ? 1 : 2;
 	for (int w=0; w < numWheels; ++w)
 	{
 		String siw = "Wheel" + strI + "_" + toStr(w);
@@ -501,7 +516,7 @@ void CarModel::Create()
 		if (FileExists(sCar + sMesh))
 		{
 			String name = sDirname + sMesh;
-			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + sMesh, sCarI);  ToDel(eWh);
+			Entity* eWh = mSceneMgr->createEntity(siw, sDirname + sMesh, res);  ToDel(eWh);
 			if (ghost)  {  eWh->setRenderQueueGroup(g);  eWh->setCastShadows(false);  }
 			ndWh[w]->attachObject(eWh);  eWh->setVisibilityFlags(RV_Car);
 			if (bLogInfo && (w==0 || w==2))  LogMeshInfo(eWh, name, 2);
@@ -509,7 +524,7 @@ void CarModel::Create()
 		if (FileExists(sCar + "_brake.mesh") && !ghostTrk)
 		{
 			String name = sDirname + "_brake.mesh";
-			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", name, sCarI);  ToDel(eBrake);
+			Entity* eBrake = mSceneMgr->createEntity(siw + "_brake", name, res);  ToDel(eBrake);
 			if (ghost)  {  eBrake->setRenderQueueGroup(g);  eBrake->setCastShadows(false);  }
 			ndBrake[w] = ndWh[w]->createChildSceneNode();  ToDel(ndBrake[w]);
 			ndBrake[w]->attachObject(eBrake);  eBrake->setVisibilityFlags(RV_Car);
@@ -659,7 +674,7 @@ void CarModel::Create()
 	
 	//  this snippet makes sure the brake texture is pre-loaded.
 	//  since it is not used until you actually brake, we have to explicitely declare it
-	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
+	/**/ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
 	if (FileExists(rCar + "_body00_brake.png") && !resMgr.resourceExists(resGrpId, sDirname + "_body00_brake.png"))
 		resMgr.declareResource(sDirname + "_body00_brake.png", "Texture", resGrpId);
 	if (FileExists(rCar + "_body00_add.png") && !resMgr.resourceExists(resGrpId, sDirname + "_body00_add.png"))
@@ -668,6 +683,7 @@ void CarModel::Create()
 	//  now just preload the whole resource group
 	resMgr.initialiseResourceGroup(resGrpId);
 	resMgr.loadResourceGroup(resGrpId);
+	/**/
 }
 
 
@@ -695,6 +711,7 @@ void CarModel::RecreateMaterials()
 		sMtr[i] = "car_ghost";
 
 	//  copy material to a new material with index
+	//  only for car body to have different colors
 	MaterialPtr mat;
 	for (int i=0; i < 1/*NumMaterials*/; ++i)
 	{
