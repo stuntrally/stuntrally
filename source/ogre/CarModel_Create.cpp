@@ -501,7 +501,7 @@ void CarModel::Create()
 	
 
 	//  wheels  ----------------------
-	// int w2 = numWheels==2 ? 1 : 2;
+	int w2 = numWheels==2 ? 1 : 2;
 	for (int w=0; w < numWheels; ++w)
 	{
 		String siw = "Wheel" + strI + "_" + toStr(w);
