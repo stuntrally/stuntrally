@@ -35,7 +35,7 @@ bool PreviewTex::Create(int x, int y, String texName)
 		PF_BYTE_BGRA, TU_DEFAULT);  //TU_DYNAMIC_WRITE_ONLY_DISCARDABLE
 		
 	//Clear();
-	return !!prvTex;//.isNull();
+	return (bool)prvTex; //.isNull();
 }
 
 //  3 destroy

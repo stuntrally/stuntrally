@@ -486,7 +486,7 @@ void SplineRoad::updMtrRoadTer()
 {
 	auto& mm = MaterialManager::getSingleton();
 	for (int i=0; i < MTRs; ++i)
-		bMtrRoadTer[i] = !mm.getByName(sMtrRoad[i] + "_ter").isNull();
+		bMtrRoadTer[i] = (bool)mm.getByName(sMtrRoad[i] + "_ter");
 }
 
 

@@ -180,7 +180,7 @@ void CarModel::Destroy()
 	//  destroy cloned materials
 	for (i=0; i < NumMaterials; ++i)
 		if (MaterialManager::getSingleton().resourceExists(sMtr[i]))
-			MaterialManager::getSingleton().remove(sMtr[i]);
+			MaterialManager::getSingleton().remove(sMtr[i], resGrpId);
 
 	s = vDelEnt.size();
 	for (i=0; i < s; ++i)  mSceneMgr->destroyEntity(vDelEnt[i]);
@@ -199,8 +199,8 @@ void CarModel::Destroy()
 	//if (pMainNode)  mSceneMgr->destroySceneNode(pMainNode);  //last?
 
 	//  destroy resource group, will also destroy all resources in it
-	// if (ResourceGroupManager::getSingleton().resourceGroupExists(resGrpId))
-	// 	ResourceGroupManager::getSingleton().destroyResourceGroup(resGrpId);
+	if (ResourceGroupManager::getSingleton().resourceGroupExists(resGrpId))
+		ResourceGroupManager::getSingleton().destroyResourceGroup(resGrpId);
 }
 
 CarModel::~CarModel()
@@ -378,6 +378,7 @@ void CarModel::CreatePart(SceneNode* ndCar, Vector3 vPofs,
 	bool ghost, uint32 visFlags,
 	AxisAlignedBox* bbox, String stMtr, bool bLogInfo)
 {
+	// return;  ///!!!
 	if (!FileExists(sCar2 + sMesh))  return;
 	LogO("CreatePart " + sCarI + sEnt + " " + sDirname +  sMesh + " r "+  sCarI);
 	Entity* ent =0;
@@ -387,7 +388,7 @@ void CarModel::CreatePart(SceneNode* ndCar, Vector3 vPofs,
 	}
 	catch (Ogre::Exception ex)
 	{
-		LogO(String("CreatePart exc! ") + ex.what());
+		LogO(String("## CreatePart exc! ") + ex.what());
 	}
 	ToDel(ent);
 
@@ -502,6 +503,7 @@ void CarModel::Create()
 
 	//  wheels  ----------------------
 	int w2 = numWheels==2 ? 1 : 2;
+	// if (0)  ///!!!
 	for (int w=0; w < numWheels; ++w)
 	{
 		String siw = "Wheel" + strI + "_" + toStr(w);

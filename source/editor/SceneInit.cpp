@@ -259,7 +259,7 @@ void App::LoadTrackEv()
 
 	try
 	{	TexturePtr tex = TextureManager::getSingleton().getByName("waterDepth.png");
-		if (!tex.isNull())
+		if (tex)
 			tex->reload();
 	}catch(...)
 	{	}

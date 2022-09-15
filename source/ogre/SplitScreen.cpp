@@ -252,8 +252,8 @@ void SplitScr::preViewportUpdate(const RenderTargetViewportEvent& evt)
 			CompositorInstance  *compositor = CompositorManager::getSingleton().getCompositorChain(evt.source)->getCompositor("gbuffer");
 			if (compositor!=NULL)
 			{
-				TexturePtr depthTexture =	compositor->getTextureInstance("mrt_output",2);
-				if (!depthTexture.isNull())
+				TexturePtr depthTexture = compositor->getTextureInstance("mrt_output",2);
+				if (depthTexture)
 					sh::Factory::getInstance().setTextureAlias("SceneDepth", depthTexture->getName());
 			}
 		}

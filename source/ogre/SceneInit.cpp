@@ -730,7 +730,7 @@ void App::LoadMisc()  // 9 last
 		//TexturePtr depthTexture = compositor->getTextureInstance("mrt_output",i);
 		//TexturePtr depthTexture = compositor->getTextureInstance("rt_bloom0",0);
 		TexturePtr depthTexture = mSceneMgr->getShadowTexture(i);
-		if (!depthTexture.isNull())
+		if (depthTexture)
 		{
 			TextureUnitState *t = debugMat->getTechnique(0)->getPass(0)->createTextureUnitState(depthTexture->getName());
 			t->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);

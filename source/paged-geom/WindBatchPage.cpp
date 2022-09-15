@@ -152,7 +152,7 @@ void WindBatchPage::_updateShaders()
 		//Search for the desired material
 		/*
 		MaterialPtr generatedMaterial = MaterialManager::getSingleton().getByName(materialSignature.str());
-		if (generatedMaterial.isNull())
+		if (!generatedMaterial)
 		{
 			//Clone the material
 			std::cout << ptrMat->getName() << std::endl;

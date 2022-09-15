@@ -614,18 +614,18 @@ void BaseApp::updMouse()
 
 void BaseApp::onCursorChange(const std::string &name)
 {
-	if(!mCursorManager->cursorChanged(name))
+	if (!mCursorManager->cursorChanged(name))
 		return; //the cursor manager doesn't want any more info about this cursor
 	//See if we can get the information we need out of the cursor resource
 	ResourceImageSetPointerFix* imgSetPtr = dynamic_cast<ResourceImageSetPointerFix*>(MyGUI::PointerManager::getInstance().getByName(name));
-	if(imgSetPtr != NULL)
+	if (imgSetPtr != NULL)
 	{
 		MyGUI::ResourceImageSet* imgSet = imgSetPtr->getImageSet();
 		std::string tex_name = imgSet->getIndexInfo(0,0).texture;
 		TexturePtr tex = TextureManager::getSingleton().getByName(tex_name);
 
 		//everything looks good, send it to the cursor manager
-		if(!tex.isNull())
+		if (tex)
 		{
 			Uint8 size_x = imgSetPtr->getSize().width;
 			Uint8 size_y = imgSetPtr->getSize().height;

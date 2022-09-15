@@ -188,7 +188,7 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	if (bChkUpd && entNextChk)
 	{
 		MaterialPtr mtr = MaterialManager::getSingleton().getByName(sChkMtr);
-		if (!mtr.isNull())
+		if (mtr)
 			entNextChk->setMaterial(mtr);
 	}
 
@@ -348,14 +348,17 @@ void CarModel::Update(PosInfo& posInfo, PosInfo& posInfoCam, float time)
 	for (w=0; w < numWheels; ++w)
 	{
 		float wR = whRadius[w];
-		#ifdef CAM_TILT_DBG  // cam debug test only
-			if (fCam)
-				ndWh[w]->setPosition(fCam->posHit[w]);
-			ndWh[w]->setScale(0.5f*Vector3::UNIT_SCALE);
-		#else
-		ndWh[w]->setPosition(posInfo.whPos[w]);
-		#endif
-		ndWh[w]->setOrientation(posInfo.whRot[w]);
+		if (ndWh[w])
+		{
+			#ifdef CAM_TILT_DBG  // cam debug test only
+				if (fCam)
+					ndWh[w]->setPosition(fCam->posHit[w]);
+				ndWh[w]->setScale(0.5f*Vector3::UNIT_SCALE);
+			#else
+			ndWh[w]->setPosition(posInfo.whPos[w]);
+			#endif
+			ndWh[w]->setOrientation(posInfo.whRot[w]);
+		}
 
 		///  Update particles and trails
 		if (isGhostTrk())
@@ -573,7 +576,7 @@ void CarModel::UpdateLightMap()
 	for (int i=0; i < NumMaterials; ++i)
 	{
 		mtr = MaterialManager::getSingleton().getByName(sMtr[i]);
-		if (!mtr.isNull())
+		if (mtr)
 		{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 			while (techIt.hasMoreElements())
 			{	Technique* tech = techIt.getNext();
@@ -596,7 +599,7 @@ void CarModel::UpdateBraking()
 	std::string texName = sDirname + (bBraking ? "_body00_brake.png" : "_body00_add.png");
 
 	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
-	if (!mtr.isNull())
+	if (mtr)
 	{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 		while (techIt.hasMoreElements())
 		{	Technique* tech = techIt.getNext();
@@ -687,7 +690,7 @@ void CarModel::ChangeClr()
 	color.setHSB(1.f - h, s, v);  //set, mini pos clr
 
 	MaterialPtr mtr = MaterialManager::getSingleton().getByName(sMtr[Mtr_CarBody]);
-	if (!mtr.isNull())
+	if (mtr)
 	{	Material::TechniqueIterator techIt = mtr->getTechniqueIterator();
 		while (techIt.hasMoreElements())
 		{	Technique* tech = techIt.getNext();

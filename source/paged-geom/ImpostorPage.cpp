@@ -465,19 +465,19 @@ ImpostorTexture::~ImpostorTexture()
 		for (int o = 0; o < IMPOSTOR_YAW_ANGLES; ++o)
 		for (int i = 0; i < IMPOSTOR_PITCH_ANGLES; ++i)
 		{
-			assert (!material[i][o].isNull());
+			assert(material[i][o]);
 			String matName(material[i][o]->getName());
 			sh::Factory::getInstance().destroyMaterialInstance(matName);
 
-			//material[i][o].setNull();
+			//material[i][o].reset();
 			//if (MaterialManager::getSingletonPtr())
 			//	MaterialManager::getSingleton().remove(matName);
 		}
 
 		//Delete textures
-		assert(!texture.isNull());
+		assert(texture);
 		String texName(texture->getName());
-		texture.setNull();
+		texture.reset();
 		if (TextureManager::getSingletonPtr())
 		{
 			TextureManager::getSingleton().remove(texName);
@@ -491,9 +491,9 @@ ImpostorTexture::~ImpostorTexture()
 
 void ImpostorTexture::regenerate()
 {
-	assert(!texture.isNull());
+	assert(texture);
 	String texName(texture->getName());
-	texture.setNull();
+	texture.reset();
 	if (TextureManager::getSingletonPtr())
 		TextureManager::getSingleton().remove(texName);
 
@@ -526,7 +526,7 @@ void ImpostorTexture::renderTextures(bool force)
 
 	//Set up RTT texture
 	Ogre::uint textureSize = ImpostorPage::getImpostorResolution();
-	if (renderTexture.isNull())
+	if (!renderTexture)
 	{
 		renderTexture = TextureManager::getSingleton().createManual(getUniqueID("ImpostorTexture"), "Impostors",
 			TEX_TYPE_2D, textureSize * IMPOSTOR_YAW_ANGLES, textureSize * IMPOSTOR_PITCH_ANGLES, 0, PF_A8R8G8B8, TU_RENDERTARGET, loader.get());
@@ -715,11 +715,12 @@ void ImpostorTexture::renderTextures(bool force)
 
 #ifdef IMPOSTOR_FILE_SAVE
 	//Delete RTT texture
-	assert(!renderTexture.isNull());
+	assert(renderTexture);
 	String texName2(renderTexture->getName());
 
-	renderTexture.setNull();
+	renderTexture.reset();
 	if (TextureManager::getSingletonPtr())
+	if (TextureManager::getSingleton().resourceExists(texName2))
 		TextureManager::getSingleton().remove(texName2);
 #endif
 

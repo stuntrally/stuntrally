@@ -109,9 +109,9 @@ StaticBillboardSet::~StaticBillboardSet()
       clear(); // Delete mesh data
 
       //Update material reference list
-      if (!mPtrMaterial.isNull())
+      if (mPtrMaterial)
          SBMaterialRef::removeMaterialRef(mPtrMaterial);
-      if (!mPtrFadeMaterial.isNull())
+      if (mPtrFadeMaterial)
          SBMaterialRef::removeMaterialRef(mPtrFadeMaterial);
 
       //Delete vertex shaders and materials if no longer in use
@@ -147,7 +147,7 @@ void StaticBillboardSet::clear()
 
          //Delete mesh
          String meshName(mPtrMesh->getName());
-         mPtrMesh.setNull();
+         mPtrMesh.reset();
          MeshManager::getSingleton().remove(meshName);
       }
 
@@ -179,9 +179,9 @@ void StaticBillboardSet::build()
          mpEntity = NULL;
 
          //Delete mesh
-         assert(!mPtrMesh.isNull());
+         assert(mPtrMesh);
          String meshName(mPtrMesh->getName());
-         mPtrMesh.setNull();
+         mPtrMesh.reset();
          MeshManager::getSingleton().remove(meshName);
       }
 
@@ -365,7 +365,7 @@ void StaticBillboardSet::build()
 ///
 void StaticBillboardSet::setMaterial(const String &materialName, const Ogre::String &resourceGroup)
 {
-   bool needUpdateMat = mPtrMaterial.isNull() || mPtrMaterial->getName() != materialName || mPtrMaterial->getGroup() != resourceGroup;
+   bool needUpdateMat = !mPtrMaterial || mPtrMaterial->getName() != materialName || mPtrMaterial->getGroup() != resourceGroup;
    if (!needUpdateMat)
       return;
 
@@ -374,10 +374,10 @@ void StaticBillboardSet::setMaterial(const String &materialName, const Ogre::Str
       //Update material reference list
       if (mFadeEnabled)
       {
-         assert(!mPtrFadeMaterial.isNull());
+         assert(mPtrFadeMaterial);
          SBMaterialRef::removeMaterialRef(mPtrFadeMaterial);
       }
-      else if (!mPtrMaterial.isNull())
+      else if (mPtrMaterial)
          SBMaterialRef::removeMaterialRef(mPtrMaterial);
 
       mPtrMaterial = MaterialManager::getSingleton().getByName(materialName, resourceGroup);
@@ -411,18 +411,18 @@ void StaticBillboardSet::setFade(bool enabled, Real visibleDist, Real invisibleD
    {
       if (enabled)
       {
-         if (mPtrMaterial.isNull())
+         if (!mPtrMaterial)
             OGRE_EXCEPT(Exception::ERR_ITEM_NOT_FOUND, "Billboard fading cannot be enabled without a material applied first", "StaticBillboardSet::setFade()");
 
          //Update material reference list
          if (mFadeEnabled)
          {
-            assert(!mPtrFadeMaterial.isNull());
+            assert(mPtrFadeMaterial);
             SBMaterialRef::removeMaterialRef(mPtrFadeMaterial);
          }
          else
          {
-            assert(!mPtrMaterial.isNull());
+            assert(mPtrMaterial);
             SBMaterialRef::removeMaterialRef(mPtrMaterial);
          }
 
@@ -442,8 +442,8 @@ void StaticBillboardSet::setFade(bool enabled, Real visibleDist, Real invisibleD
          if (mFadeEnabled)
          {
             //Update material reference list
-            assert(!mPtrFadeMaterial.isNull());
-            assert(!mPtrMaterial.isNull());
+            assert(mPtrFadeMaterial);
+            assert(mPtrMaterial);
             SBMaterialRef::removeMaterialRef(mPtrFadeMaterial);
             SBMaterialRef::addMaterialRef(mPtrMaterial, mBBOrigin);
 

@@ -572,7 +572,7 @@ void SplineRoad::createSeg_Meshes(
 	//  create Ogre Mesh
 	//-----------------------------------------
 	MeshPtr meshOld = MeshManager::getSingleton().getByName(sMesh);
-	if (!meshOld.isNull())  LogR("Mesh exists !!!" + sMesh);
+	if (meshOld)  LogR("Mesh exists !!!" + sMesh);
 
 	AxisAlignedBox aabox;
 	SubMesh* sm;

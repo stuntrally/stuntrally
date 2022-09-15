@@ -231,7 +231,7 @@ void BatchPage::_updateShaders()
 
 		//Search for the desired material
 		MaterialPtr generatedMaterial = MaterialManager::getSingleton().getByName(materialSignature.str());
-		if (generatedMaterial.isNull())
+		if (!generatedMaterial)
 		{
 			//Clone the material
 			generatedMaterial = ptrMat->clone(materialSignature.str());

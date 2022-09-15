@@ -49,7 +49,8 @@ DebugDrawer::DebugDrawer(Ogre::SceneNode *node, btDynamicsWorld *world) :
 
 DebugDrawer::~DebugDrawer() 
 {
-    Ogre::MaterialManager::getSingleton().remove("BtOgre/DebugLines");
+	if (Ogre::MaterialManager::getSingleton().resourceExists("BtOgre/DebugLines"))
+    	Ogre::MaterialManager::getSingleton().remove("BtOgre/DebugLines");
     Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup("BtOgre");
 	delete mLineDrawer;
 }

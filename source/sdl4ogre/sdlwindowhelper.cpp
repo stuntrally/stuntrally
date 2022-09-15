@@ -61,7 +61,7 @@ SDLWindowHelper::SDLWindowHelper (SDL_Window* window, int w, int h,
 void SDLWindowHelper::setWindowIcon(const std::string &name)
 {
 	Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().load(name, Ogre::ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME);
-	if (texture.isNull())
+	if (!texture)
 	{
 		std::stringstream error;
 		error << "Window icon not found: " << name;

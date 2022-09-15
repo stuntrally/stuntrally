@@ -225,7 +225,7 @@ uint32 CountUsedVertices(IndexData *id, std::map<uint32, uint32> &ibmap)
 ///
 void BatchedGeometry::extractVertexDataFromShared(const Ogre::MeshPtr &mesh)
 {
-   if (mesh.isNull() || !mesh->sharedVertexData)
+   if (!mesh || !mesh->sharedVertexData)
       return;
 
    Mesh::SubMeshIterator subMeshIterator = mesh->getSubMeshIterator();
@@ -472,25 +472,25 @@ Ogre::Vector3 BatchedGeometry::_convertToLocal(const Vector3 &globalVec) const
 //-----------------------------------------------------------------------------
 ///
 BatchedGeometry::SubBatch::SubBatch(BatchedGeometry *parent, SubEntity *ent) :
-m_pBestTechnique        (NULL),
-m_pVertexData           (0),
-m_pIndexData            (0),
-m_Built                 (false),
-m_RequireVertexColors   (false),
-m_pSubMesh              (0),
-m_pParentGeom           (parent)
+   m_pBestTechnique        (NULL),
+   m_pVertexData           (0),
+   m_pIndexData            (0),
+   m_Built                 (false),
+   m_RequireVertexColors   (false),
+   m_pSubMesh              (0),
+   m_pParentGeom           (parent)
 {
    assert(ent);
    m_pSubMesh = ent->getSubMesh();
 
    const Ogre::MaterialPtr &parentMaterial = ent->getMaterial();
-   if (parentMaterial.isNull())
+   if (!parentMaterial)
       OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "BatchedGeometry. Empty parent material", "BatchedGeometry::SubBatch::SubBatch");
 
    {
-	  Ogre::String newName = parentMaterial->getName();
+      Ogre::String newName = parentMaterial->getName();
       m_ptrMaterial = MaterialManager::getSingleton().getByName(newName, parentMaterial->getGroup());
-      if (m_ptrMaterial.isNull())
+      if (!m_ptrMaterial)
          m_ptrMaterial = parentMaterial->clone(newName);
    }
 
@@ -969,7 +969,7 @@ void BatchedGeometry::SubBatch::clear()
       m_Built = false;
 
       //Delete buffers
-      m_pIndexData->indexBuffer.setNull();
+      m_pIndexData->indexBuffer.reset();
       m_pVertexData->vertexBufferBinding->unsetAllBindings();
 
       //Reset vertex/index count

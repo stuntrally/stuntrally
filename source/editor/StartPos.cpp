@@ -18,7 +18,7 @@ void App::CreateBox(SceneNode*& nd, Entity*& ent, String sMat, String sMesh, int
 	bool e = sMat.empty();
 	if (!e)
 	{	mtr = MaterialManager::getSingleton().getByName(sMat);
-		if (mtr.isNull())  return;
+		if (!mtr)  return;
 	}
 	nd = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	ent = mSceneMgr->createEntity(sMesh);

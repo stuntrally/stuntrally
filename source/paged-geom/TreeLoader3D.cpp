@@ -424,7 +424,7 @@ void TreeLoader3D::setColorMap(TexturePtr map, MapChannel channel)
 		colorMap->unload();
 		colorMap = NULL;
 	}
-	if (map.isNull() == false){
+	if (map){
 		colorMap = ColorMap::load(map, channel);
 		colorMap->setFilter(colorMapFilter);
 	}

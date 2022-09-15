@@ -27,7 +27,7 @@ void CGui::GetMaterials(String filename, bool clear, String type)
 		vsMaterials.clear();
 	
 	DataStreamPtr stream = ResourceGroupManager::getSingleton().openResource(filename);
-	if(!stream.isNull())
+	if (stream)
 	{	try
 		{	while(!stream->eof())
 			{

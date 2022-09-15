@@ -45,6 +45,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 
 	for (auto vp : mSplitMgr->mViewports)
 	{
+	try
+	{
 		cmp.setCompositorEnabled(vp, "gbuffer", false);
 
 		cmp.setCompositorEnabled(vp, "gbufferNoMRT", false);
@@ -62,6 +64,8 @@ void BaseApp::refreshCompositor(bool disableAll)
 		cmp.setCompositorEnabled(vp, "motionblur", false);
 		cmp.setCompositorEnabled(vp, "FilmGrain", false);
 		cmp.setCompositorEnabled(vp, "gbufferUIRender", false);
+	}catch(...)
+	{	LogO("!Warning: Failed to set all compositors false.");  }
 	}
 
 	if (!pSet->all_effects || disableAll)
@@ -70,12 +74,12 @@ void BaseApp::refreshCompositor(bool disableAll)
 	//  Set Bloom params (intensity, orig weight)
 	try
 	{	MaterialPtr bloom = MaterialManager::getSingleton().getByName("Ogre/Compositor/BloomBlend2");
-	if(!bloom.isNull())
-	{
-		GpuProgramParametersSharedPtr params = bloom->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
-		params->setNamedConstant("OriginalImageWeight", pSet->bloom_orig);
-		params->setNamedConstant("BlurWeight", pSet->bloom_int);
-	}
+		if (bloom)
+		{
+			GpuProgramParametersSharedPtr params = bloom->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+			params->setNamedConstant("OriginalImageWeight", pSet->bloom_orig);
+			params->setNamedConstant("BlurWeight", pSet->bloom_int);
+		}
 	}catch(...)
 	{	LogO("!Warning: Failed to set bloom shader params.");  }
 

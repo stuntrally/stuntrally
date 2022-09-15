@@ -771,9 +771,9 @@ namespace Forests {
 
 	void GrassLayer::setMaterialName(const String &matName)
 	{
-		if (material.isNull() || matName != material->getName()){
+		if (!material || matName != material->getName()){
 			material = MaterialManager::getSingleton().getByName(matName);
-			if (material.isNull())
+			if (!material)
 				OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "The specified grass material does not exist", "GrassLayer::setMaterialName()");
 			shaderNeedsUpdate = true;
 		}
@@ -848,7 +848,7 @@ namespace Forests {
 			densityMap->unload();
 			densityMap = NULL;
 		}
-		if (map.isNull() == false){
+		if (map){
 			densityMap = DensityMap::load(map, channel);
 			densityMap->setFilter(densityMapFilter);
 		}
@@ -1092,7 +1092,7 @@ namespace Forests {
 			colorMap->unload();
 			colorMap = NULL;
 		}
-		if (map.isNull() == false){
+		if (map){
 			colorMap = ColorMap::load(map, channel);
 			colorMap->setFilter(colorMapFilter);
 		}
@@ -1138,7 +1138,7 @@ namespace Forests {
 
 				//Check if the desired material already exists (if not, create it)
 				MaterialPtr tmpMat = MaterialManager::getSingleton().getByName(matName);
-				if (tmpMat.isNull())
+				if (!tmpMat)
 				{
 					//Clone the original material
 					tmpMat = material->clone(matName);

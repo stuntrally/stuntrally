@@ -21,7 +21,7 @@ namespace sh
 		: GpuProgram()
 	{
 		Ogre::HighLevelGpuProgramManager& mgr = Ogre::HighLevelGpuProgramManager::getSingleton();
-		assert (mgr.getByName(name).isNull() && "Vertex program already exists");
+		assert (!mgr.getByName(name) && "Vertex program already exists");
 
 		Ogre::GpuProgramType t;
 		if (type == GPT_Vertex)
@@ -40,18 +40,18 @@ namespace sh
 		mProgram->setSource(source);
 		mProgram->load();
 
-		if (mProgram.isNull() || !mProgram->isSupported())
+		if (!mProgram || !mProgram->isSupported())
 			std::cerr << "Failed to compile shader \"" << name << "\". Consider the OGRE log for more information." << std::endl;
 	}
 
 	bool OgreGpuProgram::getSupported()
 	{
-		return (!mProgram.isNull() && mProgram->isSupported());
+		return (mProgram && mProgram->isSupported());
 	}
 
 	void OgreGpuProgram::setAutoConstant (const std::string& name, const std::string& autoConstantName, const std::string& extraInfo)
 	{
-		assert (!mProgram.isNull() && mProgram->isSupported());
+		assert (mProgram && mProgram->isSupported());
 		const Ogre::GpuProgramParameters::AutoConstantDefinition* d = Ogre::GpuProgramParameters::getAutoConstantDefinition(autoConstantName);
 
 		if (!d)
