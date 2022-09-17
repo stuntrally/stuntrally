@@ -279,6 +279,7 @@ void App::LoadCleanUp()  // 1 first
 	carModels.clear();  //carPoses.clear();
 
 	
+	LogO("------  # Destroy trk");
 	if (dstTrk)
 	{
 		scn->DestroyTrees();
@@ -292,6 +293,7 @@ void App::LoadCleanUp()  // 1 first
 
 
 	///  destroy all
+	LogO("------  # Destroy all");
 	if (dstTrk)
 	{
 		//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();  // destroy all scenenodes
@@ -304,9 +306,11 @@ void App::LoadCleanUp()  // 1 first
 	}
 
 	// remove junk from previous tracks
+	LogO("------  # Unload prev track res");
 	MeshManager::getSingleton().unloadUnreferencedResources();
 	sh::Factory::getInstance().unloadUnreferencedMaterials();
 	Ogre::TextureManager::getSingleton().unloadUnreferencedResources();
+	LogO("------  # Unload prev track res done");
 }
 
 

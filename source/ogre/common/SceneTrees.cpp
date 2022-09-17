@@ -47,7 +47,9 @@ inline Real getTerrainHeight(const Real x, const Real z, void *userData)
 void CScene::DestroyTrees()
 {
 	if (grass) {  delete grass->getPageLoader();  delete grass;  grass=0;   }
+	LogO("------  # Destroy trees");
 	if (trees) {  delete trees->getPageLoader();  delete trees;  trees=0;   }
+	LogO("------  # Destroy trees done");
 }
 
 void CScene::RecreateTrees()
@@ -263,7 +265,9 @@ void CScene::CreateTrees()
 				try
 				{	TextureManager::getSingleton().load(fpng, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);  ///T png first
 				}catch (Exception&)
-				{	}
+				{	
+					LogO("## Veget impostor, Can't load: "+fpng);
+				}
 			}
 
 

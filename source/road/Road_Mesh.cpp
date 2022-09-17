@@ -2,6 +2,7 @@
 #include "../ogre/common/Def_Str.h"
 #include "../ogre/common/RenderConst.h"
 #include "Road.h"
+#include <OgreException.h>
 #include <OgreSubMesh.h>
 #include <OgreSceneManager.h>
 #include <OgreMeshManager.h>
@@ -195,14 +196,15 @@ try
 		mSceneMgr->destroyEntity(rs.road[l].ent);
 		#endif
 		mSceneMgr->destroySceneNode(rs.road[l].node);
-		Ogre::MeshManager::getSingleton().remove(rs.road[l].smesh);
+		if (Ogre::MeshManager::getSingleton().resourceExists(rs.road[l].smesh))
+			Ogre::MeshManager::getSingleton().remove(rs.road[l].smesh);
 		//Resource* r = ResourceManae::getSingleton().remove(rs.road[l].smesh);
 	}
-}catch(...)
+}catch (Exception ex)
 {
-	LogO("Error!! DestroySeg");
+	LogO(String("# Error! road DestroySeg") + ex.what());
 }
-	LogO("Destroyed.");
+	//LogO("Destroyed.");
 	rs.empty = true;
 	rs.lpos.clear();
 }
