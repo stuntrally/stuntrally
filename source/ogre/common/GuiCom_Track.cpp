@@ -544,6 +544,6 @@ void CGuiCom::UpdGuiRdStats(const SplineRoad* rd, const Scene* sc, const String&
 		a = q.getPitch().valueRadians();
 		if (reverse)  a += PI_d;
 		//static float a = 0.f;  a += 0.1f;  //test center
-		imgMiniRot[id]->setAngle(a);
+		imgMiniRot[id]->setAngle(a);  // todo: crash after lang change bGI..
 	}
 }
