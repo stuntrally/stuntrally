@@ -15,6 +15,7 @@
 #include "CarModel.h"
 #include "FollowCamera.h"
 
+#include <OgreLog.h>
 #include <OgreLogManager.h>
 #include <MyGUI_Prerequest.h>
 #if OGRE_VERSION >= MYGUI_DEFINE_VERSION(1, 9, 0)
@@ -321,11 +322,12 @@ bool BaseApp::setup()
 
 	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
 #if defined(OGRE_VERSION) && OGRE_VERSION >= 0x10B00
-    mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Codec_STBI" + D_SUFFIX);
+    //mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Codec_STBI" + D_SUFFIX);  // only png
+    mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Codec_FreeImage" + D_SUFFIX);  // for jpg screenshots
 #endif
 
 	#ifdef _DEBUG
-	LogManager::getSingleton().setLogDetail(LL_BOREME);//
+	LogManager::getSingleton().setMinLogLevel(LML_TRIVIAL);  // all
 	#endif
 
 	setupResources();

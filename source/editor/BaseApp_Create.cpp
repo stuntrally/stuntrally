@@ -239,7 +239,9 @@ bool BaseApp::setup()
 		pSet->rendersystem = "OpenGL Rendering Subsystem";
 		#endif
 	}
-	//LogManager::getSingleton().setLogDetail(LL_BOREME);  //-
+	#ifdef _DEBUG
+	Ogre::LogManager::getSingleton().setMinLogLevel(LML_TRIVIAL);  // all
+	#endif
 
 	#ifdef _DEBUG
 	#define D_SUFFIX ""  // "_d"
@@ -263,7 +265,8 @@ bool BaseApp::setup()
 
 	mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Plugin_ParticleFX" + D_SUFFIX);
 #if defined(OGRE_VERSION) && OGRE_VERSION >= 0x10B00
-    mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Codec_STBI" + D_SUFFIX);
+    //mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Codec_STBI" + D_SUFFIX);  // only png
+    mRoot->loadPlugin(PATHMANAGER::OgrePluginDir() + "/Codec_FreeImage" + D_SUFFIX);  // for jpg screenshots
 #endif
 
 	setupResources();
