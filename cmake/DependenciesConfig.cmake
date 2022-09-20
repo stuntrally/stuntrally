@@ -6,14 +6,14 @@ find_package(Threads REQUIRED)
 
 add_external_lib(
         Boost
-        boost/1.79.0
+        boost/1.80.0
         REQUIRED
         FIND_PACKAGE_OPTIONS COMPONENTS system thread filesystem wave
 )
 
 add_external_lib(
         OGRE
-        ogre3d/13.4.2@anotherfoxguy/stable
+        ogre3d/13.4.4@anotherfoxguy/stable
         REQUIRED
         CONAN_PKG_NAME OGRE
         CONAN_OPTIONS ogre3d:nodeless_positioning=True ogre3d:resourcemanager_strict=off
@@ -66,7 +66,7 @@ add_external_lib(
 
 add_external_lib(
         OpenAL
-        openal/1.21.1
+        openal/1.22.2
         PKG_CONFIG "openal >= 1.18"
         FIND_PACKAGE_OPTIONS CONFIG
 )
