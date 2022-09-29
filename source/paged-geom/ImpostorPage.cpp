@@ -477,12 +477,12 @@ ImpostorTexture::~ImpostorTexture()
 		//Delete textures
 		assert(texture);
 		String texName(texture->getName());
-		texture.reset();
 		if (TextureManager::getSingletonPtr())
 		{
-			TextureManager::getSingleton().remove(texName);
-			TextureManager::getSingleton().unload(texName);
+			TextureManager::getSingleton().remove(texture);
+			//TextureManager::getSingleton().unload(texName);
 		}
+		texture.reset();
 	}
 
 	//Remove self from list of ImpostorTexture's
@@ -492,11 +492,10 @@ ImpostorTexture::~ImpostorTexture()
 void ImpostorTexture::regenerate()
 {
 	assert(texture);
-	String texName(texture->getName());
-	texture.reset();
+	//String texName(texture->getName());
 	if (TextureManager::getSingletonPtr())
-		TextureManager::getSingleton().remove(texName);
-
+		TextureManager::getSingleton().remove(texture);
+	texture.reset();
 	renderTextures(true);
 	updateMaterials();
 }

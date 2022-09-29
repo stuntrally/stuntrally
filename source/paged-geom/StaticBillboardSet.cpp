@@ -146,9 +146,9 @@ void StaticBillboardSet::clear()
          mpEntity = NULL;
 
          //Delete mesh
-         String meshName(mPtrMesh->getName());
+         MeshManager::getSingleton().remove(mPtrMesh);
+         //String meshName(mPtrMesh->getName());
          mPtrMesh.reset();
-         MeshManager::getSingleton().remove(meshName);
       }
 
       if (!mBillboardBuffer.empty())
