@@ -1,4 +1,4 @@
-![](https://github.com/stuntrally/stuntrally/blob/master/data/hud/stuntrally-logo.jpg?raw=true)
+![](/data/hud/stuntrally-banner.jpg)
 
 ------------------------------------------------------------------------------
 
