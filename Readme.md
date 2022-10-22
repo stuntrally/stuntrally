@@ -5,7 +5,6 @@
     Stunt Rally - 3D racing game, based on VDrift and OGRE, with Track Editor
     Copyright (C) 2010-2022  Crystal Hammer and contributors
 
-------------------------------------------------------------------------------
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,7 +19,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see https://www.gnu.org/licenses/
 
-------------------------------------------------------------------------------
 
     The license GNU GPL 3.0 applies only to code written by us.
     Which is in source dir, subdirs: editor, network, ogre and road.
