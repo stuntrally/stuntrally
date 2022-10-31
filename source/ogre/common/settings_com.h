@@ -40,7 +40,6 @@ public:
 
 	//  graphics other
 	int preset;  // last set, info only
-	bool horizon;
 	std::string shader_mode;
 
 

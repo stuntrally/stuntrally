@@ -88,11 +88,6 @@ public:
 	Ogre::TerrainGroup* mTerrainGroup;
 	void SetupTerrain(), UpdTerErr();
 
-	Ogre::Terrain* horizon;
-	Ogre::TerrainGlobalOptions* mHorizonGlobals;
-	Ogre::TerrainGroup* mHorizonGroup;
-	void SetupHorizon();
-
 	
 	//  Blendmap, rtt
 	//-----------------------------------

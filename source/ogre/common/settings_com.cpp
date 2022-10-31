@@ -107,7 +107,7 @@ SETcom::SETcom()   ///  Defaults
 
 	//  graphics
 	,preset(4)
-	,shader_mode(""), horizon(0), lightmap_size(0) //-
+	,shader_mode(""), lightmap_size(0) //-
 
 	,tex_filt(2), anisotropy(4), view_distance(2000.f)
 	,terdetail(1.f), terdist(300.f), road_dist(1.f)

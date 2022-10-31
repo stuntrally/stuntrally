@@ -113,45 +113,6 @@ void CScene::SetupTerrain()
 	}
 }
 
-void CScene::SetupHorizon()
-{
-	TerrainMaterialGeneratorPtr matGen;
-	TerrainMaterial* matGenP = new TerrainMaterial(this);
-	matGen.bind(matGenP);
-
-	mHorizonGlobals->setDefaultMaterialGenerator(matGen);
-	mTerrainGlobals->setMaxPixelError(app->pSet->terdetail * sc->td.errorNorm);  // 1.7 ..20
-
-	mHorizonGlobals->setLightMapDirection(sun->getDerivedDirection());
-	mHorizonGlobals->setCompositeMapAmbient(app->mSceneMgr->getAmbientLight());
-	mHorizonGlobals->setCompositeMapDiffuse(sun->getDiffuseColour());
-
-	mHorizonGlobals->setCompositeMapSize(sc->td.iTerSize-1);  // par, 128,256 ..
-	mHorizonGlobals->setCompositeMapDistance(app->pSet->terdist);  //..
-	mHorizonGlobals->setLightMapSize(ciShadowSizesA[app->pSet->lightmap_size]);  //256 ..2k
-	mHorizonGlobals->setSkirtSize(1);
-	//matProfile->setLightmapEnabled(false);
-
-	Terrain::ImportData& di = mHorizonGroup->getDefaultImportSettings();
-	di.terrainSize = sc->td.iTerSize;
-	di.worldSize = sc->td.fTerWorldSize;
-	di.minBatchSize = 65;
-	di.maxBatchSize = Terrain::TERRAIN_MAX_BATCH_SIZE;  // 129
-	LogO("Horizon size: "+toStr(sc->td.iTerSize)+"  err:"+fToStr(mHorizonGlobals->getMaxPixelError(),2,4)+
-		"  batch: "+toStr(di.minBatchSize)+" "+toStr(di.maxBatchSize));
-
-	//  textures
-	int ls = 1; //sc->td.layers.size();
-	di.layerList.resize(ls);
-	for (int i=0; i < ls; ++i)
-	{
-		TerLayer& l = sc->td.layersAll[sc->td.layers[i]];
-		di.layerList[i].worldSize = l.tiling * 16.f;
-		di.layerList[i].textureNames.push_back(l.texFile);
-		di.layerList[i].textureNames.push_back(l.texNorm);
-	}
-}
-
 
 ///--------------------------------------------------------------------------------------------------------------
 //  Create Terrain
@@ -250,36 +211,6 @@ if (bTer)
 		mTerrainGroup->freeTemporaryResources();
 	}
 
-	//  Horizon  ----------
-	if (app->pSet->horizon)
-	{
-		if (!mHorizonGlobals)
-			mHorizonGlobals = OGRE_NEW TerrainGlobalOptions();
-		OGRE_DELETE mHorizonGroup;
-
-		mHorizonGroup = OGRE_NEW TerrainGroup(app->mSceneMgr, Terrain::ALIGN_X_Z,
-			sc->td.iTerSize, sc->td.fTerWorldSize * 16.f);
-		mHorizonGroup->setOrigin(Vector3::ZERO);
-
-		SetupHorizon();
-
-		//if (sc->td.hfHeight)
-		//	mHorizonGroup->defineTerrain(0,0, sc->td.hfHeight);
-		//else
-			mHorizonGroup->defineTerrain(0,0, 0.f);
-
-		mHorizonGroup->loadAllTerrains(true);
-
-		TerrainGroup::TerrainIterator ti = mHorizonGroup->getTerrainIterator();
-		while (ti.hasMoreElements())
-		{
-			Terrain* t = ti.getNext()->instance;
-			//initBlendMaps(t);
-			horizon = t;  //<set
-			horizon->setVisibilityFlags(RV_Terrain);
-		}
-		mHorizonGroup->freeTemporaryResources();
-	}
 }//bTer
 
 	

@@ -16,7 +16,6 @@ CScene::CScene(App* app1)
 	,sun(0), pr(0),pr2(0)
 	,grass(0), trees(0)
 	,terrain(0), mTerrainGroup(0), mTerrainGlobals(0)
-	,horizon(0), mHorizonGroup(0), mHorizonGlobals(0)
 	,mWaterRTT(0)
 	,road(0), pace(0), trail(0)
 {
@@ -30,8 +29,6 @@ CScene::~CScene()
 	//?DestroyRoad();
 	delete pace;
 
-	OGRE_DELETE mHorizonGroup;
-	OGRE_DELETE mHorizonGlobals;
 	OGRE_DELETE mTerrainGroup;
 	OGRE_DELETE mTerrainGlobals;
 
