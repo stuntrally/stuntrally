@@ -162,7 +162,7 @@ void App::CreateObjects()
 			Vector3 posO = Axes::toOgre(o.pos);
 			Quaternion rotO = Axes::toOgreW(o.rot);
 
-			Matrix4 tre;  tre.makeTransform(posO,o.scale,rotO);
+			Matrix4 tre;  tre.makeTransform(posO, o.scale, rotO);
 			BtOgre::StaticMeshToShapeConverter converter(o.ent, tre);
 			btCollisionShape* shape = converter.createTrimesh();  //=new x2 todo:del?...
 			shape->setUserPointer((void*)SU_ObjectStatic);  // mark
@@ -232,9 +232,7 @@ void App::DestroyObjects(bool clear)
 
 		// ogre
 		if (o.nd)  mSceneMgr->destroySceneNode(o.nd);  o.nd = 0;
-		#ifdef SR_EDITOR  // game has destroyAll
 		if (o.ent)  mSceneMgr->destroyEntity(o.ent);  o.ent = 0;
-		#endif
 
 		#ifdef SR_EDITOR
 		// bullet

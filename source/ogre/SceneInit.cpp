@@ -298,7 +298,7 @@ void App::LoadCleanUp()  // 1 first
 	{
 		//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();  // destroy all scenenodes
 		mSceneMgr->destroyAllManualObjects();
-		mSceneMgr->destroyAllEntities();
+		// mSceneMgr->destroyAllEntities();
 		mSceneMgr->destroyAllStaticGeometry();
 		//mSceneMgr->destroyAllParticleSystems();
 		mSceneMgr->destroyAllRibbonTrails();
