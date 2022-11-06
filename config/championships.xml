@@ -609,6 +609,7 @@ descr="Canyon championship.">
 		<t name="Can6-Abyss"/>
 		<t name="Can7-RedWavy"/>
 		<t name="Can8-RedoPoka"/>
+		<t name="Can9-DukeRain"/>
 	</champ>
 	<champ name="Australia" ver="2" difficulty="4" type="6"
 descr="Australia championship.">
@@ -908,10 +909,12 @@ descr="Absolutely all rally tracks from game. Some easy pipes might appear.">
 		<t name="For20-LakoPine"/>
 		<t name="Grc12-KapabaRivers"/>
 		<t name="Aln4-EjeloOutpost"/>
+		<t name="Can8-RedoPoka"/>
+		<t name="Can9-DukeRain"/>
 	</champ>
 
 	<champ name="ALL Stunt tracks" ver="1" difficulty="6" type="4"
-descr="Complete set of all stunt tracks from game.">
+descr="Complete set of all stunt tracks from game. From easy, earliest to newest.">
 		<t name="Sav3-Loops"/>
 		<t name="Des3-Passage"/>
 		<t name="Jng5-Pipes"/>
@@ -987,6 +990,8 @@ descr="Complete set of all stunt tracks from game.">
 		<t name="Grc13-YeleyStunts"/>
 		<t name="Sur8-BloCorcle"/>
 		<t name="Aln5-WhiteLemon"/>
+		<t name="Isl18-RoupaIsland"/>
+		<t name="Isl19-Shocacosh"/>
 	</champ>
 
 </championships>

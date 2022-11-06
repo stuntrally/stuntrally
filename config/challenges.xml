@@ -986,6 +986,20 @@ descr="Alternating series of stunt tracks in red desert and blueish islands.">
 		</tracks>
 	</challenge>
 
+	<challenge name="#F0F060Island #F0D060stunts" ver="1" difficulty="5" type="5"
+descr="Stunt tracks on various islands. Not too challenging.">
+		<cartype names="Gravel" />
+		<car names="SX|XZ|U6|BV" />
+		<pass avgPoints="10" />
+		<tracks>
+			<t name="Isl11-StuntIslands"/>
+			<t name="Isl14-Ocean"/>
+			<t name="Isl18-RoupaIsland"/>
+			<t name="Isl19-Shocacosh"/>
+			<t name="Isl17-AdapterIslands"/>
+		</tracks>
+	</challenge>
+
 	<challenge name="#F0F020U#F0D040l#D0B080t#C090A0i#B080C0m#A080D8a#9080E0t#8080F0e #FFA020long #C0C0FFstunts" ver="1" difficulty="7" type="5"
 descr="Newest long stunt tracks. Great looks and challenging stunts. Last tracks are extremely long. Be prepared, patient and avoid damage, if you want to pass. #C0E0C0Fast vehicles available, changing possible.">
 		<cartype names="Gravel" />

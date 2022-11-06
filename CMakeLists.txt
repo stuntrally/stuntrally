@@ -60,7 +60,7 @@ endif ()
 
 
 # We want the binaries to be easily accessible
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})  # /${CMAKE_BUILD_TYPE}
 
 
 # Data installation path
