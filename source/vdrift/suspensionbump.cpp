@@ -5,7 +5,7 @@ SUSPENSIONBUMPDETECTION::SUSPENSIONBUMPDETECTION()
 : state(SETTLED),
   laststate(SETTLED),
   displacetime(0.01),
-  displacevelocitythreshold(0.5),
+  displacevelocitythreshold(0.8),
   settletime(0.01),
   settlevelocitythreshold(0.0),
   displacetimer(0),
