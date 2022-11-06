@@ -41,6 +41,7 @@ bool BaseApp::NeedMRTBuffer()
 //-------------------------------------------------------------------------------------
 void BaseApp::refreshCompositor(bool disableAll)
 {
+	return;  //!
 	CompositorManager& cmp = CompositorManager::getSingleton();
 
 	for (auto vp : mSplitMgr->mViewports)
@@ -128,15 +129,16 @@ void BaseApp::refreshCompositor(bool disableAll)
 //-------------------------------------------------------------------------------------
 void BaseApp::recreateCompositor()
 {
+	return;  //!
 	CompositorManager& cmp = CompositorManager::getSingleton(); 
 
 	if (!pSet->all_effects)  // disable compositor
 	{
-		try {
-			refreshCompositor();
+		try
+		{	refreshCompositor();
 		}
-		catch (InvalidParametersException& e) {
-			// ignore missing compositors
+		catch (InvalidParametersException& e)
+		{	// ignore missing compositors
 		}
 		return;
 	}

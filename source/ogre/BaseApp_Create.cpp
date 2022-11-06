@@ -369,7 +369,7 @@ bool BaseApp::setup()
 
 		LogO(String(":::: Time createScene: ") + fToStr(ti.getMilliseconds(),0,3) + " ms");  ti.reset();
 
-	LogO("*** recreateCompositor ***");
+	LogO("*** recreateCompositor, does nothing ***");
 	recreateCompositor();
 
 	LogO("*** end setup ***");
