@@ -322,6 +322,8 @@ void App::LoadGame()  // 2
 	mSplitMgr->mNumViewports = bRplPlay ? numRplViews : pSet->game.local_players;  // set num players
 	mSplitMgr->Align();
 	mPlatform->getRenderManagerPtr()->setActiveViewport(mSplitMgr->mNumViewports);
+	//  water RTT
+	scn->UpdateWaterRTT(mSplitMgr->mCameras.front());
 	
 	pGame->LeaveGame(dstTrk);
 
