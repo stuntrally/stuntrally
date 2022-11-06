@@ -65,8 +65,8 @@
 	<Tag name="Diff5">Velmi těžká</Tag>
 	<Tag name="Diff6">Mimořádná</Tag>
 	<Tag name="Diff7">Přepjatá</Tag>
-	<Tag name="DifficultyHelp">Changing difficulty does set: Tracks list filter and sorting, selected Vehicle and Track, visible HUD elements and driving aids. All can be changed manually later.</Tag>
-	<Tag name="SimulationHelp">Simulation mode does change how realistic vehicles are and how difficult driving is. It also changes damage mode and how fast vehicles break after hits. In Easy mode - vehicles are slow, feel heavy and cars don't slide much. In Medium - they are fast, slide and will spin wheels on snow and can on gravel. In Hard - cars rotate easier, and wheels spin already on gravel, good control is required.</Tag>
+	<Tag name="DifficultyHelp">Změna obtížnosti se nastaví: Filtr a třídění seznamu tratí, vybrané vozidlo a trať, viditelné prvky HUD a jízdní pomůcky. Vše lze později změnit ručně.</Tag>
+	<Tag name="SimulationHelp">Režim simulace mění realističnost vozidel a obtížnost řízení. Mění také režim poškození a rychlost, s jakou se vozidla po zásahu rozbijí. V režimu obtížnosti Lehká - vozidla jsou pomalá, působí těžce a auta moc nekloužou. V režimu Střední - jsou rychlá, kloužou a protáčejí se jim kola na sněhu a mohou jezdit po štěrku. V režimu Těžká - vozidla se snadněji otáčejí a kola se na štěrku již protáčejí, je nutné dobré ovládání.</Tag>
 	<Tag name="Track">Závodní trať</Tag>
 	<Tag name="Reverse">Obrácené</Tag>
 	<Tag name="NewGame">Nová hra</Tag>
