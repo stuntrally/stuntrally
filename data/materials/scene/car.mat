@@ -149,51 +149,6 @@ material ES_brake
 	parent ES_wheel	
 }
 
-//  S1  -------------------------------------------------
-material S1_glass
-{
-	parent car_glass
-	diffuseMap S1_glass.png
-}
-material S1_interior
-{
-	parent car_interior
-	diffuseMap S1_interior.png
-	specMap S1_interior_spec.png
-	reflMap S1_interior_refl.png
-	ambient 1 1 1
-	diffuse 1 1 1
-	specular 1 1 1 24
-	receives_shadows true
-	terrain_light_map true
-	terrain_light_map_toggleable true
-	env_map true
-	refl_amount 0.2
-}
-
-material S1_wheel
-{
-	parent car_base
-	diffuseMap S1_wheel.png
-	normalMap S1_wheel_norm.png
-	specMap S1_wheel_spec.png
-	reflMap S1_wheel_refl.png
-	ambient 0.7 0.7 0.7
-	diffuse 0.8 0.8 0.8
-	specular 0.7 0.7 0.4 32
-	env_map true
-	refl_amount 0.1
-}
-material S1_brake  // disc- caliper
-{
-	parent car_base
-	diffuseMap S1_brake.jpg
-	ambient 0.7 0.7 0.7
-	diffuse 0.7 0.7 0.7
-	specular 0.8 0.8 0.8 20
-}
-
-
 
 //  S8  -------------------------------
 material S8_glass
