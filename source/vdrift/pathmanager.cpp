@@ -61,6 +61,7 @@ void PATHMANAGER::Init(bool log_paths)
 		}
 	}
 	//ogre_plugin = "/usr/lib/x86_64-linux-gnu/OGRE-1.9.0";
+	//ogre_plugin = "/usr/local/lib/OGRE";  // Ogre 1.13 built from sources
 
 	fs::path stuntrally = "stuntrally";
 	// Figure out the user's home directory

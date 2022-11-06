@@ -107,7 +107,7 @@ void ImpostorPage::init(PagedGeometry *geom, const Ogre::Any &data)
 	assert(geom && "Null pointer to PagedGeometry");
 	m_pSceneMgr    = geom->getSceneManager();
 	m_pPagedGeom   = geom;
-	LogO("# ImpostorPage::init");
+	// LogO("# ImpostorPage::init");
 
 	if (s_nSelfInstances == 1)  // first instance
 	{
