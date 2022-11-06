@@ -89,7 +89,13 @@ ImpostorPage::~ImpostorPage()
 			assert(false && "Who must delete scene node???");
 		}
 
-		ResourceGroupManager::getSingleton().destroyResourceGroup("Impostors");
+		try
+		{	ResourceGroupManager::getSingleton().destroyResourceGroup("BinFolder");  //Impostors
+		}
+		catch (Exception&)
+		{
+			LogO("## destroyResourceGroup Impostors ~dtor fail");
+		}
 	}
 }
 
@@ -101,13 +107,16 @@ void ImpostorPage::init(PagedGeometry *geom, const Ogre::Any &data)
 	assert(geom && "Null pointer to PagedGeometry");
 	m_pSceneMgr    = geom->getSceneManager();
 	m_pPagedGeom   = geom;
+	LogO("# ImpostorPage::init");
 
 	if (s_nSelfInstances == 1)  // first instance
 	{
 		// Set up a single instance of a scene node which will be used when rendering impostor textures
 		geom->getSceneNode()->createChildSceneNode("ImpostorPage::renderNode");
 		geom->getSceneNode()->createChildSceneNode("ImpostorPage::cameraNode");
-		ResourceGroupManager::getSingleton().createResourceGroup("Impostors");
+		LogO("# createResourceGroup BinFolder");
+		ResourceGroupManager::getSingleton().createResourceGroup("BinFolder");  //Impostors
+		LogO("# createResourceGroup BinFolder ok");
 	}
 }
 
@@ -459,6 +468,7 @@ void ImpostorTexture::updateMaterials()
 
 ImpostorTexture::~ImpostorTexture()
 {
+	LogO("# ~ImpostorTexture()");
 	if (!bOnlyToRender)
 	{
 		//Delete materials
@@ -527,7 +537,7 @@ void ImpostorTexture::renderTextures(bool force)
 	Ogre::uint textureSize = ImpostorPage::getImpostorResolution();
 	if (!renderTexture)
 	{
-		renderTexture = TextureManager::getSingleton().createManual(getUniqueID("ImpostorTexture"), "Impostors",
+		renderTexture = TextureManager::getSingleton().createManual(getUniqueID("ImpostorTexture"), "BinFolder", //Impostors
 			TEX_TYPE_2D, textureSize * IMPOSTOR_YAW_ANGLES, textureSize * IMPOSTOR_PITCH_ANGLES, 0, PF_A8R8G8B8, TU_RENDERTARGET, loader.get());
 	}
 	renderTexture->setNumMipmaps(255/*MIP_UNLIMITED*/);
@@ -624,10 +634,10 @@ void ImpostorTexture::renderTextures(bool force)
 	needsRegen = force || group->getParentPagedGeometry()->forceRegenImpostors;  ///T
 	if (!needsRegen)
 	{
-		bool has = ResourceGroupManager::getSingleton().resourceExistsInAnyGroup(fileNamePNG);
+		bool has = ResourceGroupManager::getSingleton().resourceExists("BinFolder", fileNamePNG);
 		if (has)
-		try{	// get preloaded
-			texture = TextureManager::getSingleton().getByName(fileNamePNG, "BinFolder");
+		try	// get preloaded
+		{	texture = TextureManager::getSingleton().getByName(fileNamePNG, "BinFolder");
 			pre = true;
 		}catch (Ogre::Exception&)
 		{	has = false;	}
@@ -676,7 +686,10 @@ void ImpostorTexture::renderTextures(bool force)
 		renderTarget->writeContentsToFile(tempdir + "/" + fileNamePNG);  ///T missing /
 
 		//Load the render into the appropriate texture view
-		texture = TextureManager::getSingleton().load(fileNamePNG, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);
+		try{
+			texture = TextureManager::getSingleton().load(fileNamePNG, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);
+		}catch (Ogre::Exception&)
+		{	LogO("## impostor failed load after png save: " + fileNamePNG);  }
 #else
 		texture = renderTexture;
 #endif

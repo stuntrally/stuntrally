@@ -82,6 +82,7 @@ void CScene::UpdCamera()
 
 void CScene::CreateTrees()
 {
+	LogO("# CreateTrees()");
 	Ogre::Timer ti;
 	updGrsTer();
 		
@@ -102,12 +103,22 @@ void CScene::CreateTrees()
 	
 	// remove old BinFolder's (paged geom temp resource groups)
 	ResourceGroupManager& resMgr = ResourceGroupManager::getSingleton();
-	if (resMgr.resourceGroupExists("BinFolder"))
-	{
-		StringVectorPtr locations = resMgr.listResourceLocations("BinFolder");
-		for (auto it = locations->begin(); it != locations->end(); ++it)
-			resMgr.removeResourceLocation( (*it), "BinFolder" );
-	}
+	try
+	{	//LogO("# destroyResourceGroup BinFolder");
+		//resMgr.destroyResourceGroup( "BinFolder" );
+		if (resMgr.resourceGroupExists("BinFolder"))
+		{
+			LogO("# resourceGroupExists BinFolder");
+			StringVectorPtr locations = resMgr.listResourceLocations("BinFolder");
+			for (auto it = locations->begin(); it != locations->end(); ++it)
+			{
+				LogO("# removeResourceLocation BinFolder "+(*it));
+				//resMgr.destroyResourceGroup( (*it), "BinFolder" );
+				resMgr.removeResourceLocation( (*it), "BinFolder" );
+			}
+		}
+	}catch (Ogre::Exception&)
+	{	LogO("# impostor destroy BinFolder in CreateTrees");  }
 	
 	std::string sCache = PATHMANAGER::CacheDir() + "/tracks/";
 	#ifndef SR_EDITOR
@@ -205,8 +216,11 @@ void CScene::CreateTrees()
 		}
 		if (imp)
 		{
+			LogO("# addDetailLevel<ImpostorPage");
 			trees->addDetailLevel<ImpostorPage>(sc->trDistImp * pSet->trees_dist, 0);
+			LogO("# addResourceLocation BinFolder");
 			resMgr.addResourceLocation(trees->getTempDir(), "FileSystem", "BinFolder");
+			LogO("# addResourceLocation BinFolder ok");
 		}
 
 		TreeLoader2D* treeLoader = new TreeLoader2D(trees, tbnd);
@@ -264,8 +278,9 @@ void CScene::CreateTrees()
 				}
 				try
 				{	TextureManager::getSingleton().load(fpng, "BinFolder", TEX_TYPE_2D, MIP_UNLIMITED);  ///T png first
-				}catch (Exception&)
-				{	
+				}
+				catch (Exception&)
+				{
 					LogO("## Veget impostor, Can't load: "+fpng);
 				}
 			}

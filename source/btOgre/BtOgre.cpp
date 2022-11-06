@@ -287,7 +287,7 @@ void RigidBodyState::setWorldTransform(const btTransform &in)
 	{
 		const Ogre::Vector3 sz = getSize();
 
-		assert((sz.x > 0.0) && (sz.y > 0.0) && (sz.y > 0.0) && 
+		assert((sz.x > 0.0) && (sz.y > 0.0) && (sz.z > 0.0) && 
 			("Size of box must be greater than zero on all axes"));
 
 		btBoxShape* shape = new btBoxShape(Convert::toBullet(sz * 0.5));
@@ -298,7 +298,7 @@ void RigidBodyState::setWorldTransform(const btTransform &in)
 	{
 		const Ogre::Vector3 sz = getSize();
 
-		assert((sz.x > 0.0) && (sz.y > 0.0) && (sz.y > 0.0) && 
+		assert((sz.x > 0.0) && (sz.y > 0.0) && (sz.z > 0.0) && 
 			("Size of Cylinder must be greater than zero on all axes"));
 
 		btCylinderShape* shape = new btCylinderShapeX(Convert::toBullet(sz * 0.5));
