@@ -50,6 +50,7 @@ void CScene::SetupTerrain()
 	mTerrainGlobals->setCompositeMapDistance(app->pSet->terdist);  //400
 	mTerrainGlobals->setLightMapSize(ciShadowSizesA[app->pSet->lightmap_size]);  //256 ..2k
 	mTerrainGlobals->setSkirtSize(1);  // low because in water reflect
+	mTerrainGlobals->setVisibilityFlags(RV_Terrain);
 
 	//  import settings
 	Terrain::ImportData& di = mTerrainGroup->getDefaultImportSettings();
@@ -201,13 +202,9 @@ if (bTer)
 		//  sync load since we want everything in place when we start
 		mTerrainGroup->loadAllTerrains(true);
 
-		TerrainGroup::TerrainIterator ti = mTerrainGroup->getTerrainIterator();
-		while (ti.hasMoreElements())
-		{
-			Terrain* t = ti.getNext()->instance;
-			terrain = t;  //<set
-			terrain->setVisibilityFlags(RV_Terrain);
-		}
+		auto tsm = mTerrainGroup->getTerrainSlots();
+		terrain = tsm[0]->instance;
+
 		mTerrainGroup->freeTemporaryResources();
 	}
 
