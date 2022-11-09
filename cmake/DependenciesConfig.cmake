@@ -2,6 +2,13 @@ include(DependenciesFunctions)
 set(CMAKE_THREAD_PREFER_PTHREAD YES)
 find_package(Threads REQUIRED)
 
+if (USE_PACKAGE_MANAGER)
+    conan_add_remote(NAME ror-conan
+            URL https://git.anotherfoxguy.com/api/packages/rorbot/conan
+            VERIFY_SSL True
+            )
+endif ()
+
 # Some pkg-config files are broken, that is why they are commented out
 
 add_external_lib(
@@ -13,7 +20,7 @@ add_external_lib(
 
 add_external_lib(
         OGRE
-        ogre3d/13.4.4@anotherfoxguy/stable
+        ogre3d/13.5.1@anotherfoxguy/stable
         REQUIRED
         CONAN_PKG_NAME OGRE
         CONAN_OPTIONS ogre3d:nodeless_positioning=True ogre3d:resourcemanager_strict=off
@@ -33,7 +40,7 @@ add_external_lib(
 
 add_external_lib(
         SDL2
-        sdl/2.0.20
+        sdl/2.24.1
         REQUIRED
         PKG_CONFIG "sdl2 >= 2.0"
         FIND_PACKAGE_OPTIONS CONFIG
@@ -95,6 +102,11 @@ add_external_lib(
         FIND_PACKAGE
 )
 
+# Fix conan version conflict
+add_external_lib(
+        libpng
+        libpng/1.6.38
+)
 
 set(LIBS Boost::Boost
         Threads::Threads
