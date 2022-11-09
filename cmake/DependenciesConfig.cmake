@@ -22,7 +22,6 @@ add_external_lib(
         OGRE
         ogre3d/13.5.1@anotherfoxguy/stable
         REQUIRED
-        CONAN_PKG_NAME OGRE
         CONAN_OPTIONS ogre3d:nodeless_positioning=True ogre3d:resourcemanager_strict=off
         #  uncomment below for Ogre 1.9
         #PKG_CONFIG "OGRE, OGRE-Terrain, OGRE-Paging, OGRE-Overlay"        
