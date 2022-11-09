@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+#!/usr/bin/env python3
 from xml.dom.minidom import parseString
 import os
 import re
@@ -22,14 +24,16 @@ for line in times:
 		tr = r.split(line)
 		trk = tr[1]
 		#print(tr)
-		tim = tr[19]
+		tim = tr[20]
 		map[trk] = tim
-		#print(trk + " " + tim)
+		print(trk + " " + tim)
 times.close()
 	
+i = 0;
 for t in trks:
-	if t != '.git':
+	if t.find('-') != -1:
 		# get road stats
+		#print(t)
 		file = open(tdir+'/'+t+'/road.xml','r')
 		data = file.read()
 		file.close()
@@ -41,8 +45,9 @@ for t in trks:
 		xNew = xNew.replace('height=','h=').replace('length=','l=').replace('width=','w=').replace('bnkAvg=','ba=').replace('bnkMax=','bm=')
 		xNew = xNew.replace('onPipe=','op=').replace('onTer=','ot=').replace('pipes=','p=')
 		#print(xNew)
-		print(t)
+		i += 1
 		stats.write(xNew+'\n')
 
 stats.write('</roadstats>')
 stats.close()
+print('All: '+str(i))
