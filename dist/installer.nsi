@@ -1,21 +1,25 @@
 
 ; the path where to whole game binaries with data
 ; CHANGE to yours when starting script
-!define BINARY_DIR "d:\sr\"
+!define BINARY_DIR "d:\SRinst\sr"
 ; also change Release Version
 !define PRODUCT_VERSION "2.7"
 
-; redist path should contain both vcredist_x86.exe and
+; redist path should contain both VC_redist.x86.exe and VC_redist.x64.exe
+; got from https://learn.microsoft.com/en-GB/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2015-2017-2019-and-2022
+;
 ; DirectX files: DSETUP.dll, dsetup32.dll, DXSETUP.exe, dxupdate.cab
 ; and (depending on which DX SDK was used when compiling OGRE)
 ; Jun2010_D3DCompiler_43_x86.cab, Jun2010_d3dx*_43_x86.cab
-!define REDIST_DIR "d:\redist"
+; both _x64 too?
+!define REDIST_DIR "d:\SRinst\redist"
 
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Stunt Rally"
 !define PRODUCT_PUBLISHER "Crystal Hammer"
 !define PRODUCT_WEB_SITE "https://stuntrally.tuxfamily.org/"
+!define PRODUCT_DONATIONS "https://cryham.tuxfamily.org/donate/"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\StuntRally.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
@@ -44,9 +48,10 @@ SetCompressor lzma
 !insertmacro MUI_PAGE_DIRECTORY
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
+
 ; Finish page
-!define MUI_FINISHPAGE_RUN "$INSTDIR\StuntRally.exe"
-!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\Readme.txt"
+!define MUI_FINISHPAGE_RUN "$INSTDIR\sr\StuntRally.exe"
+;!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\sr\Readme.md"
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -88,8 +93,9 @@ Section "Redist" SEC01
   File "${REDIST_DIR}\*.*"
   DetailPrint "Updating DirectX this may take a few moments..."
   ExecWait "$INSTDIR\redist\dxsetup.exe /silent"
-  DetailPrint "Installing VC redistributable..."
-  ExecWait "$INSTDIR\redist\vcredist_x86.exe"
+  DetailPrint "Installing VC redistributables..."
+  ExecWait "$INSTDIR\redist\VC_redist.x86.exe /install /quiet /norestart"
+  ExecWait "$INSTDIR\redist\VC_redist.x64.exe /install /quiet /norestart"
 SectionEnd
 
 Section "StuntRally" SEC02
@@ -97,15 +103,17 @@ Section "StuntRally" SEC02
   SetOverwrite ifnewer
   File /r "${BINARY_DIR}"
   CreateDirectory "$SMPROGRAMS\${INST_SR_DIR}"
-  CreateShortCut "$SMPROGRAMS\${INST_SR_DIR}\Stunt Rally.lnk" "$INSTDIR\StuntRally.exe"
-  CreateShortCut "$SMPROGRAMS\${INST_SR_DIR}\SR Track Editor.lnk" "$INSTDIR\SR-Editor.exe"
+  CreateShortCut "$SMPROGRAMS\${INST_SR_DIR}\Stunt Rally.lnk" "$INSTDIR\sr\StuntRally.exe"
+  CreateShortCut "$SMPROGRAMS\${INST_SR_DIR}\SR Track Editor.lnk" "$INSTDIR\sr\SR-Editor.exe"
   ;CreateShortCut "$DESKTOP\Stunt Rally.lnk" "$INSTDIR\StuntRally.exe"
 SectionEnd
 
 Section -AdditionalIcons
   SetOutPath $INSTDIR
   WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
+  WriteIniStr "$INSTDIR\Donations.url" "InternetShortcut" "URL" "${PRODUCT_DONATIONS}"
   CreateShortCut "$SMPROGRAMS\${INST_SR_DIR}\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
+  CreateShortCut "$SMPROGRAMS\${INST_SR_DIR}\Donations.lnk" "$INSTDIR\Donations.url"
   CreateShortCut "$SMPROGRAMS\${INST_SR_DIR}\Uninstall.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
 
@@ -113,8 +121,8 @@ Section -Post
   WriteUninstaller "$INSTDIR\uninst.exe"
   WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\StuntRally.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninst.exe"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\StuntRally.exe"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\sr\uninst.exe"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\sr\StuntRally.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
