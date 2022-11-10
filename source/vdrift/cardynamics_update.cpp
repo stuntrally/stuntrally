@@ -465,7 +465,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	}
 	///***  --------------------------------------------------
 	
-	
+
 	///  hover
 	if (vtype == V_Spaceship)
 		SimulateSpaceship(dt);
@@ -473,7 +473,7 @@ void CARDYNAMICS::UpdateBody(Dbl dt, Dbl drive_torque[])
 	///  sphere
 	if (vtype == V_Sphere)
 		SimulateSphere(dt);
-	
+
 
 	int i;
 	Dbl normal_force[MAX_WHEELS];
@@ -728,7 +728,7 @@ void CARDYNAMICS::SimulateSpaceship(Dbl dt)
 	float f = hov.engineForce * velMul * hov_throttle * dmgE
 			- hov.brakeForce * (rear ? velMulR : 1.f) * brk * dmgE;
 
-	MATHVECTOR<Dbl,3> vf(body.GetMass() * f, 0,0);
+	MATHVECTOR<Dbl,3> vf(body.GetMass() * f, 0, 0);
 	Orientation().RotateVector(vf);
 	ApplyForce(vf);
 
@@ -773,6 +773,7 @@ void CARDYNAMICS::SimulateSpaceship(Dbl dt)
 		suspension[1].displacement = d / len;
 		suspension[0].displacement = d / rlen;
 	
+	// float vv = std::min(1.0, -vz);
 	float aa = std::min(1.0, vz * hov.hov_vz);
 	float df = vz > 0 ? (1.0 - hov.hov_vsat * aa) : 1.0;
           df *= pipe ? hov.hov_dampP : hov.hov_damp;
@@ -781,12 +782,20 @@ void CARDYNAMICS::SimulateSpaceship(Dbl dt)
 	float dm = d > dlen ? 0 : (0.5+0.5*d/len) * df;
 		suspension[2].displacement = dm;
 		suspension[3].displacement = (d < dlen ? (len-d) * 1.f : 0.f);
+	//  anti gravity force  TODO: goes crazy in pipes
 	float fn =
-		(d > dlen ? -hov.hov_fall : 0.f) +  // fall down force v
-		//  anti grav force  TODO: goes crazy in pipes
-		(d < dlen ? (dlen-d) * (pipe ? hov.hov_riseP : hov.hov_rise) : 0.f) +
-		dm * -1000.f * vz;
-	chassis->applyCentralForce(ToBulletVector(-dn * fn * dmgE));
+		// (d > dlen ? -hov.hov_fall : 0.f) +  // fall down force v
+		// (d < dlen ? ( (dlen-d) *0.1 + 0.9)  * 7.f * (0.f + 0.6 * vv) * (pipe ? hov.hov_riseP : hov.hov_rise) : 0.f) +
+		// (d < dlen ? ( 7.f * (0.f + 0.6 * vv)* (pipe ? hov.hov_riseP : hov.hov_rise)) : 0.f);
+		(vz < 0.f ? -10.f * vz : 0.f) +
+		(d < dlen ?  151 * (dlen - d) : 0.f);  // 15
+		// 15 + (d - dlen) * 1.6;
+		// dm * -1000.f * vz;
+
+	MATHVECTOR<Dbl,3> vg(0, 0, body.GetMass() * fn * dmgE);
+	Orientation().RotateVector(vg);
+	ApplyForce(vg);
+	// chassis->applyCentralForce(ToBulletVector(vg)); //-dn * fn * dmgE));
 }
 
 
@@ -814,7 +823,7 @@ void CARDYNAMICS::SimulateSphere(Dbl dt)
 	COLLISION_CONTACT ct;
 	MATHVECTOR<Dbl,3> p = GetPosition();  // - dn * 0.1;  // v fluids as solids
 	MATHVECTOR<float,3> dn(0,0,-1);
-	world->CastRay(p, dn, rlen, chassis, ct,  0,0, false, true);
+	bool nn = world->CastRay(p, dn, rlen, chassis, ct,  0,0, false, true);
 	float d = ct.GetDepth();
 
 	//  pipe
@@ -825,6 +834,7 @@ void CARDYNAMICS::SimulateSphere(Dbl dt)
 		if (su >= SU_Pipe && su < SU_RoadWall)
 			pipe = true;
 	}
+	const Dbl mul = 29.1;  //par
 
 	//  engine
 	//bool rear = false;  //transmission.GetGear() < 0;
@@ -846,11 +856,19 @@ void CARDYNAMICS::SimulateSphere(Dbl dt)
 	float hh = 1.f + 1.0f * sqrt(h);  // factor, faster steer with handbrake
 	sphereYaw += steerValue * hh * dt * pst * PI_d/180.f;
 	MATHVECTOR<Dbl,3> dir(cosf(sphereYaw), -sinf(sphereYaw), 0);
+	// if (nn)  // meh
+	// {	auto n = ct.GetNormal();
+	// 	dir = dir - dir * n.dot(dir);
+	//  // dir = dir.cross(ct.GetNormal());
+	// }
 
 	f *= body.GetMass() * -1.0;
 	btVector3 fc = ToBulletVector(dir * f);
 		if (!pipe)  fc += btVector3(0,0,-hov.hov_fall);
-	chassis->applyCentralForce(fc);
+
+	MATHVECTOR<Dbl,3> ff(0,0,-hov.hov_fall);
+	ff = ff + dir * f;
+	ApplyForce( ff * mul );
 
 	//  handbrake damping
 	btVector3 v = chassis->getLinearVelocity();
@@ -865,8 +883,9 @@ void CARDYNAMICS::SimulateSphere(Dbl dt)
 	//  side damp --
 	btVector3 vv(dir[1], -dir[0], 0.f);
 	float pmul = hov.dampSide;
-		if (pipe)  pmul *= hov.dampPmul;
+	if (pipe)  pmul *= hov.dampPmul;
 	float dot = v.getX()*vv.getX() + v.getY()*vv.getY();
-	chassis->applyCentralForce(vv * dot * -pmul
-		/*- btVector3(0,0, v.getZ()*100)*/ );
+
+	MATHVECTOR<Dbl,3> vd(dir[1], -dir[0], 0.f);
+	ApplyForce(vd * dot * -pmul * mul );
 }
