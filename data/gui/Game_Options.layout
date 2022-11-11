@@ -1026,6 +1026,8 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">
 						<Property key="Caption" value="#E0C080#{Effects}"/>
+						<Property key="ButtonAutoWidth" value="false"/>
+						<Property key="ButtonWidth" value="1"/>
 						<Widget type="ImageBox" skin="ImageBox" position="660 4 56 56">
 							<Property key="ImageCoord" value="640 128 128 128"/>
 							<Property key="Alpha" value="0.4"/>
@@ -1113,6 +1115,8 @@
 					</Widget>
 					<Widget type="TabItem" skin="" position="2 24 738 472">
 						<Property key="Caption" value="#804060#{HDRTab}"/>
+						<Property key="ButtonAutoWidth" value="false"/>
+						<Property key="ButtonWidth" value="1"/>
 						<Widget type="TextBox" skin="TextBox" position="196 306 388 24">
 							<Property key="Caption" value="#FF8020#{NotRecommended}"/>
 						</Widget>
