@@ -1,33 +1,9 @@
 ![](/data/hud/stuntrally-logo.jpg)
 
 [![Build game](https://github.com/stuntrally/stuntrally/workflows/Build%20game/badge.svg)](https://github.com/stuntrally/stuntrally/actions?query=workflow%3A%22Build+game%22)
-
-------------------------------------------------------------------------------
-
-    Stunt Rally - 3D racing game, based on VDrift and OGRE, with Track Editor
-    Copyright (C) 2010-2022  Crystal Hammer and contributors
-
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see https://www.gnu.org/licenses/
-
-
-    The license GNU GPL 3.0 applies only to code written by us.
-    Which is in source dir, subdirs: editor, network, ogre and road.
-    Libraries used have their own licenses.
-    For data licenses look in various _*.txt files in data subdirs.
-
-------------------------------------------------------------------------------
+![last commit](https://flat.badgen.net/github/last-commit/stuntrally/stuntrally)
+![last tag](https://flat.badgen.net/github/tag/stuntrally/stuntrally)
+![last tag](https://flat.badgen.net/github/license/stuntrally/stuntrally)
 
 ## Links
 
@@ -41,6 +17,8 @@
 ------------------------------------------------------------------------------
 
 ## Description
+
+3D racing game, based on VDrift and OGRE, with own Track Editor.
 
 Stunt Rally features 202 tracks in 37 sceneries and 25 vehicles.  
 Game modes include:
@@ -123,3 +101,32 @@ For newest sources and how to compile them see page [Compiling](https://stuntral
 ## Contributing
 
 If you'd like to contribute, please check [Contributing.md](https://github.com/stuntrally/stuntrally/blob/master/Contributing.md)
+
+------------------------------------------------------------------------------
+
+## License
+
+    Stunt Rally - 3D racing game, based on VDrift and OGRE, with Track Editor
+    Copyright (C) 2010-2022  Crystal Hammer and contributors
+
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see https://www.gnu.org/licenses/
+
+
+    The license GNU GPL 3.0 applies only to code written by us.
+    Which is in source dir, subdirs: editor, network, ogre and road.
+    Libraries used have their own licenses.
+    For data licenses look in various _*.txt files in data subdirs.
+
+------------------------------------------------------------------------------

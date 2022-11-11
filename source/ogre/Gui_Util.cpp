@@ -793,18 +793,22 @@ void CGui::FillHelpTxt()
 	auto ReadMd = [&]()
 	{
 		std::ifstream fi(path.c_str());
+		bool ok = false;
 		if (fi.good())
 		{
 			String text = "", s;
 			while (getline(fi,s))
 			{
+				if (s.substr(0,7) == "## Desc")
+					ok = true;  // start
+
 				bool ch = !s.empty() && s[0]=='#';  // chapters
 				s = StringUtil::replaceAll(s, "#", "");  // headers
 				s = StringUtil::replaceAll(s, "**", "");  // bold
 				if (ch)
 				 	s = "#B0D0FF"+s+"#C8D0D8";
 				
-				if (s.substr(0,4) != "![](")  // no imgs
+				if (ok)  //s.substr(0,2) != "![" && s.substr(0,2) != "[!")  // no imgs, bagdes
 					text += s + "\n";
 			}
 			ed->setCaption(UString(text));
