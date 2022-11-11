@@ -45,7 +45,7 @@ offsetL = 0.0
 offsetW = 0.0
 offsetH = 0.27
 TopBack = -0.8
-start-offsetY = 1.64
+start-offsetY = 1.69
 fluidTrigH = 0.05
 friction = 0.1
 
@@ -76,14 +76,12 @@ rollTq = 0
 roll = 2
 
 [ hover_h ]
-hov_vz = 0.384
-hov_vsat = 0.98
-hov_dsat = 0.9
-hov_dampP = 0.5
-hov_damp = 3.6
-hov_fall = 500
-hov_riseP = 2000
-hov_rise = 6000
+hov_height = 1.0
+hov_dampUp = 1.9
+hov_damp = 12
+hov_fall = 37
+hov_riseP = 170
+hov_rise = 150
 
 
 #  engine
