@@ -708,15 +708,9 @@ void CARDYNAMICS::SimulateSpaceship(Dbl dt)
 	ApplyTorque(t - av * damp * 1000.0);  // rotation damping
 
 
-	//  handbrake damping
+	//  handbrake damping  v
 	btVector3 v = chassis->getLinearVelocity();
-	Dbl h = brake[0].GetHandbrakeFactor();
-	if (h > 0.01f)
-	{
-		chassis->applyCentralForce(v * h * -20);  //par
-		btVector3 av = chassis->getAngularVelocity();
-		chassis->applyTorque(av * h * -20);
-	}
+	Dbl h = brake[2].GetHandbrakeFactor();
 	
 	//  engine  ^
 	float vel = sv.Magnitude(),  //  decrease power with velocity
@@ -725,10 +719,10 @@ void CARDYNAMICS::SimulateSpaceship(Dbl dt)
 		//sHov += " m  "+fToStr(velMul,2,5)+"\n";
 
 	Dbl brk = brake[0].GetBrakeFactor() * (1.0 - h);
-	float f = hov.engineForce * velMul * hov_throttle * dmgE
-			- hov.brakeForce * (rear ? velMulR : 1.f) * brk * dmgE;
+	float f = hov.engineForce * velMul * hov_throttle
+			- hov.brakeForce * (rear ? velMulR : 1.f) * brk;
 
-	MATHVECTOR<Dbl,3> vf(body.GetMass() * f, 0, 0);
+	MATHVECTOR<Dbl,3> vf(body.GetMass() * f * dmgE * 1.03, 0, 0);  //par fix org
 	Orientation().RotateVector(vf);
 	ApplyForce(vf);
 
@@ -768,30 +762,27 @@ void CARDYNAMICS::SimulateSpaceship(Dbl dt)
 
 
 	///  heavy landing damp  __
+	const float dlen = len * hov.hov_height;
 	Dbl vz = chassis->getLinearVelocity().dot( pipe ? ToBulletVector(-dn) : ToBulletVector(n) );
-		suspension[1].velocity = vz * hov.hov_vz;  // for graphs
-		suspension[1].displacement = d / len;
-		suspension[0].displacement = d / rlen;
+	float fd =            // free fall : below, anti gravity rising
+		-(vz < 0.f ? hov.hov_damp * vz : hov.hov_dampUp * vz);  // -10 -2  damp | vel
+
+	suspension[1].velocity =  vz * 0.05;   // grn top  for graphs
+	suspension[2].velocity = -fd * 0.006;  // ylw top
+	//suspension[3].velocity = vz < 0.f ? -0.5 : 1;
 	
-	// float vv = std::min(1.0, -vz);
-	float aa = std::min(1.0, vz * hov.hov_vz);
-	float df = vz > 0 ? (1.0 - hov.hov_vsat * aa) : 1.0;
-          df *= pipe ? hov.hov_dampP : hov.hov_damp;
+	//  anti gravity force  |
+	float fg = 
+		-h * hov.hov_fall * 3 +  //par hbrk dn
+	(d < dlen ?
+		(pipe ? hov.hov_riseP : hov.hov_rise) * (dlen - d) :  // up^ hover  151
+		-hov.hov_fall * (d - dlen));  // down_ fall  32
 
-	float dlen = len * hov.hov_dsat;
-	float dm = d > dlen ? 0 : (0.5+0.5*d/len) * df;
-		suspension[2].displacement = dm;
-		suspension[3].displacement = (d < dlen ? (len-d) * 1.f : 0.f);
-	//  anti gravity force  TODO: goes crazy in pipes
-	float fn =
-		// (d > dlen ? -hov.hov_fall : 0.f) +  // fall down force v
-		// (d < dlen ? ( (dlen-d) *0.1 + 0.9)  * 7.f * (0.f + 0.6 * vv) * (pipe ? hov.hov_riseP : hov.hov_rise) : 0.f) +
-		// (d < dlen ? ( 7.f * (0.f + 0.6 * vv)* (pipe ? hov.hov_riseP : hov.hov_rise)) : 0.f);
-		(vz < 0.f ? -10.f * vz : 0.f) +
-		(d < dlen ?  151 * (dlen - d) : 0.f);  // 15
-		// 15 + (d - dlen) * 1.6;
-		// dm * -1000.f * vz;
+	suspension[1].displacement = d / dlen;          // grn btm
+	suspension[2].displacement = 1.0 - fg * 0.004;  // ylw btm
+	// suspension[0].displacement = d / rlen;
 
+	float fn = fd + fg;
 	MATHVECTOR<Dbl,3> vg(0, 0, body.GetMass() * fn * dmgE);
 	Orientation().RotateVector(vg);
 	ApplyForce(vg);

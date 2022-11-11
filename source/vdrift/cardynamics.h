@@ -195,8 +195,8 @@ public:
 		float dampAirRes, dampSide, dampUp, dampDn, dampPmul;
 		MATHVECTOR <float,3> alt, alp;  // align torque, pipe
 		float pitchTq, rollTq, roll;
-		float hov_vz, hov_vsat, hov_dsat;  // hover
-		float hov_dampP, hov_damp;
+		float hov_height;  // hover, anti gravity
+		float hov_dampUp, hov_damp;
 		float hov_fall, hov_riseP, hov_rise;
 		void Default();
 	} hov;

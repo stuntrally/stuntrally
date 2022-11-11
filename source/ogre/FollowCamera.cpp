@@ -13,6 +13,7 @@
 #include "../btOgre/BtOgreDebug.h"
 #include "btBulletCollisionCommon.h"
 #include "CarPosInfo.h"
+#include "cardefs.h"
 
 #include <Ogre.h>
 // #include <OgreCamera.h>
@@ -43,7 +44,8 @@ static float GetAngle(float x, float y)
 ///  Update
 //-----------------------------------------------------------------------------------------------------
 
-void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLLISION_WORLD* world, bool bounce, bool sphere)
+void FollowCamera::update(Real time, const PosInfo& posIn,
+	PosInfo* posOut, COLLISION_WORLD* world, bool bounce, VehicleType type)
 {
 	if (!ca || !posOut)  return;
 
@@ -56,10 +58,12 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 	const static Quaternion
 		qOrFix = Quaternion(Degree(180), Vector3::UNIT_Z) * Quaternion(Degree(-90), Vector3::UNIT_Y),
 		qOrRot = Quaternion(Degree(90), Vector3::UNIT_Y),
-		qTop = Quaternion(Degree(-90), Vector3::UNIT_X), qSphFix = Quaternion(Degree(180), Vector3::UNIT_Z);
+		qTop = Quaternion(Degree(-90), Vector3::UNIT_X),
+		qSphFix = Quaternion(Degree(180), Vector3::UNIT_Z);
 
 	Quaternion  orient = orientGoal * qOrFix;
-	Vector3  caOfs = (ca->mType == CAM_Car && sphere ? Vector3(-ca->mOffset.x, -ca->mOffset.y, ca->mOffset.z) : ca->mOffset);
+	Vector3  caOfs = (ca->mType == CAM_Car && type == V_Sphere ?
+		Vector3(-ca->mOffset.x, -ca->mOffset.y, ca->mOffset.z) : ca->mOffset);
 	Vector3  ofs = orient * caOfs, 	goalLook = posGoal + ofs;
 
 	first = iFirst < 2;  ///par few first frames after reset
@@ -138,7 +142,7 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
     if (ca->mType == CAM_Car)	/* 3 Car - car pos & rot full */
     {
 		camPosFinal = goalLook;
-		camRotFinal = sphere ? orient * qSphFix : orient;
+		camRotFinal = type == V_Sphere ? orient * qSphFix : orient;
 
 		posOut->camPos = camPosFinal;  // save result in out posInfo
 		posOut->camRot = camRotFinal;
@@ -258,7 +262,8 @@ void FollowCamera::update(Real time, const PosInfo& posIn, PosInfo* posOut, COLL
 	Vector3 pp = camPosFinal;
 	if (bounce)
 		pp += posIn.camOfs * ca->mOfsMul
-			* gPar.camBncScale * pSet->cam_bnc_mul;
+			* gPar.camBncScale * pSet->cam_bnc_mul
+			* (type == V_Spaceship ? 0.1 : 1.0);  //fix
 	
 	Vector3 p = posGoal;  p.y += 1.f;  //up
 	//Vector3 d = camRotFinal * Vector3::UNIT_Z;  d.normalise();

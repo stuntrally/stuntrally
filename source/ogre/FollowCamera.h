@@ -4,6 +4,7 @@
 // #include <OgreQuaternion.h>
 // #include <OgreString.h>
 #include <vector>
+#include "cardefs.h"
 
 
 enum CamTypes
@@ -65,7 +66,7 @@ public:
 	#endif
 
 	///  update, simulates camera
-	void update(Ogre::Real time, const PosInfo& posInPrev, PosInfo* posOut, COLLISION_WORLD* world, bool bounce, bool sphere);
+	void update(Ogre::Real time, const PosInfo& posInPrev, PosInfo* posOut, COLLISION_WORLD* world, bool bounce, VehicleType type);
 	bool updInfo(Ogre::Real time = 0);  char ss[512];
 	Ogre::String sName;  bool updName;
 

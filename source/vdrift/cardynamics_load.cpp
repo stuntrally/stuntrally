@@ -79,9 +79,8 @@ void CARDYNAMICS::HoverPar::Default()
 	alt[0] = 21;  alt[1] = 21;  alt[2] = 21;
 	pitchTq = 30.f;  rollTq = 0.f;  roll = 3.f;
 
-	hov_vz = 0.384f;  hov_vsat = 0.98f;  hov_dsat = 0.9f;
-	hov_dampP = 0.5;  hov_damp = 3.6;
-	hov_fall = 500.f;  hov_riseP = 2000.f;  hov_rise = 6000.f;
+	hov_height = 0.9f;  hov_dampUp = 1.0;  hov_damp = 15.0;
+	hov_fall = 50.f;  hov_rise = 150.f;  hov_riseP = 200.f;
 }
 
 CARDYNAMICS::~CARDYNAMICS()
@@ -652,9 +651,8 @@ bool CARDYNAMICS::Load(GAME* game, CONFIGFILE& c)
 		c.GetParam("hover.pitchTq",  hov.pitchTq);
 		c.GetParam("hover.rollTq",   hov.rollTq);		c.GetParam("hover.roll",     hov.roll);
 
-		c.GetParam("hover_h.hov_vz",   hov.hov_vz);		c.GetParam("hover_h.hov_vsat", hov.hov_vsat);
-		c.GetParam("hover_h.hov_dsat", hov.hov_dsat);
-		c.GetParam("hover_h.hov_dampP",hov.hov_dampP);	c.GetParam("hover_h.hov_damp", hov.hov_damp);
+		c.GetParam("hover_h.hov_height", hov.hov_height);
+		c.GetParam("hover_h.hov_dampUp",hov.hov_dampUp);	c.GetParam("hover_h.hov_damp", hov.hov_damp);
 		c.GetParam("hover_h.hov_fall", hov.hov_fall);
 		c.GetParam("hover_h.hov_riseP",hov.hov_riseP);	c.GetParam("hover_h.hov_rise", hov.hov_rise);
 	}

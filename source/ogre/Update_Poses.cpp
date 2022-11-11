@@ -425,7 +425,7 @@ void App::newPoses(float time)  // time only for camera update
 			//  update camera
 			if (carM->fCam)
 				carM->fCam->update(time, pi, &carPoses[qn][c], &pGame->collision,
-					!bRplPlay && pSet->cam_bounce, carM->vtype == V_Sphere);
+					!bRplPlay && pSet->cam_bounce, carM->vtype);
 			iCurPoses[c] = qn;  // atomic, set new index in queue
 			
 			///))  upd sound camera
