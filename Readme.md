@@ -1,5 +1,7 @@
 ![](/data/hud/stuntrally-logo.jpg)
 
+[![Build game](https://github.com/stuntrally/stuntrally/workflows/Build%20game/badge.svg)](https://github.com/stuntrally/stuntrally/actions?query=workflow%3A%22Build+game%22)
+
 ------------------------------------------------------------------------------
 
     Stunt Rally - 3D racing game, based on VDrift and OGRE, with Track Editor
