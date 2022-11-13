@@ -930,8 +930,6 @@ namespace
                 convertFiltering(vecparams[0]),
                 convertFiltering(vecparams[1]),
                 convertFiltering(vecparams[2]));
-
-
         }
         else
         {

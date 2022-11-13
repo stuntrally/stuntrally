@@ -358,6 +358,7 @@ public:
 	Ck ckRplAutoRec, ckRplBestOnly, ckRplGhost, ckRplParticles;
 	Ck ckRplRewind, ckRplGhostOther, ckRplTrackGhost;
 	SV svGhoHideDist, svGhoHideDistTrk;
+	Ck ckRplHideHudAids;
 
 	//  list filtering
 	Btn rbRplCur =0, rbRplAll =0;  // radio

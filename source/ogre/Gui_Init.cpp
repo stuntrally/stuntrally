@@ -432,17 +432,19 @@ void CGui::InitGui()
 	Btn("RplLoad",   btnRplLoad);    Btn("RplSave",   btnRplSave);
 	Btn("RplDelete", btnRplDelete);  Btn("RplRename", btnRplRename);
 	//  settings
-	ck= &ckRplAutoRec;		ck->Init("RplChkAutoRec",	&app->bRplRec);
-	ck= &ckRplBestOnly;		ck->Init("RplChkBestOnly",	&pSet->rpl_bestonly);
-	ck= &ckRplGhost;		ck->Init("RplChkGhost",		&pSet->rpl_ghost);
-	ck= &ckRplParticles;	ck->Init("RplChkParticles",	&pSet->rpl_ghostpar);
+	ck= &ckRplAutoRec;		ck->Init("RplChkAutoRec",	 &app->bRplRec);
+	ck= &ckRplBestOnly;		ck->Init("RplChkBestOnly",	 &pSet->rpl_bestonly);
+	ck= &ckRplGhost;		ck->Init("RplChkGhost",		 &pSet->rpl_ghost);
+	ck= &ckRplParticles;	ck->Init("RplChkParticles",	 &pSet->rpl_ghostpar);
 
-	ck= &ckRplRewind;		ck->Init("RplChkRewind",	&pSet->rpl_ghostrewind);
-	ck= &ckRplGhostOther;	ck->Init("RplChkGhostOther",&pSet->rpl_ghostother);
-	ck= &ckRplTrackGhost;	ck->Init("RplChkTrackGhost",&pSet->rpl_trackghost);
+	ck= &ckRplRewind;		ck->Init("RplChkRewind",	 &pSet->rpl_ghostrewind);
+	ck= &ckRplGhostOther;	ck->Init("RplChkGhostOther", &pSet->rpl_ghostother);
+	ck= &ckRplTrackGhost;	ck->Init("RplChkTrackGhost", &pSet->rpl_trackghost);
 	Slv(RplNumViewports, (pSet->rpl_numViews-1) / 3.f);
-	sv= &svGhoHideDist;		sv->Init("GhoHideDist",		&pSet->ghoHideDist,    0.f, 30.f, 1.5f, 1,4);  sv->DefaultF(5.f);
-	sv= &svGhoHideDistTrk;	sv->Init("GhoHideDistTrk",	&pSet->ghoHideDistTrk, 0.f, 30.f, 1.5f, 1,4);  sv->DefaultF(5.f);
+	sv= &svGhoHideDist;		sv->Init("GhoHideDist",		 &pSet->ghoHideDist,    0.f, 30.f, 1.5f, 1,4);  sv->DefaultF(5.f);
+	sv= &svGhoHideDistTrk;	sv->Init("GhoHideDistTrk",	 &pSet->ghoHideDistTrk, 0.f, 30.f, 1.5f, 1,4);  sv->DefaultF(5.f);
+	ck= &ckRplParticles;	ck->Init("RplChkParticles",	 &pSet->rpl_ghostpar);
+	ck= &ckRplHideHudAids;  ck->Init("RplChkHideHudAids",&pSet->rpl_hideHudAids);
 
 	//  radios, filter
 	ck= &ckRplGhosts;	ck->Init("RplBtnGhosts",  &pSet->rpl_listghosts);  Cev(RplGhosts);

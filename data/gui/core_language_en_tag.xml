@@ -496,6 +496,7 @@
 	<Tag name="RplAlpha">Transparent ghost</Tag>
 	<Tag name="RplMaxNumViewports">Max. number of viewports (see less, for more player replays)</Tag>
 	<Tag name="GhostHideDist">Hide ghosts if distance is below</Tag>
+	<Tag name="RplHideHudAids">Hide HUD aids when playing replay (pacenotes, trail)</Tag>
 
 
 	<!--  Screen  -->

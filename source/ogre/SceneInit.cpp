@@ -245,12 +245,14 @@ void App::LoadCleanUp()  // 1 first
 	//  hide hud arrow,beam,pace,trail
 	bool morePlr = pSet->game.local_players > 1;
 	bool rplRd = bRplPlay /*|| scn->road && scn->road->getNumPoints() < 2/**/;
+	bool rplHide = bRplPlay && pSet->rpl_hideHudAids;
+
 	bHideHudBeam = rplRd;
 	bHideHudArr = rplRd || morePlr;
 	bool denyPace = gui->pChall && !gui->pChall->pacenotes;
-	bHideHudPace = morePlr || denyPace;  // todo: ? pace, trail for splitscreen
+	bHideHudPace = morePlr || denyPace || rplHide;  // todo: ? pace, trail for splitscreen
 	bool denyTrail = gui->pChall && !gui->pChall->trail;
-	bHideHudTrail = morePlr || denyTrail;
+	bHideHudTrail = morePlr || denyTrail || rplHide;
 
 
 	// rem old track

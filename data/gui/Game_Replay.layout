@@ -121,6 +121,10 @@
 					<Property key="TextColour" value="0.5 0.7 0.9"/>
 					<Property key="Caption" value="#{Ghost} #{Particles}"/>
 				</Widget>
+				<Widget type="Button" skin="CheckBox" position="32 210 380 24" name="RplChkHideHudAids">
+					<Property key="TextColour" value="0.5 0.7 0.8"/>
+					<Property key="Caption" value="#{RplHideHudAids}"/>
+				</Widget>
 				<Widget type="TextBox" skin="TextBox" position="32 276 576 20">
 					<Property key="TextColour" value="0.6 0.75 0.85"/>
 					<Property key="Caption" value="#{RplMaxNumViewports} *"/>

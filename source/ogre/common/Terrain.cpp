@@ -51,6 +51,7 @@ void CScene::SetupTerrain()
 	mTerrainGlobals->setLightMapSize(ciShadowSizesA[app->pSet->lightmap_size]);  //256 ..2k
 	mTerrainGlobals->setSkirtSize(1);  // low because in water reflect
 	mTerrainGlobals->setVisibilityFlags(RV_Terrain);
+	//mTerrainGlobals->setCastsDynamicShadows(false);  // todo: fix shadowmaps? in shiny, fluids too
 
 	//  import settings
 	Terrain::ImportData& di = mTerrainGroup->getDefaultImportSettings();

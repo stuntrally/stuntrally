@@ -145,6 +145,7 @@ void SETTINGS::Serialize(bool w, CONFIGFILE & c)
 	Param(c,w, "replay.ghostpar", rpl_ghostpar);	Param(c,w, "replay.ghostother", rpl_ghostother);
 	Param(c,w, "replay.num_views", rpl_numViews);	Param(c,w, "replay.ghostrewind", rpl_ghostrewind);
 	Param(c,w, "replay.ghoHideDist", ghoHideDist);	Param(c,w, "replay.ghoHideDistTrk", ghoHideDistTrk);
+	Param(c,w, "replay.hideHudAids", rpl_hideHudAids);
 
 	//  sim
 	Param(c,w, "sim.game_freq", game_fq);			Param(c,w, "sim.multi_thr", multi_thr);
@@ -233,6 +234,7 @@ SETTINGS::SETTINGS()   ///  Defaults
 	,rpl_ghostpar(0), rpl_ghostrewind(1), rpl_ghostother(1)
 	,rpl_listview(0), rpl_listghosts(0), rpl_numViews(4)
 	,ghoHideDist(5.f), ghoHideDistTrk(5.f)
+	,rpl_hideHudAids(1)
 	//  sim
 	,game_fq(82.f), blt_fq(160.f), blt_iter(24), dyn_iter(30)
 	,multi_thr(0), thread_sleep(5), gui_sleep(1), perf_speed(100000)

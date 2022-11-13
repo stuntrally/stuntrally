@@ -172,6 +172,7 @@ public:
 	bool rpl_rec, rpl_ghost, rpl_bestonly;
 	bool rpl_ghostother, rpl_trackghost;
 	bool rpl_ghostpar, rpl_ghostrewind, rpl_listghosts;
+	bool rpl_hideHudAids;
 	int rpl_listview, rpl_numViews;
 	float ghoHideDist, ghoHideDistTrk;  // ghost hide dist, when close
 
