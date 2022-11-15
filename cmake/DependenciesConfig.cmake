@@ -20,7 +20,7 @@ add_external_lib(
 
 add_external_lib(
         OGRE
-        ogre3d/13.5.1@anotherfoxguy/stable
+        ogre3d/13.5.3@anotherfoxguy/stable
         REQUIRED
         CONAN_OPTIONS ogre3d:nodeless_positioning=True ogre3d:resourcemanager_strict=off
         #  uncomment below for Ogre 1.9
