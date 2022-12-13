@@ -790,10 +790,10 @@ void CGui::FillHelpTxt()
 {
 	Ed ed;  string path;
 	
-	auto ReadMd = [&]()
+	auto ReadMd = [&](bool top)
 	{
 		std::ifstream fi(path.c_str());
-		bool ok = false;
+		bool ok = top;  // skip
 		if (fi.good())
 		{
 			String text = "", s;
@@ -815,17 +815,17 @@ void CGui::FillHelpTxt()
 			ed->setVScrollPosition(0);
 	}	};
 
-	auto PathMd = [&](string file)
+	auto PathMd = [&](string file, bool top)
 	{	path = PATHMANAGER::Data() +"/../"+ file;
 		if (!PATHMANAGER::FileExists(path))
 			path = PATHMANAGER::Data() +"/"+ file;
 		if (!PATHMANAGER::FileExists(path))
 			LogO("Can't locate file: " + file);
-		ReadMd();
+		ReadMd(top);
 	};
 
-	ed = fEd("Readme");        if (ed)  PathMd("Readme.md");
-	ed = fEd("Contributing");  if (ed)  PathMd("Contributing.md");
+	ed = fEd("Readme");        if (ed)  PathMd("Readme.md", 0);
+	ed = fEd("Contributing");  if (ed)  PathMd("Contributing.md", 1);
 
 	ed = fEd("Credits");
 	if (ed)
