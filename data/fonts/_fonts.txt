@@ -1,0 +1,18 @@
+LiberationSans-BoldItalic.ttf
+Designer: Steve Matteson  
+License: OFL (SIL Open Font License)
+https://fontlibrary.org/en/font/liberation-sans
+
+
+DejaVuSans.ttf DejaVuLGCSans.ttf
+License: https://dejavu-fonts.github.io/License.html
+Bitstream Vera Fonts Copyright, Arev Fonts Copyright, Public Domain
+https://dejavu-fonts.github.io/Download.html
+
+
+Vera.ttf
+Bitstream Vera Sans
+by The Gnome Project
+nearly identical to: Open Font License
+https://en.wikipedia.org/wiki/Bitstream_Vera
+
