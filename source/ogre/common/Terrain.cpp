@@ -51,7 +51,7 @@ void CScene::SetupTerrain()
 	mTerrainGlobals->setLightMapSize(ciShadowSizesA[app->pSet->lightmap_size]);  //256 ..2k
 	mTerrainGlobals->setSkirtSize(1);  // low because in water reflect
 	mTerrainGlobals->setVisibilityFlags(RV_Terrain);
-	//mTerrainGlobals->setCastsDynamicShadows(false);  // todo: fix shadowmaps? in shiny, fluids too
+	//mTerrainGlobals->setCastsDynamicShadows(false);  // todo: fix shadows.h in shiny, fluids too
 
 	//  import settings
 	Terrain::ImportData& di = mTerrainGroup->getDefaultImportSettings();
@@ -203,9 +203,17 @@ if (bTer)
 		//  sync load since we want everything in place when we start
 		mTerrainGroup->loadAllTerrains(true);
 
+	#if OGRE_VERSION_MAJOR >= 13
 		auto tsm = mTerrainGroup->getTerrainSlots();
 		terrain = tsm[0]->instance;
-
+	#else
+		TerrainGroup::TerrainIterator ti = mTerrainGroup->getTerrainIterator();
+		while (ti.hasMoreElements())
+		{
+			terrain = ti.getNext()->instance;
+			terrain->setVisibilityFlags(RV_Terrain);
+		}
+	#endif
 		mTerrainGroup->freeTemporaryResources();
 	}
 
