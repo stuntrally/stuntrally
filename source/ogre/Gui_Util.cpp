@@ -861,12 +861,12 @@ void CGui::FillHelpTxt()
 		for (auto c:data->cars->cars)
 			ReadTxt("cars/" + c.id + "/about.txt");
 
-		//  gui- hud-  particles-
 		ReadTxts("objects");  ReadTxts("objects2");  ReadTxts("objectsC");  ReadTxts("objects0");
-		ReadTxts("skies");  ReadTxts("rocks");
-		ReadTxts("grass");  ReadTxts("terrain");  ReadTxts("road");
-		ReadTxts("trees");  ReadTxts("trees2");   ReadTxts("trees-old");  //todo: replace-
-		ReadTxts("sounds");
+		ReadTxts("skies");   ReadTxts("rocks");
+		ReadTxts("grass");   ReadTxts("terrain");  ReadTxts("road");
+		ReadTxts("trees");   ReadTxts("trees2");   ReadTxts("trees-old");  //todo: replace-
+		ReadTxts("sounds");  ReadTxts("fonts");  ReadTxts("hud");
+		// particles-
 
 		ed->setCaption(UString(text));
 		ed->setVScrollPosition(0);

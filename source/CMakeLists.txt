@@ -91,17 +91,6 @@ if (BUILD_EDITOR)
             editor/*.h
             vdrift/configfile.*
             vdrift/pathmanager.*
-            vdrift/track.*
-            vdrift/k1999.*
-            vdrift/model.*
-            vdrift/vertexarray.*
-            vdrift/roadstrip.*
-            vdrift/bezier.*
-            vdrift/objectloader.*
-            vdrift/joepack.*
-            vdrift/track_object.*
-            vdrift/model_joe03.*
-            vdrift/roadpatch.*
             vdrift/cartire.*
             vdrift/par.*
             ogre/common/*.cpp

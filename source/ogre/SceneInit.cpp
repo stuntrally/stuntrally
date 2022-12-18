@@ -777,7 +777,7 @@ void App::NewGameDoLoad()
 {
 	if (curLoadState == LS_ALL)
 	{
-		// Loading finished
+		//  Loading finished
 		bLoading = false;
 		#ifdef DEBUG  //todo: doesnt hide later, why?
 		LoadingOff();
@@ -802,6 +802,7 @@ void App::NewGameDoLoad()
 		//.bLoadingEnd = true;
 		return;
 	}
+
 	//  Do the next loading step
 	int perc = 0;
 	switch (curLoadState)

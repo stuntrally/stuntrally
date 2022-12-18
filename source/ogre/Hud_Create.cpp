@@ -286,7 +286,7 @@ void CHud::Create()
 		h.txWarn = h.bckWarn->createWidget<TextBox>("TextBox",
 			0,0, 400,60, Align::Left, "WarnT"+s);
 		h.txWarn->setFontName("hud.text");  h.txWarn->setTextShadow(true);
-		h.txWarn->setTextColour(Colour(1,0.3,0));  h.txWarn->setTextAlign(Align::Center);
+		h.txWarn->setTextColour(Colour(1,0.2,0));  h.txWarn->setTextAlign(Align::Center);
 		h.txWarn->setCaption(TR("#{WrongChk}"));
 
 		//  win place  -----------

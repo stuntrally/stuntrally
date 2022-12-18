@@ -426,6 +426,7 @@ void CHud::UpdTimes(int carId, Hud& h, float time, CAR* pCar, CarModel* pCarM)
 				"\n#80E080" + StrTime(time)+
 				"\n#D0D040" + (cur ? toStr( chkPlace )     : "--")+
 				"\n#F0A040" + (cur ? fToStr(chkPoints,1,3) : "--");
+			
 			float dlap = last - time;
 			h.sLap =
 				"#D0E8FF"+TR("#{TBLapResults}") +
