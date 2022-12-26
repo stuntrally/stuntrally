@@ -6,7 +6,7 @@ on: [ push, pull_request ]
 jobs:
   build-gcc:
     name: Linux build on Ubuntu
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3.2.0
         with:
@@ -52,6 +52,9 @@ jobs:
 
       - name: Configure
         run: |
+          conan config set general.revisions_enabled=1
+          echo "tools.system.package_manager:mode = install" > ~/.conan/global.conf
+          echo "tools.system.package_manager:sudo = True" >> ~/.conan/global.conf
           mkdir build && cd build
           cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DSR_LIB_PREFERENCE=SYSTEM -DBUILD_MASTER_SERVER=ON ..
         shell: bash
@@ -70,8 +73,8 @@ jobs:
     name: Windows build
     runs-on: windows-2019
     env:
-      DXSDK_DIR: C:\apps\Microsoft DirectX SDK\
       BUILD_TOOLS_PATH: C:\apps\build-tools\
+      CONAN_USER_HOME_SHORT: None
     steps:
       - run: echo $env:BUILD_TOOLS_PATH | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
@@ -79,7 +82,7 @@ jobs:
         with:
           submodules: true
 
-      - name: Install Microsoft DirectX SDK and Build tools
+      - name: Install Build tools
         shell: cmake -P {0}
         run: |
           file(MAKE_DIRECTORY $ENV{BUILD_TOOLS_PATH})
@@ -91,18 +94,13 @@ jobs:
         with:
           key: conan-${{ hashFiles('cmake/DependenciesConfig.cmake') }}
           path: ~/.conan
-
-      - name: Cache conan packages
-        uses: actions/cache@v3.2.1
-        with:
-          key: conan-short_path-${{ hashFiles('cmake/DependenciesConfig.cmake') }}
-          path: C:/.conan/
       
       - name: Enable Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1.12.0
 
       - name: Configure
         run: | 
+          conan config set general.revisions_enabled=1
           mkdir build && cd build
           cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=redist -DBUILD_MASTER_SERVER=ON ..
         shell: cmd
