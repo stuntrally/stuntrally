@@ -129,7 +129,7 @@ endif ()
 if (BUILD_TRANSL_TOOL)
 	file(GLOB TRANSL_SOURCES transl/main.cpp) # Glob .cpp files needed for the translations tool
 	add_executable(${TRANSL_EXE} ${TRANSL_SOURCES})
-	target_link_libraries(${TRANSL_EXE} Boost::Boost)
+	target_link_libraries(${TRANSL_EXE} boost::boost)
 	install(TARGETS ${TRANSL_EXE} DESTINATION bin)
     target_precompile_headers(${TRANSL_EXE} PRIVATE transl/pch.h)
 endif()

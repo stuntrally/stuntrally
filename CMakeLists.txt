@@ -23,21 +23,6 @@ option(BUILD_TRANSL_TOOL      "Build the tool for translation updating, it creat
 
 set(_PREFIX "SR_")
 
-# Test if conan is installed
-find_program(CONAN_CMD_TEST conan NO_CACHE)
-cmake_dependent_option(USE_PACKAGE_MANAGER "Use conan" ON "NOT CONAN_CMD_TEST STREQUAL CONAN_CMD_TEST-NOTFOUND" OFF)
-message(STATUS "Using conan: ${USE_PACKAGE_MANAGER}")
-
-# Allow user to globally set the library preference for external libraries
-cmd_option(${_PREFIX}LIB_PREFERENCE
-        "Library preference [SYSTEM (if available), CONAN]"
-        "CONAN"
-        STRINGS "SYSTEM" "CONAN"
-        )
-
-# Special mode, that will force dependencies to the packages provided by system unless they were set to conan explicitly.
-option(${_PREFIX}FORCE_SYSTEM_DEPENDENCIES "Force the use of system packages")
-
 # Avoid source tree pollution
 if (CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
     message(FATAL_ERROR "In-source builds are not permitted. Make a separate folder for building:\nmkdir build; cd build; cmake ..\nBefore that, remove the files already created:\nrm -rf CMakeCache.txt CMakeFiles")
@@ -89,7 +74,6 @@ endif ()
 # Check for dependencies
 ################################################################################
 include(DependenciesConfig)
-resolve_conan_dependencies()
 
 # Subdirectories
 
@@ -99,3 +83,4 @@ add_subdirectory(dist)
 add_subdirectory(data)
 
 install(FILES Contributing.md Readme.md License.txt DESTINATION ${SHARE_INSTALL})
+feature_summary(WHAT ALL)
