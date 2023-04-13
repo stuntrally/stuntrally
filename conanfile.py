@@ -41,6 +41,9 @@ class StuntRally(ConanFile):
                 self.cp_data(f)
 
     def cp_data(self, src):
-        bindir = os.path.join(self.build_folder, "bin")
+        bindir = self.build_folder
         copy(self, "*.dll", src, bindir, False)
         copy(self, "*.so*", src, bindir, False)
+        redistdir = os.path.join(self.build_folder, "redist")
+        copy(self, "*.dll", src, redistdir, False)
+        copy(self, "*.so*", src, redistdir, False)
