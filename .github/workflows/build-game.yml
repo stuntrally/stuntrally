@@ -6,17 +6,17 @@ on: [ push, pull_request ]
 jobs:
   build-gcc:
     name: Linux build on Ubuntu
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.2.0
+      - uses: actions/checkout@v3
         with:
           submodules: true
 
       - name: Cache conan
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3
         with:
-          key: conan-root-${{ hashFiles('cmake/DependenciesConfig.cmake') }}
-          path: ~/.conan/
+          key: conan-ubuntu-${{ hashFiles('conanfile.py') }}
+          path: ~/.conan2/
 
       - name: Install dependencies
         run: |
@@ -52,11 +52,12 @@ jobs:
 
       - name: Configure
         run: |
-          conan config set general.revisions_enabled=1
-          echo "tools.system.package_manager:mode = install" > ~/.conan/global.conf
-          echo "tools.system.package_manager:sudo = True" >> ~/.conan/global.conf
-          mkdir build && cd build
-          cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DSR_LIB_PREFERENCE=SYSTEM -DBUILD_MASTER_SERVER=ON ..
+          conan profile detect --force
+          echo "tools.system.package_manager:mode = install" > ~/.conan2/global.conf
+          echo "tools.system.package_manager:sudo = True" >> ~/.conan2/global.conf
+          conan remote add ror-conan https://git.anotherfoxguy.com/api/packages/rorbot/conan -f
+          conan install . -s build_type=Release -b missing -pr:b=default -c tools.cmake.cmaketoolchain:generator="Ninja" -of build
+          cmake --preset conan-release -DBUILD_MASTER_SERVER=ON
         shell: bash
 
       - name: Build
@@ -66,7 +67,7 @@ jobs:
         shell: bash
 
       - name: Clean Conan pkgs
-        run: conan remove "*" -fsb
+        run: conan cache clean "*" -sbd
         shell: bash
 
   build-msvc:
@@ -78,31 +79,28 @@ jobs:
     steps:
       - run: echo $env:BUILD_TOOLS_PATH | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-      - uses: actions/checkout@v3.2.0
+      - uses: actions/checkout@v3
         with:
           submodules: true
 
       - name: Install Build tools
-        shell: cmake -P {0}
-        run: |
-          file(MAKE_DIRECTORY $ENV{BUILD_TOOLS_PATH})
-          file(DOWNLOAD https://cdn.anotherfoxguy.com/build-tools.zip "$ENV{TMP}/build-tools.zip" SHOW_PROGRESS)
-          execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf "$ENV{TMP}/build-tools.zip" WORKING_DIRECTORY "$ENV{BUILD_TOOLS_PATH}")
+        run: git clone https://git.anotherfoxguy.com/AnotherFoxGuy/build-tools.git %BUILD_TOOLS_PATH%
+        shell: cmd
 
       - name: Cache conan packages
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3
         with:
-          key: conan-${{ hashFiles('cmake/DependenciesConfig.cmake') }}
-          path: ~/.conan
+          key: conan-windows-${{ hashFiles('conanfile.py') }}
+          path: ~/.conan2
       
       - name: Enable Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1.12.1
 
       - name: Configure
-        run: | 
-          conan config set general.revisions_enabled=1
-          mkdir build && cd build
-          cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=redist -DBUILD_MASTER_SERVER=ON ..
+        run: |
+          conan remote add ror-conan https://git.anotherfoxguy.com/api/packages/rorbot/conan -f
+          conan install . -b missing -pr:b=tools/conan-profiles/vs-19-release-ninja -pr=tools/conan-profiles/vs-19-release-ninja -of build
+          cmake --preset conan-release -DCMAKE_INSTALL_PREFIX=redist -DCREATE_CONTENT_FOLDER=ON
         shell: cmd
 
       - name: Build
@@ -118,5 +116,5 @@ jobs:
           path: build/redist
 
       - name: Clean Conan pkgs
-        run: conan remove "*" -fsb
+        run: conan cache clean "*" -sbd
         shell: cmd

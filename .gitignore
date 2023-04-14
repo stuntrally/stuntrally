@@ -51,3 +51,4 @@ data/objects*
 cmake-build-*/
 
 .idea/
+CMakeUserPresets.json
