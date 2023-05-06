@@ -36,7 +36,7 @@ struct ReplayHeader2
 	std::vector<std::string> cars;  // car names eg. ES
 	std::vector<uchar> numWh;  //wheels count for all cars
 
-	float trees;      // trees multipler
+	float trees;      // trees multiplier
 	char num_laps;
 	char networked;   // if 1, was networked, so use nicks when playing
 	std::string sim_mode;  // easy, normal, etc

@@ -325,7 +325,7 @@ public:
 	Ogre::String sTxtAdvice;  // track advice text, how to drive
 
 	//  for editor tool: align terrain to road
-	float ed_Wadd = 0.f, ed_Wmul = 1.f;  // const added width and width multipler for whole road
+	float ed_Wadd = 0.f, ed_Wmul = 1.f;  // const added width and width multiplier for whole road
 
 
 	//  stats  ----

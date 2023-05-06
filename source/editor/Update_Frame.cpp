@@ -302,7 +302,7 @@ bool App::frameStarted(const Ogre::FrameEvent& evt)
 	 ctrl = mInputWrapper->isModifierHeld(SDL_Keymod(KMOD_CTRL));
 	shift = mInputWrapper->isModifierHeld(SDL_Keymod(KMOD_SHIFT));
 
-	 // speed multiplers
+	 // speed multipliers
 	moveMul = 1;  rotMul = 1;
 	if(shift){	moveMul *= 0.2;	 rotMul *= 0.4;	}  // 16 8, 4 3, 0.5 0.5
 	if(ctrl){	moveMul *= 4;	 rotMul *= 2.0;	}
