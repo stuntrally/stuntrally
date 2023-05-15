@@ -107,7 +107,7 @@ If you'd like to contribute, please check [Contributing.md](https://github.com/s
 ## License
 
     Stunt Rally - 3D racing game, based on VDrift and OGRE, with Track Editor
-    Copyright (C) 2010-2022  Crystal Hammer and contributors
+    Copyright (C) 2010-2023  Crystal Hammer and contributors
 
 
     This program is free software: you can redistribute it and/or modify
