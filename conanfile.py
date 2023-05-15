@@ -32,6 +32,7 @@ class StuntRally(ConanFile):
         self.requires("libpng/1.6.39", override=True)
         self.requires("libwebp/1.3.0", override=True)
         self.requires("zlib/1.2.13", override=True)
+        self.requires("xz_utils/5.4.2", override=True)
 
     def generate(self):
         for dep in self.dependencies.values():
