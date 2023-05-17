@@ -18,13 +18,15 @@ jobs:
               libbullet-dev libbullet-extras-dev libtinyxml-dev libtinyxml2-dev
             
       - uses: actions/checkout@v3
-
+        with:
+          submodules: true
+          
       - name: Build OGRE
         run: |
           git clone --depth 1 --branch v13.6.4 https://github.com/OGRECave/ogre.git && cd ogre
           cmake -DCMAKE_BUILD_TYPE=Release -DOGRE_BUILD_DEPENDENCIES=OFF -DOGRE_RESOURCEMANAGER_STRICT=0 \
             -DOGRE_BUILD_RENDERSYSTEM_GL3PLUS=FALSE -DOGRE_BUILD_TOOLS=FALSE -DOGRE_BUILD_SAMPLES=FALSE -DOGRE_BUILD_COMPONENT_PROPERTY=FALSE \
-            -DOGRE_BUILD_COMPONENT_JAVA=FALSE -DOGRE_BUILD_COMPONENT_CSHARP=FALSE -DOGRE_BUILD_COMPONENT_PYTHON=FALSE \
+            -DOGRE_BUILD_COMPONENT_JAVA=FALSE -DOGRE_BUILD_COMPONENT_CSHARP=FALSE -DOGRE_BUILD_COMPONENT_PYTHON=FALSE -DOGRE_NODELESS_POSITIONING=TRUE \
             -DOGRE_BUILD_PLUGIN_BSP=FALSE -DOGRE_BUILD_PLUGIN_PCZ=FALSE -DOGRE_BUILD_COMPONENT_HLMS=FALSE -DOGRE_BUILD_COMPONENT_VOLUME=FALSE .
           sudo make -j 2 install 
 

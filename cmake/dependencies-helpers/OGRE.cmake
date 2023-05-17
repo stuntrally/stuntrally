@@ -1,7 +1,7 @@
 # Add the OGRE target
 
 if (NOT TARGET OGRE::OGRE)
-    message(STATUS "Adding OGRE::OGRE target")
+    message(STATUS "Adding OGRE::OGRE target ${OGRE_LIBRARIES}")
     add_library(OGRE::OGRE INTERFACE IMPORTED)
     set_target_properties(OGRE::OGRE PROPERTIES
             INTERFACE_LINK_LIBRARIES "${OGRE_LIBRARIES}"

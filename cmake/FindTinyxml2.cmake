@@ -1,0 +1,1 @@
+find_with_pkg(Tinyxml2 "tinyxml2::tinyxml2" "tinyxml2 >= 6")
