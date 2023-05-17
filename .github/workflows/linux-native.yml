@@ -1,0 +1,42 @@
+name: Linux with Sysdeps
+on:
+  push:
+    branches: [master, native-build]
+  workflow_dispatch:
+
+jobs:
+  linux:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y libxrandr-dev libxt-dev libxaw7-dev libzzip-dev libpugixml-dev libsdl2-dev \
+              mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libfreetype6-dev \
+              libboost-wave-dev libboost-system-dev libboost-filesystem-dev libboost-thread-dev \
+              libogg-dev libvorbis-dev libenet-dev libopenal-dev \
+              libbullet-dev libbullet-extras-dev libtinyxml-dev libtinyxml2-dev
+            
+      - uses: actions/checkout@v3
+
+      - name: Build OGRE
+        run: |
+          git clone --depth 1 --branch v13.6.4 https://github.com/OGRECave/ogre.git && cd ogre
+          cmake -DCMAKE_BUILD_TYPE=Release -DOGRE_BUILD_DEPENDENCIES=OFF -DOGRE_RESOURCEMANAGER_STRICT=0 \
+            -DOGRE_BUILD_RENDERSYSTEM_GL3PLUS=FALSE -DOGRE_BUILD_TOOLS=FALSE -DOGRE_BUILD_SAMPLES=FALSE -DOGRE_BUILD_COMPONENT_PROPERTY=FALSE \
+            -DOGRE_BUILD_COMPONENT_JAVA=FALSE -DOGRE_BUILD_COMPONENT_CSHARP=FALSE -DOGRE_BUILD_COMPONENT_PYTHON=FALSE \
+            -DOGRE_BUILD_PLUGIN_BSP=FALSE -DOGRE_BUILD_PLUGIN_PCZ=FALSE -DOGRE_BUILD_COMPONENT_HLMS=FALSE -DOGRE_BUILD_COMPONENT_VOLUME=FALSE .
+          sudo make -j 2 install 
+
+      - name: Build MyGUI
+        run: |
+          git clone --depth 1 --branch MyGUI3.4.2 https://github.com/MyGUI/mygui.git && cd mygui
+          cmake -DCMAKE_BUILD_TYPE=Release -DMYGUI_BUILD_DEMOS=FALSE -DMYGUI_BUILD_TOOLS=FALSE .
+          sudo make -j 2 install
+
+      - name: Build StuntRally
+        run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release ..
+          sudo make -j 2 install
