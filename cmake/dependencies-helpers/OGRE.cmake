@@ -8,8 +8,8 @@ if (NOT TARGET OGRE::OGRE)
             INTERFACE_INCLUDE_DIRECTORIES "${OGRE_INCLUDE_DIRS}"
             )
 
-    add_compile_definitions(OGRE_PLUGIN_DIR_REL="${OGRE_PLUGIN_DIR_REL}")
-    add_compile_definitions(OGRE_PLUGIN_DIR_DBG="${OGRE_PLUGIN_DIR_DBG}")
+    add_compile_definitions(OGRE_PLUGIN_DIR_REL="${OGRE_PLUGIN_DIR}")
+    add_compile_definitions(OGRE_PLUGIN_DIR_DBG="${OGRE_PLUGIN_DIR}")
 else()
     add_compile_definitions(OGRE_PLUGIN_DIR_REL=".")
     add_compile_definitions(OGRE_PLUGIN_DIR_DBG=".")
