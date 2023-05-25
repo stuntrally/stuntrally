@@ -9,6 +9,8 @@ if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.22")
     cmake_policy(SET CMP0127 OLD)
 endif ()
 
+include(FindPkgConfig)
+set(PKG_CONFIG_USE_CMAKE_PREFIX_PATH TRUE)
 include(CMakeDependentOption)
 include(Macros)
 include(FeatureSummary)

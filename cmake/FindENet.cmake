@@ -47,3 +47,10 @@ ENDIF (ENET_FOUND)
 
 MARK_AS_ADVANCED(ENet_LIBRARY ENet_LIBRARIES ENet_INCLUDE_DIRS)
 
+if (ENET_FOUND)
+    add_library(enet::enet INTERFACE IMPORTED)
+    set_target_properties(enet::enet PROPERTIES
+            INTERFACE_LINK_LIBRARIES "${ENet_LIBRARIES}"
+            INTERFACE_INCLUDE_DIRECTORIES "${ENet_INCLUDE_DIRS}"
+            )
+endif ()

@@ -17,6 +17,7 @@ find_package(ENet REQUIRED)
 
 # Add the OGRE::OGRE target 
 include(cmake/dependencies-helpers/OGRE.cmake)
+include(cmake/dependencies-helpers/Boost.cmake)
 
 set(LIBS boost::boost
         Threads::Threads
