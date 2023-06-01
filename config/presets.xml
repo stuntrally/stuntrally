@@ -336,6 +336,7 @@
 <r sc="Des"  m="road_wall_Desert"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 <r sc="Cry"  m="road_wall_crystal"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 <r sc="Aln"  m="road_wall_Alien"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Blk"  m="road_wall_Black"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 
 <r sc="Oth"  m="pipe_wall"            r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 <r sc="JngD" m="pipe_wall_JDark"      r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
@@ -346,6 +347,7 @@
 <r sc="Wnt"  m="pipe_wall_Winter"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 <r sc="Cry"  m="pipe_wall_crystal"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 <r sc="Aln"  m="pipe_wall_Alien"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Blk"  m="pipe_wall_Black"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 
 <r sc="Wnt"  m="---- column ----"     r="0" />
 <r sc="Oth"  m="road_col"             r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
@@ -356,6 +358,7 @@
 <r sc="Des"  m="road_col_Desert"      r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 <r sc="Cry"  m="road_col_crystal"     r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 <r sc="Aln"  m="road_col_Alien"       r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Blk"  m="road_col_Black"       r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 
 <r sc="Wnt"  m="---- wall universal"  r="0" />
 <r sc="Spc"  m="wall_space_diam"      r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />

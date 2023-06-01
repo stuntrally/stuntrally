@@ -879,6 +879,41 @@ material pipeGlassAlienLime
 }
 
 
+//  Black
+material road_wall_Black
+{
+	parent road_wall
+	ambient 0.31 0.3 0.31
+	diffuse 0.26 0.26 0.26
+	specular 0.3 0.28 0.3 32
+	diffuseMap brass_patina.jpg
+	normalMap normal_1.png
+	bump_scale 3.0
+}
+
+material pipe_wall_Black
+{
+	parent pipe_wall
+	ambient 0.31 0.3 0.31
+	diffuse 0.26 0.26 0.26
+	specular 0.3 0.28 0.3 32
+	diffuseMap brass_patina.jpg
+	normalMap normal_1.png
+	bump_scale 3.0
+}
+
+material road_col_Black
+{
+	parent base
+	ambient 0.31 0.3 0.31
+	diffuse 0.26 0.26 0.26
+	specular 0.3 0.28 0.3 32
+	diffuseMap brass_patina.jpg
+	normalMap normal_1.png
+	bump_scale 3.0
+}
+
+
 //  universal  any road,pipe,wall,column  SR 2.7
 //--------------------------------------------------------------------------------------
 //  univ space
