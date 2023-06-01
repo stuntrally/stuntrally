@@ -695,3 +695,78 @@ material rock46grayWhite2
 	specular 0.3 0.3 0.3 32
 }
 //--------------------------------------------------------------------------------------------------------------
+
+
+//  hexrocks
+//------------------------------------------------------------------
+material hexrock_grey
+{
+	parent base
+	diffuseMap hexrock_grey.jpg
+	normalMap hexrock_norm.jpg
+	specMap hexrock_spec.jpg
+	terrain_light_map true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 0.4 0.3 0.35 24
+	bump_scale 0.6
+}
+
+material hexrock_brown
+{
+	parent base
+	diffuseMap hexrock_brown.jpg
+	normalMap hexrock_norm.jpg
+	specMap hexrock_spec.jpg
+	terrain_light_map true
+	ambient 1.0 1.0 1.0
+	diffuse 0.9 0.9 0.9
+	specular 0.4 0.3 0.35 24
+	bump_scale 0.8
+}
+
+material hexrock_pink
+{
+	parent base
+	diffuseMap hexrock_pink.jpg
+	normalMap hexrock_pink_norm.jpg
+	specMap hexrock_pink_spec.jpg
+	terrain_light_map true
+	ambient 0.8 0.6 0.6
+	diffuse 1.15 0.9 1.1
+	specular 0.9 0.7 0.9 26
+	bump_scale 0.3
+	refl_amount 0.9
+}
+
+material hexrock_crystal
+{
+	parent base
+	diffuseMap hexrock_crystal.jpg
+	normalMap hexrock_crystal_norm.jpg
+	specMap hexrock_crystal_spec.jpg
+	reflMap hexrock_crystal_spec.jpg
+	specMap_rgb true
+	ambient 0.2 1.3 0.8
+	diffuse 0.8 1.8 1.04
+	specular 0.5 1.6 1.0 12
+	env_map true
+	envMap ReflectionCube
+	refl_amount 0.5
+}
+
+material hexrock_metal
+{
+	parent base
+	diffuseMap hexrock_metal.jpg
+	normalMap hexrock_metal_norm.jpg
+	specMap hexrock_metal_spec.jpg
+	reflMap hexrock_metal_spec.jpg
+	specMap_rgb true
+	ambient 0.5 0.7 0.75
+	diffuse 1.05 1.1 0.95
+	specular 0.8 0.9 0.8 20
+	env_map true
+	fresnel false
+	refl_amount 0.1
+}
