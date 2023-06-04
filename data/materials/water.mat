@@ -673,6 +673,179 @@ material River_Blue_jelly
 	speed -3.05 -1.0
 }
 
+
+//  New
+//--------------------------------------------------------
+material Water_strange
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.08 0.12
+    fresnelMultiplier 1.1
+	
+	colour 0.49 0.69 0.78  0.0
+	reflectColour 0.81 0.93 1.49  0.9
+	refractColour 0.66 0.99 0.59  1.26
+	specColourAndPower 0.0 2.5 0.5  64
+
+    bump2SpecPowerMul 6.0 36 0.9
+    speed 1.0 1.0
+}
+
+material Water_strange2
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 0.42 0.97 0.39  0.0
+	reflectColour 0.98 0.09 0.97  0.9
+	refractColour 0.76 0.89 0.99  0.76
+	specColourAndPower 1.3 0.1 0.1  64
+
+    bump2SpecPowerMul 6.0 36 0.9
+    speed 0.6 1.0
+}
+
+material LavaHot   // lava dense fluid
+{
+    parent Water
+    choppyness_scale 0.1 33
+    smallWaves_midWaves 0.15 0.1 0.22 0.12
+    bigWaves 0.553 0.435
+    bump 2.5 0.145 0.073
+    fresnelMultiplier 0.67
+
+    colour 0.847 0.314 0.195  1.0
+	reflectColour 1.45 1.46 0.48  0.44
+	refractColour 0.0 0.0 0.0  0.6
+	specColourAndPower 1.10 1.20 0.44  256
+
+    bump2SpecPowerMul 4.86 1.0 1.03
+    speed 0.478 1.0
+}
+
+
+material Water_pink  // pink
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 0.99 0.39 0.94  0.0
+	reflectColour 0.94 0.89 0.91  0.9
+	refractColour 0.86 0.99 0.86  0.76
+	specColourAndPower 0.98 1.0 1.0  64
+
+    bump2SpecPowerMul 6.0 16 0.8
+    speed 1.0 1.0
+}
+
+material Pink_jelly
+{
+	parent Water
+	WaterNormalMap water_nh.png
+	choppyness_scale 0.08 12
+	smallWaves_midWaves 0.25 0.3 0.5 0.15
+	bigWaves 0.5 0.5
+	bump 2 0.6 0.8
+	fresnelMultiplier 1.0
+
+	colour 0.87 0.1 0.86 0.86
+	reflectColour 0.9 0.3 0.6 1
+	refractColour 0.9 0.4 0.5 1.0
+	specColourAndPower 1.0 1.0 1.0 64
+
+	bump2SpecPowerMul 12.0 12 0.4
+	speed 0.08 1.0
+}
+
+material Oil
+{
+    parent Water
+    WaterNormalMap water_nh.png
+    smallWaves_midWaves 0.025 0.15 0.06 0.1
+    choppyness_scale 0.03 7
+    bigWaves 0.68 0.67
+    bump 1.4 0.22 0.01
+    fresnelMultiplier 1.0
+
+    colour 0.04 0.04 0.05  1.0
+	reflectColour 0.1 0.2 0.3  0.57
+	refractColour 0.13 0.13 0.19  1.0
+	specColourAndPower 0.33 0.35 0.37  48
+
+    bump2SpecPowerMul 16.0 8 0.3
+    speed 0.03 1.0
+}
+
+material Liquid_gas
+{
+	parent Water
+	choppyness_scale 0.025 5
+    smallWaves_midWaves 0.025 0.15 0.06 0.1
+    bigWaves 0.68 0.67
+    bump 1.2 0.22 0.01
+    fresnelMultiplier 1.4
+
+    colour 0.82 0.85 0.37  0.0
+    reflectColour 0.39 0.6 1.0  0.03
+    refractColour 0.76 0.99 0.96  0.016
+
+	specColourAndPower 0.09 0.2 0.2  12
+    bump2SpecPowerMul 16.0 8 0.3
+    speed 0.03 1.0
+}
+
+material Liquid_gas2
+{
+	parent Water
+	choppyness_scale 0.025 5
+    smallWaves_midWaves 0.025 0.15 0.06 0.1
+    bigWaves 0.68 0.67
+    bump 1.2 0.22 0.01
+    fresnelMultiplier 1.0
+
+    colour 0.72 0.69 0.37  0.1
+    reflectColour 0.39 0.6 1.0  0.03
+    refractColour 0.89 0.89 0.99  0.3
+
+	specColourAndPower 0.09 0.2 0.2  24
+    bump2SpecPowerMul 16.0 8 0.3
+    speed 0.03 1.0
+}
+
+
+material Green_slime
+{
+	parent Water
+	WaterNormalMap water_nh.png
+	choppyness_scale 0.08 24
+	smallWaves_midWaves 0.25 0.3 0.5 0.15
+	bigWaves 0.5 0.5
+	bump 2 0.6 0.8
+	fresnelMultiplier 1.0
+
+	colour 0.03 0.95 0.26 0.86
+	reflectColour 0.5 0.98 0.1 1
+	refractColour 0.1 0.7 0.5 1.0
+	specColourAndPower 1.0 1.0 1.0 64
+
+	bump2SpecPowerMul 12.0 12 0.4
+	speed 0.38 1.0
+}
+
+
+//  New  River
+//--------------------------------------------------------
 material River_Acid_green   // green acid
 {
     parent Acid_green
@@ -710,4 +883,76 @@ material River_LavaBlk   // lava solid
     WaterDepthMap white.png
 	alphaMap HmapTex
     speed -0.15 -1.0
+}
+
+material River_pink  
+{
+    parent Water_pink
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -3.0 -1.0
+}
+
+material River_strange 
+{
+    parent Water_strange
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -3.0 -1.0
+}
+
+material River_strange2
+{
+    parent Water_strange2
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -3.0 -1.0
+}
+
+material River_liquid_gas
+{
+    parent Liquid_gas
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -1.0 -1.0
+}
+
+material River_liquid_gas2
+{
+    parent Liquid_gas2
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -1.0 -1.0
+}
+
+material River_Pink_jelly
+{
+	parent Pink_jelly
+    WaterDepthMap white.png
+	alphaMap HmapTex
+	speed -3.05 -1.0
+}
+
+material River_Green_slime
+{
+	parent Green_slime
+    WaterDepthMap white.png
+	alphaMap HmapTex
+	speed -3.05 -1.0
+}
+
+material River_Oil
+{
+	parent Oil
+    WaterDepthMap white.png
+	alphaMap HmapTex
+	speed -2.05 -1.0
+}
+
+material River_LavaHot
+{
+    parent LavaHot
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -0.478 -1.0
 }

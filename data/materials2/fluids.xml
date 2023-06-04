@@ -110,4 +110,67 @@
 		fogHSVA="0.023 0.742 0.091 1" fogDens="4" fogDensH="0.6"
 		solid="1" surf="DesertFast" idParticles="-1" fDamage="2" deep="0" />
 
+
+	<!-- new -->
+	<fluid name="water pink"	material="Water_pink"  density="250" angDamp="0.9" linDamp="0.3" heightDamp="0"
+		fogHSVA="0.828 0.440 0.758 1" fogDens="12" fogDensH="1" deep="1" />
+			
+	<fluid name="water strange"	material="Water_strange" density="200" angDamp="0.7" linDamp="0.2" heightDamp="0"
+		fogHSVA="0.832 0.523 0.631 1" fogDens="17" fogDensH="1" deep="1" />
+
+	<fluid name="water strange2"	material="Water_strange2" density="250" angDamp="0.8" linDamp="0.4" heightDamp="0"
+		fogHSVA="0.432 0.823 0.531 0.7" fogDens="11" fogDensH="1" deep="1" />
+			
+	<fluid name="lava hot"		material="LavaHot"	density="1000" angDamp="3" linDamp="1.3" heightDamp="3"
+		fogHSVA="0.047 0.767 0.116 1" fogDens="3" fogDensH="0.6"
+		bWhForce="1" whMaxAngVel="30" whSpinDamp="65"  whForceLong="80" whForceUp="15"
+		bumpFqX="22.2" bumpFqY="23.2" bumpAmp="0.8" bumpAngle="20" whSteerMul="1.1" idParticles="2" fDamage="7" deep="0" />
+
+
+	<fluid name="liquid gas"	material="Liquid_gas"  density="10" angDamp="0.2" linDamp="0.1" heightDamp="0"
+		fogHSVA="0.228 0.460 0.658 1" fogDens="79" fogDensH="1" deep="1" />
+		
+	<fluid name="liquid gas 2"	material="Liquid_gas2"  density="10" angDamp="0.2" linDamp="0.1" heightDamp="0"
+		fogHSVA="0.198 0.440 0.558 1" fogDens="64" fogDensH="1" fDamage="0.35" deep="1" />
+
+	<fluid name="pink jelly"	material="Pink_jelly" density="700" angDamp="1.4" linDamp="0.5" heightDamp="4"
+		fogHSVA="0.840 0.334 0.720 1" fogDens="12" fogDensH="0.6"
+		bWhForce="1" whMaxAngVel="60" whSpinDamp="25" whForceLong="80" whForceUp="20"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.6" bumpAngle="10" whSteerMul="2" idParticles="-1" deep="0" />
+			
+	<fluid name="green slime"	material="Green_slime" density="1000" angDamp="1.4" linDamp="0.5" heightDamp="4"
+		fogHSVA="0.240 0.934 0.820 1" fogDens="8" fogDensH="0.6"
+		bWhForce="1" whMaxAngVel="60" whSpinDamp="25" whForceLong="80" whForceUp="20"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.6" bumpAngle="10" whSteerMul="2" idParticles="-1" deep="0" />
+			
+	<fluid name="oil"	material="Oil" density="1200"  angDamp="1.8" linDamp="0.7" heightDamp="5"
+		fogHSVA="0.052 0.064 0.070 1" fogDens="20" fogDensH="0.8"
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="90" whForceUp="60"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.5" bumpAngle="10" whSteerMul="3" idParticles="-1" deep="0" />
+
+	<!-- low density -->
+	<fluid name="water blue low density"	material="Water_blue"  density="100" angDamp="0.7" linDamp="0.2" heightDamp="0"
+		fogHSVA="0.548 0.742 0.612 1" fogDens="22" fogDensH="1" deep="1" />
+	<fluid name="water cyan low density"	material="Water_cyan"  density="100" angDamp="0.7" linDamp="0.2" heightDamp="0"
+		fogHSVA="0.475 0.824 0.624 1" fogDens="27" fogDensH="1" deep="1" />
+	<fluid name="water green low density"	material="Water_green" density="100" angDamp="0.7" linDamp="0.2" heightDamp="0"
+		fogHSVA="0.277 0.582 0.357 1" fogDens="24" fogDensH="1" deep="1" />
+	<fluid name="water moss low density"	material="Water_moss"  density="150" angDamp="0.8" linDamp="0.3" heightDamp="0"
+		fogHSVA="0.428 0.440 0.258 1" fogDens="39" fogDensH="1" deep="1" />
+	<fluid name="water blue dark low density" material="Water_blue_dark"  density="100" angDamp="0.7" linDamp="0.3" heightDamp="0"
+		fogHSVA="0.502 0.304 0.308 1" fogDens="21" fogDensH="1" deep="1" />
+		
+	<fluid name="water white low density"	material="Water_white" density="100" angDamp="0.7" linDamp="0.2" heightDamp="0"
+		fogHSVA="0.532 0.323 0.631 1" fogDens="22" fogDensH="1" deep="1" />
+	<fluid name="water sunset low density"	material="Water_sunset" density="100" angDamp="0.7" linDamp="0.2" heightDamp="0"
+		fogHSVA="0.582 0.521 0.424 1" fogDens="33" fogDensH="1" deep="1" />
+	<fluid name="water sunset cyan low density"	material="Water_sunset_cyan" density="100" angDamp="0.7" linDamp="0.2" heightDamp="0"
+		fogHSVA="0.500 0.632 0.424 1" fogDens="36" fogDensH="1" deep="1" />
+	<fluid name="water shore low density"	material="Water_shore" density="100" angDamp="0.7" linDamp="0.2" heightDamp="0"
+		fogHSVA="0.532 0.336 0.383 1" fogDens="32" fogDensH="1" deep="1" />
+	<fluid name="water dark low density"	material="Water_dark" density="100" angDamp="0.7" linDamp="0.2" heightDamp="0"
+		fogHSVA="0.568 0.500 0.088 1" fogDens="34" fogDensH="1" deep="1" />
+	<fluid name="water pink low density"	material="Water_pink"  density="150" angDamp="0.8" linDamp="0.3" heightDamp="0"
+		fogHSVA="0.828 0.440 0.758 1" fogDens="38" fogDensH="1" deep="1" />
+
 </fluids>

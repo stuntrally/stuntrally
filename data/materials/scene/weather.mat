@@ -78,3 +78,17 @@ material Lava1
 	alpha_rejection none
     diffuseMap lava1.png
 }
+
+
+//  Bubble
+material FluidBubble
+{
+    parent FluidMud
+    diffuseMap bubble.png
+}
+
+material FluidBubbleGrease
+{
+    parent FluidMud
+    diffuseMap bubble-grease.png
+}
