@@ -392,6 +392,366 @@ particle_system SnowStormFine
 	}
 }
 
+//Crystal Snow
+
+//  Snow  * * * * *
+particle_system CrystalSnow
+{
+	material			SnowFlake
+	quota				18000
+	particle_width		0.09
+	particle_height		0.09
+
+	cull_each		false
+    sorted			false
+
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	0 -1 0
+		width	18
+		height	18
+		depth	12  //h
+
+		colour				0.5 0.8 1  0.6
+		colour_range_start	0.5 0.7 1  0.7
+		colour_range_end	0.4 0.5 1  0.5
+
+		emission_rate	20
+		velocity_min	4.1
+		velocity_max	5.2
+		time_to_live_min	1.5
+		time_to_live_max	2
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	13
+	}
+}
+
+
+//  SnowFine  ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+particle_system CrystalSnowFine
+{
+	material			SnowFlake
+	quota				18000
+	particle_width		0.07
+	particle_height		0.07
+
+	cull_each		false
+    sorted			false
+
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	0 -1 0
+		width	18
+		height	18
+		depth	12  //h
+
+		colour				0.5 0.8 1  0.6
+		colour_range_start	0.5 0.7 1  0.7
+		colour_range_end	0.4 0.5 1  0.5
+
+		emission_rate	20
+		velocity_min	2.1
+		velocity_max	3.2
+		time_to_live_min	2.0
+		time_to_live_max	2.5
+	}
+	affector DirectionRandomiser
+	{
+		randomness	8
+	}
+}
+
+
+//  Snow  Storm  * * *  *  *  *
+particle_system CrystalSnowStorm
+{
+	material			SnowFlake
+	quota				18000
+	particle_width		0.08
+	particle_height		0.08
+
+	cull_each		false
+    sorted			false
+
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.8 0.5
+		width	19
+		height	19
+		depth	11  //h
+
+		colour				0.5 0.8 1  0.6
+		colour_range_start	0.5 0.7 1  0.7
+		colour_range_end	0.4 0.5 1  0.5
+
+		emission_rate	20
+		velocity_min	5.1
+		velocity_max	7.0
+		time_to_live_min	1.5
+		time_to_live_max	2.2
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	13
+	}
+}
+
+//  Snow  Storm  Fine  . . .  .  .  .
+particle_system CrystalSnowStormFine
+{
+	material			SnowFlake
+	quota				18000
+	particle_width		0.07
+	particle_height		0.07
+
+	cull_each		false
+    sorted			false
+
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.8 0.5
+		width	19
+		height	19
+		depth	11  //h
+
+		colour				0.5 0.8 1  0.6
+		colour_range_start	0.5 0.7 1  0.7
+		colour_range_end	0.4 0.5 1  0.5
+
+		emission_rate	20
+		velocity_min	4.1
+		velocity_max	6.0
+		time_to_live_min	2.0
+		time_to_live_max	2.5
+	}
+	affector DirectionRandomiser
+	{
+		randomness	15
+	}
+}
+
+//Crystal Snow Green
+
+//  Snow  * * * * *
+particle_system CrystalSnowGreen
+{
+	material			SnowFlake
+	quota				18000
+	particle_width		0.09
+	particle_height		0.09
+
+	cull_each		false
+    sorted			false
+
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	0 -1 0
+		width	18
+		height	18
+		depth	12  //h
+
+		colour				0.5 0.8 0.4  0.6
+		colour_range_start	0.5 0.7 0.4  0.7
+		colour_range_end	0.4 0.5 0.3  0.5
+
+		emission_rate	20
+		velocity_min	4.1
+		velocity_max	5.2
+		time_to_live_min	1.5
+		time_to_live_max	2
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	13
+	}
+}
+
+
+//  SnowFine  ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+particle_system CrystalSnowFineGreen
+{
+	material			SnowFlake
+	quota				18000
+	particle_width		0.07
+	particle_height		0.07
+
+	cull_each		false
+    sorted			false
+
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	0 -1 0
+		width	18
+		height	18
+		depth	12  //h
+
+		colour				0.5 0.8 0.4  0.6
+		colour_range_start	0.5 0.7 0.4  0.7
+		colour_range_end	0.4 0.5 0.3  0.5
+
+		emission_rate	20
+		velocity_min	2.1
+		velocity_max	3.2
+		time_to_live_min	2.0
+		time_to_live_max	2.5
+	}
+	affector DirectionRandomiser
+	{
+		randomness	8
+	}
+}
+
+
+//  Snow  Storm  * * *  *  *  *
+particle_system CrystalSnowStormGreen
+{
+	material			SnowFlake
+	quota				18000
+	particle_width		0.08
+	particle_height		0.08
+
+	cull_each		false
+    sorted			false
+
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.8 0.5
+		width	19
+		height	19
+		depth	11  //h
+
+		colour				0.5 0.8 0.4  0.6
+		colour_range_start	0.5 0.7 0.4  0.7
+		colour_range_end	0.4 0.5 0.3  0.5
+
+		emission_rate	20
+		velocity_min	5.1
+		velocity_max	7.0
+		time_to_live_min	1.5
+		time_to_live_max	2.2
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	13
+	}
+}
+
+//  Snow  Storm  Fine  . . .  .  .  .
+particle_system CrystalSnowStormFineGreen
+{
+	material			SnowFlake
+	quota				18000
+	particle_width		0.07
+	particle_height		0.07
+
+	cull_each		false
+    sorted			false
+
+	billboard_type		point
+	//renderer			billboard
+    //sorted			true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.8 0.5
+		width	19
+		height	19
+		depth	11  //h
+
+		colour				0.5 0.8 0.4  0.6
+		colour_range_start	0.5 0.7 0.4  0.7
+		colour_range_end	0.4 0.5 0.3  0.5
+
+		emission_rate	20
+		velocity_min	4.1
+		velocity_max	6.0
+		time_to_live_min	2.0
+		time_to_live_max	2.5
+	}
+	affector DirectionRandomiser
+	{
+		randomness	15
+	}
+}
+
 
 //  SandStormRed  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 particle_system SandStormRed
