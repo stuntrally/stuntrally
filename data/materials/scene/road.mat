@@ -415,6 +415,35 @@ material roadMagicMirror_ter
 	normalMap normal_2.png
 }
 
+//  Mirror  ----
+material roadMagicMirrorCyan
+{
+	parent road
+	ambient 0.24 1.0 1.56
+	diffuse 0.32 1.22 1.72
+	specular 0.3 0.6 0.6  16 //x4
+	diffuseMap roadSandSet.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.45
+	bump_scale 0.3
+	//specMap roadAsphalt_spec2.jpg
+}
+material roadMagicMirrorCyan_ter
+{
+	parent road_terrain
+	ambient 0.24 1.0 1.56
+	diffuse 0.32 1.22 1.72
+	specular 0.3 0.6 0.6  16 //x4
+	diffuseMap roadSandSet.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.3
+	bump_scale 0.3
+	normalMap normal_2.png
+}
+
+
 //  Crystals
 material roadCrystal
 {
@@ -435,6 +464,35 @@ material roadCrystal_ter
 	ambient 0.3 0.6 1.4
 	diffuse 0.3 0.6 1.4
 	specular 0.05 0.4 0.8  16 //x4
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	specMap rdGravel.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.5
+	bump_scale 0.2
+}
+
+//  Crystals
+material roadCrystalCyan
+{
+	parent road
+	ambient 0.24 1.2 1.16
+	diffuse 0.32 1.42 1.32
+	specular 0.3 0.6 0.6  16 //x4
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.5
+	bump_scale 0.2
+}
+material roadCrystalCyan_ter
+{
+	parent road_terrain
+	ambient 0.24 1.2 1.16
+	diffuse 0.32 1.42 1.32
+	specular 0.3 0.6 0.6  16 //x4
 	diffuseMap rdGravel.jpg
 	normalMap rdGravel_norm.jpg
 	specMap rdGravel.jpg

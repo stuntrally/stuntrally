@@ -1091,6 +1091,110 @@ particle_system Electricity
 	}
 }
 
+//  AlienBeam  * * * * * * * * * * * * * * 
+particle_system AlienBeamDown
+{
+	quota           1000
+    material        Particles/Spark
+    particle_width  0.2
+    particle_height 0.4
+	cull_each		false
+    sorted			false
+	billboard_type	point
+
+	emitter Cylinder
+	{
+		angle	20
+		position	0 0 0
+		direction	0 -1 0
+		width	1
+		height	1
+		depth	0.4  //h
+
+		colour				0.21 0.55 0.15  0.52
+		colour_range_start	0.12 0.41 0.08  0.41
+		colour_range_end	0.28 0.62 0.19  0.23
+		velocity	2
+		velocity_min	2
+		velocity_max	3
+		time_to_live       1
+		time_to_live_min   1
+		time_to_live_max   1.1
+    }
+	affector DirectionRandomiser
+	{
+		randomness  15
+	}
+
+    affector Scaler
+    {
+   	    rate 4
+    }
+	affector ColourFader
+    {
+
+        blue  0.2
+		alpha -0.1
+    }
+	affector LinearForce
+	{
+		force_vector	0 -11.8 0
+		force_application	add
+	}
+}
+
+
+//  AlienBeam  * * * * * * * * * * * * * * 
+particle_system AlienBeamUp
+{
+	quota           1000
+    material        Particles/Spark
+    particle_width  2.7
+    particle_height 4.2
+	cull_each		false
+    sorted			false
+	billboard_type	point
+
+	emitter Cylinder
+	{
+		angle	20
+		position	0 0 0
+		direction	0 1 0
+		width	1
+		height	1
+		depth	0.4  //h
+
+		colour				0.21 0.55 0.15  0.52
+		colour_range_start	0.12 0.41 0.08  0.41
+		colour_range_end	0.28 0.62 0.19  0.23
+		velocity	1
+		velocity_min	1
+		velocity_max	2
+		time_to_live       1
+		time_to_live_min   1
+		time_to_live_max   1.1
+    }
+	affector DirectionRandomiser
+	{
+		randomness  10
+	}
+
+    affector Scaler
+    {
+   	    rate 3
+    }
+	affector ColourFader
+    {
+        blue  0.2
+		alpha -0.1
+    }
+	affector LinearForce
+	{
+		force_vector	0 3.8 0
+		force_application	add
+	}
+}
+
 
 //  Waterfall  ::: ::: ::: ::: ::: :::
 particle_system Waterfall1High

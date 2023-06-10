@@ -282,8 +282,10 @@
 
 <r sc="Spc"  m="---- Space ----"      r="0" />
 <r sc="Uni"  m="roadSandMagic"        r="3" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.32 0.46 0.8" z="U" />     
-<r sc="Uni"  m="roadMagicMirror"      r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.32 0.46 0.8" z="U" />     
-<r sc="Cry"  m="roadCrystal"          r="3" su="roadDesert"   du="0.0" ds="0.0" md="0.0" tr="0.00 0.10 0.20 0.5" z="Y" />     
+<r sc="Uni"  m="roadMagicMirror"      r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.32 0.46 0.8" z="U" />
+<r sc="Uni"  m="roadMagicMirrorCyan"  r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.25 0.8" z="U" />     
+<r sc="Cry"  m="roadCrystal"          r="3" su="roadDesert"   du="0.0" ds="0.0" md="0.0" tr="0.00 0.10 0.20 0.5" z="Y" />
+<r sc="Cry"  m="roadCrystalCyan"      r="3" su="roadDesert"   du="0.0" ds="0.0" md="0.0" tr="0.00 0.10 0.10 0.5" z="Y" />   
 
 <r sc="Mrs"  m="roadMars"             r="3" su="roadForest"   du="0.2" ds="0.4" md="0.0" tr="0.042 0.593 0.540 0.7 0.0" z="R" />
 <r sc="Blk"  m="roadFunny"            r="1" su="roadJungle"   du="0.0" ds="0.4" md="0.0" tr="0.042 0.593 0.540 0.7 0.0" z="R" />
@@ -444,15 +446,24 @@
 <r sc="IslD" m="River_shore"          r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="I" />
 <r sc="Vlc"  m="River_dark"           r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="I" />
 <r sc="For"  m="River_blue_dark"      r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="U" />
+	
+<r sc="Sur"  m="River_pink"           r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="I" />
+<r sc="Sur"  m="River_strange"        r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Sur"  m="River_strange2"       r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Vlc"  m="River_liquid_gas"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="V" />
+<r sc="Vlc"  m="River_liquid_gas2"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="V" />
 
 <r sc="Uni"  m="River_Grease_jelly"   r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="U" />
 <r sc="Cry"  m="River_Blue_jelly"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="U" />
 <r sc="Cry"  m="River_Pink_jelly"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="U" />
+<r sc="Tox"  m="River_Green_slime"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="U" />
+<r sc="Blk"  m="River_Oil"            r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 <r sc="Tox"  m="River_Acid_green"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="T" />
 <r sc="Wnt"  m="River_Ice"            r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="W" />
 <r sc="Wnt"  m="River_Ice_cyan"       r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="W" />
 <r sc="Vlc"  m="River_LavaOrn"        r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="V" />
 <r sc="VlcD" m="River_LavaBlk"        r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="V" />  
+<r sc="Vlc"  m="River_LavaHot"        r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="V" />
 
 
 <!--  Grasses  ================================================================================================================================
