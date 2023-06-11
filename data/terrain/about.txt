@@ -114,3 +114,7 @@ License(s):  GPL 2.0   GPL 3.0   CC-BY-SA 3.0
 https://opengameart.org/content/29-grounds-and-walls-and-water-1024x1024
 
 snow_mntn  from violetRocks
+
+New:
+pink and white marble terrain based on CC0 textures from https://ambientcg.com
+pink crystals based original blue
