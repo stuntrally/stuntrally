@@ -387,6 +387,62 @@ material roadSandMagic_ter
 	normalMap normal_2.png
 }
 
+//  Magic  ----
+material roadSandMagicCyan
+{
+	parent road
+	ambient 0.24 1.0 1.56
+	diffuse 0.32 1.22 1.72
+	specular 0.3 0.6 0.6  16
+	diffuseMap roadSandSet.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.15
+	bump_scale 0.3
+	//specMap roadAsphalt_spec2.jpg
+}
+material roadSandMagicCyan_ter
+{
+	parent road_terrain
+	ambient 0.24 1.0 1.56
+	diffuse 0.32 1.22 1.72
+	specular 0.3 0.6 0.6  16
+	diffuseMap roadSandSet.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.15
+	bump_scale 0.3
+	normalMap normal_2.png
+}
+
+//  Magic  ----
+material roadSandMagicPink
+{
+	parent road
+	ambient 0.81 0.55 1.15
+	diffuse 0.99 0.60 1.25
+	specular 0.6 0.3 0.45  16
+	diffuseMap roadSandSet.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.15
+	bump_scale 0.3
+	//specMap roadAsphalt_spec2.jpg
+}
+material roadSandMagicPink_ter
+{
+	parent road_terrain
+	ambient 0.81 0.55 1.15
+	diffuse 0.99 0.60 1.25
+	specular 0.6 0.3 0.45  16
+	diffuseMap roadSandSet.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.15
+	bump_scale 0.3
+	normalMap normal_2.png
+}
+
 //  Mirror  ----
 material roadMagicMirror
 {
@@ -443,6 +499,33 @@ material roadMagicMirrorCyan_ter
 	normalMap normal_2.png
 }
 
+//  Mirror  ----
+material roadMagicMirrorPink
+{
+	parent road
+	ambient 0.51 0.25 0.65
+	diffuse 0.69 0.27 0.75
+	specular 0.6 0.3 0.45  16
+	diffuseMap roadSandSet.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.45
+	bump_scale 0.3
+	//specMap roadAsphalt_spec2.jpg
+}
+material roadMagicMirrorPink_ter
+{
+	parent road_terrain
+	ambient 0.51 0.25 0.65
+	diffuse 0.69 0.27 0.75
+	specular 0.6 0.3 0.45  16
+	diffuseMap roadSandSet.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.3
+	bump_scale 0.3
+	normalMap normal_2.png
+}
 
 //  Crystals
 material roadCrystal
@@ -502,6 +585,33 @@ material roadCrystalCyan_ter
 	bump_scale 0.2
 }
 
+material roadCrystalPink
+{
+	parent road
+	ambient 1.34 0.21 0.66
+	diffuse 1.42 0.42 0.72
+	specular 0.6 0.3 0.4  16 //x4
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.5
+	bump_scale 0.2
+}
+material roadCrystalPink_ter
+{
+	parent road_terrain
+	ambient 1.34 0.21 0.66
+	diffuse 1.42 0.42 0.72
+	specular 0.6 0.3 0.4  16 //x4
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	specMap rdGravel.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.5
+	bump_scale 0.2
+}
 
 //  Mud
 material roadMud

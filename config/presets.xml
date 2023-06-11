@@ -237,6 +237,15 @@
 <t sc="Blk"  t="zdesert_sand_d"     n="desert_sand_n"      s="12.06" r="1" su="DesertFast"     tp="0" du="0.8" ds="1.0" md="0.1" tr="0.16 0.16 0.16 0.7"  aa="0"  ab="10" z="Z" />
 <t sc="Blk"  t="zdesert_wet_d"      n="desert_wet_n"       s="8.78"  r="2" su="DesertFast"     tp="0" du="0.5" ds="0.7" md="0.0" tr="0.20 0.20 0.20 0.7"  aa="0"  ab="13" z="Z" />
 <t sc="Stn"  t="zAsphalt_d"         n="ground_cracks2_n"   s="10.14" r="0" su="Asphalt"        tp="0" du="0.0" ds="0.6" md="0.0" tr="0.10 0.10 0.10 0.6"  aa="0" ab="90"  z="D" />
+	
+<t sc="Oth"  t="mntn_marble_pink_d"     n="mntn_marble_n"       s="26.04" r="3" su="Rocks"          tp="1" du="0.0" ds="0.2" md="0.0" tr="0.40 0.20 0.20 0.5"  aa="28" ab="44" z="U" />
+<t sc="Oth"  t="mntn_marble_pink2_d"    n="mntn_marble2_n"      s="26.04" r="3" su="Rocks"          tp="1" du="0.0" ds="0.2" md="0.0" tr="0.40 0.20 0.20 0.5"  aa="28" ab="44" z="U" />
+<t sc="Oth"  t="mntn_marble_white_d"    n="mntn_marble_n"       s="26.04" r="3" su="Rocks"          tp="0" du="0.0" ds="0.2" md="0.0" tr="0.30 0.30 0.30 0.5"  aa="28" ab="44" z="U" />
+<t sc="Oth"  t="marble_ground_d"        n="marble_ground_n"     s="26.04" r="3" su="DesertFast"     tp="0" du="0.0" ds="0.2" md="0.0" tr="0.30 0.30 0.30 0.5"  aa="0" ab="25" z="U" />
+<t sc="Oth"  t="marble_ground2_d"       n="marble_ground_n"     s="26.04" r="3" su="DesertFast"     tp="0" du="0.0" ds="0.2" md="0.0" tr="0.40 0.20 0.20 0.5"  aa="0" ab="25" z="U" />
+<t sc="Cry"  t="ycrystals2_fine_d"      n="ycrystals_fine_n"    s="17.15" r="3" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.26 0.1 0.23 0.8"  aa="0"  ab="10" z="Y" d="" />
+<t sc="Cry"  t="ycrystals2_med_d"       n="ycrystals_med_n"     s="12.59" r="2" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.26 0.1 0.23 0.8"  aa="14" ab="31" z="Y" d="" />
+<t sc="Cry"  t="ycrystals2_big_d"       n="ycrystals_big_n"     s="17.15" r="4" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.26 0.1 0.23 0.8"  aa="38" ab="90" z="Y" d="" />
 
 
 <!--  Roads  ================================================================================================================================
@@ -281,11 +290,16 @@
 <r sc="Wnt"  m="roadSandWhite"        r="1" su="roadDesert"   du="0.6" ds="0.6" md="0.0" tr="0.70 0.70 0.70 0.7" z="G" />
 
 <r sc="Spc"  m="---- Space ----"      r="0" />
-<r sc="Uni"  m="roadSandMagic"        r="3" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.32 0.46 0.8" z="U" />     
+<r sc="Uni"  m="roadSandMagic"        r="3" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.32 0.46 0.8" z="U" />
+<r sc="Uni"  m="roadSandMagicCyan"    r="3" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.22 0.68 0.56 0.6" z="U" />
+<r sc="Uni"  m="roadSandMagicPink"    r="3" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.64 0.40 0.46 0.6" z="U" />  
 <r sc="Uni"  m="roadMagicMirror"      r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.32 0.46 0.8" z="U" />
-<r sc="Uni"  m="roadMagicMirrorCyan"  r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.25 0.8" z="U" />     
+<r sc="Uni"  m="roadMagicMirrorCyan"  r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.22 0.68 0.56 0.5" z="U" />
+<r sc="Uni"  m="roadMagicMirrorPink"  r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.40 0.20 0.20 0.5" z="U" />
 <r sc="Cry"  m="roadCrystal"          r="3" su="roadDesert"   du="0.0" ds="0.0" md="0.0" tr="0.00 0.10 0.20 0.5" z="Y" />
-<r sc="Cry"  m="roadCrystalCyan"      r="3" su="roadDesert"   du="0.0" ds="0.0" md="0.0" tr="0.00 0.10 0.10 0.5" z="Y" />   
+<r sc="Cry"  m="roadCrystalCyan"      r="3" su="roadDesert"   du="0.0" ds="0.0" md="0.0" tr="0.00 0.20 0.10 0.4" z="Y" />
+<r sc="Cry"  m="roadCrystalPink"      r="3" su="roadDesert"   du="0.0" ds="0.0" md="0.0" tr="0.30 0.10 0.20 0.4" z="Y" /> 
+	
 
 <r sc="Mrs"  m="roadMars"             r="3" su="roadForest"   du="0.2" ds="0.4" md="0.0" tr="0.042 0.593 0.540 0.7 0.0" z="R" />
 <r sc="Blk"  m="roadFunny"            r="1" su="roadJungle"   du="0.0" ds="0.4" md="0.0" tr="0.042 0.593 0.540 0.7 0.0" z="R" />
