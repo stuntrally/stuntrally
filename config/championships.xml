@@ -141,7 +141,7 @@ descr="The longest rally tracks, for those who want to drive a lot, in nice scen
 		<t name="Mud4-Taiga"/>
 	</champ>
 
-	<champ name="Curly shorts" ver="3" difficulty="3" type="2"
+	<champ name="Curly shorts" ver="4" difficulty="3" type="2"
 descr="Short, curly and tricky tracks with sharp turns.">
 		<t name="Fin2-Serpent"/>
 		<t name="Isl12-Beach"/>
@@ -151,7 +151,7 @@ descr="Short, curly and tricky tracks with sharp turns.">
 		<t name="Wnt12-Peaks"/>
 		<t name="For3-Snail"/>
 		<t name="Jng7-Hilly"/>
-		<t name="Des13-Winding"/>
+		<t name="Mos7-Winding"/>
 	</champ>
 
 	<champ name="Fancy circles" ver="4" difficulty="2" type="2"
@@ -325,7 +325,7 @@ descr="Only pipe tracks with high difficulty, extremely curly. Don't drive too f
 		<t name="Sav6-PipeCrazy"/>
 		<t name="Aus2-PipeCoil"/>
 		<t name="Uni2-Swirl"/>
-		<t name="Sav12-Infinity"/>
+		<t name="Sur10-Infinity"/>
 		<t name="Uni4-Pipeline"/>
 		<t name="Can5-Obstacles"/>
 	</champ>
@@ -447,12 +447,11 @@ descr="Desert championship. Part 1.">
 		<t name="Des7-CrossJumps"/>
 		<t name="Des8-Technical"/>
 	</champ>
-	<champ name="Desert 2nd" ver="3" difficulty="3" type="5"
+	<champ name="Desert 2nd" ver="4" difficulty="3" type="5"
 descr="Desert champ. Part 2.">
 		<t name="Des10-MudBath"/>
 		<t name="Des11-PersianCity"/>
 		<t name="Des12-Sandstorm"/>
-		<t name="Des13-Winding"/>
 		<t name="Des14-JumpCrazy"/>
 		<t name="Des15-CityWall"/>
 		<t name="Des16-AsphaltJumps"/>
@@ -504,9 +503,8 @@ descr="Savanna championship. Part 1.">
 		<t name="Sav9-Short"/>
 		<t name="Sav10-PipeCurl"/>
 	</champ>
-	<champ name="Savanna 2nd" ver="1" difficulty="5" type="5"
+	<champ name="Savanna 2nd" ver="2" difficulty="5" type="5"
 descr="Savanna championship. Part 2.">
-		<t name="Sav12-Infinity"/>
 		<t name="Sav13-Hole"/>
 		<t name="Sav14-Refinery"/>
 		<t name="Sav15-Scorpio"/>
@@ -666,13 +664,14 @@ descr="Autumn championship, Part 2.">
 		<t name="Atm9-SchwabAutumn"/>
 	</champ>
 
-	<champ name="Moss" ver="2" difficulty="5" type="6"
+	<champ name="Moss" ver="3" difficulty="5" type="6"
 descr="Moss championship.">
 		<t name="Mos2-Mouse"/>
 		<t name="Mos3-Air"/>
 		<t name="Mos4-MossyMntn"/>
 		<t name="Mos5-Factory"/>
 		<t name="Mos6-TaraMosses"/>
+		<t name="Mos7-Winding"/>
 	</champ>
 	<champ name="Volcanic" ver="3" difficulty="4" type="6"
 descr="Volcanic championship.">
@@ -717,10 +716,11 @@ descr="Crystals championship.">
 		<t name="Cry2-MagicFog"/>
 		<t name="Cry3-BlueHell"/>
 	</champ>
-	<champ name="Surreal" ver="2" difficulty="2" type="6"
+	<champ name="Surreal" ver="3" difficulty="2" type="6"
 descr="Surreal championship.">
 		<t name="Sur1-Surreal"/>
 		<t name="Sur3-Chaotic"/>
+		<t name="Sur10-Infinity"/>
 	</champ>
 	<champ name="SurrealSpace" ver="1" difficulty="5" type="6"
 descr="SurrealSpace championship.">
@@ -927,7 +927,7 @@ descr="Complete set of all stunt tracks from game. From easy, earliest to newest
 		<t name="Sav7-HighMadness"/>
 		<t name="Jng6-Fun"/>
 		<t name="Sav10-PipeCurl"/>
-		<t name="Sav12-Infinity"/>
+		<t name="Sur10-Infinity"/>
 		<t name="For9-MadMntn"/>
 		<t name="Aus1-StuntPark"/>
 		<t name="Aus2-PipeCoil"/>
@@ -946,7 +946,7 @@ descr="Complete set of all stunt tracks from game. From easy, earliest to newest
 		<t name="Uni5-PipeJumps"/>
 		<t name="Mud3-Mudlake"/>
 		<t name="Vlc6-Crematoria"/>
-		<t name="Des13-Winding"/>
+		<t name="Mos7-Winding"/>
 		<t name="Des14-JumpCrazy"/>
 		<t name="Can5-Obstacles"/>
 		<t name="Wnt14-DangerRoad"/>

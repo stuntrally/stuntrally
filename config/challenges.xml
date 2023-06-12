@@ -175,13 +175,13 @@ descr="Short easy tracks with some pipe fragments.">
 		</tracks>
 	</challenge>
 
-	<challenge name="#F0F000Winding pipes" ver="1" difficulty="2" type="0"
+	<challenge name="#F0F000Winding pipes" ver="2" difficulty="2" type="0"
 descr="Tracks fully in pipes, winding but quite easy. Don't drive too fast in small pipes.">
 		<cartype names="Gravel|Terrain" />
 		<pass avgPoints="11" />
 		<tracks>
 			<t name="Sav10-PipeCurl"  passPoints="9" />
-			<t name="Des13-Winding"   passPoints="9" />
+			<t name="Mos7-Winding"    passPoints="9" />
 			<t name="Aus2-PipeCoil"   passPoints="9" />
 		</tracks>
 	</challenge>
@@ -925,7 +925,7 @@ descr="Most difficult all-pipe tracks. Long and winding.">
 		<car names="U6|UV" />
 		<pass avgPoints="11" />
 		<tracks>
-			<t name="Sav12-Infinity"   passPoints="9" />
+			<t name="Sur10-Infinity"   passPoints="9" />
 			<t name="Uni4-Pipeline"    passPoints="8.5" />
 		</tracks>
 	</challenge>
