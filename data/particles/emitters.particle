@@ -2026,3 +2026,452 @@ particle_system GreaseBubblesLarge
 		alpha	-0.10
 	}
 }
+
+////// PINK JELLY WATERFALL
+
+particle_system PinkJellyfallHigh
+{
+	material        FluidJellyFall
+	quota           1000
+	particle_width  4.5
+	particle_height 4.5
+	cull_each		false
+	sorted			false
+	billboard_type	point
+
+	emitter Box
+	{
+		angle	30
+		width	0.4
+		height	0.4
+		depth	0.1
+		direction	0 -1 0
+
+		colour				0.8 0.5 0.8  0.5
+		colour_range_start	0.8 0.5 0.8  0.3
+		colour_range_end	0.9 0.5 0.9  0.7
+
+		velocity	3
+		velocity_min	1
+		velocity_max	6
+		time_to_live_min   3.3
+		time_to_live       3.6
+		time_to_live_max   7.4
+    }
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -60
+		rotation_speed_range_end 60
+	}
+	affector LinearForce
+	{
+		force_vector	0 -9.8 0
+		force_application	add
+	}
+	affector DirectionRandomiser
+	{
+		randomness	11
+	}
+	affector Scaler
+	{
+		rate	1.20
+	}
+	affector ColourFader
+	{
+		alpha	-0.10
+	}
+}
+
+particle_system PinkJellyfallLow
+{
+	material			FluidJellyFall
+	quota				1000
+	particle_width		3.6
+	particle_height		3.6
+	cull_each			false
+	billboard_type		point
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	1.2
+		height	0.7
+		depth	0.4  //h
+
+		colour				0.8 0.5 0.8  0.5
+		colour_range_start	0.8 0.5 0.8  0.3
+		colour_range_end	0.9 0.5 0.9  0.7
+
+		velocity_min	1.5
+		velocity_max	3.0
+		time_to_live_min	1.8
+		time_to_live_max	2.5
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -60
+		rotation_speed_range_end 60
+	}
+	affector LinearForce
+	{
+		force_vector	0 -3.8 0
+		force_application	add
+	}
+	affector DirectionRandomiser
+	{
+		randomness	11
+	}
+	affector Scaler
+	{
+		rate	2.20
+	}
+	affector ColourFader
+	{
+		alpha	-0.20
+	}
+}
+
+
+////// BLUE JELLY WATERFALL
+
+particle_system BlueJellyfallHigh
+{
+	material        FluidJellyFall
+	quota           1000
+	particle_width  4.5
+	particle_height 4.5
+	cull_each		false
+	sorted			false
+	billboard_type	point
+
+	emitter Box
+	{
+		angle	30
+		width	0.4
+		height	0.4
+		depth	0.1
+		direction	0 -1 0
+
+		colour				0.5 0.3 0.8  0.5
+		colour_range_start	0.5 0.3 0.8  0.3
+		colour_range_end	0.5 0.4 0.9  0.7
+
+		velocity	3
+		velocity_min	1
+		velocity_max	6
+		time_to_live_min   3.3
+		time_to_live       3.6
+		time_to_live_max   7.4
+    }
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -60
+		rotation_speed_range_end 60
+	}
+	affector LinearForce
+	{
+		force_vector	0 -9.8 0
+		force_application	add
+	}
+	affector DirectionRandomiser
+	{
+		randomness	11
+	}
+	affector Scaler
+	{
+		rate	1.20
+	}
+	affector ColourFader
+	{
+		alpha	-0.10
+	}
+}
+
+particle_system BlueJellyfallLow
+{
+	material			FluidJellyFall
+	quota				1000
+	particle_width		3.6
+	particle_height		3.6
+	cull_each			false
+	billboard_type		point
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	1.2
+		height	0.7
+		depth	0.4  //h
+
+		colour				0.5 0.3 0.8  0.5
+		colour_range_start	0.5 0.3 0.8  0.3
+		colour_range_end	0.5 0.4 0.9  0.7
+
+		velocity_min	1.5
+		velocity_max	3.0
+		time_to_live_min	1.8
+		time_to_live_max	2.5
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -60
+		rotation_speed_range_end 60
+	}
+	affector LinearForce
+	{
+		force_vector	0 -3.8 0
+		force_application	add
+	}
+	affector DirectionRandomiser
+	{
+		randomness	11
+	}
+	affector Scaler
+	{
+		rate	2.20
+	}
+	affector ColourFader
+	{
+		alpha	-0.20
+	}
+}
+
+////// GREASE JELLY WATERFALL
+
+particle_system GreaseJellyfallHigh
+{
+	material        FluidJellyFall
+	quota           1000
+	particle_width  4.5
+	particle_height 4.5
+	cull_each		false
+	sorted			false
+	billboard_type	point
+
+	emitter Box
+	{
+		angle	30
+		width	0.4
+		height	0.4
+		depth	0.1
+		direction	0 -1 0
+
+		colour				0.63 0.26 0.81  0.5
+		colour_range_start	0.63 0.26 0.81  0.3
+		colour_range_end	0.69 0.34 0.83  0.7
+
+		velocity	3
+		velocity_min	1
+		velocity_max	6
+		time_to_live_min   3.3
+		time_to_live       3.6
+		time_to_live_max   7.4
+    }
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -60
+		rotation_speed_range_end 60
+	}
+	affector LinearForce
+	{
+		force_vector	0 -9.8 0
+		force_application	add
+	}
+	affector DirectionRandomiser
+	{
+		randomness	11
+	}
+	affector Scaler
+	{
+		rate	1.20
+	}
+	affector ColourFader
+	{
+		alpha	-0.10
+	}
+}
+
+particle_system GreaseJellyfallLow
+{
+	material			FluidJellyFall
+	quota				1000
+	particle_width		3.6
+	particle_height		3.6
+	cull_each			false
+	billboard_type		point
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	1.2
+		height	0.7
+		depth	0.4  //h
+
+		colour				0.63 0.26 0.81  0.5
+		colour_range_start	0.63 0.26 0.81  0.3
+		colour_range_end	0.69 0.34 0.83  0.7
+
+		velocity_min	1.5
+		velocity_max	3.0
+		time_to_live_min	1.8
+		time_to_live_max	2.5
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -60
+		rotation_speed_range_end 60
+	}
+	affector LinearForce
+	{
+		force_vector	0 -3.8 0
+		force_application	add
+	}
+	affector DirectionRandomiser
+	{
+		randomness	11
+	}
+	affector Scaler
+	{
+		rate	2.20
+	}
+	affector ColourFader
+	{
+		alpha	-0.20
+	}
+}
+
+////// GREEN SLIME WATERFALL
+
+particle_system GreenSlimefallHigh
+{
+	material        FluidJellyFall
+	quota           1000
+	particle_width  4.5
+	particle_height 4.5
+	cull_each		false
+	sorted			false
+	billboard_type	point
+
+	emitter Box
+	{
+		angle	30
+		width	0.4
+		height	0.4
+		depth	0.1
+		direction	0 -1 0
+
+		colour				0.5 0.9 0.5  0.5
+		colour_range_start	0.5 0.9 0.5  0.3
+		colour_range_end	0.55 1.0 0.55  0.7
+
+		velocity	3
+		velocity_min	1
+		velocity_max	6
+		time_to_live_min   3.3
+		time_to_live       3.6
+		time_to_live_max   7.4
+    }
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -60
+		rotation_speed_range_end 60
+	}
+	affector LinearForce
+	{
+		force_vector	0 -9.8 0
+		force_application	add
+	}
+	affector DirectionRandomiser
+	{
+		randomness	11
+	}
+	affector Scaler
+	{
+		rate	1.20
+	}
+	affector ColourFader
+	{
+		alpha	-0.10
+	}
+}
+
+particle_system GreenSlimefallLow
+{
+	material			FluidJellyFall
+	quota				1000
+	particle_width		3.6
+	particle_height		3.6
+	cull_each			false
+	billboard_type		point
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	1.2
+		height	0.7
+		depth	0.4  //h
+
+		colour				0.5 0.9 0.5  0.7
+		colour_range_start	0.5 0.9 0.5  0.5
+		colour_range_end	0.55 1.0 0.55  0.9
+
+		velocity_min	1.5
+		velocity_max	3.0
+		time_to_live_min	1.8
+		time_to_live_max	2.5
+	}
+
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 360
+		rotation_speed_range_start -60
+		rotation_speed_range_end 60
+	}
+	affector LinearForce
+	{
+		force_vector	0 -3.8 0
+		force_application	add
+	}
+	affector DirectionRandomiser
+	{
+		randomness	11
+	}
+	affector Scaler
+	{
+		rate	2.20
+	}
+	affector ColourFader
+	{
+		alpha	-0.20
+	}
+}

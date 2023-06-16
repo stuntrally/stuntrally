@@ -92,3 +92,10 @@ material FluidBubbleGrease
     parent FluidMud
     diffuseMap bubble-grease.png
 }
+
+material FluidJellyFall
+{
+    parent FluidMud
+    diffuseMap fluid-jelly-waterfall.png
+}
+

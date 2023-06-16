@@ -315,6 +315,11 @@
 <r sc="Aln"  m="roadAlien"            r="1" su="roadJungle"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" z="L" />
 <r sc="Aln"  m="roadAlienStone"       r="1" su="roadForest"   du="0.0" ds="0.2" md="0.0" tr="0.30 0.20 0.10 0.7" z="L" />
 <r sc="Blk"  m="roadDesertBlack"      r="1" su="roadDesert"   du="0.4" ds="0.9" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+	
+<r sc="Mos"  m="roadMoss2"             r="3" su="roadJungle"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" z="O" />
+<r sc="Oth"  m="roadMarbleStone"       r="1" su="roadForest"   du="0.0" ds="0.2" md="0.0" tr="0.56 0.50 0.50 0.7" z="H" />
+<r sc="GrcR" m="roadSandMarble"        r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.70 0.70 0.70 0.6" z="FIT" />
+<r sc="GrcR" m="roadSandMarblePink"    r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.75 0.65 0.70 0.6" z="FIT" />
 
 <r sc="Wnt"  m="---- pipe glass ----" r="0" />
 <!-- <r sc="Oth"  m="pipe_glass"           r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" /> -->
