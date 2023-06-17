@@ -65,6 +65,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnN["Jng"] = "Jungle";        scnN["JngD"]= "JungleDark";      scnN["Mos"] = "Moss";          
 	scnN["For"] = "Forest";        scnN["ForM"]= "ForestMntn";      scnN["ForY"]= "ForestYellow";
 	scnN["Fin"] = "Finland";       scnN["Mud"] = "Mud";             scnN["DesM"]= "DesertMud";
+
 	scnN["Sav"] = "Savanna";       scnN["SavD"]= "SavannaDry";      scnN["Stn"] = "Stone";
 	scnN["Grc"] = "Greece";        scnN["GrcW"]= "GreeceWhite";     scnN["GrcR"] = "GreeceRocky";  
 
@@ -77,13 +78,17 @@ CGuiCom::CGuiCom(App* app1)
 
 	scnN["Tox"] = "Toxic";         scnN["Aln"] = "Alien";
 	scnN["Uni"] = "Unidentified";  scnN["Mrs"] = "Mars";            scnN["Cry"] = "Crystals";
-	scnN["Sur"] = "Surreal";       scnN["Spc"] = "Space";           scnN["SuSp"] = "SurrealSpace";
+
+	scnN["Sur"] = "Surreal";       scnN["Mar"] = "Marble";
+	scnN["Spc"] = "Space";         scnN["SuSp"] = "SurrealSpace";
+
 	scnN["Oth"] = "Other";         scnN["Blk"] = "BlackDesert";     scnN["Asp"] = "Asphalt";
 
 	//  scenery colors  for track names  *  *  * * * * ** ** ** *** *** ****
 	scnClr["Jungle"]       = "#50FF50";  scnClr["JungleDark"]   = "#40C040";  scnClr["Moss"]         = "#70F0B0";
 	scnClr["Forest"]       = "#A0C000";  scnClr["ForestMntn"]   = "#A0C080";  scnClr["ForestYellow"] = "#C0C000";
 	scnClr["Finland"]      = "#A0E080";  scnClr["Mud"]          = "#A0A000";  scnClr["DesertMud"]    = "#B0B000";
+
 	scnClr["Savanna"]      = "#C0F080";  scnClr["SavannaDry"]   = "#C0D090";  scnClr["Stone"]        = "#A0A0A0";
 	scnClr["Greece"]       = "#B0FF00";  scnClr["GreeceWhite"]  = "#C0C0A0";  scnClr["GreeceRocky"]  = "#B0A8A0";
 
@@ -96,7 +101,10 @@ CGuiCom::CGuiCom(App* app1)
 
 	scnClr["Toxic"]        = "#60A030";  scnClr["Alien"]        = "#D0FFA0";
 	scnClr["Unidentified"] = "#8080D0";  scnClr["Mars"]         = "#A04840";  scnClr["Crystals"]     = "#4090F0";
-	scnClr["Surreal"]      = "#F080B0";  scnClr["Space"]        = "#A0B8D0";  scnClr["SurrealSpace"] = "#80B0FF";
+
+	scnClr["Surreal"]      = "#F080B0";  scnClr["Marble"]       = "#E0A0C0";
+	scnClr["Space"]        = "#A0B8D0";  scnClr["SurrealSpace"] = "#80B0FF";
+	
 	scnClr["Other"]        = "#C0D0E0";  scnClr["BlackDesert"]  = "#202020";  scnClr["Asphalt"]      = "#B0E0E0";
 }
 

@@ -325,7 +325,7 @@ descr="Only pipe tracks with high difficulty, extremely curly. Don't drive too f
 		<t name="Sav6-PipeCrazy"/>
 		<t name="Aus2-PipeCoil"/>
 		<t name="Uni2-Swirl"/>
-		<t name="Sur10-Infinity"/>
+		<t name="Mar1-Infinity"/>
 		<t name="Uni4-Pipeline"/>
 		<t name="Can5-Obstacles"/>
 	</champ>
@@ -716,11 +716,15 @@ descr="Crystals championship.">
 		<t name="Cry2-MagicFog"/>
 		<t name="Cry3-BlueHell"/>
 	</champ>
-	<champ name="Surreal" ver="3" difficulty="2" type="6"
+	<champ name="Surreal" ver="4" difficulty="2" type="6"
 descr="Surreal championship.">
 		<t name="Sur1-Surreal"/>
 		<t name="Sur3-Chaotic"/>
-		<t name="Sur10-Infinity"/>
+	</champ>
+	<champ name="Marble" ver="1" difficulty="3" type="6"
+descr="Marble championship.">
+		<t name="Mar1-Infinity"/>
+		<t name="Mar2-Momayon"/>
 	</champ>
 	<champ name="SurrealSpace" ver="1" difficulty="5" type="6"
 descr="SurrealSpace championship.">
@@ -912,6 +916,7 @@ descr="Absolutely all rally tracks from game. Some easy pipes might appear.">
 		<t name="Can8-RedoPoka"/>
 		<t name="Can9-DukeRain"/>
 	</champ>
+	<!-- todo: add new tracks ^v -->
 
 	<champ name="ALL Stunt tracks" ver="1" difficulty="6" type="4"
 descr="Complete set of all stunt tracks from game. From easy, earliest to newest.">
@@ -927,7 +932,7 @@ descr="Complete set of all stunt tracks from game. From easy, earliest to newest
 		<t name="Sav7-HighMadness"/>
 		<t name="Jng6-Fun"/>
 		<t name="Sav10-PipeCurl"/>
-		<t name="Sur10-Infinity"/>
+		<t name="Mar1-Infinity"/>
 		<t name="For9-MadMntn"/>
 		<t name="Aus1-StuntPark"/>
 		<t name="Aus2-PipeCoil"/>

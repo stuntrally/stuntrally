@@ -925,7 +925,7 @@ descr="Most difficult all-pipe tracks. Long and winding.">
 		<car names="U6|UV" />
 		<pass avgPoints="11" />
 		<tracks>
-			<t name="Sur10-Infinity"   passPoints="9" />
+			<t name="Mar1-Infinity"    passPoints="9" />
 			<t name="Uni4-Pipeline"    passPoints="8.5" />
 		</tracks>
 	</challenge>

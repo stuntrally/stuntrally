@@ -318,6 +318,7 @@
 	<Tag name="SC_BlackDesert">BlackDesert</Tag>
 	<Tag name="SC_SurrealSpace">SurrealSpace</Tag>
 	<Tag name="SC_GreeceRocky">GreeceRocky</Tag>
+	<Tag name="SC_Marble">Marble</Tag>
 	
 
 <!--  ..............................................................................................  -->
@@ -893,7 +894,7 @@
 	<Tag name="AndUsing">and using</Tag>
 	<Tag name="ProjectPage">project&apos;s page:</Tag>
 	<Tag name="PageURL">https://stuntrally.tuxfamily.org/</Tag>
-	<Tag name="GameVersion">2.7.1</Tag>
+	<Tag name="GameVersion">2.8</Tag>
 		
 	
 	
