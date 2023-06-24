@@ -1286,3 +1286,680 @@ material roadSandMarblePink_ter
 	specular 0.33 0.32 0.33 32
 	normalMap normal_1.png
 }
+
+//  Invisible Roads, for different surface types
+material roadInvisibleDesert
+{
+	parent road
+	//diffuseMap roadSnow.jpg
+	ambient 0.8 0.8 0.8 0.0
+	diffuse 0.8 0.8 0.8 0.0
+	specular 0.1 0.1 0.1 32
+}
+
+material roadInvisibleDesert_ter
+{
+	parent road_terrain
+	//diffuseMap roadSnow.jpg
+	ambient 0.95 0.95 0.95 0.0
+	diffuse 0.95 0.85 0.95 0.0
+	specular 0.1 0.1 0.1 32
+}
+
+
+material roadInvisibleJungle
+{
+	parent road
+	//diffuseMap roadSnow.jpg
+	ambient 0.8 0.8 0.8 0.0
+	diffuse 0.8 0.8 0.8 0.0
+	specular 0.1 0.1 0.1 32
+}
+
+material roadInvisibleJungle_ter
+{
+	parent road_terrain
+	//diffuseMap roadSnow.jpg
+	ambient 0.95 0.95 0.95 0.0
+	diffuse 0.95 0.85 0.95 0.0
+	specular 0.1 0.1 0.1 32
+}
+
+material roadInvisibleGravel
+{
+	parent road
+	//diffuseMap roadSnow.jpg
+	ambient 0.8 0.8 0.8 0.0
+	diffuse 0.8 0.8 0.8 0.0
+	specular 0.1 0.1 0.1 32
+}
+
+material roadInvisibleGravel_ter
+{
+	parent road_terrain
+	//diffuseMap roadSnow.jpg
+	ambient 0.95 0.95 0.95 0.0
+	diffuse 0.95 0.85 0.95 0.0
+	specular 0.1 0.1 0.1 32
+}
+
+material roadInvisibleSnow
+{
+	parent road
+	//diffuseMap roadSnow.jpg
+	ambient 0.8 0.8 0.8 0.0
+	diffuse 0.8 0.8 0.8 0.0
+	specular 0.1 0.1 0.1 32
+}
+
+material roadInvisibleSnow_ter
+{
+	parent road_terrain
+	//diffuseMap roadSnow.jpg
+	ambient 0.95 0.95 0.95 0.0
+	diffuse 0.95 0.85 0.95 0.0
+	specular 0.1 0.1 0.1 32
+}
+
+material roadInvisibleForest
+{
+	parent road
+	//diffuseMap roadSnow.jpg
+	ambient 0.8 0.8 0.8 0.0
+	diffuse 0.8 0.8 0.8 0.0
+	specular 0.1 0.1 0.1 32
+}
+
+material roadInvisibleForest_ter
+{
+	parent road_terrain
+	//diffuseMap roadSnow.jpg
+	ambient 0.95 0.95 0.95 0.0
+	diffuse 0.95 0.85 0.95 0.0
+	specular 0.1 0.1 0.1 32
+}
+
+//----------------------------------------------------------------------------
+//  50 % Transparent roads
+//  JungleDark  ----
+material roadJDarkTransp
+{
+	parent road
+	diffuseMap roadJDark.jpg
+	ambient 1.0 1.0 1.0 0.5
+	diffuse 0.7 0.7 0.7 0.5
+	specular 0.3 0.3 0.25 48
+}
+material roadJDarkTransp_ter
+{
+	parent road_terrain
+	diffuseMap roadJDark.jpg
+	ambient 0.7 0.7 0.8 0.5
+	diffuse 0.70 0.60 0.80 0.5
+	specular 0.43 0.43 0.40 48
+	//normalMap normal_2.png
+}
+
+
+//  Jungle  ----
+material roadJungleTransp
+{
+	parent road
+	diffuseMap roadJungle.jpg
+	ambient 1.0 1.0 1.0 0.5
+	diffuse 0.7 0.7 0.7 0.5
+	specular 0.3 0.3 0.25 48
+}
+material roadJungleTransp_ter
+{
+	parent road_terrain
+	diffuseMap roadJungle.jpg
+	ambient 1.02 1.0 1.0 0.5
+	diffuse 0.65 0.65 0.65 0.5
+	specular 0.2 0.2 0.15 32
+	//normalMap normal_2.png
+}
+
+
+//  Moss
+material roadMossTransp
+{
+	parent road
+	diffuseMap roadMoss.jpg
+	ambient 0.7 0.7 0.7 0.5
+	diffuse 0.5 0.5 0.5 0.5
+	specular 0.15 0.24 0.25 48
+}
+material roadMossTransp_ter
+{
+	parent road_terrain
+	diffuseMap roadMoss.jpg
+	ambient 0.7 0.7 0.7 0.5
+	diffuse 0.6 0.6 0.6 0.5
+	specular 0.15 0.24 0.25 96
+	//normalMap normal_1.png
+}
+
+//  Mud
+material roadMudTransp
+{
+	parent road
+	diffuseMap roadMud.jpg
+	specMap roadAsphalt_spec2.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0 0.5
+	diffuse 0.7 0.7 0.7 0.5
+	specular 0.3 0.3 0.2 16
+}
+material roadMudTransp_ter
+{
+	parent road_terrain
+	ambient 1.0 1.0 1.0 0.5
+	diffuse 0.7 0.7 0.7 0.5
+	specular 0.3 0.3 0.3 64
+	//normalMap normal_2.png
+	diffuseMap roadMud.jpg
+}
+
+//  Snow Winter
+material roadSnowTransp
+{
+	parent road
+	ambient 1.1 1.05 1.05 0.5
+	diffuse 0.9 0.85 0.85 0.5
+	specular 0.7 0.72 0.72 12
+	diffuseMap roadSnow.jpg
+	//specMap roadAsphalt_spec2.jpg
+}
+material roadSnowTransp_ter
+{
+	parent road_terrain
+	ambient 1.1 1.05 1.05 0.5
+	diffuse 0.9 0.85 0.85 0.5
+	specular 0.6 0.62 0.62 18
+	diffuseMap roadSnow.jpg
+	//normalMap normal_1.png
+}
+
+material roadSnowGrnTransp
+{
+	parent road
+	ambient 1.0 1.0 1.0 0.5
+	diffuse 0.8 0.8 0.8 0.5
+	specular 0.6 0.62 0.62 18
+	diffuseMap roadSnowGrn.jpg
+	//specMap roadSnowGrn.jpg
+	//specMap_rgb true
+}
+material roadSnowGrnTransp_ter
+{
+	parent road_terrain
+	ambient 1.0 1.0 1.0 0.5
+	diffuse 0.8 0.8 0.8 0.5
+	specular 0.6 0.62 0.62 18
+	diffuseMap roadSnowGrn.jpg
+	//normalMap normal_1.png
+	//specMap roadSnowGrn.jpg
+	//specMap_rgb true
+}
+
+//  Ice winter  ----
+material roadIceTransp
+{
+	parent road
+	ambient 1.0 1.0 1.0 0.5
+	diffuse 0.9 0.9 0.9 0.5
+	specular 1.0 1.02 1.02  12 //x4
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.15
+	bump_scale 0.15
+	normalMap normal_1.png
+	diffuseMap roadSnow.jpg
+	specMap roadAsphalt_spec2.jpg
+	specMap_rgb true
+}
+material roadIceTransp_ter
+{
+	parent road_terrain
+	ambient 1.02 1.0 1.0 0.5
+	diffuse 0.92 0.9 0.9 0.5
+	specular 0.9 0.92 0.92  8 //x4
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.15
+	bump_scale 0.3
+	normalMap normal_1.png
+	diffuseMap roadSnow.jpg
+	specMap roadAsphalt_spec2.jpg
+	specMap_rgb true
+}
+
+
+///  Gravel new
+material roadNdirtTransp
+{
+	parent road
+	diffuseMap rdDirt.jpg
+	ambient 0.7 0.7 0.7 0.5
+	diffuse 0.7 0.7 0.7 0.5
+	specular 0.2 0.2 0.2 48
+}
+material roadNdirtTransp_ter
+{
+	parent road_terrain
+	diffuseMap rdDirt.jpg
+	normalMap rdDirt_norm.jpg
+	ambient 0.7 0.7 0.7 0.5
+	diffuse 0.7 0.7 0.7 0.5
+	specular 0.2 0.2 0.2 48
+}
+
+//  Alien  ----
+material roadAlienDTransp
+{
+	parent road
+	diffuseMap roadAlienD.jpg
+	ambient 0.85 0.85 0.85 0.5
+	ambient 0.85 0.85 0.85 0.5
+	diffuse 0.81 0.8 0.75 0.5
+	specular 0.36 0.34 0.3 18
+}
+material roadAlienDTransp_ter
+{
+	parent road_terrain
+	ambient 0.65 0.72 0.64 0.5
+	diffuse 0.87 0.95 0.88 0.5
+	specular 0.36 0.34 0.32 18
+	diffuseMap roadAlienD.jpg
+	normalMap normal_1.png
+}
+
+material roadAlienTransp
+{
+	parent road
+	diffuseMap roadAlien.jpg
+	ambient 0.8 0.9 0.8 0.5
+	diffuse 0.6 0.7 0.6 0.5
+	specular 0.3 0.5 0.6 32
+}
+material roadAlienTransp_ter
+{
+	parent road_terrain
+	diffuseMap roadAlien.jpg
+	ambient 0.85 0.95 0.85 0.5
+	diffuse 0.8 0.9 0.75 0.5
+	specular 0.3 0.6 0.5 64
+	normalMap normal_1.png
+}
+
+//  Sand marble
+material roadSandMarbleTransp
+{
+	parent road
+	diffuseMap roadSnow.jpg
+	ambient 0.9 0.77 0.73 0.5
+	diffuse 0.9 0.77 0.73 0.5
+	specular 0.33 0.32 0.33 32
+	specMap roadAsphalt_spec2.jpg
+}
+
+material roadSandMarbleTransp_ter
+{
+	parent road_terrain
+	diffuseMap roadSnow.jpg
+	ambient 0.9 0.77 0.73 0.5
+	diffuse 0.9 0.77 0.73 0.5
+	specular 0.33 0.32 0.33 32
+	normalMap normal_1.png
+}
+
+//  Sand marble
+material roadSandMarblePinkTransp
+{
+	parent road
+	diffuseMap roadSnow.jpg
+	ambient 1.02 0.61 0.66 0.5
+	diffuse 1.02 0.61 0.66 0.5
+	specular 0.33 0.32 0.33 32
+	specMap roadAsphalt_spec2.jpg
+}
+
+material roadSandMarblePinkTransp_ter
+{
+	parent road_terrain
+	diffuseMap roadSnow.jpg
+	ambient 1.02 0.61 0.66 0.5
+	diffuse 1.02 0.61 0.66 0.5
+	specular 0.33 0.32 0.33 32
+	normalMap normal_1.png
+}
+
+//  Sand island  ------
+material roadSandTransp
+{
+	parent road
+	diffuseMap roadSand.jpg
+	ambient 0.94 0.94 0.94 0.5
+	diffuse 0.82 0.82 0.82 0.5
+	specular 0.23 0.23 0.22 32
+	specMap roadAsphalt_spec2.jpg
+}
+material roadSandTransp_ter
+{
+	parent road_terrain
+	diffuseMap roadSand.jpg
+	ambient 0.94 0.94 0.94 0.5
+	diffuse 0.82 0.82 0.82 0.5
+	specular 0.23 0.23 0.22 32
+	normalMap normal_1.png
+}
+
+//  Sand2 island
+material roadSand2Transp
+{
+	parent road
+	ambient 0.94 0.94 0.94 0.5
+	diffuse 0.82 0.82 0.82 0.5
+	specular 0.23 0.23 0.22 32
+	diffuseMap roadSand2.jpg
+	specMap roadAsphalt_spec2.jpg
+}
+material roadSand2Transp_ter
+{
+	parent road_terrain
+	ambient 0.94 0.94 0.94 0.5
+	diffuse 0.82 0.82 0.82 0.5
+	specular 0.23 0.23 0.22 32
+	diffuseMap roadSand2.jpg
+	normalMap normal_1.png
+}	
+
+//  Sand white island
+material roadSandWhiteTransp
+{
+	parent road
+	ambient 0.9 0.9 0.9 0.5
+	diffuse 0.9 0.9 0.9 0.5
+	specular 0.23 0.23 0.23 32
+	diffuseMap roadSandW.jpg
+	specMap roadAsphalt_spec2.jpg
+}
+material roadSandWhiteTransp_ter
+{
+	parent road_terrain
+	ambient 0.9 0.9 0.9 0.5
+	diffuse 0.9 0.9 0.9 0.5
+	specular 0.23 0.23 0.23 32
+	diffuseMap roadSandW.jpg
+	normalMap normal_1.png
+}	
+
+//  Sand shore
+material roadSandShoreTransp
+{
+	parent road
+	diffuseMap roadSnow.jpg
+	ambient 0.85 0.75 0.6 0.5
+	diffuse 0.85 0.75 0.6 0.5
+	specular 0.31 0.32 0.33 32
+	specMap roadAsphalt_spec2.jpg
+}
+
+material roadSandShoreTransp_ter
+{
+	parent road_terrain
+	diffuseMap roadSnow.jpg
+	ambient 0.85 0.75 0.6 0.5
+	diffuse 0.85 0.75 0.6 0.5
+	specular 0.31 0.32 0.33 32
+	normalMap normal_1.png
+}
+
+//  Sand sunset
+material roadSandSetTransp
+{
+	parent road
+	diffuseMap roadSand.jpg
+	ambient 0.94 0.94 0.94 0.5
+	diffuse 0.82 0.82 0.82 0.5
+	specular 0.23 0.23 0.22 32
+}
+material roadSandSetTransp_ter
+{
+	parent road_terrain
+	diffuseMap roadSand.jpg
+	ambient 0.94 0.94 0.94 0.5
+	diffuse 0.82 0.82 0.82 0.5
+	specular 0.23 0.23 0.22 32
+	normalMap normal_2.png
+}
+
+//  Sand dark
+material roadSandDarkTransp
+{
+	parent road
+	diffuseMap roadSandSet.jpg
+	ambient 0.6 0.6 0.4 0.5
+	diffuse 0.52 0.62 0.42 0.5
+	specular 0.3 0.3 0.2 24
+}
+material roadSandDarkTransp_ter
+{
+	parent road_terrain
+	diffuseMap roadSandSet.jpg
+	ambient 0.6 0.6 0.4 0.5
+	diffuse 0.52 0.62 0.42 0.5
+	specular 0.3 0.3 0.2 24
+	normalMap normal_2.png
+}
+
+//  Crystals
+material roadCrystalTransp
+{
+	parent road
+	ambient 0.4 0.8 1.4 0.5
+	diffuse 0.4 0.8 1.4 0.5
+	specular 0.05 0.25 0.5  16 //x4
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.5
+	bump_scale 0.2
+}
+material roadCrystalTransp_ter
+{
+	parent road_terrain
+	ambient 0.3 0.6 1.4 0.5
+	diffuse 0.3 0.6 1.4 0.5
+	specular 0.05 0.4 0.8  16 //x4
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	specMap rdGravel.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.5
+	bump_scale 0.2
+}
+
+material roadCrystalCyanTransp
+{
+	parent road
+	ambient 0.24 1.2 1.16 0.5
+	diffuse 0.32 1.42 1.32 0.5
+	specular 0.3 0.6 0.6  16 //x4
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.5
+	bump_scale 0.2
+}
+material roadCrystalCyanTransp_ter
+{
+	parent road_terrain
+	ambient 0.24 1.2 1.16 0.5
+	diffuse 0.32 1.42 1.32 0.5
+	specular 0.3 0.6 0.6  16 //x4
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	specMap rdGravel.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.5
+	bump_scale 0.2
+}
+
+material roadCrystalPinkTransp
+{
+	parent road
+	ambient 1.34 0.21 0.66 0.5
+	diffuse 1.42 0.42 0.72 0.5
+	specular 0.6 0.3 0.4  16 //x4
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.5
+	bump_scale 0.2
+}
+material roadCrystalPinkTransp_ter
+{
+	parent road_terrain
+	ambient 1.34 0.21 0.66 0.5
+	diffuse 1.42 0.42 0.72 0.5
+	specular 0.6 0.3 0.4  16 //x4
+	diffuseMap rdGravel.jpg
+	normalMap rdGravel_norm.jpg
+	specMap rdGravel.jpg
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.5
+	bump_scale 0.2
+}
+
+//  Desert
+material roadDesertTransp
+{
+	parent road
+	diffuseMap roadDesertD.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 0.8 0.5
+	diffuse 0.9 0.9 0.9 0.5
+	specular 0.36 0.34 0.3 18
+}
+material roadDesertTransp_ter
+{
+	parent road_terrain
+	ambient 1.0 0.88 0.72 0.5
+	diffuse 0.95 0.87 0.72 0.5
+	specular 0.16 0.14 0.12 12
+	diffuseMap roadDesert.jpg
+	normalMap roadDesert_n.jpg
+	bump_scale 0.7
+}
+
+//  Black Desert
+material roadDesertBlackTransp
+{
+	parent road
+	diffuseMap roadAsphalt.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
+	ambient 0.9 0.9 0.9 0.5
+	diffuse 0.9 0.9 0.9 0.5
+	specular 0.12 0.12 0.12 32
+}
+material roadDesertBlackTransp_ter
+{
+	parent road_terrain
+	ambient 1.0 1.0 1.0 0.5
+	diffuse 1.0 1.0 1.0 0.5
+	specular 0.10 0.10 0.10 22
+	diffuseMap roadDesertBlack.jpg
+	normalMap roadDesert_n.jpg
+	bump_scale 0.7
+}
+
+//  Savannah
+material roadSavannahTransp
+{
+	parent road
+   	ambient 0.88 0.88 0.88 0.5
+	diffuse 0.8 0.8 0.8 0.5
+	specular 0.3 0.3 0.28 24
+	diffuseMap roadSavannah.jpg
+	specMap roadAsphalt_spec2.jpg
+}
+material roadSavannahTransp_ter
+{
+	parent road_terrain
+   	ambient 0.88 0.88 0.88 0.5
+	diffuse 0.8 0.8 0.8 0.5
+	specular 0.3 0.3 0.28 24
+	diffuseMap roadSavannah.jpg
+	normalMap normal_1.png
+	specMap roadAsphalt_spec2.jpg
+	specMap_rgb true
+}
+
+material roadCanyon1Transp
+{
+	parent road
+	diffuseMap canyonroad1.jpg
+	ambient 1.3 1 0.8 0.5
+	diffuse 0.8 0.6 0.5 0.5
+	specular 0.35 0.3 0.25 18
+
+}
+material roadCanyon1Transp_ter
+{
+	parent road_terrain
+	diffuseMap canyonroad1.jpg
+	ambient 1.3 1 0.8 0.5
+	diffuse 0.8 0.6 0.5 0.5
+	specular 0.35 0.3 0.25 18
+	normalMap normal_1.png
+}
+
+material roadCanyon2Transp
+{
+	parent road
+	diffuseMap canyonroad2.jpg
+	ambient 1.25 0.75 0.5 0.5
+	diffuse 0.75 0.55 0.3 0.5
+	specular 0.35 0.3 0.25 16
+}
+material roadCanyon2Transp_ter
+{
+	parent road_terrain
+	diffuseMap canyonroad2.jpg
+	ambient 1.25 0.75 0.5 0.5
+	diffuse 0.75 0.55 0.3 0.5
+	specular 0.35 0.3 0.25 16
+	normalMap normal_2.png
+}
+
+//  Mars  ----
+material roadMarsTransp
+{
+	parent road
+	diffuseMap roadMars.jpg
+	ambient 1.2 1.1 0.8 0.5
+	diffuse 0.75 0.65 0.75 0.5
+	specular 0.36 0.32 0.3 32
+	normalMap roadMars_norm.jpg
+	bump_scale 0.6
+}
+material roadMarsTransp_ter
+{
+	parent road_terrain
+	ambient 0.97 0.80 0.77 0.5
+	diffuse 0.80 0.80 0.74 0.5
+	specular 0.32 0.32 0.32 32
+	diffuseMap roadMars.jpg
+	normalMap roadMars_norm.jpg
+	bump_scale 0.6
+}
