@@ -823,6 +823,25 @@ material Liquid_gas2
     speed 0.03 1.0
 }
 
+material Liquid_gas_space
+{
+	parent Water
+	choppyness_scale 0.025 5
+    smallWaves_midWaves 0.025 0.15 0.06 0.1
+    bigWaves 0.68 0.67
+    bump 1.2 0.22 0.01
+    fresnelMultiplier 1.0
+
+    colour 0.72 0.69 0.77  0.1
+    reflectColour 0.39 0.6 3.5  0.03
+    refractColour 0.89 0.89 0.99  0.3
+
+	specColourAndPower 0.09 0.2 0.2  24
+    bump2SpecPowerMul 16.0 8 0.3
+    speed 0.03 1.0
+}
+
+
 
 material Green_slime
 {
@@ -924,6 +943,15 @@ material River_liquid_gas2
 	alphaMap HmapTex
     speed -1.0 -1.0
 }
+
+material River_liquid_gas_space
+{
+    parent Liquid_gas2
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -1.0 -1.0
+}
+
 
 material River_Pink_jelly
 {

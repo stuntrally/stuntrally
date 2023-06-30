@@ -507,6 +507,7 @@
 <r sc="Sur"  m="River_strange2"       r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 <r sc="Vlc"  m="River_liquid_gas"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="V" />
 <r sc="Vlc"  m="River_liquid_gas2"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="V" />
+<r sc="Spc"  m="River_liquid_gas_space"  r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="V" />
 
 <r sc="Uni"  m="River_Grease_jelly"   r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="U" />
 <r sc="Cry"  m="River_Blue_jelly"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="U" />

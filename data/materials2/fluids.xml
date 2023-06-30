@@ -133,6 +133,9 @@
 	<fluid name="liquid gas 2"	material="Liquid_gas2"  density="10" angDamp="0.2" linDamp="0.1" heightDamp="0"
 		fogHSVA="0.198 0.440 0.558 1" fogDens="64" fogDensH="1" fDamage="0.35" deep="1" />
 
+	<fluid name="liquid gas space"	material="Liquid_gas_space"  density="10" angDamp="0.2" linDamp="0.1" heightDamp="0"
+		fogHSVA="0.502 0.304 0.108 0.8" fogDens="64" fogDensH="1" fDamage="0.20" deep="1" />
+
 	<fluid name="pink jelly"	material="Pink_jelly" density="700" angDamp="1.4" linDamp="0.5" heightDamp="4"
 		fogHSVA="0.840 0.334 0.720 1" fogDens="12" fogDensH="0.6"
 		bWhForce="1" whMaxAngVel="60" whSpinDamp="25" whForceLong="80" whForceUp="20"
