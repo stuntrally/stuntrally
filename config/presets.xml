@@ -378,6 +378,8 @@
 
 <r sc="Oth"  m="pipeAsphalt"          r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 <r sc="Aus"  m="pipeAsphaltRed"       r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
+<r sc="Oth"  m="pipeAsphaltSpace"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.40 0.40 0.20 0.8" z="Z" />
+<r sc="Oth"  m="pipeAsphaltSpaceBlue" r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.40 0.40 0.20 0.8" z="Z" />
 <r sc="Oth"  m="pipeMetal"            r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 <r sc="Can"  m="pipeMetalOrn"         r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />
 <r sc="Oth"  m="pipeMetalBlue"        r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" z="Z" />

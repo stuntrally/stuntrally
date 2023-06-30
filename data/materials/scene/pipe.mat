@@ -534,6 +534,44 @@ material pipeAsphaltRed
 	receives_shadows false
 }
 
+material pipeAsphaltSpace
+{
+	parent base
+	diffuseMap roadAsphaltSpace1.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
+	ambient 0.95 0.95 0.95
+	diffuse 0.7 0.7 0.7
+	specular 0.5 0.5 0.5 6
+	normalMap roadAsphaltSpace_norm.jpg
+	bump_scale 0.04
+	envMap ReflectionCube
+	depth_bias 3
+	env_map true
+	refl_amount 0.04
+	cull_hardware none
+	receives_shadows false
+}
+
+material pipeAsphaltSpaceBlue
+{
+	parent base
+	diffuseMap roadAsphaltSpace1.jpg
+	specMap roadAsphalt_spec.jpg
+	specMap_rgb true
+	ambient 0.95 0.95 1.1
+	diffuse 0.7 0.7 0.85
+	specular 0.5 0.5 0.65 6
+	normalMap roadAsphaltSpace_norm.jpg
+	bump_scale 0.04
+	envMap ReflectionCube
+	depth_bias 3
+	env_map true
+	refl_amount 0.08
+	cull_hardware none
+	receives_shadows false
+}
+
 //  pipe metal
 material pipeMetal
 {
