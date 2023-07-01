@@ -19,7 +19,7 @@ struct PTer
 {
 	int rate = 0;
 	Ogre::String texFile, texNorm, sc;
-	std::string surfName = "Default", scn;
+	std::string surfName = "Default";
 
 	float tiling = 8.f;  bool triplanar = false;
 
@@ -35,7 +35,7 @@ struct PRoad
 {
 	int rate = 0;
 	Ogre::String mtr, sc;
-	std::string surfName, scn;
+	std::string surfName;
 
 	float dust = 0.f, mud = 0.2f, dustS = 0.f;
 	SColor tclr = SColor(0.2f, 0.2f, 0.1f, 0.6f);  // trail
@@ -47,7 +47,6 @@ struct PGrass
 	int rate = 0;
 	//  material, colormap, scenery
 	Ogre::String mtr, clr = "GrassClrJungle", sc;
-	std::string scn;
 
 	float minSx = 1.2f, minSy = 1.2f;
 	float maxSx = 1.6f, maxSy = 1.6f;  // sizes
@@ -58,7 +57,7 @@ struct PVeget
 {
 	int rate = 0;
 	Ogre::String sc;
-	std::string name, scn;
+	std::string name;
 
 	float minScale = 0.6f, maxScale = 1.2f;
 	float windFx = 0.02f, windFy = 0.002f;

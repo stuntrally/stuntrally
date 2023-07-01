@@ -91,7 +91,6 @@ bool Presets::LoadXml(string file)
 		a = e->Attribute("su");	if (a)  l.surfName = string(a);
 
 		a = e->Attribute("sc");	if (a)  l.sc = String(a);
-		a = e->Attribute("z");	if (a)  l.scn = string(a);
 
 		a = e->Attribute("du");	if (a)  l.dust = s2r(a);
 		a = e->Attribute("ds");	if (a)  l.dustS = s2r(a);
@@ -117,7 +116,6 @@ bool Presets::LoadXml(string file)
 		a = e->Attribute("su");	if (a)  l.surfName = string(a);
 
 		a = e->Attribute("sc");	if (a)  l.sc = String(a);
-		a = e->Attribute("z");	if (a)  l.scn = string(a);
 
 		a = e->Attribute("du");	if (a)  l.dust = s2r(a);
 		a = e->Attribute("ds");	if (a)  l.dustS = s2r(a);
@@ -128,7 +126,7 @@ bool Presets::LoadXml(string file)
 		e = e->NextSiblingElement("r");
 	}
 		
-	///  ass
+	///  grass
 	e = root->FirstChildElement("g");
 	while (e)
 	{
@@ -138,7 +136,6 @@ bool Presets::LoadXml(string file)
 		a = e->Attribute("c");	if (a)  g.clr = String(a);
 
 		a = e->Attribute("sc");	if (a)  g.sc = String(a);
-		a = e->Attribute("z");	if (a)  g.scn = string(a);
 
 		a = e->Attribute("xa");	if (a)  g.minSx = s2r(a);
 		a = e->Attribute("xb");	if (a)  g.maxSx = s2r(a);
@@ -158,7 +155,6 @@ bool Presets::LoadXml(string file)
 		a = e->Attribute("p");	if (a)  l.name = String(a);
 
 		a = e->Attribute("sc");	if (a)  l.sc = String(a);
-		a = e->Attribute("z");	if (a)  l.scn = string(a);
 
 		a = e->Attribute("sa");	if (a)  l.minScale = s2r(a);
 		a = e->Attribute("sb");	if (a)  l.maxScale = s2r(a);
@@ -173,6 +169,5 @@ bool Presets::LoadXml(string file)
 		veg.push_back(l);  iveg[l.name] = veg.size();
 		e = e->NextSiblingElement("v");
 	}
-
 	return true;
 }
