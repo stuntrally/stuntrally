@@ -469,10 +469,11 @@ void CGui::UpdEdInfo()
 {	
 	int t = scn->sc->secEdited;
 	ostringstream s;  s.fill('0');
-	s << fixed << "#C0F0F8" << t/3600 << ":#A0D8E0" << setw(2) << t/60%60 << ":#70A8B0" << setw(2) << t%60;
+	s << fixed << "#C0F0F8" << t/3600 << ":#A0D8E0" << setw(2) << t/60%60 << ":#70A8B0" << setw(2) << t%60
+	  << "  " << fToStr(float(t)/3600.f/8.f,1,4) << " d";
 	txtEdInfo->setCaption(
-		TR("#A0C0D0#{Time} [h:m:s]: ") + s.str()+"\n"+
-		TR("#808080Base track: ") + scn->sc->baseTrk);
+		TR("#A0C0D0#{Time} [h:m:s]:  ") + s.str()+"\n"+
+		TR("#808080Base track:  ") + scn->sc->baseTrk);
 }
 
 

@@ -387,7 +387,6 @@ material roadSandMagic_ter
 	normalMap normal_2.png
 }
 
-//  Magic  ----
 material roadSandMagicCyan
 {
 	parent road
@@ -415,7 +414,6 @@ material roadSandMagicCyan_ter
 	normalMap normal_2.png
 }
 
-//  Magic  ----
 material roadSandMagicPink
 {
 	parent road
@@ -1206,6 +1204,10 @@ material roadAsphaltSpaceBlue_ter
 	refl_amount 0.15
 }
 
+
+//  Marble  new rbduck  SR 2.8
+//----------------------------------------------------------------------------
+
 //  new Moss variant
 material roadMoss2
 {
@@ -1225,7 +1227,7 @@ material roadMoss2_ter
 	normalMap normal_1.png
 }
 
-// Marble Rock
+//  Marble Rock
 material roadMarbleStone
 {
 	parent road
@@ -1255,7 +1257,6 @@ material roadSandMarble
 	specular 0.33 0.32 0.33 32
 	specMap roadAsphalt_spec2.jpg
 }
-
 material roadSandMarble_ter
 {
 	parent road_terrain
@@ -1276,7 +1277,6 @@ material roadSandMarblePink
 	specular 0.33 0.32 0.33 32
 	specMap roadAsphalt_spec2.jpg
 }
-
 material roadSandMarblePink_ter
 {
 	parent road_terrain
@@ -1296,7 +1296,6 @@ material roadInvisibleDesert
 	diffuse 0.8 0.8 0.8 0.0
 	specular 0.1 0.1 0.1 32
 }
-
 material roadInvisibleDesert_ter
 {
 	parent road_terrain
@@ -1306,7 +1305,6 @@ material roadInvisibleDesert_ter
 	specular 0.1 0.1 0.1 32
 }
 
-
 material roadInvisibleJungle
 {
 	parent road
@@ -1315,7 +1313,6 @@ material roadInvisibleJungle
 	diffuse 0.8 0.8 0.8 0.0
 	specular 0.1 0.1 0.1 32
 }
-
 material roadInvisibleJungle_ter
 {
 	parent road_terrain
@@ -1333,7 +1330,6 @@ material roadInvisibleGravel
 	diffuse 0.8 0.8 0.8 0.0
 	specular 0.1 0.1 0.1 32
 }
-
 material roadInvisibleGravel_ter
 {
 	parent road_terrain
@@ -1351,7 +1347,6 @@ material roadInvisibleSnow
 	diffuse 0.8 0.8 0.8 0.0
 	specular 0.1 0.1 0.1 32
 }
-
 material roadInvisibleSnow_ter
 {
 	parent road_terrain
@@ -1369,7 +1364,6 @@ material roadInvisibleForest
 	diffuse 0.8 0.8 0.8 0.0
 	specular 0.1 0.1 0.1 32
 }
-
 material roadInvisibleForest_ter
 {
 	parent road_terrain
@@ -1379,9 +1373,10 @@ material roadInvisibleForest_ter
 	specular 0.1 0.1 0.1 32
 }
 
-//----------------------------------------------------------------------------
 //  50 % Transparent roads
-//  JungleDark  ----
+//-------------------------------------------------------------------------------------------------------------------------------
+
+//  JungleDark
 material roadJDarkTransp
 {
 	parent road
@@ -1400,8 +1395,7 @@ material roadJDarkTransp_ter
 	//normalMap normal_2.png
 }
 
-
-//  Jungle  ----
+//  Jungle
 material roadJungleTransp
 {
 	parent road
@@ -1419,7 +1413,6 @@ material roadJungleTransp_ter
 	specular 0.2 0.2 0.15 32
 	//normalMap normal_2.png
 }
-
 
 //  Moss
 material roadMossTransp
@@ -1535,7 +1528,6 @@ material roadIceTransp_ter
 	specMap_rgb true
 }
 
-
 ///  Gravel new
 material roadNdirtTransp
 {
@@ -1603,7 +1595,6 @@ material roadSandMarbleTransp
 	specular 0.33 0.32 0.33 32
 	specMap roadAsphalt_spec2.jpg
 }
-
 material roadSandMarbleTransp_ter
 {
 	parent road_terrain
@@ -1624,7 +1615,6 @@ material roadSandMarblePinkTransp
 	specular 0.33 0.32 0.33 32
 	specMap roadAsphalt_spec2.jpg
 }
-
 material roadSandMarblePinkTransp_ter
 {
 	parent road_terrain
@@ -1705,7 +1695,6 @@ material roadSandShoreTransp
 	specular 0.31 0.32 0.33 32
 	specMap roadAsphalt_spec2.jpg
 }
-
 material roadSandShoreTransp_ter
 {
 	parent road_terrain
