@@ -469,7 +469,6 @@ material roadMagicMirror_ter
 	normalMap normal_2.png
 }
 
-//  Mirror  ----
 material roadMagicMirrorCyan
 {
 	parent road
@@ -497,7 +496,6 @@ material roadMagicMirrorCyan_ter
 	normalMap normal_2.png
 }
 
-//  Mirror  ----
 material roadMagicMirrorPink
 {
 	parent road
@@ -525,7 +523,8 @@ material roadMagicMirrorPink_ter
 	normalMap normal_2.png
 }
 
-//  Crystals
+
+//  Crystals  ----
 material roadCrystal
 {
 	parent road
@@ -554,7 +553,6 @@ material roadCrystal_ter
 	bump_scale 0.2
 }
 
-//  Crystals
 material roadCrystalCyan
 {
 	parent road

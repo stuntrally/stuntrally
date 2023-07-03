@@ -82,6 +82,12 @@
 		<Property key="Snap" value="true"/>
 		<Property key="Visible" value="false"/>
 		<UserString key="NotSized" value="1"/>
+
+		<Widget type="ImageBox" skin="ImageBox" position="27 54 484 8">
+			<Property key="InheritsAlpha" value="false"/>
+			<Property key="ImageTexture" value="hue_bar2.png"/>
+			<Property key="ImageCoord" value="0 16 416 16"/>
+		</Widget>
 		<Widget type="TextBox" skin="TextBoxS" position="104 4 280 22">
 			<Property key="InheritsAlpha" value="false"/>
 			<Property key="TextColour" value="0.67 1 1"/>

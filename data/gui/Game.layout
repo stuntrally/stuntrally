@@ -885,7 +885,8 @@
 							<Property key="TextColour" value="0.4 0.6 0.9"/>
 						</Widget>
 						<Widget type="ImageBox" skin="ImageBox" position="180 302 472 8">
-							<Property key="ImageTexture" value="hue_bar.png"/>
+							<Property key="ImageTexture" value="hue_bar2.png"/>
+							<Property key="ImageCoord" value="0 0 512 16"/>
 						</Widget>
 						<Widget type="ImageBox" skin="ImageBox" position="500 330 52 52" name="ImgCarClr">
 							<Property key="ImageTexture" value="white.png"/>
