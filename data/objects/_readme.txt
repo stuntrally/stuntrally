@@ -85,11 +85,6 @@ License: CC0
 https://opengameart.org/content/free-tiling-textures-42
 
 
----- Obstacle1.mesh (1..4)
-Pipe Obstacles
-Author: rubberduck
-License: CC0
-
 ---- atomic_barrel.mesh
 ---- pallet.mesh
 License: CC0

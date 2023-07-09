@@ -874,3 +874,100 @@ material ObeliskCrystal
 	specular 0.6 0.6 0.6 24
 	bump_scale 0.6
 }
+
+material obstaclesGrey
+{
+	parent base
+	diffuseMap obstaclesGrey_d.jpg
+	normalMap obstaclesGrey_n.jpg
+	specMap obstaclesGrey_s.jpg
+    //specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 20
+	terrain_light_map true
+}
+
+material obstaclesRed
+{
+	parent obstaclesGrey
+	diffuseMap obstaclesGreen_d.jpg
+	specMap obstaclesGreen_s.jpg
+	ambient 1.12 0.59 0.42
+	diffuse 1.23 0.62 0.49
+	specular 2.1 0.8 1.0 12
+
+}
+
+material obstaclesWhite
+{
+	parent obstaclesGrey
+	diffuseMap obstaclesWhite_d.jpg
+	specMap obstaclesWhite_s.jpg
+	reflMap obstaclesWhite_s.jpg
+	ambient 1.3 1.3 1.33
+	diffuse 1.15 1.05 1.2
+	specular 1.1 1.0 1.3 12
+	specMap_rgb true
+	refl_amount 0.5
+
+}
+
+material obstaclesGreen
+{
+	parent obstaclesGrey
+	normalMap obstaclesMarble_n.jpg
+	diffuseMap obstaclesGreen_d.jpg
+	specMap obstaclesGreen_s.jpg
+	ambient 0.7 0.8 0.73
+	diffuse 0.05 0.78 0.6
+	specular 1.0 1.6 1.2 26
+
+}
+
+material obstaclesBlack
+{
+	parent obstaclesGrey
+	diffuseMap obstaclesWhite_d.jpg	
+	specMap obstaclesWhite_s.jpg
+	reflMap obstaclesCrystal_s.jpg
+	ambient 0.51 0.49 0.49
+	diffuse 0.69 0.69 0.79
+	specular 1.03 1.1 1.1 32
+	//env_map true
+	//envMap ReflectionCube
+	specMap_rgb true
+	refl_amount 0.5
+
+}
+
+
+material obstaclesMarble
+{
+	parent obstaclesGrey
+	diffuseMap obstaclesMarble_d.jpg
+	normalMap obstaclesMarble_n.jpg
+	specMap obstaclesMarble_s.jpg
+	diffuse 1.15 0.9 1.1
+	specular 0.9 0.7 0.9 8
+	bump_scale 0.9
+
+}
+
+material obstaclesCrystal
+{
+	parent obstaclesGrey
+	diffuseMap obstaclesCrystal_d.jpg
+	normalMap obstaclesCrystal_n.jpg
+	specMap obstaclesCrystal_s.jpg
+	reflMap obstaclesCrystal_s.jpg
+	specMap_rgb true
+	ambient 0.2 1.3 0.86
+	diffuse 0.8 1.8 1.1
+	specular 0.5 1.6 1.0 16
+	env_map true
+	envMap ReflectionCube
+	bump_scale 1.2
+	refl_amount 0.5
+
+}
