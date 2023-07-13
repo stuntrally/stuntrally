@@ -1,5 +1,5 @@
 
-//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+//  Clouds  oOoOOoOoo * * * * * * * * * * * *
 particle_system Cloud1
 {
 	material			Cloud1
@@ -54,8 +54,173 @@ particle_system Cloud1
 	}
 }
 
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud1Thin
+{
+	material			Cloud1
+	quota				1000
+	particle_width		122
+	particle_height		122
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.9 0.9 0.9  0.1
+		colour_range_start	0.9 0.9 0.9  0.04
+		colour_range_end	0.9 0.9 0.9  0.1
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.013
+        green -0.013
+        blue  -0.013
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
 
 //  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud1Small
+{
+	material			Cloud1
+	quota				1000
+	particle_width		62
+	particle_height		62
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.9 0.9 0.9  0.2
+		colour_range_start	0.9 0.9 0.9  0.1
+		colour_range_end	0.9 0.9 0.9  0.3
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.02
+        green -0.02
+        blue  -0.02
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 7.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	15
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud1ThinWhite
+{
+	material			Cloud1
+	quota				1000
+	particle_width		122
+	particle_height		122
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.9 0.9 0.9  0.1
+		colour_range_start	0.9 0.9 0.9  0.04
+		colour_range_end	0.9 0.9 0.9  0.1
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   0.01
+        green 0.01
+        blue  0.01
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 5
 particle_system Cloud2
 {
 	material			Cloud2
@@ -103,6 +268,121 @@ particle_system Cloud2
 		rotation_range_end 220
 		rotation_speed_range_start -20
 		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud2Small
+{
+	material			Cloud2
+	quota				1000
+	particle_width		55
+	particle_height		55
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	152
+		height	152
+		depth	82  //h
+
+		colour				0.7 0.7 0.7  0.2
+		colour_range_start	0.7 0.7 0.7  0.1
+		colour_range_end	0.7 0.7 0.7  0.3
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.02
+        green -0.02
+        blue  -0.02
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 4
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud2Fast
+{
+	material			Cloud2
+	quota				1000
+	particle_width		55
+	particle_height		55
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 1
+		width	152
+		height	152
+		depth	82  //h
+
+		colour				0.7 0.7 0.7  0.2
+		colour_range_start	0.7 0.7 0.7  0.1
+		colour_range_end	0.7 0.7 0.7  0.3
+
+		emission_rate	200
+		velocity_min	1.1
+		velocity_max	3.3
+		time_to_live_min	1.3
+		time_to_live_max	2.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.01
+        green -0.01
+        blue  -0.01
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 100
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector LinearForce
+	{
+		force_vector	0 0.1 24
+		force_application	add
 	}
 	affector DirectionRandomiser
 	{
@@ -166,6 +446,116 @@ particle_system Cloud3
 }
 
 //  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud3Blue
+{
+	material			Cloud3
+	quota				1000
+	particle_width		100
+	particle_height		90
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	142
+		height	142
+		depth	72  //h
+
+		colour				0.4 0.4 0.4  0.2
+		colour_range_start	0.4 0.4 0.5  0.1
+		colour_range_end	0.5 0.4 0.7  0.3
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.01
+        green -0.02
+        blue  -0.01
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 8
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	50
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 10
+particle_system Cloud3BlueSmall
+{
+	material			Cloud3
+	quota				1000
+	particle_width		60
+	particle_height		50
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	62
+		height	62
+		depth	72  //h
+
+		colour				0.4 0.4 0.4  0.2
+		colour_range_start	0.4 0.4 0.5  0.1
+		colour_range_end	0.5 0.4 0.7  0.3
+
+		emission_rate	120
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.01
+        green -0.02
+        blue  -0.01
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 4
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	20
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
 particle_system Cloud4
 {
 	material			Cloud4
@@ -221,6 +611,61 @@ particle_system Cloud4
 }
 
 //  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud4Green
+{
+	material			Cloud4
+	quota				1000
+	particle_width		162
+	particle_height		162
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	262
+		height	242
+		depth	122  //h
+
+		colour				0.6 0.6 0.6  0.2
+		colour_range_start	0.6 0.65 0.6  0.1
+		colour_range_end	0.7 0.7 0.6  0.3
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.012
+        green -0.008
+        blue  -0.001
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 9.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	12
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
 particle_system Cloud5
 {
 	material			Cloud5
@@ -243,6 +688,1739 @@ particle_system Cloud5
 		colour				0.8 0.8 0.8  0.2
 		colour_range_start	0.8 0.8 0.8  0.1
 		colour_range_end	0.8 0.8 0.8  0.3
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.02
+        green -0.02
+        blue  -0.02
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud5Cyan
+{
+	material			Cloud5
+	quota				1000
+	particle_width		92
+	particle_height		92
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	112
+		height	112
+		depth	102  //h
+
+		colour				0.82 0.82 0.82  0.15
+		colour_range_start	0.82 0.82 0.82  0.08
+		colour_range_end	0.84 0.84 0.82  0.24
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.9
+	}
+
+    affector ColourFader
+    {
+        red   -0.001
+        //green 0.001
+        //blue  0.001
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 9
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start 20
+		rotation_speed_range_end -20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	35
+	}
+}
+
+//  SURREAL COLOR CHANGING CLOUD  oOoOOoOoOoOOOoooOOOOOooOOo * * * * * * * * * * * * 15
+particle_system Cloud5Surreal
+{
+	material			Cloud5
+	quota				1000
+	particle_width		72
+	particle_height		72
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	52
+		height	52
+		depth	122  //h
+
+		colour				1.3 1.37 1.31  0.15
+		colour_range_start	1.4 1.41 1.4  0.07
+		colour_range_end	0.95 0.97 0.95  0.2
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.2
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   0.1
+        green 0.1
+        blue  0.1
+        alpha 0.03
+    }
+    affector Scaler
+    {
+   	    rate 6.40
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	15
+	}
+}
+
+//  Clouds White  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud6White
+{
+	material			Cloud6
+	quota				1000
+	particle_width		102
+	particle_height		102
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	132
+		height	132
+		depth	122  //h
+
+		colour				0.8 0.8 0.8  0.2
+		colour_range_start	0.8 0.8 0.8  0.1
+		colour_range_end	0.85 0.85 0.85  0.3
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   0.02
+        green 0.02
+        blue  0.02
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+//  Clouds White  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud6WhiteSlow
+{
+	material			Cloud6
+	quota				1000
+	particle_width		102
+	particle_height		102
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	132
+		height	132
+		depth	122  //h
+
+		colour				0.8 0.8 0.8  0.2
+		colour_range_start	0.8 0.8 0.8  0.1
+		colour_range_end	0.85 0.85 0.85  0.3
+
+		emission_rate	200
+		velocity_min	0.01
+		velocity_max	0.04
+		time_to_live_min	3.3
+		time_to_live_max	4.5
+	}
+
+    affector ColourFader
+    {
+        red   0.02
+        green 0.02
+        blue  0.02
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	3
+	}
+}
+
+//  Clouds White  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud6WhiteSmall
+{
+	material			Cloud6
+	quota				1000
+	particle_width		42
+	particle_height		42
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	72
+		height	72
+		depth	42  //h
+
+		colour				0.8 0.8 0.8  0.2
+		colour_range_start	0.8 0.8 0.8  0.1
+		colour_range_end	0.85 0.85 0.85  0.3
+
+		emission_rate	140
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   0.02
+        green 0.02
+        blue  0.02
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 3
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	13
+	}
+}
+
+//  Clouds White  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud6WhiteLarge
+{
+	material			Cloud6
+	quota				1000
+	particle_width		342
+	particle_height		342
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	372
+		height	372
+		depth	242  //h
+
+		colour				0.8 0.8 0.8  0.2
+		colour_range_start	0.8 0.8 0.8  0.1
+		colour_range_end	0.85 0.85 0.85  0.3
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+	affector LinearForce
+	{
+		force_vector	7 0.1 -14
+		force_application	add
+	}
+
+    affector ColourFader
+    {
+        red   0.01
+        green 0.01
+        blue  0.01
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 35
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	30
+	}
+}
+
+//  Clouds White  oOoOOoOoo * * * * * * * * * * * * 20
+particle_system Cloud6Orange
+{
+	material			Cloud6
+	quota				1000
+	particle_width		102
+	particle_height		102
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	132
+		height	132
+		depth	122  //h
+
+		colour				0.9 0.8 0.61  0.2
+		colour_range_start	0.92 0.81 0.62  0.14
+		colour_range_end	0.96 0.95 0.81  0.3
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   0.01
+        green 0.01
+        //blue  0.01
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+//  Clouds White  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud6OrangeSlow
+{
+	material			Cloud6
+	quota				1000
+	particle_width		102
+	particle_height		102
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	132
+		height	132
+		depth	122  //h
+
+		colour				0.9 0.8 0.61  0.2
+		colour_range_start	0.92 0.81 0.62  0.14
+		colour_range_end	0.96 0.95 0.81  0.3
+
+		emission_rate	200
+		velocity_min	0.01
+		velocity_max	0.04
+		time_to_live_min	3.3
+		time_to_live_max	4.5
+	}
+
+    affector ColourFader
+    {
+        red   0.02
+        green 0.02
+        blue  0.02
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	3
+	}
+}
+
+//  Clouds White  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud6OrangeSmall
+{
+	material			Cloud6
+	quota				1000
+	particle_width		42
+	particle_height		42
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	72
+		height	72
+		depth	42  //h
+
+		colour				0.9 0.8 0.61  0.2
+		colour_range_start	0.92 0.81 0.62  0.14
+		colour_range_end	0.96 0.95 0.81  0.3
+
+		emission_rate	140
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   0.02
+        green 0.02
+        blue  0.02
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 3
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	13
+	}
+}
+
+//  Clouds White  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud6OrangeLarge
+{
+	material			Cloud6
+	quota				1000
+	particle_width		342
+	particle_height		342
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	372
+		height	372
+		depth	242  //h
+
+		colour				0.9 0.8 0.61  0.2
+		colour_range_start	0.92 0.81 0.62  0.14
+		colour_range_end	0.96 0.95 0.81  0.3
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+	
+	affector LinearForce
+	{
+		force_vector	7 0.1 -14
+		force_application	add
+	}
+
+    affector ColourFader
+    {
+        red   0.01
+        green 0.01
+        blue  0.01
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 35
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	30
+	}
+}
+
+
+//  Clouds Misty Grey  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud7MistyGrey
+{
+	material			Cloud7
+	quota				1000
+	particle_width		62
+	particle_height		62
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.9 0.9 0.9  0.2
+		colour_range_start	0.9 0.9 0.9  0.1
+		colour_range_end	0.9 0.9 0.9  0.3
+
+		emission_rate	200
+		velocity_min	0.05
+		velocity_max	0.2
+		time_to_live_min	2.3
+		time_to_live_max	4.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.003
+        green -0.003
+        blue  -0.003
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+//  Clouds Misty White  oOoOOoOoo * * * * * * * * * * * * 25
+particle_system Cloud7MistyGrey2
+{
+	material			Cloud7
+	quota				1000
+	particle_width		62
+	particle_height		62
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.9 0.9 0.9  0.2
+		colour_range_start	0.9 0.9 0.9  0.1
+		colour_range_end	0.95 0.95 0.95  0.3
+
+		emission_rate	200
+		velocity_min	0.05
+		velocity_max	0.2
+		time_to_live_min	4.3
+		time_to_live_max	6.5
+	}
+	
+	affector LinearForce
+	{
+		force_vector	-1 0.3 4
+		force_application	add
+	}
+
+    affector ColourFader
+    {
+        red   0.01
+        green 0.01
+        blue  0.01
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+//  Clouds Misty White  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud7MistyOrange
+{
+	material			Cloud7
+	quota				1000
+	particle_width		62
+	particle_height		62
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.9 0.8 0.61  0.2
+		colour_range_start	0.92 0.81 0.62  0.1
+		colour_range_end	0.96 0.95 0.81  0.3
+
+		emission_rate	200
+		velocity_min	0.05
+		velocity_max	0.2
+		time_to_live_min	4.3
+		time_to_live_max	6.5
+	}
+
+    affector ColourFader
+    {
+        red   0.01
+        green 0.01
+        blue  0.01
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+//  SURREAL COLOR CHANGING CLOUD  oOoOOoOoOoOOOoooOOOOOooOOo * * * * * * * * * * * * 
+particle_system Cloud7SurrealMist
+{
+	material			Cloud7
+	quota				1000
+	particle_width		72
+	particle_height		72
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	52
+		height	52
+		depth	122  //h
+
+		colour				1.3 1.37 1.31  0.15
+		colour_range_start	1.4 1.41 1.4  0.07
+		colour_range_end	0.95 0.97 0.95  0.2
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.2
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   0.5
+        green 0.5
+        blue  0.5
+        alpha 0.03
+    }
+    affector Scaler
+    {
+   	    rate 6.40
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	15
+	}
+}
+
+//  Mist
+particle_system Cloud8MistyWhite
+{
+	material			Cloud8
+	quota				300
+	particle_width		34.5
+	particle_height		27.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	60
+		height 60
+		depth	30  //h
+
+		colour				0.85 0.85 0.80  0.4
+		colour_range_start	0.81 0.82 0.85  0.3
+		colour_range_end	0.89 0.88 0.87  0.0
+
+		emission_rate	10
+		velocity_min	0.1
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	6
+	}
+}
+
+//  Mist
+particle_system Cloud8MistyWhite2
+{
+	material			Cloud8
+	quota				150
+	particle_width		79.5
+	particle_height		66.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	80
+		height 80
+		depth	40  //h
+
+		colour				0.85 0.85 0.80  0.4
+		colour_range_start	0.81 0.82 0.85  0.3
+		colour_range_end	0.89 0.88 0.87  0.0
+
+		emission_rate	10
+		velocity_min	0.2
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	12
+	}
+}
+
+//  Mist oOoOOoOoOoOOOoooOOOOOooOOo * * * * * * * * * * * * 30
+particle_system Cloud8MistyWhite3
+{
+	material			Cloud8
+	quota				300
+	particle_width		37.5
+	particle_height		28.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+	
+	
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	60
+		height 60
+		depth	30  //h
+
+		colour				0.85 0.85 0.80  0.24
+		colour_range_start	0.81 0.82 0.85  0.18
+		colour_range_end	0.89 0.88 0.87  0.0
+
+		emission_rate	10
+		velocity_min	0.3
+		velocity_max	0.6
+		time_to_live_min	3.2
+		time_to_live_max	5.1
+	}
+	
+	affector LinearForce
+	{
+		force_vector	3 0.1 -4
+		force_application	add
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	6
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud9
+{
+	material			Cloud9
+	quota				1000
+	particle_width		122
+	particle_height		122
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.9 0.9 0.9  0.2
+		colour_range_start	0.9 0.9 0.9  0.1
+		colour_range_end	0.9 0.9 0.9  0.3
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.02
+        green -0.02
+        blue  -0.02
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud9Large
+{
+	material			Cloud9
+	quota				1000
+	particle_width		322
+	particle_height		322
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.9 0.9 0.9  0.2
+		colour_range_start	0.9 0.9 0.9  0.1
+		colour_range_end	0.9 0.9 0.9  0.3
+
+		emission_rate	100
+		velocity_min	0.1
+		velocity_max	0.24
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.01
+        green -0.01
+        blue  -0.01
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 14
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	15
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud9Small
+{
+	material			Cloud9
+	quota				1000
+	particle_width		32
+	particle_height		32
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	42
+		height	42
+		depth	22  //h
+
+		colour				0.8 0.8 0.8  0.2
+		colour_range_start	0.9 0.9 0.9  0.1
+		colour_range_end	0.9 0.9 0.9  0.3
+
+		emission_rate	100
+		velocity_min	0.1
+		velocity_max	0.24
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 3
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	15
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud9Brown
+{
+	material			Cloud9
+	quota				1000
+	particle_width		122
+	particle_height		122
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.55 0.5 0.5  0.4
+		colour_range_start	0.65 0.6 0.5  0.3
+		colour_range_end	0.66 0.55 0.5  0.5
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.02
+        green -0.02
+        blue  -0.03
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	25
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 35
+particle_system Cloud9BrownLarge
+{
+	material			Cloud9
+	quota				1000
+	particle_width		322
+	particle_height		322
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.55 0.5 0.5  0.4
+		colour_range_start	0.65 0.6 0.5  0.3
+		colour_range_end	0.66 0.55 0.5  0.5
+
+		emission_rate	100
+		velocity_min	0.1
+		velocity_max	0.24
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+        affector ColourFader
+    {
+        red   -0.02
+        green -0.02
+        blue  -0.03
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 14
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	15
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud9BrownSmall
+{
+	material			Cloud9
+	quota				1000
+	particle_width		32
+	particle_height		32
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	42
+		height	42
+		depth	22  //h
+
+		colour				0.55 0.5 0.5  0.4
+		colour_range_start	0.65 0.6 0.5  0.3
+		colour_range_end	0.66 0.55 0.5  0.5
+
+		emission_rate	100
+		velocity_min	0.1
+		velocity_max	0.24
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.02
+        green -0.02
+        blue  -0.03
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 4
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	15
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud9Cyan
+{
+	material			Cloud9
+	quota				1000
+	particle_width		192
+	particle_height		172
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	112
+		height	112
+		depth	102  //h
+
+		colour				0.82 0.82 0.82  0.1
+		colour_range_start	0.82 0.82 0.82  0.04
+		colour_range_end	0.84 0.84 0.82  0.14
+
+		emission_rate	200
+		velocity_min	0.4
+		velocity_max	0.7
+		time_to_live_min	3.3
+		time_to_live_max	4.9
+	}
+
+    affector ColourFader
+    {
+        red   -0.001
+        //green 0.001
+        //blue  0.001
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start 20
+		rotation_speed_range_end -20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	45
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud9White
+{
+	material			Cloud9
+	quota				1000
+	particle_width		192
+	particle_height		172
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	112
+		height	112
+		depth	102  //h
+
+		colour				0.92 0.92 0.92  0.1
+		colour_range_start	0.92 0.92 0.92  0.04
+		colour_range_end	0.9 0.9 0.9  0.14
+
+		emission_rate	200
+		velocity_min	0.4
+		velocity_max	0.7
+		time_to_live_min	3.3
+		time_to_live_max	4.9
+	}
+
+    affector ColourFader
+    {
+        red   0.01
+        green 0.01
+        blue  0.01
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 45
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start 20
+		rotation_speed_range_end -20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	45
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 
+particle_system Cloud9White2
+{
+	material			Cloud9
+	quota				1000
+	particle_width		192
+	particle_height		172
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	112
+		height	112
+		depth	102  //h
+
+		colour				0.92 0.92 0.92  0.1
+		colour_range_start	0.92 0.92 0.92  0.04
+		colour_range_end	0.9 0.9 0.9  0.14
+
+		emission_rate	200
+		velocity_min	0.6
+		velocity_max	0.9
+		time_to_live_min	3.3
+		time_to_live_max	4.9
+	}
+
+    affector ColourFader
+    {
+        red   0.01
+        green 0.01
+        blue  0.01
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 45
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start 20
+		rotation_speed_range_end -20
+	}
+	
+	affector LinearForce
+	{
+		force_vector	5 0.1 -9
+		force_application	add
+	}
+	affector DirectionRandomiser
+	{
+		randomness	34
+	}
+}
+
+//  Clouds  oOoOOoOoo * * * * * * * * * * * * 40
+particle_system Cloud9Surreal
+{
+	material			Cloud9
+	quota				1000
+	particle_width		192
+	particle_height		172
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	112
+		height	112
+		depth	102  //h
+
+		colour				0.82 0.82 0.82  0.1
+		colour_range_start	0.82 0.82 0.82  0.04
+		colour_range_end	1.1 1.1 1.1  0.14
+
+		emission_rate	200
+		velocity_min	0.4
+		velocity_max	0.7
+		time_to_live_min	3.3
+		time_to_live_max	4.9
+	}
+
+    affector ColourFader
+    {
+        red   0.01
+        green 0.01
+        blue  0.01
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 45
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start 20
+		rotation_speed_range_end -20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	45
+	}
+}
+
+//  AlienClouds  oOoOOoOoo  * * * * * * * * * * * * 
+particle_system AlienCloud1
+{
+	material			Cloud1
+	quota				1000
+	particle_width		122
+	particle_height		122
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.51 0.95 0.55  0.1
+		colour_range_start	0.62 0.91 0.55  0.07
+		colour_range_end	0.48 0.82 0.37  0.11
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.02
+        green -0.02
+        blue  -0.02
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+particle_system AlienCloud2
+{
+	material			Cloud3
+	quota				1000
+	particle_width		122
+	particle_height		122
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.51 0.85 0.4  0.12
+		colour_range_start	0.42 0.91 0.45  0.1
+		colour_range_end	0.78 0.92 0.97  0.13
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.02
+        green -0.02
+        blue  -0.02
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+particle_system AlienCloud3
+{
+	material			Cloud3
+	quota				1000
+	particle_width		122
+	particle_height		122
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.31 0.65 0.2  0.12
+		colour_range_start	0.22 0.51 0.15  0.11
+		colour_range_end	0.38 0.72 0.27  0.13
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.02
+        green -0.02
+        blue  -0.02
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+//  More Clouds  oOoOOoOoo  * * * * * * * * * * * * 
+particle_system CrystalCloud
+{
+	material			Cloud3
+	quota				1000
+	particle_width		122
+	particle_height		122
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.21 0.35 0.6  0.12
+		colour_range_start	0.2 0.21 0.55  0.11
+		colour_range_end	0.1 0.1 0.47  0.13
+
+		emission_rate	200
+		velocity_min	0.1
+		velocity_max	0.3
+		time_to_live_min	2.3
+		time_to_live_max	3.5
+	}
+
+    affector ColourFader
+    {
+        red   -0.02
+        green -0.02
+        blue  -0.02
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 11.30
+    }
+	affector Rotator
+	{
+		rotation_range_start 0
+		rotation_range_end 220
+		rotation_speed_range_start -20
+		rotation_speed_range_end 20
+	}
+	affector DirectionRandomiser
+	{
+		randomness	22
+	}
+}
+
+particle_system PinkCloud
+{
+	material			Cloud3
+	quota				1000
+	particle_width		122
+	particle_height		122
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	232
+		height	232
+		depth	122  //h
+
+		colour				0.99 0.75 0.8  0.12
+		colour_range_start	0.99 0.61 0.7  0.11
+		colour_range_end	0.98 0.7 0.75  0.13
 
 		emission_rate	200
 		velocity_min	0.1
@@ -1365,279 +3543,6 @@ particle_system WaterfallLow
 
 
 //  New
-//  AlienClouds  oOoOOoOoo  * * * * * * * * * * * * 
-particle_system AlienCloud1
-{
-	material			Cloud1
-	quota				1000
-	particle_width		122
-	particle_height		122
-	cull_each			false
-	billboard_type		point
-    sorted				true
-
-	emitter Cylinder
-	{
-		angle	0
-		position	0 0 0
-		direction	0 1 0
-		width	232
-		height	232
-		depth	122  //h
-
-		colour				0.51 0.95 0.55  0.1
-		colour_range_start	0.62 0.91 0.55  0.07
-		colour_range_end	0.48 0.82 0.37  0.11
-
-		emission_rate	200
-		velocity_min	0.1
-		velocity_max	0.3
-		time_to_live_min	2.3
-		time_to_live_max	3.5
-	}
-
-    affector ColourFader
-    {
-        red   -0.02
-        green -0.02
-        blue  -0.02
-        alpha 0.02
-    }
-    affector Scaler
-    {
-   	    rate 11.30
-    }
-	affector Rotator
-	{
-		rotation_range_start 0
-		rotation_range_end 220
-		rotation_speed_range_start -20
-		rotation_speed_range_end 20
-	}
-	affector DirectionRandomiser
-	{
-		randomness	22
-	}
-}
-
-particle_system AlienCloud2
-{
-	material			Cloud3
-	quota				1000
-	particle_width		122
-	particle_height		122
-	cull_each			false
-	billboard_type		point
-    sorted				true
-
-	emitter Cylinder
-	{
-		angle	0
-		position	0 0 0
-		direction	0 1 0
-		width	232
-		height	232
-		depth	122  //h
-
-		colour				0.51 0.85 0.4  0.12
-		colour_range_start	0.42 0.91 0.45  0.1
-		colour_range_end	0.78 0.92 0.97  0.13
-
-		emission_rate	200
-		velocity_min	0.1
-		velocity_max	0.3
-		time_to_live_min	2.3
-		time_to_live_max	3.5
-	}
-
-    affector ColourFader
-    {
-        red   -0.02
-        green -0.02
-        blue  -0.02
-        alpha 0.02
-    }
-    affector Scaler
-    {
-   	    rate 11.30
-    }
-	affector Rotator
-	{
-		rotation_range_start 0
-		rotation_range_end 220
-		rotation_speed_range_start -20
-		rotation_speed_range_end 20
-	}
-	affector DirectionRandomiser
-	{
-		randomness	22
-	}
-}
-
-particle_system AlienCloud3
-{
-	material			Cloud3
-	quota				1000
-	particle_width		122
-	particle_height		122
-	cull_each			false
-	billboard_type		point
-    sorted				true
-
-	emitter Cylinder
-	{
-		angle	0
-		position	0 0 0
-		direction	0 1 0
-		width	232
-		height	232
-		depth	122  //h
-
-		colour				0.31 0.65 0.2  0.12
-		colour_range_start	0.22 0.51 0.15  0.11
-		colour_range_end	0.38 0.72 0.27  0.13
-
-		emission_rate	200
-		velocity_min	0.1
-		velocity_max	0.3
-		time_to_live_min	2.3
-		time_to_live_max	3.5
-	}
-
-    affector ColourFader
-    {
-        red   -0.02
-        green -0.02
-        blue  -0.02
-        alpha 0.02
-    }
-    affector Scaler
-    {
-   	    rate 11.30
-    }
-	affector Rotator
-	{
-		rotation_range_start 0
-		rotation_range_end 220
-		rotation_speed_range_start -20
-		rotation_speed_range_end 20
-	}
-	affector DirectionRandomiser
-	{
-		randomness	22
-	}
-}
-
-//  More Clouds  oOoOOoOoo  * * * * * * * * * * * * 
-particle_system CrystalCloud
-{
-	material			Cloud3
-	quota				1000
-	particle_width		122
-	particle_height		122
-	cull_each			false
-	billboard_type		point
-    sorted				true
-
-	emitter Cylinder
-	{
-		angle	0
-		position	0 0 0
-		direction	0 1 0
-		width	232
-		height	232
-		depth	122  //h
-
-		colour				0.21 0.35 0.6  0.12
-		colour_range_start	0.2 0.21 0.55  0.11
-		colour_range_end	0.1 0.1 0.47  0.13
-
-		emission_rate	200
-		velocity_min	0.1
-		velocity_max	0.3
-		time_to_live_min	2.3
-		time_to_live_max	3.5
-	}
-
-    affector ColourFader
-    {
-        red   -0.02
-        green -0.02
-        blue  -0.02
-        alpha 0.02
-    }
-    affector Scaler
-    {
-   	    rate 11.30
-    }
-	affector Rotator
-	{
-		rotation_range_start 0
-		rotation_range_end 220
-		rotation_speed_range_start -20
-		rotation_speed_range_end 20
-	}
-	affector DirectionRandomiser
-	{
-		randomness	22
-	}
-}
-
-particle_system PinkCloud
-{
-	material			Cloud3
-	quota				1000
-	particle_width		122
-	particle_height		122
-	cull_each			false
-	billboard_type		point
-    sorted				true
-
-	emitter Cylinder
-	{
-		angle	0
-		position	0 0 0
-		direction	0 1 0
-		width	232
-		height	232
-		depth	122  //h
-
-		colour				0.99 0.75 0.8  0.12
-		colour_range_start	0.99 0.61 0.7  0.11
-		colour_range_end	0.98 0.7 0.75  0.13
-
-		emission_rate	200
-		velocity_min	0.1
-		velocity_max	0.3
-		time_to_live_min	2.3
-		time_to_live_max	3.5
-	}
-
-    affector ColourFader
-    {
-        red   -0.02
-        green -0.02
-        blue  -0.02
-        alpha 0.02
-    }
-    affector Scaler
-    {
-   	    rate 11.30
-    }
-	affector Rotator
-	{
-		rotation_range_start 0
-		rotation_range_end 220
-		rotation_speed_range_start -20
-		rotation_speed_range_end 20
-	}
-	affector DirectionRandomiser
-	{
-		randomness	22
-	}
-}
-
-
 //  Electric Sparks2  * * * * * * * * * * * * * * 
 particle_system ElectricSparks2
 {
