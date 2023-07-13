@@ -828,3 +828,453 @@ particle_system SandStorm
 	}
 }
 
+//  Mist
+particle_system CloudsMistWhiteMedium
+{
+	material			Cloud8
+	quota				300
+	particle_width		14.5
+	particle_height		12.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	60
+		height 60
+		depth	30  //h
+
+		colour				0.85 0.85 0.80  0.4
+		colour_range_start	0.81 0.82 0.85  0.3
+		colour_range_end	0.89 0.88 0.87  0.0
+
+		emission_rate	10
+		velocity_min	0.1
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	6
+	}
+}
+
+
+//  Mist
+particle_system CloudsMistWhiteLarge
+{
+	material			Cloud8
+	quota				150
+	particle_width		49.5
+	particle_height		36.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	80
+		height 80
+		depth	40  //h
+
+		colour				0.85 0.85 0.80  0.4
+		colour_range_start	0.81 0.82 0.85  0.3
+		colour_range_end	0.89 0.88 0.87  0.0
+
+		emission_rate	10
+		velocity_min	0.1
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	12
+	}
+}
+
+//  Mist
+particle_system CloudsMistWhiteThin
+{
+	material			Cloud8
+	quota				300
+	particle_width		27.5
+	particle_height		24.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	60
+		height 60
+		depth	30  //h
+
+		colour				0.85 0.85 0.80  0.18
+		colour_range_start	0.81 0.82 0.85  0.12
+		colour_range_end	0.89 0.88 0.87  0.0
+
+		emission_rate	10
+		velocity_min	0.1
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	6
+	}
+}
+
+//  Mist
+particle_system CloudsMistOrangeMedium
+{
+	material			Cloud8
+	quota				300
+	particle_width		14.5
+	particle_height		12.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	60
+		height 60
+		depth	30  //h
+
+
+		colour				0.9 0.8 0.61  0.4
+		colour_range_start	0.92 0.81 0.62  0.3
+		colour_range_end	0.96 0.95 0.81  0.0
+
+		emission_rate	10
+		velocity_min	0.1
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	6
+	}
+}
+
+
+//  Mist
+particle_system CloudsMistOrangeLarge
+{
+	material			Cloud8
+	quota				150
+	particle_width		49.5
+	particle_height		36.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	80
+		height 80
+		depth	40  //h
+
+		colour				0.9 0.8 0.61  0.4
+		colour_range_start	0.92 0.81 0.62  0.3
+		colour_range_end	0.96 0.95 0.81  0.0
+
+		emission_rate	10
+		velocity_min	0.1
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	12
+	}
+}
+
+//  Mist
+particle_system CloudsMistOrangeThin
+{
+	material			Cloud8
+	quota				300
+	particle_width		27.5
+	particle_height		24.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	60
+		height 60
+		depth	30  //h
+
+		colour				0.9 0.8 0.61  0.18
+		colour_range_start	0.92 0.81 0.62  0.12
+		colour_range_end	0.96 0.95 0.81  0.0
+
+		emission_rate	10
+		velocity_min	0.1
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	6
+	}
+}
+
+//  Mist
+particle_system CloudsMistMagicMedium
+{
+	material			Cloud8
+	quota				300
+	particle_width		14.5
+	particle_height		12.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	60
+		height 60
+		depth	30  //h
+
+		colour				0.46 0.76 0.89  0.45
+		colour_range_start	0.44 1.28 0.98  0.34
+		colour_range_end	0.18 0.98 0.49  0.0
+
+		emission_rate	10
+		velocity_min	0.1
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	6
+	}
+}
+
+
+//  Mist
+particle_system CloudsMistMagicLarge
+{
+	material			Cloud8
+	quota				150
+	particle_width		49.5
+	particle_height		36.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	80
+		height 80
+		depth	40  //h
+
+		colour				0.46 0.76 0.89  0.45
+		colour_range_start	0.44 1.28 0.98  0.34
+		colour_range_end	0.18 0.98 0.49  0.0
+
+		emission_rate	10
+		velocity_min	0.1
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	12
+	}
+}
+
+//  Mist
+particle_system CloudsMistMagicThin
+{
+	material			Cloud8
+	quota				300
+	particle_width		27.5
+	particle_height		24.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	60
+		height 60
+		depth	30  //h
+
+		colour				0.46 0.76 0.89  0.18
+		colour_range_start	0.44 1.28 0.98  0.12
+		colour_range_end	0.18 0.98 0.49  0.0
+
+		emission_rate	10
+		velocity_min	0.1
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	6
+	}
+}
+
+//  Mist
+particle_system CloudsMistToxicMedium
+{
+	material			Cloud8
+	quota				300
+	particle_width		14.5
+	particle_height		12.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	60
+		height 60
+		depth	30  //h
+
+		colour				0.58 1.66 1.40  0.4
+		colour_range_start	0.59 1.78 1.33  0.3
+		colour_range_end	0.63 1.88 1.2  0.0
+
+		emission_rate	10
+		velocity_min	0.1
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	6
+	}
+}
+
+
+//  Mist
+particle_system CloudsMistToxicLarge
+{
+	material			Cloud8
+	quota				150
+	particle_width		49.5
+	particle_height		36.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	80
+		height 80
+		depth	40  //h
+
+		colour				0.58 1.66 1.40  0.4
+		colour_range_start	0.59 1.78 1.33  0.3
+		colour_range_end	0.63 1.88 1.2  0.0
+
+		emission_rate	10
+		velocity_min	0.1
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	12
+	}
+}
+
+
+//  Mist
+particle_system CloudsMistToxicThin
+{
+	material			Cloud8
+	quota				300
+	particle_width		27.5
+	particle_height		24.5
+	cull_each			true
+	billboard_type		point
+    sorted				true
+
+	emitter Box
+	{
+		angle	0
+		position	0 0 0
+		direction	-0.9 -0.1 0.8
+		width	60
+		height 60
+		depth	30  //h
+
+		colour				0.58 1.66 1.40  0.18
+		colour_range_start	0.59 1.78 1.33  0.12
+		colour_range_end	0.63 1.88 1.2  0.0
+
+		emission_rate	10
+		velocity_min	0.1
+		velocity_max	0.6
+		time_to_live_min	2.2
+		time_to_live_max	4.1
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	6
+	}
+}
+
