@@ -40,7 +40,7 @@ data/ghosts/original
 data/tracks
 data/cars/
 data/skies
-data/objects*
+#data/objects*
 #data/trees
 #data/rocks
 #data/materials/

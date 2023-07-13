@@ -155,7 +155,9 @@ public:
 	std::string name;  // particle_system
 	Ogre::Vector3 pos, size;
 	Ogre::Vector3 up;  float rot;  // dir
+	Ogre::Vector2 par;  // auto set original particle size from .emitter
 	float rate;  // emit
+	float parScale;
 
 	float upd;  // update time for static
 	bool stat;  // static for, e.g. clouds

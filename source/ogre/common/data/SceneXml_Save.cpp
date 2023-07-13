@@ -317,8 +317,10 @@ bool Scene::SaveXml(String file)
 			oe.SetAttribute("sc",	toStrC(e->size));
 			oe.SetAttribute("up",	toStrC(e->up));
 			oe.SetAttribute("rot",	toStrC(e->rot));
+
 			oe.SetAttribute("rate",	toStrC(e->rate));
 			oe.SetAttribute("st",	e->stat ? 1 : 0);
+			oe.SetAttribute("psc",	toStrC(e->parScale));
 
 			emts.InsertEndChild(oe);
 		}

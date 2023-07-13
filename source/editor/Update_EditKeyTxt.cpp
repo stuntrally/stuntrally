@@ -372,12 +372,16 @@ void App::KeyTxtEmitters(Real q)
 	emtTxt[2]->setCaption(String(emtEd==EO_Move  ?"#60FF60":"")+ TR("#{Obj_Pos}  ") +fToStr(e.pos.x,1,4)+" "+fToStr(e.pos.y,1,4)+" "+fToStr(e.pos.z,1,4));
 	emtTxt[3]->setCaption(String(emtEd==EO_Rotate?"#FFA0A0":"")+ TR("#{Obj_Rot}  y ") +fToStr(e.rot/*e.up.x*/,0,3) );
 	emtTxt[4]->setCaption(String(emtEd==EO_Scale ?"#60F0FF":"")+ TR("#{scale}  ") +fToStr(e.size.x,2,4)+" "+fToStr(e.size.y,2,4)+" "+fToStr(e.size.z,2,4));
-	emtTxt[5]->setCaption(TR("#{Density}: ") +fToStr(e.rate,0,3) );
-	emtTxt[6]->setCaption(TR("#{Count}: ")+ toStr(e.ps ? e.ps->getNumParticles() : 0) + (e.stat ? "  Static" : ""));
+
+	emtTxt[5]->setCaption(TR("#{Size}: ") +fToStr(e.parScale,2,4)+" * "+fToStr(e.par.x,1,3) );
+	emtTxt[6]->setCaption(TR("#{Density}: ") +fToStr(e.rate,0,3) );
+	emtTxt[7]->setCaption(TR("#{Count}: ") + toStr(e.ps ? e.ps->getNumParticles() : 0) + (e.stat ? "  Static" : ""));
 
 	if (!bEdit())  return;
 	if (isKey(LEFTBRACKET) ||isKey(O)){  e.rate  *= 1.f - 0.04f*q;  e.ps->getEmitter(0)->setEmissionRate(e.rate);  }
 	if (isKey(RIGHTBRACKET)||isKey(P)){  e.rate  *= 1.f + 0.04f*q;  e.ps->getEmitter(0)->setEmissionRate(e.rate);  }
+	if (isKey(SEMICOLON)   ||isKey(K)){  e.parScale *= 1.f - 0.04f*q;  e.UpdEmitter();  }
+	if (isKey(APOSTROPHE)  ||isKey(L)){  e.parScale *= 1.f + 0.04f*q;  e.UpdEmitter();  }
 
 	//  edit
 	if (mz != 0)  // wheel prev/next

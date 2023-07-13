@@ -356,8 +356,10 @@ bool Scene::LoadXml(String file, bool bTer)
 			a = u->Attribute("sc");		if (a)  p.size = s2v(a);
 			a = u->Attribute("up");		if (a)  p.up = s2v(a);
 			a = u->Attribute("rot");	if (a)  p.rot = s2r(a);
+			
 			a = u->Attribute("rate");	if (a)  p.rate = s2r(a);
 			a = u->Attribute("st");		if (a)  p.stat = s2i(a);
+			a = u->Attribute("psc");	if (a)  p.parScale = s2r(a);
 
 			emitters.push_back(p);
 			u = u->NextSiblingElement("e");

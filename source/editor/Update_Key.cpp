@@ -331,7 +331,7 @@ bool App::keyPressed(const SDL_KeyboardEvent &arg)
 		case key(V):  bTrGrUpd = true;  break;
 		case key(G):  gui->ckFog.Invert();  break;
 		case key(I):  gui->ckWeather.Invert();  break;
-		case key(P):  bParticles = !bParticles;  bRecreateEmitters = true;  break;
+		case key(P):  if (!bEdit()){  bParticles = !bParticles;  bRecreateEmitters = true;  }  break;
 
 		//  terrain
 		case key(D):  if (bEdit()){  SetEdMode(ED_Deform);  curBr = 0;  updBrush();  UpdEditWnds();  }	break;

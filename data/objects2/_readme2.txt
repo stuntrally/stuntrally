@@ -16,3 +16,7 @@ Author: Duane's Mind
 License: CC-BY 4.0
 https://sketchfab.com/3d-models/satellite-comms-4be56951da39429a963ee12140bbff57
 
+----  obstacle*.mesh
+New Pipe Obstacles
+Author: rubberduck
+License: CC0
