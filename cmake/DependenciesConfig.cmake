@@ -19,6 +19,14 @@ find_package(ENet REQUIRED)
 include(cmake/dependencies-helpers/OGRE.cmake)
 include(cmake/dependencies-helpers/Boost.cmake)
 
+if(NOT TARGET OpenAL::OpenAL)
+    add_library(OpenAL::OpenAL INTERFACE IMPORTED)
+    set_target_properties(OpenAL::OpenAL PROPERTIES
+        INTERFACE_LINK_LIBRARIES "${OPENAL_LIBRARY}"
+        INTERFACE_INCLUDE_DIRECTORIES "${OPENAL_INCLUDE_DIR}"
+    )
+endif()
+
 set(LIBS boost::boost
         Threads::Threads
         OGRE::OGRE
