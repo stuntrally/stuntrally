@@ -1,3 +1,5 @@
+//  based on RoR's  /source/main/audio/Sound.h
+//  https://github.com/RigsOfRods/rigs-of-rods
 #pragma once
 #include <AL/al.h>
 #include <Ogre.h>

@@ -1,6 +1,9 @@
+//  based on RoR's  /source/main/audio/SoundScriptManager.h
+//  https://github.com/RigsOfRods/rigs-of-rods
 #pragma once
 #include <OgreString.h>
 #include <OgreStringVector.h>
+#include <map>
 
 namespace Ogre  {  class FileStreamDataStream;  }
 class SoundBase;  class SoundBaseMgr;
