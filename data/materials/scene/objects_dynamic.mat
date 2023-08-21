@@ -117,10 +117,12 @@ material wooden_barrel
 	diffuseMap wooden_barrel.jpg
 	normalMap wooden_barrel_norm.jpg
 	terrain_light_map true
-	ambient 0.9 1 1
+	ambient 0.8 0.8 0.8
 	diffuse 0.9 1 1
-	specular 0.35 0.35 0.35 32
-	bump_scale 4.0
+	specular 0.95 0.95 0.95 20
+	specMap_rgb true
+	env_map true
+	reflMap wooden_barrel_metal.png
 }
 
 material atomic_barrel
@@ -223,3 +225,50 @@ material metal_barrel_black
 	diffuseMap metal_barrel_black.jpg
 }
 
+material can_rusted
+{
+	parent base
+	diffuseMap can_rusted.jpg
+	normalMap can_rusted_norm.jpg
+	specMap can_rusted_spec.jpg
+	terrain_light_map true
+	specular 0.6 0.6 0.6 20
+}
+
+material garbage_bin_green
+{
+	parent base
+	diffuseMap garbage_bin_green.jpg
+	normalMap garbage_bin_norm.jpg
+	specMap garbage_bin_green_spec.jpg
+	terrain_light_map true
+	specular 0.6 0.6 0.6 14
+	ambient 1.20 1.20 1.20
+	specMap_rgb true
+	reflMap garbage_bin_metal.jpg
+}
+
+material garbage_bin_blue
+{
+	parent base
+	diffuseMap garbage_bin_blue.jpg
+	normalMap garbage_bin_norm.jpg
+	specMap garbage_bin_blue_spec.jpg
+	terrain_light_map true
+	specular 0.6 0.6 0.6 14
+	ambient 1.20 1.20 1.20
+	specMap_rgb true
+	reflMap garbage_bin_metal.jpg
+}
+
+material trash_bag
+{
+	parent base
+	diffuseMap garbage_bag.jpg
+	normalMap garbage_bag_norm.jpg
+	specMap garbage_bag_spec.jpg
+	terrain_light_map true
+	specular 0.8 0.8 0.8 36
+	ambient 0.90 0.90 0.90
+	specMap_rgb true
+}
