@@ -35,7 +35,12 @@
 <s m="100_kloppenheim_06"   c="#C0D8F8"   p="84"  y=" 13"  />
 -->
 
-<!--  skies, new 2.8 ?
+<!--  skies, new 2.8  
+<s m="sky2/aristea_wreck01"     c="#c0d0f0" p="40" y="50" />
+<s m="sky2/BigCloudsSky"        c="#c0d0f0" p="40" y="50" />
+<s m="sky2/farm_field01"        c="#c0d0f0" p="40" y="50" />
+
+  skies, new 2.8 ?  test
 <s m="sky2/aristea_wreck01"     c="#c0d0f0" p="40" y="50" />
 <s m="sky2/dikhololo_night01"   c="#c0d0f0" p="40" y="50" />
 <s m="sky2/farm_field01"        c="#c0d0f0" p="40" y="50" />
@@ -167,6 +172,7 @@
 
 <t sc="Grc"  t="ground_white_d"     n="ground_white_n"     s="8.54"  r="2" su="DesertBumpy"    tp="0" du="0.3" ds="0.2" md="0.4" tr="0.36 0.40 0.28 0.7"  aa="0"  ab="18" />
 <t sc="Grc"  t="ground_yellow_d"    n="jungle_mntn_n"      s="8.91"  r="3" su="DesertBumpy"    tp="0" du="0.3" ds="0.2" md="0.4" tr="0.42 0.36 0.28 0.6"  aa="18" ab="30" />
+<t sc="Grc"  t="mntn_yellow2_d"     n="jungle_stone_n"     s="42.53" r="2" su="Rocks"          tp="1" du="0.3" ds="0.2" md="0.5" tr="0.32 0.32 0.32 0.4"  aa="33" ab="90" />
 
 <t sc="Isl"  t="---- Sand ------"   r="0" />      <!-- 🏖️ -->
 <t sc="Isl"  t="island_sand2_d"     n="desert_sand2_n"     s="10.21" r="2" su="DesertFast"     tp="0" du="0.6" ds="0.7" md="0.0" tr="0.44 0.40 0.23 0.7"  aa="0"  ab="90" />

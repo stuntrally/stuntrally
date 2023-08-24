@@ -966,3 +966,28 @@ material obstaclesCrystal
 	bump_scale 1.2
 	refl_amount 0.5
 }
+
+//  new
+material ancient_ruins
+{
+	parent base
+	diffuseMap ancient_ruins.jpg
+	normalMap ancient_ruins_norm.jpg
+	specMap ancient_ruins_spec.jpg
+	ambient 0.9 0.9 0.9
+	diffuse 1.0 1.0 1.0
+	specular 0.7 0.7 0.7 4
+	bump_scale 0.55
+}
+
+material ancient_ruins_yellow
+{
+	parent base
+	diffuseMap ancient_ruins.jpg
+	normalMap ancient_ruins_norm.jpg
+	specMap ancient_ruins_spec.jpg
+	ambient 1.44 1.3 0.92
+	diffuse 1.52 1.3 0.94
+	specular 0.7 0.7 0.7 4
+	bump_scale 0.55
+}
