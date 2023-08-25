@@ -18,3 +18,8 @@ https://opengameart.org/content/seamless-textures
 
 
 old road based on VDrift asphalt
+
+
+roadGlass_crystal.png
+by rubberduck, hex pattern from openclipart
+License: CC0

@@ -158,6 +158,24 @@ material Water_cyan   // G2-Coast
     speed 1.0 1.0
 }
 
+material Water_marble   // G2-Coast
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.10 0.13
+    fresnelMultiplier 1.0
+
+    colour 0.402 0.45 0.37  0.0
+    reflectColour 0.98 0.7 1.0  1.0
+    refractColour 1.62 0.8 0.9  0.75
+
+	specColourAndPower 0.99 1.0 1.0  32
+    bump2SpecPowerMul 6.0 12 0.4
+    speed 1.0 1.0
+}
+
 material Water_green   // J11-Temple
 {
     parent Water
@@ -983,4 +1001,12 @@ material River_LavaHot
     WaterDepthMap white.png
 	alphaMap HmapTex
     speed -0.478 -1.0
+}
+
+material River_marble  
+{
+    parent Water_marble
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -3.0 -1.0
 }

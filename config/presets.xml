@@ -276,6 +276,8 @@
 <t sc="Cry"  t="ycrystals2_fine_d"      n="ycrystals_fine_n"    s="17.15" r="3" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.26 0.1 0.23 0.8"  aa="0"  ab="10" />
 <t sc="Cry"  t="ycrystals2_med_d"       n="ycrystals_med_n"     s="12.59" r="2" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.26 0.1 0.23 0.8"  aa="14" ab="31" />
 <t sc="Cry"  t="ycrystals2_big_d"       n="ycrystals_big_n"     s="17.15" r="4" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.26 0.1 0.23 0.8"  aa="38" ab="90" />
+<t sc="Mar"  t="moss_ground_marble_d"   n="grass_ground_n"     s="8.92"  r="2" su="GrassJungle"    tp="0" du="0.0" ds="0.2" md="0.1" tr="0.13 0.20 0.13 0.8"  aa="17" ab="34" />
+<t sc="Mar"  t="moss_plants_marble_d"   n="moss_plants_n"      s="9.01"  r="2" su="GrassJungle"    tp="0" du="0.0" ds="0.2" md="0.1" tr="0.12 0.25 0.23 0.8"  aa="0"  ab="19" />
 
 
 <!--  🛣️ Roads  ================================================================================================================================
@@ -351,6 +353,7 @@
 <r sc="Oth"  m="roadMarbleStone"       r="1" su="roadForest"   du="0.0" ds="0.2" md="0.0" tr="0.56 0.50 0.50 0.7" />
 <r sc="GrcR" m="roadSandMarble"        r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.70 0.70 0.70 0.6" />
 <r sc="GrcR" m="roadSandMarblePink"    r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.75 0.65 0.70 0.6" />
+<r sc="Mar"  m="roadMossMarble"        r="3" su="roadJungle"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" />
 	
 <r sc="Oth"  m="roadInvisibleDesert"       r="3" su="roadDesert"   du="0.0" ds="0.0" md="0.0" tr="0.40 0.36 0.16 0.4" />
 <r sc="Oth"  m="roadInvisibleJungle"       r="3" su="roadJungle"   du="0.0" ds="0.0" md="0.0" tr="0.40 0.36 0.16 0.4" />
@@ -402,6 +405,11 @@
 
 <r sc="Wnt"  m="---- pipe glass2 ----" r="0" />
 <r sc="Cry"  m="pipeGlassCrystal"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Cry"  m="pipeGlassCrystal2Red" r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Cry"  m="pipeGlassCrystal2Blue" r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Cry"  m="pipeGlassCrystal2Cyan" r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Cry"  m="pipeGlassCrystal2Pink" r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Cry"  m="pipeGlassCrystal2Green" r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Spc"  m="pipeGlassAlien"       r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Cry"  m="pipeGlassAlienBlue"   r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Jng"  m="pipeGlassAlienGreen"  r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
@@ -525,6 +533,7 @@
 <r sc="Grc"  m="River_cyan"           r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="JngD" m="River_green"          r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Mos"  m="River_moss"           r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Mar" m="River_marble"          r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 
 <r sc="GrcR" m="River_white"          r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Isl"  m="River_sunset"         r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
@@ -581,6 +590,7 @@
 <g sc="Sav"  g="grass3s"           c="grClrSavanna"   r="1" xa="1.01" xb="1.44" ya="1.13" yb="2.50" />
 <g sc="Grc"  g="grass3y"           c="grClrJungle"    r="1" xa="1.44" xb="1.68" ya="1.47" yb="1.85" />
 
+
 <g sc="Des"  g="grass4v"           c="grClrDesert"    r="4" xa="1.82" xb="2.80" ya="1.22" yb="2.26" />
 <g sc="Des"  g="grass5"            c="grClrJungle"    r="3" xa="1.13" xb="1.44" ya="1.28" yb="1.77" />
 
@@ -592,6 +602,10 @@
 <g sc="Grc"  g="grassGreece"       c="grClrJungle"    r="1" xa="1.23" xb="1.60" ya="1.22" yb="1.62" />
 <g sc="Sav"  g="grassJungle"       c="grClrForest"    r="1" xa="1.58" xb="2.04" ya="1.41" yb="1.94" />
 <g sc="Des"  g="grassSavanna"      c="grClrJungle"    r="1" xa="1.18" xb="1.67" ya="1.79" yb="2.28" />
+
+<g sc="Mar"  g="---- Marble ----"  r="0" />   <!-- 🔴 -->
+<g sc="Mar"  g="grass3m"           c="grClrJungle2"   r="2" xa="0.94" xb="2.02" ya="0.98" yb="2.11" />
+<g sc="Mar"  g="grass4m"           c="grClrDesert"    r="4" xa="1.82" xb="2.80" ya="1.22" yb="2.26" />
 
 <g sc="Can"  g="---- Red ----"     r="0" />   <!-- 🔴 -->
 <g sc="Can"  g="grassAustralia"    c="grClrAustralia" r="1" xa="0.70" xb="1.61" ya="0.56" yb="1.17" />
