@@ -1225,6 +1225,25 @@ material roadMoss2_ter
 	normalMap normal_1.png
 }
 
+//  new Moss variant
+material roadMossMarble
+{
+	parent road
+	diffuseMap roadMoss.jpg
+	ambient 1.2 0.41 0.51
+	diffuse 1.16 0.21 0.42
+	specular 0.58 0.13 0.25 48
+}
+material roadMossMarble_ter
+{
+	parent road_terrain
+	diffuseMap roadMoss.jpg
+	ambient 1.2 0.38 0.47
+	diffuse 1.16 0.23 0.41
+	specular 0.58 0.13 0.25 96
+	normalMap normal_1.png
+}
+
 //  Marble Rock
 material roadMarbleStone
 {

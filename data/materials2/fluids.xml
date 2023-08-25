@@ -16,6 +16,8 @@
 		fogHSVA="0.495 0.824 0.624 1" fogDens="20" fogDensH="1" deep="1" />
 	<fluid name="water green med"	material="Water_green" density="400" angDamp="1.0" linDamp="0.4" heightDamp="0"
 		fogHSVA="0.277 0.582 0.357 1" fogDens="16" fogDensH="1" deep="1" />
+	<fluid name="water marble"	material="Water_marble"  density="400" angDamp="1.0" linDamp="0.4" heightDamp="0"
+		fogHSVA="0.115 0.824 0.624 1" fogDens="20" fogDensH="1" deep="1" />
 
 	<fluid name="water white"	material="Water_white" density="200" angDamp="0.7" linDamp="0.2" heightDamp="0"
 		fogHSVA="0.532 0.323 0.631 1" fogDens="17" fogDensH="1" deep="1" />

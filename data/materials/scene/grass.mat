@@ -87,6 +87,9 @@ material grass3g  {  parent grass
 
 material grass3o  {  parent grass
     diffuseMap grass3o.png  }
+	
+material grass3m  {  parent grass
+    diffuseMap grass3m.png  }
 
 material grass3y  {  parent grass
     diffuseMap grass3y.png  }
@@ -96,6 +99,9 @@ material grass3s  {  parent grass
 
 material grass4v {  parent grass
     diffuseMap grass4v.png  }
+	
+material grass4m {  parent grass
+    diffuseMap grass4m.png  }
 
 material grass5  {  parent grass
     diffuseMap grass5.png  }

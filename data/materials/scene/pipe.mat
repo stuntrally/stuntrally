@@ -883,6 +883,63 @@ material pipeGlassAlien
 	bump_scale 0.15
 }
 
+material pipeGlassCrystal2Red
+{
+	parent pipe_glass
+	ambient 1.25 0.16 0.14
+	diffuse 1.1 0.1 0.07
+	diffuseMap roadGlass_crystal.png
+	specMap roadGlass_spec0.png
+	normalMap roadGlass_crystal_n.png
+	bump_scale 0.3
+}
+
+material pipeGlassCrystal2Blue
+{
+	parent pipe_glass
+	ambient 0.3 0.4 1.0
+	diffuse 0.2 0.3 0.8
+	diffuseMap roadGlass_crystal.png
+	specMap roadGlass_spec0.png
+	normalMap roadGlass_crystal_n.png
+	bump_scale 0.3
+}
+
+material pipeGlassCrystal2Cyan
+{
+	parent pipe_glass
+	ambient 0.3 0.8 1.0
+	diffuse 0.2 0.7 0.8
+	diffuseMap roadGlass_crystal.png
+	specMap roadGlass_spec0.png
+	normalMap roadGlass_crystal_n.png
+	bump_scale 0.3
+}
+
+material pipeGlassCrystal2Pink
+{
+	parent pipe_glass
+	ambient 1.1 0.15 0.5
+	diffuse 1.04 0.11 0.4
+	diffuseMap roadGlass_crystal.png
+	specMap roadGlass_spec0.png
+	normalMap roadGlass_crystal_n.png
+	bump_scale 0.3
+}
+
+material pipeGlassCrystal2Green
+{
+	parent pipe_glass
+	ambient 0.2 1.15 0.3
+	diffuse 0.1 1.06 0.2
+	diffuseMap roadGlass_crystal.png
+	specMap roadGlass_spec0.png
+	normalMap roadGlass_crystal_n.png
+	bump_scale 0.3
+}
+
+
+
 material pipeGlassAlienBlue
 {
 	parent pipe_glass
