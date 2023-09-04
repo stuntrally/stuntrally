@@ -773,13 +773,12 @@ descr="Fastest 3 tracks, to test logic.">
 		<t name="TestC4-Ow"/>
 		<t name="TestC1-Circle"/>
 	</champ>
-	<champ name="Test tracks" ver="1" difficulty="1" type="7"
+	<champ name="Test tracks" ver="2" difficulty="1" type="7"
 descr="Really short and circular tracks. 2 Laps on each.">
 		<t name="TestC1-Circle"		laps="2"/>
 		<t name="TestC2-PipeHalf"	laps="2"/>
 		<t name="TestC3-PipeBig"	laps="2"/>
 		<t name="TestC4-Ow"			laps="2"/>
-		<t name="TestC5-Egg"		laps="2"/>
 		<t name="TestC6-Temp"		laps="2"/>
 		<t name="TestC7-Oc"			laps="2"/>
 		<t name="TestC8-Align"		laps="2"/>
