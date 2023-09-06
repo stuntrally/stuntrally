@@ -18,8 +18,7 @@
 #include <OgreBillboardSet.h>
 #include <MyGUI_Gui.h>
 #include <MyGUI_TextBox.h>
-#include "tinyxml.h"
-#include "tinyxml2.h"
+#include <tinyxml2.h>
 using namespace tinyxml2;
 using namespace std;
 using namespace Ogre;

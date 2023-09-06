@@ -2,8 +2,7 @@
 #include "../Def_Str.h"
 #include "SceneXml.h"
 #include "FluidsXml.h"
-#include "tinyxml.h"
-#include "tinyxml2.h"
+#include <tinyxml2.h>
 #include <OgreSceneNode.h>
 #include "../vdrift/game.h"  // for surfaces map
 using namespace std;
@@ -270,7 +269,6 @@ bool Scene::LoadXml(String file, bool bTer)
 		while (u && c < 4)
 		{
 			SGrassChannel& g = grChan[c++];
-			TiXmlElement gch("gchan");
 
 			a = u->Attribute("amin");	if (a)  g.angMin = s2r(a);
 			a = u->Attribute("amax");	if (a)  g.angMax = s2r(a);

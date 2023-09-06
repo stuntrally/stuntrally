@@ -26,7 +26,7 @@ class StuntRally(ConanFile):
         self.requires("vorbis/1.3.7")
         self.requires("openal/1.22.2")
         self.requires("enet/1.3.17")
-        self.requires("tinyxml/2.6.2")
+        #self.requires("tinyxml/2.6.2")
         self.requires("tinyxml2/9.0.0")
 
         self.requires("libpng/1.6.39", override=True)

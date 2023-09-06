@@ -9,7 +9,6 @@ find_package(SDL2 REQUIRED)
 find_package(MyGUI REQUIRED)
 find_package(OGG REQUIRED)
 find_package(Vorbis REQUIRED)
-find_package(Tinyxml REQUIRED)
 find_package(Tinyxml2 REQUIRED)
 
 find_package(OpenAL REQUIRED)
@@ -38,7 +37,6 @@ set(LIBS boost::boost
         Ogg::ogg
         OpenAL::OpenAL
         enet::enet
-        tinyxml::tinyxml
         tinyxml2::tinyxml2
 )
 

@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "../Def_Str.h"
 #include "TracksXml.h"
-#include "tinyxml.h"
-#include "tinyxml2.h"
+#include <tinyxml2.h>
 #include <set>
 #include "../vdrift/pathmanager.h"
 #include "../../ReplayTrk.h"  // check
@@ -15,7 +14,7 @@ using Ogre::uchar;
 Date s2dt(const char* a)
 {
 	Date d;  d.day=0; d.month=0; d.year=0;
-	TIXML_SSCANF(a,"%2d-%2d-%2d",&d.day,&d.month,&d.year);
+	sscanf(a,"%2d-%2d-%2d",&d.day,&d.month,&d.year);
 	return d;
 }
 string dt2s(const Date& dt)
@@ -64,19 +63,20 @@ bool UserXml::LoadXml(string file)
 
 bool UserXml::SaveXml(string file)
 {
-	TiXmlDocument xml;	TiXmlElement root("tracks");
+	XMLDocument xml;
+	XMLElement* root = xml.NewElement("tracks");
 
 	for (int i=0; i < trks.size(); ++i)
 	{
 		const UserTrkInfo& t = trks[i];
-		TiXmlElement trk("t");
-		trk.SetAttribute("n",		t.name.c_str());
+		XMLElement* trk = xml.NewElement("t");
+		trk->SetAttribute("n",		t.name.c_str());
 
-		trk.SetAttribute("date",	dt2s(t.last).c_str());
-		trk.SetAttribute("rate",	toStrC( t.rating ));
-		trk.SetAttribute("laps",	toStrC( t.laps ));
+		trk->SetAttribute("date",	dt2s(t.last).c_str());
+		trk->SetAttribute("rate",	toStrC( t.rating ));
+		trk->SetAttribute("laps",	toStrC( t.laps ));
 		
-		root.InsertEndChild(trk);
+		root->InsertEndChild(trk);
 	}
 	xml.InsertEndChild(root);
 	return xml.SaveFile(file.c_str());

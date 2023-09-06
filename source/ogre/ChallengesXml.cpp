@@ -2,11 +2,10 @@
 #include "common/Def_Str.h"
 #include "common/data/TracksXml.h"
 #include "ChallengesXml.h"
-#include "tinyxml.h"
-#include "tinyxml2.h"
 #include <regex>
-using namespace Ogre;
+#include <tinyxml2.h>
 using namespace tinyxml2;
+using namespace Ogre;
 using namespace std;
 
 
@@ -216,33 +215,34 @@ bool ProgressLXml::LoadXml(std::string file)
 //  Save progress
 bool ProgressLXml::SaveXml(std::string file)
 {
-	TiXmlDocument xml;	TiXmlElement root("progress");
+	XMLDocument xml;
+	XMLElement* root = xml.NewElement("progress");
 
 	for (int i=0; i < chs.size(); ++i)
 	{
 		const ProgressChall& pc = chs[i];
-		TiXmlElement eCh("chall");
-			eCh.SetAttribute("name",	pc.name.c_str() );
-			eCh.SetAttribute("ver",		toStrC( pc.ver ));
-			eCh.SetAttribute("cur",		toStrC( pc.curTrack ));
-			eCh.SetAttribute("car",		pc.car.c_str() );
+		XMLElement* eCh = xml.NewElement("chall");
+			eCh->SetAttribute("name", pc.name.c_str() );
+			eCh->SetAttribute("ver",  toStrC( pc.ver ));
+			eCh->SetAttribute("cur",  toStrC( pc.curTrack ));
+			eCh->SetAttribute("car",  pc.car.c_str() );
 
-			eCh.SetAttribute("p",	fToStr( pc.avgPoints, 2).c_str());
-			eCh.SetAttribute("t",	fToStr( pc.totalTime, 1).c_str());
-			eCh.SetAttribute("n",	fToStr( pc.avgPos, 2).c_str());
-			eCh.SetAttribute("z",	iToStr( pc.fin ).c_str());
+			eCh->SetAttribute("p",  fToStr( pc.avgPoints, 2).c_str());
+			eCh->SetAttribute("t",  fToStr( pc.totalTime, 1).c_str());
+			eCh->SetAttribute("n",  fToStr( pc.avgPos, 2).c_str());
+			eCh->SetAttribute("z",  iToStr( pc.fin ).c_str());
 
 			for (int i=0; i < pc.trks.size(); ++i)
 			{
 				const ProgressTrackL& pt = pc.trks[i];
-				TiXmlElement eTr("t");
+				XMLElement* eTr = xml.NewElement("t");
 
-				eTr.SetAttribute("p",	fToStr( pt.points, 1).c_str());
-				eTr.SetAttribute("t",	fToStr( pt.time, 1).c_str());
-				eTr.SetAttribute("n",	iToStr( pt.pos ).c_str());
-				eCh.InsertEndChild(eTr);
+				eTr->SetAttribute("p",  fToStr( pt.points, 1).c_str());
+				eTr->SetAttribute("t",  fToStr( pt.time, 1).c_str());
+				eTr->SetAttribute("n",  iToStr( pt.pos ).c_str());
+				eCh->InsertEndChild(eTr);
 			}
-		root.InsertEndChild(eCh);
+		root->InsertEndChild(eCh);
 	}
 	xml.InsertEndChild(root);
 	return xml.SaveFile(file.c_str());

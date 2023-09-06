@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "../ogre/common/Def_Str.h"
 #include "Road.h"
-#include "tinyxml.h"
-#include "tinyxml2.h"
+#include <tinyxml2.h>
 
 #include <OgreCamera.h>
 #include <OgreMaterialManager.h>
@@ -337,43 +336,44 @@ bool SplineRoad::LoadFile(String fname, bool build)
 //---------------------------------------------------------------------------------------------------------------
 bool SplineRoad::SaveFile(String fname)
 {
-	TiXmlDocument xml;	TiXmlElement root("SplineRoad");
+	XMLDocument xml;
+	XMLElement* root = xml.NewElement("SplineRoad");
 
-	TiXmlElement mtr("mtr");
-		mtr.SetAttribute("type",		toStrC( type ));
+	XMLElement* mtr = xml.NewElement("mtr");
+		mtr->SetAttribute("type",    toStrC( type ));
 		for (int i=0; i<MTRs; ++i)  {	String si = i==0 ? "" : toStr(i+1);
-			if (sMtrRoad[i] != "")	mtr.SetAttribute(String("road"+si).c_str(),	sMtrRoad[i].c_str());
-			if (sMtrPipe[i] != "")	mtr.SetAttribute(String("pipe"+si).c_str(),	sMtrPipe[i].c_str());  }
+			if (sMtrRoad[i] != "")	mtr->SetAttribute(String("road"+si).c_str(),	sMtrRoad[i].c_str());
+			if (sMtrPipe[i] != "")	mtr->SetAttribute(String("pipe"+si).c_str(),	sMtrPipe[i].c_str());  }
 
-		if (sMtrWall != "road_wall")	mtr.SetAttribute("wall",	sMtrWall.c_str());
-	if (sMtrWallPipe != "pipe_wall")	mtr.SetAttribute("pipeW",	sMtrWallPipe.c_str());
-		if (sMtrCol  != "road_col")		mtr.SetAttribute("col",		sMtrCol.c_str());
-	root.InsertEndChild(mtr);
+		if (sMtrWall != "road_wall")	mtr->SetAttribute("wall",	sMtrWall.c_str());
+	if (sMtrWallPipe != "pipe_wall")	mtr->SetAttribute("pipeW",	sMtrWallPipe.c_str());
+		if (sMtrCol  != "road_col")		mtr->SetAttribute("col",	sMtrCol.c_str());
+	root->InsertEndChild(mtr);
 	
-	TiXmlElement dim("dim");
-		dim.SetAttribute("tcMul",		toStrC( g_tcMul ));
-		dim.SetAttribute("tcW",			toStrC( g_tcMulW ));
-		dim.SetAttribute("tcP",			toStrC( g_tcMulP ));
-		dim.SetAttribute("tcPW",		toStrC( g_tcMulPW ));
-		dim.SetAttribute("tcC",			toStrC( g_tcMulC ));
+	XMLElement* dim = xml.NewElement("dim");
+		dim->SetAttribute("tcMul", toStrC( g_tcMul ));
+		dim->SetAttribute("tcW",   toStrC( g_tcMulW ));
+		dim->SetAttribute("tcP",   toStrC( g_tcMulP ));
+		dim->SetAttribute("tcPW",  toStrC( g_tcMulPW ));
+		dim->SetAttribute("tcC",   toStrC( g_tcMulC ));
 
-		dim.SetAttribute("lenDim",		toStrC( g_LenDim0 ));
-		dim.SetAttribute("widthSteps",	toStrC( g_iWidthDiv0 ));
-		dim.SetAttribute("heightOfs",	toStrC( g_Height ));
-	root.InsertEndChild(dim);
+		dim->SetAttribute("lenDim",     toStrC( g_LenDim0 ));
+		dim->SetAttribute("widthSteps", toStrC( g_iWidthDiv0 ));
+		dim->SetAttribute("heightOfs",  toStrC( g_Height ));
+	root->InsertEndChild(dim);
 
-	TiXmlElement mrg("mrg");
-		mrg.SetAttribute("loop",	isLooped ? "1" : "0" );
-		mrg.SetAttribute("skirtLen",	toStrC( g_SkirtLen ));
-		mrg.SetAttribute("skirtH",		toStrC( g_SkirtH ));
+	XMLElement* mrg = xml.NewElement("mrg");
+		mrg->SetAttribute("loop",      isLooped ? "1" : "0" );
+		mrg->SetAttribute("skirtLen",  toStrC( g_SkirtLen ));
+		mrg->SetAttribute("skirtH",    toStrC( g_SkirtH ));
 
-		mrg.SetAttribute("merge",		"1");  // always 1 for game, 0 set in editor
-		mrg.SetAttribute("mergeLen",	toStrC( g_MergeLen ));
-		mrg.SetAttribute("lodPntLen",	toStrC( g_LodPntLen ));
+		mrg->SetAttribute("merge",      "1");  // always 1 for game, 0 set in editor
+		mrg->SetAttribute("mergeLen",   toStrC( g_MergeLen ));
+		mrg->SetAttribute("lodPntLen",  toStrC( g_LodPntLen ));
 
-		mrg.SetAttribute("visDist",		toStrC( g_VisDist ));
-		mrg.SetAttribute("visBehind",	toStrC( g_VisBehind ));
-	root.InsertEndChild(mrg);
+		mrg->SetAttribute("visDist",    toStrC( g_VisDist ));
+		mrg->SetAttribute("visBehind",  toStrC( g_VisBehind ));
+	root->InsertEndChild(mrg);
 
 	int num = getNumPoints();
 	int iP1 = 0;  // find 1st chk id
@@ -381,75 +381,75 @@ bool SplineRoad::SaveFile(String fname)
 		if (mP[i].chk1st)
 			iP1 = i;
 	
-	TiXmlElement geo("geom");
-		geo.SetAttribute("colN",	toStrC( g_ColNSides ));
-		geo.SetAttribute("colR",	toStrC( g_ColRadius ));
-		geo.SetAttribute("wsPm",	toStrC( g_P_iw_mul ));
-		geo.SetAttribute("lsPm",	toStrC( g_P_il_mul ));
-		geo.SetAttribute("stBox",	toStrC( vStBoxDim ));
-		geo.SetAttribute("iDir",	toStrC( iDir ));
-		geo.SetAttribute("iChk1",	toStrC( iP1 ));
-	root.InsertEndChild(geo);
+	XMLElement* geo = xml.NewElement("geom");
+		geo->SetAttribute("colN",  toStrC( g_ColNSides ));
+		geo->SetAttribute("colR",  toStrC( g_ColRadius ));
+		geo->SetAttribute("wsPm",  toStrC( g_P_iw_mul ));
+		geo->SetAttribute("lsPm",  toStrC( g_P_il_mul ));
+		geo->SetAttribute("stBox", toStrC( vStBoxDim ));
+		geo->SetAttribute("iDir",  toStrC( iDir ));
+		geo->SetAttribute("iChk1", toStrC( iP1 ));
+	root->InsertEndChild(geo);
 
-	TiXmlElement ste("stats");
-		ste.SetAttribute("length",	toStrC( st.Length ));
-		ste.SetAttribute("width",	toStrC( st.WidthAvg ));
-		ste.SetAttribute("height",	toStrC( st.HeightDiff ));
-		  ste.SetAttribute("onTer",	toStrC( st.OnTer ));
-		  ste.SetAttribute("pipes",	toStrC( st.Pipes ));
-		  if (st.OnPipe > 0.f)
-		  ste.SetAttribute("onPipe",toStrC( st.OnPipe ));
-		  ste.SetAttribute("bnkAvg",toStrC( st.bankAvg ));
-		  ste.SetAttribute("bnkMax",toStrC( st.bankMax ));
-	root.InsertEndChild(ste);
+	XMLElement* ste = xml.NewElement("stats");
+		ste->SetAttribute("length", toStrC( st.Length ));
+		ste->SetAttribute("width",  toStrC( st.WidthAvg ));
+		ste->SetAttribute("height", toStrC( st.HeightDiff ));
+		ste->SetAttribute("onTer",  toStrC( st.OnTer ));
+		ste->SetAttribute("pipes",  toStrC( st.Pipes ));
+		if (st.OnPipe > 0.f)
+		ste->SetAttribute("onPipe", toStrC( st.OnPipe ));
+		ste->SetAttribute("bnkAvg", toStrC( st.bankAvg ));
+		ste->SetAttribute("bnkMax", toStrC( st.bankMax ));
+	root->InsertEndChild(ste);
 		
-	TiXmlElement txt("txt");
-		txt.SetAttribute("desc",	sTxtDescr.c_str());
-	root.InsertEndChild(txt);
-	TiXmlElement adv("adv");
-		adv.SetAttribute("ice",		sTxtAdvice.c_str());
-	root.InsertEndChild(adv);
+	XMLElement* txt = xml.NewElement("txt");
+		txt->SetAttribute("desc",  sTxtDescr.c_str());
+	root->InsertEndChild(txt);
+	XMLElement* adv = xml.NewElement("adv");
+		adv->SetAttribute("ice",   sTxtAdvice.c_str());
+	root->InsertEndChild(adv);
 
 	for (int i=0; i < num; ++i)		//  points
 	{
 		bool onTer = mP[i].onTer, onTer1 = mP[(i+1)%num].onTer, onTer_1 = mP[(i-1+num)%num].onTer;
-		TiXmlElement p("P");
+		XMLElement* p = xml.NewElement("P");
 		{
 			Vector3 pos = getPos(i);  if (onTer)  pos.y = 0.f;  // no need to save
-			p.SetAttribute("pos",	toStrC( pos ));
-			p.SetAttribute("w",		toStrC( mP[i].width ));
+			p->SetAttribute("pos", toStrC( pos ));
+			p->SetAttribute("w",   toStrC( mP[i].width ));
 		
 			if (!onTer)
-				p.SetAttribute("onTer",	"0");
+				p->SetAttribute("onTer",	"0");
 
 			if (!onTer || !onTer1 || !onTer_1)
-			{	p.SetAttribute("a",  toStrC( mP[i].mYaw ));
-				p.SetAttribute("ar", toStrC( mP[i].mRoll ));
+			{	p->SetAttribute("a",  toStrC( mP[i].mYaw ));
+				p->SetAttribute("ar", toStrC( mP[i].mRoll ));
 			}
-			p.SetAttribute("aT", toStrC( (int)mP[i].aType ));
+			p->SetAttribute("aT", toStrC( (int)mP[i].aType ));
 
 			if (mP[i].cols != 1)
-				p.SetAttribute("col", toStrC( mP[i].cols ));
+				p->SetAttribute("col", toStrC( mP[i].cols ));
 			if (mP[i].pipe > 0.f)
-				p.SetAttribute("pipe", toStrC( mP[i].pipe ));
+				p->SetAttribute("pipe", toStrC( mP[i].pipe ));
 
 			if (mP[i].idMtr != 0)
-				p.SetAttribute("mtr", toStrC( mP[i].idMtr ));
+				p->SetAttribute("mtr", toStrC( mP[i].idMtr ));
 			if (mP[i].idWall != 0)
-				p.SetAttribute("wall", toStrC( mP[i].idWall ));
+				p->SetAttribute("wall", toStrC( mP[i].idWall ));
 
 			if (mP[i].notReal)
-				p.SetAttribute("not", "1");
+				p->SetAttribute("not", "1");
 
 			if (mP[i].chkR > 0.f)
-				p.SetAttribute("chkR", toStrC( mP[i].chkR ));
+				p->SetAttribute("chkR", toStrC( mP[i].chkR ));
 			if (mP[i].loop)
-				p.SetAttribute("ckL", toStrC( mP[i].loop ));
+				p->SetAttribute("ckL", toStrC( mP[i].loop ));
 			
 			if (mP[i].onPipe > 0)
-				p.SetAttribute("onP", toStrC( mP[i].onPipe ));
+				p->SetAttribute("onP", toStrC( mP[i].onPipe ));
 		}
-		root.InsertEndChild(p);
+		root->InsertEndChild(p);
 	}
 	
 	xml.InsertEndChild(root);

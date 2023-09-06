@@ -5,8 +5,7 @@
 #include "FluidsXml.h"
 #include "TracksXml.h"
 #include "../Axes.h"
-#include "tinyxml.h"
-#include "tinyxml2.h"
+#include <tinyxml2.h>
 #include <OgreSceneNode.h>
 #include "../vdrift/game.h"  // for surfaces map
 using namespace std;

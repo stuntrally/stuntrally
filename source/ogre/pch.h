@@ -33,8 +33,7 @@
 	#include <process.h>
 #endif
 
-#include "tinyxml.h"
-#include "tinyxml2.h"
+#include <tinyxml2.h>
 #include "half.hpp"
 
 ///  SDL, Sound

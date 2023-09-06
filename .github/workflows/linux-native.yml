@@ -15,7 +15,7 @@ jobs:
               mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libfreetype6-dev \
               libboost-wave-dev libboost-system-dev libboost-filesystem-dev libboost-thread-dev \
               libogg-dev libvorbis-dev libenet-dev libopenal-dev \
-              libbullet-dev libbullet-extras-dev libtinyxml-dev libtinyxml2-dev
+              libbullet-dev libbullet-extras-dev libtinyxml2-dev
             
       - uses: actions/checkout@v3
         with:

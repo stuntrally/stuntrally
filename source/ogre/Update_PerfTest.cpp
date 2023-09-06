@@ -9,6 +9,8 @@
 #include <MyGUI_EditBox.h>
 #include <MyGUI_Window.h>
 #include <MyGUI_TabControl.h>
+#include <tinyxml2.h>
+using namespace tinyxml2;
 using namespace Ogre;
 
 
@@ -201,75 +203,76 @@ void App::newPerfTest(float time)
 					if (!orig)
 						PATHMANAGER::CreateDir(pathUserDir);
 
-					TiXmlDocument xml;	TiXmlElement root("perf");
+					XMLDocument xml;
+					XMLElement* root = xml.NewElement("perf");
 					std::string s;
 
-					TiXmlElement car("car");
-						car.SetAttribute("mass",	toStrC(pCar->GetMass()) );
+					XMLElement* car = xml.NewElement("car");
+						car->SetAttribute("mass",	toStrC(pCar->GetMass()) );
 						s = fToStr(inert[0],0,3)+" "+fToStr(inert[1],0,3)+" "+fToStr(inert[2],0,3);
-						car.SetAttribute("inertia",	s.c_str() );
-					root.InsertEndChild(car);
+						car->SetAttribute("inertia",	s.c_str() );
+					root->InsertEndChild(car);
 
-					TiXmlElement co("com");
-						co.SetAttribute("frontPercent",	toStrC(comFrontPercent) );
+					XMLElement* co = xml.NewElement("com");
+						co->SetAttribute("frontPercent",	toStrC(comFrontPercent) );
 						s = fToStr(com[0],3,5)+" "+fToStr(com[1],3,5)+" "+fToStr(com[2],3,5);
-						co.SetAttribute("pos",		s.c_str());
-						co.SetAttribute("whf",		toStrC(Real(whf)));
-						co.SetAttribute("whr",		toStrC(Real(whr)));
-					root.InsertEndChild(co);
+						co->SetAttribute("pos",		s.c_str());
+						co->SetAttribute("whf",		toStrC(Real(whf)));
+						co->SetAttribute("whr",		toStrC(Real(whr)));
+					root->InsertEndChild(co);
 
-					TiXmlElement tq("torque");
-						tq.SetAttribute("max",		toStrC(Real(maxTrq*m)) );
-						tq.SetAttribute("rpm",		toStrC(rpmMaxTq) );
-						tq.SetAttribute("mul",		toStrC(Real(m)) );
-					root.InsertEndChild(tq);
+					XMLElement* tq = xml.NewElement("torque");
+						tq->SetAttribute("max",		toStrC(Real(maxTrq*m)) );
+						tq->SetAttribute("rpm",		toStrC(rpmMaxTq) );
+						tq->SetAttribute("mul",		toStrC(Real(m)) );
+					root->InsertEndChild(tq);
 
-					TiXmlElement pw("power");
-						pw.SetAttribute("max",		toStrC(Real(maxPwr*m)) );
-						pw.SetAttribute("rpm",		toStrC(rpmMaxPwr) );
-					root.InsertEndChild(pw);
+					XMLElement* pw = xml.NewElement("power");
+						pw->SetAttribute("max",		toStrC(Real(maxPwr*m)) );
+						pw->SetAttribute("rpm",		toStrC(rpmMaxPwr) );
+					root->InsertEndChild(pw);
 
-					TiXmlElement bh("bhpPerTon");
-						bh.SetAttribute("val",		toStrC(Real(bhpPerTon)) );
-					root.InsertEndChild(bh);
+					XMLElement* bh = xml.NewElement("bhpPerTon");
+						bh->SetAttribute("val",		toStrC(Real(bhpPerTon)) );
+					root->InsertEndChild(bh);
 
-					TiXmlElement tp("top");
-						tp.SetAttribute("speed",	toStrC(maxVel) );
-						tp.SetAttribute("time",		toStrC(tiMaxVel) );
-					root.InsertEndChild(tp);
+					XMLElement* tp = xml.NewElement("top");
+						tp->SetAttribute("speed",	toStrC(maxVel) );
+						tp->SetAttribute("time",	toStrC(tiMaxVel) );
+					root->InsertEndChild(tp);
 
-					TiXmlElement qm("quarterMile");
-						qm.SetAttribute("time",		toStrC(timeQM) );
-						qm.SetAttribute("vel",		toStrC(velAtQM) );
-					root.InsertEndChild(qm);
+					XMLElement* qm = xml.NewElement("quarterMile");
+						qm->SetAttribute("time",	toStrC(timeQM) );
+						qm->SetAttribute("vel",		toStrC(velAtQM) );
+					root->InsertEndChild(qm);
 
-					TiXmlElement ta("accel"), dn("downForce");
-						ta.SetAttribute("t60",		toStrC(t0to60) );
-						ta.SetAttribute("t100",		toStrC(t0to100) );	dn.SetAttribute("d100",	toStrC(down100) );
+					XMLElement* ta = xml.NewElement("accel"), *dn = xml.NewElement("downForce");
+						ta->SetAttribute("t60",		toStrC(t0to60) );
+						ta->SetAttribute("t100",	toStrC(t0to100) );	dn->SetAttribute("d100",	toStrC(down100) );
 						if (maxVel > 160.f)
-						{	ta.SetAttribute("t160",	toStrC(t0to160) );	dn.SetAttribute("d160",	toStrC(down160) );  }
+						{	ta->SetAttribute("t160",toStrC(t0to160) );	dn->SetAttribute("d160",	toStrC(down160) );  }
 						if (maxVel > 200.f)
-						{	ta.SetAttribute("t200",	toStrC(t0to200) );	dn.SetAttribute("d200",	toStrC(down200) );  }
-					root.InsertEndChild(ta);
-					root.InsertEndChild(dn);
+						{	ta->SetAttribute("t200",toStrC(t0to200) );	dn->SetAttribute("d200",	toStrC(down200) );  }
+					root->InsertEndChild(ta);
+					root->InsertEndChild(dn);
 
-					TiXmlElement st("stop");
-						st.SetAttribute("s160",		toStrC(tMaxTo0-tMaxTo160) );
-						st.SetAttribute("s100",		toStrC(tMaxTo0-tMaxTo100) );
-						st.SetAttribute("s60",		toStrC(tMaxTo0-tMaxTo60) );
-					root.InsertEndChild(st);
+					XMLElement* st = xml.NewElement("stop");
+						st->SetAttribute("s160",	toStrC(tMaxTo0-tMaxTo160) );
+						st->SetAttribute("s100",	toStrC(tMaxTo0-tMaxTo100) );
+						st->SetAttribute("s60",		toStrC(tMaxTo0-tMaxTo60) );
+					root->InsertEndChild(st);
 
 
 					/*  speed graph points  */
-					TiXmlElement acc("velGraph");
+					XMLElement* acc = xml.NewElement("velGraph");
 					for (int i=0; i < ttim.size(); ++i)
 					{
-						TiXmlElement p("p");
-						p.SetAttribute("t",		fToStr(ttim[i],2,4).c_str() );
-						p.SetAttribute("v",		fToStr(tkmh[i],1,3).c_str() );
-						acc.InsertEndChild(p);
+						XMLElement* p = xml.NewElement("p");
+						p->SetAttribute("t",		fToStr(ttim[i],2,4).c_str() );
+						p->SetAttribute("v",		fToStr(tkmh[i],1,3).c_str() );
+						acc->InsertEndChild(p);
 					}
-					root.InsertEndChild(acc);
+					root->InsertEndChild(acc);
 					/**/
 
 					xml.InsertEndChild(root);
