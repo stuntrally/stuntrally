@@ -27,11 +27,15 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "ICSInputControlSystem.h"
 
+#include <tinyxml2.h>
+using namespace tinyxml2;
+
+
 namespace ICS
 {
-	void InputControlSystem::loadKeyBinders(TiXmlElement* xmlControlNode)
+	void InputControlSystem::loadKeyBinders(XMLElement* xmlControlNode)
 	{
-		TiXmlElement* xmlKeyBinder = xmlControlNode->FirstChildElement("KeyBinder");    
+		XMLElement* xmlKeyBinder = xmlControlNode->FirstChildElement("KeyBinder");    
 		while(xmlKeyBinder)
 		{
 			Control::ControlChangingDirection dir = Control::STOP;

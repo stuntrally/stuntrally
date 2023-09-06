@@ -35,12 +35,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <list>
 #include <limits>
 
-#include "tinyxml.h"
+#include <tinyxml2.h>
 
-#include "SDL_keyboard.h"
-#include "SDL_mouse.h"
-#include "SDL_joystick.h"
-#include "SDL_events.h"
+#include <SDL_keyboard.h>
+#include <SDL_mouse.h>
+#include <SDL_joystick.h>
+#include <SDL_events.h>
 
 /// Define the dll export qualifier if compiling for Windows
 

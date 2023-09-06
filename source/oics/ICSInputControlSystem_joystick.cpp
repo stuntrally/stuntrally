@@ -27,15 +27,20 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "ICSInputControlSystem.h"
 
+#include <tinyxml2.h>
+using namespace tinyxml2;
+
+
 #define SDL_JOY_AXIS_MIN -32768
 #define SDL_JOY_AXIS_MAX 32767
+
 
 namespace ICS
 {
 	// load xml
-	void InputControlSystem::loadJoystickAxisBinders(TiXmlElement* xmlControlNode)
+	void InputControlSystem::loadJoystickAxisBinders(XMLElement* xmlControlNode)
 	{
-		TiXmlElement* xmlJoystickBinder = xmlControlNode->FirstChildElement("JoystickAxisBinder");    
+		XMLElement* xmlJoystickBinder = xmlControlNode->FirstChildElement("JoystickAxisBinder");    
 		while(xmlJoystickBinder)
 		{
 			Control::ControlChangingDirection dir = Control::STOP;
@@ -55,9 +60,9 @@ namespace ICS
 		}
 	}
 
-	void InputControlSystem::loadJoystickButtonBinders(TiXmlElement* xmlControlNode)
+	void InputControlSystem::loadJoystickButtonBinders(XMLElement* xmlControlNode)
 	{
-		TiXmlElement* xmlJoystickButtonBinder = xmlControlNode->FirstChildElement("JoystickButtonBinder");    
+		XMLElement* xmlJoystickButtonBinder = xmlControlNode->FirstChildElement("JoystickButtonBinder");    
 		while(xmlJoystickButtonBinder)
 		{
 			Control::ControlChangingDirection dir = Control::STOP;
@@ -77,9 +82,9 @@ namespace ICS
 		}
 	}
 
-	void InputControlSystem::loadJoystickPOVBinders(TiXmlElement* xmlControlNode)
+	void InputControlSystem::loadJoystickPOVBinders(XMLElement* xmlControlNode)
 	{
-		TiXmlElement* xmlJoystickPOVBinder = xmlControlNode->FirstChildElement("JoystickPOVBinder");    
+		XMLElement* xmlJoystickPOVBinder = xmlControlNode->FirstChildElement("JoystickPOVBinder");    
 		while(xmlJoystickPOVBinder)
 		{
 			Control::ControlChangingDirection dir = Control::STOP;

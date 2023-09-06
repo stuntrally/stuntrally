@@ -27,12 +27,16 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "ICSInputControlSystem.h"
 
+#include <tinyxml2.h>
+using namespace tinyxml2;
+
+
 namespace ICS
 {
 	// load xml
-	void InputControlSystem::loadMouseAxisBinders(TiXmlElement* xmlControlNode)
+	void InputControlSystem::loadMouseAxisBinders(XMLElement* xmlControlNode)
 	{
-		TiXmlElement* xmlMouseBinder = xmlControlNode->FirstChildElement("MouseBinder");    
+		XMLElement* xmlMouseBinder = xmlControlNode->FirstChildElement("MouseBinder");    
 		while(xmlMouseBinder)
 		{
 			Control::ControlChangingDirection dir = Control::STOP;
@@ -61,9 +65,9 @@ namespace ICS
 		}
 	}
 
-	void InputControlSystem::loadMouseButtonBinders(TiXmlElement* xmlControlNode)
+	void InputControlSystem::loadMouseButtonBinders(XMLElement* xmlControlNode)
 	{
-		TiXmlElement* xmlMouseButtonBinder = xmlControlNode->FirstChildElement("MouseButtonBinder");    
+		XMLElement* xmlMouseButtonBinder = xmlControlNode->FirstChildElement("MouseButtonBinder");    
 		while(xmlMouseButtonBinder)
 		{
 			Control::ControlChangingDirection dir = Control::STOP;
@@ -264,11 +268,11 @@ namespace ICS
 					ctrl->setIgnoreAutoReverse(true);
 					if(mouseBinderItem.direction == Control::INCREASE)
 					{
-						ctrl->setValue( float( (evt.state.Z.abs) / float(evt.state.¿width?) ) );
+						ctrl->setValue( float( (evt.state.Z.abs) / float(evt.state.width) ) );
 					}
 					else if(mouseBinderItem.direction == Control::DECREASE)
 					{
-						ctrl->setValue( float( (1 - evt.state.Z.abs) / float(evt.state.¿width?) ) );
+						ctrl->setValue( float( (1 - evt.state.Z.abs) / float(evt.state.width) ) );
 					}
 				}*/
 			}
