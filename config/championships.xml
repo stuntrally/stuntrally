@@ -9,11 +9,11 @@
 <!--  Tutorials  -->
 <!--========================================================================================================================-->
 
-	<champ name="Tutorial Basic" ver="1" difficulty="1" type="0"
+	<champ name="Tutorial Basic" ver="2" difficulty="1" type="0"
 descr="Basic tutorial on simplest tracks. One lap on each track. To learn different road surfaces: gravel, wet gravel, snow.">
 		<t name="Jng3-Rocky"/>
 		<t name="For1-Slippery"/>
-		<t name="Wnt1-Cross"/>
+		<t name="Wnt2-Wet"/>
 	</champ>
 
 	<champ name="Tutorial Banked" ver="1" difficulty="1" type="0"

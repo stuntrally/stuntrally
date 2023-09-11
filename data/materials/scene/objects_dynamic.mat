@@ -225,6 +225,7 @@ material metal_barrel_black
 	diffuseMap metal_barrel_black.jpg
 }
 
+
 material can_rusted
 {
 	parent base
