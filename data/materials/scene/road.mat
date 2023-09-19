@@ -1225,7 +1225,6 @@ material roadMoss2_ter
 	normalMap normal_1.png
 }
 
-//  new Moss variant
 material roadMossMarble
 {
 	parent road
@@ -1284,7 +1283,6 @@ material roadSandMarble_ter
 	normalMap normal_1.png
 }
 
-//  Sand marble
 material roadSandMarblePink
 {
 	parent road
