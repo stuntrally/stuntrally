@@ -880,6 +880,291 @@ material Green_slime
 	speed 0.38 1.0
 }
 
+material Water_milky_white  
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.2 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 0.86 0.87 0.87  1.0
+	
+	reflectColour 0.88 0.88 0.83  0.65
+	refractColour 0.87 0.88 0.88  1.6
+	specColourAndPower 0.82 0.84 0.81  12
+
+    bump2SpecPowerMul 6.0 36 0.9
+    speed 1.0 1.0
+}
+
+material Water_milky_blue  
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.2 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 0.66 0.77 1.32  1.0
+	
+	reflectColour 0.88 0.88 0.83  0.65
+	refractColour 0.84 0.88 0.98  1.6
+	specColourAndPower 0.82 0.84 0.81  12
+
+    bump2SpecPowerMul 6.0 36 0.9
+    speed 1.0 1.0
+}
+
+material Water_milky_cyan 
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.2 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 0.36 0.94 0.65  1.0
+	
+	reflectColour 1.08 1.08 1.03  0.65
+	refractColour 0.8 1.00 0.6  1.6
+	specColourAndPower 0.82 0.84 0.81  12
+
+    bump2SpecPowerMul 6.0 36 0.9
+    speed 1.0 1.0
+}
+
+material Water_milky_white_2 
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.2 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 0.86 0.87 0.87  1.0
+	
+	reflectColour 0.88 0.88 0.83  0.65
+	refractColour 0.87 0.88 0.88  0.5
+	specColourAndPower 0.82 0.84 0.81  12
+
+    bump2SpecPowerMul 6.0 36 0.9
+    speed 1.0 1.0
+}
+
+material Water_milky_blue_2
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.2 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 0.6 0.8 0.97  1.0
+	
+	reflectColour 0.88 0.88 0.83  0.65
+	refractColour 0.84 0.88 0.98  0.5
+	specColourAndPower 0.82 0.84 0.81  12
+
+    bump2SpecPowerMul 6.0 36 0.9
+    speed 1.0 1.0
+}
+
+material Water_milky_cyan_2
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.2 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 0.36 0.74 0.85  1.0
+	
+	reflectColour 1.08 1.08 1.03  0.65
+	refractColour 0.8 1.00 0.6  0.5
+	specColourAndPower 0.82 0.84 0.81  12
+
+    bump2SpecPowerMul 6.0 36 0.9
+    speed 1.0 1.0
+}
+
+
+material Water_clear_white
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 0.79 0.99 0.98  0.0
+	reflectColour 0.91 0.93 0.94  0.27
+	refractColour 0.76 0.89 0.99  0.02
+	specColourAndPower 0.98 1.0 1.0  12
+
+    bump2SpecPowerMul 6.0 16 0.3
+    speed 1.0 1.0
+}
+
+material Water_clear_blue
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.12 0.13
+    fresnelMultiplier 1.0
+
+    colour 0.002 0.37 0.57  0.0
+    reflectColour 0.92 1.0 0.72  0.3
+    refractColour 0.92 0.90 1.03  0.05
+
+    specColourAndPower 1.0 1.0 1.0  32
+    bump2SpecPowerMul 6.0 12 0.2
+    speed 1.0 1.0
+}
+
+material Water_clear_green
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.10 0.13
+    fresnelMultiplier 1.0
+
+    colour 0.002 0.45 0.37  0.0
+    reflectColour 0.88 1.0 1.0  0.3
+    refractColour 0.62 1.0 0.9  0.05
+
+	specColourAndPower 0.99 1.0 1.0  32
+    bump2SpecPowerMul 6.0 12 0.3
+    speed 1.0 1.0
+}
+
+
+material Water_clear_sunset
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 0.58 0.60 0.78  0.0
+	reflectColour 1.0 0.75 0.57  0.3
+	refractColour 0.85 0.89 0.99  0.09
+	specColourAndPower 1.0 0.84 0.3  64
+
+    bump2SpecPowerMul 6.0 16 0.4
+    speed 1.0 1.0
+}
+
+material Water_clear_shore
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 1.0 1.0 1.0  0.0
+	reflectColour 0.85 0.9 0.78  0.35
+	refractColour 0.6 0.7 0.58  0.26
+	specColourAndPower 0.8 0.8 0.9  16
+
+    bump2SpecPowerMul 6.0 12 0.3
+    speed 1.0 1.0
+}
+
+
+material Water_clear_pink  // pink
+{
+    parent Water
+    choppyness_scale 0.15 25
+    smallWaves_midWaves 0.15 0.1 0.3 0.15
+    bigWaves 0.3 0.3
+    bump 1.5 0.08 0.12
+    fresnelMultiplier 1.0
+
+    colour 1.11 0.39 0.94  0.0
+	reflectColour 0.74 0.89 0.91  0.3
+	refractColour 0.86 0.99 0.86  0.19
+	specColourAndPower 0.98 1.0 1.0  32
+
+    bump2SpecPowerMul 6.0 16 0.4
+    speed 1.0 1.0
+}
+
+
+material Mud_white
+{
+    parent Water
+    WaterNormalMap water_nh.png
+    choppyness_scale 0.025 5
+    smallWaves_midWaves 0.025 0.15 0.06 0.1
+    bigWaves 0.68 0.67
+    bump 1.2 0.22 0.01
+    fresnelMultiplier 1.0
+
+    colour 0.75 0.79 0.79  1.0
+	reflectColour 0.88 0.9 0.83  0.75
+	refractColour 0.65 0.7 0.66  1.2
+	specColourAndPower 0.8 0.84 0.75  16
+
+    bump2SpecPowerMul 16.0 8 0.3
+    speed 0.03 1.0
+}
+
+
+material Mud_cyan
+{
+    parent Water
+    WaterNormalMap water_nh.png
+    choppyness_scale 0.025 5
+    smallWaves_midWaves 0.025 0.15 0.06 0.1
+    bigWaves 0.68 0.67
+    bump 1.2 0.22 0.01
+    fresnelMultiplier 1.0
+
+    colour 0.54 0.95 0.81  1.0
+	reflectColour 0.88 0.9 0.83  0.75
+	refractColour 0.65 0.7 0.66  1.2
+	specColourAndPower 0.8 0.84 0.75  16
+
+    bump2SpecPowerMul 16.0 8 0.3
+    speed 0.03 1.0
+}
+
+
+material Mud_blue
+{
+    parent Water
+    WaterNormalMap water_nh.png
+    choppyness_scale 0.025 5
+    smallWaves_midWaves 0.025 0.15 0.06 0.1
+    bigWaves 0.68 0.67
+    bump 1.2 0.22 0.01
+    fresnelMultiplier 1.0
+
+    colour 0.65 0.9 1.0  1.0
+	reflectColour 0.88 0.9 0.83  0.75
+	refractColour 0.65 0.7 0.66  1.2
+	specColourAndPower 0.8 0.84 0.75  16
+
+    bump2SpecPowerMul 16.0 8 0.3
+    speed 0.03 1.0
+}
+
 
 //  New  River
 //--------------------------------------------------------
@@ -1006,6 +1291,81 @@ material River_LavaHot
 material River_marble  
 {
     parent Water_marble
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -3.0 -1.0
+}
+
+material River_milky_white
+{
+    parent Water_milky_white
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -3.0 -1.0
+}
+
+
+material River_milky_blue
+{
+    parent Water_milky_blue
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -3.0 -1.0
+}
+
+material River_milky_cyan
+{
+    parent Water_milky_cyan
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -3.0 -1.0
+}
+
+material River_clear_white
+{
+    parent Water_clear_white
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -3.0 -1.0
+}
+
+
+material River_clear_blue
+{
+    parent Water_clear_blue
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -3.0 -1.0
+}
+
+material River_clear_green
+{
+    parent Water_clear_green
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -3.0 -1.0
+}
+
+material River_clear_sunset
+{
+    parent Water_clear_sunset
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -3.0 -1.0
+}
+
+
+material River_clear_shore
+{
+    parent Water_clear_shore
+    WaterDepthMap white.png
+	alphaMap HmapTex
+    speed -3.0 -1.0
+}
+
+material River_clear_pink
+{
+    parent Water_clear_pink
     WaterDepthMap white.png
 	alphaMap HmapTex
     speed -3.0 -1.0

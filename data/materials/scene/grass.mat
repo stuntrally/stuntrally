@@ -244,3 +244,41 @@ material grassZ14r {  parent grass
 material grassZ1r {  parent grass
 	emissive 0.2 0.2 0.2
     diffuseMap grassZ1r.png  }
+
+material alienPlant01a {  parent grass
+	emissive 0.2 0.2 0.2
+    diffuseMap alienPlant01a.png  }
+	
+material alienPlant01b {  parent grass
+	emissive 0.2 0.2 0.2
+    diffuseMap alienPlant01b.png  }
+
+material flower01 {  parent grass
+    diffuseMap flower01.png  }
+	
+material flower01b {  parent grass
+    diffuseMap flower01b.png  }
+	
+material seaweedTall01 {  parent grass
+    diffuseMap seaweedTall01.png  }
+	
+material seaweedTall02 {  parent grass
+    diffuseMap seaweedTall02.png  }
+	
+material seaweedTall03 {  parent grass
+    diffuseMap seaweedTall03.png  }
+	
+material seaweedTall04 {  parent grass
+    diffuseMap seaweedTall04.png  }
+	
+material seaweedTall05 {  parent grass
+    diffuseMap seaweedTall05.png  }
+
+material seaweed01 {  parent grass
+    diffuseMap seaweed01.png  }
+	
+material seaweed02 {  parent grass
+    diffuseMap seaweed02.png  }
+	
+material seaweed03 {  parent grass
+    diffuseMap seaweed03.png  }

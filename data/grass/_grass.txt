@@ -17,3 +17,21 @@ grassJungle.png  rest is colored
 This grass texture included with PagedGeometry was kindly provided by
 Agnisola Philippe (https://www.blitz3dfr.com/portal_joomla/) for 
 commercial or non-commercial use.
+
+---- new
+
+alien plant
+	https://sketchfab.com/3d-models/alien-plant-142addd0188c49e18e6d836fb9dfe813
+	CC-By 4.0, by green364
+
+flower 01
+	https://polyhaven.com/a/shrub_sorrel_01
+	CC0, by Rico Cilliers
+
+seaweed_tall
+	https://sketchfab.com/3d-models/claret-tall-seaweed-6a07131b52b34d8992861d3c3ba82a29
+	CC-By 4.0, by Ben Laret
+
+seaweed
+	https://sketchfab.com/3d-models/seaweed-dec5b256a37f40acb63b0bf30b45d756
+	CC-By 4.0, by OwenCalingasan
