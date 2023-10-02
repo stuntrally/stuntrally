@@ -21,8 +21,12 @@ New Pipe Obstacles
 Author: rubberduck
 License: CC0
 
----- ancient ruins
 Ancient Ruins (Modular)
 Author: zacharykozak
 License: CC-BY 4.0
 https://sketchfab.com/3d-models/ancient-ruins-modular-c277e5acad5849bc913e76d3fdbf32a3
+
+wooden pier
+Author: Rico Cilliers
+License: CC0
+https://polyhaven.com/a/modular_wooden_pier

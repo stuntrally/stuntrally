@@ -560,6 +560,16 @@
 <r sc="Vlc"  m="River_LavaOrn"        r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="VlcD" m="River_LavaBlk"        r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />  
 <r sc="Vlc"  m="River_LavaHot"        r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+	
+<r sc="GrcR" m="River_milky_white"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Jng" m="River_milky_blue"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Grc" m="River_milky_cyan"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="GrcR" m="River_clear_white"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Jng" m="River_clear_blue"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="JngD" m="River_clear_green"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Isl" m="River_clear_sunset"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="IslD" m="River_clear_shore"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Sur" m="River_clear_pink"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 
 
 <!--  🌿  Grasses  ================================================================================================================================
@@ -646,6 +656,21 @@
 <g sc="Mrs"  g="grassZ13r"         c="grClrWinter"    r="1" xa="1.87" xb="2.23" ya="1.86" yb="2.26" />
 <g sc="Mrs"  g="grassZ14r"         c="grClrWinter"    r="2" xa="1.87" xb="2.23" ya="1.86" yb="2.26" />
 <g sc="Mrs"  g="grassZ1r"          c="grClrWinter"    r="2" xa="1.87" xb="2.23" ya="1.86" yb="2.26" />
+	
+<g sc="Aln"  g="alienPlant01a"     c="grClrWinter"    r="1" xa="2.67" xb="3.23" ya="1.96" yb="2.26" />
+<g sc="Aln"  g="alienPlant01b"     c="grClrWinter"    r="1" xa="2.67" xb="3.23" ya="1.96" yb="2.26" />
+
+<g sc="For"  g="flower01"           c="grClrForest"    r="2" xa="1.60" xb="1.80" ya="1.46" yb="1.67" />
+<g sc="For"  g="flower01b"          c="grClrForest"   r="2" xa="1.60" xb="1.80" ya="1.46" yb="1.67" />
+
+<g sc="Jng"  g="seaweedTall01"      c="grClrForest"    r="2" xa="2.60" xb="4.60" ya="3.4" yb="6.0" />
+<g sc="Jng"  g="seaweedTall02"      c="grClrForest"    r="2" xa="2.60" xb="4.60" ya="3.4" yb="6.0" />
+<g sc="Jng"  g="seaweedTall03"      c="grClrForest"    r="2" xa="2.60" xb="4.60" ya="3.4" yb="6.0" />
+<g sc="Jng"  g="seaweedTall04"      c="grClrForest"    r="2" xa="2.60" xb="4.60" ya="3.4" yb="6.0" />
+<g sc="Uni"  g="seaweedTall05"      c="grClrSmall"    r="2" xa="2.60" xb="4.60" ya="3.4" yb="6.0" />
+<g sc="Jng"  g="seaweed01"          c="grClrForest"    r="2" xa="1.80" xb="2.10" ya="1.76" yb="2.07" />
+<g sc="Jng"  g="seaweed02"          c="grClrForest"    r="2" xa="1.80" xb="2.10" ya="1.76" yb="2.07" />
+<g sc="Jng"  g="seaweed03"          c="grClrForest"    r="2" xa="1.80" xb="2.10" ya="1.76" yb="2.07" />
 
 
 <!--  🌳  Vegetation  ================================================================================================================================
