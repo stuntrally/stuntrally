@@ -1967,3 +1967,41 @@ material roadMarsTransp_ter
 	normalMap roadMars_norm.jpg
 	bump_scale 0.6
 }
+
+//----------------------------------------------------------------------------
+//  Spring  ----
+material roadSpring
+{
+	parent road
+	diffuseMap roadSpring.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.7 0.7 0.7
+	specular 0.25 0.3 0.25 48
+}
+material roadSpring_ter
+{
+	parent road_terrain
+	diffuseMap roadSpring.jpg
+	ambient 1.02 1.06 1.0
+	diffuse 0.65 0.65 0.65
+	specular 0.15 0.2 0.15 32
+	normalMap normal_2.png
+}
+
+material roadSpring2
+{
+	parent road
+	diffuseMap roadSpring2.jpg
+	ambient 0.7 0.83 0.7
+	diffuse 0.5 0.66 0.5
+	specular 0.15 0.33 0.25 48
+}
+material roadSpring2_ter
+{
+	parent road_terrain
+	diffuseMap roadSpring2.jpg
+	ambient 0.7 0.83 0.7
+	diffuse 0.6 0.75 0.6
+	specular 0.15 0.33 0.25 96
+	normalMap normal_1.png
+}

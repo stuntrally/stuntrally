@@ -35,3 +35,11 @@ seaweed_tall
 seaweed
 	https://sketchfab.com/3d-models/seaweed-dec5b256a37f40acb63b0bf30b45d756
 	CC-By 4.0, by OwenCalingasan
+
+flower 02 (dandelion)
+	https://polyhaven.com/a/dandelion_01
+	CC0, by Rico Cilliers
+	
+flower 03 (rose)
+	https://sketchfab.com/3d-models/flower-0fa50cf622f44f2ba59eff6c11cb8fbd
+	CC-BY 4.0, by tojamerlin
