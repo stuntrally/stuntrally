@@ -30,3 +30,7 @@ wooden pier
 Author: Rico Cilliers
 License: CC0
 https://polyhaven.com/a/modular_wooden_pier
+
+bridge wooden based on wooden pier
+Author: Rico Cilliers (original) and rubberduck
+License: CC0

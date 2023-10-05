@@ -258,6 +258,12 @@ material flower01 {  parent grass
 	
 material flower01b {  parent grass
     diffuseMap flower01b.png  }
+
+material flower02 {  parent grass
+    diffuseMap flower02.png  }
+
+material flower03 {  parent grass
+    diffuseMap flower03.png  }
 	
 material seaweedTall01 {  parent grass
     diffuseMap seaweedTall01.png  }

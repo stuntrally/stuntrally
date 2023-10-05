@@ -118,3 +118,5 @@ snow_mntn  from violetRocks
 New:
 pink and white marble terrain based on CC0 textures from https://ambientcg.com
 pink crystals based original blue
+
+grass_rocky_spring_d, grass_ground_spring_d, grass_green_spring_d based on original from SR

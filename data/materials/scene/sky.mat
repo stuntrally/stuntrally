@@ -215,3 +215,49 @@ material sky/magic_alien
     parent base_sky
     texture magic_alien.jpg
 }
+
+// newest
+
+material sky/newsky004
+{
+    parent base_sky
+    texture DaySkyHDRI004B_8K-HDR.jpg
+}
+
+material sky/newsky020A
+{
+    parent base_sky
+    texture DaySkyHDRI020B_8K-HDR.jpg
+}
+
+material sky/newsky020B
+{
+    parent base_sky
+    texture DaySkyHDRI020B_8K-HDR_2.jpg
+}
+
+
+material sky/belfast_sunset01
+{
+    parent base_sky
+    texture belfast_sunset01.jpg
+}
+
+material sky/belfast_sunset02
+{
+    parent base_sky
+    texture belfast_sunset02.jpg
+}
+
+material sky/newsky026A
+{
+    parent base_sky
+    texture DaySkyHDRI026B_8K-HDR.jpg
+}
+
+material sky/newsky026B
+{
+    parent base_sky
+    texture DaySkyHDRI026B_8K-HDR_2.jpg
+}
+

@@ -36,9 +36,23 @@
 -->
 
 <!--  skies, new 2.8  
-<s m="sky2/aristea_wreck01"     c="#c0d0f0" p="40" y="50" />
+<s m="sky2/aristea_wreck01"     c="#7c8497" p="50" y="-37" />
 <s m="sky2/BigCloudsSky"        c="#c0d0f0" p="40" y="50" />
-<s m="sky2/farm_field01"        c="#c0d0f0" p="40" y="50" />
+<s m="sky2/farm_field01"        c="#8794a7" p="52" y="-47" />
+
+
+
+<s m="sky/kloofendal01"        c="#7b95ce" p="48" y="-35" />
+<s m="sky/kloppenheim01"        c="#8a929d" p="26" y="-29" />
+<s m="sky/newsky031A"          c="#717a7f"   p="55"  y="-5"  />
+<s m="sky/newsky031B"          c="#42565d"   p="55"  y="-5"  />
+<s m="sky/belfast_sunset01"        c="#ffd69f"   p="8"  y="-45"  />
+<s m="sky/belfast_sunset02"        c="#d5bebe"   p="8"  y="-45"  />
+<s m="sky/newsky004"          c="#d1d0d0"   p="20"  y="0"  />
+<s m="sky/newsky020A"          c="#959b98"   p="15"  y="0"  />
+<s m="sky/newsky020B"          c="#58525f"   p="15"  y="0"  />
+<s m="sky/newsky026A"          c="#516477"   p="33"  y="0"  />
+<s m="sky/newsky026B"          c="#55779a"   p="33"  y="0"  />
 
   skies, new 2.8 ?  test
 <s m="sky2/aristea_wreck01"     c="#c0d0f0" p="40" y="50" />
@@ -109,6 +123,10 @@
 <s m="sky/magicdark"       c="#7070B0"   p="31"  y="-30"  />
 
 <s m="sky/magic_alien"     c="#70A974"   p="30"  y="-41"  />
+	
+<s m="sky/belfast_sunset01"        c="#ffd69f"   p="8"  y="-45"  /> <!-- used in Spr1-Rise --> 
+	
+
 
 
 <!--  common:  sc - "short scenery name" (name color)  z - appears on sceneries (not used, for filters)  -->
@@ -278,6 +296,11 @@
 <t sc="Cry"  t="ycrystals2_big_d"       n="ycrystals_big_n"     s="17.15" r="4" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.26 0.1 0.23 0.8"  aa="38" ab="90" />
 <t sc="Mar"  t="moss_ground_marble_d"   n="grass_ground_n"     s="8.92"  r="2" su="GrassJungle"    tp="0" du="0.0" ds="0.2" md="0.1" tr="0.13 0.20 0.13 0.8"  aa="17" ab="34" />
 <t sc="Mar"  t="moss_plants_marble_d"   n="moss_plants_n"      s="9.01"  r="2" su="GrassJungle"    tp="0" du="0.0" ds="0.2" md="0.1" tr="0.12 0.25 0.23 0.8"  aa="0"  ab="19" />
+	
+	
+<t sc="Jng"  t="grass_green_spring_d"      n="grass_green_n"      s="9.43"  r="5" su="GrassJungle"    tp="0" du="0.0" ds="0.2" md="0.4" tr="0.16 0.31 0.04 0.7"  aa="0"  ab="27" />
+<t sc="For"  t="grass_ground_spring_d"     n="grass_ground_n"     s="9.04"  r="5" su="GrassForest"    tp="0" du="0.0" ds="0.2" md="0.8" tr="0.22 0.20 0.04 0.9"  aa="0"  ab="25" />
+<t sc="Jng"  t="grass_rocky_spring_d"   n="grass_rocky_n"      s="10.81" r="4" su="DesertBumpy"    tp="0" du="0.0" ds="0.2" md="0.6" tr="0.42 0.46 0.08 0.7"  aa="13" ab="36" />
 
 
 <!--  🛣️ Roads  ================================================================================================================================
@@ -354,6 +377,9 @@
 <r sc="GrcR" m="roadSandMarble"        r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.70 0.70 0.70 0.6" />
 <r sc="GrcR" m="roadSandMarblePink"    r="1" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.75 0.65 0.70 0.6" />
 <r sc="Mar"  m="roadMossMarble"        r="3" su="roadJungle"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" />
+	
+<r sc="For"  m="roadSpring"           r="4" su="roadForest"   du="0.0" ds="0.2" md="0.2" tr="0.30 0.26 0.16 0.8" />
+<r sc="For"  m="roadSpring2"           r="4" su="roadForest"   du="0.0" ds="0.2" md="0.2" tr="0.30 0.26 0.16 0.8" />
 	
 <r sc="Oth"  m="roadInvisibleDesert"       r="3" su="roadDesert"   du="0.0" ds="0.0" md="0.0" tr="0.40 0.36 0.16 0.4" />
 <r sc="Oth"  m="roadInvisibleJungle"       r="3" su="roadJungle"   du="0.0" ds="0.0" md="0.0" tr="0.40 0.36 0.16 0.4" />
@@ -433,6 +459,8 @@
 <r sc="Cry"  m="road_wall_crystal"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Aln"  m="road_wall_Alien"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Blk"  m="road_wall_Black"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Jng"  m="road_wall_spring"     r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+
 
 <r sc="Oth"  m="pipe_wall"            r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="JngD" m="pipe_wall_JDark"      r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
@@ -444,6 +472,8 @@
 <r sc="Cry"  m="pipe_wall_crystal"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Aln"  m="pipe_wall_Alien"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Blk"  m="pipe_wall_Black"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Jng"  m="pipe_wall_spring"     r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+
 
 <r sc="Wnt"  m="---- column ----"     r="0" />  <!-- 🏛️ -->
 <r sc="Oth"  m="road_col"             r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
@@ -455,6 +485,7 @@
 <r sc="Cry"  m="road_col_crystal"     r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Aln"  m="road_col_Alien"       r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Blk"  m="road_col_Black"       r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Jng"  m="road_col_spring"     r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 
 <r sc="Wnt"  m="---- wall universal"  r="0" />  <!-- 🧱📏 -->
 <r sc="Spc"  m="wall_space_diam"      r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
@@ -662,6 +693,9 @@
 
 <g sc="For"  g="flower01"           c="grClrForest"    r="2" xa="1.60" xb="1.80" ya="1.46" yb="1.67" />
 <g sc="For"  g="flower01b"          c="grClrForest"   r="2" xa="1.60" xb="1.80" ya="1.46" yb="1.67" />
+<g sc="For"  g="flower02"           c="grClrForest"    r="2" xa="1.80" xb="2.00" ya="1.66" yb="1.87" />
+<g sc="For"  g="flower03"           c="grClrForest"    r="2" xa="1.80" xb="2.00" ya="1.66" yb="1.87" />
+
 
 <g sc="Jng"  g="seaweedTall01"      c="grClrForest"    r="2" xa="2.60" xb="4.60" ya="3.4" yb="6.0" />
 <g sc="Jng"  g="seaweedTall02"      c="grClrForest"    r="2" xa="2.60" xb="4.60" ya="3.4" yb="6.0" />

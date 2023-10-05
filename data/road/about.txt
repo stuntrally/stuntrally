@@ -23,3 +23,11 @@ old road based on VDrift asphalt
 roadGlass_crystal.png
 by rubberduck, hex pattern from openclipart
 License: CC0
+
+wall_spring.jpg
+by rubberduck, CC0
+
+roadSpring*
+by rubberduck
+based on roadJDark.jpg mixed with own
+CC-By 3.0 ?
