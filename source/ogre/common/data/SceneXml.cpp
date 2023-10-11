@@ -167,10 +167,11 @@ void Scene::UpdPgLayers()
 float Scene::GetDepthInFluids(Vector3 pos)
 {
 	float fa = 0.f;
-	for (int i=0; i < fluids.size(); ++i)
+	for (const FluidBox& fb : fluids)
 	{
-		const FluidBox& fb = fluids[i];
-		if (fb.pos.y - pos.y > 0.f)  // dont check when above fluid, ..or below its size-
+		//  dont check when above fluid, or below its size
+		if (pos.y < fb.pos.y &&
+			pos.y > fb.pos.y - fb.size.y)
 		{
 			const float sizex = fb.size.x*0.5f, sizez = fb.size.z*0.5f;
 			//  check rect 2d - no rot !
@@ -178,7 +179,7 @@ float Scene::GetDepthInFluids(Vector3 pos)
 				pos.z > fb.pos.z - sizez && pos.z < fb.pos.z + sizez)
 			{
 				float f = fb.pos.y - pos.y;
-				if (f > fa)  fa = f;
+				if (f > fa && f < fb.size.y)  fa = f;
 	}	}	}
 	return fa;
 }
