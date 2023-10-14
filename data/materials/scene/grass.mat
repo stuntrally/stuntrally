@@ -245,6 +245,7 @@ material grassZ1r {  parent grass
 	emissive 0.2 0.2 0.2
     diffuseMap grassZ1r.png  }
 
+//  spring
 material alienPlant01a {  parent grass
 	emissive 0.2 0.2 0.2
     diffuseMap alienPlant01a.png  }

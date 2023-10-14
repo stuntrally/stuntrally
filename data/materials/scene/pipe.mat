@@ -1471,6 +1471,7 @@ material wallP_metal_40_grid
 	cull_hardware none
 }
 
+//  new 10'23  spring
 material road_wall_spring
 {
 	parent road_wall
@@ -1481,8 +1482,6 @@ material road_wall_spring
 	normalMap wall_spring_norm.png
 	bump_scale 1.1
 }
-
-
 
 material pipe_wall_spring
 {

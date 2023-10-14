@@ -879,7 +879,6 @@ material Liquid_gas_space
 }
 
 
-
 material Green_slime
 {
 	parent Water
@@ -899,6 +898,7 @@ material Green_slime
 	speed 0.38 1.0
 }
 
+//  new
 material Water_milky_white  
 {
     parent Water

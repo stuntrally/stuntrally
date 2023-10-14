@@ -247,7 +247,7 @@ material gas_tank
 }
 
 
-//  house
+//  house  ------------------------------------------
 material house
 {
 	parent base
@@ -354,7 +354,7 @@ material Building
 }
 
 
-//  big
+//  big  ------------------------------------------
 material water_plane_big
 {
 	parent base
@@ -876,7 +876,7 @@ material ObeliskCrystal
 }
 
 
-//  obstacles
+//  obstacles  ------------------------------------------
 material obstaclesGrey
 {
 	parent base
@@ -967,7 +967,7 @@ material obstaclesCrystal
 	refl_amount 0.5
 }
 
-//  new
+//  new'23  ------------------------------------------
 material ancient_ruins
 {
 	parent base
@@ -1004,6 +1004,7 @@ material ancient_ruins_white
 	bump_scale 0.55
 }
 
+//  pier
 material pier_planks
 {
 	parent base

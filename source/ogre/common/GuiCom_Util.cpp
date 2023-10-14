@@ -79,7 +79,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnN["Tox"] = "Toxic";         scnN["Aln"] = "Alien";
 	scnN["Uni"] = "Unidentified";  scnN["Mrs"] = "Mars";            scnN["Cry"] = "Crystals";
 
-	scnN["Sur"] = "Surreal";       scnN["Mar"] = "Marble";
+	scnN["Sur"] = "Surreal";       scnN["Mar"] = "Marble";          scnN["Spr"] = "Spring";
 	scnN["Spc"] = "Space";         scnN["SuSp"] = "SurrealSpace";
 
 	scnN["Oth"] = "Other";         scnN["Blk"] = "BlackDesert";     scnN["Asp"] = "Asphalt";
@@ -102,7 +102,7 @@ CGuiCom::CGuiCom(App* app1)
 	scnClr["Toxic"]        = "#60A030";  scnClr["Alien"]        = "#D0FFA0";
 	scnClr["Unidentified"] = "#8080D0";  scnClr["Mars"]         = "#A04840";  scnClr["Crystals"]     = "#4090F0";
 
-	scnClr["Surreal"]      = "#F080B0";  scnClr["Marble"]       = "#E0A0C0";
+	scnClr["Surreal"]      = "#F080B0";  scnClr["Marble"]       = "#E0A0C0";  scnClr["Spring"]       = "#A0F000";
 	scnClr["Space"]        = "#A0B8D0";  scnClr["SurrealSpace"] = "#80B0FF";
 	
 	scnClr["Other"]        = "#C0D0E0";  scnClr["BlackDesert"]  = "#202020";  scnClr["Asphalt"]      = "#B0E0E0";

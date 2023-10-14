@@ -3,7 +3,7 @@
 [![Build game](https://github.com/stuntrally/stuntrally/workflows/Build%20game/badge.svg)](https://github.com/stuntrally/stuntrally/actions?query=workflow%3A%22Build+game%22)
 ![last commit](https://flat.badgen.net/github/last-commit/stuntrally/stuntrally)
 ![last tag](https://flat.badgen.net/github/tag/stuntrally/stuntrally)
-![last tag](https://flat.badgen.net/github/license/stuntrally/stuntrally)
+![license](https://flat.badgen.net/github/license/stuntrally/stuntrally)
 
 ## Links
 

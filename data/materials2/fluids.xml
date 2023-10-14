@@ -195,13 +195,13 @@
 
 	<fluid name="water pink"	material="Water_pink"  density="250" angDamp="0.9" linDamp="0.3" heightDamp="0"
 		fogHSVA="0.828 0.440 0.758 1" fogDens="12" fogDensH="1" deep="1" />
-			
+	
 	<fluid name="water strange"	material="Water_strange" density="200" angDamp="0.7" linDamp="0.2" heightDamp="0"
 		fogHSVA="0.832 0.523 0.631 1" fogDens="17" fogDensH="1" deep="1" />
 
 	<fluid name="water strange2"	material="Water_strange2" density="250" angDamp="0.8" linDamp="0.4" heightDamp="0"
 		fogHSVA="0.432 0.823 0.531 0.7" fogDens="11" fogDensH="1" deep="1" />
-			
+	
 	<fluid name="lava hot"		material="LavaHot"	density="1000" angDamp="3" linDamp="1.3" heightDamp="3"
 		fogHSVA="0.047 0.767 0.116 1" fogDens="3" fogDensH="0.6"
 		bWhForce="1" whMaxAngVel="30" whSpinDamp="65"  whForceLong="80" whForceUp="15"
