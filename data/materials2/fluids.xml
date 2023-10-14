@@ -164,6 +164,16 @@
 	<fluid name="acid green"	material="Acid_green" density="500" angDamp="0.9" linDamp="0.4" heightDamp="1"
 		fogHSVA="0.222 0.798 0.390 1" fogDens="11" fogDensH="0.6"
 		fDamage="5" deep="1" />
+	
+	<fluid name="acid green weak"	material="Acid_green" density="500" angDamp="0.9" linDamp="0.4" heightDamp="1"
+		fogHSVA="0.222 0.798 0.390 1" fogDens="11" fogDensH="0.6"
+		fDamage="1.3" deep="1" />
+	<fluid name="alien acid"	material="Alien_acid" density="500" angDamp="0.9" linDamp="0.4" heightDamp="1"
+		fogHSVA="0.362 0.798 0.390 1" fogDens="11" fogDensH="0.6"
+		fDamage="5" deep="1" />
+	<fluid name="alien acid weak"	material="Alien_acid" density="500" angDamp="0.9" linDamp="0.4" heightDamp="1"
+		fogHSVA="0.362 0.798 0.390 1" fogDens="11" fogDensH="0.6"
+		fDamage="1.3" deep="1" />
 
 	<fluid name="ice solid"		material="Ice"		density="500" angDamp="0.2" linDamp="0.4" heightDamp="1"
 		fogHSVA="0.495 0.154 0.696 1" fogDens="6" fogDensH="0.6"
