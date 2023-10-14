@@ -1052,4 +1052,130 @@ material pier_poles_brown
 	specular 1.0 1.0 1.0 20
 }
 
+material mining_truck
+{
+	parent base
+	diffuseMap mining_truck.jpg
+	normalMap mining_truck_norm.jpg
+	specMap mining_truck_spec.jpg
+	reflMap mining_truck_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 20
+	terrain_light_map true
 }
+
+material radio_tower
+{
+	parent base
+	diffuseMap radio_tower.jpg
+	normalMap radio_tower_norm.jpg
+	specMap radio_tower_spec.jpg
+	reflMap radio_tower_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 20
+	terrain_light_map true
+}
+
+material house_05
+{
+	parent base
+	diffuseMap house_05.jpg
+	normalMap house_05_norm.jpg
+	specMap house_05_spec.jpg
+	reflMap house_05_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 20
+	terrain_light_map true
+}
+
+material storage_tank
+{
+	parent base
+	diffuseMap storage_tank.jpg
+	normalMap storage_tank_norm.jpg
+	specMap storage_tank_spec.jpg
+	reflMap storage_tank_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+	bump_scale 0.65
+}
+
+material storage_tank_2
+{
+	parent base
+	diffuseMap storage_tank_2.jpg
+	normalMap storage_tank_2_norm.jpg
+	specMap storage_tank_2_spec.jpg
+	reflMap storage_tank_2_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+material gas_tank_02_red
+{
+	parent base
+	diffuseMap gas_tank_02_red.jpg
+	normalMap gas_tank_02_norm.jpg
+	specMap gas_tank_02_spec.jpg
+	reflMap gas_tank_02_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+material gas_tank_02_grey
+{
+	parent base
+	diffuseMap gas_tank_02_grey.jpg
+	normalMap gas_tank_02_norm.jpg
+	specMap gas_tank_02_spec.jpg
+	reflMap gas_tank_02_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+material gas_tank_02_green
+{
+	parent base
+	diffuseMap gas_tank_02_green.jpg
+	normalMap gas_tank_02_norm.jpg
+	specMap gas_tank_02_spec.jpg
+	reflMap gas_tank_02_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+material gas_tank_02_blue
+{
+	parent base
+	diffuseMap gas_tank_02_blue.jpg
+	normalMap gas_tank_02_norm.jpg
+	specMap gas_tank_02_spec.jpg
+	reflMap gas_tank_02_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+

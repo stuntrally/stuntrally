@@ -34,3 +34,39 @@ https://polyhaven.com/a/modular_wooden_pier
 bridge wooden based on wooden pier
 Author: Rico Cilliers (original) and rubberduck
 License: CC0
+
+----  mining_truck.mesh
+mining_truck / Caterpillar 789c
+Author: Sinh Nguyễn
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/caterpillar-789c-60d5ff8cf56747fba0864be02022ef84
+
+----  radio_tower.mesh
+Old soviet radio tower
+Author: Ashkelon
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/old-soviet-radio-tower-ebcc913f5a5e42f2845b252603fe6401
+
+----  house_05.mesh
+House
+Author: Mateusz Woliński
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/house-e70c4aebc911429ba9a894b38146892c
+
+----  storage_tank.mesh
+Rusted Tank storage
+Author: ixMkc1
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/rusted-tank-storage-57be2eaf4d6b4d2980bcee4ccb35f780
+
+----  storage_tank_2.mesh
+Rust pipe tank
+Author: Fruit_Route
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/rust-pipe-tank-771fcf3c9d7b450b9eaa763902b41622
+
+----  gas_tank_02*.mesh
+Gas Tank
+Author: Herr Wolf
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/gas-tank-fcff049c431041a4889b836be5e93c93
