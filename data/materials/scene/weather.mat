@@ -119,6 +119,7 @@ material FluidJellyFall
     diffuseMap fluid-jelly-waterfall.png
 }
 
+//  Aurora
 material Aurora01
 {
     parent Base_particle
@@ -146,5 +147,3 @@ material Aurora04
     diffuseMap aurora04.png
 	fog_en false
 }
-
-

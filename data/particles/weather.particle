@@ -8,7 +8,7 @@ particle_system RainStorm
 	particle_height		4.2
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -54,7 +54,7 @@ particle_system RainFastA
 	particle_height		1.52
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	//billboard_type	point
 	billboard_type		oriented_self
@@ -96,7 +96,7 @@ particle_system RainFast
 	particle_height		1.52
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	//billboard_type	point
 	billboard_type		oriented_self
@@ -138,7 +138,7 @@ particle_system RainFine
 	particle_height		0.16
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	//billboard_type	point
 	billboard_type		oriented_self
@@ -180,7 +180,7 @@ particle_system RainHeavy
 	particle_height		0.86
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	//billboard_type	point
 	billboard_type		oriented_self
@@ -223,7 +223,7 @@ particle_system Snow
 	particle_height		0.09
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	billboard_type		point
 	//renderer			billboard
@@ -272,7 +272,7 @@ particle_system SnowFine
 	particle_height		0.07
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	billboard_type		point
 	//renderer			billboard
@@ -313,7 +313,7 @@ particle_system SnowStorm
 	particle_height		0.08
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	billboard_type		point
 	//renderer			billboard
@@ -361,7 +361,7 @@ particle_system SnowStormFine
 	particle_height		0.07
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	billboard_type		point
 	//renderer			billboard
@@ -403,7 +403,7 @@ particle_system CrystalSnow
 	particle_height		0.09
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	billboard_type		point
 	//renderer			billboard
@@ -452,7 +452,7 @@ particle_system CrystalSnowFine
 	particle_height		0.07
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	billboard_type		point
 	//renderer			billboard
@@ -493,7 +493,7 @@ particle_system CrystalSnowStorm
 	particle_height		0.08
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	billboard_type		point
 	//renderer			billboard
@@ -541,7 +541,7 @@ particle_system CrystalSnowStormFine
 	particle_height		0.07
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	billboard_type		point
 	//renderer			billboard
@@ -583,7 +583,7 @@ particle_system CrystalSnowGreen
 	particle_height		0.09
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	billboard_type		point
 	//renderer			billboard
@@ -632,7 +632,7 @@ particle_system CrystalSnowFineGreen
 	particle_height		0.07
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	billboard_type		point
 	//renderer			billboard
@@ -673,7 +673,7 @@ particle_system CrystalSnowStormGreen
 	particle_height		0.08
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	billboard_type		point
 	//renderer			billboard
@@ -721,7 +721,7 @@ particle_system CrystalSnowStormFineGreen
 	particle_height		0.07
 
 	cull_each		false
-    sorted			false
+	sorted			false
 
 	billboard_type		point
 	//renderer			billboard
@@ -762,7 +762,7 @@ particle_system SandStormRed
 	particle_height		5.6
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -800,7 +800,7 @@ particle_system SandStorm
 	particle_height		2.2
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -828,7 +828,7 @@ particle_system SandStorm
 	}
 }
 
-//  Mist
+//  Mist  - - - - -  - - - - -  - - - - -  - - - - -  - - - - -  - - - - -  - - - - - 
 particle_system CloudsMistWhiteMedium
 {
 	material			Cloud8
@@ -837,7 +837,7 @@ particle_system CloudsMistWhiteMedium
 	particle_height		12.5
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -865,8 +865,6 @@ particle_system CloudsMistWhiteMedium
 	}
 }
 
-
-//  Mist
 particle_system CloudsMistWhiteLarge
 {
 	material			Cloud8
@@ -875,7 +873,7 @@ particle_system CloudsMistWhiteLarge
 	particle_height		36.5
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -903,7 +901,6 @@ particle_system CloudsMistWhiteLarge
 	}
 }
 
-//  Mist
 particle_system CloudsMistWhiteThin
 {
 	material			Cloud8
@@ -912,7 +909,7 @@ particle_system CloudsMistWhiteThin
 	particle_height		24.5
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -940,7 +937,6 @@ particle_system CloudsMistWhiteThin
 	}
 }
 
-//  Mist
 particle_system CloudsMistOrangeMedium
 {
 	material			Cloud8
@@ -949,7 +945,7 @@ particle_system CloudsMistOrangeMedium
 	particle_height		12.5
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -978,8 +974,6 @@ particle_system CloudsMistOrangeMedium
 	}
 }
 
-
-//  Mist
 particle_system CloudsMistOrangeLarge
 {
 	material			Cloud8
@@ -988,7 +982,7 @@ particle_system CloudsMistOrangeLarge
 	particle_height		36.5
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -1016,7 +1010,6 @@ particle_system CloudsMistOrangeLarge
 	}
 }
 
-//  Mist
 particle_system CloudsMistOrangeThin
 {
 	material			Cloud8
@@ -1025,7 +1018,7 @@ particle_system CloudsMistOrangeThin
 	particle_height		24.5
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -1053,7 +1046,6 @@ particle_system CloudsMistOrangeThin
 	}
 }
 
-//  Mist
 particle_system CloudsMistMagicMedium
 {
 	material			Cloud8
@@ -1062,7 +1054,7 @@ particle_system CloudsMistMagicMedium
 	particle_height		12.5
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -1090,8 +1082,6 @@ particle_system CloudsMistMagicMedium
 	}
 }
 
-
-//  Mist
 particle_system CloudsMistMagicLarge
 {
 	material			Cloud8
@@ -1100,7 +1090,7 @@ particle_system CloudsMistMagicLarge
 	particle_height		36.5
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -1128,7 +1118,6 @@ particle_system CloudsMistMagicLarge
 	}
 }
 
-//  Mist
 particle_system CloudsMistMagicThin
 {
 	material			Cloud8
@@ -1137,7 +1126,7 @@ particle_system CloudsMistMagicThin
 	particle_height		24.5
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -1165,7 +1154,6 @@ particle_system CloudsMistMagicThin
 	}
 }
 
-//  Mist
 particle_system CloudsMistToxicMedium
 {
 	material			Cloud8
@@ -1174,7 +1162,7 @@ particle_system CloudsMistToxicMedium
 	particle_height		12.5
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -1202,8 +1190,6 @@ particle_system CloudsMistToxicMedium
 	}
 }
 
-
-//  Mist
 particle_system CloudsMistToxicLarge
 {
 	material			Cloud8
@@ -1212,7 +1198,7 @@ particle_system CloudsMistToxicLarge
 	particle_height		36.5
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
@@ -1240,8 +1226,6 @@ particle_system CloudsMistToxicLarge
 	}
 }
 
-
-//  Mist
 particle_system CloudsMistToxicThin
 {
 	material			Cloud8
@@ -1250,7 +1234,7 @@ particle_system CloudsMistToxicThin
 	particle_height		24.5
 	cull_each			true
 	billboard_type		point
-    sorted				true
+	sorted				true
 
 	emitter Box
 	{
