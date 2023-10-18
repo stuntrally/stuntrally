@@ -273,3 +273,15 @@ material trash_bag
 	ambient 0.90 0.90 0.90
 	specMap_rgb true
 }
+
+material branches_01
+{
+	parent base
+	diffuseMap branches_01.jpg
+	normalMap branches_01_norm.jpg
+	specMap branches_01_spec.jpg
+	terrain_light_map true
+	ambient 1.00 1.00 1.00
+	diffuse 0.80 0.80 0.80
+	specular 0.90 0.90 0.90 6
+}

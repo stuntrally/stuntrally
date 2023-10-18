@@ -21,19 +21,16 @@ New Pipe Obstacles
 Author: rubberduck
 License: CC0
 
----- ancient ruins
 Ancient Ruins (Modular)
 Author: zacharykozak
 License: CC-BY 4.0
 https://sketchfab.com/3d-models/ancient-ruins-modular-c277e5acad5849bc913e76d3fdbf32a3
 
-----
 wooden pier
 Author: Rico Cilliers
 License: CC0
 https://polyhaven.com/a/modular_wooden_pier
 
-----
 bridge wooden based on wooden pier
 Author: Rico Cilliers (original) and rubberduck
 License: CC0
@@ -73,3 +70,20 @@ Gas Tank
 Author: Herr Wolf
 License: CC-BY 4.0
 https://sketchfab.com/3d-models/gas-tank-fcff049c431041a4889b836be5e93c93
+
+----  log_cabin_01.mesh
+Log Cabin Wooden
+Author: Tyler Regnart
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/log-cabin-wooden-94ed8fca6efa48eaabe37b62da2fd333
+
+----  log_cabin_02.mesh
+Author: Tyler Regnart, rubberduck
+License: CC-BY 4.0
+based on log_cabin_01
+
+----  wagon.mesh
+Wagon
+Author: FlukierJupiter
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/wagon-f491eb62aaa24fdeb6dc52a1aab54d0c

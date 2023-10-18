@@ -4380,3 +4380,200 @@ particle_system GreenSlimefallLow
 		alpha	-0.20
 	}
 }
+
+// aurora particles 
+particle_system Aurora01
+{
+	material			Aurora01
+	quota				50
+	particle_width		1000
+	particle_height		50
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	300
+		height	300
+		depth	32  //h
+
+		colour				0.9 0.9 0.9  0.4
+		colour_range_start	0.9 0.9 0.9  0.5
+		colour_range_end	0.9 0.9 0.9  0.5
+
+		emission_rate	1000
+		velocity_min	0.01
+		velocity_max	0.03
+		time_to_live_min	9.3
+		time_to_live_max	12.5
+	}
+
+    affector ColourFader
+    {
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 4
+    }
+	affector LinearForce
+	{
+		force_vector	0 0.1 3
+		force_application	add
+	}
+	affector DirectionRandomiser
+	{
+		randomness	4
+	}
+}
+
+particle_system Aurora02
+{
+	material			Aurora02
+	quota				50
+	particle_width		1400
+	particle_height		110
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	300
+		height	300
+		depth	32  //h
+
+		colour				0.9 0.9 0.9  0.4
+		colour_range_start	0.9 0.9 0.9  0.5
+		colour_range_end	0.9 0.9 0.9  0.5
+
+		emission_rate	1000
+		velocity_min	0.02
+		velocity_max	0.05
+		time_to_live_min	7.3
+		time_to_live_max	10.5
+	}
+
+    affector ColourFader
+    {
+        alpha 0.01
+    }
+    affector Scaler
+    {
+   	    rate 4
+    }
+	affector LinearForce
+	{
+		force_vector	0 0.1 5
+		force_application	add
+	}
+	affector DirectionRandomiser
+	{
+		randomness	4
+	}
+}
+
+particle_system Aurora03
+{
+	material			Aurora03
+	quota				50
+	particle_width		1200
+	particle_height		100
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	300
+		height	300
+		depth	32  //h
+
+		colour				0.9 0.9 0.9  0.4
+		colour_range_start	0.9 0.9 0.9  0.5
+		colour_range_end	0.9 0.9 0.9  0.5
+
+		emission_rate	1000
+		velocity_min	0.01
+		velocity_max	0.03
+		time_to_live_min	9.3
+		time_to_live_max	12.5
+	}
+
+    affector ColourFader
+    {
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 4
+    }
+	affector LinearForce
+	{
+		force_vector	3 0.1 1
+		force_application	add
+	}
+	affector DirectionRandomiser
+	{
+		randomness	4
+	}
+}
+
+particle_system Aurora04
+{
+	material			Aurora04
+	quota				50
+	particle_width		1150
+	particle_height		120
+	cull_each			false
+	billboard_type		point
+    sorted				true
+
+	emitter Cylinder
+	{
+		angle	0
+		position	0 0 0
+		direction	0 1 0
+		width	300
+		height	300
+		depth	32  //h
+
+		colour				0.9 0.9 0.9  0.4
+		colour_range_start	0.9 0.9 0.9  0.5
+		colour_range_end	0.9 0.9 0.9  0.5
+
+		emission_rate	1000
+		velocity_min	0.01
+		velocity_max	0.03
+		time_to_live_min	9.3
+		time_to_live_max	12.5
+	}
+
+    affector ColourFader
+    {
+        alpha 0.02
+    }
+    affector Scaler
+    {
+   	    rate 4
+    }
+	affector LinearForce
+	{
+		force_vector	-4 0.1 2
+		force_application	add
+	}
+	affector DirectionRandomiser
+	{
+		randomness	4
+	}
+}
