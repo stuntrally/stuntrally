@@ -126,6 +126,9 @@
 	
 <s m="sky/belfast_sunset01"        c="#ffd69f"   p="8"  y="-45"  /> <!-- used in Spr1-Rise --> 
 	
+<s m="sky/kloppenheim02_a"        c="#616a73" p="18" y="-35" />
+<s m="sky/kloppenheim02_b"        c="#4f557c" p="18" y="-35" />
+	
 
 
 

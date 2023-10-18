@@ -1180,3 +1180,45 @@ material gas_tank_02_blue
 	terrain_light_map true
 }
 
+material log_cabin_01
+{
+	parent base
+	diffuseMap log_cabin_01.jpg
+	normalMap log_cabin_01_norm.jpg
+	specMap log_cabin_01_spec.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+	bump_scale 0.7
+}
+
+material wagon_wood
+{
+	parent base
+	diffuseMap wagon_wood.jpg
+	normalMap wagon_wood_norm.jpg
+	specMap wagon_wood_spec.jpg
+	reflMap wagon_wood_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+material wagon_wheels
+{
+	parent base
+	diffuseMap wagon_wheels.jpg
+	normalMap wagon_wheels_norm.jpg
+	specMap wagon_wheels_spec.jpg
+	reflMap wagon_wheels_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+

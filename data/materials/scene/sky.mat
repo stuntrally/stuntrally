@@ -261,3 +261,16 @@ material sky/newsky026B
     texture DaySkyHDRI026B_8K-HDR_2.jpg
 }
 
+material sky/kloppenheim02_a
+{
+    parent base_sky
+    texture kloppenheim02_a.jpg
+}
+
+material sky/kloppenheim02_b
+{
+    parent base_sky
+    texture kloppenheim02_b.jpg
+}
+
+
