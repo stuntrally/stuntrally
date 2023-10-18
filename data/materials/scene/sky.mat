@@ -216,7 +216,18 @@ material sky/magic_alien
     texture magic_alien.jpg
 }
 
-// newest
+//  newest
+material sky/belfast_sunset01
+{
+    parent base_sky
+    texture belfast_sunset01.jpg
+}
+
+material sky/belfast_sunset02
+{
+    parent base_sky
+    texture belfast_sunset02.jpg
+}
 
 material sky/newsky004
 {
@@ -234,19 +245,6 @@ material sky/newsky020B
 {
     parent base_sky
     texture DaySkyHDRI020B_8K-HDR_2.jpg
-}
-
-
-material sky/belfast_sunset01
-{
-    parent base_sky
-    texture belfast_sunset01.jpg
-}
-
-material sky/belfast_sunset02
-{
-    parent base_sky
-    texture belfast_sunset02.jpg
 }
 
 material sky/newsky026A
@@ -272,5 +270,3 @@ material sky/kloppenheim02_b
     parent base_sky
     texture kloppenheim02_b.jpg
 }
-
-
