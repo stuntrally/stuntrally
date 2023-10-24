@@ -375,7 +375,7 @@ void App::AlignTerToRoad()
 	bool  *rh = new bool[w*h];  // road hit
 
 	const float ws = scn->sc->td.fTerWorldSize;
-	const float Len = 400;  // max ray length
+	const float Len = 2500;  // max ray height
 	int x,y,a;
 	float v,k, fx,fz, wx,wz;
 	
