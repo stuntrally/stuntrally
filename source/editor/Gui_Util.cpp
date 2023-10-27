@@ -129,7 +129,7 @@ void CGui::btnNewGame(WP)
 
 void CGui::btnEdTut(WP)
 {
-	PATHMANAGER::OpenUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=editor");
+	PATHMANAGER::OpenUrl("https://github.com/stuntrally/stuntrally/blob/master/docs/editor.md");
 }
 
 

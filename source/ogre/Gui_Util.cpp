@@ -755,11 +755,11 @@ void CGui::btnWebsite(WP)
 }
 void CGui::btnWiki(WP)
 {
-	PATHMANAGER::OpenUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=features");
+	PATHMANAGER::OpenUrl("https://github.com/stuntrally/stuntrally/blob/master/docs/_menu.md");
 }
 void CGui::btnWikiInput(WP)
 {
-	PATHMANAGER::OpenUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=running#controllers");
+	PATHMANAGER::OpenUrl("https://github.com/stuntrally/stuntrally/blob/master/docs/running.md#controllers");
 }
 
 void CGui::btnForum(WP)
@@ -772,11 +772,11 @@ void CGui::btnSources(WP)
 }
 void CGui::btnEdTut(WP)
 {
-	PATHMANAGER::OpenUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=editor");
+	PATHMANAGER::OpenUrl("https://github.com/stuntrally/stuntrally/blob/master/docs/editor.md");
 }
 void CGui::btnTransl(WP)
 {
-	PATHMANAGER::OpenUrl("https://stuntrally.tuxfamily.org/wiki/doku.php?id=localization");
+	PATHMANAGER::OpenUrl("https://github.com/stuntrally/stuntrally/blob/master/docs/localization.md");
 }
 void CGui::btnDonations(WP)
 {

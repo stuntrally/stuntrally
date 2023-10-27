@@ -8,7 +8,7 @@
 ## Links
 
 [Stunt Rally Homepage](https://stuntrally.tuxfamily.org/) - Download links, track & vehicle browsers etc.  
-[Sources](https://github.com/stuntrally/) - with Documentation, also for bugs & Issues, pull requests, etc.  
+[Sources](https://github.com/stuntrally/) - with Documentation in docs/, also for bugs & Issues, pull requests, etc.  
 [Forums](https://forum.freegamedev.net/viewforum.php?f=77) - Discussions, tracks, Issues, etc.  
 [Screenshots](https://stuntrally.tuxfamily.org/gallery) - Galleries from all versions and development  
 [Videos](https://www.youtube.com/user/TheCrystalHammer) - from game and editor  
@@ -61,7 +61,7 @@ Have fun 😀
 
 ### Troubleshooting
 
-If you have problems running, check Wiki page [Running](docs/running.md).  
+If you have problems running, check page [Running](docs/running.md).  
 All settings and logs are saved to user folder, see [Paths](docs/paths.md). It is also shown on 1st Help page.
 
 ------------------------------------------------------------------------------
@@ -100,7 +100,7 @@ For newest sources and how to compile them see page [Compiling](docs/compile.md)
 
 ## Contributing
 
-If you'd like to contribute, please check [Contributing.md](Contributing.md)
+If you'd like to contribute, please check [Contributing](Contributing.md)
 
 ------------------------------------------------------------------------------
 

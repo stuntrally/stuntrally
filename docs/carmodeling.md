@@ -15,7 +15,7 @@ See our forum topic, [this
 post](https://forum.freegamedev.net/viewtopic.php?f=80&t=18526) shows
 the list of cars.  
 Some are too high poly or too low. And some just don't fit the game.  
-The license for the art must be GPL, CC-BY-SA, CC-BY, CC0, etc so we
+The license for the art must be CC-BY-SA, CC-BY, CC0 or GPL so we
 could use it.
 
 Models sometimes still require some work (to have in game):
@@ -111,7 +111,7 @@ textures.
 
 One wheel (including brake disc and caliper) should be about 4k to 10k
 triangles.  
-[Comments](CarModeling#Comments) section has more info.
+[Comments](carmodeling.md#comments) section has more info.
 
 More detail can (and should) be put in textures. More triangles will
 unnecessary reduce game Fps.
@@ -150,7 +150,7 @@ HI and BE models are newest and best here, have lot of detail in
 textures. BE has even more, baked in normal map.  
 To check geometry (triangles) just start game and press F10 to toggle
 wireframe. Also game logs car meshes info in ogre.log (how to find it in
-[Paths](Paths) wiki).  
+[Paths](paths.md) page).  
 Look for "MESH info: " it says how many submeshes (subs, materials) and
 how many triangles (tris) each part has and the total amounts.  
 Most optimal and preferred is when there is 1 submesh and 1 material in

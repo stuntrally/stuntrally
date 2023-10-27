@@ -1,7 +1,7 @@
 ## What's coming next 3.x - NEW
 
 Stunt Rally 3 is continuing last SR 2.x, using latest Ogre-Next 3.0.  
-More info in its [readme](https://github.com/stuntrally/stuntrally3/blob/main/docs/readme.md), [changelog](https://github.com/stuntrally/stuntrally3/blob/main/docs/Changelog.md) and [documentation](https://github.com/stuntrally/stuntrally3/blob/main/docs/).
+More info in its [readme](https://github.com/stuntrally/stuntrally3/blob/main/Readme.md), [changelog](https://github.com/stuntrally/stuntrally3/blob/main/docs/Changelog.md) and [documentation](https://github.com/stuntrally/stuntrally3/blob/main/docs/_Menu.md).
 
 
 ------------------------------------------------------------------------

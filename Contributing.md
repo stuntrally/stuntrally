@@ -23,8 +23,7 @@ and preferably could handle some of the [new SR3 Roadmap](https://github.com/stu
 Own ideas could also go into new SR3, just need some discussion first.  
 Most ideas are already in [Tasks](https://stuntrally.tuxfamily.org/mantis/view_all_bug_page.php). Sorted by P (priority): 1 is most important, higher are less so.
 
-Medium changes can go through [pull requests](https://github.com/stuntrally/stuntrally/pulls).  
-For those with more time and effort, commits to main branch will be possible.
+Changes can go through [pull requests](https://github.com/stuntrally/stuntrally/pulls).  
 
 There is no style guide (yet), I simply recommend following my own.  
 A quick info: it is not random, it's quite specifically formatted to how I want it to be (in my files).
@@ -52,7 +51,7 @@ or know how to improve building from sources (or make it easier).
 ------------------------
 ## Translators
 
-If you want to help translating a language, check Wiki page [Localization](docs/localization.md).
+If you want to help translating a language, check page [Localization](docs/localization.md).
 
 ------------------------
 ## Sound Artists
@@ -61,11 +60,11 @@ If you can record or edit sounds for games. Especially looped engine sounds.
 
 ## 3D Artists
 
-If you know Blender and can help with importing existing models into game [Objects wiki](docs/objects.md).  
-Or can edit vehicles ([topic](https://forum.freegamedev.net/viewtopic.php?f=80&t=18526) and [wiki](docs/carmodeling.md)) or objects for game, UV unwrap, texturing, etc.
+If you know Blender and can help with importing existing models into game [Objects](docs/objects.md).  
+Or can edit vehicles ([topic](https://forum.freegamedev.net/viewtopic.php?f=80&t=18526) and [docs page](docs/carmodeling.md)) or objects for game, UV unwrap, texturing, etc.
 
 
 ------------------------
 # Donations
 
-Financial support is possible through [CryHam's page](https://cryham.tuxfamily.org/donate/).
+Financial support is possible through [CryHam's website](https://cryham.tuxfamily.org/donate/).

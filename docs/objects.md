@@ -5,8 +5,8 @@
 
 This here is a short list of steps.
 
-1.  Download (must be CC0, CC-BY, CC-BY-SA, etc.) or create a model in
-    Blender
+1.  Download (must be CC0, CC-BY, CC-BY-SA, or GPL)  
+    or create a model in Blender
 2.  Once seen the model is ok, and can be useful:
     -   create dir with a good_name - to have some consistency, when
         picking model in editor, etc.
