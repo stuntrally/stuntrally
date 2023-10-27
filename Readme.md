@@ -7,9 +7,9 @@
 
 ## Links
 
-[Stunt Rally Homepage](https://stuntrally.tuxfamily.org/) - Download links, Documentation wiki, track & vehicle browsers etc.  
+[Stunt Rally Homepage](https://stuntrally.tuxfamily.org/) - Download links, track & vehicle browsers etc.  
+[Sources](https://github.com/stuntrally/) - with Documentation, also for bugs & Issues, pull requests, etc.  
 [Forums](https://forum.freegamedev.net/viewforum.php?f=77) - Discussions, tracks, Issues, etc.  
-[Sources](https://github.com/stuntrally/) - also for bugs & Issues, pull requests, etc.  
 [Screenshots](https://stuntrally.tuxfamily.org/gallery) - Galleries from all versions and development  
 [Videos](https://www.youtube.com/user/TheCrystalHammer) - from game and editor  
 [Donations](https://cryham.tuxfamily.org/donate/) - financial support
@@ -24,7 +24,7 @@ Stunt Rally features 202 tracks in 37 sceneries and 25 vehicles.
 Game modes include:
 * Single Race (with your Ghost drive, track car guide), Replays,
 * Challenges, Championships, Tutorials,
-* Multiplayer (info [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=multiplayer), no official server) and Split Screen.  
+* Multiplayer (info [here](docs/multiplayer.md), no official server) and Split Screen.  
 
 The Track Editor allows creating and modifying tracks.  
 Both run on GNU/Linux and Windows.  
@@ -33,7 +33,7 @@ The game has a **rally** style of driving, mostly on gravel (like Richard Burns 
 with possible **stunt** elements (jumps, loops, pipes) and generated roads from 3D spline.  
 It also features few Sci-Fi vehicles and planets.
 
-Full features list on [our Wiki](https://stuntrally.tuxfamily.org/wiki/doku.php?id=features).
+Full features list on [our Wiki](docs/features.md).
 
 ------------------------------------------------------------------------------
 
@@ -54,15 +54,15 @@ In game - Esc or Tab key shows/hides GUI.
 
 Quick setup help is on the Welcome screen, shown at game start, or by Ctrl-F1.  
 At first, open Options to adjust Screen resolution, pick graphics preset according to your GPU and *do* restart.  
-Open Options tab Input, to see or reassign keys, or configure a game controller, info [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=running#input).  
+Open Options tab Input, to see or reassign keys, or configure a game controller, info [here](docs/running.md#input).  
 Game related Hints are available in menu: How to drive, with few driving lessons.  
 
 Have fun 😀
 
 ### Troubleshooting
 
-If you have problems running, check Wiki page [Running](https://stuntrally.tuxfamily.org/wiki/doku.php?id=running).  
-All settings and logs are saved to user folder, see [Paths](https://stuntrally.tuxfamily.org/wiki/doku.php?id=paths). It is also shown on 1st Help page.
+If you have problems running, check Wiki page [Running](docs/running.md).  
+All settings and logs are saved to user folder, see [Paths](docs/paths.md). It is also shown on 1st Help page.
 
 ------------------------------------------------------------------------------
 
@@ -77,7 +77,7 @@ After each save, track can be tested in game.
 
 ### Tutorial
 
-Editor Tutorial page with more info and videos [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=editor).
+Editor Tutorial page with more info and videos [here](docs/editor.md).
 
 ------------------------------------------------------------------------------
 
@@ -94,13 +94,13 @@ IRC *was* used: #stuntrally on freenode. But now I'm not checking it.
 
 ## Building from sources
 
-For newest sources and how to compile them see page [Compiling](https://stuntrally.tuxfamily.org/wiki/doku.php?id=compile).
+For newest sources and how to compile them see page [Compiling](docs/compile.md).
 
 ------------------------------------------------------------------------------
 
 ## Contributing
 
-If you'd like to contribute, please check [Contributing.md](https://github.com/stuntrally/stuntrally/blob/master/Contributing.md)
+If you'd like to contribute, please check [Contributing.md](Contributing.md)
 
 ------------------------------------------------------------------------------
 

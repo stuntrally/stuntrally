@@ -18,9 +18,9 @@ of bigger focused contributions:
 ------------------------
 ## Programmers
 
-If you know C++, newest [OGRE](https://forums.ogre3d.org/viewforum.php?f=25) (2 and up) or shaders,  
-and preferably could handle some of the [Roadmap](https://stuntrally.tuxfamily.org/wiki/doku.php?id=roadmap) tasks.  
-Own ideas could also go into SR, just need some discussion first.  
+If you know C++, newest [Ogre-Next](https://forums.ogre3d.org/viewforum.php?f=25),  
+and preferably could handle some of the [new SR3 Roadmap](https://github.com/stuntrally/stuntrally3/blob/main/docs/Roadmap.md) tasks.  
+Own ideas could also go into new SR3, just need some discussion first.  
 Most ideas are already in [Tasks](https://stuntrally.tuxfamily.org/mantis/view_all_bug_page.php). Sorted by P (priority): 1 is most important, higher are less so.
 
 Medium changes can go through [pull requests](https://github.com/stuntrally/stuntrally/pulls).  
@@ -40,7 +40,7 @@ Tracks are licensed GPLv3 by default.
 ------------------------
 ## Testers
 
-If you found a bug please report it, info [here](https://stuntrally.tuxfamily.org/wiki/doku.php?id=troubleshooting).  
+If you found a bug please report it, info [here](docs/troubleshooting.md).  
 Even better if you're able to build from sources.  
 If so, then also honest, constructive opinions or suggestions (e.g. about my latest changes) are welcome, on Forum.
 
@@ -52,7 +52,7 @@ or know how to improve building from sources (or make it easier).
 ------------------------
 ## Translators
 
-If you want to help translating a language, check Wiki page [Localization](https://stuntrally.tuxfamily.org/wiki/doku.php?id=localization).
+If you want to help translating a language, check Wiki page [Localization](docs/localization.md).
 
 ------------------------
 ## Sound Artists
@@ -61,8 +61,8 @@ If you can record or edit sounds for games. Especially looped engine sounds.
 
 ## 3D Artists
 
-If you know Blender and can help with importing existing models into game [Objects wiki](https://stuntrally.tuxfamily.org/wiki/doku.php?id=objects).  
-Or can edit vehicles ([topic](https://forum.freegamedev.net/viewtopic.php?f=80&t=18526) and [wiki](https://stuntrally.tuxfamily.org/wiki/doku.php?id=carmodeling)) or objects for game, UV unwrap, texturing, etc.
+If you know Blender and can help with importing existing models into game [Objects wiki](docs/objects.md).  
+Or can edit vehicles ([topic](https://forum.freegamedev.net/viewtopic.php?f=80&t=18526) and [wiki](docs/carmodeling.md)) or objects for game, UV unwrap, texturing, etc.
 
 
 ------------------------
