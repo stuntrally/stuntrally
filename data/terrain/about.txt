@@ -120,3 +120,10 @@ pink and white marble terrain based on CC0 textures from https://ambientcg.com
 pink crystals based original blue
 
 grass_rocky_spring_d, grass_ground_spring_d, grass_green_spring_d based on original from SR
+
+anomaly textures based from their original
+for example: desert_mntn2_anomaly from desert_mntn2
+
+exceptions
+space_diam_anomaly2 from original, but uses binary number pattern from openclipart
+space_metal_grid from https://ambientcg.com/view?id=MetalPlates006, CC0

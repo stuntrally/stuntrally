@@ -16,7 +16,7 @@ Author: Duane's Mind
 License: CC-BY 4.0
 https://sketchfab.com/3d-models/satellite-comms-4be56951da39429a963ee12140bbff57
 
-----  obstacle*.mesh
+----  obstacle*.mesh (including anomaly)
 New Pipe Obstacles
 Author: rubberduck
 License: CC0
@@ -87,3 +87,9 @@ Wagon
 Author: FlukierJupiter
 License: CC-BY 4.0
 https://sketchfab.com/3d-models/wagon-f491eb62aaa24fdeb6dc52a1aab54d0c
+
+
+---- concrete_bar_anomaly
+based on original by: cr0wb4r
+License: CC-BY-SA
+https://www.blendswap.com/blends/game-engine/low-poly-worn-construction-barrier/

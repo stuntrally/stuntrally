@@ -285,3 +285,54 @@ material branches_01
 	diffuse 0.80 0.80 0.80
 	specular 0.90 0.90 0.90 6
 }
+
+material balloon1_anomaly
+{
+	parent base
+	diffuseMap balloon1_anomaly.jpg
+	ambient 0.7 0.7 0.7
+	diffuse 0.8 0.8 0.8
+	specular 0.3 0.3 0.3 20
+}
+
+material balloon2_anomaly
+{
+	parent base
+	diffuseMap obstaclesAnomaly_d.jpg
+	normalMap concrete_bar_norm.jpg
+	specMap concrete_bar_norm.jpg
+    specMap_rgb true
+	ambient 1.1 1.1 1.9
+	diffuse 0.75 0.75 1.65
+	terrain_light_map true
+	specular 0.5 1.0 1.6 32
+	env_map true
+	envMap ReflectionCube
+	bump_scale 1.2
+	refl_amount 0.5
+}
+
+material Crate_anomaly
+{
+	parent base
+	diffuseMap crate_anomaly.jpg
+	normalMap crate_anomaly.jpg
+	terrain_light_map true
+	ambient 1.9 1 1
+	diffuse 1.9 1 1
+	specular 1.55 0.6 0.6 8
+	bump_scale 4.0
+}
+
+material crate2m_anomaly
+{
+	parent base
+	diffuseMap big_tire.png
+	normalMap concrete_bar_norm.jpg
+	terrain_light_map true
+	ambient 0.95 1 1
+	diffuse 0.65 0.7 0.7
+	specular 0.6 0.6 0.6 8
+	bump_scale 2.0
+}
+

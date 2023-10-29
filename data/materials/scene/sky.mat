@@ -259,6 +259,12 @@ material sky/newsky026B
     texture DaySkyHDRI026B_8K-HDR_2.jpg
 }
 
+material sky/kloppenheim01
+{
+    parent base_sky
+    texture kloppenheim01.jpg
+}
+
 material sky/kloppenheim02_a
 {
     parent base_sky
@@ -270,3 +276,52 @@ material sky/kloppenheim02_b
     parent base_sky
     texture kloppenheim02_b.jpg
 }
+
+material sky/aristea_wreck01
+{
+    parent base_sky
+    texture aristea_wreck01.jpg
+}
+
+material sky/farm_field01
+{
+    parent base_sky
+    texture farm_field01.jpg
+}
+
+material sky/kloofendal01
+{
+    parent base_sky
+    texture kloofendal01.jpg
+}
+
+material sky/newsky031A
+{
+    parent base_sky
+    texture DaySkyHDRI031B_8K-HDR.jpg
+}
+
+material sky/newsky031B
+{
+    parent base_sky
+    texture DaySkyHDRI031B_8K-HDR_2.jpg
+}
+
+material sky/sky_anomaly_01
+{
+    parent base_sky
+    texture sky_anomaly_01.jpg
+}
+
+material sky/sky_anomaly_02
+{
+    parent base_sky
+    texture sky_anomaly_02.jpg
+}
+
+material sky/sky_anomaly_03
+{
+    parent base_sky
+    texture sky_anomaly_03.jpg
+}
+

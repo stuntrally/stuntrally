@@ -43,3 +43,11 @@ flower 02 (dandelion)
 flower 03 (rose)
 	https://sketchfab.com/3d-models/flower-0fa50cf622f44f2ba59eff6c11cb8fbd
 	CC-BY 4.0, by tojamerlin
+	
+grassAnomaly*
+	based on original SR grass textures
+
+flower02Anomaly
+	based on flower 02 (dandelion)
+	CC0
+

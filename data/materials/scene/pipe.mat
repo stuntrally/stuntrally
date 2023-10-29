@@ -1504,3 +1504,416 @@ material road_col_spring
 	normalMap normal_1.png
 	bump_scale 0.7
 }
+
+// ----------------- new ANOMALY scenery -----------------
+//  pipes
+
+
+// new anomaly: road walls
+
+material road_wall_metal_01_anomaly
+{
+	parent road_wall
+	ambient 1 1 1.1
+	diffuse 1 1 1.1
+	specular 1 1 1.2 16
+	diffuseMap metal_29norm.jpg
+	normalMap metal_29.jpg
+	specMap metal_29spec.jpg
+	scene_blend alpha_blend
+}
+
+material road_wall_metal_02_anomaly
+{
+	parent road_wall
+	ambient 1 0.1 1
+	diffuse 1 1.6 1
+	specular 1 1.6 1 16
+	diffuseMap metal_40.png
+	normalMap metal_40spec.jpg
+	specMap metal_40norm.jpg
+	scene_blend alpha_blend
+}
+
+material road_wall_wheel_anomaly
+{
+	parent road_wall
+	ambient 1.3 1.3 1.3
+	diffuse 1 1 1
+	specular 0.4 0.6 0.8 32
+	diffuseMap HI_WheelWall.jpg
+	normalMap HI_WheelWall_n.jpg
+	scene_blend alpha_blend
+}
+
+material road_col_wheel_anomaly
+{
+	parent road_wall
+	ambient 1.2 1.9 0.8
+	diffuse 1 1.5 1
+	specular 0.4 1.6 0.8 32
+	diffuseMap HI_WheelWall_col.jpg
+	normalMap HI_WheelWall_n.jpg
+	scene_blend alpha_blend
+}
+
+
+
+// new anomaly: pipe walls
+
+material pipe_wall_metal_01_anomaly
+{
+	parent pipe_wall
+	ambient 1.2 1.2 1.4
+	diffuse 1 1 1.6
+	specular 1 1 2 8
+	diffuseMap metal_29norm.jpg
+	normalMap metal_29.jpg
+	specMap metal_29spec.jpg
+	//scene_blend alpha_blend
+}
+
+material pipe_wall_metal_02_anomaly
+{
+	parent pipe_wall
+	ambient 1.0 0.4 1.2
+	diffuse 1 1.6 1.2
+	specular 1 1.6 1 8
+	diffuseMap metal_40.png
+	normalMap metal_40spec.jpg
+	specMap metal_40norm.jpg
+	//scene_blend alpha_blend
+}
+
+material pipe_wall_wheel_anomaly
+{
+	parent pipe_wall
+	ambient 1.4 1.4 1.4
+	diffuse 1.3 1.3 1.3
+	specular 1.2 1.4 2.0 12
+	diffuseMap HI_WheelWall.jpg
+	normalMap HI_WheelWall_n.jpg
+	//scene_blend alpha_blend
+}
+
+// new anomaly: pipes
+
+material pipeGlassAnomaly1
+{
+	parent pipe_glass
+	ambient 0.35 1.28 0.55
+	diffuse 1.16 0.82 0.90
+	diffuseMap roadGlass1_anomaly.png
+	specMap roadGlass_spec_anomaly.png
+	normalMap roadGlass_spec1l.png
+	bump_scale 2.6
+}
+
+material pipeGlassAnomaly1Red
+{
+	parent pipe_glass
+	ambient 0.8 0.4 0.3
+	diffuse 0.6 0.3 0.2
+	diffuseMap roadGlass1_anomaly.png
+	specMap roadGlass_spec_anomaly.png
+	normalMap roadGlass_spec1l.png
+	bump_scale 2.6
+}
+
+material pipeGlassAnomaly1Orange
+{
+	parent pipe_glass
+	ambient 0.6 0.35 0.1
+	diffuse 0.8 0.35 0.1
+	diffuseMap roadGlass1_anomaly.png
+	specMap roadGlass_spec_anomaly.png
+	normalMap roadGlass_spec1l.png
+	bump_scale 2.6
+}
+
+material pipeGlassAnomaly1Violet
+{
+	parent pipe_glass
+	ambient 0.4 0.4 0.6
+	diffuse 0.6 0.5 0.9
+	diffuseMap roadGlass1_anomaly.png
+	specMap roadGlass_spec_anomaly.png
+	normalMap roadGlass_spec1l.png
+	bump_scale 2.6
+}
+
+material pipeGlassAnomaly1Blue
+{
+	parent pipe_glass
+	ambient 0.30 0.47 0.57
+	diffuse 0.46 0.61 0.72
+	diffuseMap roadGlass1_anomaly.png
+	specMap roadGlass_spec_anomaly.png
+	normalMap roadGlass_spec1l.png
+	bump_scale 2.6
+}
+
+material pipeGlassAnomaly1Green
+{
+	parent pipe_glass
+	ambient 0.45 0.46 0.2
+	diffuse 0.35 0.6 0.1
+	diffuseMap roadGlass1_anomaly.png
+	specMap roadGlass_spec_anomaly.png
+	normalMap roadGlass_spec1l.png
+	bump_scale 2.6
+}
+
+material pipeGlassAnomaly2
+{
+	parent pipe_glass
+	ambient 0.35 1.28 0.55
+	diffuse 1.16 0.82 0.90
+	diffuseMap roadGlass2_anomaly.png
+	specMap roadGlass_spec_anomaly.png
+	normalMap roadGlass_spec1l.png
+	bump_scale 2.6
+}
+
+material pipeGlassAnomaly2Yellow
+{
+	parent pipe_glass
+	ambient 0.9 0.75 0.1
+	diffuse 1.0 1.0 0.6
+	diffuseMap roadGlass2_anomaly.png
+	specMap roadGlass_spec_anomaly.png
+	normalMap roadGlass_spec1l.png
+	bump_scale 2.6
+}
+
+material pipeGlassAnomaly2Pink
+{
+	parent pipe_glass
+	ambient 1.1 0.15 0.5
+	diffuse 1.04 0.11 0.4
+	diffuseMap roadGlass2_anomaly.png
+	specMap roadGlass_spec_anomaly.png
+	normalMap roadGlass_spec1l.png
+	bump_scale 2.6
+}
+
+material pipeGlassAnomaly3
+{
+	parent pipe_glass
+	ambient 0.35 1.28 0.55
+	diffuse 1.16 0.82 0.90
+	diffuseMap roadGlassC_dirt.png
+	specMap roadGlass_crystal.png
+	normalMap roadGlass_alien.png
+	bump_scale 2.6
+}
+
+material pipeGlassAnomaly3Cyan
+{
+	parent pipe_glass
+	ambient 0.34 0.71 0.71
+	diffuse 0.5 0.67 0.73
+	diffuseMap roadGlassC_dirt.png
+	specMap roadGlass_crystal.png
+	normalMap roadGlass_alien.png
+	bump_scale 2.6
+}
+
+material pipeGlassAnomaly3Pink
+{
+	parent pipe_glass
+	ambient 1.1 0.15 0.5
+	diffuse 1.04 0.11 0.4
+	diffuseMap roadGlassC_dirt.png
+	specMap roadGlass_crystal.png
+	normalMap roadGlass_alien.png
+	bump_scale 2.6
+}
+
+material pipeGlassAnomaly3Green
+{
+	parent pipe_glass
+	ambient 0.45 0.46 0.2
+	diffuse 0.35 0.6 0.1
+	diffuseMap roadGlassC_dirt.png
+	specMap roadGlass_crystal.png
+	normalMap roadGlass_alien.png
+	bump_scale 2.6
+}
+
+material pipeGlassAnomalySpace
+{
+	parent pipe_glass
+	ambient 1.05 0.96 0.7
+	diffuse 1.55 1.6 1.7
+	specular 1.0 3.0 5.0 4
+	diffuseMap pipeGlass_space_anomaly.png
+	specMap roadGlass_spec1l.png
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.7
+	normalMap normal_3.jpg
+	bump_scale 0.1
+}
+
+material pipeGlassAnomalySpaceDark
+{
+	parent pipe_glass
+	ambient 0.05 0.06 0.04
+	diffuse 0.2 0.2 0.4
+	specular 1.0 4.0 9.0 6
+	diffuseMap pipeGlass_space_anomaly.png
+	specMap roadGlass_spec1l.png
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.7
+	normalMap normal_3.jpg
+	bump_scale 0.1
+}
+
+
+
+material pipeAsphaltAnomaly
+{
+	parent base
+	diffuseMap roadAsphalt_spec.jpg
+	specMap roadAsphaltAnomaly_spec.jpg
+	specMap_rgb true
+	ambient 0.5 1.4 0.2
+	diffuse 0.1 0.75 2.75
+	specular 2.1 0.0 0.4 4
+	depth_bias 3
+	cull_hardware none
+	//receives_shadows false
+}
+
+
+	
+material pipeAsphaltAnomalySpace
+{
+	parent base
+	diffuseMap roadAsphalt_spec.jpg
+	specMap roadAsphaltAnomalySpace_spec.jpg
+	specMap_rgb true
+	ambient 0.5 0.3 1.5
+	diffuse 0.1 .05 1.75
+	specular 1.2 0.5 1.8 4
+	normalMap roadAsphaltSpace_norm.jpg
+	bump_scale 0.04
+	envMap ReflectionCube
+	depth_bias 3
+	env_map true
+	refl_amount 0.04
+	cull_hardware none
+	receives_shadows false
+}
+
+
+material pipeAsphaltAnomalyStreaks
+{
+	parent pipe_glass
+	diffuseMap roadAsphaltAnomalyStreaks.png
+	specMap roadAsphaltAnomaly_spec.jpg
+	specMap_rgb true
+	ambient 0.5 1.4 0.2
+	diffuse 0.1 0.75 2.75
+	specular 2.1 0.0 0.4 4
+	depth_bias 3
+	cull_hardware none
+	//receives_shadows false
+}
+
+
+	
+material pipeAsphaltAnomalySpaceStreaks
+{
+	parent pipe_glass
+	diffuseMap roadAsphaltAnomalyStreaks.png
+	specMap roadAsphaltAnomalySpace_spec.jpg
+	specMap_rgb true
+	ambient 0.5 0.3 1.5
+	diffuse 0.1 .05 1.75
+	specular 1.2 0.5 1.8 4
+	normalMap roadAsphaltSpace_norm.jpg
+	bump_scale 0.04
+	envMap ReflectionCube
+	depth_bias 3
+	env_map true
+	refl_amount 0.04
+	cull_hardware none
+	receives_shadows false
+}
+
+material wall_space_gray_anomaly
+{
+	parent road_wall
+	ambient 0.8 0.8 1
+	diffuse 1 1 1.2
+	specular 1 1.1 1.6 24
+	diffuseMap space_gray_anomaly_d.jpg
+	normalMap space_gray_anomaly_n.jpg
+	specMap space_gray_anomaly_s.jpg
+}
+material wallP_space_gray_anomaly
+{
+	parent wall_space_gray_anomaly
+	cull_hardware none
+}
+
+material wall_space_x_anomaly
+{
+	parent road_wall
+	ambient 0.8 0.8 1
+	diffuse 1 1 1.2
+	specular 1 1.1 1.6 24
+	diffuseMap space_x_anomaly_d.jpg
+	normalMap space_x_anomaly_n.jpg
+	specMap space_x_anomaly_s.jpg
+}
+material wallP_space_x_anomaly
+{
+	parent wall_space_x_anomaly
+	cull_hardware none
+}
+
+material wall_lava_anomaly
+{
+	parent road_wall
+	ambient 0.3 0.3 1
+	diffuse 1 1 2.2
+	specular 0.2 1.1 2.6 6
+	diffuseMap wall_lava_anomaly_d.jpg
+	normalMap wall_lava_anomaly_n.jpg
+	specMap wall_lava_anomaly_s.jpg
+	bump_scale 0.55
+}
+material wallP_lava_anomaly
+{
+	parent wall_lava_anomaly
+	cull_hardware none
+}
+
+material wall_mining_truck_anomaly
+{
+	parent road_wall
+	ambient 0.7 0.7 1
+	diffuse 1.3 1 1.2
+	specular 0.8 1.1 1.6 12
+	diffuseMap mining_truck.jpg
+	normalMap mining_truck_norm.jpg
+	specMap mining_truck_spec.jpg
+	bump_scale 0.55
+}
+material wallP_mining_truck_anomaly
+{
+	parent wall_mining_truck_anomaly
+	cull_hardware none
+}
+
+
+
+
+
+
+
+

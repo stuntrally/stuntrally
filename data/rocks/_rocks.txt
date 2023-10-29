@@ -54,3 +54,8 @@ https://ambientcg.com/view?id=Pipe004
 https://ambientcg.com/view?id=Tiles064
 https://ambientcg.com/view?id=Tiles070
 https://polyhaven.com/a/rock_06
+
+Models: 	*_anomaly.mesh
+Artists: 	Various (edited by rubberduck)
+Licenses: 	same as original used in SR 
+Date: 		29/10/2023
