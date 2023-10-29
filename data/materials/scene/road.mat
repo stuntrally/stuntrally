@@ -2005,3 +2005,249 @@ material roadSpring2_ter
 	specular 0.15 0.33 0.25 96
 	normalMap normal_1.png
 }
+
+
+
+
+
+//----------------------------------------------------------------------------
+//  Anomaly  ----
+
+// Desert Anomaly 
+material roadDesertAnomaly
+{
+	parent road
+	diffuseMap roadDesertAnomaly.png
+	ambient 0.84 0.94 0.74
+	diffuse 0.63 0.65 0.62
+	specular 0.23 0.23 0.52 12
+	specMap roadDesertAnomaly_spec.jpg
+	specMap_rgb true
+}
+material roadDesertAnomaly_ter
+{
+	parent road_terrain
+	diffuseMap roadDesertAnomaly.png
+	normalMap roadDesert_n.jpg
+	ambient 0.79 0.77 0.47
+	diffuse 0.66 0.65 0.52
+	specular 0.23 0.23 0.52 22
+	specMap roadDesertAnomaly_spec.jpg
+	specMap_rgb true
+}
+
+// Savannah Anomaly 
+material roadSavannahAnomaly
+{
+	parent road
+   	ambient 0.88 0.88 0.88
+	diffuse 0.8 0.8 0.8
+	specular 1.2 1.2 0.28 8
+	diffuseMap roadSavannahAnomaly.jpg
+	specMap roadSavannahAnomaly.jpg
+}
+material roadSavannahAnomaly_ter
+{
+	parent road_terrain
+   	ambient 0.88 0.88 0.88
+	diffuse 0.8 0.8 0.8
+	specular 1.2 1.2 0.28 8
+	diffuseMap roadSavannahAnomaly.jpg
+	normalMap normal_1.png
+	specMap roadSavannahAnomaly.jpg
+	specMap_rgb true
+}
+
+// Moss Anomaly
+material roadMossAnomaly
+{
+	parent road
+	diffuseMap roadMossAnomaly.jpg
+	ambient 0.7 0.8 0.6
+	diffuse 0.5 0.5 0.8
+	specular 0.65 0.24 0.25 48
+}
+material roadMossAnomaly_ter
+{
+	parent road_terrain
+	diffuseMap roadMossAnomaly.jpg
+	ambient 0.7 0.8 0.6
+	diffuse 0.6 0.6 0.9
+	specular 0.65 0.24 0.25 96
+	normalMap normal_1.png
+}
+
+material roadMossAnomaly2
+{
+	parent road
+	diffuseMap roadMossAnomaly2.png
+	ambient 0.7 0.8 0.6
+	diffuse 0.5 0.5 0.8
+	specular 0.65 0.24 0.25 48
+}
+material roadMossAnomaly2_ter
+{
+	parent road_terrain
+	diffuseMap roadMossAnomaly2.png
+	ambient 0.7 0.8 0.6
+	diffuse 0.6 0.6 0.9
+	specular 0.65 0.24 0.25 96
+	normalMap normal_1.png
+}
+
+// Asphalt Anomaly
+material roadAsphaltAnomaly
+{
+	parent road
+	diffuseMap roadAsphalt_spec.jpg
+	specMap roadAsphaltAnomaly_spec.jpg
+	specMap_rgb true
+	ambient 0.5 1.4 0.2
+	diffuse 0.1 0.75 2.75
+	specular 2.1 0.0 0.4 4
+}
+material roadAsphaltAnomaly_ter
+{
+	parent road
+	diffuseMap roadAsphalt_spec.jpg
+	normalMap normal_1.png
+	specMap roadAsphaltAnomaly_spec.jpg
+	specMap_rgb true
+	ambient 0.5 1.4 0.2
+	diffuse 0.1 0.75 2.75
+	specular 2.1 0.0 0.4 4
+}
+
+material roadAsphaltAnomalyStreaks
+{
+	parent road
+	diffuseMap roadAsphaltAnomalyStreaks.png
+	specMap roadAsphalt.jpg
+	specMap_rgb true
+	ambient 0.5 1.4 0.2
+	diffuse 0.1 0.75 2.75
+	specular 2.1 0.0 0.4 4
+}
+material roadAsphaltAnomalyStreaks_ter
+{
+	parent road
+	diffuseMap roadAsphaltAnomalyStreaks.png
+	normalMap normal_1.png
+	specMap roadAsphalt.jpg
+	specMap_rgb true
+	ambient 0.5 1.4 0.2
+	diffuse 0.1 0.75 2.75
+	specular 2.1 0.0 0.4 4
+}
+
+// Anomaly Space - Metal
+material roadMetal1Anomaly
+{
+	parent road
+	diffuseMap roadMetal1Anomaly.jpg
+	specMap roadMetal1Anomaly_spec.jpg
+	specMap_rgb true
+	ambient 0.8 0.8 1.1
+	diffuse 0.5 0.3 0.5
+	specular 1 0.2 1 16
+	normalMap roadMetal1.jpg
+	bump_scale 0.5
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.05
+}
+material roadMetal1Anomaly_ter
+{
+	parent road
+	diffuseMap roadMetal1Anomaly.jpg
+	specMap roadMetal1Anomaly_spec.jpg
+	specMap_rgb true
+	ambient 0.8 0.8 1.1
+	diffuse 0.5 0.3 0.5
+	specular 1 0.2 1 16
+	normalMap roadMetal1.jpg
+	bump_scale 0.4
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.05
+}
+
+material roadMetal2Anomaly
+{
+	parent road
+	diffuseMap roadMetal2Anomaly.jpg
+	specMap roadMetal2Anomaly_spec.jpg
+	specMap_rgb true
+	ambient 1.1 0.7 0.8
+	diffuse 0.5 0.7 0.4
+	specular 2 1 1 16
+	normalMap roadMetal2Anomaly_norm.jpg
+	bump_scale 0.2
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.15
+}
+material roadMetal2Anomaly_ter
+{
+	parent road
+	diffuseMap roadMetal2Anomaly.jpg
+	specMap roadMetal2Anomaly_spec.jpg
+	specMap_rgb true
+	ambient 1.1 0.7 0.8
+	diffuse 0.5 0.7 1.2
+	specular 2 1 1 16
+	normalMap roadMetal2Anomaly_norm.jpg
+	bump_scale 0.3
+	envMap ReflectionCube
+	env_map true
+	refl_amount 0.15
+}
+
+// Anomaly Space - Asphalt
+material roadAsphaltAnomalySpace
+{
+	parent road
+	diffuseMap roadAsphalt_spec.jpg
+	specMap roadAsphaltAnomalySpace_spec.jpg
+	specMap_rgb true
+	ambient 0.5 0.4 1.5
+	diffuse 0.1 0.75 2.75
+	specular 1.7 0.0 0.4 4
+	receives_shadows false
+}
+material roadAsphaltAnomalySpace_ter
+{
+	parent road
+	diffuseMap roadAsphalt_spec.jpg
+	normalMap normal_1.png
+	specMap roadAsphaltAnomalySpace_spec.jpg
+	specMap_rgb true
+	ambient 0.5 0.4 1.5
+	diffuse 0.1 0.75 2.75
+	specular 1.7 0.0 0.4 4
+	receives_shadows false
+}
+
+material roadAsphaltAnomalySpaceStreaks
+{
+	parent road
+	diffuseMap roadAsphaltAnomalyStreaks.png
+	specMap roadAsphaltAnomalySpace_spec.jpg
+	specMap_rgb true
+	ambient 0.5 0.4 1.5
+	diffuse 0.1 0.75 2.75
+	specular 1.7 0.0 0.4 4
+	receives_shadows false
+}
+material roadAsphaltAnomalySpaceStreaks_ter
+{
+	parent road
+	diffuseMap roadAsphaltAnomalyStreaks.png
+	normalMap normal_1.png
+	specMap roadAsphaltAnomalySpace_spec.jpg
+	specMap_rgb true
+	ambient 0.5 0.4 1.5
+	diffuse 0.1 0.75 2.75
+	specular 1.7 0.0 0.4 4
+	receives_shadows false
+}

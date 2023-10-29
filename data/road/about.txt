@@ -31,3 +31,24 @@ roadSpring*
 by rubberduck
 based on roadJDark.jpg mixed with own
 CC-By 3.0 ?
+
+
+new anomaly:
+
+HI_WheelWall*
+based on HI Car texture
+License: CC-BY 4.0,  see cars/HI/about.txt for more detail
+
+pipeGlass_space_anomaly.png
+based on Spc2-SpaceMine track terrain preview (terrain.jpg)
+
+roadAsphaltAnomaly, roadDesertAnomaly, roadMossAnomaly, 
+roadSavannahAnomaly, roadGlass*_anomaly, roadMetal1Anomaly, roadMetal2Anomaly
+based on their original
+
+wall_lava_anomaly based on lava terrain texture
+
+
+
+
+

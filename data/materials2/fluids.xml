@@ -256,5 +256,84 @@
 		fogHSVA="0.568 0.500 0.088 1" fogDens="34" fogDensH="1" deep="1" />
 	<fluid name="water pink low density"	material="Water_pink"  density="150" angDamp="0.8" linDamp="0.3" heightDamp="0"
 		fogHSVA="0.828 0.440 0.758 1" fogDens="38" fogDensH="1" deep="1" />
-
+		
+	<!-- anomaly -->
+	<fluid name="water anomaly blue"	material="Water_anomaly_blue"  density="200" angDamp="0.7" linDamp="0.2" heightDamp="0"
+		fogHSVA="0.548 0.742 0.612 1" fogDens="19" fogDensH="1" deep="1" />
+		
+	<fluid name="anomaly jelly 1"	material="Anomaly_jelly_1" density="800"  angDamp="1.2" linDamp="0.9" heightDamp="4"
+		fogHSVA="0.752 0.564 0.170 1" fogDens="12" fogDensH="0.6"
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" deep="0" />
+	<fluid name="anomaly jelly 1 lowDamp"	material="Anomaly_jelly_1" density="800"  angDamp="0.3" linDamp="0.6" heightDamp="2"
+		fogHSVA="0.752 0.564 0.170 1" fogDens="12" fogDensH="0.6"
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" deep="0" />
+	<fluid name="anomaly jelly 1 highDamp"	material="Anomaly_jelly_1" density="800"  angDamp="2.1" linDamp="1.4" heightDamp="5"
+		fogHSVA="0.752 0.564 0.170 1" fogDens="12" fogDensH="0.6"
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" deep="0" />	
+	<fluid name="anomaly jelly 1 solid ice"	material="Anomaly_jelly_1" density="800"  angDamp="1.2" linDamp="0.4" heightDamp="3"
+		fogHSVA="0.752 0.564 0.170 1" fogDens="12" fogDensH="0.6"
+		solid="1" surf="roadSnow" idParticles="-1" deep="0" />
+	<fluid name="anomaly jelly 1 solid dmg"	material="Anomaly_jelly_1" density="800" angDamp="0.2" linDamp="0.4" heightDamp="1"
+		fogHSVA="0.023 0.742 0.091 1" fogDens="4" fogDensH="0.6"
+		solid="1" surf="DesertFast" idParticles="-1" fDamage="2.4" deep="0" />
+	
+	<fluid name="anomaly jelly 2"	material="Anomaly_jelly_2" density="800"  angDamp="1.3" linDamp="0.9" heightDamp="4"
+		fogHSVA="0.752 0.564 0.170 1" fogDens="12" fogDensH="0.6"
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" deep="0" />
+	<fluid name="anomaly jelly 2 lowDamp"	material="Anomaly_jelly_2" density="800"  angDamp="0.3" linDamp="0.6" heightDamp="2"
+		fogHSVA="0.752 0.564 0.170 1" fogDens="12" fogDensH="0.6"
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" deep="0" />
+	<fluid name="anomaly jelly 2 highDamp"	material="Anomaly_jelly_2" density="800"  angDamp="2.1" linDamp="1.6" heightDamp="5"
+		fogHSVA="0.752 0.564 0.170 1" fogDens="12" fogDensH="0.6"
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" deep="0" />
+	<fluid name="anomaly jelly 2 solid ice"	material="Anomaly_jelly_2" density="800"  angDamp="1.2" linDamp="0.4" heightDamp="3"
+		fogHSVA="0.752 0.564 0.170 1" fogDens="12" fogDensH="0.6"
+		solid="1" surf="roadSnow" idParticles="-1" deep="0" />
+	<fluid name="anomaly jelly 2 solid dmg"	material="Anomaly_jelly_2" density="800" angDamp="0.2" linDamp="0.4" heightDamp="1"
+		fogHSVA="0.023 0.742 0.091 1" fogDens="4" fogDensH="0.6"
+		solid="1" surf="DesertFast" idParticles="-1" fDamage="2.4" deep="0" />
+		
+	<fluid name="anomaly jelly 3"	material="Anomaly_jelly_3" density="400"  angDamp="1.3" linDamp="0.9" heightDamp="4"
+		fogHSVA="0.752 0.564 0.170 1" fogDens="12" fogDensH="0.6"
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" deep="0" />
+	<fluid name="anomaly jelly 3 lowDamp"	material="Anomaly_jelly_3" density="400"  angDamp="0.3" linDamp="0.6" heightDamp="2"
+		fogHSVA="0.752 0.564 0.170 1" fogDens="12" fogDensH="0.6"
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" deep="0" />
+	<fluid name="anomaly jelly 3 highDamp"	material="Anomaly_jelly_3" density="400"  angDamp="2.1" linDamp="1.6" heightDamp="5"
+		fogHSVA="0.752 0.564 0.170 1" fogDens="12" fogDensH="0.6"
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="70" whForceUp="50"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.2" bumpAngle="0" whSteerMul="3" idParticles="-1" deep="0" />
+	<fluid name="anomaly jelly 3 solid ice"	material="Anomaly_jelly_3" density="400"  angDamp="1.2" linDamp="0.4" heightDamp="3"
+		fogHSVA="0.752 0.564 0.170 1" fogDens="12" fogDensH="0.6"
+		solid="1" surf="roadSnow" idParticles="-1" deep="0" />
+	<fluid name="anomaly jelly 3 solid dmg"	material="Anomaly_jelly_3" density="400" angDamp="0.2" linDamp="0.4" heightDamp="1"
+		fogHSVA="0.023 0.742 0.091 1" fogDens="4" fogDensH="0.6"
+		solid="1" surf="DesertFast" idParticles="-1" fDamage="2.4" deep="0" />
+		
+	<fluid name="mud white anomaly"	material="Mud_white_anomaly"  density="2200"  angDamp="2.7" linDamp="1.4" heightDamp="3"
+		fogHSVA="0.532 0.086 0.853 1" fogDens="7" fogDensH="0.9"
+		bWhForce="1" whMaxAngVel="60" whSpinDamp="25"  whForceLong="80" whForceUp="20"
+		bumpFqX="22.2" bumpFqY="23.2" bumpAmp="0.2" bumpAngle="0" whSteerMul="2" idParticles="1" deep="0" />
+	<fluid name="mud white anomaly lowDamp"	material="Mud_white_anomaly"  density="2200"  angDamp="1.1" linDamp="0.6" heightDamp="2"
+		fogHSVA="0.532 0.086 0.853 1" fogDens="7" fogDensH="0.9"
+		bWhForce="1" whMaxAngVel="60" whSpinDamp="25"  whForceLong="80" whForceUp="20"
+		bumpFqX="22.2" bumpFqY="23.2" bumpAmp="0.2" bumpAngle="0" whSteerMul="2" idParticles="1" deep="0" />
+	<fluid name="mud white anomaly highDamp"	material="Mud_white_anomaly"  density="2200"  angDamp="5.2" linDamp="2.8" heightDamp="8"
+		fogHSVA="0.532 0.086 0.853 1" fogDens="7" fogDensH="0.9"
+		bWhForce="1" whMaxAngVel="60" whSpinDamp="25"  whForceLong="80" whForceUp="20"
+		bumpFqX="22.2" bumpFqY="23.2" bumpAmp="0.2" bumpAngle="0" whSteerMul="2" idParticles="1" deep="0" />
+		
+	<fluid name="water strange anomaly"	material="Water_strange_anomaly" density="700" angDamp="0.7" linDamp="0.2" heightDamp="0"
+		fogHSVA="0.832 0.523 0.631 1" fogDens="17" fogDensH="1" deep="1" />
+	<fluid name="water strange2_anomaly"	material="Water_strange2_anomaly" density="1150" angDamp="0.8" linDamp="0.4" heightDamp="0"
+		fogHSVA="0.432 0.823 0.531 0.7" fogDens="11" fogDensH="1" deep="1" />
+	
 </fluids>

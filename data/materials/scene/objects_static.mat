@@ -1221,4 +1221,34 @@ material wagon_wheels
 	terrain_light_map true
 }
 
+material concrete_bar_anomaly
+{
+	parent base
+	diffuseMap concrete_bar_norm.jpg
+	normalMap concrete_bar_norm.jpg
+	specMap concrete_bar_spec.png
+	terrain_light_map true
+	ambient 0.80 0.80 0.80
+	diffuse 0.90 0.90 0.90
+	specular 1 1 1 4
+}
+
+material obstaclesAnomaly
+{
+	parent base
+	diffuseMap obstaclesAnomaly_d.jpg
+	normalMap maur_boat_norm.png
+	specMap maur_boat_spec.png
+    specMap_rgb true
+	ambient 1.1 1.1 1.1
+	diffuse 0.75 0.75 0.75
+	terrain_light_map true
+	specular 0.5 1.6 1.0 16
+	env_map true
+	envMap ReflectionCube
+	bump_scale 1.2
+	refl_amount 0.5
+}
+
+
 

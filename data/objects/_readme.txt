@@ -210,3 +210,7 @@ Author: Rico Cilliers
 License: CC0
 https://polyhaven.com/a/dry_branches_medium_01
 
+---- *_anomaly
+Author: Various
+Licenses: Various
+based on their original variants

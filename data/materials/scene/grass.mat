@@ -289,3 +289,64 @@ material seaweed02 {  parent grass
 	
 material seaweed03 {  parent grass
     diffuseMap seaweed03.png  }
+
+
+//  anomaly
+material grassAnomaly01a {  parent grass
+	emissive 0.3 0.3 0.3
+    diffuseMap grassAnomaly01a.png  }
+	
+material grassAnomaly01b {  parent grass
+    diffuseMap grassAnomaly01b.png  }
+	
+material grassAnomaly01c {  parent grass
+    diffuseMap grassAnomaly01c.png  }
+	
+	
+material grassAnomaly02a {  parent grass
+	emissive 0.3 0.3 0.3
+    diffuseMap grassAnomaly02a.png  }
+	
+material grassAnomaly02b {  parent grass
+    diffuseMap grassAnomaly02b.png  }
+	
+material grassAnomaly02c {  parent grass
+	ambient 0.8 0.8 0.6
+    diffuse 0.5 0.5 0.4
+    diffuseMap grassAnomaly02c.png  }
+	
+material grassAnomaly03a {  parent grass
+	emissive 0.3 0.3 0.3
+    diffuseMap grassAnomaly03a.png  }
+	
+material grassAnomaly03b {  parent grass
+    diffuseMap grassAnomaly03b.png  }
+	
+material grassAnomaly03c {  parent grass
+	ambient 0.8 0.8 0.6
+    diffuse 0.5 0.5 0.4
+    diffuseMap grassAnomaly03c.png  }
+	
+material grassAnomaly04a {  parent grass
+	emissive 0.3 0.3 0.3
+    diffuseMap grassAnomaly04a.png  }
+	
+material grassAnomaly04b {  parent grass
+    diffuseMap grassAnomaly04b.png  }
+	
+material grassAnomaly04c {  parent grass
+	ambient 1.8 1.8 1.6
+    diffuse 1.5 1.5 1.4
+    diffuseMap grassAnomaly04c.png  }
+	
+material flower02AnomalyA {  parent grass
+	emissive 0.3 0.3 0.3
+    diffuseMap flower02AnomalyA.png  }
+	
+material flower02AnomalyB {  parent grass
+    diffuseMap flower02AnomalyB.png  }
+	
+material flower02AnomalyC {  parent grass
+	ambient 0.8 0.8 0.6
+    diffuse 0.5 0.5 0.4
+    diffuseMap flower02AnomalyC.png  }
