@@ -31,9 +31,9 @@ Firstly you need to install VS 2010 Express, [read
 here](compilevs#visual_studio_c_2010_express).
 
 Then download, the archive (`SR_deps_VS10exp.7z`) from
-[here](http://sourceforge.net/projects/stuntrally/files/2.3/SR_deps_VS10exp.7z/download).
+[here](https://sourceforge.net/projects/stuntrally/files/2.3/SR_deps_VS10exp.7z/download).
 
-To unpack it, use [7-zip](http://www.7-zip.org/download.html) or any
+To unpack it, use [7-zip](https://www.7-zip.org/download.html) or any
 decent File Commander that can.
 
 Fastest way would be to unpack in `e:\v`, but you may not have `e:`,  
@@ -98,7 +98,7 @@ Also if you don't like my comments or want to do this really fast,
   
 This page provides a detailed description that could guide you through
 the *nightmare* process of building on
-[Windows](http://en.windows7sins.org/).
+[Windows](https://en.windows7sins.org/).
 
 It is considered difficult and tedious, *annoying and stupid too*.
 
@@ -124,8 +124,8 @@ Chuck Norris has built SR within 3 hours.*
 Lastly, it is likely that you will have errors / issues, not mentioned
 here,  
 I recommend just putting them in
-[stackoverflow](http://www.stackoverflow.com) or
-[google](http://www.google.com) search.
+[stackoverflow](https://www.stackoverflow.com) or
+[duckduckgo](https://www.duckduckgo.com) search.
 
   
 ## Introduction
@@ -149,11 +149,11 @@ Any version should work. I didn't test myself though.
 ### Client for Git
 
 To download the SR sources from repository you can get the client
-[here](http://git-scm.com/downloads),  
+[here](https://git-scm.com/downloads),  
 which comes with a simple GUI and integrates with the Windows File
 Explorer.  
 *That should do the task, but you can also use
-[TortoiseGit](http://code.google.com/p/tortoisegit/wiki/Download) or
+[TortoiseGit](https://code.google.com/p/tortoisegit/wiki/Download) or
 [GitExtensions](https://github.com/gitextensions/gitextensions/releases),
 it's up to you.*  
 *If you really don't want to quickly update it later, you can download
@@ -164,7 +164,7 @@ tracks [here](https://github.com/stuntrally/tracks/tags).*
 
 We need CMake to create the project and solution files for `MyGui`
 library (also can be used for few other).  
-Download from <http://www.cmake.org/>
+Download from <https://www.cmake.org/>
 
 > CMake is the best approach, since it is a layer above project files,
 > it can be used to generate them for various IDEs.  
@@ -209,16 +209,16 @@ Now, download those by clicking on all Links.
 If the Download Link doesn't work use Downloads and pick version, if
 even that is broken visit Website and find downloads.
 
-| **Library** | Version used | Website                               | Downloads                                                                 | **Download Link**                                                                                                       |
+| **Library** | Version used | Website                               | Downloads                                                                 | Download Link (old, broken)                                                                                                       |
 |-------------|--------------|---------------------------------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
-| Ogre        | 1.9\*        | <http://www.ogre3d.org>               | [Downloads](http://www.ogre3d.org/download/sdk)                           | [Link](http://sourceforge.net/projects/ogre/files/ogre/1.9/1.9/OgreSDK_vc10_v1-9-0.exe/download)                        |
-| Bullet      | 2.79\*       | <http://bulletphysics.org>            | [Downloads](https://code.google.com/p/bullet/downloads/list)              | [Link](http://code.google.com/p/bullet/downloads/detail?name=bullet-2.79-rev2440.zip&can=4&q======)                     |
-| MyGui       | 3.2          | <http://mygui.info>                   | [Downloads](http://www.sourceforge.net/p/my-gui/code/HEAD/tree/)          | [Link](http://sourceforge.net/p/my-gui/code/HEAD/tarball)                                                               |
-| SDL2        | 2.0.3        | <http://www.libsdl.org>               | [Downloads](http://www.libsdl.org/download-2.0.php)                       | [Link](http://www.libsdl.org/release/SDL2-devel-2.0.3-VC.zip)                                                           |
-| Boost       | 1.55\*       | <http://www.boost.org>                | [Downloads](https://sourceforge.net/projects/boost/files/boost-binaries/) | [Link](http://sourceforge.net/projects/boost/files/boost-binaries/1.55.0-build2/boost_1_55_0-msvc-10.0-32.exe/download) |
-| Enet        | 1.3.12       | <http://enet.bespin.org>              | [Downloads](http://enet.bespin.org/SourceDistro.html)                     | [Link](http://enet.bespin.org/download/enet-1.3.12.tar.gz)                                                              |
-| Ogg         | 1.3.1        | <http://xiph.org>                     | [Downloads](http://xiph.org/downloads/)                                   | [Link](http://downloads.xiph.org/releases/ogg/libogg-1.3.1.zip)                                                         |
-| Vorbis      | 1.3.4        | <http://xiph.org>                     | [Downloads](http://xiph.org/downloads/)                                   | [Link](http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.4.zip)                                                   |
+| Ogre        | 1.9\*        | <https://www.ogre3d.org>               | [Downloads](https://www.ogre3d.org/download/sdk)                           | [Link](https://sourceforge.net/projects/ogre/files/ogre/1.9/1.9/OgreSDK_vc10_v1-9-0.exe/download)                        |
+| Bullet      | 2.79\*       | <https://pybullet.org/wordpress/>            | [Downloads](https://github.com/bulletphysics/bullet3/releases)              | [Link](https://code.google.com/p/bullet/downloads/detail?name=bullet-2.79-rev2440.zip&can=4&q======)                     |
+| MyGui       | 3.2          | <http://mygui.info>                   | [Downloads](https://github.com/MyGUI/mygui/releases/)          | [Link](https://sourceforge.net/p/my-gui/code/HEAD/tarball)                                                               |
+| SDL2        | 2.0.3        | <https://www.libsdl.org>               | [Downloads](https://www.libsdl.org/download-2.0.php)                       | [Link](https://www.libsdl.org/release/SDL2-devel-2.0.3-VC.zip)                                                           |
+| Boost       | 1.74\*       | <https://www.boost.org>                | [Downloads](https://sourceforge.net/projects/boost/files/boost-binaries/) | [Link](https://sourceforge.net/projects/boost/files/boost-binaries/1.55.0-build2/boost_1_55_0-msvc-10.0-32.exe/download) |
+| Enet        | 1.3.12       | <https://enet.bespin.org>              | [Downloads](https://github.com/lsalzman/enet/tags)                     | [Link](https://enet.bespin.org/download/enet-1.3.12.tar.gz)                                                              |
+| Ogg         | 1.3.1        | <https://xiph.org>                     | [Downloads](https://xiph.org/downloads/)                                   | [Link](https://downloads.xiph.org/releases/ogg/libogg-1.3.1.zip)                                                         |
+| Vorbis      | 1.3.4        | <https://xiph.org>                     | [Downloads](https://xiph.org/downloads/)                                   | [Link](https://downloads.xiph.org/releases/vorbis/libvorbis-1.3.4.zip)                                                   |
 | OpenAL Soft | 1.13         | <https://github.com/kcat/openal-soft> | [tags](https://github.com/kcat/openal-soft/tags)                          |                                                                                                                         |
 
   
@@ -261,9 +261,9 @@ This is wrong in Bullet, others seem to have it set properly.
 > linker errors out of nowhere.  
 > And is is quite tricky to find out which .lib caused it, if you didn't
 > check. See e.g.
-> [here](http://stackoverflow.com/questions/604484/linker-errors-between-multiple-projects-in-visual-c).*
+> [here](https://stackoverflow.com/questions/604484/linker-errors-between-multiple-projects-in-visual-c).*
 
-![](http://vdrift-ogre.googlecode.com/files/IMG20121117_1s.png)
+![](https://vdrift-ogre.googlecode.com/files/IMG20121117_1s.png)
 
   
 ### Ogg
@@ -343,7 +343,7 @@ Crucial: select only those we need and set Runtime to Multi-threaded DLL
 We downloaded already a build SDL2 archive, so just need to unpack it
 (`SDL2-devel-2.0.3-VC.zip`).  
 *If you want to build SDL from sources (not needed), download
-[this](http://www.libsdl.org/release/SDL2-2.0.3.zip).  
+[this](https://www.libsdl.org/release/SDL2-2.0.3.zip).  
 Then extract in `e:\v` and go into `e:\v\SDL2-2.0.3\VisualC` dir and
 open SDL_VS2010.sln.*
 
@@ -353,7 +353,7 @@ open SDL_VS2010.sln.*
 Note: on current master version, the Stunt Rally game project has Enet
 inside sources, so it's build with game, no need to build it outside.  
 For older SR versions: Download the VS 2010 project files for Enet from
-[here](http://vdrift-ogre.googlecode.com/files/enet_1.3.5_prj_files_vs2010.zip),
+[here](https://vdrift-ogre.googlecode.com/files/enet_1.3.5_prj_files_vs2010.zip),
 then open it and build project (in Debug and Release as always).  
 
 ------------------------------------------------------------------------
@@ -382,10 +382,10 @@ Set environment variable BOOST_ROOT with main Boost path.
 
 > If you want to build boost from sources (really not needed), download
 > sources
-> [here](http://sourceforge.net/projects/boost/files/boost/1.55.0/boost_1_55_0.7z/download)
+> [here](https://sourceforge.net/projects/boost/files/boost/1.55.0/boost_1_55_0.7z/download)
 > and  
 > read how to build
-> [here](http://www.boost.org/doc/libs/1_55_0/more/getting_started/windows.html#simplified-build-from-source)
+> [here](https://www.boost.org/doc/libs/1_55_0/more/getting_started/windows.html#simplified-build-from-source)
 > (just 2 commands in visual studio command prompt, but might take
 > several minutes).
 
@@ -396,10 +396,10 @@ Start the downloaded `OgreSDK_vc10_v1-9-0.exe`.
 This will install Ogre build, it already includes debug and release lib
 files *(also a piece of boost, and what not :-) ).*  
 For reference you can read [Ogre
-Wiki](http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Installing+the+Ogre+SDK).  
+Wiki](https://www.ogre3d.org/tikiwiki/tiki-index.php?page=Installing+the+Ogre+SDK).  
 You'll need to install also DirectX SDK June 2010 (Runtime/redist),
 [link
-here](http://www.microsoft.com/en-au/download/details.aspx?id=8109).  
+here](https://www.microsoft.com/en-au/download/details.aspx?id=8109).  
 Extract that and start DXSETUP.exe.  
 *(you can delete other date files leaving just `Jun2010_*.cab` and the
 short name files starting with d)*.
@@ -422,14 +422,14 @@ Building Ogre from sources is very time consuming (and not needed to build SR).
 *Also takes like 6GB of disk space (mostly intermediate garbage).*  
 But if you want to or you had troubles with Ogre SDK, then I recommend
 this [Building Ogre
-Wiki](http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Building+Ogre)
+Wiki](https://www.ogre3d.org/tikiwiki/tiki-index.php?page=Building+Ogre)
 on how to do it.  
 *My short guide:*  
 You need to install full DirectX SDK June 2010 (samples not needed, but
 still 572MB to download), link
-[here](http://www.microsoft.com/en-us/download/confirmation.aspx?id=6812).  
+[here](https://www.microsoft.com/en-us/download/confirmation.aspx?id=6812).  
 Install
-[TortoiseHg](http://bitbucket.org/tortoisehg/files/downloads/tortoisehg-2.11.2-hg-2.9.2-x64.msi)
+[TortoiseHg](https://bitbucket.org/tortoisehg/files/downloads/tortoisehg-2.11.2-hg-2.9.2-x64.msi)
 to get the sources.  
 Clone these 2 repositories:  
 <https://bitbucket.org/cabalistic/ogredeps> - Ogre Dependencies - into
@@ -441,11 +441,11 @@ Set environment paths for BOOST_ROOT, OGRE_HOME, OGRE_DEPENDENCIES_DIR
 dir)*.  
 After that use CMake for Ogre and build.  
 Other links: [Ogre Mercurial
-Wiki](http://www.ogre3d.org/developers/mercurial), [Ogre
-Prerequisites](http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Prerequisites)  
+Wiki](https://www.ogre3d.org/developers/mercurial), [Ogre
+Prerequisites](https://www.ogre3d.org/tikiwiki/tiki-index.php?page=Prerequisites)  
 *And above all, sit straight and don't curse. Also give your hands a
 rest, if you don't use an ergonomic keyboard or still use the layout
-from year [1878](http://www.dvzine.org/zine/).*
+from year [1878](https://www.dvzine.org/zine/).*
 
   
 ### MyGui

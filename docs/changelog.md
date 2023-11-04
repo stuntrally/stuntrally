@@ -18,7 +18,8 @@ Development continues in Stunt Rally 3.x.
 |-----------------|---------------|
 | **Version 2.8** | ?\. ?. 2023 |
 
--   223 tracks  (**21 New**, 7 renewed, 2 removed)
+-   225 tracks  (**23 New**, 7 renewed, 2 removed)
+-   3 New sceneries: Marble, Spring, Anomaly
 -   New content for tracks: hexrocks, particles, fluids, dynamic objects etc
 -   Editor
     -   Particles scale - new parameter for size e.g. for bigger clouds
