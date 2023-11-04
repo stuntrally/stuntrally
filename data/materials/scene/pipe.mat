@@ -1505,9 +1505,7 @@ material road_col_spring
 	bump_scale 0.7
 }
 
-// ----------------- new ANOMALY scenery -----------------
-//  pipes
-
+// ----------------- new Anomaly -----------------
 
 // new anomaly: road walls
 
@@ -1556,8 +1554,6 @@ material road_col_wheel_anomaly
 	normalMap HI_WheelWall_n.jpg
 	scene_blend alpha_blend
 }
-
-
 
 // new anomaly: pipe walls
 
@@ -1771,8 +1767,6 @@ material pipeGlassAnomalySpaceDark
 	bump_scale 0.1
 }
 
-
-
 material pipeAsphaltAnomaly
 {
 	parent base
@@ -1787,8 +1781,6 @@ material pipeAsphaltAnomaly
 	//receives_shadows false
 }
 
-
-	
 material pipeAsphaltAnomalySpace
 {
 	parent base
@@ -1808,7 +1800,6 @@ material pipeAsphaltAnomalySpace
 	receives_shadows false
 }
 
-
 material pipeAsphaltAnomalyStreaks
 {
 	parent pipe_glass
@@ -1823,8 +1814,6 @@ material pipeAsphaltAnomalyStreaks
 	//receives_shadows false
 }
 
-
-	
 material pipeAsphaltAnomalySpaceStreaks
 {
 	parent pipe_glass
@@ -1909,11 +1898,3 @@ material wallP_mining_truck_anomaly
 	parent wall_mining_truck_anomaly
 	cull_hardware none
 }
-
-
-
-
-
-
-
-

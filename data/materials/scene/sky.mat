@@ -307,6 +307,7 @@ material sky/newsky031B
     texture DaySkyHDRI031B_8K-HDR_2.jpg
 }
 
+//  anomaly
 material sky/sky_anomaly_01
 {
     parent base_sky
@@ -324,4 +325,3 @@ material sky/sky_anomaly_03
     parent base_sky
     texture sky_anomaly_03.jpg
 }
-
