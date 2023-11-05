@@ -771,6 +771,7 @@ material hexrock_metal
 	refl_amount 0.1
 }
 
+//  anomaly
 material crystal1_anomaly
 {
     parent base

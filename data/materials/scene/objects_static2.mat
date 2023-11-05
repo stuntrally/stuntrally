@@ -46,3 +46,259 @@ material satellite3
 	diffuse 0.8 0.8 0.8
 	specular 0.6 0.6 0.6 24
 }
+
+//  new'23  ------------------------------------------
+material ancient_ruins
+{
+	parent base
+	diffuseMap ancient_ruins.jpg
+	normalMap ancient_ruins_norm.jpg
+	specMap ancient_ruins_spec.jpg
+	ambient 0.9 0.9 0.9
+	diffuse 1.0 1.0 1.0
+	specular 0.7 0.7 0.7 16
+	bump_scale 0.55
+}
+
+material ancient_ruins_yellow
+{
+	parent base
+	diffuseMap ancient_ruins.jpg
+	normalMap ancient_ruins_norm.jpg
+	specMap ancient_ruins_spec.jpg
+	ambient 1.44 1.3 0.92
+	diffuse 1.52 1.3 0.94
+	specular 0.7 0.7 0.7 16
+	bump_scale 0.55
+}
+
+material ancient_ruins_white
+{
+	parent base
+	diffuseMap ancient_ruins_white.jpg
+	normalMap ancient_ruins_norm.jpg
+	specMap ancient_ruins_spec.jpg
+	ambient 1.3 1.3 1.3
+	diffuse 1.1 1.1 1.1
+	specular 0.87 0.87 0.87 16
+	bump_scale 0.55
+}
+
+//  pier, Spring
+material pier_planks
+{
+	parent base
+	diffuseMap pier_planks.jpg
+	normalMap pier_planks_norm.jpg
+	specMap pier_planks_spec.jpg
+	reflMap pier_planks_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 20
+}
+
+material pier_poles
+{
+	parent base
+	diffuseMap pier_poles.jpg
+	normalMap pier_poles_norm.jpg
+	specMap pier_poles_spec.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 20
+}
+
+material pier_planks_brown
+{
+	parent base
+	diffuseMap pier_planks.jpg
+	normalMap pier_planks_norm.jpg
+	specMap pier_planks_spec.jpg
+	reflMap pier_planks_metal.jpg
+	specMap_rgb true
+	ambient 0.75 0.6 0.3
+	diffuse 0.7 0.7 0.65
+	specular 1.0 1.0 1.0 20
+}
+
+material pier_poles_brown
+{
+	parent base
+	diffuseMap pier_poles.jpg
+	normalMap pier_poles_norm.jpg
+	specMap pier_poles_spec.jpg
+	ambient 0.75 0.6 0.3
+	diffuse 0.7 0.7 0.65
+	specular 1.0 1.0 1.0 20
+}
+
+//  new Stn2  ------------------------------------------
+material mining_truck
+{
+	parent base
+	diffuseMap mining_truck.jpg
+	normalMap mining_truck_norm.jpg
+	specMap mining_truck_spec.jpg
+	reflMap mining_truck_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 20
+	terrain_light_map true
+}
+
+material radio_tower
+{
+	parent base
+	diffuseMap radio_tower.jpg
+	normalMap radio_tower_norm.jpg
+	specMap radio_tower_spec.jpg
+	reflMap radio_tower_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 20
+	terrain_light_map true
+}
+
+material house_05
+{
+	parent base
+	diffuseMap house_05.jpg
+	normalMap house_05_norm.jpg
+	specMap house_05_spec.jpg
+	reflMap house_05_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 20
+	terrain_light_map true
+}
+
+material storage_tank
+{
+	parent base
+	diffuseMap storage_tank.jpg
+	normalMap storage_tank_norm.jpg
+	specMap storage_tank_spec.jpg
+	reflMap storage_tank_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+	bump_scale 0.65
+}
+
+material storage_tank_2
+{
+	parent base
+	diffuseMap storage_tank_2.jpg
+	normalMap storage_tank_2_norm.jpg
+	specMap storage_tank_2_spec.jpg
+	reflMap storage_tank_2_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+material gas_tank_02_red
+{
+	parent base
+	diffuseMap gas_tank_02_red.jpg
+	normalMap gas_tank_02_norm.jpg
+	specMap gas_tank_02_spec.jpg
+	reflMap gas_tank_02_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+material gas_tank_02_grey
+{
+	parent base
+	diffuseMap gas_tank_02_grey.jpg
+	normalMap gas_tank_02_norm.jpg
+	specMap gas_tank_02_spec.jpg
+	reflMap gas_tank_02_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+material gas_tank_02_green
+{
+	parent base
+	diffuseMap gas_tank_02_green.jpg
+	normalMap gas_tank_02_norm.jpg
+	specMap gas_tank_02_spec.jpg
+	reflMap gas_tank_02_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+material gas_tank_02_blue
+{
+	parent base
+	diffuseMap gas_tank_02_blue.jpg
+	normalMap gas_tank_02_norm.jpg
+	specMap gas_tank_02_spec.jpg
+	reflMap gas_tank_02_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+//  new Fin2  ------------------------------------------
+material log_cabin_01
+{
+	parent base
+	diffuseMap log_cabin_01.jpg
+	normalMap log_cabin_01_norm.jpg
+	specMap log_cabin_01_spec.jpg
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+	bump_scale 0.7
+}
+
+material wagon_wood
+{
+	parent base
+	diffuseMap wagon_wood.jpg
+	normalMap wagon_wood_norm.jpg
+	specMap wagon_wood_spec.jpg
+	reflMap wagon_wood_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+material wagon_wheels
+{
+	parent base
+	diffuseMap wagon_wheels.jpg
+	normalMap wagon_wheels_norm.jpg
+	specMap wagon_wheels_spec.jpg
+	reflMap wagon_wheels_metal.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
