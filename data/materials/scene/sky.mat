@@ -325,3 +325,10 @@ material sky/sky_anomaly_03
     parent base_sky
     texture sky_anomaly_03.jpg
 }
+
+material sky/space_nebula_01
+{
+    parent base_sky
+    texture space_nebula_01.jpg
+}
+
