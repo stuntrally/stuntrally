@@ -41,3 +41,23 @@ https://polyhaven.com/a/kloppenheim_02_puresky
 License: CC0
 More:
 https://polyhaven.com/hdris
+
+
+------------ HDRI based
+
+skies from CC0 HDRIs above, more or less modified
+
+sky_anomaly_*.jpg
+modified using G'MIC
+
+
+-------------- procedural
+
+space_nebula_01.jpg
+
+Self created in Blender, with big thanks to Samuel Krug VFX
+https://www.youtube.com/watch?v=v6pULIv8sZA
+and with a noise from Simon Thommes Noise Pack (CC0)
+https://simonthommes.gumroad.com/l/NOISE-P
+
+For fairness licensed under CC-BY-SA 4.0 to credit Samuel Krug VFX for the wonderful nebula tutorial
