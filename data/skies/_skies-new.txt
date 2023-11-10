@@ -1,0 +1,43 @@
+---- NEW skies 1 ----
+
+DaySkyHDRI004B*.jpg
+https://ambientcg.com/view?id=DaySkyHDRI004B
+
+DaySkyHDRI020B*.jpg
+https://ambientcg.com/view?id=DaySkyHDRI020B
+
+DaySkyHDRI026B*.jpg
+https://ambientcg.com/view?id=DaySkyHDRI026B
+
+DaySkyHDRI031B*.jpg
+https://ambientcg.com/view?id=DaySkyHDRI031B
+
+Rest *_2 etc colored versions from them
+
+License: CC0
+https://docs.ambientcg.com/license/
+More:
+https://ambientcg.com/list?type=HDRI
+
+---- NEW skies 2 ----
+aristea_wreck01.jpg
+https://polyhaven.com/a/aristea_wreck_puresky
+
+belfast_sunset01.jpg  belfast_sunset02.jpg
+https://polyhaven.com/a/belfast_sunset_puresky
+
+farm_field01.jpg
+https://polyhaven.com/a/farm_field_puresky
+
+kloofendal01.jpg
+https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky
+
+kloppenheim01.jpg
+https://polyhaven.com/a/kloppenheim_07_puresky
+
+kloppenheim02_a.jpg  kloppenheim02_b.jpg
+https://polyhaven.com/a/kloppenheim_02_puresky
+
+License: CC0
+More:
+https://polyhaven.com/hdris

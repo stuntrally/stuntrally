@@ -1,3 +1,4 @@
+---- OLD skies ----
 360x90 degree spherical Skybox textures, UV map them to a hemisphere for best result.
 
 - (old)  sky_*.jpg also d* m*
