@@ -1898,3 +1898,72 @@ material wallP_mining_truck_anomaly
 	parent wall_mining_truck_anomaly
 	cull_hardware none
 }
+
+
+//  crystal 2
+material road_wall_crystal_cyan
+{
+	parent road_wall
+	ambient 0.9 1.2 0.6
+	diffuse 0.95 1.35 0.65
+	specular 0.21 0.41 0.41 4
+	diffuseMap crystal_wall.jpg
+	normalMap normal_1.png
+	bump_scale 1.5
+}
+
+material pipe_wall_crystal_cyan
+{
+	parent pipe_wall
+	ambient 0.9 1.2 0.6
+	diffuse 0.95 1.35 0.65
+	specular 0.21 0.41 0.41 4
+	diffuseMap crystal_wall.jpg
+	normalMap normal_1.png
+	bump_scale 1.5
+}
+
+material road_col_crystal_cyan
+{
+	parent base
+	ambient 0.9 1.2 0.6
+	diffuse 0.95 1.35 0.65
+	specular 0.21 0.41 0.41 4
+	diffuseMap crystal_wall.jpg
+	normalMap normal_1.png
+	bump_scale 1.2
+}
+
+//  crystal 2
+material road_wall_crystal_pink
+{
+	parent road_wall
+	ambient 1.3 0.9 0.9
+	diffuse 1.45 0.95 0.95
+	specular 1.31 0.21 0.21 4
+	diffuseMap crystal_wall_pink.jpg
+	normalMap normal_1.png
+	bump_scale 1.5
+}
+
+material pipe_wall_crystal_pink
+{
+	parent pipe_wall
+	ambient 1.3 0.9 0.9
+	diffuse 1.45 0.95 0.95
+	specular 1.31 0.21 0.21 4
+	diffuseMap crystal_wall_pink.jpg
+	normalMap normal_1.png
+	bump_scale 1.5
+}
+
+material road_col_crystal_pink
+{
+	parent base
+	ambient 1.3 0.9 0.9
+	diffuse 1.45 0.95 0.95
+	specular 1.31 0.21 0.21 4
+	diffuseMap crystal_wall_pink.jpg
+	normalMap normal_1.png
+	bump_scale 1.2
+}

@@ -24,12 +24,14 @@ Url:		https://www.blendswap.com/blend/11024
 Artist:		OliverMH
 License:    CC-BY
 Date:		05/12/2013
+including color variants
 
 Low Poly Rock Formation 2
 Url:		https://www.blendswap.com/blend/11147
 Artist:		OliverMH
 License:    CC-0
 Date:		16/12/2013
+including color variants
 
 
 Models:		rock01* - rock46*.mesh
@@ -59,3 +61,20 @@ Models: 	*_anomaly.mesh
 Artists: 	Various (edited by rubberduck)
 Licenses: 	same as original used in SR 
 Date: 		29/10/2023
+
+
+Model:		crystal3
+Url:		https://sketchfab.com/3d-models/crystal-dc521f0925fb4f67b969d53e001d5bfe
+Artist:		SebastianSosnowski
+License:    CC-BY 4.0
+including color variants
+
+Model:		crystal_flower
+Url:		https://sketchfab.com/3d-models/crystal-flowers-2d8bcf463c9d4128bdc1a7abc7096d4d
+Artist:		C.anton
+License:    CC-BY 4.0
+including color variants
+
+
+crystal 4 based on crystal model (crystal1.mesh)
+

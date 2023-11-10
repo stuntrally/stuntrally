@@ -180,58 +180,6 @@ material rock_R5f
 	//specular 0.9 0.9 0.9 24
 }
 
-
-//  Crystals
-//------------------------------------------------------------------
-material crystal1
-{
-    parent base
-	diffuseMap crystal_form3.jpg
-	normalMap crystal_form3_n.jpg
-
-	ambient 0.1 0.3 0.3
-	diffuse 0.3 0.6 0.6
-	specular 0.05 0.2 0.25 64
-
-	transparent true
-	scene_blend add
-	//scene_blend alpha_blend
-	//cull_hardware none
-
-	depth_write off
-	depth_check off
-	twoside_diffuse true
-
-	tree_wind false
-	terrain_light_map true
-	receives_shadows false
-}
-
-material crystal6
-{
-    parent base
-	diffuseMap crystal_form2.jpg
-	normalMap crystal_form2_n.jpg
-
-	//ambient 1 1 1
-	ambient 0.08 0.1 0.12
-	diffuse 0.22 0.25 0.3
-	specular 0.2 0.2 0.3 64
-
-	transparent true
-	scene_blend add
-	//scene_blend alpha_blend
-	cull_hardware none
-
-	depth_write off
-	depth_check off
-	twoside_diffuse true
-
-	tree_wind false
-	terrain_light_map true
-	receives_shadows false
-}
-
 //  -
 material crystal_cube4
 {
@@ -833,5 +781,651 @@ material rock35red1edgy_anomaly
 	ambient 1.2 0.9 0.7
 	diffuse 1.0 0.7 0.5
 	specular 0.3 0.3 0.3 32
+}
+
+// ---------- new crystals
+
+//modified original, brightened
+material crystal1
+{
+    parent base
+	diffuseMap crystal_form3.jpg
+	normalMap crystal_form3_n.jpg
+
+	ambient 0.9 0.9 1.9
+	diffuse 0.6 0.6 1.1
+	specular 0.05 0.2 0.55 64
+
+	transparent true
+	scene_blend add
+	//scene_blend alpha_blend
+	//cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+material crystal6
+{
+    parent base
+	diffuseMap crystal_form2.jpg
+	normalMap crystal_form2_n.jpg
+
+	//ambient 1 1 1
+	ambient 0.48 0.6 0.72
+	diffuse 0.52 0.75 0.94
+	specular 0.3 0.3 0.6 64
+
+	transparent true
+	scene_blend add
+	//scene_blend alpha_blend
+	cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+//  Crystals original
+//------------------------------------------------------------------
+//material crystal1
+//{
+//    parent base
+//	diffuseMap crystal_form3.jpg
+//	normalMap crystal_form3_n.jpg
+
+//	ambient 0.1 0.3 0.3
+//	diffuse 0.3 0.6 0.6
+//	specular 0.05 0.2 0.25 64
+
+//	transparent true
+//	scene_blend add
+//	//scene_blend alpha_blend
+//	//cull_hardware none
+
+//	depth_write off
+//	depth_check off
+//	twoside_diffuse true
+
+//	tree_wind false
+//	terrain_light_map true
+//	receives_shadows false
+//}
+
+//material crystal6
+//{
+//    parent base
+//	diffuseMap crystal_form2.jpg
+//	normalMap crystal_form2_n.jpg
+
+//	ambient 0.08 0.1 0.12
+//	diffuse 0.22 0.25 0.3
+//	specular 0.2 0.2 0.3 64
+
+//	transparent true
+//	scene_blend add
+	//scene_blend alpha_blend
+//	cull_hardware none
+
+//	depth_write off
+//	depth_check off
+//	twoside_diffuse true
+
+//	tree_wind false
+//	terrain_light_map true
+//	receives_shadows false
+//}
+
+
+// recolored (and brightened)
+
+material crystal1_cyan
+{
+    parent base
+	diffuseMap crystal_form3_cyan.jpg
+	normalMap crystal_form3_n.jpg
+
+	ambient 0.7 0.98 0.96
+	diffuse 0.6 0.7 0.8
+	specular 0.05 0.5 0.55 64
+
+	transparent true
+	scene_blend add
+	//scene_blend alpha_blend
+	//cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+material crystal2_cyan
+{
+    parent base
+	diffuseMap crystal_form2_cyan.jpg
+	normalMap crystal_form2_n.jpg
+
+	//ambient 1 1 1
+	ambient 0.18 0.43 0.58
+	diffuse 0.4 0.53 0.63
+	specular 0.3 0.5 0.5 64
+
+	transparent true
+	scene_blend add
+	//scene_blend alpha_blend
+	cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+material crystal1_pink
+{
+    parent base
+	diffuseMap crystal_form3_pink.jpg
+	normalMap crystal_form3_n.jpg
+
+	ambient 2.2 0.26 1.0
+	diffuse 1.1 0.2 0.68
+	specular 1.05 0.4 0.55 64
+
+	transparent true
+	scene_blend add
+	//scene_blend alpha_blend
+	//cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+material crystal2_pink
+{
+    parent base
+	diffuseMap crystal_form2_pink.jpg
+	normalMap crystal_form2_n.jpg
+
+	//ambient 1 1 1
+	ambient 0.68 0.14 0.22
+	diffuse 0.52 0.13 0.23
+	specular 0.9 0.3 0.3 64
+
+	transparent true
+	scene_blend add
+	//scene_blend alpha_blend
+	cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+//recolored (not brightened)
+
+//material crystal1_cyan
+//{
+//    parent base
+//	diffuseMap crystal_form3_cyan.jpg
+//	normalMap crystal_form3_n.jpg
+
+//	ambient 0.1 0.3 0.3
+//	diffuse 0.3 0.6 0.6
+//	specular 0.05 0.35 0.25 64
+
+//	transparent true
+//	scene_blend add
+//	//scene_blend alpha_blend
+//	//cull_hardware none
+
+//	depth_write off
+//	depth_check off
+//	twoside_diffuse true
+
+//	tree_wind false
+//	terrain_light_map true
+//	receives_shadows false
+//}
+
+//material crystal2_cyan
+//{
+//   parent base
+//	diffuseMap crystal_form2_cyan.jpg
+//	normalMap crystal_form2_n.jpg
+
+//	//ambient 1 1 1
+//	ambient 0.08 0.1 0.12
+//	diffuse 0.22 0.25 0.3
+//	specular 0.2 0.35 0.3 64
+
+//	transparent true
+//	scene_blend add
+//	//scene_blend alpha_blend
+//	cull_hardware none
+
+//	depth_write off
+//	depth_check off
+//	twoside_diffuse true
+
+//	tree_wind false
+//	terrain_light_map true
+//	receives_shadows false
+//}
+
+//material crystal1_pink
+//{
+//    parent base
+//	diffuseMap crystal_form3_pink.jpg
+//	normalMap crystal_form3_n.jpg
+
+//	ambient 0.8 0.2 0.3
+//	diffuse 1.1 0.4 0.6
+//	specular 1.05 0.35 0.35 64
+
+//	transparent true
+//	scene_blend add
+//	//scene_blend alpha_blend
+//	//cull_hardware none
+
+//	depth_write off
+//	depth_check off
+//	twoside_diffuse true
+//
+//	tree_wind false
+//	terrain_light_map true
+//	receives_shadows false
+//}
+
+//material crystal2_pink
+//{
+//    parent base
+//	diffuseMap crystal_form2_pink.jpg
+//	normalMap crystal_form2_n.jpg
+
+//	//ambient 1 1 1
+//	ambient 0.2 0.02 0.12
+//	diffuse 0.42 0.04 0.22
+//	specular 1.2 0.35 0.3 64
+
+//	transparent true
+//	scene_blend add
+//	//scene_blend alpha_blend
+//	cull_hardware none
+
+//	depth_write off
+//	depth_check off
+//	twoside_diffuse true
+
+//	tree_wind false
+//	terrain_light_map true
+//	receives_shadows false
+//}
+
+
+
+// crystal forms and cube recolored
+material crystal_form1_cyan
+{
+    parent base
+	diffuseMap crystal_form1_cyan.jpg
+	normalMap crystal_form1_n.jpg
+
+	ambient 0.75 0.9 0.87
+	diffuse 0.6 0.86 0.86
+	specular 0.3 0.8 0.88 20
+
+	env_map true
+	envMap ReflectionCube
+	refl_amount 0.2
+
+	tree_wind false
+	terrain_light_map true
+	bump_scale 1
+}
+
+
+material crystalForm4_cyan
+{
+    parent base
+	diffuseMap crystal_form2_cyan.jpg
+	normalMap crystal_form2_n.jpg
+
+	ambient 0.9 0.85 0.96
+	diffuse 0.85 0.8 0.95
+	specular 0.05 0.4 0.4 64
+
+	tree_wind false
+	terrain_light_map true
+	bump_scale 2
+}
+
+material crystal_form3_cyan
+{
+    parent base
+	diffuseMap crystal_form3_cyan.jpg
+	normalMap crystal_form3_n.jpg
+
+	ambient 0.8 0.85 0.9
+	diffuse 0.8 0.85 0.9
+	specular 0.3 0.45 0.45 32
+
+	env_map true
+	envMap ReflectionCube
+	refl_amount 0.2
+
+	tree_wind false
+	terrain_light_map true
+	bump_scale 3
+}
+
+material crystal_cube4_cyan
+{
+    parent base
+	diffuseMap crystal_form3_cyan.jpg
+	normalMap crystal_form3_n.jpg
+
+	ambient 0.24 0.70 0.78
+	diffuse 0.20 0.60 0.85
+	specular 0.5 0.95 1.0 128
+
+	tree_wind false
+	terrain_light_map true
+	twoside_diffuse true
+	//receives_shadows false
+	shadowBias 0.0001
+	bump_scale 3
+}
+
+material crystal_form1_pink
+{
+    parent base
+	diffuseMap crystal_form1_pink.jpg
+	normalMap crystal_form1_n.jpg
+
+	ambient 1.5 0.8 0.98
+	diffuse 1.4 0.76 0.96
+	specular 0.96 0.4 0.58 20
+
+	env_map true
+	envMap ReflectionCube
+	refl_amount 0.2
+
+	tree_wind false
+	terrain_light_map true
+	bump_scale 1
+}
+
+material crystalForm4_pink
+{
+    parent base
+	diffuseMap crystal_form2_pink.jpg
+	normalMap crystal_form2_n.jpg
+
+	ambient 1.0 0.4 0.56
+	diffuse 0.9 0.5 0.6
+	specular 0.9 0.3 0.4 64
+
+	tree_wind false
+	terrain_light_map true
+	bump_scale 2
+}
+
+material crystal_form3_pink
+{
+    parent base
+	diffuseMap crystal_form3_pink.jpg
+	normalMap crystal_form3_n.jpg
+
+	ambient 1.25 0.55 0.77
+	diffuse 1.25 0.45 0.77
+	specular 0.9 0.25 0.45 32
+
+	env_map true
+	envMap ReflectionCube
+	refl_amount 0.2
+
+	tree_wind false
+	terrain_light_map true
+	bump_scale 3
+}
+
+material crystal_cube4_pink
+{
+    parent base
+	diffuseMap crystal_form3_pink.jpg
+	normalMap crystal_form3_n.jpg
+
+	ambient 0.98 0.70 0.78
+	diffuse 0.88 0.80 0.85
+	specular 1.2 0.45 0.8 128
+
+	tree_wind false
+	terrain_light_map true
+	twoside_diffuse true
+	//receives_shadows false
+	shadowBias 0.0001
+	bump_scale 3
+}
+
+
+// other new
+
+material crystal3_blue
+{
+    parent base
+	diffuseMap crystal3.png
+	normalMap crystal3_n.jpg
+
+	ambient 0.3 1.0 3.3
+	diffuse 0.2 1.0 3.6
+	specular 0.05 0.05 1.25 64
+
+	transparent true
+	//scene_blend add
+	scene_blend alpha_blend
+	//cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+material crystal3_cyan
+{
+    parent base
+	diffuseMap crystal3.png
+	normalMap crystal3_n.jpg
+
+	ambient 0.2 2.2 2.2
+	diffuse 0.1 2.7 2.7
+	specular 0.05 0.35 0.25 64
+
+	transparent true
+	//scene_blend add
+	scene_blend alpha_blend
+	//cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+material crystal3_pink
+{
+    parent base
+	diffuseMap crystal3.png
+	normalMap crystal3_n.jpg
+
+	ambient 2.7 0.8 1.23
+	diffuse 1.6 0.3 0.75
+	specular 0.85 0.25 0.35 64
+
+	transparent true
+	//scene_blend add
+	scene_blend alpha_blend
+	//cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+material crystal_flower_blue
+{
+    parent base
+	diffuseMap crystal_flower.png
+	normalMap crystal_form2_n.jpg
+
+	ambient 0.3 0.8 1.6
+	diffuse 0.3 0.5 2.1
+	specular 0.05 0.35 1.45 16
+
+	transparent true
+	//scene_blend add
+	scene_blend alpha_blend
+	//cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+material crystal_flower_cyan
+{
+    parent base
+	diffuseMap crystal_flower.png
+	normalMap crystal_form2_n.jpg
+
+	ambient 0.1 1.6 1.6
+	diffuse 0.3 2.1 2.1
+	specular 0.05 2.85 2.95 16
+
+	transparent true
+	//scene_blend add
+	scene_blend alpha_blend
+	//cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+
+material crystal_flower_pink
+{
+    parent base
+	diffuseMap crystal_flower.png
+	normalMap crystal_form2_n.jpg
+
+	ambient 1.9 0.3 0.8
+	diffuse 1.6 0.3 0.6
+	specular 1.15 0.45 0.45 16
+
+	transparent true
+	//scene_blend add
+	scene_blend alpha_blend
+	//cull_hardware none
+
+	depth_write off
+	depth_check off
+	twoside_diffuse true
+
+	tree_wind false
+	terrain_light_map true
+	receives_shadows false
+}
+
+
+material crystal4_blue
+{
+	parent base
+	diffuseMap hexrock_crystal.jpg
+	normalMap hexrock_crystal_norm.jpg
+	specMap hexrock_crystal_spec.jpg
+	reflMap hexrock_crystal_spec.jpg
+	specMap_rgb true
+	ambient 0.4 0.8 1.02
+	diffuse 0.9 0.9 1.14
+	specular 0.5 1.1 1.9 12
+	env_map true
+	envMap ReflectionCube
+	refl_amount 0.3
+}
+
+material crystal4_cyan
+{
+	parent base
+	diffuseMap hexrock_crystal.jpg
+	normalMap hexrock_crystal_norm.jpg
+	specMap hexrock_crystal_spec.jpg
+	reflMap hexrock_crystal_spec.jpg
+	specMap_rgb true
+	ambient 0.4 2.5 1.4
+	diffuse 0.9 2.8 1.64
+	specular 0.5 1.2 1.3 12
+	env_map true
+	envMap ReflectionCube
+	refl_amount 0.3
+}
+
+material crystal4_pink
+{
+	parent base
+	diffuseMap hexrock_crystal_pink.jpg
+	normalMap hexrock_crystal_norm.jpg
+	specMap hexrock_crystal_pink_spec.jpg
+	reflMap hexrock_crystal_pink_spec.jpg
+	specMap_rgb true
+	ambient 1.3 0.9 1.2
+	diffuse 1.0 0.8 0.64
+	specular 2.0 0.8 1.2 12
+	env_map true
+	envMap ReflectionCube
+	refl_amount 0.3
 }
 

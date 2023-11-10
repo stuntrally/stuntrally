@@ -142,6 +142,7 @@
 <s m="sky/newsky020B"          c="#58525f"   p="15"  y="0"  />
 <s m="sky/newsky026A"          c="#516477"   p="33"  y="0"  />
 <s m="sky/newsky026B"          c="#55779a"   p="33"  y="0"  />
+<s m="sky/space_nebula_01"     c="#41182a"   p="25"  y="115"  />
 	
 <!--  skies, anomaly  -->
 <s m="sky/sky_anomaly_01"      c="#a6d76e"   p="55"  y="0"  />
@@ -320,6 +321,10 @@
 <t sc="Spr"  t="grass_green_spring_d"   n="grass_green_n"       s="9.43"  r="5" su="GrassJungle"    tp="0" du="0.0" ds="0.2" md="0.4" tr="0.16 0.31 0.04 0.7"  aa="0"  ab="27" />
 <t sc="Spr"  t="grass_ground_spring_d"  n="grass_ground_n"      s="9.04"  r="5" su="GrassForest"    tp="0" du="0.0" ds="0.2" md="0.8" tr="0.22 0.20 0.04 0.9"  aa="0"  ab="25" />
 <t sc="Spr"  t="grass_rocky_spring_d"   n="grass_rocky_n"       s="10.81" r="4" su="DesertBumpy"    tp="0" du="0.0" ds="0.2" md="0.6" tr="0.42 0.46 0.08 0.7"  aa="13" ab="36" />
+
+<t sc="Cry"  t="ycrystals3_fine_d"      n="ycrystals_fine_n"    s="17.15" r="3" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.26 0.1 0.23 0.8"  aa="0"  ab="10" />
+<t sc="Cry"  t="ycrystals3_med_d"       n="ycrystals_med_n"     s="12.59" r="2" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.26 0.1 0.23 0.8"  aa="14" ab="31" />
+<t sc="Cry"  t="ycrystals3_big_d"       n="ycrystals_big_n"     s="17.15" r="4" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.26 0.1 0.23 0.8"  aa="38" ab="90" />
 
 <!-- new metal grid texture -->
 <t sc="Spc"  t="space_metal_grid_d"   n="space_metal_grid_n"   s="25.0"  r="1" su="Metal"          tp="0" du="0.0" ds="1.0" md="0.0" tr="0.46 0.46 0.46 0.7"  aa="0"  ab="22" />
@@ -515,21 +520,23 @@
 <r sc="Spc"  m="pipeAsphaltAnomalySpace"         r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Sur"  m="pipeAsphaltAnomalyStreaks"       r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Spc"  m="pipeAsphaltAnomalySpaceStreaks"  r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Spc"  m="pipeGlassAnomalySpace"  r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Spc"  m="pipeGlassAnomalySpaceDark"  r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Spc"  m="pipeGlassAnomalySpace"           r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Spc"  m="pipeGlassAnomalySpaceDark"       r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 
 
-<r sc="Wnt"  m="---- pipe wall ----"  r="0" />  <!-- ⭕📏 -->
-<r sc="Oth"  m="road_wall"            r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="JngD" m="road_wall_JDark"      r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Jng"  m="road_wall_Jungle"     r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Wnt"  m="road_wall_Winter"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Can"  m="road_wall_Red"        r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Des"  m="road_wall_Desert"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Cry"  m="road_wall_crystal"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Aln"  m="road_wall_Alien"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Blk"  m="road_wall_Black"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Jng"  m="road_wall_spring"     r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Wnt"  m="---- pipe wall ----"      r="0" />  <!-- ⭕📏 -->
+<r sc="Oth"  m="road_wall"                r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="JngD" m="road_wall_JDark"          r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Jng"  m="road_wall_Jungle"         r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Wnt"  m="road_wall_Winter"         r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Can"  m="road_wall_Red"            r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Des"  m="road_wall_Desert"         r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Cry"  m="road_wall_crystal"        r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Cry"  m="road_wall_crystal_cyan"   r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Mar"  m="road_wall_crystal_pink"   r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Aln"  m="road_wall_Alien"          r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Blk"  m="road_wall_Black"          r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Jng"  m="road_wall_spring"         r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 
 <r sc="Spc"  m="road_wall_metal_01_anomaly"     r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Spc"  m="road_wall_metal_02_anomaly"     r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
@@ -540,17 +547,19 @@
 <r sc="Sur"  m="wall_mining_truck_anomaly"      r="5" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 
 
-<r sc="Oth"  m="pipe_wall"            r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="JngD" m="pipe_wall_JDark"      r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Jng"  m="pipe_wall_Jungle"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Aus"  m="pipe_wall_Red"        r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Can"  m="pipe_wall_Orange"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Des"  m="pipe_wall_Yellow"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Wnt"  m="pipe_wall_Winter"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Cry"  m="pipe_wall_crystal"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Aln"  m="pipe_wall_Alien"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Blk"  m="pipe_wall_Black"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Jng"  m="pipe_wall_spring"     r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Oth"  m="pipe_wall"                 r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="JngD" m="pipe_wall_JDark"           r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Jng"  m="pipe_wall_Jungle"          r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Aus"  m="pipe_wall_Red"             r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Can"  m="pipe_wall_Orange"          r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Des"  m="pipe_wall_Yellow"          r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Wnt"  m="pipe_wall_Winter"          r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Cry"  m="pipe_wall_crystal"         r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Cry"  m="pipe_wall_crystal_cyan"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Mar"  m="pipe_wall_crystal_pink"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Aln"  m="pipe_wall_Alien"           r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Blk"  m="pipe_wall_Black"           r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Jng"  m="pipe_wall_spring"          r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 
 <r sc="Spc"  m="pipe_wall_metal_01_anomaly"     r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Spc"  m="pipe_wall_metal_02_anomaly"     r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
@@ -562,18 +571,20 @@
 
 
 
-<r sc="Wnt"  m="---- column ----"     r="0" />  <!-- 🏛️ -->
-<r sc="Oth"  m="road_col"             r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="JngD" m="road_col_Dark"        r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Grc"  m="road_col_Blue"        r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Wnt"  m="road_col_Winter"      r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Can"  m="road_col_Red"         r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Des"  m="road_col_Desert"      r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Cry"  m="road_col_crystal"     r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Aln"  m="road_col_Alien"       r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Blk"  m="road_col_Black"       r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Jng"  m="road_col_spring"      r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Jng"  m="road_col_wheel_anomaly"      r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Wnt"  m="---- column ----"          r="0" />  <!-- 🏛️ -->
+<r sc="Oth"  m="road_col"                  r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="JngD" m="road_col_Dark"             r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Grc"  m="road_col_Blue"             r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Wnt"  m="road_col_Winter"           r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Can"  m="road_col_Red"              r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Des"  m="road_col_Desert"           r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Cry"  m="road_col_crystal"          r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Cry"  m="road_col_crystal_cyan"     r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Mar"  m="road_col_crystal_pink"     r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Aln"  m="road_col_Alien"            r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Blk"  m="road_col_Black"            r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Jng"  m="road_col_spring"           r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Jng"  m="road_col_wheel_anomaly"    r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 
 <r sc="Wnt"  m="---- wall universal"  r="0" />  <!-- 🧱📏 -->
 <r sc="Spc"  m="wall_space_diam"      r="4" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
@@ -661,11 +672,11 @@
 <r sc="Vlc"  m="River_dark"           r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="For"  m="River_blue_dark"      r="3" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 	
-<r sc="Sur"  m="River_pink"           r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Sur"  m="River_strange"        r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Sur"  m="River_strange2"       r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Vlc"  m="River_liquid_gas"     r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Vlc"  m="River_liquid_gas2"    r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Sur"  m="River_pink"              r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Sur"  m="River_strange"           r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Sur"  m="River_strange2"          r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Vlc"  m="River_liquid_gas"        r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Vlc"  m="River_liquid_gas2"       r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Spc"  m="River_liquid_gas_space"  r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 
 <r sc="Uni"  m="River_Grease_jelly"   r="2" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
@@ -691,13 +702,13 @@
 <r sc="IslD" m="River_clear_shore"    r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 <r sc="Sur"  m="River_clear_pink"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 
-<r sc="Oth"  m="River_Water_anomaly_blue"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Oth"  m="River_Anomaly_jelly_1"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Oth"  m="River_Anomaly_jelly_2"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Oth"  m="River_Anomaly_jelly_3"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Oth"  m="River_Mud_white_anomaly"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Oth"  m="River_Water_strange_anomaly"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
-<r sc="Oth"  m="River_Water_strange2_anomaly"     r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Oth"  m="River_Water_anomaly_blue"       r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Oth"  m="River_Anomaly_jelly_1"          r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Oth"  m="River_Anomaly_jelly_2"          r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Oth"  m="River_Anomaly_jelly_3"          r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Oth"  m="River_Mud_white_anomaly"        r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Oth"  m="River_Water_strange_anomaly"    r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
+<r sc="Oth"  m="River_Water_strange2_anomaly"   r="1" su="roadDesert"   du="0.0" ds="0.5" md="0.0" tr="0.10 0.10 0.10 0.7" />
 
 
 <!--  🌿  Grasses  ================================================================================================================================
@@ -802,21 +813,21 @@
 <g sc="Jng"  g="seaweed02"          c="grClrForest"    r="2" xa="1.80" xb="2.10" ya="1.76" yb="2.07" />
 <g sc="Jng"  g="seaweed03"          c="grClrForest"    r="2" xa="1.80" xb="2.10" ya="1.76" yb="2.07" />
 
-<g sc="Sur"  g="grassAnomaly01a"         c="grClrJungle"    r="1" xa="2.50" xb="3.34" ya="2.32" yb="3.93" />
-<g sc="Sur"  g="grassAnomaly01b"         c="grClrJungle"    r="1" xa="2.50" xb="3.34" ya="2.32" yb="3.93" />
-<g sc="Sur"  g="grassAnomaly01c"         c="grClrJungle"    r="1" xa="2.50" xb="3.34" ya="2.32" yb="3.93" />
-<g sc="Sur"  g="grassAnomaly02a"       c="grClrJungle"    r="1" xa="1.83" xb="5.60" ya="1.22" yb="7.62" />
-<g sc="Sur"  g="grassAnomaly02b"       c="grClrJungle"    r="1" xa="1.83" xb="5.60" ya="1.22" yb="7.62" />
-<g sc="Sur"  g="grassAnomaly02c"       c="grClrJungle"    r="1" xa="1.83" xb="5.60" ya="1.22" yb="7.62" />
-<g sc="Sur"  g="grassAnomaly03a"          c="grClrJungle"    r="2" xa="4.28" xb="5.57" ya="6.00" yb="8.00" />
-<g sc="Sur"  g="grassAnomaly03b"          c="grClrJungle"    r="2" xa="4.28" xb="5.57" ya="6.00" yb="8.00" />
-<g sc="Sur"  g="grassAnomaly03c"          c="grClrJungle"    r="2" xa="4.28" xb="5.57" ya="6.00" yb="8.00" />
-<g sc="Sur"  g="grassAnomaly04a"          c="grClrJungle"    r="1" xa="1.22" xb="1.44" ya="2.15" yb="2.50" />
-<g sc="Sur"  g="grassAnomaly04b"          c="grClrJungle"    r="1" xa="1.22" xb="1.44" ya="2.15" yb="2.50" />
-<g sc="Sur"  g="grassAnomaly04c"          c="grClrJungle"    r="1" xa="1.22" xb="1.44" ya="2.15" yb="2.50" />
-<g sc="Sur"  g="flower02AnomalyA"           c="grClrForest"    r="2" xa="2.80" xb="2.00" ya="5.66" yb="7.87" />
-<g sc="Sur"  g="flower02AnomalyB"           c="grClrForest"    r="2" xa="2.80" xb="2.00" ya="5.66" yb="7.87" />
-<g sc="Sur"  g="flower02AnomalyC"           c="grClrForest"    r="2" xa="2.80" xb="2.00" ya="5.66" yb="7.87" />
+<g sc="Sur"  g="grassAnomaly01a"     c="grClrJungle"    r="1" xa="2.50" xb="3.34" ya="2.32" yb="3.93" />
+<g sc="Sur"  g="grassAnomaly01b"     c="grClrJungle"    r="1" xa="2.50" xb="3.34" ya="2.32" yb="3.93" />
+<g sc="Sur"  g="grassAnomaly01c"     c="grClrJungle"    r="1" xa="2.50" xb="3.34" ya="2.32" yb="3.93" />
+<g sc="Sur"  g="grassAnomaly02a"     c="grClrJungle"    r="1" xa="1.83" xb="5.60" ya="1.22" yb="7.62" />
+<g sc="Sur"  g="grassAnomaly02b"     c="grClrJungle"    r="1" xa="1.83" xb="5.60" ya="1.22" yb="7.62" />
+<g sc="Sur"  g="grassAnomaly02c"     c="grClrJungle"    r="1" xa="1.83" xb="5.60" ya="1.22" yb="7.62" />
+<g sc="Sur"  g="grassAnomaly03a"     c="grClrJungle"    r="2" xa="4.28" xb="5.57" ya="6.00" yb="8.00" />
+<g sc="Sur"  g="grassAnomaly03b"     c="grClrJungle"    r="2" xa="4.28" xb="5.57" ya="6.00" yb="8.00" />
+<g sc="Sur"  g="grassAnomaly03c"     c="grClrJungle"    r="2" xa="4.28" xb="5.57" ya="6.00" yb="8.00" />
+<g sc="Sur"  g="grassAnomaly04a"     c="grClrJungle"    r="1" xa="1.22" xb="1.44" ya="2.15" yb="2.50" />
+<g sc="Sur"  g="grassAnomaly04b"     c="grClrJungle"    r="1" xa="1.22" xb="1.44" ya="2.15" yb="2.50" />
+<g sc="Sur"  g="grassAnomaly04c"     c="grClrJungle"    r="1" xa="1.22" xb="1.44" ya="2.15" yb="2.50" />
+<g sc="Sur"  g="flower02AnomalyA"    c="grClrForest"    r="2" xa="2.80" xb="2.00" ya="5.66" yb="7.87" />
+<g sc="Sur"  g="flower02AnomalyB"    c="grClrForest"    r="2" xa="2.80" xb="2.00" ya="5.66" yb="7.87" />
+<g sc="Sur"  g="flower02AnomalyC"    c="grClrForest"    r="2" xa="2.80" xb="2.00" ya="5.66" yb="7.87" />
 
 
 <!--  🌳  Vegetation  ================================================================================================================================
