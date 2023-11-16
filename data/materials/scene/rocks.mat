@@ -886,7 +886,7 @@ material crystal6
 //}
 
 
-// recolored (and brightened)
+//  recolored (and brightened)
 
 material crystal1_cyan
 {
@@ -1088,7 +1088,7 @@ material crystal2_pink
 
 
 
-// crystal forms and cube recolored
+//  crystal forms and cube recolored
 material crystal_form1_cyan
 {
     parent base
@@ -1233,7 +1233,7 @@ material crystal_cube4_pink
 }
 
 
-// other new
+//  crystal new
 
 material crystal3_blue
 {

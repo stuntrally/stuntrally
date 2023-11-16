@@ -8,13 +8,18 @@
 ## Links
 
 [Stunt Rally Homepage](https://stuntrally.tuxfamily.org/) - Download links, track & vehicle browsers etc.  
-[Sources](https://github.com/stuntrally/) - with Documentation in docs/, also for bugs & Issues, pull requests, etc.  
+Sources: [New 3.x](https://github.com/stuntrally/stuntrally3), [Old 2.x](https://github.com/stuntrally/stuntrally/) - with Documentation in docs/, also for bugs & Issues, pull requests, etc  
 [Forums](https://forum.freegamedev.net/viewforum.php?f=77) - Discussions, tracks, Issues, etc.  
 [Screenshots](https://stuntrally.tuxfamily.org/gallery) - Galleries from all versions and development  
 [Videos](https://www.youtube.com/user/TheCrystalHammer) - from game and editor  
 [Donations](https://cryham.tuxfamily.org/donate/) - financial support
 
 ------------------------------------------------------------------------------
+
+## Note
+
+This is an older outdated version of Stunt Rally 2.x.  
+New repo with Stunt Rally 3.0 and up is [here](https://github.com/stuntrally/stuntrally3).
 
 ## Description
 
@@ -87,8 +92,6 @@ Before reporting bugs or issues, be sure to [Read before posting](https://forum.
 
 Then create a topic on Forum [SR Bugs & Help](https://forum.freegamedev.net/viewforum.php?f=78)  
 or a [new issue on github](https://github.com/stuntrally/stuntrally/issues/new) (if not present). PRs are welcome too.  
-
-IRC *was* used: #stuntrally on freenode. But now I'm not checking it.
 
 ------------------------------------------------------------------------------
 
