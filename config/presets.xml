@@ -143,6 +143,9 @@
 <s m="sky/newsky026A"          c="#516477"   p="33"  y="0"  />
 <s m="sky/newsky026B"          c="#55779a"   p="33"  y="0"  />
 <s m="sky/space_nebula_01"     c="#41182a"   p="25"  y="115"  />
+<s m="sky/newsky011"           c="#afc789"   p="25"  y="0"  />
+<s m="sky/mud_road01"          c="#7a9747"   p="40"  y="75"  />
+<s m="sky/mud_road02"          c="#5e4562"   p="40"  y="75"  />
 	
 <!--  skies, anomaly  -->
 <s m="sky/sky_anomaly_01"      c="#a6d76e"   p="55"  y="0"  />
@@ -325,6 +328,12 @@
 <t sc="Cry"  t="ycrystals3_fine_d"      n="ycrystals_fine_n"    s="17.15" r="3" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.26 0.1 0.23 0.8"  aa="0"  ab="10" />
 <t sc="Cry"  t="ycrystals3_med_d"       n="ycrystals_med_n"     s="12.59" r="2" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.26 0.1 0.23 0.8"  aa="14" ab="31" />
 <t sc="Cry"  t="ycrystals3_big_d"       n="ycrystals_big_n"     s="17.15" r="4" su="SnowDeep"       tp="0" du="0.0" ds="1.0" md="0.0" tr="0.26 0.1 0.23 0.8"  aa="38" ab="90" />
+	
+<t sc="Mud"  t="ground_mud3_d"          n="ground_mud3_n"       s="8.53"  r="4" su="GrassJungleWet" tp="0" du="0.0" ds="0.2" md="0.6" tr="0.30 0.26 0.10 0.7"  aa="19" ab="34" />
+<t sc="Blk"  t="ground_mud3_oil_d"      n="ground_mud3_n"       s="8.53"  r="4" su="GrassJungleWet" tp="0" du="0.0" ds="0.2" md="0.6" tr="0.30 0.26 0.10 0.7"  aa="19" ab="34" />
+<t sc="Vlc"  t="ground_dirty_d"         n="ground_dirty_n"      s="6.67"  r="2" su="DesertMud"      tp="0" du="0.0" ds="0.0" md="0.1" tr="0.25 0.20 0.14 0.6"  aa="13" ab="26" />
+<t sc="Blk"  t="ground_dirty_toxic_d"   n="ground_dirty_n"      s="6.67"  r="2" su="DesertMud"      tp="0" du="0.0" ds="0.0" md="0.1" tr="0.25 0.20 0.14 0.6"  aa="13" ab="26" />
+<t sc="Vlc"  t="mntn_dark2_d"           n="mntn_dark2_n"        s="30.02" r="1" su="Rocks"          tp="1" du="0.3" ds="0.2" md="0.5" tr="0.32 0.32 0.32 0.4"  aa="44" ab="90" />
 
 <!-- new metal grid texture -->
 <t sc="Spc"  t="space_metal_grid_d"   n="space_metal_grid_n"   s="25.0"  r="1" su="Metal"          tp="0" du="0.0" ds="1.0" md="0.0" tr="0.46 0.46 0.46 0.7"  aa="0"  ab="22" />
@@ -440,6 +449,9 @@
 <r sc="Spc"  m="roadAsphaltAnomalySpaceStreaks"   r="2" su="roadDesert"   du="0.0" ds="0.2" md="0.0" tr="0.40 0.40 0.20 0.8" />
 <r sc="Sur"  m="roadMossAnomaly"                  r="3" su="roadJungle"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" />
 <r sc="Sur"  m="roadMossAnomaly2"                 r="3" su="roadJungle"   du="0.0" ds="0.2" md="0.0" tr="0.09 0.19 0.15 0.8" />
+	
+<r sc="Blk" m="roadMudOil"            r="4" su="roadJungle"   du="0.0" ds="0.1" md="0.2" tr="0.40 0.36 0.16 0.8" />
+<r sc="Tox" m="roadSandToxic"         r="2" su="roadGravel"   du="0.0" ds="0.2" md="0.0" tr="0.54 0.44 0.30 0.1" />
 
 <r sc="JngD" m="roadJDarkTransp"            r="4" su="roadJungle"   du="0.0" ds="0.2" md="0.2" tr="0.40 0.36 0.16 0.4" />
 <r sc="For"  m="roadJungleTransp"           r="4" su="roadForest"   du="0.0" ds="0.2" md="0.2" tr="0.30 0.26 0.16 0.4" />

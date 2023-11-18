@@ -997,3 +997,112 @@ material obstaclesAnomaly
 	refl_amount 0.5
 }
 
+// new post-apo scenery
+material dead_tree_01
+{
+	parent base
+	diffuseMap tree_dead_01_bark_d.jpg
+	normalMap tree_dead_01_bark_n.jpg
+	specMap tree_dead_01_bark_s.jpg
+	ambient 0.9 0.9 0.9
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+	bump_scale 0.7
+}
+
+material dead_tree_01_dark
+{
+	parent base
+	diffuseMap tree_dead_01_bark_d.jpg
+	normalMap tree_dead_01_bark_n.jpg
+	specMap tree_dead_01_bark_s.jpg
+	ambient 0.55 0.57 0.55
+	diffuse 0.46 0.5 0.46
+	specular 0.3 0.32 0.3 26
+	terrain_light_map true
+	bump_scale 0.7
+}
+
+material dead_tree_01_burned
+{
+	parent base
+	diffuseMap tree_dead_01_bark_burned_d.jpg
+	normalMap tree_dead_01_bark_n.jpg
+	specMap tree_dead_01_bark_s.jpg
+	ambient 0.4 0.4 0.4
+	diffuse 0.46 0.46 0.46
+	specular 0.1 0.1 0.1 26
+	terrain_light_map true
+	bump_scale 0.7
+}
+
+material dead_tree_04
+{
+	parent base
+	diffuseMap tree_dead_04_bark_d.jpg
+	normalMap tree_dead_04_bark_n.jpg
+	specMap tree_dead_04_bark_s.jpg
+	ambient 0.9 0.9 0.9
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+	bump_scale 0.7
+}
+
+material dead_tree_04_dark
+{
+	parent base
+	diffuseMap tree_dead_04_bark_d.jpg
+	normalMap tree_dead_04_bark_n.jpg
+	specMap tree_dead_04_bark_s.jpg
+	ambient 0.55 0.57 0.55
+	diffuse 0.46 0.5 0.46
+	specular 0.3 0.32 0.3 26
+	terrain_light_map true
+	bump_scale 0.7
+}
+
+material dead_tree_04_burned
+{
+	parent base
+	diffuseMap tree_dead_04_bark_burned_d.jpg
+	normalMap tree_dead_04_bark_n.jpg
+	specMap tree_dead_04_bark_s.jpg
+	ambient 0.4 0.4 0.4
+	diffuse 0.46 0.46 0.46
+	specular 0.1 0.1 0.1 26
+	terrain_light_map true
+	bump_scale 0.7
+}
+
+material oil_pump
+{
+	parent base
+	diffuseMap oil_pump.jpg
+	normalMap oil_pump_norm.jpg
+	specMap oil_pump_spec.jpg
+	reflMap oil_pump_spec.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+material post_apo_buildings
+{
+	parent base
+	diffuseMap concrete_postapo_d.jpg
+	normalMap concrete_postapo_n.jpg
+	specMap concrete_postapo_s.jpg
+	reflMap concrete_postapo_m.jpg
+	specMap_rgb true
+	ambient 1.0 1.0 1.0
+	diffuse 0.8 0.8 0.8
+	specular 1.0 1.0 1.0 26
+	terrain_light_map true
+}
+
+
+

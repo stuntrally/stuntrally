@@ -3,6 +3,9 @@
 DaySkyHDRI004B*.jpg
 https://ambientcg.com/view?id=DaySkyHDRI004B
 
+DaySkyHDRI011B*.jpg
+https://ambientcg.com/view?id=DaySkyHDRI011B
+
 DaySkyHDRI020B*.jpg
 https://ambientcg.com/view?id=DaySkyHDRI020B
 
@@ -37,6 +40,9 @@ https://polyhaven.com/a/kloppenheim_07_puresky
 
 kloppenheim02_a.jpg  kloppenheim02_b.jpg
 https://polyhaven.com/a/kloppenheim_02_puresky
+
+mud_road01.jpg  mud_road02.jpg
+https://polyhaven.com/a/mud_road_puresky
 
 License: CC0
 More:
