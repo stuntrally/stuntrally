@@ -332,3 +332,21 @@ material sky/space_nebula_01
     texture space_nebula_01.jpg
 }
 
+material sky/newsky011
+{
+    parent base_sky
+    texture DaySkyHDRI011B_8K-HDR.jpg
+}
+
+material sky/mud_road01
+{
+    parent base_sky
+    texture mud_road01.jpg
+}
+
+material sky/mud_road02
+{
+    parent base_sky
+    texture mud_road02.jpg
+}
+

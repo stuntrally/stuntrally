@@ -337,3 +337,44 @@ material crate2m_anomaly
 	bump_scale 2.0
 }
 
+// new post-apo scenery
+material barrel_oil_red
+{
+    parent base
+    diffuseMap barrel_oil_d.jpg
+    normalMap barrel_oil_n.jpg
+    specMap barrel_oil_s.jpg
+    terrain_light_map true
+    diffuse 1.00 1.00 1.00
+    specular 0.6 0.6 0.6 4
+	specMap_rgb true
+	reflMap barrel_oil_m.jpg
+  
+}
+
+material barrel_oil_green
+{
+    parent base
+    diffuseMap barrel_oil_green_d.jpg
+    normalMap barrel_oil_n.jpg
+    specMap barrel_oil_s.jpg
+    terrain_light_map true
+    diffuse 1.00 1.00 1.00
+    specular 0.6 0.6 0.6 4
+	specMap_rgb true
+	reflMap barrel_oil_m.jpg
+  
+}
+
+material plastic_canister
+{
+	parent base
+	diffuseMap plastic_canister_d.jpg
+	normalMap plastic_canister_n.jpg
+	specMap plastic_canister_s.jpg
+	terrain_light_map true
+	ambient 1.00 1.00 1.00
+	diffuse 1.00 1.00 1.00
+	specular 1.00 1.00 1.00 8
+}
+

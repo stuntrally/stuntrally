@@ -227,10 +227,20 @@
 		bWhForce="1" whMaxAngVel="60" whSpinDamp="25" whForceLong="80" whForceUp="20"
 		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.6" bumpAngle="10" whSteerMul="2" idParticles="-1" deep="0" />
 			
-	<fluid name="oil"	material="Oil" density="1200"  angDamp="1.8" linDamp="0.7" heightDamp="5"
-		fogHSVA="0.052 0.064 0.070 1" fogDens="20" fogDensH="0.8"
-		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="90" whForceUp="60"
-		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.5" bumpAngle="10" whSteerMul="3" idParticles="-1" deep="0" />
+	<fluid name="oil"	material="Oil" density="900"  angDamp="1.3" linDamp="0.9" heightDamp="5"
+		fogHSVA="0.052 0.064 0.070 1" fogDens="4" fogDensH="0.8"
+		bWhForce="1" whMaxAngVel="70" whSpinDamp="20"  whForceLong="80" whForceUp="40"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.7" bumpAngle="10" whSteerMul="1.6" idParticles="-1" deep="0" />
+	
+	<fluid name="oil med"	material="Oil" density="1100"  angDamp="1.0" linDamp="1.3" heightDamp="5"
+		fogHSVA="0.052 0.064 0.070 1" fogDens="4" fogDensH="0.8"
+		bWhForce="1" whMaxAngVel="60" whSpinDamp="25"  whForceLong="80" whForceUp="30"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.7" bumpAngle="15" whSteerMul="1.4" idParticles="-1" deep="0" />
+		
+	<fluid name="oil hard"	material="Oil" density="1300"  angDamp="0.7" linDamp="1.7" heightDamp="5"
+		fogHSVA="0.052 0.064 0.070 1" fogDens="4" fogDensH="0.8"
+		bWhForce="1" whMaxAngVel="55" whSpinDamp="30"  whForceLong="80" whForceUp="20"
+		bumpFqX="10.2" bumpFqY="10.5" bumpAmp="0.7" bumpAngle="25" whSteerMul="1.3" idParticles="-1" deep="0" />
 
 	<!-- low density -->
 	<fluid name="water blue low density"	material="Water_blue"  density="100" angDamp="0.7" linDamp="0.2" heightDamp="0"

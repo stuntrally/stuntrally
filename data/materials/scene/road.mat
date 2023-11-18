@@ -941,7 +941,7 @@ material roadFunny
 	ambient 0.7 0.7 0.7
 	diffuse 0.7 0.7 0.7
 	specular 0.2 0.2 0.2 48
-	normalMap roadJDarkD_norm.jpg
+	//normalMap roadJDarkD_norm.jpg //does not exist and makes this road look strange
 }
 material roadFunny_ter
 {
@@ -950,7 +950,7 @@ material roadFunny_ter
 	ambient 0.7 0.7 0.7
 	diffuse 0.7 0.7 0.7
 	specular 0.2 0.2 0.2 48
-	normalMap roadJDarkD_norm.jpg
+	//normalMap roadJDarkD_norm.jpg //does not exist and makes this road look strange
 } 
 
 
@@ -2247,4 +2247,42 @@ material roadAsphaltAnomalySpaceStreaks_ter
 	diffuse 0.1 0.75 2.75
 	specular 1.7 0.0 0.4 4
 	receives_shadows false
+}
+
+// new post-apo scenery
+material roadMudOil
+{
+	parent road
+	diffuseMap roadJDarkD.jpg
+	ambient 0.7 0.6 1.1
+	diffuse 0.5 0.4 0.75
+	specular 0.3 0.3 0.35 40
+}
+material roadMudOil_ter
+{
+	parent road_terrain
+	diffuseMap roadJDarkD.jpg
+	ambient 0.5 0.45 0.7
+	diffuse 0.50 0.50 0.70
+	specular 0.43 0.4 0.45 40
+	normalMap normal_2.png
+}
+
+//  Sand dark
+material roadSandToxic
+{
+	parent road
+	diffuseMap roadSandSet.jpg
+	ambient 0.37 0.6 0.31
+	diffuse 0.4 0.6 0.33
+	specular 0.3 0.35 0.2 24
+}
+material roadSandToxic_ter
+{
+	parent road_terrain
+	diffuseMap roadSandSet.jpg
+	ambient 0.4 0.6 0.31
+	diffuse 0.4 0.6 0.31
+	specular 0.3 0.37 0.2 24
+	normalMap normal_2.png
 }

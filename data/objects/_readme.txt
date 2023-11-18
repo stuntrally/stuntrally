@@ -214,3 +214,41 @@ https://polyhaven.com/a/dry_branches_medium_01
 Author: Various
 Licenses: Various
 based on their original variants
+
+---- barrel oil (red original, green modified)
+Oil barrel
+Author: farsmok
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/oil-barrel-ec37cc2a844f4f0ca0873d85a8b3b976
+
+---- concrete postapo buildings
+Ruined buildings pack
+Author: tobiasherbers
+License: CC-BY 4.0 (model only, texture CC0)
+https://sketchfab.com/3d-models/ruined-buildings-pack-free-download-690edb7d64b84df7bfeee3b54746d6eb
+texture replaced with
+https://ambientcg.com/view?id=Concrete043C
+
+---- plastic canister
+#2 Plastic Canister
+Author: hoxsvl
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/2-plastic-canister-lowpoly-eec75982101b4a32874b491892f43984
+
+---- oil pump
+Oil Pump Jack
+Author: Machine Meza
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/oil-pump-jack-73e9e419df5748ceb1bbbd333c5ce8d1
+
+---- tree_dead (01 - 03)
+Mountain Trees
+Author: Jagobo
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/mountain-trees-b914384f931d4b3585bd4f0bf48f0da3
+
+---- tree_dead (04)
+Oak tree
+Author: evolveduk
+License: CC-BY 4.0
+https://sketchfab.com/3d-models/oak-tree-6468dd4d3eb240ef902b9057d9913606

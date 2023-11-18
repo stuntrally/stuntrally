@@ -127,3 +127,13 @@ for example: desert_mntn2_anomaly from desert_mntn2
 exceptions
 space_diam_anomaly2 from original, but uses binary number pattern from openclipart
 space_metal_grid from https://ambientcg.com/view?id=MetalPlates006, CC0
+
+-----
+mntn_dark2
+https://ambientcg.com/view?id=Rock037
+
+ground_mud3, ground_mud3_oil
+https://ambientcg.com/view?id=Ground050
+
+ground_dirty, ground_dirty_toxic
+https://ambientcg.com/view?id=Ground047
