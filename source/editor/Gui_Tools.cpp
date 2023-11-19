@@ -314,6 +314,9 @@ void CGui::btnTrackRename(WP)
 ///  Delete
 void CGui::btnTrackDel(WP)
 {
+	if (!gcom->bListTrackU && !pSet->allow_save)
+		return;  // users don't delete original
+
 	Message* message = Message::createMessageBox(
 		"Message", TR("#{DeleteTrack}"), gcom->sListTrack,
 		MessageBoxStyle::IconQuest | MessageBoxStyle::Yes | MessageBoxStyle::No);
