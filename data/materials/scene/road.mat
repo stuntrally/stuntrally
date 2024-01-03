@@ -2249,7 +2249,7 @@ material roadAsphaltAnomalySpaceStreaks_ter
 	receives_shadows false
 }
 
-// new post-apo scenery
+//  post-apo
 material roadMudOil
 {
 	parent road
