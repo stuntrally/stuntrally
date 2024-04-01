@@ -27,6 +27,8 @@ Date:		02/05/2012
 Model:		jungle_tree.mesh
 License: 	CC0 (Public domain)
 Link: 		https://www.blendswap.com/blends/plants/bge-tree/
+			https://blendswap.com/blend/2196
+Artist:		Bardes
 Notes:		Bark texture by OpenGameArt user yughues, licensed CC0
 			low-polying, baked textures & normals in blender by scrawl
 

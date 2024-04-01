@@ -295,7 +295,7 @@ void App::newPoses(float time)  // time only for camera update
 
 						///  new best lap, save ghost
 						bool newbest = false;
-						if (!pSet->rpl_bestonly || best || pSet->game.rewind_type == 2 || gPar.backTime)
+						if (!pSet->rpl_bestonly || best)  //- || pSet->game.rewind_type == 2 || gPar.backTime)
 						if (c==0 && pSet->rpl_rec)  // for many, only 1st car
 						{
 							ghost.SaveFile(gui->GetGhostFile());  //,boost_type?
