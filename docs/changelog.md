@@ -277,7 +277,7 @@ be seen in [gallery](https://stuntrally.tuxfamily.org/gallery).
 * Common
     * All tracks renewed, new look
     * **Terrain**
-        * New textures, bigger 1k, with CC 0 license, more info in [about](https://github.com/stuntrally/stuntrally/blob/master/data/terrain/about.txt)
+        * New textures, bigger 1k, with CC 0 license, more info in [about](https://github.com/stuntrally/stuntrally/blob/master/data/terrain/_terrain.txt)
         * Blendmap noise with many parameters
         * Fixed triplanar uv swap, also now max 2 layers can be picked
         * Emissive light, on few tracks
@@ -504,8 +504,8 @@ be seen in [gallery](https://stuntrally.tuxfamily.org/gallery).
 |-----------------|--------------|
 | **Version 1.7** | 02. 09. 2012 |
 
-* *99 tracks (12 new, 20 old renewed, with 8 VDrift tracks)
-* *Gameplay
+* 99 tracks (12 new, 20 old renewed, with 8 VDrift tracks)
+* Gameplay
     * **Rewind** - lets you take your car back in time after crash, spin out etc (default key: Backspace (hold)).
     * VDrift tracks (with all game features)
     * Static and Dynamic **objects** on tracks (barrels, boxes, buildings etc)
